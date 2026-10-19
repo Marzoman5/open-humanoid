@@ -8,7 +8,7 @@
   "robot_height_m": 0.55,
   "scan_m": [
    0.15,
-   0.522,
+   0.52,
    0.025
   ],
   "resolution_m": 0.005,
@@ -644,17 +644,7 @@
    },
    "tether_pct_bw": 0.02,
    "peak_factor": 1.52,
-   "gate": 0.7,
-   "servo": {
-    "grasp_ok": true,
-    "object_lift_m": 0.0301,
-    "overload_trips": 0,
-    "fell": false,
-    "saturation_fraction_max": 0.0,
-    "saturated_joint": "hip_yaw_l",
-    "max_err_deg": 0.79,
-    "worst_joint": "knee_l"
-   }
+   "gate": 0.7
   },
   {
    "table_m": 0.35,
@@ -985,17 +975,7 @@
    },
    "tether_pct_bw": 0.02,
    "peak_factor": 1.52,
-   "gate": 0.7,
-   "servo": {
-    "grasp_ok": true,
-    "object_lift_m": 0.0294,
-    "overload_trips": 0,
-    "fell": false,
-    "saturation_fraction_max": 0.0,
-    "saturated_joint": "hip_yaw_l",
-    "max_err_deg": 0.79,
-    "worst_joint": "knee_l"
-   }
+   "gate": 0.7
   },
   {
    "table_m": 0.3843,
@@ -1326,17 +1306,7 @@
    },
    "tether_pct_bw": 0.02,
    "peak_factor": 1.52,
-   "gate": 0.7,
-   "servo": {
-    "grasp_ok": true,
-    "object_lift_m": 0.0259,
-    "overload_trips": 0,
-    "fell": false,
-    "saturation_fraction_max": 0.0,
-    "saturated_joint": "hip_yaw_l",
-    "max_err_deg": 0.79,
-    "worst_joint": "knee_l"
-   }
+   "gate": 0.7
   },
   {
    "table_m": 0.4,
@@ -1349,5 +1319,5 @@
    "reason": "reference infeasible: pickup at 0.45 m: the arm covers this height but in every whole-body posture tried the forearm, hand or body would meet the table edge (object 50 mm behind the front edge) (table clearance -x mm (forearm_r) at the grasp (x4710); the body or arm meets the table at the grasp (x2804); legs/waist out of range once the arm is out (x101)); COM tracking error 0.00 mm"
   }
  ],
- "seconds": 223.8
+ "seconds": 604.7
 }

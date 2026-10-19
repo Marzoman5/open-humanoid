@@ -45,20 +45,17 @@ Robot 0.55 m, right hand, 150 g object, object centre 50 mm behind the table's f
 | 0.300 | yes | elbow_r | sts3215-12v | 0.9693 | 2.721 | 0.356 | 1.97 | 0.234 | 2.99 |
 | 0.300 | yes | gripper_r | sts3215-12v | 0.7642 | 2.721 | 0.281 | 2.49 | 0.185 | 3.79 |
 | 0.300 | | worst joint of all: elbow_r | | | | 0.356 | | | |
-| 0.300 | | servo-in-the-loop: {'grasp_ok': True, 'object_lift_m': 0.0301, 'overload_trips': 0, 'fell': False, 'saturation_fraction_max': 0.0, 'saturated_joint': 'hip_yaw_l', 'max_err_deg': 0.79, 'worst_joint': 'knee_l'} | | | | | | | |
 | 0.350 | yes | waist_yaw | sts3215-12v | 0.3372 | 2.721 | 0.124 | 5.65 | 0.082 | 8.59 |
 | 0.350 | yes | shoulder_pitch_r | sts3215-12v | 0.9097 | 2.721 | 0.334 | 2.09 | 0.22 | 3.18 |
 | 0.350 | yes | shoulder_roll_r | sts3215-12v | 0.344 | 2.721 | 0.126 | 5.54 | 0.083 | 8.42 |
 | 0.350 | yes | elbow_r | sts3215-12v | 1.0835 | 2.721 | 0.398 | 1.76 | 0.262 | 2.67 |
 | 0.350 | yes | gripper_r | sts3215-12v | 0.7642 | 2.721 | 0.281 | 2.49 | 0.185 | 3.79 |
 | 0.350 | | worst joint of all: elbow_r | | | | 0.398 | | | |
-| 0.350 | | servo-in-the-loop: {'grasp_ok': True, 'object_lift_m': 0.0294, 'overload_trips': 0, 'fell': False, 'saturation_fraction_max': 0.0, 'saturated_joint': 'hip_yaw_l', 'max_err_deg': 0.79, 'worst_joint': 'knee_l'} | | | | | | | |
 | 0.384 | yes | waist_yaw | sts3215-12v | 0.3722 | 2.721 | 0.137 | 5.12 | 0.09 | 7.78 |
 | 0.384 | yes | shoulder_pitch_r | sts3215-12v | 0.9372 | 2.721 | 0.344 | 2.03 | 0.227 | 3.09 |
 | 0.384 | yes | shoulder_roll_r | sts3215-12v | 0.3747 | 2.721 | 0.138 | 5.08 | 0.091 | 7.73 |
 | 0.384 | yes | elbow_r | sts3215-12v | 1.0788 | 2.721 | 0.396 | 1.77 | 0.261 | 2.68 |
 | 0.384 | yes | gripper_r | sts3215-12v | 0.7643 | 2.721 | 0.281 | 2.49 | 0.185 | 3.79 |
 | 0.384 | | worst joint of all: elbow_r | | | | 0.396 | | | |
-| 0.384 | | servo-in-the-loop: {'grasp_ok': True, 'object_lift_m': 0.0259, 'overload_trips': 0, 'fell': False, 'saturation_fraction_max': 0.0, 'saturated_joint': 'hip_yaw_l', 'max_err_deg': 0.79, 'worst_joint': 'knee_l'} | | | | | | | |
 | 0.400 | NO: reference infeasible: pickup at 0.40 m: the arm covers this height but in every whole-body | | | | | | | | |
 | 0.450 | NO: reference infeasible: pickup at 0.45 m: the arm covers this height but in every whole-body | | | | | | | | |

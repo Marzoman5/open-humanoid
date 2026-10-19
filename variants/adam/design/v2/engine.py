@@ -62,8 +62,14 @@ def cmd_backlash(a) -> int:
                          a.extra_deg[3] if len(a.extra_deg) > 3 else 2 * a.extra_deg[1])):
         bl = np.array([servo + (math.radians(ek) if n.startswith("knee") else math.radians(ea) if n.startswith("ankle_pitch") else 0.0) for n in names])
         cfg = PlayConfig(mode="servo", backlash_rad=bl)
-        off, _ = learn_offsets(robot, ref, cfg, iters=3)
-        lg = play(robot, ref, replace(cfg, cmd_offset=off))
+        try:
+            off, _ = learn_offsets(robot, ref, cfg, iters=3)
+            lg = play(robot, ref, replace(cfg, cmd_offset=off))
+        except ValueError as e:      # the replay fell during feed-forward learning (log lengths differ): report it, do not hide it
+            out["cases"][tag] = {"backlash_deg": {"knee": round(math.degrees(servo) + ek, 3), "ankle_pitch": round(math.degrees(servo) + ea, 3)},
+                                 "fell": True, "note": f"replay diverged / fell while learning the feed-forward offsets ({e})"}
+            print(tag, out["cases"][tag], flush=True)
+            continue
         sl = lg.sl()
         err = np.degrees(np.abs(lg.q - lg.q_ref)[sl])
         per = {n: round(float(np.sqrt((err[:, i] ** 2).mean())), 2) for i, n in enumerate(names) if n.startswith(("knee", "ankle_pitch", "hip_pitch"))}

@@ -1,0 +1,1573 @@
+{
+ "cal": [
+  {
+   "cand": "R1",
+   "h": 0.55,
+   "mass": 4.005,
+   "gait": "40/0.5",
+   "strict": "1.247 (hip_roll_l)",
+   "half": 1.571,
+   "cal": "1.891 (hip_roll_l)",
+   "bounds s/h/c": "10/11/11 of 13",
+   "failing_cal": [
+    "armature high",
+    "walking speed x1.5"
+   ],
+   "failing_strict": [
+    "armature high",
+    "stall low",
+    "walking speed x1.5"
+   ],
+   "R10 all": true,
+   "R10 min Ns": 0.669,
+   "invalid": [
+    "pickup_0.45m"
+   ]
+  },
+  {
+   "cand": "R1",
+   "h": 0.6,
+   "mass": 4.595,
+   "gait": "30/0.5",
+   "strict": "1.024 (hip_roll_l)",
+   "half": 1.29,
+   "cal": "1.453 (knee_r)",
+   "bounds s/h/c": "4/10/11 of 13",
+   "failing_cal": [
+    "armature high",
+    "walking speed x1.5"
+   ],
+   "failing_strict": [
+    "structure mass x1.4",
+    "wiring/electronics x1.5",
+    "pessimistic linear torque-speed",
+    "armature high",
+    "stall low",
+    "walking speed x1.5",
+    "benchmark-fit mass (structure x1.46)",
+    "shelled nominal (structure x1.2)",
+    "low SoC 0.15 + R x1.5 at 10 A (bus 10.34 V)"
+   ],
+   "R10 all": true,
+   "R10 min Ns": 0.661,
+   "invalid": [
+    "pickup_0.45m"
+   ]
+  },
+  {
+   "cand": "V2a",
+   "h": 0.55,
+   "mass": 4.005,
+   "gait": "40/0.5",
+   "strict": "1.245 (hip_roll_l)",
+   "half": 1.569,
+   "cal": "1.889 (hip_roll_l)",
+   "bounds s/h/c": "10/11/11 of 13",
+   "failing_cal": [
+    "armature high",
+    "walking speed x1.5"
+   ],
+   "failing_strict": [
+    "armature high",
+    "stall low",
+    "walking speed x1.5"
+   ],
+   "R10 all": true,
+   "R10 min Ns": 0.67,
+   "invalid": [
+    "pickup_0.45m"
+   ]
+  },
+  {
+   "cand": "V2a",
+   "h": 0.6,
+   "mass": 4.595,
+   "gait": "30/0.5",
+   "strict": "1.023 (hip_roll_l)",
+   "half": 1.289,
+   "cal": "1.463 (knee_r)",
+   "bounds s/h/c": "4/10/11 of 13",
+   "failing_cal": [
+    "armature high",
+    "walking speed x1.5"
+   ],
+   "failing_strict": [
+    "structure mass x1.4",
+    "wiring/electronics x1.5",
+    "pessimistic linear torque-speed",
+    "armature high",
+    "stall low",
+    "walking speed x1.5",
+    "benchmark-fit mass (structure x1.46)",
+    "shelled nominal (structure x1.2)",
+    "low SoC 0.15 + R x1.5 at 10 A (bus 10.34 V)"
+   ],
+   "R10 all": true,
+   "R10 min Ns": 0.664,
+   "invalid": [
+    "pickup_0.45m"
+   ]
+  },
+  {
+   "cand": "V2b",
+   "h": 0.55,
+   "mass": 4.005,
+   "gait": "40/0.5",
+   "strict": "1.245 (hip_roll_l)",
+   "half": 1.569,
+   "cal": "1.861 (knee_r)",
+   "bounds s/h/c": "10/11/11 of 13",
+   "failing_cal": [
+    "armature high",
+    "walking speed x1.5"
+   ],
+   "failing_strict": [
+    "armature high",
+    "stall low",
+    "walking speed x1.5"
+   ],
+   "R10 all": true,
+   "R10 min Ns": 0.67,
+   "invalid": [
+    "pickup_0.45m"
+   ]
+  },
+  {
+   "cand": "V2b",
+   "h": 0.6,
+   "mass": 4.595,
+   "gait": "30/0.5",
+   "strict": "1.023 (hip_roll_l)",
+   "half": 1.289,
+   "cal": "1.411 (knee_r)",
+   "bounds s/h/c": "4/10/11 of 13",
+   "failing_cal": [
+    "armature high",
+    "walking speed x1.5"
+   ],
+   "failing_strict": [
+    "structure mass x1.4",
+    "wiring/electronics x1.5",
+    "pessimistic linear torque-speed",
+    "armature high",
+    "stall low",
+    "walking speed x1.5",
+    "benchmark-fit mass (structure x1.46)",
+    "shelled nominal (structure x1.2)",
+    "low SoC 0.15 + R x1.5 at 10 A (bus 10.34 V)"
+   ],
+   "R10 all": true,
+   "R10 min Ns": 0.664,
+   "invalid": [
+    "pickup_0.45m"
+   ]
+  }
+ ],
+ "reports": {
+  "R1 0.55": {
+   "mtime": 1792443047.416186,
+   "verdict": {
+    "status": "FAIL",
+    "robust_to_all_bounds": false,
+    "passes_at_benchmark_mass": false,
+    "reasons": [
+     "INVALID pickup_0.45m: reference infeasible: pickup at 0.45 m: the arm covers this height but in every whole-body posture tried the forearm, hand or body would meet the table edge (object 50 mm behind the front edge) (table clearance -x mm (forearm_r) at the grasp (x4710); the body or arm meets the table at the grasp (x2804); legs/waist out of range once the arm is out (x101)); COM tracking error 0.00 mm",
+     "Monte Carlo p95 peak above the gate at hip_pitch_l (0.87 of stall)"
+    ],
+    "warnings": [
+     "cost $1080.06 typical is above the $550 cap (high band $1540.48); prices are unverified",
+     "sts3250-12v: full charge 12.6 V is 0.6 V over the rating for 23% of the discharge (charge only to 4.00 V/cell (12.0 V) -- most chargers allow it; costs about 23% of the capacity)",
+     "thermal model failed the Robonine replay: thermal temperatures are indicative only"
+    ],
+    "meaning": "PASS = no blocker: every frozen motion valid, nominal joint gates met, Monte Carlo p95 peak and mixed RMS within the gates, grasp, bus and regulator OK. Warnings (cost, voltage rating, runtime, unusable thermal model) do not flip it. 'robust' and 'benchmark mass' are the decision-rule checks (challenge-1): a PASS that is not robust is not a decision."
+   },
+   "mc": {
+    "quasi_static_only": true,
+    "samples": 64,
+    "seed": 1234,
+    "pass_rate": 0.0,
+    "pass_rate_required": null,
+    "p95_peak_frac_of_stall": {
+     "hip_yaw_l": 0.657,
+     "hip_yaw_r": 0.673,
+     "hip_roll_l": 0.813,
+     "hip_roll_r": 0.763,
+     "hip_pitch_l": 0.866,
+     "hip_pitch_r": 0.849,
+     "knee_l": 0.713,
+     "knee_r": 0.722,
+     "ankle_pitch_l": 0.746,
+     "ankle_pitch_r": 0.743,
+     "ankle_roll_l": 0.39,
+     "ankle_roll_r": 0.505,
+     "waist_yaw": 0.434,
+     "neck_yaw": 0.311,
+     "neck_pitch": 0.006,
+     "shoulder_pitch_l": 0.339,
+     "shoulder_pitch_r": 0.339,
+     "shoulder_roll_l": 0.26,
+     "shoulder_roll_r": 0.26,
+     "elbow_l": 0.137,
+     "elbow_r": 0.567,
+     "gripper_l": 0.001,
+     "gripper_r": 0.295
+    },
+    "p95_rms_over_rated": {
+     "hip_yaw_l": 0.549,
+     "hip_yaw_r": 0.568,
+     "hip_roll_l": 0.937,
+     "hip_roll_r": 0.856,
+     "hip_pitch_l": 0.886,
+     "hip_pitch_r": 0.903,
+     "knee_l": 0.92,
+     "knee_r": 0.96,
+     "ankle_pitch_l": 0.983,
+     "ankle_pitch_r": 1.021,
+     "ankle_roll_l": 0.446,
+     "ankle_roll_r": 0.478,
+     "waist_yaw": 0.117,
+     "neck_yaw": 0.13,
+     "neck_pitch": 0.01,
+     "shoulder_pitch_l": 0.336,
+     "shoulder_pitch_r": 0.337,
+     "shoulder_roll_l": 0.281,
+     "shoulder_roll_r": 0.289,
+     "elbow_l": 0.102,
+     "elbow_r": 0.549,
+     "gripper_l": 0.002,
+     "gripper_r": 0.399
+    },
+    "p95_peak_gate_ok": false,
+    "worst_joint_p95_peak": "hip_pitch_l",
+    "worst_p95_peak": 0.866,
+    "note": "latency, backlash and kp are NOT sampled here: they need the closed loop (P5)"
+   },
+   "runtime_min": 28.0,
+   "avg_w": 26.25,
+   "bus": {
+    "pack_nominal_v": 11.1,
+    "peak_total_a": 7.31,
+    "peak_total_w": 79.0,
+    "peak_from_frozen_motions_a": 7.31,
+    "peak_from_r10_transient_a": 4.29,
+    "r10_transient_scenario": "push_walk_lat_in",
+    "sag_at_peak_v": 0.3,
+    "v_at_peak_v": 10.8,
+    "branches": {
+     "leg_l": {
+      "peak_w": 48.3,
+      "peak_a": 4.48,
+      "voltage_at_far_servo_v": 10.71
+     },
+     "leg_r": {
+      "peak_w": 49.0,
+      "peak_a": 4.54,
+      "voltage_at_far_servo_v": 10.71
+     },
+     "torso_head": {
+      "peak_w": 15.4,
+      "peak_a": 1.43,
+      "voltage_at_far_servo_v": 10.77
+     },
+     "arm_l": {
+      "peak_w": 3.6,
+      "peak_a": 0.34,
+      "voltage_at_far_servo_v": 10.79
+     },
+     "arm_r": {
+      "peak_w": 10.3,
+      "peak_a": 0.95,
+      "voltage_at_far_servo_v": 10.78
+     }
+    },
+    "min_voltage_at_far_servo_v": 10.71,
+    "servo_min_operating_v": 6.0,
+    "min_voltage_ok": true,
+    "fuse_a": 10,
+    "fuse_a_if_sized_from_motions_only": 10,
+    "fuse_blows_on_r10_if_sized_from_motions_only": false,
+    "fuse_rule": "1.25 x peak legitimate draw (larger of the frozen motions and the R10 push transient), next standard value",
+    "all_leg_servos_stalled_a": 35.5,
+    "fuse_a_to_ride_through_all_leg_stall": 50,
+    "all_servos_stalled_a": 68.1,
+    "pack_limit_a": 97.5,
+    "pack_c_ok": true,
+    "connector_rating_note": "STS3215 connector current rating is unknown (research/methods/e); the fuse must also stay below the wiring/connector limit"
+   },
+   "mass": 4.005,
+   "cost": {
+    "rows": [
+     {
+      "part": "sts3215-12v",
+      "qty": 19,
+      "label": "actuators",
+      "typical": 397.09999999999997,
+      "low": 265.81,
+      "high": 531.81,
+      "verified": true
+     },
+     {
+      "part": "sts3250-12v",
+      "qty": 4,
+      "label": "actuators",
+      "typical": 295.96,
+      "low": 172.0,
+      "high": 500.0,
+      "verified": false
+     },
+     {
+      "part": "rpi-5-4gb",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 110.0,
+      "low": 110.0,
+      "high": 130.0,
+      "verified": true
+     },
+     {
+      "part": "microsd-32gb",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 12.0,
+      "low": 9.97,
+      "high": 19.95,
+      "verified": false
+     },
+     {
+      "part": "waveshare-bus-servo-adapter",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 4.99,
+      "low": 4.3,
+      "high": 11.3,
+      "verified": false
+     },
+     {
+      "part": "imu-bno085",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 29.5,
+      "low": 27.15,
+      "high": 34.95,
+      "verified": false
+     },
+     {
+      "part": "cam-rpi-v3",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 29.25,
+      "low": 29.25,
+      "high": 32.95,
+      "verified": true
+     },
+     {
+      "part": "lipo-3s-1300-tattu",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 26.99,
+      "low": 17.0,
+      "high": 26.99,
+      "verified": true
+     },
+     {
+      "part": "buck-pololu-d36v50f5",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 39.95,
+      "low": 36.75,
+      "high": 39.95,
+      "verified": true
+     },
+     {
+      "part": "power-switch-xt60",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 6.0,
+      "low": 4.0,
+      "high": 13.0,
+      "verified": false
+     },
+     {
+      "part": "fastener-kit-m2-m3",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 20.0,
+      "low": 10.0,
+      "high": 60.0,
+      "verified": false
+     },
+     {
+      "part": "bearing-kit-small",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 12,
+      "low": 8,
+      "high": 18,
+      "verified": false
+     },
+     {
+      "part": "wiring-kit-bus",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 10,
+      "low": 6,
+      "high": 15,
+      "verified": false
+     },
+     {
+      "part": "charger-skyrc-b6neo",
+      "qty": 1,
+      "label": "off-board (charger etc., counts toward the budget)",
+      "typical": 39.99,
+      "low": 32.69,
+      "high": 49.95,
+      "verified": true
+     },
+     {
+      "part": "pla-plus-1kg",
+      "qty": 2.574,
+      "label": "printed structure (kg incl. waste)",
+      "typical": 46.331999999999994,
+      "low": 24.89058,
+      "high": 56.628,
+      "verified": false
+     }
+    ],
+    "total_usd": {
+     "low": 757.81,
+     "typical": 1080.06,
+     "high": 1540.48
+    },
+    "budget_cap_usd": 550,
+    "within_cap_typical": false,
+    "within_cap_at_high": false,
+    "unverified_lines": 8,
+    "note": "every price in the catalog is an estimate unless verified: true; the decision needs a pass at the high price"
+   }
+  },
+  "V2a 0.55": {
+   "mtime": 1792443622.3726957,
+   "verdict": {
+    "status": "FAIL",
+    "robust_to_all_bounds": false,
+    "passes_at_benchmark_mass": false,
+    "reasons": [
+     "INVALID pickup_0.45m: reference infeasible: pickup at 0.45 m: the arm covers this height but in every whole-body posture tried the forearm, hand or body would meet the table edge (object 50 mm behind the front edge) (table clearance -x mm (forearm_r) at the grasp (x5970); the body or arm meets the table at the grasp (x3467); legs/waist out of range once the arm is out (x150)); COM tracking error 0.00 mm",
+     "Monte Carlo p95 peak above the gate at hip_pitch_l (0.86 of stall)"
+    ],
+    "warnings": [
+     "cost $1080.06 typical is above the $550 cap (high band $1540.48); prices are unverified",
+     "sts3250-12v: full charge 12.6 V is 0.6 V over the rating for 23% of the discharge (charge only to 4.00 V/cell (12.0 V) -- most chargers allow it; costs about 23% of the capacity)",
+     "thermal model failed the Robonine replay: thermal temperatures are indicative only"
+    ],
+    "meaning": "PASS = no blocker: every frozen motion valid, nominal joint gates met, Monte Carlo p95 peak and mixed RMS within the gates, grasp, bus and regulator OK. Warnings (cost, voltage rating, runtime, unusable thermal model) do not flip it. 'robust' and 'benchmark mass' are the decision-rule checks (challenge-1): a PASS that is not robust is not a decision."
+   },
+   "mc": {
+    "quasi_static_only": true,
+    "samples": 64,
+    "seed": 1234,
+    "pass_rate": 0.0,
+    "pass_rate_required": null,
+    "p95_peak_frac_of_stall": {
+     "hip_yaw_l": 0.655,
+     "hip_yaw_r": 0.672,
+     "hip_roll_l": 0.815,
+     "hip_roll_r": 0.765,
+     "hip_pitch_l": 0.864,
+     "hip_pitch_r": 0.849,
+     "knee_l": 0.713,
+     "knee_r": 0.721,
+     "ankle_pitch_l": 0.748,
+     "ankle_pitch_r": 0.736,
+     "ankle_roll_l": 0.391,
+     "ankle_roll_r": 0.505,
+     "waist_yaw": 0.449,
+     "neck_yaw": 0.311,
+     "neck_pitch": 0.006,
+     "shoulder_pitch_l": 0.347,
+     "shoulder_pitch_r": 0.347,
+     "shoulder_roll_l": 0.275,
+     "shoulder_roll_r": 0.275,
+     "elbow_l": 0.144,
+     "elbow_r": 0.563,
+     "gripper_l": 0.001,
+     "gripper_r": 0.295
+    },
+    "p95_rms_over_rated": {
+     "hip_yaw_l": 0.547,
+     "hip_yaw_r": 0.567,
+     "hip_roll_l": 0.938,
+     "hip_roll_r": 0.859,
+     "hip_pitch_l": 0.888,
+     "hip_pitch_r": 0.9,
+     "knee_l": 0.917,
+     "knee_r": 0.957,
+     "ankle_pitch_l": 0.98,
+     "ankle_pitch_r": 1.02,
+     "ankle_roll_l": 0.446,
+     "ankle_roll_r": 0.479,
+     "waist_yaw": 0.119,
+     "neck_yaw": 0.13,
+     "neck_pitch": 0.01,
+     "shoulder_pitch_l": 0.341,
+     "shoulder_pitch_r": 0.342,
+     "shoulder_roll_l": 0.299,
+     "shoulder_roll_r": 0.308,
+     "elbow_l": 0.105,
+     "elbow_r": 0.553,
+     "gripper_l": 0.002,
+     "gripper_r": 0.4
+    },
+    "p95_peak_gate_ok": false,
+    "worst_joint_p95_peak": "hip_pitch_l",
+    "worst_p95_peak": 0.864,
+    "note": "latency, backlash and kp are NOT sampled here: they need the closed loop (P5)"
+   },
+   "runtime_min": 28.0,
+   "avg_w": 26.31,
+   "bus": {
+    "pack_nominal_v": 11.1,
+    "peak_total_a": 7.33,
+    "peak_total_w": 79.1,
+    "peak_from_frozen_motions_a": 7.33,
+    "peak_from_r10_transient_a": 4.3,
+    "r10_transient_scenario": "push_walk_lat_in",
+    "sag_at_peak_v": 0.3,
+    "v_at_peak_v": 10.8,
+    "branches": {
+     "leg_l": {
+      "peak_w": 48.1,
+      "peak_a": 4.46,
+      "voltage_at_far_servo_v": 10.71
+     },
+     "leg_r": {
+      "peak_w": 48.8,
+      "peak_a": 4.52,
+      "voltage_at_far_servo_v": 10.71
+     },
+     "torso_head": {
+      "peak_w": 16.0,
+      "peak_a": 1.48,
+      "voltage_at_far_servo_v": 10.77
+     },
+     "arm_l": {
+      "peak_w": 3.7,
+      "peak_a": 0.34,
+      "voltage_at_far_servo_v": 10.79
+     },
+     "arm_r": {
+      "peak_w": 10.3,
+      "peak_a": 0.95,
+      "voltage_at_far_servo_v": 10.78
+     }
+    },
+    "min_voltage_at_far_servo_v": 10.71,
+    "servo_min_operating_v": 6.0,
+    "min_voltage_ok": true,
+    "fuse_a": 10,
+    "fuse_a_if_sized_from_motions_only": 10,
+    "fuse_blows_on_r10_if_sized_from_motions_only": false,
+    "fuse_rule": "1.25 x peak legitimate draw (larger of the frozen motions and the R10 push transient), next standard value",
+    "all_leg_servos_stalled_a": 35.5,
+    "fuse_a_to_ride_through_all_leg_stall": 50,
+    "all_servos_stalled_a": 68.1,
+    "pack_limit_a": 97.5,
+    "pack_c_ok": true,
+    "connector_rating_note": "STS3215 connector current rating is unknown (research/methods/e); the fuse must also stay below the wiring/connector limit"
+   },
+   "mass": 4.005,
+   "cost": {
+    "rows": [
+     {
+      "part": "sts3215-12v",
+      "qty": 19,
+      "label": "actuators",
+      "typical": 397.09999999999997,
+      "low": 265.81,
+      "high": 531.81,
+      "verified": true
+     },
+     {
+      "part": "sts3250-12v",
+      "qty": 4,
+      "label": "actuators",
+      "typical": 295.96,
+      "low": 172.0,
+      "high": 500.0,
+      "verified": false
+     },
+     {
+      "part": "rpi-5-4gb",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 110.0,
+      "low": 110.0,
+      "high": 130.0,
+      "verified": true
+     },
+     {
+      "part": "microsd-32gb",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 12.0,
+      "low": 9.97,
+      "high": 19.95,
+      "verified": false
+     },
+     {
+      "part": "waveshare-bus-servo-adapter",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 4.99,
+      "low": 4.3,
+      "high": 11.3,
+      "verified": false
+     },
+     {
+      "part": "imu-bno085",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 29.5,
+      "low": 27.15,
+      "high": 34.95,
+      "verified": false
+     },
+     {
+      "part": "cam-rpi-v3",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 29.25,
+      "low": 29.25,
+      "high": 32.95,
+      "verified": true
+     },
+     {
+      "part": "lipo-3s-1300-tattu",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 26.99,
+      "low": 17.0,
+      "high": 26.99,
+      "verified": true
+     },
+     {
+      "part": "buck-pololu-d36v50f5",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 39.95,
+      "low": 36.75,
+      "high": 39.95,
+      "verified": true
+     },
+     {
+      "part": "power-switch-xt60",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 6.0,
+      "low": 4.0,
+      "high": 13.0,
+      "verified": false
+     },
+     {
+      "part": "fastener-kit-m2-m3",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 20.0,
+      "low": 10.0,
+      "high": 60.0,
+      "verified": false
+     },
+     {
+      "part": "bearing-kit-small",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 12,
+      "low": 8,
+      "high": 18,
+      "verified": false
+     },
+     {
+      "part": "wiring-kit-bus",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 10,
+      "low": 6,
+      "high": 15,
+      "verified": false
+     },
+     {
+      "part": "charger-skyrc-b6neo",
+      "qty": 1,
+      "label": "off-board (charger etc., counts toward the budget)",
+      "typical": 39.99,
+      "low": 32.69,
+      "high": 49.95,
+      "verified": true
+     },
+     {
+      "part": "pla-plus-1kg",
+      "qty": 2.574,
+      "label": "printed structure (kg incl. waste)",
+      "typical": 46.331999999999994,
+      "low": 24.89058,
+      "high": 56.628,
+      "verified": false
+     }
+    ],
+    "total_usd": {
+     "low": 757.81,
+     "typical": 1080.06,
+     "high": 1540.48
+    },
+    "budget_cap_usd": 550,
+    "within_cap_typical": false,
+    "within_cap_at_high": false,
+    "unverified_lines": 8,
+    "note": "every price in the catalog is an estimate unless verified: true; the decision needs a pass at the high price"
+   }
+  },
+  "V2b 0.55": {
+   "mtime": 1792443607.0639956,
+   "verdict": {
+    "status": "FAIL",
+    "robust_to_all_bounds": false,
+    "passes_at_benchmark_mass": false,
+    "reasons": [
+     "INVALID pickup_0.45m: reference infeasible: pickup at 0.45 m: the arm covers this height but in every whole-body posture tried the forearm, hand or body would meet the table edge (object 50 mm behind the front edge) (table clearance -x mm (forearm_r) at the grasp (x5970); the body or arm meets the table at the grasp (x3467); legs/waist out of range once the arm is out (x150)); COM tracking error 0.00 mm",
+     "Monte Carlo p95 peak above the gate at hip_pitch_l (0.87 of stall)"
+    ],
+    "warnings": [
+     "cost $1080.06 typical is above the $550 cap (high band $1540.48); prices are unverified",
+     "sts3250-12v: full charge 12.6 V is 0.6 V over the rating for 23% of the discharge (charge only to 4.00 V/cell (12.0 V) -- most chargers allow it; costs about 23% of the capacity)",
+     "thermal model failed the Robonine replay: thermal temperatures are indicative only"
+    ],
+    "meaning": "PASS = no blocker: every frozen motion valid, nominal joint gates met, Monte Carlo p95 peak and mixed RMS within the gates, grasp, bus and regulator OK. Warnings (cost, voltage rating, runtime, unusable thermal model) do not flip it. 'robust' and 'benchmark mass' are the decision-rule checks (challenge-1): a PASS that is not robust is not a decision."
+   },
+   "mc": {
+    "quasi_static_only": true,
+    "samples": 64,
+    "seed": 1234,
+    "pass_rate": 0.0,
+    "pass_rate_required": null,
+    "p95_peak_frac_of_stall": {
+     "hip_yaw_l": 0.655,
+     "hip_yaw_r": 0.672,
+     "hip_roll_l": 0.813,
+     "hip_roll_r": 0.766,
+     "hip_pitch_l": 0.872,
+     "hip_pitch_r": 0.856,
+     "knee_l": 0.745,
+     "knee_r": 0.758,
+     "ankle_pitch_l": 0.785,
+     "ankle_pitch_r": 0.781,
+     "ankle_roll_l": 0.39,
+     "ankle_roll_r": 0.501,
+     "waist_yaw": 0.449,
+     "neck_yaw": 0.311,
+     "neck_pitch": 0.006,
+     "shoulder_pitch_l": 0.347,
+     "shoulder_pitch_r": 0.347,
+     "shoulder_roll_l": 0.275,
+     "shoulder_roll_r": 0.275,
+     "elbow_l": 0.144,
+     "elbow_r": 0.563,
+     "gripper_l": 0.001,
+     "gripper_r": 0.295
+    },
+    "p95_rms_over_rated": {
+     "hip_yaw_l": 0.548,
+     "hip_yaw_r": 0.567,
+     "hip_roll_l": 0.938,
+     "hip_roll_r": 0.861,
+     "hip_pitch_l": 0.897,
+     "hip_pitch_r": 0.907,
+     "knee_l": 0.948,
+     "knee_r": 0.989,
+     "ankle_pitch_l": 1.03,
+     "ankle_pitch_r": 1.071,
+     "ankle_roll_l": 0.444,
+     "ankle_roll_r": 0.476,
+     "waist_yaw": 0.119,
+     "neck_yaw": 0.13,
+     "neck_pitch": 0.01,
+     "shoulder_pitch_l": 0.341,
+     "shoulder_pitch_r": 0.342,
+     "shoulder_roll_l": 0.299,
+     "shoulder_roll_r": 0.308,
+     "elbow_l": 0.105,
+     "elbow_r": 0.553,
+     "gripper_l": 0.002,
+     "gripper_r": 0.4
+    },
+    "p95_peak_gate_ok": false,
+    "worst_joint_p95_peak": "hip_pitch_l",
+    "worst_p95_peak": 0.872,
+    "note": "latency, backlash and kp are NOT sampled here: they need the closed loop (P5)"
+   },
+   "runtime_min": 27.6,
+   "avg_w": 26.64,
+   "bus": {
+    "pack_nominal_v": 11.1,
+    "peak_total_a": 7.26,
+    "peak_total_w": 78.4,
+    "peak_from_frozen_motions_a": 7.26,
+    "peak_from_r10_transient_a": 4.43,
+    "r10_transient_scenario": "push_walk_lat_in",
+    "sag_at_peak_v": 0.3,
+    "v_at_peak_v": 10.8,
+    "branches": {
+     "leg_l": {
+      "peak_w": 51.7,
+      "peak_a": 4.79,
+      "voltage_at_far_servo_v": 10.7
+     },
+     "leg_r": {
+      "peak_w": 52.4,
+      "peak_a": 4.86,
+      "voltage_at_far_servo_v": 10.7
+     },
+     "torso_head": {
+      "peak_w": 16.0,
+      "peak_a": 1.48,
+      "voltage_at_far_servo_v": 10.77
+     },
+     "arm_l": {
+      "peak_w": 3.7,
+      "peak_a": 0.34,
+      "voltage_at_far_servo_v": 10.79
+     },
+     "arm_r": {
+      "peak_w": 10.3,
+      "peak_a": 0.95,
+      "voltage_at_far_servo_v": 10.78
+     }
+    },
+    "min_voltage_at_far_servo_v": 10.7,
+    "servo_min_operating_v": 6.0,
+    "min_voltage_ok": true,
+    "fuse_a": 10,
+    "fuse_a_if_sized_from_motions_only": 10,
+    "fuse_blows_on_r10_if_sized_from_motions_only": false,
+    "fuse_rule": "1.25 x peak legitimate draw (larger of the frozen motions and the R10 push transient), next standard value",
+    "all_leg_servos_stalled_a": 35.5,
+    "fuse_a_to_ride_through_all_leg_stall": 50,
+    "all_servos_stalled_a": 68.1,
+    "pack_limit_a": 97.5,
+    "pack_c_ok": true,
+    "connector_rating_note": "STS3215 connector current rating is unknown (research/methods/e); the fuse must also stay below the wiring/connector limit"
+   },
+   "mass": 4.005,
+   "cost": {
+    "rows": [
+     {
+      "part": "sts3215-12v",
+      "qty": 19,
+      "label": "actuators",
+      "typical": 397.09999999999997,
+      "low": 265.81,
+      "high": 531.81,
+      "verified": true
+     },
+     {
+      "part": "sts3250-12v",
+      "qty": 4,
+      "label": "actuators",
+      "typical": 295.96,
+      "low": 172.0,
+      "high": 500.0,
+      "verified": false
+     },
+     {
+      "part": "rpi-5-4gb",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 110.0,
+      "low": 110.0,
+      "high": 130.0,
+      "verified": true
+     },
+     {
+      "part": "microsd-32gb",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 12.0,
+      "low": 9.97,
+      "high": 19.95,
+      "verified": false
+     },
+     {
+      "part": "waveshare-bus-servo-adapter",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 4.99,
+      "low": 4.3,
+      "high": 11.3,
+      "verified": false
+     },
+     {
+      "part": "imu-bno085",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 29.5,
+      "low": 27.15,
+      "high": 34.95,
+      "verified": false
+     },
+     {
+      "part": "cam-rpi-v3",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 29.25,
+      "low": 29.25,
+      "high": 32.95,
+      "verified": true
+     },
+     {
+      "part": "lipo-3s-1300-tattu",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 26.99,
+      "low": 17.0,
+      "high": 26.99,
+      "verified": true
+     },
+     {
+      "part": "buck-pololu-d36v50f5",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 39.95,
+      "low": 36.75,
+      "high": 39.95,
+      "verified": true
+     },
+     {
+      "part": "power-switch-xt60",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 6.0,
+      "low": 4.0,
+      "high": 13.0,
+      "verified": false
+     },
+     {
+      "part": "fastener-kit-m2-m3",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 20.0,
+      "low": 10.0,
+      "high": 60.0,
+      "verified": false
+     },
+     {
+      "part": "bearing-kit-small",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 12,
+      "low": 8,
+      "high": 18,
+      "verified": false
+     },
+     {
+      "part": "wiring-kit-bus",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 10,
+      "low": 6,
+      "high": 15,
+      "verified": false
+     },
+     {
+      "part": "charger-skyrc-b6neo",
+      "qty": 1,
+      "label": "off-board (charger etc., counts toward the budget)",
+      "typical": 39.99,
+      "low": 32.69,
+      "high": 49.95,
+      "verified": true
+     },
+     {
+      "part": "pla-plus-1kg",
+      "qty": 2.574,
+      "label": "printed structure (kg incl. waste)",
+      "typical": 46.331999999999994,
+      "low": 24.89058,
+      "high": 56.628,
+      "verified": false
+     }
+    ],
+    "total_usd": {
+     "low": 757.81,
+     "typical": 1080.06,
+     "high": 1540.48
+    },
+    "budget_cap_usd": 550,
+    "within_cap_typical": false,
+    "within_cap_at_high": false,
+    "unverified_lines": 8,
+    "note": "every price in the catalog is an estimate unless verified: true; the decision needs a pass at the high price"
+   }
+  },
+  "V2a 0.60": {
+   "mtime": 1792444583.1991084,
+   "verdict": {
+    "status": "FAIL",
+    "robust_to_all_bounds": false,
+    "passes_at_benchmark_mass": false,
+    "reasons": [
+     "INVALID pickup_0.45m: reference infeasible: pickup at 0.45 m: the arm covers this height but in every whole-body posture tried the forearm, hand or body would meet the table edge (object 50 mm behind the front edge) (table clearance -x mm (forearm_r) at the grasp (x6912); the body or arm meets the table at the grasp (x4546); table clearance -x mm (finger_fixed_r) at 4.2 s on the planned path (x522)); COM tracking error 0.00 mm",
+     "Monte Carlo p95 peak above the gate at hip_roll_l (0.96 of stall)"
+    ],
+    "warnings": [
+     "cost $1093.87 typical is above the $550 cap (high band $1557.35); prices are unverified",
+     "sts3250-12v: full charge 12.6 V is 0.6 V over the rating for 23% of the discharge (charge only to 4.00 V/cell (12.0 V) -- most chargers allow it; costs about 23% of the capacity)",
+     "thermal model failed the Robonine replay: thermal temperatures are indicative only"
+    ],
+    "meaning": "PASS = no blocker: every frozen motion valid, nominal joint gates met, Monte Carlo p95 peak and mixed RMS within the gates, grasp, bus and regulator OK. Warnings (cost, voltage rating, runtime, unusable thermal model) do not flip it. 'robust' and 'benchmark mass' are the decision-rule checks (challenge-1): a PASS that is not robust is not a decision."
+   },
+   "mc": {
+    "quasi_static_only": true,
+    "samples": 64,
+    "seed": 1234,
+    "pass_rate": 0.0,
+    "pass_rate_required": null,
+    "p95_peak_frac_of_stall": {
+     "hip_yaw_l": 0.742,
+     "hip_yaw_r": 0.843,
+     "hip_roll_l": 0.963,
+     "hip_roll_r": 0.909,
+     "hip_pitch_l": 0.925,
+     "hip_pitch_r": 0.931,
+     "knee_l": 0.824,
+     "knee_r": 0.855,
+     "ankle_pitch_l": 0.867,
+     "ankle_pitch_r": 0.867,
+     "ankle_roll_l": 0.505,
+     "ankle_roll_r": 0.692,
+     "waist_yaw": 0.545,
+     "neck_yaw": 0.311,
+     "neck_pitch": 0.009,
+     "shoulder_pitch_l": 0.318,
+     "shoulder_pitch_r": 0.357,
+     "shoulder_roll_l": 0.342,
+     "shoulder_roll_r": 0.342,
+     "elbow_l": 0.159,
+     "elbow_r": 0.607,
+     "gripper_l": 0.001,
+     "gripper_r": 0.295
+    },
+    "p95_rms_over_rated": {
+     "hip_yaw_l": 0.667,
+     "hip_yaw_r": 0.713,
+     "hip_roll_l": 1.159,
+     "hip_roll_r": 1.05,
+     "hip_pitch_l": 0.952,
+     "hip_pitch_r": 0.948,
+     "knee_l": 0.925,
+     "knee_r": 0.947,
+     "ankle_pitch_l": 1.179,
+     "ankle_pitch_r": 1.138,
+     "ankle_roll_l": 0.511,
+     "ankle_roll_r": 0.558,
+     "waist_yaw": 0.136,
+     "neck_yaw": 0.13,
+     "neck_pitch": 0.014,
+     "shoulder_pitch_l": 0.306,
+     "shoulder_pitch_r": 0.345,
+     "shoulder_roll_l": 0.377,
+     "shoulder_roll_r": 0.391,
+     "elbow_l": 0.114,
+     "elbow_r": 0.564,
+     "gripper_l": 0.002,
+     "gripper_r": 0.401
+    },
+    "p95_peak_gate_ok": false,
+    "worst_joint_p95_peak": "hip_roll_l",
+    "worst_p95_peak": 0.963,
+    "note": "latency, backlash and kp are NOT sampled here: they need the closed loop (P5)"
+   },
+   "runtime_min": 25.0,
+   "avg_w": 29.41,
+   "bus": {
+    "pack_nominal_v": 11.1,
+    "peak_total_a": 10.26,
+    "peak_total_w": 109.6,
+    "peak_from_frozen_motions_a": 10.26,
+    "peak_from_r10_transient_a": 5.45,
+    "r10_transient_scenario": "push_walk_lat_out",
+    "sag_at_peak_v": 0.42,
+    "v_at_peak_v": 10.68,
+    "branches": {
+     "leg_l": {
+      "peak_w": 83.4,
+      "peak_a": 7.81,
+      "voltage_at_far_servo_v": 10.52
+     },
+     "leg_r": {
+      "peak_w": 86.3,
+      "peak_a": 8.08,
+      "voltage_at_far_servo_v": 10.52
+     },
+     "torso_head": {
+      "peak_w": 19.7,
+      "peak_a": 1.85,
+      "voltage_at_far_servo_v": 10.64
+     },
+     "arm_l": {
+      "peak_w": 4.0,
+      "peak_a": 0.38,
+      "voltage_at_far_servo_v": 10.67
+     },
+     "arm_r": {
+      "peak_w": 12.4,
+      "peak_a": 1.16,
+      "voltage_at_far_servo_v": 10.66
+     }
+    },
+    "min_voltage_at_far_servo_v": 10.52,
+    "servo_min_operating_v": 6.0,
+    "min_voltage_ok": true,
+    "fuse_a": 15,
+    "fuse_a_if_sized_from_motions_only": 15,
+    "fuse_blows_on_r10_if_sized_from_motions_only": false,
+    "fuse_rule": "1.25 x peak legitimate draw (larger of the frozen motions and the R10 push transient), next standard value",
+    "all_leg_servos_stalled_a": 35.5,
+    "fuse_a_to_ride_through_all_leg_stall": 50,
+    "all_servos_stalled_a": 68.1,
+    "pack_limit_a": 97.5,
+    "pack_c_ok": true,
+    "connector_rating_note": "STS3215 connector current rating is unknown (research/methods/e); the fuse must also stay below the wiring/connector limit"
+   },
+   "mass": 4.595,
+   "cost": {
+    "rows": [
+     {
+      "part": "sts3215-12v",
+      "qty": 19,
+      "label": "actuators",
+      "typical": 397.09999999999997,
+      "low": 265.81,
+      "high": 531.81,
+      "verified": true
+     },
+     {
+      "part": "sts3250-12v",
+      "qty": 4,
+      "label": "actuators",
+      "typical": 295.96,
+      "low": 172.0,
+      "high": 500.0,
+      "verified": false
+     },
+     {
+      "part": "rpi-5-4gb",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 110.0,
+      "low": 110.0,
+      "high": 130.0,
+      "verified": true
+     },
+     {
+      "part": "microsd-32gb",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 12.0,
+      "low": 9.97,
+      "high": 19.95,
+      "verified": false
+     },
+     {
+      "part": "waveshare-bus-servo-adapter",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 4.99,
+      "low": 4.3,
+      "high": 11.3,
+      "verified": false
+     },
+     {
+      "part": "imu-bno085",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 29.5,
+      "low": 27.15,
+      "high": 34.95,
+      "verified": false
+     },
+     {
+      "part": "cam-rpi-v3",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 29.25,
+      "low": 29.25,
+      "high": 32.95,
+      "verified": true
+     },
+     {
+      "part": "lipo-3s-1300-tattu",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 26.99,
+      "low": 17.0,
+      "high": 26.99,
+      "verified": true
+     },
+     {
+      "part": "buck-pololu-d36v50f5",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 39.95,
+      "low": 36.75,
+      "high": 39.95,
+      "verified": true
+     },
+     {
+      "part": "power-switch-xt60",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 6.0,
+      "low": 4.0,
+      "high": 13.0,
+      "verified": false
+     },
+     {
+      "part": "fastener-kit-m2-m3",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 20.0,
+      "low": 10.0,
+      "high": 60.0,
+      "verified": false
+     },
+     {
+      "part": "bearing-kit-small",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 12,
+      "low": 8,
+      "high": 18,
+      "verified": false
+     },
+     {
+      "part": "wiring-kit-bus",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 10,
+      "low": 6,
+      "high": 15,
+      "verified": false
+     },
+     {
+      "part": "charger-skyrc-b6neo",
+      "qty": 1,
+      "label": "off-board (charger etc., counts toward the budget)",
+      "typical": 39.99,
+      "low": 32.69,
+      "high": 49.95,
+      "verified": true
+     },
+     {
+      "part": "pla-plus-1kg",
+      "qty": 3.341,
+      "label": "printed structure (kg incl. waste)",
+      "typical": 60.138,
+      "low": 32.307469999999995,
+      "high": 73.502,
+      "verified": false
+     }
+    ],
+    "total_usd": {
+     "low": 765.23,
+     "typical": 1093.87,
+     "high": 1557.35
+    },
+    "budget_cap_usd": 550,
+    "within_cap_typical": false,
+    "within_cap_at_high": false,
+    "unverified_lines": 8,
+    "note": "every price in the catalog is an estimate unless verified: true; the decision needs a pass at the high price"
+   }
+  },
+  "R1 0.60": {
+   "mtime": 1792430866.3834813,
+   "verdict": {
+    "status": "FAIL",
+    "robust_to_all_bounds": false,
+    "passes_at_benchmark_mass": false,
+    "reasons": [
+     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+     "Monte Carlo p95 peak above the gate at hip_roll_l (1.01 of stall)"
+    ],
+    "warnings": [
+     "cost $1093.87 typical is above the $550 cap (high band $1557.35); prices are unverified",
+     "sts3250-12v: full charge 12.6 V is 0.6 V over the rating for 23% of the discharge (charge only to 4.00 V/cell (12.0 V) -- most chargers allow it; costs about 23% of the capacity)",
+     "thermal model failed the Robonine replay: thermal temperatures are indicative only"
+    ],
+    "meaning": "PASS = no blocker: every frozen motion valid, nominal joint gates met, Monte Carlo p95 peak and mixed RMS within the gates, grasp, bus and regulator OK. Warnings (cost, voltage rating, runtime, unusable thermal model) do not flip it. 'robust' and 'benchmark mass' are the decision-rule checks (challenge-1): a PASS that is not robust is not a decision."
+   },
+   "mc": {
+    "quasi_static_only": true,
+    "samples": 64,
+    "seed": 1234,
+    "pass_rate": 0.0,
+    "pass_rate_required": null,
+    "p95_peak_frac_of_stall": {
+     "hip_yaw_l": 0.799,
+     "hip_yaw_r": 0.821,
+     "hip_roll_l": 1.009,
+     "hip_roll_r": 0.929,
+     "hip_pitch_l": 0.707,
+     "hip_pitch_r": 0.704,
+     "knee_l": 0.823,
+     "knee_r": 0.852,
+     "ankle_pitch_l": 0.924,
+     "ankle_pitch_r": 0.952,
+     "ankle_roll_l": 0.514,
+     "ankle_roll_r": 0.676,
+     "waist_yaw": 0.521,
+     "neck_yaw": 0.311,
+     "neck_pitch": 0.008,
+     "shoulder_pitch_l": 0.357,
+     "shoulder_pitch_r": 0.358,
+     "shoulder_roll_l": 0.322,
+     "shoulder_roll_r": 0.322,
+     "elbow_l": 0.152,
+     "elbow_r": 0.504,
+     "gripper_l": 0.001,
+     "gripper_r": 0.295
+    },
+    "p95_rms_over_rated": {
+     "hip_yaw_l": 0.672,
+     "hip_yaw_r": 0.691,
+     "hip_roll_l": 1.158,
+     "hip_roll_r": 1.038,
+     "hip_pitch_l": 0.783,
+     "hip_pitch_r": 0.774,
+     "knee_l": 1.008,
+     "knee_r": 1.019,
+     "ankle_pitch_l": 1.185,
+     "ankle_pitch_r": 1.175,
+     "ankle_roll_l": 0.568,
+     "ankle_roll_r": 0.583,
+     "waist_yaw": 0.133,
+     "neck_yaw": 0.13,
+     "neck_pitch": 0.013,
+     "shoulder_pitch_l": 0.345,
+     "shoulder_pitch_r": 0.347,
+     "shoulder_roll_l": 0.354,
+     "shoulder_roll_r": 0.366,
+     "elbow_l": 0.109,
+     "elbow_r": 0.557,
+     "gripper_l": 0.002,
+     "gripper_r": 0.397
+    },
+    "p95_peak_gate_ok": false,
+    "worst_joint_p95_peak": "hip_roll_l",
+    "worst_p95_peak": 1.009,
+    "note": "latency, backlash and kp are NOT sampled here: they need the closed loop (P5)"
+   },
+   "runtime_min": 24.9,
+   "avg_w": 29.61,
+   "bus": {
+    "pack_nominal_v": 11.1,
+    "peak_total_a": 9.35,
+    "peak_total_w": 100.2,
+    "peak_from_frozen_motions_a": 9.35,
+    "peak_from_r10_transient_a": 5.08,
+    "r10_transient_scenario": "push_walk_lat_out",
+    "sag_at_peak_v": 0.38,
+    "v_at_peak_v": 10.72,
+    "branches": {
+     "leg_l": {
+      "peak_w": 42.9,
+      "peak_a": 4.0,
+      "voltage_at_far_servo_v": 10.64
+     },
+     "leg_r": {
+      "peak_w": 42.8,
+      "peak_a": 3.99,
+      "voltage_at_far_servo_v": 10.64
+     },
+     "torso_head": {
+      "peak_w": 18.8,
+      "peak_a": 1.76,
+      "voltage_at_far_servo_v": 10.68
+     },
+     "arm_l": {
+      "peak_w": 3.9,
+      "peak_a": 0.36,
+      "voltage_at_far_servo_v": 10.71
+     },
+     "arm_r": {
+      "peak_w": 8.0,
+      "peak_a": 0.75,
+      "voltage_at_far_servo_v": 10.7
+     }
+    },
+    "min_voltage_at_far_servo_v": 10.64,
+    "servo_min_operating_v": 6.0,
+    "min_voltage_ok": true,
+    "fuse_a": 15,
+    "fuse_a_if_sized_from_motions_only": 15,
+    "fuse_blows_on_r10_if_sized_from_motions_only": false,
+    "fuse_rule": "1.25 x peak legitimate draw (larger of the frozen motions and the R10 push transient), next standard value",
+    "all_leg_servos_stalled_a": 35.5,
+    "fuse_a_to_ride_through_all_leg_stall": 50,
+    "all_servos_stalled_a": 68.1,
+    "pack_limit_a": 97.5,
+    "pack_c_ok": true,
+    "connector_rating_note": "STS3215 connector current rating is unknown (research/methods/e); the fuse must also stay below the wiring/connector limit"
+   },
+   "mass": 4.595,
+   "cost": {
+    "rows": [
+     {
+      "part": "sts3215-12v",
+      "qty": 19,
+      "label": "actuators",
+      "typical": 397.09999999999997,
+      "low": 265.81,
+      "high": 531.81,
+      "verified": true
+     },
+     {
+      "part": "sts3250-12v",
+      "qty": 4,
+      "label": "actuators",
+      "typical": 295.96,
+      "low": 172.0,
+      "high": 500.0,
+      "verified": false
+     },
+     {
+      "part": "rpi-5-4gb",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 110.0,
+      "low": 110.0,
+      "high": 130.0,
+      "verified": true
+     },
+     {
+      "part": "microsd-32gb",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 12.0,
+      "low": 9.97,
+      "high": 19.95,
+      "verified": false
+     },
+     {
+      "part": "waveshare-bus-servo-adapter",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 4.99,
+      "low": 4.3,
+      "high": 11.3,
+      "verified": false
+     },
+     {
+      "part": "imu-bno085",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 29.5,
+      "low": 27.15,
+      "high": 34.95,
+      "verified": false
+     },
+     {
+      "part": "cam-rpi-v3",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 29.25,
+      "low": 29.25,
+      "high": 32.95,
+      "verified": true
+     },
+     {
+      "part": "lipo-3s-1300-tattu",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 26.99,
+      "low": 17.0,
+      "high": 26.99,
+      "verified": true
+     },
+     {
+      "part": "buck-pololu-d36v50f5",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 39.95,
+      "low": 36.75,
+      "high": 39.95,
+      "verified": true
+     },
+     {
+      "part": "power-switch-xt60",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 6.0,
+      "low": 4.0,
+      "high": 13.0,
+      "verified": false
+     },
+     {
+      "part": "fastener-kit-m2-m3",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 20.0,
+      "low": 10.0,
+      "high": 60.0,
+      "verified": false
+     },
+     {
+      "part": "bearing-kit-small",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 12,
+      "low": 8,
+      "high": 18,
+      "verified": false
+     },
+     {
+      "part": "wiring-kit-bus",
+      "qty": 1,
+      "label": "on-board",
+      "typical": 10,
+      "low": 6,
+      "high": 15,
+      "verified": false
+     },
+     {
+      "part": "charger-skyrc-b6neo",
+      "qty": 1,
+      "label": "off-board (charger etc., counts toward the budget)",
+      "typical": 39.99,
+      "low": 32.69,
+      "high": 49.95,
+      "verified": true
+     },
+     {
+      "part": "pla-plus-1kg",
+      "qty": 3.341,
+      "label": "printed structure (kg incl. waste)",
+      "typical": 60.138,
+      "low": 32.307469999999995,
+      "high": 73.502,
+      "verified": false
+     }
+    ],
+    "total_usd": {
+     "low": 765.23,
+     "typical": 1093.87,
+     "high": 1557.35
+    },
+    "budget_cap_usd": 550,
+    "within_cap_typical": false,
+    "within_cap_at_high": false,
+    "unverified_lines": 8,
+    "note": "every price in the catalog is an estimate unless verified: true; the decision needs a pass at the high price"
+   }
+  }
+ }
+}
