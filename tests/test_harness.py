@@ -87,7 +87,9 @@ def repo(tmp_path, monkeypatch):
     shutil.copytree(REPO / "variants" / "adam", root / "variants" / "adam", ignore=shutil.ignore_patterns("generated", "cad", "reviews", "renders"))
     (root / "coordination" / "handoffs").mkdir(parents=True)
     (root / "coordination" / "active-profile").write_text("solo")
-    (root / ".gitignore").write_text("coordination/.local/\n")
+    # Use the real ignore rules: without __pycache__/ etc., bytecode written by the hooks makes the tree
+    # "dirty" on CI runners that have no global gitignore (lesson 2026-10-19).
+    (root / ".gitignore").write_text((REPO / ".gitignore").read_text(encoding="utf-8") + "\ncoordination/.local/\n")
     monkeypatch.setenv("OPENHUMANOID_ROOT", str(root))
     git(root, "init", "-q")
     git(root, "add", "-A")
