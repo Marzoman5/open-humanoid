@@ -80,6 +80,7 @@ def ensure_deps(root: Path | None, raw_stdin: bytes | None = None) -> None:
     sys.stdout.buffer.write(r.stdout)
     sys.stderr.buffer.write(r.stderr)
     sys.stdout.flush()
+    sys.stderr.flush()
     os._exit(r.returncode)
 
 
@@ -97,6 +98,13 @@ def use_repo(root: Path) -> None:
     os.environ["OPENHUMANOID_ROOT"] = str(root)
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
+
+
+def emit(stream, text: str) -> None:
+    """Write UTF-8 bytes. On Windows the default text encoding is cp1252, which Claude Code reads as UTF-8 and garbles ('·' -> U+FFFD)."""
+    stream.flush()
+    stream.buffer.write(text.encode("utf-8", errors="replace"))
+    stream.buffer.flush()
 
 
 def run(event: str, handler, budget_s: float) -> None:
@@ -117,13 +125,11 @@ def run(event: str, handler, budget_s: float) -> None:
             return  # human kill switch: touch coordination/.local/hooks.off
         out = handler(payload, root, cfg)
         if isinstance(out, dict) and "block_stderr" in out:  # exit-2 block: stderr is what the agent reads
-            sys.stderr.write(out["block_stderr"])
-            sys.stderr.flush()
+            emit(sys.stderr, out["block_stderr"])
             t.cancel()
             sys.exit(2)
         if out:
-            sys.stdout.write(out if isinstance(out, str) else json.dumps(out))
-            sys.stdout.flush()
+            emit(sys.stdout, out if isinstance(out, str) else json.dumps(out))
     except SystemExit:
         raise
     except BaseException:

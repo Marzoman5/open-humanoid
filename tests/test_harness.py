@@ -602,3 +602,17 @@ def test_settings_json_wires_every_hook():
         h = s[ev][0]["hooks"][0]
         assert h["type"] == "command" and h["args"][0].endswith(f"tools/hooks/{script}") and (HOOKS / script).exists()
         assert h["timeout"] >= 5
+
+
+def test_hook_output_is_utf8_even_when_the_locale_is_not(repo):
+    """Found in the first live run: on Windows stdout defaulted to cp1252 and Claude Code read '·' as U+FFFD."""
+    cfg = yaml.safe_load((repo / "pipeline" / "hooks.yaml").read_text(encoding="utf-8"))
+    cfg["smoke_on_session_start"] = False
+    (repo / "pipeline" / "hooks.yaml").write_text(yaml.safe_dump(cfg), encoding="utf-8")
+    env = {k: v for k, v in os.environ.items() if k not in ("OPENHUMANOID_ROOT", "PYTHONIOENCODING", "PYTHONUTF8")}
+    env["PYTHONIOENCODING"] = "cp1252"
+    body = json.dumps({"session_id": "s", "cwd": str(repo), "source": "startup"}).encode()
+    r = subprocess.run([sys.executable, str(HOOKS / "session_start.py")], input=body, capture_output=True, env=env, timeout=60)
+    assert r.returncode == 0
+    text = r.stdout.decode("utf-8")  # strict: raises if the bytes aren't valid UTF-8
+    assert "\u00b7" in text and "\ufffd" not in text
