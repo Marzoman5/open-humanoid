@@ -1,0 +1,4 @@
+# No published identification or independent measurement of STS3250 found (searched 2026-10-19).
+status: none_found
+bam_rhoban: "BAM params list sts3215 7.4V and waveshare_st3025 only; no sts3250 (https://github.com/Rhoban/bam)"
+accessed: 2026-10-19

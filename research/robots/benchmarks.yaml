@@ -1,0 +1,229 @@
+# Benchmarks of comparable small/mid humanoids. Unknown = null (never guessed).
+# basis: vendor = vendor/spec-sheet claim; measured = paper-reported measurement; derived = our arithmetic.
+# Every entry lists sources (url + accessed). Fields without support in the listed sources are null.
+schema_version: 1
+robots:
+- id: toddlerbot
+  name: ToddlerBot (Stanford)
+  height_m: {value: 0.56, basis: vendor}
+  mass_kg: {value: 3.4, basis: measured, note: "3484 g"}
+  dof: {leg: 6, arm: 7, total: 30, other: "neck 2, waist 2"}
+  actuators: "Dynamixel XC330-T288, XC430-T240BB, XM430-W210, 2XL430-W250, 2XC430-W250; 30 motors total, per-model count not given"
+  torque_nm_stall: {hip_pitch_roll: 1.8, hip_yaw: 1.0, knee: 3.0, basis: vendor, note: "estimated required: knee 2.35, hip pitch 1.77, ankle pitch 2.66"}
+  compute: "NVIDIA Jetson Orin NX 16GB"
+  battery: {voltage_v: 14.8, wh: null, note: "2000 mAh or 5000 mAh 4-cell options; Wh not stated; paper estimates ~75 Wh for 1 h walking"}
+  cost_usd: {value: 6000, year: 2025, basis: vendor, note: "upper bound ('under 6,000'); ~90% motors+computer"}
+  walking_speed_mps: null
+  sim_to_real_zero_shot: yes   # walking RL policy; chirp-based motor sysid
+  sim: "MuJoCo / MJX, Brax"
+  lessons:
+    - "Motor temperature rise pushed robot out of policy training distribution -> more falls; actuation model ignores temperature."
+    - "Survives up to 7 falls before breaking; longest 19 min without falling; 3D-printed parts break more than metal on impact."
+    - "Needed chirp-based motor system-ID (avg tracking error 1.3 deg); XC330 units have higher backlash/tracking error."
+    - "Agile tasks limited by motor speed/torque/comm speed."
+  sources:
+    - {url: "https://arxiv.org/html/2502.00893v4", accessed: 2026-10-19}
+- id: open_duck_mini_v2
+  name: Open Duck Mini v2 (apirrone)
+  height_m: {value: 0.42, basis: vendor}
+  mass_kg: null
+  dof: {leg: null, arm: 0, total: 14, note: "14 servos per reseller; example MJCF has 13 position actuators (hips, knees, ankles + 3 head)"}
+  actuators: "Feetech STS3215 (7.4 V) x14 (reseller listing; v2 BOM); v1 alpha used Dynamixel XC330-M288-T legs"
+  torque_nm_stall: {note: "STS3215: 19.5 kg.cm @6V = 1.91 Nm (copper gear); 30 kg.cm @12V = 2.94 Nm (steel gear); vendor"}
+  compute: "Raspberry Pi Zero 2W (Pi 5 variant offered)"
+  battery: {voltage_v: 7.4, wh: 22.2, note: "2S Li-ion 3000 mAh 18650 pack per reseller; Wh derived 7.4 x 3.0"}
+  cost_usd: {value: 400, year: 2025, basis: vendor, note: "BOM target 'under $400', not measured"}
+  walking_speed_mps: null
+  sim_to_real_zero_shot: partial   # README: "Sim2Real walking is starting to work"
+  sim: "Isaac Gym -> MuJoCo (sim2sim); moving to MuJoCo Playground"
+  lessons:
+    - "v1 alpha: 'too much play at some joints', hard to build; author upgraded XL330 -> XC330 because XL330 underpowered."
+    - "Used Rhoban BAM actuator identification (BAM includes a Feetech STS3215 7.4V model; only m1 model identified)."
+    - "STS3215 datasheet: overcurrent protection trips at >2 A for ~2 s; stall protection >80% locked-rotor for 2 s; reseller advises <=50% of max ratings for longevity."
+    - "No public measured mass, speed, or overheating report found."
+  sources:
+    - {url: "https://raw.githubusercontent.com/apirrone/Open_Duck_Mini/v2/README.md", accessed: 2026-10-19}
+    - {url: "https://gitee.com/MatLzg/Open_Duck_Mini", accessed: 2026-10-19}
+    - {url: "https://aifitlab-wiki.super.site/openduckmini-docs", accessed: 2026-10-19}
+    - {url: "https://aifitlab.com/products/openduckmini-open-source-version-of-the-bdx-droid", accessed: 2026-10-19}
+    - {url: "https://bam.readthedocs.io/en/latest/usage/actuators.html", accessed: 2026-10-19}
+    - {url: "https://aifitlab.com/products/feetech-sts3215-servo-motor", accessed: 2026-10-19}
+    - {url: "https://raw.githubusercontent.com/apirrone/Open_Duck_Mini/v2/docs/prepare_robot.md", accessed: 2026-10-19}
+- id: kscale_zeroth_01
+  name: K-Scale Zeroth-01 (Zeroth Bot)
+  height_m: null
+  mass_kg: null
+  dof: {leg: 5, arm: 4, total: null, note: "5/leg, 4/arm per one secondary article (18 actuators); another says 16 servos - conflict"}
+  actuators: "Feetech STS3215/50 x16 (circuitdigest); conflicting count 18 elsewhere"
+  compute: "Milk-V Duo S (SG2000), secondary article"
+  battery: null
+  cost_usd: {value: 350, year: 2025, basis: vendor, note: "BOM 'starts at $350', parts only"}
+  walking_speed_mps: null
+  sim_to_real_zero_shot: null   # README: basic locomotion, beta; SysID-calibrated actuators in RL repo; no transfer data
+  sim: "K-Sim (MuJoCo, Isaac Sim, Genesis)"
+  lessons:
+    - "Project 'public beta', expect breaking changes; K-Scale wound down Nov 2025 (secondary source) - ecosystem/support risk."
+    - "Repo ships SysID-calibrated actuator models, i.e. actuator model treated as required for sim2real."
+  sources:
+    - {url: "https://github.com/kscalelabs/zeroth-bot", accessed: 2026-10-19}
+    - {url: "https://github.com/zeroth-robotics/zeroth-bot", accessed: 2026-10-19}
+    - {url: "https://circuitdigest.com/news/zeroth-bot-an-opensource-risc-v-powered-humanoid-robot", accessed: 2026-10-19}
+    - {url: "https://aiwiki.ai/wiki/k-scale_labs", accessed: 2026-10-19}
+- id: berkeley_humanoid_lite
+  name: Berkeley Humanoid Lite
+  height_m: {value: 0.8, basis: vendor, note: "one Berkeley news piece says ~1 m; paper and R&D World say 0.8"}
+  mass_kg: {value: 16, basis: vendor}
+  dof: {leg: null, arm: 5, total: 22, note: "22 actuators (10x 6512, 12x 5010) + 2 grippers; leg DOF not stated"}
+  actuators: "3D-printed cycloidal: 10x 6512 (M6C12 150KV BLDC) + 12x 5010, B-G431B-ESC1 drivers, AS5600 encoders"
+  torque_nm_peak: null
+  compute: "Intel N95 mini PC; 4x CAN 1 Mbps"
+  battery: {voltage_v: 22.2, wh: 88.8, note: "6S 4000 mAh LiPo; V and Wh derived at 3.7 V/cell; ~30 min"}
+  cost_usd: {value: 4312, year: 2025, basis: vendor, note: "BOM, US sourcing; $3,236 China; actuators $188 (6512) / $136 (5010)"}
+  walking_speed_mps: null
+  sim_to_real_zero_shot: yes   # PPO in Isaac Gym transferred directly, 25 Hz
+  sim: "Isaac Gym"
+  lessons:
+    - "Policy used only ~30% of actuator torque limit."
+    - "60-hour durability test: backlash grew with wear, max 0.0229 rad, still acceptable; efficiency drops at high torque/speed due to heat."
+    - "PLA cycloidal reducer stiffness ~319 Nm/rad vs ~1468 for CF-reinforced printed reducer; thermal effect on printed structure not studied."
+  sources:
+    - {url: "https://arxiv.org/html/2504.17249", accessed: 2026-10-19}
+    - {url: "https://www.rdworldonline.com/berkeley-debuts-5000-open-source-humanoid-built-with-desktop-3d-printers/", accessed: 2026-10-19}
+    - {url: "https://engineering.berkeley.edu/news/2025/11/building-bots-on-a-budget/", accessed: 2026-10-19}
+- id: berkeley_humanoid
+  name: Berkeley Humanoid (legs-only configuration)
+  height_m: {value: 0.85, basis: vendor}
+  mass_kg: {value: 16, basis: vendor, note: "without arms"}
+  dof: {leg: 6, arm: 0, total: 12, note: "4-DoF arms designed but omitted"}
+  actuators: "custom 9:1 planetary QDD: 5013, 8513, 8518, 10413"
+  torque_nm_peak: {hip_flex_ext: 62.6, knee: 81.1, smallest_5013: 9.7, basis: vendor}
+  compute: "Intel i7-1255U, EtherCAT 1-4 kHz"
+  battery: {voltage_v: null, wh: null, note: "swappable DJI TB50"}
+  cost_usd: {value: 9955, year: 2024, basis: vendor, note: "small-quantity production"}
+  walking_speed_mps: null
+  sim_to_real_zero_shot: yes   # sagittal velocity error 0.051 sim vs 0.058 real
+  sim: "Isaac Lab (PPO, 50 Hz)"
+  lessons:
+    - "38 falls on concrete/grass/unpaved, only 2 caused damage (loose screws, glue)."
+    - "Narrow dynamics randomization worked; authors flag torque-current nonlinearity near saturation and motor thermal protection as unmodeled."
+  sources:
+    - {url: "https://arxiv.org/html/2407.21781", accessed: 2026-10-19}
+- id: robotis_op3
+  name: ROBOTIS OP3
+  height_m: {value: 0.51, basis: vendor}
+  mass_kg: {value: 3.5, basis: vendor, note: "without skin cover"}
+  dof: {leg: null, arm: null, total: 20}
+  actuators: "Dynamixel XM430-W350-R (count not explicitly stated; 20 inferred)"
+  compute: "Intel NUC i3, 8 GB; OpenCR sub-controller"
+  battery: {voltage_v: 11.1, wh: 36.6, note: "3S LiPo 3300 mAh; Wh derived"}
+  cost_usd: null
+  walking_speed_mps: null
+  sim_to_real_zero_shot: null
+  sim: null
+  lessons: ["Closest size/mass analogue to a 0.5 m target: 0.51 m, 3.5 kg, 20 DOF (all Dynamixel)."]
+  sources:
+    - {url: "https://emanual.robotis.com/docs/en/platform/op3/introduction/", accessed: 2026-10-19}
+- id: hiwonder_ainex
+  name: Hiwonder AiNex
+  height_m: null
+  mass_kg: null
+  dof: {total: 24, note: "Standard kit 24 incl. 2-DOF head; Starter listing shows 20"}
+  actuators: "Bus servos with temperature feedback; model not confirmed"
+  compute: "Raspberry Pi 5 (2/4/8 GB) or Pi 4B"
+  battery: null
+  cost_usd: null
+  walking_speed_mps: null
+  sim_to_real_zero_shot: null
+  sim: null
+  lessons: ["Hobby kit with IK walking; no RL reports found. Most specs unverified (retailer pages blocked)."]
+  sources:
+    - {url: "https://openelab.io/a/s/products/hiwonder-ainex-standard-pi5-2gb", accessed: 2026-10-19}
+- id: unitree_g1
+  name: Unitree G1
+  height_m: {value: 1.32, basis: vendor}
+  mass_kg: {value: 35, basis: vendor}
+  dof: {leg: 6, arm: 5, total: 23, note: "waist 1; EDU up to 43"}
+  actuators: "proprietary"
+  torque_nm_peak: {knee: 90, basis: vendor, note: "EDU 120"}
+  compute: "8-core CPU; Orin optional on EDU"
+  battery: {voltage_v: null, wh: null, note: "9000 mAh quick-release, ~2 h"}
+  cost_usd: {value: 13500, year: 2026, basis: vendor}
+  walking_speed_mps: null
+  sim_to_real_zero_shot: null
+  sim: null
+  lessons: []
+  sources:
+    - {url: "https://www.unitree.com/g1", accessed: 2026-10-19}
+- id: unitree_h1
+  name: Unitree H1
+  height_m: {value: 1.8, basis: vendor}
+  mass_kg: {value: 47, basis: vendor}
+  dof: {leg: 5, arm: 4, total: null}
+  torque_nm_peak: {knee: 360, basis: vendor}
+  battery: {voltage_v: 67.2, wh: 864, note: "15 Ah, vendor"}
+  cost_usd: {value: 90000, year: 2026, basis: vendor, note: "secondary news, $90,000-$90,800"}
+  walking_speed_mps: {value: 3.3, basis: vendor, note: "'moving speed' record claim"}
+  sim_to_real_zero_shot: null
+  sim: null
+  sources:
+    - {url: "https://www.unitree.com/h1", accessed: 2026-10-19}
+    - {url: "https://www.futura-sciences.com/en/it-does-flips-talks-and-costs-barely-more-than-an-apple-vision-pro-this-humanoid-robot-has-the-internet-hooked_19360/", accessed: 2026-10-19}
+- id: unitree_r1
+  name: Unitree R1
+  height_m: {value: 1.21, basis: vendor, note: "121-122 cm across sources"}
+  mass_kg: {value: 25, basis: vendor}
+  dof: {total: 26, note: "joints"}
+  cost_usd: {value: 5900, year: 2025, basis: vendor, note: "base 39,999 CNY"}
+  battery: {voltage_v: null, wh: null, note: "removable, ~1 h"}
+  sim_to_real_zero_shot: null
+  sources:
+    - {url: "https://humanoid.guide/de/produkt/unitree-r1/", accessed: 2026-10-19}
+    - {url: "https://www.techeblog.com/unitree-r1-humanoid-robot-price-video/", accessed: 2026-10-19}
+- id: booster_t1
+  name: Booster T1
+  height_m: {value: 1.18, basis: vendor}
+  mass_kg: {value: 30, basis: vendor}
+  dof: {total: 23, note: "base; 31 with grippers per datasheet"}
+  torque_nm_peak: {knee: 130, basis: vendor}
+  compute: "Jetson AGX Orin (200 TOPS) + 14-core CPU"
+  battery: {voltage_v: null, wh: null, note: "10.5 Ah; ~2 h walking"}
+  cost_usd: {value: 30000, year: 2026, basis: vendor, note: "single reseller listing, backorder"}
+  walking_speed_mps: null
+  sim_to_real_zero_shot: null
+  sources:
+    - {url: "https://quakelogic.net/datasheets/QL-Booster-T1-Humanoid-Robot-for-Developers.pdf", accessed: 2026-10-19}
+    - {url: "https://www.generationrobots.com/blog/en/booster-t1-the-humanoid-development-platform-for-researchers-and-developers/", accessed: 2026-10-19}
+- id: menlo_asimov_1
+  name: Menlo Asimov 1
+  height_m: {value: 1.2, basis: vendor}
+  mass_kg: {value: 35, basis: vendor}
+  dof: {leg: 6, arm: 5, total: 25, note: "docs: 25 + 2 (waist 1, neck 2 listed)"}
+  compute: "Radxa CM5 + Raspberry Pi 5"
+  battery: {voltage_v: null, wh: null, note: "13S4P Li-ion"}
+  cost_usd: {value: 20000, year: 2026, basis: vendor, note: "DIY kit order page; $15-16k self-sourced claims"}
+  sim_to_real_zero_shot: null
+  sources:
+    - {url: "https://docs.menlo.ai/asimov/1", accessed: 2026-10-19}
+    - {url: "https://interestingengineering.com/ai-robotics/bipedal-humanoid-robot-kit-asimov", accessed: 2026-10-19}
+- id: poppy_humanoid
+  name: Poppy Humanoid
+  height_m: {value: 0.84, basis: vendor, note: "80-85 cm across sources"}
+  mass_kg: null
+  dof: {total: null, note: "21 MX-28 reported in 2013 article"}
+  actuators: "Dynamixel MX-28, ~$219 each (2013)"
+  cost_usd: {value: 11000, year: 2013, basis: vendor, note: "kit now ~EUR 9,972"}
+  sim_to_real_zero_shot: null
+  lessons: ["Premium Dynamixel actuators dominate cost; WPI project swapped to HerkuleX DRS-0201 (~$130) cutting ~$7k -> ~$4k."]
+  sources:
+    - {url: "https://www.generationrobots.com/en/403347-poppy-humanoid-robot-raspberry-pi-version-with-3d-parts.html", accessed: 2026-10-19}
+    - {url: "https://www.fabbaloo.com/2013/11/adorable-3d-printed-humanoid-robot-html", accessed: 2026-10-19}
+    - {url: "https://www.wpi.edu/sites/default/files/inline-image/Departments-Programs/Robotics-Engineering/MQP_3D Printed Robot Poster.pdf", accessed: 2026-10-19}
+not_found:
+  - "Bez1/HR-OS, RoboBuilder, Kondo KHR, Disney BD-1, Roboto Origin, Digit/Cassie, HF/Pollen: not researched to a citable level; omitted rather than guessed. K-Bot (unofficial, aiwiki): ~1.4 m, ~30 kg, Robstride, $8,999."
+reference_actuator:
+  id: feetech_sts3215
+  weight_g: 55
+  stall_torque: "19.5 kg.cm @6V (copper gears); 30 kg.cm @12V (steel gears); vendor"
+  price_usd: "23-26 (reseller)"
+  sources:
+    - {url: "https://aifitlab.com/products/feetech-sts3215-servo-motor", accessed: 2026-10-19}

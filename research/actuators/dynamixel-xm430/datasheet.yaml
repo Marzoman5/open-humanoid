@@ -1,0 +1,23 @@
+# Dynamixel XM430 (W350 and W210). ROBOTIS e-Manual, vendor-claimed. kind: vendor
+id: dynamixel-xm430
+common:
+  weight_g: {v: 82, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+  size_mm: {v: [28.5, 46.5, 34], source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+  motor: {v: coreless, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+  gears: {v: "full metal", source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+  encoder: {v: "contactless absolute 12-bit (AS5045), 4096/rev", source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+  backlash_arcmin: {v: 15, deg: 0.25, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+  input_voltage_v: {v: [10.0, 14.8], recommended: 12.0, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+  operating_temp_c: {v: [-5, 80], source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+  baud_rate_bps: {v: "9600 to 4500000 (default reg 1 = 57600)", source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+  standby_current_ma: {v: 40, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+  defaults: {position_p: {addr: 84, v: 800}, position_i: {addr: 82, v: 0}, position_d: {addr: 80, v: 0}, velocity_p: {addr: 78, v: 100}, velocity_i: {addr: 76, v: 1920}, temperature_limit_c: {addr: 31, v: 80}, current_limit_raw: {addr: 38, v: 1193, unit_ma: 2.69}, pwm_limit: {addr: 36, v: 885}, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19}
+w350:
+  gear_ratio: {v: 353.5, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+  stall: [{torque_nm: 3.8, current_a: 2.1, no_load_rpm: 43, at: "11.1V"}, {torque_nm: 4.1, current_a: 2.3, no_load_rpm: 46, at: "12.0V"}, {torque_nm: 4.8, current_a: 2.7, no_load_rpm: 57, at: "14.8V"}]
+  stall_source: {source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", accessed: 2026-10-19, kind: vendor}
+w210:
+  gear_ratio: {v: 212.6, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/", accessed: 2026-10-19, kind: vendor}
+  stall: [{torque_nm: 2.7, current_a: 2.1, no_load_rpm: 70, at: "11.1V"}, {torque_nm: 3.0, current_a: 2.3, no_load_rpm: 77, at: "12.0V"}, {torque_nm: 3.7, current_a: 2.7, no_load_rpm: 95, at: "14.8V"}]
+  stall_source: {source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/", accessed: 2026-10-19, kind: vendor}
+stall_torque_at_10v: null   # manual lists none

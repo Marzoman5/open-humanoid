@@ -1,0 +1,27 @@
+# PUBLISHED identification/measurement of STS3215. Independent of vendor claims. accessed: 2026-10-19
+bam_rhoban:
+  what: "BAM (Better Actuator Models) pendulum-bench identification, STS3215 labelled 7.4V; models m1..m6 (m1 = MuJoCo Coulomb+viscous; m6 = Stribeck + load-dependent + quadratic friction)"
+  paper: "https://arxiv.org/abs/2410.08650"
+  repo: "https://github.com/Rhoban/bam"
+  params_url: "https://raw.githubusercontent.com/Rhoban/bam/main/bam/params/feetech_sts3215_7_4V/m6.json"
+  accessed: 2026-10-19
+  voltage: "7.4 V (per directory name; test supply voltage not otherwise documented)"
+  gear_ratio_tested: null   # not stated
+  test_conditions: "single pendulum test bench, recorded trajectories under varying load, fit by optimisation; exact loads/trajectories not stated on pages read"
+  simulators: [MuJoCo CPU, MuJoCo Warp (mjlab)]
+  m1_fit: {kt: 1.1776, R_ohm: 2.4787, armature: 0.026083, friction_base: 0.05152, friction_viscous: 0.05989, max_velocity_rad_s: 5.288, command_delay_s: 0.00105, q_offset_rad: -0.0506, error_gain_ratio: 1.0049}
+  m6_fit: {kt: 1.2753, R_ohm: 2.7534, armature: 0.021564, friction_base: 0.053313, friction_viscous: 0.028161, friction_stribeck: 4.2573e-05, load_friction_motor: 0.044912, load_friction_external: 0.243555, load_friction_motor_stribeck: 0.00012449, load_friction_external_stribeck: 0.14229, load_friction_motor_quad: 0.0075949, load_friction_external_quad: 0.0034041, dtheta_stribeck: 0.37114, alpha: 9.9309, max_velocity_rad_s: 5.0958, command_delay_s: 0.004981, q_offset_rad: -0.06827, error_gain_ratio: 1.1617}
+  units_note: "Units follow BAM conventions (not documented on pages read); max_velocity 5.1 rad/s = 48.7 rpm, consistent with 7.4V no-load 52 rpm vendor claim. m6 load-dependent friction (external 0.24) is >4x base friction => friction rises strongly under load."
+  voltage_dependence: "none modeled explicitly (single 7.4V set); no 12V STS3215 set published in BAM"
+mcobzarenco_sysid:
+  what: "MuJoCo-style position-actuator fit (kp, kv, forcerange, damping, frictionloss, armature) on 12 STS3215 on SO-ARM100 pair via open-loop replay at 30 Hz"
+  source: "https://mcobzarenco-fontaine-blog.static.hf.space/posts/2026-08-11-sim-servo-sysid.html"
+  accessed: 2026-10-19
+  voltage: null   # not stated
+  fitted: {kp: 108.18, kv: 13.377, forcerange_nm: 3.478, damping: 0.722, frictionloss: 0.0183, armature: 0.2045}
+  baselines: {menagerie: {kp: 998.22, kv: 2.731, forcerange: 2.94, val_mae_deg: 3.31}, upstream_TheRobotStudio: {kp: 17.8, kv: 0, forcerange: 3.35, val_mae_deg: 2.8}, fitted_val_mae_deg: 1.76}
+  caveats: "effective values absorbing timebase mismatch; no payload; shared across joints; blog not peer reviewed"
+  note_forcerange: "fit saturation +/-3.48 N.m (~35.5 kg.cm) looks like stall-level peak, not continuous"
+open_duck_mini: {status: "none found: no published STS3215 identification located (Open Duck Mini uses Feetech/other; not verified)", source: null}
+lerobot_so100_community_torque_curves: {status: "none found", source: null}
+independent_stall_torque_or_continuous_torque_measurement: {status: "none found for STS3215 (no published dyno/thermal-limit data located)", source: null}

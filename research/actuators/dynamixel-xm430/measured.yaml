@@ -1,0 +1,14 @@
+# Published identification of XM430-W210. accessed: 2026-10-19
+toddlerbot_xm430_w210:
+  paper: "https://arxiv.org/abs/2502.00893"
+  source: "https://arxiv.org/html/2502.00893"
+  accessed: 2026-10-19
+  model: "tau_m = kp(q_cmd-q) - (kd_min+kd)*qdot; linear torque-speed limit to zero at qdot_max; constant braking torque; passive-active ratio 3 (~58% gearbox efficiency); MuJoCo damping/armature/frictionloss"
+  test_conditions: "motor test bed (powder brake to 5 N.m, driver motor 1 N.m, torque precision 3e-4 N.m); friction/damping from constant-RPM back-drive; armature from spin-down; chirp position tracking joint fit; supply voltage not stated in extracted text"
+  voltage: null
+  simulator: MuJoCo
+  dynamixel_to_sim_kp_factor: 150
+  tracking_error_deg: 1.3
+  params: {damping_nms_rad: 0.0056, armature_kgm2: 0.0022, friction_loss_nm: 0.025, tau_max_nm: 1.61, qdot_taumax_rad_s: 0.10, qdot_max_rad_s: 7.63, tau_at_qdot_max_nm: 0.47, kd_min: 0.203, tau_brake_nm: 3.70}
+  note: "tau_max 1.61 N.m is ~54% of vendor stall 3.0 N.m @12V (W210); no-load 7.63 rad/s = 73 rpm vs vendor 70-77 rpm. Independently measured/fit, in a 2025 paper."
+bam_rhoban: "BAM has mx64, mx106 (not xm430)"

@@ -1,0 +1,47 @@
+# Feetech STS3215. ALL values below are VENDOR-CLAIMED (retailer/vendor pages; no primary Feetech PDF text could be parsed - the translated PDF is image-only).
+# Primary-ish: feetech.cn product page + Feetech datasheet PDF (image scans, unreadable by tool): https://core-electronics.com.au/attachments/uploads/sts3215-smart-servo-datasheet-translated.pdf
+# Format: {v: value, unit, at: voltage/condition, source, accessed, kind}. null = unknown.
+id: feetech-sts3215
+variants:
+  c001_7v4_1to345:
+    gear_ratio: {v: 345, source: "https://servodatabase.com/servo/feetech/sts3215", accessed: 2026-10-19, kind: vendor}
+    nominal_voltage_v: {v: 7.4, source: "https://www.feetechrc.com/en/2020-05-13_56655.html", accessed: 2026-10-19, kind: vendor}
+    voltage_range_v: {v: "6-7.4 (evelta); 4-14 (servodatabase)", source: "https://evelta.com/st3215-7-4v-19kg-1-345-gear-dual-axis-ttl-string-servo-motor/", accessed: 2026-10-19, kind: vendor, note: "sources conflict on range"}
+    stall_torque_kgcm: {v: 19.5, at: "7.4V", source: "https://www.feetechrc.com/en/2020-05-13_56655.html", accessed: 2026-10-19, kind: vendor}
+    stall_torque_kgcm_at_6v: {v: 16.5, at: "6V", source: "https://servodatabase.com/servo/feetech/sts3215", accessed: 2026-10-19, kind: vendor, note: "evelta labels 19.5 as @6V - conflict; Feetech page says 19.5@7.4V"}
+    rated_torque_kgcm: {v: 6.5, at: "6V (as labelled by retailer)", source: "https://evelta.com/st3215-7-4v-19kg-1-345-gear-dual-axis-ttl-string-servo-motor/", accessed: 2026-10-19, kind: vendor, note: "= 33% of 19.5 stall; vendor 'rated' is ~1/3 of stall, NOT 40%"}
+    no_load_speed_rpm: {v: 52, at: "7.4V (0.19 s/60deg)", source: "https://servodatabase.com/servo/feetech/sts3215", accessed: 2026-10-19, kind: vendor}
+    no_load_speed_rpm_6v: {v: 42, at: "6V (0.24 s/60deg)", source: "https://servodatabase.com/servo/feetech/sts3215", accessed: 2026-10-19, kind: vendor}
+    stall_current_a: {v: "2.0-2.7", at: "6V per evelta (2.0 A); range from servodatabase", source: "https://servodatabase.com/servo/feetech/sts3215", accessed: 2026-10-19, kind: vendor, note: "stall current at 7.4V not stated"}
+    no_load_current_ma: {v: 150, at: "6V", source: "https://evelta.com/st3215-7-4v-19kg-1-345-gear-dual-axis-ttl-string-servo-motor/", accessed: 2026-10-19, kind: vendor}
+    running_current_ma: {v: 650, at: "7.4V", source: "https://servodatabase.com/servo/feetech/sts3215", accessed: 2026-10-19, kind: vendor}
+    gear_material: {v: "metal/copper (alloy)", source: "https://www.feetechrc.com/en/2020-05-13_56655.html", accessed: 2026-10-19, kind: vendor}
+  c044_7v4_1to191: {gear_ratio: {v: 191, source: "https://github.com/horndeer/SO-ARM101-LeRobot", accessed: 2026-10-19, kind: vendor}, stall_torque_kgcm: null, no_load_speed_rpm: null, stall_current_a: null, note: "Used as SO-ARM101 leader pan/elbow; per-variant torque/speed not found. Expect speed ~1.8x and torque ~0.55x of 1:345 by ratio only (derived, NOT sourced)."}
+  c046_7v4_1to147: {gear_ratio: {v: 147, source: "https://github.com/horndeer/SO-ARM101-LeRobot", accessed: 2026-10-19, kind: vendor}, stall_torque_kgcm: {v: 14.4, at: "7.4V", source: "eckstein-shop C046 listing via search: https://eckstein-shop.de/feetech/servo-sts3215-C046-7-4v-19kg-0-360-magnetencoder_1", accessed: 2026-10-19, kind: vendor, note: "other listing says 14 kgcm"}, no_load_speed_rpm: null, stall_current_a: null}
+  c018_c047_12v:
+    gear_ratio: null   # not listed by any 12V page found
+    stall_torque_kgcm: {v: 30, at: "12V", source: "https://evelta.com/sts3215-c018-12v-30kg-cm-dual-shaft-ttl-serial-servo-metal-gears-magnetic-encoder/", accessed: 2026-10-19, kind: vendor}
+    rated_torque_kgcm: {v: 10, at: "12V", source: "https://evelta.com/sts3215-c018-12v-30kg-cm-dual-shaft-ttl-serial-servo-metal-gears-magnetic-encoder/", accessed: 2026-10-19, kind: vendor, note: "= 33% of stall"}
+    no_load_speed_rpm: {v: 45, at: "12V (0.222 s/60deg)", source: "https://www.waveshare.com/wiki/ST3215_Servo", accessed: 2026-10-19, kind: vendor}
+    stall_current_a: {v: 2.7, at: "12V", source: "https://www.waveshare.com/wiki/ST3215_Servo", accessed: 2026-10-19, kind: vendor}
+    no_load_current_ma: {v: 180, at: "12V (evelta) / 200 (waveshare)", source: "https://evelta.com/sts3215-c018-12v-30kg-cm-dual-shaft-ttl-serial-servo-metal-gears-magnetic-encoder/", accessed: 2026-10-19, kind: vendor}
+    gear_material: {v: steel, source: "https://evelta.com/sts3215-c018-12v-30kg-cm-dual-shaft-ttl-serial-servo-metal-gears-magnetic-encoder/", accessed: 2026-10-19, kind: vendor}
+common:
+  weight_g: {v: 55, tol: 1, source: "https://evelta.com/st3215-7-4v-19kg-1-345-gear-dual-axis-ttl-string-servo-motor/", accessed: 2026-10-19, kind: vendor}
+  size_mm: {v: [45.2, 24.7, 35.0], source: "https://servodatabase.com/servo/feetech/sts3215", accessed: 2026-10-19, kind: vendor}
+  encoder: {v: "magnetic, 12-bit absolute, 4096 steps/360deg (0.088 deg)", source: "https://www.feetechrc.com/en/2020-05-13_56655.html", accessed: 2026-10-19, kind: vendor}
+  backlash_deg: {v: 0.87, source: "https://servodatabase.com/servo/feetech/sts3215", accessed: 2026-10-19, kind: vendor, note: "unverified aggregator figure; not independently measured"}
+  baud_rate_bps: {v: "38400 to 1000000 (default 1M)", source: "https://www.waveshare.com/wiki/ST3215_Servo", accessed: 2026-10-19, kind: vendor}
+  bus: {v: "half-duplex async TTL, IDs 0-253", source: "https://www.waveshare.com/wiki/ST3215_Servo", accessed: 2026-10-19, kind: vendor}
+  operating_temp_c: {v: [-20, 60], source: "https://servodatabase.com/servo/feetech/sts3215", accessed: 2026-10-19, kind: vendor, note: "evelta says -15..70"}
+  default_max_temp_register_c: {v: 70, source: "https://aifitlab-wiki.super.site/feetech-servo-motor-docs/feetech-sts-servo-memory-table-analysis", accessed: 2026-10-19, kind: third_party_wiki}
+  overload_protection: {v: "trips when blocked >80% of locked-rotor torque for 2 s (both configurable); clears on new position command", source: "https://core-electronics.com.au/attachments/uploads/sts3215-smart-servo-datasheet-translated.pdf (via search summary)", accessed: 2026-10-19, kind: vendor}
+  vendor_duty_advice: {v: "continuous operation <=50% of max values", source: "https://rcdrone.top/products/feetech-sts3215-20kg-servo", accessed: 2026-10-19, kind: vendor}
+  current_feedback_unit_ma: {v: 6.5, source: "https://www.feetechrc.com/en/2020-05-13_56655.html", accessed: 2026-10-19, kind: vendor}
+registers_pid_defaults:
+  note: "Third-party wiki table; verify on a real servo. Kp scaled 1/4, Kd 1/8 per wiki. Kp/Kd defaults NOT given; Ki default 0."
+  source: "https://aifitlab-wiki.super.site/feetech-servo-motor-docs/feetech-sts-servo-memory-table-analysis"
+  accessed: 2026-10-19
+  addr: {id: 5, baud: 6, min_angle: 9, max_angle: 11, max_temp: 13, max_torque: 16, kp: 21, kd: 22, ki: 23, protection_current: 28, overload_torque: 36, torque_enable: 40, acceleration: 41, goal_pos: 42, lock: 55, present_pos: 56, present_speed: 58, present_load: 60, present_voltage: 62, present_temp: 63, present_current: 69}
+  defaults: {max_torque_0p1pct: 1000, protection_current_6p5ma: 511, overload_torque_pct: 80, max_temp_c: 70, min_voltage_0p1v: 40, kp: null, kd: null, ki: 0}
+  baud_codes: "0=1M 1=500k 2=250k 3=128k 4=115.2k 5=76.8k 6=57.6k 7=38.4k"

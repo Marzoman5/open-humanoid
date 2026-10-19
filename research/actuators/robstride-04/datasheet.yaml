@@ -1,0 +1,20 @@
+# RobStride 04 (RS04). Retailer reproductions; vendor-claimed.
+id: robstride-04
+voltage: {rated_v: 48, range_v: [15, 60], source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+rated_torque_nm: {v: 40, at: "48V", source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+peak_torque_nm: {v: 120, at: "48V", source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+speed_rpm: {no_load: 200, at_rated_torque: 167, tol_pct: 10, at: "48V", source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+current_a: {no_load_arms: 0.7, rated_phase_pk: 27, max_phase_pk: 90, source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+torque_constant_nm_per_arms: {v: 2.1, source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+terminal_resistance_ohm: {v: 0.16, source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+inductance_mh: {v: 0.211, source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+gear_ratio: {v: 9, source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+rated_output_power_w: {v: 700, tol_pct: 10, source: "https://openelab.io/es/blogs/learn/robstride04-qdd-120n-m-integrated-joint-bldc-gear-motor-complete-guide", accessed: 2026-10-19, kind: vendor}
+weight_g: {v: 1420, tol: 20, source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor, note: "one retailer shows 1.5 kg gross"}
+size_mm: {v: [120, 120, 56], source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+encoder: {v: "dual magnetic, 14-bit", poles: 42, source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+comm: {v: "CAN 1 Mbps", source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+operating_temp_c: {v: [-20, 50], source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
+protection: {v: IP52, source: "https://rcdrone.top/nl/products/robstride-04-qdd-120n-m-integrated-actuator-module-48v-9-1-ratio-dual-magnetic-encoder-ip52-700w-output", accessed: 2026-10-19, kind: vendor}
+backlash_deg: null
+price_usd: {v: 255, source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}

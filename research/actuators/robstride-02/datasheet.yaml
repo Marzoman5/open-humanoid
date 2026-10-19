@@ -1,0 +1,19 @@
+# RobStride 02 (RS02). Retailer reproductions of RobStride spec sheet; vendor-claimed. Manuals: RobStride Product_Information repo (not read).
+id: robstride-02
+voltage: {rated_v: 48, range_v: [24, 60], source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+rated_torque_nm: {v: 6, at: "48V", source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+peak_torque_nm: {v: 17, at: "48V", source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+speed_rpm: {no_load: 410, at_rated_torque: 360, tol_pct: 10, at: "48V", source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+current_a: {no_load_arms: 0.5, rated_peak: 7, max_peak: 23, source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+torque_constant_nm_per_arms: {v: 1.22, source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+terminal_resistance_ohm: {v: 0.58, source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+inductance_uh: {v: [187, 339], source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+gear_ratio: {v: 7.75, type: planetary QDD, source: "https://pakronics.com.au/products/robstride-02-qdd-17n-m-integrated-actuator-module-dual-encoders-ss100064875", accessed: 2026-10-19, kind: vendor}
+rated_output_power_w: {v: 170, source: "https://pakronics.com.au/products/robstride-02-qdd-17n-m-integrated-actuator-module-dual-encoders-ss100064875", accessed: 2026-10-19, kind: vendor}
+weight_g: {v: 405, tol: 5, ip67_variant_g: 490, source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+size_mm: {v: [78.5, 78.5, 45.5], source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+encoder: {v: "dual magnetic, 14-bit", poles: 28, source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+comm: {v: "CAN 1 Mbps", source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+operating_temp_c: {v: [-20, 50], source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+backlash_deg: null
+price_usd: {v: 145, source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
