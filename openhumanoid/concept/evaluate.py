@@ -449,6 +449,15 @@ def _push_block(b: Bundle, sim: dict, quick: bool) -> dict:
         if not quick:
             speed_cap = 0.9 * hip_pitch_speed if kind == "hip_fwd" else None
             case["largest_recoverable_push"] = PU.max_recoverable_scale(b.kin, kind, speed_cap=speed_cap)
+            lr = case["largest_recoverable_push"]
+            if (not case["valid"] or not case["demand_ok"]) and lr["scale"] > 0.05:
+                # the defined push cannot be recovered: what do the actuators need at the largest push that CAN be?
+                ref2 = PU.push_case(b.kin, kind, push_scale=0.98 * lr["scale"])
+                d2 = E.ideal_demand(robot, ref2)
+                g2 = E.push_gate(robot, d2, TS.v_nominal(b.pack))
+                case["at_largest_recoverable"] = {"scale": round(0.98 * lr["scale"], 3), "dv_mps": round(ref2.meta["dv_mps"], 3),
+                                                  "impulse_Ns": round(ref2.meta["impulse_Ns"], 3), "valid": g2["valid"], "reason": g2["reason"],
+                                                  **{k: g2[k] for k in ("peak_frac_of_stall", "peak_joint", "util_max", "omega_peak", "ok", "why") if k in g2}}
         out["cases"][nm] = case
     out["all_ok"] = all(c["valid"] and c["demand_ok"] and (c.get("servo_in_the_loop", {}).get("delivered_in_time", True)) for c in out["cases"].values())
     return out
@@ -644,6 +653,10 @@ def to_markdown(r: dict) -> str:
                      f"{sv.get('delivered_in_time', '-')} | {lr.get('scale', '-')}x ({lr.get('dv_mps', '-')} m/s) |")
             if not c["valid"]:
                 L.append(f"|  | | | | reason: {c['reason'][:160]} | | | | |")
+            a = c.get("at_largest_recoverable")
+            if a:
+                L.append(f"|  | {a['dv_mps']} | {a['impulse_Ns']} | at the largest recoverable push ({a['scale']}x) | {a['valid']} | "
+                         f"{round(a['peak_frac_of_stall'], 2) if 'peak_frac_of_stall' in a else '-'} {a.get('peak_joint', '')} | {round(a['util_max'], 2) if 'util_max' in a else '-'} | demand ok: {a.get('ok')} | {a['reason'][:60]} |")
             for w in c.get("why", []):
                 L.append(f"|  | | | | {w} | | | | |")
     if "bounds_sweep" in r:
