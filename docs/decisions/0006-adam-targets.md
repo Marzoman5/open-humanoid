@@ -11,3 +11,6 @@
 - CAD backend: build123d (AI-authored). Maintainer may re-surface shells in Onshape/SolidWorks.
 - Onboard compute runs the locomotion policy. The LLM, when added, runs off-board.
 - Successor: **Eve** (~$2k, larger) will `extends: adam`.
+
+## Note (2026-10-19)
+The name "Adam" collides with an AI-for-CAD startup (adam.new / CADAM). The maintainer chose to keep it; revisit before public release.
