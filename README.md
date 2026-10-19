@@ -50,6 +50,7 @@ Full walkthrough: **[docs/getting-started.md](docs/getting-started.md)**.
 | Doc | For |
 |---|---|
 | [Getting started](docs/getting-started.md) | Install, explore Adam, make your own variant, hand off to an agent |
+| [**PROGRESS.md**](PROGRESS.md) | **What exists so far: videos, images, numbers, status** |
 | [Pipeline](docs/pipeline.md) | **How a robot is designed and built: phases, gates, review stops** |
 | [Vision](docs/vision.md) | Why this exists, principles, roadmap |
 | [Research](research/) | Verified evidence base: actuators, comparable robots, methods, AI-engineering practice, reuse audit |
