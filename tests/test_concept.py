@@ -402,41 +402,185 @@ def test_known_robot_check_runs_legs_only(tmp_path):
     assert set(rep["motions"]) == {"stand", "walk_forward", "walk_backward", "turn", "squat_90"}
 
 
-# ----------------------------------------------------------------------------------------------- push recovery (R10)
-def test_push_is_defined_in_capture_point_units_and_scaled_to_mass(robot_a, kin_a):
+# ----------------------------------------------------------------------------------------------- push recovery (R10, absolute impulse)
+def test_push_is_an_absolute_impulse_the_same_for_every_candidate(robot_a):
     from openhumanoid.concept.motions import push as PU
-    ref = PU.push_case(kin_a, "ankle_fwd")
-    m = ref.meta
-    cfg = config.motions()["push"]
-    assert m["dv_mps"] == pytest.approx(cfg["ankle_k"] * (kin_a.lg.foot_len / 2) * math.sqrt(9.81 / m["zc_m"]), rel=1e-6)
-    assert m["impulse_Ns"] == pytest.approx(m["mass_kg"] * m["dv_mps"], rel=1e-6)           # J = M dv
-    assert m["mass_kg"] == pytest.approx(robot_a.total_mass, rel=1e-3)
-    servo_delay = max(s.delay_s for s in robot_a.servo.values())
-    assert m["reaction_delay_s"] == pytest.approx(servo_delay + cfg["control_period_s"] + cfg["sensing_latency_s"])
-    assert ref.feasible and m["recovered_plan"] and m["cop_peak_offset_m"] <= kin_a.lg.foot_len / 2
+    robot_b = build_robot(CONCEPTS / "B-2s-7v4-sts3215.yaml")
+    J = config.motions()["push"]["required_impulse_Ns"]
+    for rb in (robot_a, robot_b):
+        kin = RobotKin(rb)
+        for sc in ("stand_fwd", "walk_lat_out"):
+            ref = PU.push_case(kin, sc)
+            m = ref.meta
+            assert m["impulse_Ns"] == pytest.approx(J) and m["dv_mps"] == pytest.approx(J / rb.total_mass, rel=1e-6)    # J fixed, dv = J / M
+            assert m["mass_kg"] == pytest.approx(rb.total_mass, rel=1e-3)
+            assert m["reaction_delay_s"] == pytest.approx(max(s.delay_s for s in rb.servo.values()) + config.motions()["push"]["control_period_s"] + config.motions()["push"]["sensing_latency_s"])
 
 
-def test_ankle_push_is_cheap(robot_a, kin_a):
+def test_cop_is_referenced_to_the_foot_centre_not_the_initial_com(kin_a):
     from openhumanoid.concept.motions import push as PU
-    ank = E.push_gate(robot_a, E.ideal_demand(robot_a, PU.push_case(kin_a, "ankle_fwd")), 11.1)
+    S = PU.make_setup(kin_a, "stand_fwd")
+    assert S.c0[0] == pytest.approx(kin_a.lg.foot_off)                         # challenge-2 row 9: the old plan started the COM 7 mm behind the foot centre
+    plan = PU.simulate(S, 0.2, PU.Option(0))
+    mx = config.motions()["push"]["cop_margin_frac"] * kin_a.lg.foot_len / 2
+    assert plan.ok and plan.meta["cop_peak_offset_m"] <= mx + 1e-6              # the COP never leaves the shrunk foot, measured from the foot centre
+
+
+def test_ankle_push_is_cheap_and_a_push_free_control_passes_every_scenario(robot_a, kin_a):
+    from openhumanoid.concept.motions import push as PU
+    from openhumanoid.concept import pushcheck as PC, tradestudy as TS
+    vin = TS.v_nominal(TS.pack_of(robot_a))
+    ank = E.push_gate(robot_a, E.ideal_demand(robot_a, PU.push_case(kin_a, "stand_fwd", 0.15, PU.Option(0))), vin)
     assert ank["valid"] and ank["ok"] and ank["peak_frac_of_stall"] < 0.5
-    assert ank["peak_joint"].startswith("ankle")
+    for sc in PU.SCENARIOS:                                                      # a ~zero push must pass the emergency limits, else the walk itself would be blamed on the push
+        c = PC.required_case(robot_a, kin_a, vin, sc, J=0.02)
+        assert c.ok, (sc, c.row)
 
 
-def test_latency_makes_the_capture_point_grow_before_the_controller_acts(kin_a):
+def test_hip_strategy_is_never_a_blocker_by_itself(kin_a):
     from openhumanoid.concept.motions import push as PU
-    base = PU.push_case(kin_a, "capture_fwd")
+    S = PU.make_setup(kin_a, "stand_fwd")
+    assert not PU.simulate(S, 0.2, PU.Option(0, None, True), hip_speed_cap=0.01).ok          # speed-limited: unavailable ...
+    assert PU.simulate(S, 0.2, PU.Option(0), hip_speed_cap=0.01).ok                          # ... but the ankle strategy alone still recovers it
+    assert not any(o.hip for o in PU.options_for("stand_lat")) and any(o.hip for o in PU.options_for("stand_fwd"))
+    assert PU.hip_speed_cap(kin_a) < float(min(kin_a.robot.servo[n].noload(11.1) for n in kin_a.robot.names if n.startswith("hip_pitch")))
+
+
+def test_step_options_sweep_swing_time_and_allow_two_steps():
+    from openhumanoid.concept.motions import push as PU
+    opts = PU.options_for("walk_fwd")
+    assert {o.swing_s for o in opts if o.steps} == {0.15, 0.20, 0.25, 0.30, 0.35} and max(o.steps for o in opts) == 2
+    assert set(PU.SCENARIOS) == {"stand_fwd", "stand_lat", "walk_fwd", "walk_lat_out", "walk_lat_in"}
+
+
+def test_latency_shrinks_the_largest_ankle_push(kin_a):
+    from openhumanoid.concept.motions import push as PU
+    S = PU.make_setup(kin_a, "stand_fwd")
+    base = PU.plan_bisect(S, PU.Option(0), None, 2.0, full=False)
     node = config._load()["motions"]["push"]
     old = node["sensing_latency_s"]
     try:
-        node["sensing_latency_s"] = old + 0.040             # 40 ms more latency
-        slow = PU.push_case(kin_a, "capture_fwd")
+        node["sensing_latency_s"] = old + 0.040
+        slow = PU.plan_bisect(PU.make_setup(kin_a, "stand_fwd"), PU.Option(0), None, 2.0, full=False)
     finally:
         node["sensing_latency_s"] = old
-    assert slow.meta["capture_point_xy"][0] > base.meta["capture_point_xy"][0]          # the capture point runs further away
+    assert slow < base
 
 
-def test_largest_recoverable_push_is_reported(kin_a):
-    from openhumanoid.concept.motions import push as PU
-    r = PU.max_recoverable_scale(kin_a, "ankle_fwd", iters=4)
-    assert r["scale"] > 1.0 and r["impulse_Ns"] > 0
+def test_largest_recoverable_push_is_reported_in_newton_seconds_and_m_per_s(robot_a, kin_a):
+    from openhumanoid.concept import pushcheck as PC, tradestudy as TS
+    r = PC.largest_recoverable(robot_a, kin_a, TS.v_nominal(TS.pack_of(robot_a)), "stand_lat", demand_iters=2)
+    assert r["largest_recoverable_Ns"] > 0.3 and r["dv_mps"] == pytest.approx(r["largest_recoverable_Ns"] / robot_a.total_mass, abs=2e-3)
+    assert r["best_strategy"] and r["limited_by"]
+
+
+# ----------------------------------------------------------------------------------------------- challenge-2 calibration fixes
+def test_static_knee_torque_scales_with_the_supported_mass(robot_a, kin_a):
+    """Row 10: scale every body mass by 1.5 in the simulated model: the static knee torque must follow within 5%, and an independent hand
+    calculation from the model's own kinematics (vertical load W/2 at the COM x, minus the lower leg's own weight) must agree within 5%."""
+    from openhumanoid.concept.playback import PlayConfig
+    ref = posture.stand(kin_a, 3.0)
+
+    def knee(scale):
+        def hook(model):
+            model.body_mass[:] *= scale
+            model.body_inertia[:] *= scale
+        d = E.ideal_demand(robot_a, ref, PlayConfig(mode="ideal", model_hook=hook))
+        return float(np.abs(d.tau_ideal[:, robot_a.names.index("knee_l")]).mean())
+    t1, t15 = knee(1.0), knee(1.5)
+    assert t15 / t1 == pytest.approx(1.5, rel=0.05)
+    m = kin_a.model
+    kin_a.set_state(ref.q[0], ref.base_pos[0], ref.base_quat[0])
+    kin_a.mj.mj_kinematics(m, kin_a.data)
+    kin_a.mj.mj_comPos(m, kin_a.data)
+    d = kin_a.data
+    com_x = float(d.subtree_com[1][0])
+    knee_x = float(d.xanchor[m.joint("knee_l").id][0])
+    low = [i for i in range(m.nbody) if m.body(i).name in ("shank_l", "foot_l")]
+    m_low = float(sum(m.body_mass[i] for i in low))
+    x_low = float(sum(m.body_mass[i] * d.xipos[i][0] for i in low) / m_low)
+    hand = abs(0.5 * float(sum(m.body_mass)) * 9.81 * (com_x - knee_x) - m_low * 9.81 * (x_low - knee_x))
+    assert t1 == pytest.approx(hand, rel=0.05)
+
+
+def test_pd_demand_agrees_with_minimum_torque_inverse_dynamics(robot_a, kin_a):
+    from openhumanoid.concept.mintorque import min_torque_demand
+    for ref in (posture.stand(kin_a, 3.0), W.walk(kin_a, "forward")):
+        pd = E.ideal_demand(robot_a, ref)
+        mt = min_torque_demand(robot_a, ref)
+        vin = np.full(len(robot_a.names), 11.1)
+        a, b = E.joint_metrics(robot_a, pd, vin), E.joint_metrics(robot_a, mt, vin)
+        leg = [i for i, n in enumerate(robot_a.names) if n.split("_")[0] in ("hip", "knee", "ankle")]
+        sag = [i for i in leg if robot_a.names[i].split("_")[0] in ("hip", "knee", "ankle") and not robot_a.names[i].startswith(("hip_roll", "hip_yaw", "ankle_roll"))]
+        assert np.allclose(b["rms_nm"][sag], a["rms_nm"][sag], rtol=0.12, atol=0.02)              # sagittal joints: the PD and the ideal contact split agree
+        assert np.allclose(b["rms_nm"][leg], a["rms_nm"][leg], rtol=0.5, atol=0.03)                 # roll joints differ more: the contact split decides the lateral COP
+
+
+def test_mj_inverse_bookkeeping_and_closed_chain_fighting(robot_a, kin_a):
+    from openhumanoid.concept import invdyn
+    st = invdyn.inverse_error(robot_a, posture.stand(kin_a, 3.0))
+    assert st["inverse_error_max_over_pd_leg"] < 0.01 and st["vertical_share_left_mean_in_ds"] == pytest.approx(0.5, abs=0.01) and st["squeeze_bw_max_in_ds"] < 0.01
+    wk = invdyn.inverse_error(robot_a, W.walk(kin_a, "forward"))
+    assert wk["inverse_error_max_over_pd_leg"] < 0.10 and wk["squeeze_bw_mean_in_ds"] < 0.03          # no stiff-PD fighting through the floor in double support
+
+
+def test_gait_sweep_is_the_frozen_set_and_step_time_scales_the_step():
+    gs = config.thresholds()["gait_sweep"]
+    assert gs["step_time_s"] == [0.25, 0.35, 0.5] and gs["stance_knee_flex_deg"][0] == 20 and gs["stance_knee_flex_deg"][-1] == 45
+    g1, g2 = W.frozen_gait(0.5), W.frozen_gait(0.25)
+    assert g2["step_len"] == pytest.approx(g1["step_len"] / 2) and g2["n_steps"] == 2 * g1["n_steps"]       # same speed, same walk duration
+
+
+def test_rated_alternative_and_st3025_armature_come_from_the_data_files():
+    sp = servo_spec("sts3215-7v4")
+    assert sp.rated_continuous_nm == pytest.approx(0.49) and sp.rated_alt_nm == (0.637,)
+    st = bam_params("bam_waveshare_st3025_m4.json")
+    assert st["armature"] == pytest.approx(0.00399, rel=2e-3) and st["actuator"] == "waveshare_st3025"
+
+
+def test_cad_foundation_packaging_keeps_the_height_and_limits_the_ranges():
+    from openhumanoid.concept.robot import build_spec
+    c = load_concept(A)
+    c["packaging"] = ["t0004", "cad_foundation"]
+    c["height_m"] = 0.5
+    spec = build_spec(c)
+    p = spec["body"]["proportions"]
+    base = load_spec("adam")["body"]["proportions"]
+    keys = ("ankle_height", "shank", "thigh", "pelvis", "torso", "neck", "head")
+    assert p["ankle_height"] * 0.5 == pytest.approx(0.066)
+    assert sum(p[k] for k in keys) == pytest.approx(sum(base[k] for k in keys))             # the standing height is kept
+    rng = {j["name"]: j["range"] for j in spec["kinematics"]["joints"]}
+    assert rng["knee"][1] == 115 and rng["hip_pitch"] == [-110, 40] and rng["ankle_pitch"] == [-60, 25]
+
+
+def test_squat_deeper_than_the_knee_range_is_clamped_and_reported():
+    c = load_concept(A)
+    c["packaging"] = ["t0004", "cad_foundation"]
+    kin = RobotKin(build_robot(c))
+    refs = E.build_motions(kin)
+    assert refs["squat_120"].meta["rom_clamped_from_deg"] == 120 and "ROM CLAMP" in " ".join(refs["squat_120"].notes)
+    assert "rom_clamped_from_deg" not in refs["squat_90"].meta
+
+
+def test_unsafe_pickles_are_refused_before_loading(tmp_path):
+    import pickle
+    from openhumanoid.concept.calibration import pickle_is_numpy_only
+
+    class Evil:
+        def __reduce__(self):
+            return (os.system, ("echo no",))
+    bad = tmp_path / "bad.pkl"
+    bad.write_bytes(pickle.dumps(Evil()))
+    good = tmp_path / "good.pkl"
+    good.write_bytes(pickle.dumps({"a": np.zeros(3)}))
+    assert pickle_is_numpy_only(bad)[0] is False and pickle_is_numpy_only(good)[0] is True
+
+
+@pytest.mark.skipif(not os.environ.get("ODM_DIR"), reason="set ODM_DIR to a scratch clone of apirrone/Open_Duck_Playground (no licence: never inside this repo)")
+@pytest.mark.slow
+def test_open_duck_mini_calibration_runs(tmp_path):
+    from openhumanoid.concept import odm_experiments as X
+    assert os.path.abspath(os.environ["ODM_DIR"]).lower().startswith(str(CONCEPTS.parent.parent.parent).lower()) is False
+    res = X.run_all(os.environ["ODM_DIR"], CONCEPTS, tmp_path, quick=True)
+    assert res["structure_mass"]["gap_factor"] > 1.5 and res["b_frozen_on_odm"]["best"]["gates"]["peak_frac_of_stall"] > 0
+    assert "| gate |" in X.to_markdown(res)

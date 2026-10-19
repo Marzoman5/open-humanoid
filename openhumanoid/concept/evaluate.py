@@ -18,6 +18,7 @@ from pathlib import Path
 import numpy as np
 
 from .. import catalog
+from ..actuators import ServoBank
 from ..paths import generated_header, variants_dir
 from . import config, envelopes as E, provenance, pushcheck as PC, tradestudy as TS
 from .kin import RobotKin
@@ -286,7 +287,8 @@ def _power_block(b: Bundle) -> dict:
     usable_wh = pack.energy_wh * config.value("power.usable_battery_fraction")
     runtime = usable_wh / avg_w * 60.0
     branch = ms["branch_peak_w"]
-    bus = TS.bus_analysis(robot, ms, branch, pack, rail_w)
+    tr = _r10_transient(b)
+    bus = TS.bus_analysis(robot, ms, branch, pack, rail_w, transient=tr)
     return {"pack": {"part": pack.part_id, "cells": pack.cells, "capacity_ah": pack.capacity_ah, "energy_wh": round(pack.energy_wh, 1),
                      "mass_kg": pack.mass_kg, "nominal_v": round(TS.v_nominal(pack), 2), "r_total_mohm": round(pack.r_total * 1000, 1),
                      "c_rating_limit_a": round(pack.max_discharge_a, 1)},
@@ -324,20 +326,26 @@ def _thermal_block(b: Bundle, validation: dict) -> dict:
 def _bounds(concept: dict, table_height, nominal: Bundle) -> list[dict]:
     """Tornado: one unknown at a time at its low/high bound; report the worst margin and what fails."""
     t = config.thresholds()["uncertainty"]["tornado"]
+    lo, hi = t["mass_structure"]["low"], t["mass_structure"]["high"]
+    from ..actuators import bam_params
+    st3025 = float(bam_params("bam_waveshare_st3025_m4.json")["armature"])
     variants = [
-        Mods(structure=t["mass_structure"]["low"], label="structure mass x0.9"), Mods(structure=t["mass_structure"]["high"], label="structure mass x1.8"),
+        Mods(structure=lo, label=f"structure mass x{lo:g}"), Mods(structure=hi, label=f"structure mass x{hi:g}"),
         Mods(wiring=t["mass_wiring_electronics"]["low"], label="wiring/electronics x0.8"), Mods(wiring=t["mass_wiring_electronics"]["high"], label="wiring/electronics x1.5"),
         Mods(torque_model="linear", label="pessimistic linear torque-speed"),
         Mods(armature_dir=-1.0, label="armature low"), Mods(armature_dir=1.0, label="armature high"),
         Mods(stall_dir=-1.0, label="stall low"), Mods(stall_dir=1.0, label="stall high"),
         Mods(rth_dir=1.0, ambient_c=40.0, label="Rth high + 40 C ambient"),
         Mods(speed_factor=1.5, label="walking speed x1.5"),
+        # SENSITIVITY, not a bound (challenge-2 row 4): the only other 12 V-class armature in BAM's parameter files (Waveshare ST3025, m4 fit,
+        # bam/params/waveshare_st3025/m4.json, commit e9a619d), 0.00399 kg m^2 = 17% of the borrowed 7.4 V value. A different gearbox: the bench settles it.
+        Mods(armature_abs=st3025, label=f"SENSITIVITY armature = BAM ST3025 ({st3025:.5f}), not a bound"),
     ]
     out = []
     for m in variants:
         b = run_bundle(concept, m, table_height=table_height, thermal=True)
         w, j = b.worst
-        row = {"label": m.label, "worst_margin": round(w, 3), "worst_joint": j, "passes": b.passes, "failing": b.failing()[:6]}
+        row = {"label": m.label, "kind": "sensitivity" if m.label.startswith("SENSITIVITY") else "bound", "worst_margin": round(w, 3), "worst_joint": j, "passes": b.passes, "failing": b.failing()[:6]}
         if b.thermal:
             row["hot_steady_max_c"] = round(float(b.thermal["hot_steady_c"].max()), 1)
             row["rms_mixed_over_rated_max"] = round(float((b.ms["rms_mixed_nm"] / np.array([b.robot.servo[n].rated_continuous_nm for n in b.robot.names])).max()), 3)
@@ -357,13 +365,14 @@ def _mass_cases(concept: dict, table_height, nominal: Bundle) -> dict:
     s_bm = max((bm - other) / max(struct, 1e-6), 1.0)
     out = {"nominal_kg": round(robot.total_mass, 3), "benchmark_fit_kg": round(bm, 3), "structure_kg_nominal": round(struct, 3),
            "cases": {}, "note": "benchmark fit is a SANITY BOUND and a stress case, not an estimate"}
-    for label, s in (("structure x1.8", 1.8), ("benchmark-fit mass", s_bm)):
+    hi_band = config.thresholds()["mass"]["structure_factor"]["high"]
+    for label, s in ((f"structure x{hi_band:g}", hi_band), ("benchmark-fit mass", s_bm)):
         b = run_bundle(concept, Mods(structure=s, label=label), table_height=table_height, thermal=True)
         w, j = b.worst
         out["cases"][label] = {"structure_scale": round(s, 2), "total_kg": round(b.robot.total_mass, 3), "worst_margin": round(w, 3), "worst_joint": j,
                                "passes": b.passes, "failing": b.failing()[:6]}
     # mass to first gate failure: raise the structure mass until a gate fails
-    ladder = [1.0, 1.4, 1.8, 2.5, 3.5, 5.0]
+    ladder = [1.0, 1.4, 2.0, 3.0, 4.5]
     last_ok = None
     first_fail = None
     scan = []
@@ -436,6 +445,63 @@ def _stress_block(b: Bundle) -> dict:
                      "worst_rms_over_rated": round(float(m["rms_over_rated"].max()), 3), "worst_util": round(float(m["util_max"].max()), 3),
                      "peak_within_gate": bool(m["peak_frac_stall"][j] <= g)}
     return out
+
+
+def _rms_denominators(b: Bundle) -> dict | None:
+    """Challenge-2 row 2: the RMS verdict for servos whose 'rated continuous torque' is a contested retailer label, at every figure in
+    circulation (7.4 V STS3215: 0.49 Seeed, 0.637 Evelta). Per-motion gate (worst motion) and the mixed-activity RMS, legs and all joints."""
+    robot = b.robot
+    idx = [i for i, n in enumerate(robot.names) if robot.servo[n].rated_alt_nm]
+    if not idx or not b.metrics:
+        return None
+    primary = {robot.names[i]: robot.servo[robot.names[i]].rated_continuous_nm for i in idx}
+    figs = sorted({round(v, 3) for v in primary.values()} | {round(a, 3) for i in idx for a in robot.servo[robot.names[i]].rated_alt_nm})
+    rows = []
+    for fig in figs:
+        worst, wj, wm = 0.0, "", ""
+        for mname, mt in b.metrics.items():
+            r = mt["rms_nm"][idx] / fig
+            k = int(np.argmax(r))
+            if r[k] > worst:
+                worst, wj, wm = float(r[k]), robot.names[idx[k]], mname
+        row = {"rated_nm": fig, "per_motion_rms_gate_worst": round(worst, 3), "per_motion_rms_gate_ok": bool(worst <= config.gate("rms_torque_vs_continuous")), "worst_joint": wj, "worst_motion": wm}
+        if b.ms is not None:
+            rm = b.ms["rms_mixed_nm"][idx] / fig
+            row["mixed_schedule_rms_worst"] = round(float(rm.max()), 3)
+            row["mixed_schedule_ok"] = bool(rm.max() <= config.gate("rms_torque_vs_continuous"))
+        rows.append(row)
+    return {"joints": len(idx), "rows": rows, "note": "the PRIMARY gate uses the first figure; the others are a sensitivity until a bench thermal hold measures the real continuous torque"}
+
+
+def _r10_transient(b: Bundle) -> dict | None:
+    """Battery power during the R10 push cases at the required impulse (per scenario, total and per bus branch), from the demand."""
+    from .tradestudy import branch_of
+    robot = b.robot
+    if not b.push_dem:
+        return None
+    specs = [robot.servo[n] for n in robot.names]
+    bank = ServoBank(specs, 0.01)
+    kt, rh = bank.kt_cur, bank.R_heat
+    br = {}
+    for i, n in enumerate(robot.names):
+        br.setdefault(branch_of(n), []).append(i)
+    best = {"total_w": 0.0, "scenario": None, "branch_w": {k: 0.0 for k in br}}
+    for nm, d in b.push_dem.items():
+        if not d.valid:
+            continue
+        sl = d.window
+        tau, om = d.tau[sl], d.omega[sl]
+        k_ = max(1, int(round(0.04 / float(d.t[1] - d.t[0]))))
+        ker = np.ones(k_) / k_
+        cur = np.abs(tau) / kt
+        batt = np.maximum(cur ** 2 * rh + tau * om, 0.0) + 0.03 * b.vin
+        batt = np.stack([np.convolve(np.pad(batt[:, j], (k_ // 2, k_ - 1 - k_ // 2), mode="edge"), ker, mode="valid") for j in range(batt.shape[1])], 1)
+        tot = float(batt.sum(1).max())
+        if tot > best["total_w"]:
+            best["total_w"], best["scenario"] = tot, nm
+        for k, idx in br.items():
+            best["branch_w"][k] = max(best["branch_w"][k], float(batt[:, idx].sum(1).max()))
+    return best
 
 
 def _push_block(b: Bundle, sim: dict, quick: bool) -> dict:
@@ -551,6 +617,7 @@ def evaluate(path_or_concept, *, out_root: Path | None = None, samples: int | No
     w, j = nominal.worst
     rep["nominal"] = {"passes": nominal.passes, "worst_margin": round(w, 3), "worst_joint": j, "failing": nominal.failing()}
     rep["power"] = _power_block(nominal)
+    rep["rms_denominators"] = _rms_denominators(nominal)
     rep["thermal"] = _thermal_block(nominal, validation)
     rep["cost"] = TS.cost_report(robot)
     rep["model_quality"] = TS.model_quality(robot, nominal.vin)
@@ -614,7 +681,7 @@ def evaluate(path_or_concept, *, out_root: Path | None = None, samples: int | No
     ok = not blockers
     robust = None
     if not quick:
-        robust = all(r["passes"] for r in rep["bounds_sweep"])
+        robust = all(r["passes"] for r in rep["bounds_sweep"] if r["kind"] == "bound")
         rep["robust_to_all_bounds"] = robust
         rep["passes_at_benchmark_mass"] = rep["mass_cases"]["cases"]["benchmark-fit mass"]["passes"]
     rep["verdict"] = {"status": "PASS" if ok else "FAIL", "robust_to_all_bounds": robust,

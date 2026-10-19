@@ -192,6 +192,8 @@ def build_spec(concept: dict) -> dict:
     if cad:
         floor_notes += apply_cad_rom(jl)
     spec["_floor_notes"] = floor_notes
+    if "body_overrides" in concept:                  # e.g. {mass_kg: 2.107}: pin the total mass of a robot whose real mass is known (known-robot calibration)
+        spec["body"] = {**spec["body"], **concept["body_overrides"]}
     spec["kinematics"] = {"template": tpl["id"], "mirror": True, "joints": jl}
     spec["locomotion"] = deep_merge(spec["locomotion"], concept.get("locomotion", {}))
     if "mass_model" in concept:

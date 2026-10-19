@@ -22,7 +22,6 @@ from __future__ import annotations
 import copy
 import math
 import pickle
-import pickletools
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -42,19 +41,30 @@ ODM_SCENE = Path("playground") / "open_duck_mini_v2" / "xmls" / "scene_flat_terr
 ODM_POLY = Path("playground") / "open_duck_mini_v2" / "data" / "polynomial_coefficients.pkl"
 
 
+_NUMPY_NAMES = {"dtype", "scalar", "ndarray", "_reconstruct", "_frombuffer"}
+
+
+class _NumpyOnly(pickle.Unpickler):
+    """Unpickler that builds numpy arrays, dtypes and scalars and refuses everything else (no os.system, no arbitrary callables)."""
+
+    def find_class(self, module, name):
+        if module.split(".")[0] == "numpy" and name in _NUMPY_NAMES:
+            return super().find_class(module, name)
+        raise pickle.UnpicklingError(f"refusing to load {module}.{name}")
+
+
+def safe_load(path):
+    with open(path, "rb") as f:
+        return _NumpyOnly(f).load()
+
+
 def pickle_is_numpy_only(path: Path) -> tuple[bool, set]:
-    """Opcode scan: a pickle that only builds numpy dtypes / scalars cannot run arbitrary code. Anything else is refused."""
-    data = Path(path).read_bytes()
-    prev, seen = [], set()
-    for op, arg, _ in pickletools.genops(data):
-        if op.name in ("SHORT_BINUNICODE", "BINUNICODE", "UNICODE", "BINUNICODE8"):
-            prev.append(arg)
-        if op.name == "GLOBAL":
-            seen.add(str(arg).replace(" ", "."))
-        if op.name == "STACK_GLOBAL":
-            seen.add(".".join(prev[-2:]))
-    safe = {"numpy.dtype", "numpy.core.multiarray.scalar", "numpy._core.multiarray.scalar", "numpy.ndarray", "numpy.core.multiarray._reconstruct", "numpy._core.multiarray._reconstruct"}
-    return seen <= safe, seen
+    """True when the pickle loads with numpy classes only (the check an untrusted downloaded pickle must pass before it is used)."""
+    try:
+        safe_load(path)
+        return True, set()
+    except pickle.UnpicklingError as e:
+        return False, {str(e)}
 
 
 # ------------------------------------------------------------------------------------------------ the ODM model as a Robot
@@ -140,7 +150,7 @@ def load_odm(odm_dir, stance_knee_flex_deg: float = 77.0, armature: float | None
         joints.append({"name": n, "base": base, "range": [float(lo), float(hi)], "side": n[-1] if n.endswith(("_l", "_r")) else None, "limb": "leg" if n.endswith(("_l", "_r")) else "head"})
     names = [j["name"] for j in joints]
     facts = _measure_geometry(model, mujoco)
-    geom = {"thigh": facts["L1"], "shank": facts["L2"], "hip_width": 2 * facts["foot_y"], "pelvis": 0.0, "ankle_height": facts["ankle_h"], "foot_length": facts["foot_len"],
+    geom = {"thigh": facts["L1"], "shank": facts["L2"], "hip_width": 2 * facts["foot_y_plan"], "pelvis": 0.0, "ankle_height": facts["ankle_h"], "foot_length": facts["foot_len"],
             "foot_width": facts["foot_w"], "torso": 0.1, "neck": 0.02, "head": 0.1, "upper_arm": 0.0, "forearm": 0.0, "shoulder_width": 0.1}
     robot = ExternalRobot(
         concept={"id": "open-duck-mini-own", "base": "adam", "power": {"pack": "lipo-2s-2200-turnigy", "regulator": "buck-5v-5a"}}, spec={"locomotion": {"walk": {"stance_knee_flex_deg": stance_knee_flex_deg}}, "id": "odm"},
@@ -180,6 +190,7 @@ def _measure_geometry(model, mujoco) -> dict:
     out["foot_off"] = float(0.5 * (xs.max() + xs.min()))
     out["ankle_h"] = float(-zs.min())
     out["foot_y"] = float(abs(d.xanchor[model.joint("ankle_pitch_l").id][1]))        # foot (ankle) lateral position in the home pose
+    out["foot_y_plan"] = float(abs(0.5 * (w[:, 1].max() + w[:, 1].min())))                # lateral position of the foot CENTRE in the home pose (the plan puts the ZMP there)
     out["sole_tilt_deg_at_home"] = float(np.degrees(np.arcsin(abs(n[0]))))
     out["total_mass_kg"] = float(model.body_mass.sum())
     # centre of mass relative to the hip-pitch axis height, at home

@@ -18,6 +18,9 @@ joints:
   - ankle_roll
   - neck_yaw
   - neck_pitch
+# Structure mass recentred by the ODM calibration (challenge-2 row 11): Open Duck Mini's non-servo structure backs out at 0.88 kg
+# (11.9 kg/m^3 * 0.42^3) against the engine's 6.4 kg/m^3 (0.47 kg), a 1.86x gap (> 1.5x) -> nominal moved to the ODM point.
+mass_model: {structure_kg_at_1m: 11.9}
 actuator_default: sts3215-7v4
 locomotion:
   walk: {stance_knee_flex_deg: 40}

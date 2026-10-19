@@ -1,0 +1,58 @@
+# KNOWN-ROBOT CALIBRATION CONCEPT (challenge-2 rows 1 and 11), not an Adam candidate: our generator given Open Duck Mini's REAL
+# leg lengths, foot, stance width, 5-DOF legs, 14-servo count and total mass. Experiment (c) of `python -m openhumanoid.concept calibrate-odm`.
+# Numbers are derived from the user's scratch copy of ODM's MJCF (read at run time, never stored in the repo); ODM's Playground repo has NO
+# LICENSE, so only derived numbers appear here: thigh = shank = 78.65 mm (hip-pitch to knee to ankle anchors), ankle axis 38.9 mm above the
+# sole, foot 103 x 41 mm with its centre 13 mm ahead of the ankle, feet 163 mm apart, total mass 2.107 kg (sum of the MJCF body masses).
+# What is approximated: the template has neck yaw/pitch (ODM has neck pitch, head pitch/yaw/roll: 4 head servos; the 14th and 15th servo of
+# the real robot are not modelled), the template always has two passive arms (their structure share is dead weight here), and the mass
+# distribution follows the template's shares (ODM's real one: trunk 0.70, head and neck 0.58, legs 0.41 each). Vertical proportions give
+# 0.42 m with straight legs.
+id: odm-like-0p42-5dof
+description: "Open Duck Mini-proportioned known-robot concept, 0.42 m, 5-DOF legs (no ankle roll), STS3215 7.4 V, total mass pinned to ODM's 2.107 kg."
+base: adam
+height_m: 0.42
+template: humanoid_v2
+proportions:
+  ankle_height: 0.0927
+  thigh: 0.1873
+  shank: 0.1873
+  pelvis: 0.095
+  torso: 0.214
+  neck: 0.048
+  head: 0.181
+  hip_width: 0.3892
+  foot_length: 0.2457
+  foot_width: 0.0987
+  upper_arm: 0.15
+  forearm: 0.15
+  shoulder_width: 0.36
+body_overrides: {mass_kg: 2.107}
+joints:
+  - {name: hip_yaw, range: [-30, 30]}
+  - {name: hip_roll, range: [-25, 25]}
+  - {name: hip_pitch, range: [-70, 30]}
+  - {name: knee, range: [0, 90]}
+  - {name: ankle_pitch, range: [-90, 90]}
+  - neck_yaw
+  - neck_pitch
+actuator_default: sts3215-7v4
+locomotion:
+  walk: {stance_knee_flex_deg: 77}
+evaluate:
+  motions: [stand, walk_forward, walk_backward, turn, squat_90]
+power:
+  pack: lipo-2s-2200-turnigy
+  regulator: buck-5v-5a
+  compute: rpi-zero-2w
+parts:
+  onboard:
+    - {part: rpi-zero-2w, qty: 1}
+    - {part: microsd-32gb, qty: 1}
+    - {part: waveshare-bus-servo-adapter, qty: 1}
+    - {part: imu-bno085, qty: 1}
+    - {part: lipo-2s-2200-turnigy, qty: 1}
+    - {part: buck-5v-5a, qty: 1}
+    - {part: power-switch-xt60, qty: 1}
+    - {part: wiring-kit-bus, qty: 1}
+  offboard:
+    - {part: charger-skyrc-b6neo, qty: 1}

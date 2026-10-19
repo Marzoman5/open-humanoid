@@ -65,7 +65,7 @@ thermal:
 
 mass:
   # Challenge-1 row 3 (supersedes the earlier -15/+40 instruction): uncertainty on NON-SERVO terms only, asymmetric.
-  structure_factor: {low: 0.9, high: 1.8, class: assumption, source: "printed frame + shell mass before CAD/shells exist; the structure coefficient (6.4 kg at 1 m cubed) is NOT recalibrated until shelled CAD exists. The ToddlerBot/OP3 masses are sanity bounds only"}
+  structure_factor: {low: 0.55, high: 1.4, class: assumption, source: "printed frame + shell mass before CAD/shells exist. RECENTRED by the Open Duck Mini calibration (challenge-2 row 11): the nominal structure coefficient is 11.9 kg per m^3 (ODM backs out at 0.88 kg of structure at 0.42 m, 1.86x the old 6.4), set per concept in mass_model. The band is relative to the new nominal: 0.55 is the old 6.4 nominal, 1.4 about the benchmark-fit mass. NOT recalibrated again until shelled CAD exists. The ToddlerBot/OP3 masses are sanity bounds only"}
   wiring_electronics_factor: {low: 0.8, high: 1.5, class: assumption, source: "wiring harness and electronics_kg: harnesses grow in practice"}
   servo_battery_board_factor: {value: 1.0, class: sourced_estimate, source: "catalog masses of servos, battery and boards are taken as listed (no band): vendor figures, +-1 g on a 55 g servo"}
   benchmark_fit: {k: 18.5, n: 2.28}
@@ -77,7 +77,7 @@ uncertainty:
   # Challenge-1 rows 5/9/10: the HEADLINE is a bounds ("tornado") sweep, one unknown at a time at its low/high bound, because
   # most of these unknowns are not random variables. A small Monte Carlo covers the QUASI-STATIC dimensions only.
   tornado:
-    mass_structure: {low: 0.9, high: 1.8, class: assumption, source: "same band as mass.structure_factor"}
+    mass_structure: {low: 0.55, high: 1.4, class: assumption, source: "same band as mass.structure_factor"}
     mass_wiring_electronics: {low: 0.8, high: 1.5, class: assumption, source: "same band as mass.wiring_electronics_factor"}
     torque_speed_model: {values: [anchored, linear], class: extrapolated, source: "anchored = DC law with datasheet cap; linear = pessimistic stall*(1 - w/w_noload). Nothing in the research verifies the 12 V mid-speed curve."}
     armature: {class: extrapolated, source: "per-actuator spec.uncertainty.armature: +-20% at 7.4 V (BAM fit), +-50% for 12 V and STS3250 (borrowed from the 7.4 V fit)"}

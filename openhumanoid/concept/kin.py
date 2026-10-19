@@ -172,6 +172,8 @@ def lower_body(kin: RobotKin, pelvis: np.ndarray, yaw: np.ndarray, pitch: np.nda
                ankle_r: np.ndarray, foot_yaw_l: np.ndarray, foot_yaw_r: np.ndarray):
     """World pelvis/ankle trajectories -> 12 leg joint angles. Returns (dict name->(T,), ok(T,))."""
     lg = kin.lg
+    if getattr(kin, "numeric_legs", None) is not None:             # a robot whose legs are not the template's (e.g. an imported MJCF): numerical IK
+        return kin.numeric_legs(pelvis, yaw, pitch, ankle_l, ankle_r, foot_yaw_l, foot_yaw_r)
     out, ok_all = {}, np.ones(len(pelvis), bool)
     R = rot_z(yaw) @ rot_y(pitch)                                  # (T,3,3)
     for side, ank, fy, sgn in (("l", ankle_l, foot_yaw_l, 1.0), ("r", ankle_r, foot_yaw_r, -1.0)):

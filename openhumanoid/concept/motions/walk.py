@@ -96,8 +96,13 @@ def walk(kin: RobotKin, mode: str = "forward", n_steps: int | None = None, dt: f
         cur[swing] = b.copy()
     final_mid = 0.5 * (cur["l"][:2] + cur["r"][:2])
 
+    inboard = float(gait.get("zmp_inboard", 0.0))          # ZMP target this far towards the midline from the foot centre (0 for the frozen gait; a wide, knock-kneed stance like Open Duck Mini's needs it)
+
     def centre(p):
-        return p[:2] + lg.foot_off * np.array([math.cos(p[2]), math.sin(p[2])])
+        c = p[:2] + lg.foot_off * np.array([math.cos(p[2]), math.sin(p[2])])
+        if inboard:
+            c = c - inboard * math.copysign(1.0, p[1]) * np.array([-math.sin(p[2]), math.cos(p[2])])
+        return c
 
     zmp = np.zeros((T, 2))
     mid0 = 0.5 * (centre(init["l"]) + centre(init["r"]))

@@ -12,7 +12,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .calibration import ExternalRobot, LEG_BASES, pickle_is_numpy_only
+from .calibration import ExternalRobot, LEG_BASES, safe_load
 from .kin import Reference, quat_from_yaw_pitch
 
 
@@ -22,11 +22,7 @@ class OdmPoly:
     one exactly like ODM's training code does (so a 'straight' command lands on the tabulated dy = -0.037, dtheta = -0.074 entry)."""
 
     def __init__(self, path):
-        ok, seen = pickle_is_numpy_only(Path(path))
-        if not ok:
-            raise ValueError(f"refusing to unpickle {path}: unexpected globals {seen}")
-        with open(path, "rb") as f:
-            data = pickle.load(f)               # only numpy dtype / scalar opcodes, verified above
+        data = safe_load(path)                  # numpy classes only; anything else raises
         self.coef = {}
         first = next(iter(data.values()))
         self.period = float(first["period"])
@@ -105,7 +101,21 @@ class OdmGround:
         return float((w @ _rot_y(pitch).T)[:, 2].min())
 
 
-def odm_reference(robot: ExternalRobot, poly: OdmPoly, command=(0.148, 0.0, 0.0), n_periods: int = 10, lead_s: float = 0.0, dt: float = 0.01) -> Reference:
+def periodic_smooth(frames: np.ndarray, harmonics: int) -> np.ndarray:
+    """Make a one-period signal (rows = samples across the period, endpoint included) periodic and band-limited: remove the wrap mismatch with a
+    linear detrend, keep `harmonics` Fourier harmonics. The raw degree-15 polynomial fit has end-point oscillation (wrap mismatch up to 0.1 rad and
+    accelerations above 1000 rad/s^2 on the knees) that no robot performs."""
+    n = len(frames) - 1
+    x = frames[:-1]
+    trend = (frames[-1] - frames[0])[None, :] * (np.arange(n) / n)[:, None]
+    F = np.fft.rfft(x - trend, axis=0)
+    F[harmonics + 1:] = 0
+    y = np.fft.irfft(F, n=n, axis=0) + trend
+    return np.concatenate([y, y[:1]], axis=0)
+
+
+def odm_reference(robot: ExternalRobot, poly: OdmPoly, command=(0.148, 0.0, 0.0), n_periods: int = 10, lead_s: float = 0.0, dt: float = 0.01,
+                  harmonics: int | None = 6) -> Reference:
     """ODM's own gait (a command snapped to the table) as a Reference: joints from the polynomials, base x-y integrated from the reference base
     velocity, base pitch from the flatness of the soles in contact, base height from the floor. Starts from ODM's home pose over `lead_s`."""
     key = poly.snap(*command)
@@ -114,7 +124,13 @@ def odm_reference(robot: ExternalRobot, poly: OdmPoly, command=(0.148, 0.0, 0.0)
     ix = {n: i for i, n in enumerate(names)}
     nper = int(round(n_periods * poly.period / dt))
     t = np.arange(nper) * dt
-    fr = poly.frames(key, (t / poly.period) % 1.0)
+    if harmonics:
+        one = poly.frames(key, np.linspace(0.0, 1.0, 109))
+        one = periodic_smooth(one, harmonics)
+        ph = (t / poly.period) % 1.0
+        fr = np.stack([np.interp(ph, np.linspace(0, 1, 109), one[:, i], period=None) for i in range(one.shape[1])], 1)
+    else:
+        fr = poly.frames(key, (t / poly.period) % 1.0)
     q = np.zeros((nper, len(names)))
     for k, bn in enumerate(LEG_BASES):                 # ODM reference order: left leg 0-4, head joints, right leg 11-15
         q[:, ix[f"{bn}_l"]] = fr[:, k]
