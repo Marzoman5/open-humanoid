@@ -186,8 +186,9 @@ def _servo_runs(b: Bundle, pack_soc: float = 1.0) -> dict:
         mask[gi] = False
         rec = {"rms_err_deg": round(float(np.sqrt((err[:, mask] ** 2).mean())), 2), "max_err_deg": round(float(err[:, mask].max()), 2),
                "worst_joint": lg.names[int(np.argmax(np.where(mask, err.max(0), 0)))],
-               "saturation_fraction_max": round(float(max(lg.extras["sat_frac"])), 3),
-               "saturated_joint": lg.names[int(np.argmax(lg.extras["sat_frac"]))],
+               "saturation_fraction_max": round(float(np.max(np.where(mask, lg.extras["sat_frac"], 0.0))), 3),
+               "saturated_joint": lg.names[int(np.argmax(np.where(mask, lg.extras["sat_frac"], 0.0)))],
+               "gripper_saturation_fraction(by design, torque-limited)": round(float(max([lg.extras["sat_frac"][i] for i in gi] or [0.0])), 3),
                "overload_trips": int(sum(lg.extras["protection_trips"])), "fell": bool(lg.fell),
                "min_bus_voltage_v": round(float(lg.vin[sl].min()), 2), "peak_total_current_a": round(float(lg.i_total[sl].max()), 2),
                "tether_mean_pct_bw": round(100 * lg.extras["assist_mean_bw"], 2)}

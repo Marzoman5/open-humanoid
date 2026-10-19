@@ -325,7 +325,7 @@ class ServoBank:
         # to the motor-side cap: net torque at the shaft can still reach the datasheet figure. (No double counting.)
         cap = cap0 + self.fric_last
         # firmware overload protection: > Overload_Torque for Protection_Time -> torque drops to Protective_Torque
-        over = np.abs(tau) > self.ov_frac * cap0
+        over = np.abs(np.clip(tau, -cap, cap)) > self.ov_frac * (self.stall_ref * self.vin / self.vin_ref)   # judged on the delivered torque vs the full stall
         self.ov_timer = np.where(over, self.ov_timer + self.dt, np.maximum(self.ov_timer - self.dt, 0.0))
         newly = (~self.protected) & (self.ov_timer >= self.prot_time)
         self.trips += newly

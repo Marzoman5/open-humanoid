@@ -154,7 +154,7 @@ def joint_metrics(robot: Robot, dem: Demand, vin_op: np.ndarray, *, torque_model
     tau, om = dem.tau[sl], dem.omega[sl]
     dt = float(dem.t[1] - dem.t[0]) if len(dem.t) > 1 else 0.01
     specs = [robot.servo[n] for n in robot.names]
-    k = max(1, int(round(0.04 / dt)))
+    k = max(1, int(round(config.gate("peak_window_s") / dt)))
     ker = np.ones(k) / k
     ma = lambda x: np.stack([np.convolve(np.pad(x[:, j], (k // 2, k - 1 - k // 2), mode="edge"), ker, mode="valid") for j in range(x.shape[1])], 1)  # noqa: E731
     tau_ma, om_ma = np.abs(ma(tau)), np.abs(ma(om))

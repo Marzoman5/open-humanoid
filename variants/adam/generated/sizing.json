@@ -3,9 +3,9 @@
   "variant": "adam",
   "feasible": true,
   "reason": "ok",
-  "height_m": 0.54,
+  "height_m": 0.53,
   "height_mode": "maximize",
-  "limiting_factor": "over budget: $662 > $550",
+  "limiting_factor": "over budget: $661 > $550",
   "joints_base": [
     "hip_yaw",
     "hip_roll",
@@ -14,12 +14,14 @@
     "ankle_pitch",
     "ankle_roll",
     "shoulder_pitch",
-    "elbow"
-  ],
-  "optional_added": [],
-  "optional_dropped": [
-    "shoulder_roll",
+    "elbow",
     "neck_yaw"
+  ],
+  "optional_added": [
+    "neck_yaw"
+  ],
+  "optional_dropped": [
+    "shoulder_roll"
   ],
   "sweep": [
     {
@@ -108,9 +110,9 @@
     },
     {
       "height_m": 0.54,
-      "feasible": true,
-      "reason": "ok",
-      "cost": 404.59
+      "feasible": false,
+      "reason": "over budget: $661 > $550",
+      "cost": 660.59
     },
     {
       "height_m": 0.55,
@@ -240,36 +242,36 @@
     }
   ],
   "mass": {
-    "structure_kg": 1.008,
-    "actuators_kg": 0.88,
+    "structure_kg": 0.953,
+    "actuators_kg": 0.935,
     "electronics_kg": 0.12,
-    "compute_power_kg": 0.51,
-    "total_kg": 2.518
+    "compute_power_kg": 0.515,
+    "total_kg": 2.523
   },
   "geometry_m": {
-    "ankle_height": 0.0243,
-    "shank": 0.1215,
-    "thigh": 0.1215,
-    "pelvis": 0.0324,
-    "torso": 0.135,
-    "neck": 0.0189,
-    "head": 0.0756,
-    "hip_width": 0.081,
-    "shoulder_width": 0.162,
-    "upper_arm": 0.0918,
-    "forearm": 0.0918,
-    "foot_length": 0.0918,
-    "foot_width": 0.0405
+    "ankle_height": 0.0238,
+    "shank": 0.1193,
+    "thigh": 0.1193,
+    "pelvis": 0.0318,
+    "torso": 0.1325,
+    "neck": 0.0186,
+    "head": 0.0742,
+    "hip_width": 0.0795,
+    "shoulder_width": 0.159,
+    "upper_arm": 0.0901,
+    "forearm": 0.0901,
+    "foot_length": 0.0901,
+    "foot_width": 0.0398
   },
   "segment_mass_kg": {
-    "torso": 1.0423,
-    "pelvis": 0.3208,
-    "head": 0.0806,
-    "thigh": 0.1906,
-    "shank": 0.1805,
-    "foot": 0.0302,
-    "upper_arm": 0.0953,
-    "forearm": 0.0403
+    "torso": 1.0858,
+    "pelvis": 0.3153,
+    "head": 0.0762,
+    "thigh": 0.1862,
+    "shank": 0.1767,
+    "foot": 0.0286,
+    "upper_arm": 0.0931,
+    "forearm": 0.0381
   },
   "actuators": {
     "hip_yaw_l": "sts3215-12v",
@@ -287,21 +289,22 @@
     "shoulder_pitch_l": "sts3215-12v",
     "shoulder_pitch_r": "sts3215-12v",
     "elbow_l": "sts3215-12v",
-    "elbow_r": "sts3215-12v"
+    "elbow_r": "sts3215-12v",
+    "neck_yaw": "sts3215-12v"
   },
   "cost_usd": {
-    "actuators": 256.0,
+    "actuators": 272.0,
     "fixed_parts": 125.0,
-    "material": 23.59,
-    "material_kg": 1.31,
-    "total": 404.59
+    "material": 22.3,
+    "material_kg": 1.239,
+    "total": 419.3
   },
   "gaits": {
     "walk": {
       "required": true,
       "ok": true,
       "worst_joint": "hip_pitch_l",
-      "worst_margin": 1.0,
+      "worst_margin": 1.02,
       "limit": "continuous",
       "failing": []
     },
@@ -329,9 +332,9 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 4.48,
-          "peak": 5.95,
-          "speed": 5.45
+          "continuous": 4.53,
+          "peak": 6.02,
+          "speed": 5.46
         }
       }
     },
@@ -340,9 +343,9 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 4.48,
-          "peak": 5.95,
-          "speed": 5.45
+          "continuous": 4.53,
+          "peak": 6.02,
+          "speed": 5.46
         }
       }
     },
@@ -351,9 +354,9 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 1.12,
-          "peak": 1.49,
-          "speed": 3.63
+          "continuous": 1.13,
+          "peak": 1.5,
+          "speed": 3.64
         }
       }
     },
@@ -362,9 +365,9 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 1.12,
-          "peak": 1.49,
-          "speed": 3.63
+          "continuous": 1.13,
+          "peak": 1.5,
+          "speed": 3.64
         }
       }
     },
@@ -373,8 +376,8 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 1.0,
-          "peak": 1.33,
+          "continuous": 1.02,
+          "peak": 1.35,
           "speed": 1.36
         }
       }
@@ -384,8 +387,8 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 1.0,
-          "peak": 1.33,
+          "continuous": 1.02,
+          "peak": 1.35,
           "speed": 1.36
         }
       }
@@ -395,8 +398,8 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 1.0,
-          "peak": 1.33,
+          "continuous": 1.02,
+          "peak": 1.35,
           "speed": 1.09
         }
       }
@@ -406,8 +409,8 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 1.0,
-          "peak": 1.33,
+          "continuous": 1.02,
+          "peak": 1.35,
           "speed": 1.09
         }
       }
@@ -417,8 +420,8 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 1.05,
-          "peak": 1.4,
+          "continuous": 1.07,
+          "peak": 1.42,
           "speed": 1.82
         }
       }
@@ -428,8 +431,8 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 1.05,
-          "peak": 1.4,
+          "continuous": 1.07,
+          "peak": 1.42,
           "speed": 1.82
         }
       }
@@ -439,9 +442,9 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 1.91,
-          "peak": 2.53,
-          "speed": 3.63
+          "continuous": 1.94,
+          "peak": 2.57,
+          "speed": 3.64
         }
       }
     },
@@ -450,9 +453,9 @@
         "ok": true,
         "limit": "continuous",
         "margins": {
-          "continuous": 1.91,
-          "peak": 2.53,
-          "speed": 3.63
+          "continuous": 1.94,
+          "peak": 2.57,
+          "speed": 3.64
         }
       }
     },
@@ -461,8 +464,8 @@
         "ok": true,
         "limit": "speed",
         "margins": {
-          "continuous": 7.71,
-          "peak": 10.92,
+          "continuous": 8.12,
+          "peak": 11.5,
           "speed": 1.03
         }
       }
@@ -472,8 +475,8 @@
         "ok": true,
         "limit": "speed",
         "margins": {
-          "continuous": 7.71,
-          "peak": 10.92,
+          "continuous": 8.12,
+          "peak": 11.5,
           "speed": 1.03
         }
       }
@@ -483,8 +486,8 @@
         "ok": true,
         "limit": "speed",
         "margins": {
-          "continuous": 51.87,
-          "peak": 73.48,
+          "continuous": 55.89,
+          "peak": 79.18,
           "speed": 1.07
         }
       }
@@ -494,8 +497,19 @@
         "ok": true,
         "limit": "speed",
         "margins": {
-          "continuous": 51.87,
-          "peak": 73.48,
+          "continuous": 55.89,
+          "peak": 79.18,
+          "speed": 1.07
+        }
+      }
+    },
+    "neck_yaw": {
+      "walk": {
+        "ok": true,
+        "limit": "speed",
+        "margins": {
+          "continuous": 61.75,
+          "peak": 87.48,
           "speed": 1.07
         }
       }
@@ -506,130 +520,138 @@
       "hip_yaw_l": {
         "base": "hip_yaw",
         "limb": "leg",
-        "continuous_nm": 0.263,
-        "peak_nm": 0.42,
+        "continuous_nm": 0.26,
+        "peak_nm": 0.416,
         "speed_rad_s": 0.829,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "hip_yaw_r": {
         "base": "hip_yaw",
         "limb": "leg",
-        "continuous_nm": 0.263,
-        "peak_nm": 0.42,
+        "continuous_nm": 0.26,
+        "peak_nm": 0.416,
         "speed_rad_s": 0.829,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "hip_roll_l": {
         "base": "hip_roll",
         "limb": "leg",
-        "continuous_nm": 1.051,
-        "peak_nm": 1.682,
+        "continuous_nm": 1.039,
+        "peak_nm": 1.662,
         "speed_rad_s": 1.244,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "hip_roll_r": {
         "base": "hip_roll",
         "limb": "leg",
-        "continuous_nm": 1.051,
-        "peak_nm": 1.682,
+        "continuous_nm": 1.039,
+        "peak_nm": 1.662,
         "speed_rad_s": 1.244,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "hip_pitch_l": {
         "base": "hip_pitch",
         "limb": "leg",
-        "continuous_nm": 1.176,
-        "peak_nm": 1.881,
+        "continuous_nm": 1.159,
+        "peak_nm": 1.855,
         "speed_rad_s": 3.318,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "hip_pitch_r": {
         "base": "hip_pitch",
         "limb": "leg",
-        "continuous_nm": 1.176,
-        "peak_nm": 1.881,
+        "continuous_nm": 1.159,
+        "peak_nm": 1.855,
         "speed_rad_s": 3.318,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "knee_l": {
         "base": "knee",
         "limb": "leg",
-        "continuous_nm": 1.176,
-        "peak_nm": 1.881,
+        "continuous_nm": 1.159,
+        "peak_nm": 1.855,
         "speed_rad_s": 4.147,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "knee_r": {
         "base": "knee",
         "limb": "leg",
-        "continuous_nm": 1.176,
-        "peak_nm": 1.881,
+        "continuous_nm": 1.159,
+        "peak_nm": 1.855,
         "speed_rad_s": 4.147,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "ankle_pitch_l": {
         "base": "ankle_pitch",
         "limb": "leg",
-        "continuous_nm": 1.12,
-        "peak_nm": 1.792,
+        "continuous_nm": 1.102,
+        "peak_nm": 1.764,
         "speed_rad_s": 2.488,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "ankle_pitch_r": {
         "base": "ankle_pitch",
         "limb": "leg",
-        "continuous_nm": 1.12,
-        "peak_nm": 1.792,
+        "continuous_nm": 1.102,
+        "peak_nm": 1.764,
         "speed_rad_s": 2.488,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "ankle_roll_l": {
         "base": "ankle_roll",
         "limb": "leg",
-        "continuous_nm": 0.618,
-        "peak_nm": 0.988,
+        "continuous_nm": 0.608,
+        "peak_nm": 0.973,
         "speed_rad_s": 1.244,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "ankle_roll_r": {
         "base": "ankle_roll",
         "limb": "leg",
-        "continuous_nm": 0.618,
-        "peak_nm": 0.988,
+        "continuous_nm": 0.608,
+        "peak_nm": 0.973,
         "speed_rad_s": 1.244,
-        "swing_load_nm": 0.126
+        "swing_load_nm": 0.12
       },
       "shoulder_pitch_l": {
         "base": "shoulder_pitch",
         "limb": "arm",
-        "continuous_nm": 0.153,
-        "peak_nm": 0.229,
+        "continuous_nm": 0.145,
+        "peak_nm": 0.217,
         "speed_rad_s": 4.4,
-        "swing_load_nm": 0.122
+        "swing_load_nm": 0.116
       },
       "shoulder_pitch_r": {
         "base": "shoulder_pitch",
         "limb": "arm",
-        "continuous_nm": 0.153,
-        "peak_nm": 0.229,
+        "continuous_nm": 0.145,
+        "peak_nm": 0.217,
         "speed_rad_s": 4.4,
-        "swing_load_nm": 0.122
+        "swing_load_nm": 0.116
       },
       "elbow_l": {
         "base": "elbow",
         "limb": "arm",
-        "continuous_nm": 0.023,
-        "peak_nm": 0.034,
+        "continuous_nm": 0.021,
+        "peak_nm": 0.032,
         "speed_rad_s": 4.4,
-        "swing_load_nm": 0.018
+        "swing_load_nm": 0.017
       },
       "elbow_r": {
         "base": "elbow",
         "limb": "arm",
-        "continuous_nm": 0.023,
-        "peak_nm": 0.034,
+        "continuous_nm": 0.021,
+        "peak_nm": 0.032,
         "speed_rad_s": 4.4,
-        "swing_load_nm": 0.018
+        "swing_load_nm": 0.017
+      },
+      "neck_yaw": {
+        "base": "neck_yaw",
+        "limb": "head",
+        "continuous_nm": 0.019,
+        "peak_nm": 0.029,
+        "speed_rad_s": 4.4,
+        "swing_load_nm": 0.015
       }
     }
   }

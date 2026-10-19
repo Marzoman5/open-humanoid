@@ -13,7 +13,11 @@ gates:
     value: 0.70
     class: gate
     source: research/ai-engineering/RECOMMENDATIONS.md B4 ("p95 Monte Carlo peak <= 70% of measured stall at operating voltage")
-    note: peak = max of a 40 ms moving average of |motor torque| (single-sample contact spikes are excluded); stall = datasheet stall scaled to the pack's NOMINAL voltage (conservative reference), see actuator models.
+    note: "peak = max of a moving average (peak_window_s) of |motor torque|; stall = datasheet stall scaled to the pack's NOMINAL voltage (conservative reference), see actuator models."
+  peak_window_s:
+    value: 0.10
+    class: assumption
+    source: "a torque pulse shorter than ~0.1 s is absorbed by gear/foot compliance and costs the servo only a momentary tracking deficit, so the peak gate looks at the 100 ms moving average. A stiff ideal-PD replay shows 20-50 ms touchdown spikes (18 N.m at 1.5x speed) that no real servo-foot system transmits. 0.04 s would make touchdown spikes decide the verdict."
   rms_torque_vs_continuous:
     value: 1.0
     class: gate

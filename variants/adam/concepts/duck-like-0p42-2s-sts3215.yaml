@@ -1,0 +1,41 @@
+# KNOWN-ROBOT CHECK (challenge-1 row 12), not an Adam candidate: an Open Duck Mini-like robot, the one direct STS3215 analogue
+# (research/robots/benchmarks.md: 0.42 m, 14x STS3215, Pi Zero 2 W, 2S pack, sim2real walking "partial").
+# What is approximated: the template has no head-roll/antenna joints (14 servos modelled: 6-DOF legs + neck yaw/pitch; the real robot has 5-DOF legs and 4 head joints);
+# Open Duck's real proportions are not in the research, so the spec default proportions (with the same packaging floors) are used;
+# the duck has no arms, so only the leg motions are evaluated. Use the result to see how much headroom a robot that walks leaves
+# under these gates: if it fails by a wide margin the gates are too strict for a hobby biped, if it passes narrowly they are about right.
+id: duck-like-0p42-2s-sts3215
+description: "Open Duck Mini-like known-robot check, 0.42 m, STS3215 7.4 V, 2S pack, legs only."
+base: adam
+height_m: 0.42
+template: humanoid_v2
+joints:
+  - hip_yaw
+  - hip_roll
+  - hip_pitch
+  - knee
+  - {name: ankle_pitch, range: [-80, 60]}
+  - ankle_roll
+  - neck_yaw
+  - neck_pitch
+actuator_default: sts3215-7v4
+locomotion:
+  walk: {stance_knee_flex_deg: 40}
+evaluate:
+  motions: [stand, walk_forward, walk_backward, turn, squat_90]
+power:
+  pack: lipo-2s-2200-turnigy
+  regulator: buck-5v-5a
+  compute: rpi-zero-2w
+parts:
+  onboard:
+    - {part: rpi-zero-2w, qty: 1}
+    - {part: microsd-32gb, qty: 1}
+    - {part: waveshare-bus-servo-adapter, qty: 1}
+    - {part: imu-bno085, qty: 1}
+    - {part: lipo-2s-2200-turnigy, qty: 1}
+    - {part: buck-5v-5a, qty: 1}
+    - {part: power-switch-xt60, qty: 1}
+    - {part: wiring-kit-bus, qty: 1}
+  offboard:
+    - {part: charger-skyrc-b6neo, qty: 1}
