@@ -201,7 +201,7 @@ All sources opened via WebFetch (raw GitHub/arXiv/API). No commit SHAs available
 | Action delay 0-3 steps (0-60 ms) | a, b, yaml, SUMMARY 7 | corrected | `maxval=3` in jax.random.randint is exclusive -> 0-2 steps (<=~40 ms); config says 0-3 |
 | Open Duck randomize.py: friction 0.5-1.0, frictionloss 0.9-1.1, armature 1.0-1.05, CoM +-0.05, mass 0.9-1.1, torso +-0.1, qpos0 +-0.03, kp 0.9-1.1 | b, yaml | verified | randomize.py source read in full |
 | Open Duck obs noise & push 0.1-1.0 / 5-10 s, cmd ranges 0.15/0.2 | b, c, yaml | verified; linvel noise commented out (added) | joystick.py |
-| Open Duck Mini uses BAM | SUMMARY 4 | unsupported | no BAM mention in Playground README or XML; search found no source. Needs SUMMARY edit (not in my write scope) |
+| Open Duck Mini uses BAM | SUMMARY 4 | **CORRECTED 2026-10-19 (challenge #2, row 18): supported.** The Open_Duck_Mini main README states actuator identification was done with Rhoban's BAM; ODM's armature 0.027 is BAM-derived. The earlier check only searched the Playground repo | https://github.com/apirrone/Open_Duck_Mini |
 | SO-ARM100 blog fit kp ~108 vs stock 998 | SUMMARY 6 | unsupported | not in methods/a at all; search found nothing. Needs SUMMARY edit |
 | ToddlerBot DR defaults (friction 0.4-1.0, damping/armature/frictionloss 0.8-1.2, kp/kd/tau 0.9-1.1, passive_active 0.5-1.5, backlash 0.02-0.1, push 1-3 f, 0.2 s/2 s) | b, yaml | verified (lines off by 1) | mjx_config.py DomainRandConfig |
 | gin override | b, yaml | partly checked | walk.gin: add_head_pose True, add_push off, no range overrides; 14 other gin files not checked |
