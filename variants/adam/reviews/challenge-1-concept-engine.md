@@ -34,3 +34,8 @@ Challenger: Opus, read-only, run against the work in progress in worktree `agent
 3. **Get-up:** must Adam self-right after a fall?
 
 Answers are recorded below once given.
+
+## Provisional answers (commander, overnight; maintainer to confirm or override)
+1. **R5 table height = coffee/side table, about 0.40–0.50 m.** A dining table (0.75 m) is above a ~0.5 m robot's head and isn't realistic at this budget. PROVISIONAL.
+2. **No purchase before the concept decision** (nothing is bought overnight). The decision runs on the tornado. If the winner flips on torque-speed, armature or Rth, the decision is marked **conditional**, and buying one bench servo per candidate voltage (~$15–30, counted as test equipment, not inside the $550) becomes the first purchase, before the main order. PROVISIONAL.
+3. **Self-righting is a SHOULD, not a MUST.** The concept must show a sit-to-stand / kneel-to-stand proxy is feasible within limits. Full get-up-from-prone is designed in P5 if margins allow. PROVISIONAL.
