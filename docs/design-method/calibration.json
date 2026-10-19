@@ -1,0 +1,1989 @@
+{
+  "generated_by": "oh design calibrate",
+  "rubric_version": 1,
+  "calibration": {
+    "status": "provisional",
+    "references": [
+      "human_canon",
+      "optimus_like",
+      "atlas_like"
+    ],
+    "counter_examples": [
+      "toy_chibi",
+      "adam_cad_v0"
+    ],
+    "caveat": "The three reference profiles are approximated from public dimensions and press images (see their `sources`), not pixel-measured. Bands below separate sleek from toy on THIS set. Re-run `oh design calibrate` with measured silhouettes (`--ref image.png`) before using any band as a hard gate.\n"
+  },
+  "summary": {
+    "human_canon": {
+      "kind": "reference",
+      "n_pass": 18,
+      "n_scored": 18,
+      "pass_fraction": 1.0,
+      "failed": []
+    },
+    "optimus_like": {
+      "kind": "reference",
+      "n_pass": 18,
+      "n_scored": 18,
+      "pass_fraction": 1.0,
+      "failed": []
+    },
+    "atlas_like": {
+      "kind": "reference",
+      "n_pass": 18,
+      "n_scored": 18,
+      "pass_fraction": 1.0,
+      "failed": []
+    },
+    "toy_chibi": {
+      "kind": "counter_example",
+      "n_pass": 7,
+      "n_scored": 18,
+      "pass_fraction": 0.389,
+      "failed": [
+        "P1",
+        "P2a",
+        "P3",
+        "P6",
+        "P7",
+        "P8a",
+        "P8b",
+        "P9b",
+        "P10a",
+        "P10b",
+        "S4a"
+      ]
+    },
+    "sample_sleek_050": {
+      "kind": "candidate",
+      "n_pass": 19,
+      "n_scored": 19,
+      "pass_fraction": 1.0,
+      "failed": []
+    },
+    "adam_cad_v0": {
+      "kind": "counter_example",
+      "n_pass": 5,
+      "n_scored": 20,
+      "pass_fraction": 0.25,
+      "failed": [
+        "P2b",
+        "P3",
+        "P4",
+        "P5",
+        "P8a",
+        "P9a",
+        "P9b",
+        "P10a",
+        "P10b",
+        "S3a",
+        "S3b",
+        "S4a",
+        "S4b",
+        "S5a",
+        "S5b"
+      ]
+    }
+  },
+  "separation": {
+    "P1": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "toy_chibi"
+      ],
+      "discriminates": true
+    },
+    "P2a": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "toy_chibi"
+      ],
+      "discriminates": true
+    },
+    "P2b": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "P3": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "toy_chibi",
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "P4": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "P5": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "P6": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "toy_chibi"
+      ],
+      "discriminates": true
+    },
+    "P7": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "toy_chibi"
+      ],
+      "discriminates": true
+    },
+    "P8a": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "toy_chibi",
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "P8b": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "toy_chibi"
+      ],
+      "discriminates": true
+    },
+    "P9a": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "P9b": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "toy_chibi",
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "P10a": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "toy_chibi",
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "P10b": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "toy_chibi",
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "S3a": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "S3b": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "S4a": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "toy_chibi",
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    },
+    "S4b": {
+      "refs_all_pass": true,
+      "counter_examples_failing": [
+        "adam_cad_v0"
+      ],
+      "discriminates": true
+    }
+  },
+  "gap": {
+    "lowest_reference_pass_fraction": 1.0,
+    "highest_counter_example_pass_fraction": 0.389,
+    "separates": true
+  },
+  "subjects": {
+    "human_canon": {
+      "kind": "reference",
+      "source": "design/references/human_canon.yaml",
+      "measured": {
+        "P1_head_height_f": 0.1249,
+        "P2_neck_length_hu": 0.208,
+        "P2_neck_width_ratio": 0.7215,
+        "P3_shoulder_width_f": 0.2797,
+        "P4_waist_over_shoulder": 0.6107,
+        "P5_pelvis_over_shoulder": 0.6821,
+        "P6_hip_height_f": 0.52,
+        "P6_source": "joint",
+        "P7_source": "joint",
+        "P7_knee_height_f": 0.285,
+        "P10_foot_length_f": 0.1528,
+        "P10_foot_height_f": 0.03,
+        "P8_thigh_taper_area": 0.514,
+        "P8_shank_taper_area": 0.4794,
+        "P9_thigh_widest_from_top": 0.0,
+        "P9_calf_widest_from_top": 0.2499,
+        "S3_ledge_count": 2,
+        "S3_ledge_total_f": 0.513,
+        "S3_leg_bumps": 2,
+        "S4_flat_area_fraction": 0.048,
+        "S4_worst_part_flat_fraction": 0.1082,
+        "M1_watertight_parts": "1/1",
+        "M1_parts_over_bed": "n/a (height > 1 m)",
+        "M1_not_computed": [
+          "wall_thickness",
+          "step_roundtrip",
+          "frame_clearance",
+          "rom_sweep"
+        ],
+        "M1_not_computed_reason": "needs the frame/servo model and the CAD geometry gate (T-0004 / cad check); not derivable from an outer mesh",
+        "height_m": 1.75,
+        "head_unit_m": 0.2185,
+        "landmarks_f": {
+          "crotch": 0.4685,
+          "knee": 0.285,
+          "hip": 0.52,
+          "neck_bottom": 0.8492,
+          "head_bottom": 0.8751
+        }
+      },
+      "evaluation": {
+        "criteria": {
+          "P1": {
+            "key": "P1_head_height_f",
+            "value": 0.1249,
+            "band": [
+              0.11,
+              0.15
+            ],
+            "verdict": "PASS",
+            "name": "Head height / H"
+          },
+          "P2a": {
+            "key": "P2_neck_length_hu",
+            "value": 0.208,
+            "band": [
+              0.18,
+              0.55
+            ],
+            "verdict": "PASS",
+            "name": "Visible neck length / head height"
+          },
+          "P2b": {
+            "key": "P2_neck_width_ratio",
+            "value": 0.7215,
+            "band": [
+              0.5,
+              null
+            ],
+            "verdict": "PASS",
+            "name": "Neck width / head width (no stick)"
+          },
+          "P3": {
+            "key": "P3_shoulder_width_f",
+            "value": 0.2797,
+            "band": [
+              0.22,
+              0.29
+            ],
+            "verdict": "PASS",
+            "name": "Outer shoulder width / H"
+          },
+          "P4": {
+            "key": "P4_waist_over_shoulder",
+            "value": 0.6107,
+            "band": [
+              0.5,
+              0.75
+            ],
+            "verdict": "PASS",
+            "name": "Waist width / shoulder width"
+          },
+          "P5": {
+            "key": "P5_pelvis_over_shoulder",
+            "value": 0.6821,
+            "band": [
+              0.62,
+              0.9
+            ],
+            "verdict": "PASS",
+            "name": "Pelvis width / shoulder width"
+          },
+          "P6": {
+            "key": "P6_hip_height_f",
+            "value": 0.52,
+            "band": [
+              0.46,
+              0.53
+            ],
+            "verdict": "PASS",
+            "name": "Hip-joint height / H"
+          },
+          "P7": {
+            "key": "P7_knee_height_f",
+            "value": 0.285,
+            "band": [
+              0.25,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Knee height / H"
+          },
+          "P8a": {
+            "key": "P8_thigh_taper_area",
+            "value": 0.514,
+            "band": [
+              null,
+              0.65
+            ],
+            "verdict": "PASS",
+            "name": "Thigh taper: distal / proximal section area"
+          },
+          "P8b": {
+            "key": "P8_shank_taper_area",
+            "value": 0.4794,
+            "band": [
+              null,
+              0.6
+            ],
+            "verdict": "PASS",
+            "name": "Shank taper: ankle / calf section area"
+          },
+          "P9a": {
+            "key": "P9_thigh_widest_from_top",
+            "value": 0.0,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "PASS",
+            "name": "Thigh widest point, fraction of length from the top"
+          },
+          "P9b": {
+            "key": "P9_calf_widest_from_top",
+            "value": 0.2499,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "PASS",
+            "name": "Calf widest point, fraction of shank from the top"
+          },
+          "P10a": {
+            "key": "P10_foot_length_f",
+            "value": 0.1528,
+            "band": [
+              0.13,
+              0.17
+            ],
+            "verdict": "PASS",
+            "name": "Foot length / H"
+          },
+          "P10b": {
+            "key": "P10_foot_height_f",
+            "value": 0.03,
+            "band": [
+              null,
+              0.05
+            ],
+            "verdict": "PASS",
+            "name": "Foot height / H"
+          },
+          "S1a": {
+            "key": "S1_iou_front",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Front silhouette IoU vs approved D1"
+          },
+          "S1b": {
+            "key": "S1_iou_side",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Side silhouette IoU vs approved D1"
+          },
+          "S3a": {
+            "key": "S3_ledge_count",
+            "value": 2,
+            "band": [
+              null,
+              6
+            ],
+            "verdict": "PASS",
+            "name": "Silhouette ledges (horizontal steps in the outer edge)"
+          },
+          "S3b": {
+            "key": "S3_leg_bumps",
+            "value": 2,
+            "band": [
+              null,
+              3
+            ],
+            "verdict": "PASS",
+            "name": "Unintended bumps in the leg width profile"
+          },
+          "S4a": {
+            "key": "S4_flat_area_fraction",
+            "value": 0.048,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Share of surface in flat patches >= 0.002 H^2"
+          },
+          "S4b": {
+            "key": "S4_worst_part_flat_fraction",
+            "value": 0.1082,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Largest flat patch / its part's area"
+          },
+          "S5a": {
+            "key": "S5_hardware_visible_fraction_front",
+            "value": null,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "NA",
+            "name": "Servo/frame/horn pixels visible, front"
+          },
+          "S5b": {
+            "key": "S5_hardware_visible_fraction_side",
+            "value": null,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "NA",
+            "name": "Servo/frame/horn pixels visible, side"
+          },
+          "HP": {
+            "key": "HP_all_enclosed_with_margin",
+            "value": null,
+            "band": [
+              1,
+              1
+            ],
+            "verdict": "NA",
+            "name": "Every hard point enclosed with wall + gap"
+          }
+        },
+        "n_pass": 18,
+        "n_scored": 18,
+        "pass_fraction": 1.0,
+        "failed": []
+      }
+    },
+    "optimus_like": {
+      "kind": "reference",
+      "source": "design/references/optimus_like.yaml",
+      "measured": {
+        "P1_head_height_f": 0.1329,
+        "P2_neck_length_hu": 0.2105,
+        "P2_neck_width_ratio": 0.6988,
+        "P3_shoulder_width_f": 0.2647,
+        "P4_waist_over_shoulder": 0.5509,
+        "P5_pelvis_over_shoulder": 0.6943,
+        "P6_hip_height_f": 0.52,
+        "P6_source": "joint",
+        "P7_source": "joint",
+        "P7_knee_height_f": 0.275,
+        "P10_foot_length_f": 0.1508,
+        "P10_foot_height_f": 0.03,
+        "P8_thigh_taper_area": 0.579,
+        "P8_shank_taper_area": 0.4648,
+        "P9_thigh_widest_from_top": 0.0,
+        "P9_calf_widest_from_top": 0.303,
+        "S3_ledge_count": 2,
+        "S3_ledge_total_f": 0.3134,
+        "S3_leg_bumps": 2,
+        "S4_flat_area_fraction": 0.0258,
+        "S4_worst_part_flat_fraction": 0.1058,
+        "M1_watertight_parts": "1/1",
+        "M1_parts_over_bed": "n/a (height > 1 m)",
+        "M1_not_computed": [
+          "wall_thickness",
+          "step_roundtrip",
+          "frame_clearance",
+          "rom_sweep"
+        ],
+        "M1_not_computed_reason": "needs the frame/servo model and the CAD geometry gate (T-0004 / cad check); not derivable from an outer mesh",
+        "height_m": 1.73,
+        "head_unit_m": 0.2299,
+        "landmarks_f": {
+          "crotch": 0.4765,
+          "knee": 0.275,
+          "hip": 0.52,
+          "neck_bottom": 0.8392,
+          "head_bottom": 0.8671
+        }
+      },
+      "evaluation": {
+        "criteria": {
+          "P1": {
+            "key": "P1_head_height_f",
+            "value": 0.1329,
+            "band": [
+              0.11,
+              0.15
+            ],
+            "verdict": "PASS",
+            "name": "Head height / H"
+          },
+          "P2a": {
+            "key": "P2_neck_length_hu",
+            "value": 0.2105,
+            "band": [
+              0.18,
+              0.55
+            ],
+            "verdict": "PASS",
+            "name": "Visible neck length / head height"
+          },
+          "P2b": {
+            "key": "P2_neck_width_ratio",
+            "value": 0.6988,
+            "band": [
+              0.5,
+              null
+            ],
+            "verdict": "PASS",
+            "name": "Neck width / head width (no stick)"
+          },
+          "P3": {
+            "key": "P3_shoulder_width_f",
+            "value": 0.2647,
+            "band": [
+              0.22,
+              0.29
+            ],
+            "verdict": "PASS",
+            "name": "Outer shoulder width / H"
+          },
+          "P4": {
+            "key": "P4_waist_over_shoulder",
+            "value": 0.5509,
+            "band": [
+              0.5,
+              0.75
+            ],
+            "verdict": "PASS",
+            "name": "Waist width / shoulder width"
+          },
+          "P5": {
+            "key": "P5_pelvis_over_shoulder",
+            "value": 0.6943,
+            "band": [
+              0.62,
+              0.9
+            ],
+            "verdict": "PASS",
+            "name": "Pelvis width / shoulder width"
+          },
+          "P6": {
+            "key": "P6_hip_height_f",
+            "value": 0.52,
+            "band": [
+              0.46,
+              0.53
+            ],
+            "verdict": "PASS",
+            "name": "Hip-joint height / H"
+          },
+          "P7": {
+            "key": "P7_knee_height_f",
+            "value": 0.275,
+            "band": [
+              0.25,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Knee height / H"
+          },
+          "P8a": {
+            "key": "P8_thigh_taper_area",
+            "value": 0.579,
+            "band": [
+              null,
+              0.65
+            ],
+            "verdict": "PASS",
+            "name": "Thigh taper: distal / proximal section area"
+          },
+          "P8b": {
+            "key": "P8_shank_taper_area",
+            "value": 0.4648,
+            "band": [
+              null,
+              0.6
+            ],
+            "verdict": "PASS",
+            "name": "Shank taper: ankle / calf section area"
+          },
+          "P9a": {
+            "key": "P9_thigh_widest_from_top",
+            "value": 0.0,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "PASS",
+            "name": "Thigh widest point, fraction of length from the top"
+          },
+          "P9b": {
+            "key": "P9_calf_widest_from_top",
+            "value": 0.303,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "PASS",
+            "name": "Calf widest point, fraction of shank from the top"
+          },
+          "P10a": {
+            "key": "P10_foot_length_f",
+            "value": 0.1508,
+            "band": [
+              0.13,
+              0.17
+            ],
+            "verdict": "PASS",
+            "name": "Foot length / H"
+          },
+          "P10b": {
+            "key": "P10_foot_height_f",
+            "value": 0.03,
+            "band": [
+              null,
+              0.05
+            ],
+            "verdict": "PASS",
+            "name": "Foot height / H"
+          },
+          "S1a": {
+            "key": "S1_iou_front",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Front silhouette IoU vs approved D1"
+          },
+          "S1b": {
+            "key": "S1_iou_side",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Side silhouette IoU vs approved D1"
+          },
+          "S3a": {
+            "key": "S3_ledge_count",
+            "value": 2,
+            "band": [
+              null,
+              6
+            ],
+            "verdict": "PASS",
+            "name": "Silhouette ledges (horizontal steps in the outer edge)"
+          },
+          "S3b": {
+            "key": "S3_leg_bumps",
+            "value": 2,
+            "band": [
+              null,
+              3
+            ],
+            "verdict": "PASS",
+            "name": "Unintended bumps in the leg width profile"
+          },
+          "S4a": {
+            "key": "S4_flat_area_fraction",
+            "value": 0.0258,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Share of surface in flat patches >= 0.002 H^2"
+          },
+          "S4b": {
+            "key": "S4_worst_part_flat_fraction",
+            "value": 0.1058,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Largest flat patch / its part's area"
+          },
+          "S5a": {
+            "key": "S5_hardware_visible_fraction_front",
+            "value": null,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "NA",
+            "name": "Servo/frame/horn pixels visible, front"
+          },
+          "S5b": {
+            "key": "S5_hardware_visible_fraction_side",
+            "value": null,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "NA",
+            "name": "Servo/frame/horn pixels visible, side"
+          },
+          "HP": {
+            "key": "HP_all_enclosed_with_margin",
+            "value": null,
+            "band": [
+              1,
+              1
+            ],
+            "verdict": "NA",
+            "name": "Every hard point enclosed with wall + gap"
+          }
+        },
+        "n_pass": 18,
+        "n_scored": 18,
+        "pass_fraction": 1.0,
+        "failed": []
+      }
+    },
+    "atlas_like": {
+      "kind": "reference",
+      "source": "design/references/atlas_like.yaml",
+      "measured": {
+        "P1_head_height_f": 0.1119,
+        "P2_neck_length_hu": 0.2589,
+        "P2_neck_width_ratio": 0.6882,
+        "P3_shoulder_width_f": 0.2757,
+        "P4_waist_over_shoulder": 0.6014,
+        "P5_pelvis_over_shoulder": 0.692,
+        "P6_hip_height_f": 0.52,
+        "P6_source": "joint",
+        "P7_source": "joint",
+        "P7_knee_height_f": 0.275,
+        "P10_foot_length_f": 0.1419,
+        "P10_foot_height_f": 0.03,
+        "P8_thigh_taper_area": 0.6067,
+        "P8_shank_taper_area": 0.4749,
+        "P9_thigh_widest_from_top": 0.0,
+        "P9_calf_widest_from_top": 0.269,
+        "S3_ledge_count": 2,
+        "S3_ledge_total_f": 0.502,
+        "S3_leg_bumps": 2,
+        "S4_flat_area_fraction": 0.0688,
+        "S4_worst_part_flat_fraction": 0.1129,
+        "M1_watertight_parts": "1/1",
+        "M1_parts_over_bed": "n/a (height > 1 m)",
+        "M1_not_computed": [
+          "wall_thickness",
+          "step_roundtrip",
+          "frame_clearance",
+          "rom_sweep"
+        ],
+        "M1_not_computed_reason": "needs the frame/servo model and the CAD geometry gate (T-0004 / cad check); not derivable from an outer mesh",
+        "height_m": 1.9,
+        "head_unit_m": 0.2126,
+        "landmarks_f": {
+          "crotch": 0.4765,
+          "knee": 0.275,
+          "hip": 0.52,
+          "neck_bottom": 0.8591,
+          "head_bottom": 0.8881
+        }
+      },
+      "evaluation": {
+        "criteria": {
+          "P1": {
+            "key": "P1_head_height_f",
+            "value": 0.1119,
+            "band": [
+              0.11,
+              0.15
+            ],
+            "verdict": "PASS",
+            "name": "Head height / H"
+          },
+          "P2a": {
+            "key": "P2_neck_length_hu",
+            "value": 0.2589,
+            "band": [
+              0.18,
+              0.55
+            ],
+            "verdict": "PASS",
+            "name": "Visible neck length / head height"
+          },
+          "P2b": {
+            "key": "P2_neck_width_ratio",
+            "value": 0.6882,
+            "band": [
+              0.5,
+              null
+            ],
+            "verdict": "PASS",
+            "name": "Neck width / head width (no stick)"
+          },
+          "P3": {
+            "key": "P3_shoulder_width_f",
+            "value": 0.2757,
+            "band": [
+              0.22,
+              0.29
+            ],
+            "verdict": "PASS",
+            "name": "Outer shoulder width / H"
+          },
+          "P4": {
+            "key": "P4_waist_over_shoulder",
+            "value": 0.6014,
+            "band": [
+              0.5,
+              0.75
+            ],
+            "verdict": "PASS",
+            "name": "Waist width / shoulder width"
+          },
+          "P5": {
+            "key": "P5_pelvis_over_shoulder",
+            "value": 0.692,
+            "band": [
+              0.62,
+              0.9
+            ],
+            "verdict": "PASS",
+            "name": "Pelvis width / shoulder width"
+          },
+          "P6": {
+            "key": "P6_hip_height_f",
+            "value": 0.52,
+            "band": [
+              0.46,
+              0.53
+            ],
+            "verdict": "PASS",
+            "name": "Hip-joint height / H"
+          },
+          "P7": {
+            "key": "P7_knee_height_f",
+            "value": 0.275,
+            "band": [
+              0.25,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Knee height / H"
+          },
+          "P8a": {
+            "key": "P8_thigh_taper_area",
+            "value": 0.6067,
+            "band": [
+              null,
+              0.65
+            ],
+            "verdict": "PASS",
+            "name": "Thigh taper: distal / proximal section area"
+          },
+          "P8b": {
+            "key": "P8_shank_taper_area",
+            "value": 0.4749,
+            "band": [
+              null,
+              0.6
+            ],
+            "verdict": "PASS",
+            "name": "Shank taper: ankle / calf section area"
+          },
+          "P9a": {
+            "key": "P9_thigh_widest_from_top",
+            "value": 0.0,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "PASS",
+            "name": "Thigh widest point, fraction of length from the top"
+          },
+          "P9b": {
+            "key": "P9_calf_widest_from_top",
+            "value": 0.269,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "PASS",
+            "name": "Calf widest point, fraction of shank from the top"
+          },
+          "P10a": {
+            "key": "P10_foot_length_f",
+            "value": 0.1419,
+            "band": [
+              0.13,
+              0.17
+            ],
+            "verdict": "PASS",
+            "name": "Foot length / H"
+          },
+          "P10b": {
+            "key": "P10_foot_height_f",
+            "value": 0.03,
+            "band": [
+              null,
+              0.05
+            ],
+            "verdict": "PASS",
+            "name": "Foot height / H"
+          },
+          "S1a": {
+            "key": "S1_iou_front",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Front silhouette IoU vs approved D1"
+          },
+          "S1b": {
+            "key": "S1_iou_side",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Side silhouette IoU vs approved D1"
+          },
+          "S3a": {
+            "key": "S3_ledge_count",
+            "value": 2,
+            "band": [
+              null,
+              6
+            ],
+            "verdict": "PASS",
+            "name": "Silhouette ledges (horizontal steps in the outer edge)"
+          },
+          "S3b": {
+            "key": "S3_leg_bumps",
+            "value": 2,
+            "band": [
+              null,
+              3
+            ],
+            "verdict": "PASS",
+            "name": "Unintended bumps in the leg width profile"
+          },
+          "S4a": {
+            "key": "S4_flat_area_fraction",
+            "value": 0.0688,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Share of surface in flat patches >= 0.002 H^2"
+          },
+          "S4b": {
+            "key": "S4_worst_part_flat_fraction",
+            "value": 0.1129,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Largest flat patch / its part's area"
+          },
+          "S5a": {
+            "key": "S5_hardware_visible_fraction_front",
+            "value": null,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "NA",
+            "name": "Servo/frame/horn pixels visible, front"
+          },
+          "S5b": {
+            "key": "S5_hardware_visible_fraction_side",
+            "value": null,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "NA",
+            "name": "Servo/frame/horn pixels visible, side"
+          },
+          "HP": {
+            "key": "HP_all_enclosed_with_margin",
+            "value": null,
+            "band": [
+              1,
+              1
+            ],
+            "verdict": "NA",
+            "name": "Every hard point enclosed with wall + gap"
+          }
+        },
+        "n_pass": 18,
+        "n_scored": 18,
+        "pass_fraction": 1.0,
+        "failed": []
+      }
+    },
+    "toy_chibi": {
+      "kind": "counter_example",
+      "source": "design/references/toy_chibi.yaml",
+      "measured": {
+        "P1_head_height_f": 0.1828,
+        "P2_neck_length_hu": 0.1421,
+        "P2_neck_width_ratio": 0.63,
+        "P3_shoulder_width_f": 0.4515,
+        "P4_waist_over_shoulder": 0.7429,
+        "P5_pelvis_over_shoulder": 0.7566,
+        "P6_hip_height_f": 0.36,
+        "P6_source": "joint",
+        "P7_source": "joint",
+        "P7_knee_height_f": 0.18,
+        "P10_foot_length_f": 0.2218,
+        "P10_foot_height_f": 0.0559,
+        "P8_thigh_taper_area": 0.9006,
+        "P8_shank_taper_area": 0.7944,
+        "P9_thigh_widest_from_top": 0.3247,
+        "P9_calf_widest_from_top": 0.4376,
+        "S3_ledge_count": 4,
+        "S3_ledge_total_f": 0.2236,
+        "S3_leg_bumps": 1,
+        "S4_flat_area_fraction": 0.4196,
+        "S4_worst_part_flat_fraction": 0.1572,
+        "M1_watertight_parts": "1/1",
+        "M1_parts_over_bed": [],
+        "M1_not_computed": [
+          "wall_thickness",
+          "step_roundtrip",
+          "frame_clearance",
+          "rom_sweep"
+        ],
+        "M1_not_computed_reason": "needs the frame/servo model and the CAD geometry gate (T-0004 / cad check); not derivable from an outer mesh",
+        "height_m": 0.5,
+        "head_unit_m": 0.0914,
+        "landmarks_f": {
+          "crotch": 0.3277,
+          "knee": 0.18,
+          "hip": 0.36,
+          "neck_bottom": 0.7912,
+          "head_bottom": 0.8172
+        }
+      },
+      "evaluation": {
+        "criteria": {
+          "P1": {
+            "key": "P1_head_height_f",
+            "value": 0.1828,
+            "band": [
+              0.11,
+              0.15
+            ],
+            "verdict": "FAIL",
+            "name": "Head height / H"
+          },
+          "P2a": {
+            "key": "P2_neck_length_hu",
+            "value": 0.1421,
+            "band": [
+              0.18,
+              0.55
+            ],
+            "verdict": "FAIL",
+            "name": "Visible neck length / head height"
+          },
+          "P2b": {
+            "key": "P2_neck_width_ratio",
+            "value": 0.63,
+            "band": [
+              0.5,
+              null
+            ],
+            "verdict": "PASS",
+            "name": "Neck width / head width (no stick)"
+          },
+          "P3": {
+            "key": "P3_shoulder_width_f",
+            "value": 0.4515,
+            "band": [
+              0.22,
+              0.29
+            ],
+            "verdict": "FAIL",
+            "name": "Outer shoulder width / H"
+          },
+          "P4": {
+            "key": "P4_waist_over_shoulder",
+            "value": 0.7429,
+            "band": [
+              0.5,
+              0.75
+            ],
+            "verdict": "PASS",
+            "name": "Waist width / shoulder width"
+          },
+          "P5": {
+            "key": "P5_pelvis_over_shoulder",
+            "value": 0.7566,
+            "band": [
+              0.62,
+              0.9
+            ],
+            "verdict": "PASS",
+            "name": "Pelvis width / shoulder width"
+          },
+          "P6": {
+            "key": "P6_hip_height_f",
+            "value": 0.36,
+            "band": [
+              0.46,
+              0.53
+            ],
+            "verdict": "FAIL",
+            "name": "Hip-joint height / H"
+          },
+          "P7": {
+            "key": "P7_knee_height_f",
+            "value": 0.18,
+            "band": [
+              0.25,
+              0.3
+            ],
+            "verdict": "FAIL",
+            "name": "Knee height / H"
+          },
+          "P8a": {
+            "key": "P8_thigh_taper_area",
+            "value": 0.9006,
+            "band": [
+              null,
+              0.65
+            ],
+            "verdict": "FAIL",
+            "name": "Thigh taper: distal / proximal section area"
+          },
+          "P8b": {
+            "key": "P8_shank_taper_area",
+            "value": 0.7944,
+            "band": [
+              null,
+              0.6
+            ],
+            "verdict": "FAIL",
+            "name": "Shank taper: ankle / calf section area"
+          },
+          "P9a": {
+            "key": "P9_thigh_widest_from_top",
+            "value": 0.3247,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "PASS",
+            "name": "Thigh widest point, fraction of length from the top"
+          },
+          "P9b": {
+            "key": "P9_calf_widest_from_top",
+            "value": 0.4376,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "FAIL",
+            "name": "Calf widest point, fraction of shank from the top"
+          },
+          "P10a": {
+            "key": "P10_foot_length_f",
+            "value": 0.2218,
+            "band": [
+              0.13,
+              0.17
+            ],
+            "verdict": "FAIL",
+            "name": "Foot length / H"
+          },
+          "P10b": {
+            "key": "P10_foot_height_f",
+            "value": 0.0559,
+            "band": [
+              null,
+              0.05
+            ],
+            "verdict": "FAIL",
+            "name": "Foot height / H"
+          },
+          "S1a": {
+            "key": "S1_iou_front",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Front silhouette IoU vs approved D1"
+          },
+          "S1b": {
+            "key": "S1_iou_side",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Side silhouette IoU vs approved D1"
+          },
+          "S3a": {
+            "key": "S3_ledge_count",
+            "value": 4,
+            "band": [
+              null,
+              6
+            ],
+            "verdict": "PASS",
+            "name": "Silhouette ledges (horizontal steps in the outer edge)"
+          },
+          "S3b": {
+            "key": "S3_leg_bumps",
+            "value": 1,
+            "band": [
+              null,
+              3
+            ],
+            "verdict": "PASS",
+            "name": "Unintended bumps in the leg width profile"
+          },
+          "S4a": {
+            "key": "S4_flat_area_fraction",
+            "value": 0.4196,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "FAIL",
+            "name": "Share of surface in flat patches >= 0.002 H^2"
+          },
+          "S4b": {
+            "key": "S4_worst_part_flat_fraction",
+            "value": 0.1572,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Largest flat patch / its part's area"
+          },
+          "S5a": {
+            "key": "S5_hardware_visible_fraction_front",
+            "value": null,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "NA",
+            "name": "Servo/frame/horn pixels visible, front"
+          },
+          "S5b": {
+            "key": "S5_hardware_visible_fraction_side",
+            "value": null,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "NA",
+            "name": "Servo/frame/horn pixels visible, side"
+          },
+          "HP": {
+            "key": "HP_all_enclosed_with_margin",
+            "value": null,
+            "band": [
+              1,
+              1
+            ],
+            "verdict": "NA",
+            "name": "Every hard point enclosed with wall + gap"
+          }
+        },
+        "n_pass": 7,
+        "n_scored": 18,
+        "pass_fraction": 0.389,
+        "failed": [
+          "P1",
+          "P2a",
+          "P3",
+          "P6",
+          "P7",
+          "P8a",
+          "P8b",
+          "P9b",
+          "P10a",
+          "P10b",
+          "S4a"
+        ]
+      }
+    },
+    "sample_sleek_050": {
+      "kind": "candidate",
+      "source": "design/sample/sample_sleek_050.yaml",
+      "measured": {
+        "P1_head_height_f": 0.1329,
+        "P2_neck_length_hu": 0.2105,
+        "P2_neck_width_ratio": 0.6588,
+        "P3_shoulder_width_f": 0.2817,
+        "P4_waist_over_shoulder": 0.5355,
+        "P5_pelvis_over_shoulder": 0.8191,
+        "P6_hip_height_f": 0.505,
+        "P6_source": "joint",
+        "P7_source": "joint",
+        "P7_knee_height_f": 0.275,
+        "P10_foot_length_f": 0.1618,
+        "P10_foot_height_f": 0.036,
+        "P8_thigh_taper_area": 0.6125,
+        "P8_shank_taper_area": 0.5243,
+        "P9_thigh_widest_from_top": 0.0,
+        "P9_calf_widest_from_top": 0.2987,
+        "S3_ledge_count": 2,
+        "S3_ledge_total_f": 0.3553,
+        "S3_leg_bumps": 2,
+        "S4_flat_area_fraction": 0.0363,
+        "S4_worst_part_flat_fraction": 0.1085,
+        "M1_watertight_parts": "1/1",
+        "M1_parts_over_bed": [],
+        "M1_not_computed": [
+          "wall_thickness",
+          "step_roundtrip",
+          "frame_clearance",
+          "rom_sweep"
+        ],
+        "M1_not_computed_reason": "needs the frame/servo model and the CAD geometry gate (T-0004 / cad check); not derivable from an outer mesh",
+        "HP_hard_points": [
+          {
+            "id": "thigh_servos_l",
+            "segment": "leg_l",
+            "margin_m": 0.0035,
+            "required_m": 0.003,
+            "pass": true
+          },
+          {
+            "id": "thigh_servos_r",
+            "segment": "leg_r",
+            "margin_m": 0.0035,
+            "required_m": 0.003,
+            "pass": true
+          },
+          {
+            "id": "knee_servo_l",
+            "segment": "leg_l",
+            "margin_m": 0.0043,
+            "required_m": 0.003,
+            "pass": true
+          },
+          {
+            "id": "knee_servo_r",
+            "segment": "leg_r",
+            "margin_m": 0.0043,
+            "required_m": 0.003,
+            "pass": true
+          }
+        ],
+        "HP_all_enclosed_with_margin": true,
+        "height_m": 0.5,
+        "head_unit_m": 0.0664,
+        "landmarks_f": {
+          "crotch": 0.4685,
+          "knee": 0.275,
+          "hip": 0.505,
+          "neck_bottom": 0.8392,
+          "head_bottom": 0.8671
+        }
+      },
+      "evaluation": {
+        "criteria": {
+          "P1": {
+            "key": "P1_head_height_f",
+            "value": 0.1329,
+            "band": [
+              0.11,
+              0.15
+            ],
+            "verdict": "PASS",
+            "name": "Head height / H"
+          },
+          "P2a": {
+            "key": "P2_neck_length_hu",
+            "value": 0.2105,
+            "band": [
+              0.18,
+              0.55
+            ],
+            "verdict": "PASS",
+            "name": "Visible neck length / head height"
+          },
+          "P2b": {
+            "key": "P2_neck_width_ratio",
+            "value": 0.6588,
+            "band": [
+              0.5,
+              null
+            ],
+            "verdict": "PASS",
+            "name": "Neck width / head width (no stick)"
+          },
+          "P3": {
+            "key": "P3_shoulder_width_f",
+            "value": 0.2817,
+            "band": [
+              0.22,
+              0.29
+            ],
+            "verdict": "PASS",
+            "name": "Outer shoulder width / H"
+          },
+          "P4": {
+            "key": "P4_waist_over_shoulder",
+            "value": 0.5355,
+            "band": [
+              0.5,
+              0.75
+            ],
+            "verdict": "PASS",
+            "name": "Waist width / shoulder width"
+          },
+          "P5": {
+            "key": "P5_pelvis_over_shoulder",
+            "value": 0.8191,
+            "band": [
+              0.62,
+              0.9
+            ],
+            "verdict": "PASS",
+            "name": "Pelvis width / shoulder width"
+          },
+          "P6": {
+            "key": "P6_hip_height_f",
+            "value": 0.505,
+            "band": [
+              0.46,
+              0.53
+            ],
+            "verdict": "PASS",
+            "name": "Hip-joint height / H"
+          },
+          "P7": {
+            "key": "P7_knee_height_f",
+            "value": 0.275,
+            "band": [
+              0.25,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Knee height / H"
+          },
+          "P8a": {
+            "key": "P8_thigh_taper_area",
+            "value": 0.6125,
+            "band": [
+              null,
+              0.65
+            ],
+            "verdict": "PASS",
+            "name": "Thigh taper: distal / proximal section area"
+          },
+          "P8b": {
+            "key": "P8_shank_taper_area",
+            "value": 0.5243,
+            "band": [
+              null,
+              0.6
+            ],
+            "verdict": "PASS",
+            "name": "Shank taper: ankle / calf section area"
+          },
+          "P9a": {
+            "key": "P9_thigh_widest_from_top",
+            "value": 0.0,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "PASS",
+            "name": "Thigh widest point, fraction of length from the top"
+          },
+          "P9b": {
+            "key": "P9_calf_widest_from_top",
+            "value": 0.2987,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "PASS",
+            "name": "Calf widest point, fraction of shank from the top"
+          },
+          "P10a": {
+            "key": "P10_foot_length_f",
+            "value": 0.1618,
+            "band": [
+              0.13,
+              0.17
+            ],
+            "verdict": "PASS",
+            "name": "Foot length / H"
+          },
+          "P10b": {
+            "key": "P10_foot_height_f",
+            "value": 0.036,
+            "band": [
+              null,
+              0.05
+            ],
+            "verdict": "PASS",
+            "name": "Foot height / H"
+          },
+          "S1a": {
+            "key": "S1_iou_front",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Front silhouette IoU vs approved D1"
+          },
+          "S1b": {
+            "key": "S1_iou_side",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Side silhouette IoU vs approved D1"
+          },
+          "S3a": {
+            "key": "S3_ledge_count",
+            "value": 2,
+            "band": [
+              null,
+              6
+            ],
+            "verdict": "PASS",
+            "name": "Silhouette ledges (horizontal steps in the outer edge)"
+          },
+          "S3b": {
+            "key": "S3_leg_bumps",
+            "value": 2,
+            "band": [
+              null,
+              3
+            ],
+            "verdict": "PASS",
+            "name": "Unintended bumps in the leg width profile"
+          },
+          "S4a": {
+            "key": "S4_flat_area_fraction",
+            "value": 0.0363,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Share of surface in flat patches >= 0.002 H^2"
+          },
+          "S4b": {
+            "key": "S4_worst_part_flat_fraction",
+            "value": 0.1085,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Largest flat patch / its part's area"
+          },
+          "S5a": {
+            "key": "S5_hardware_visible_fraction_front",
+            "value": null,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "NA",
+            "name": "Servo/frame/horn pixels visible, front"
+          },
+          "S5b": {
+            "key": "S5_hardware_visible_fraction_side",
+            "value": null,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "NA",
+            "name": "Servo/frame/horn pixels visible, side"
+          },
+          "HP": {
+            "key": "HP_all_enclosed_with_margin",
+            "value": true,
+            "band": [
+              1,
+              1
+            ],
+            "verdict": "PASS",
+            "name": "Every hard point enclosed with wall + gap"
+          }
+        },
+        "n_pass": 19,
+        "n_scored": 19,
+        "pass_fraction": 1.0,
+        "failed": []
+      }
+    },
+    "adam_cad_v0": {
+      "kind": "counter_example",
+      "source": "C:/Users/aemar/Documents/Easy Humanoid/.claude/worktrees/quizzical-fermi-f387e1/variants/adam/cad/export/robot.xml",
+      "measured": {
+        "P1_head_height_f": 0.142,
+        "P2_neck_length_hu": 0.1901,
+        "P2_neck_width_ratio": 0.4255,
+        "P3_shoulder_width_f": 0.476,
+        "P4_waist_over_shoulder": 0.3857,
+        "P5_pelvis_over_shoulder": 0.9748,
+        "P6_hip_height_f": 0.5051,
+        "P6_source": "joint",
+        "P7_source": "joint",
+        "P7_knee_height_f": 0.2755,
+        "P10_foot_length_f": 0.19,
+        "P10_foot_height_f": 0.069,
+        "P8_thigh_taper_area": 0.6616,
+        "P8_shank_taper_area": 0.424,
+        "P9_thigh_widest_from_top": 0.3762,
+        "P9_calf_widest_from_top": 0.3462,
+        "S3_ledge_count": 30,
+        "S3_ledge_total_f": 2.6464,
+        "S3_leg_bumps": 6,
+        "S4_flat_area_fraction": 0.5755,
+        "S4_worst_part_flat_fraction": 0.4618,
+        "S5_hardware_visible_fraction_front": 0.1858,
+        "S5_hardware_visible_fraction_side": 0.1804,
+        "M1_watertight_parts": "46/52",
+        "M1_parts_over_bed": [],
+        "M1_not_computed": [
+          "wall_thickness",
+          "step_roundtrip",
+          "frame_clearance",
+          "rom_sweep"
+        ],
+        "M1_not_computed_reason": "needs the frame/servo model and the CAD geometry gate (T-0004 / cad check); not derivable from an outer mesh",
+        "height_m": 0.49,
+        "head_unit_m": 0.0696,
+        "landmarks_f": {
+          "crotch": 0.544,
+          "knee": 0.2755,
+          "hip": 0.5051,
+          "neck_bottom": 0.831,
+          "head_bottom": 0.858
+        }
+      },
+      "evaluation": {
+        "criteria": {
+          "P1": {
+            "key": "P1_head_height_f",
+            "value": 0.142,
+            "band": [
+              0.11,
+              0.15
+            ],
+            "verdict": "PASS",
+            "name": "Head height / H"
+          },
+          "P2a": {
+            "key": "P2_neck_length_hu",
+            "value": 0.1901,
+            "band": [
+              0.18,
+              0.55
+            ],
+            "verdict": "PASS",
+            "name": "Visible neck length / head height"
+          },
+          "P2b": {
+            "key": "P2_neck_width_ratio",
+            "value": 0.4255,
+            "band": [
+              0.5,
+              null
+            ],
+            "verdict": "FAIL",
+            "name": "Neck width / head width (no stick)"
+          },
+          "P3": {
+            "key": "P3_shoulder_width_f",
+            "value": 0.476,
+            "band": [
+              0.22,
+              0.29
+            ],
+            "verdict": "FAIL",
+            "name": "Outer shoulder width / H"
+          },
+          "P4": {
+            "key": "P4_waist_over_shoulder",
+            "value": 0.3857,
+            "band": [
+              0.5,
+              0.75
+            ],
+            "verdict": "FAIL",
+            "name": "Waist width / shoulder width"
+          },
+          "P5": {
+            "key": "P5_pelvis_over_shoulder",
+            "value": 0.9748,
+            "band": [
+              0.62,
+              0.9
+            ],
+            "verdict": "FAIL",
+            "name": "Pelvis width / shoulder width"
+          },
+          "P6": {
+            "key": "P6_hip_height_f",
+            "value": 0.5051,
+            "band": [
+              0.46,
+              0.53
+            ],
+            "verdict": "PASS",
+            "name": "Hip-joint height / H"
+          },
+          "P7": {
+            "key": "P7_knee_height_f",
+            "value": 0.2755,
+            "band": [
+              0.25,
+              0.3
+            ],
+            "verdict": "PASS",
+            "name": "Knee height / H"
+          },
+          "P8a": {
+            "key": "P8_thigh_taper_area",
+            "value": 0.6616,
+            "band": [
+              null,
+              0.65
+            ],
+            "verdict": "FAIL",
+            "name": "Thigh taper: distal / proximal section area"
+          },
+          "P8b": {
+            "key": "P8_shank_taper_area",
+            "value": 0.424,
+            "band": [
+              null,
+              0.6
+            ],
+            "verdict": "PASS",
+            "name": "Shank taper: ankle / calf section area"
+          },
+          "P9a": {
+            "key": "P9_thigh_widest_from_top",
+            "value": 0.3762,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "FAIL",
+            "name": "Thigh widest point, fraction of length from the top"
+          },
+          "P9b": {
+            "key": "P9_calf_widest_from_top",
+            "value": 0.3462,
+            "band": [
+              null,
+              0.33
+            ],
+            "verdict": "FAIL",
+            "name": "Calf widest point, fraction of shank from the top"
+          },
+          "P10a": {
+            "key": "P10_foot_length_f",
+            "value": 0.19,
+            "band": [
+              0.13,
+              0.17
+            ],
+            "verdict": "FAIL",
+            "name": "Foot length / H"
+          },
+          "P10b": {
+            "key": "P10_foot_height_f",
+            "value": 0.069,
+            "band": [
+              null,
+              0.05
+            ],
+            "verdict": "FAIL",
+            "name": "Foot height / H"
+          },
+          "S1a": {
+            "key": "S1_iou_front",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Front silhouette IoU vs approved D1"
+          },
+          "S1b": {
+            "key": "S1_iou_side",
+            "value": null,
+            "band": [
+              0.95,
+              null
+            ],
+            "verdict": "NA",
+            "name": "Side silhouette IoU vs approved D1"
+          },
+          "S3a": {
+            "key": "S3_ledge_count",
+            "value": 30,
+            "band": [
+              null,
+              6
+            ],
+            "verdict": "FAIL",
+            "name": "Silhouette ledges (horizontal steps in the outer edge)"
+          },
+          "S3b": {
+            "key": "S3_leg_bumps",
+            "value": 6,
+            "band": [
+              null,
+              3
+            ],
+            "verdict": "FAIL",
+            "name": "Unintended bumps in the leg width profile"
+          },
+          "S4a": {
+            "key": "S4_flat_area_fraction",
+            "value": 0.5755,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "FAIL",
+            "name": "Share of surface in flat patches >= 0.002 H^2"
+          },
+          "S4b": {
+            "key": "S4_worst_part_flat_fraction",
+            "value": 0.4618,
+            "band": [
+              null,
+              0.3
+            ],
+            "verdict": "FAIL",
+            "name": "Largest flat patch / its part's area"
+          },
+          "S5a": {
+            "key": "S5_hardware_visible_fraction_front",
+            "value": 0.1858,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "FAIL",
+            "name": "Servo/frame/horn pixels visible, front"
+          },
+          "S5b": {
+            "key": "S5_hardware_visible_fraction_side",
+            "value": 0.1804,
+            "band": [
+              null,
+              0.005
+            ],
+            "verdict": "FAIL",
+            "name": "Servo/frame/horn pixels visible, side"
+          },
+          "HP": {
+            "key": "HP_all_enclosed_with_margin",
+            "value": null,
+            "band": [
+              1,
+              1
+            ],
+            "verdict": "NA",
+            "name": "Every hard point enclosed with wall + gap"
+          }
+        },
+        "n_pass": 5,
+        "n_scored": 20,
+        "pass_fraction": 0.25,
+        "failed": [
+          "P2b",
+          "P3",
+          "P4",
+          "P5",
+          "P8a",
+          "P9a",
+          "P9b",
+          "P10a",
+          "P10b",
+          "S3a",
+          "S3b",
+          "S4a",
+          "S4b",
+          "S5a",
+          "S5b"
+        ]
+      }
+    }
+  }
+}

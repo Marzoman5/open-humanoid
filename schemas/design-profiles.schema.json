@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Open Humanoid design profiles",
+  "description": "variants/<id>/design/profiles.yaml: the source of truth for the outer shape (ADR 0010). Units: metres. Frame: z up, x forward, y left, origin on the ground under the body centre.",
+  "type": "object",
+  "required": ["schema", "height_m", "segments"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": "design-profiles/0.1"},
+    "name": {"type": "string"},
+    "notes": {"type": "string"},
+    "height_m": {"type": "number", "exclusiveMinimum": 0},
+    "head_unit_m": {"type": "number", "exclusiveMinimum": 0, "description": "Defaults to the extent of the segment with role 'head'."},
+    "sources": {"type": "array", "items": {"type": "string"}, "description": "Where the numbers came from (required for reference profiles)."},
+    "confidence": {"enum": ["measured", "approximate", "low"]},
+    "kind": {"enum": ["design", "reference", "counter_example"], "description": "What the file is for; only used by the calibration tooling."},
+    "blend": {
+      "type": "object", "additionalProperties": false,
+      "properties": {"k_m": {"type": "number", "minimum": 0}, "voxel_m": {"type": "number", "exclusiveMinimum": 0}}
+    },
+    "segments": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["id", "stations"], "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "role": {"type": "string", "description": "Free tag (head, neck, torso, pelvis, thigh, shank, foot, upper_arm, forearm, hand...)."},
+          "axis": {"enum": ["z", "x"], "default": "z", "description": "Loft axis. z: stations carry z, w=y-extent, d=x-extent. x: stations carry x, w=y-extent, d=z-extent (feet)."},
+          "mirror": {"type": "boolean", "default": false, "description": "Emit <id>_l (as written, y>0) and <id>_r (y negated)."},
+          "k_m": {"type": "number", "minimum": 0, "description": "Smooth-union radius override for this segment (0 = hard union)."},
+          "stations": {
+            "type": "array", "minItems": 2,
+            "items": {
+              "type": "object", "additionalProperties": false,
+              "required": ["w", "d"],
+              "properties": {
+                "z": {"type": "number"}, "x": {"type": "number"},
+                "w": {"type": "number", "exclusiveMinimum": 0},
+                "d": {"type": "number", "exclusiveMinimum": 0},
+                "n": {"type": "number", "minimum": 1.5, "maximum": 12, "description": "Superellipse exponent (default 2): 2 ellipse, 3-4 rounded squircle, >6 boxy."},
+                "cx": {"type": "number"}, "cy": {"type": "number"}, "cz": {"type": "number"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "joints": {
+      "type": "array",
+      "items": {"type": "object", "required": ["id", "pos"], "additionalProperties": false,
+        "properties": {"id": {"type": "string"}, "pos": {"type": "array", "items": {"type": "number"}, "minItems": 3, "maxItems": 3}}}
+    },
+    "hard_points": {
+      "type": "array",
+      "items": {"type": "object", "required": ["id", "center", "size"], "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string"},
+          "segment": {"type": "string", "description": "Segment id (with _l/_r) that must enclose it; default: the union."},
+          "center": {"type": "array", "items": {"type": "number"}, "minItems": 3, "maxItems": 3},
+          "size": {"type": "array", "items": {"type": "number"}, "minItems": 3, "maxItems": 3},
+          "margin_m": {"type": "number", "minimum": 0, "description": "Required wall + gap between the box and the outer surface."}
+        }}
+    }
+  }
+}
