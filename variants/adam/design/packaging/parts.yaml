@@ -1,0 +1,19 @@
+# Packaging-for-look study (T-20261019-c1aa): candidate SMALL servos and rail parts, variant-local DATA (not catalog entries).
+# Read by packaging/layout.py (body sizes) and packaging/engine.py (an in-process actuator model on a regulated rail).
+# Source: web research 2026-10-19 (Feetech wiki model pages, Waveshare, aifitlab, Core Electronics, Pololu). verified: false on every
+# line: Feetech's wiki itself flags table/PDF conflicts, and no unit was measured. A catalog task must add these (with verified flags)
+# before anything is ordered. Body dims: L (long), W (width), H (along the output axis), AX (output axis to the near end: ESTIMATE W/2).
+# armature_kg_m2 is an ASSUMPTION (no identification exists): STS3215 0.02 (BAM 7.4 V fit), Waveshare ST3025 0.00399 (BAM m4 file);
+# the 15 mm class is taken at 0.002 and the 12 mm micro at 0.001, with a sensitivity run at the ST3025 value.
+servos:
+  sts3215-12v: {L: 45.2, W: 24.7, H: 35.0, AX: 12.0, mass_kg: 0.055, price: 20.90, rail_v: null,
+                note: "baseline (catalog, verified)"}
+  sts3045m: {L: 36.0, W: 15.0, H: 29.2, AX: 7.5, mass_kg: 0.0348, stall_nm: 0.588, noload_rad_s: 7.87, voltage_v: [4.8, 7.4],
+             continuous_nm: 0.196, armature_kg_m2: 0.002, price: 40.00, rail_v: 6.0, encoder: "12-bit magnetic, 360 deg",
+             source: "https://ftservo.github.io/ftservo-wiki/en/products/models/st-3045-c001/main/ (6 kg.cm, 0.133 s/60deg @ 6 V, 2 kg.cm rated, 36x15x29.2, 34.8 g); price aifitlab $40 (backordered), Core Electronics A$57.93 (in stock)"}
+  scs0009: {L: 23.2, W: 12.1, H: 25.25, AX: 6.0, mass_kg: 0.0132, stall_nm: 0.226, noload_rad_s: 10.47, voltage_v: [4.0, 6.0],
+            continuous_nm: 0.069, armature_kg_m2: 0.001, price: 8.99, rail_v: 6.0, encoder: "10-bit potentiometer, 300 deg",
+            source: "https://ftservo.github.io/ftservo-wiki/en/products/models/sc-0090-c001/main/ (2.3 kg.cm, 0.1 s/60deg @ 6 V, 0.7 kg.cm rated); Waveshare SC09 $8.99 https://www.waveshare.com/product/modules/sc09-servo.htm (4-6 V)"}
+rail:
+  buck-pololu-d36v50f6: {price: 39.95, out_v: 6.0, max_a: 5.5, size_mm: [25.4, 25.4, 9.5], mass_kg: 0.007,
+                         source: "https://www.pololu.com/product/4092 (6.5-50 V in, 5.5 A typ., thermally limited; Rationed, backorder allowed) read 2026-10-19"}
