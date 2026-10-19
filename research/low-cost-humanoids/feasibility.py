@@ -23,6 +23,7 @@ ACT = {
 # hip roll 1.66, ankle roll 0.97, hip yaw 0.42, shoulder pitch 0.22. scale.md: joint torque ~ h^3.3.
 H_ADAM, H_NEW = 0.53, 0.90
 K = (H_NEW / H_ADAM) ** 3.3
+K_MH = (11.5 / 2.52) * (H_NEW / H_ADAM)  # alternative: torque ~ mass x height, 11.5 kg from the mass fit
 REQ_ADAM = {"hip_yaw": 0.42, "hip_roll": 1.66, "hip_pitch": 1.85, "knee": 1.85,
             "ankle_pitch": 1.76, "ankle_roll": 0.97, "shoulder_pitch": 0.22}
 # Quasi-static walking requirement only. Push recovery / dance / sim-to-real margin: engineers use 2-3x.
@@ -33,7 +34,7 @@ PLANS = {
     # lean: cheapest class that clears ~2x the scaled quasi-static requirement
     "lean": {
         "hip_yaw": "RS05", "hip_roll": "RS02", "hip_pitch": "RS06", "knee": "RS06",
-        "ankle_pitch": "RS02", "ankle_roll": "RS05",
+        "ankle_pitch": "RS02", "ankle_roll": "RS00",
         "waist_yaw": "RS05", "shoulder_pitch": "RS05", "shoulder_roll": "RS05", "elbow": "STS3250",
         "wrist_pitch": "STS3215", "neck_yaw": "STS3215", "neck_pitch": "STS3215",
     },
@@ -107,7 +108,7 @@ def main() -> None:
             key = j if j in plan else None
             if key:
                 pk = ACT[plan[key]]["peak"]
-                print(f"   {j:15s} {plan[key]:8s} peak {pk:5.1f} Nm vs scaled quasi-static {req*K:4.1f} Nm -> margin {pk/(req*K):4.1f}x")
+                print(f"   {j:15s} {plan[key]:8s} peak {pk:5.1f} Nm vs scaled {req*K:4.1f} (h^3.3) / {req*K_MH:4.1f} (m*h) Nm -> margin {pk/(req*K):3.1f}x / {pk/(req*K_MH):3.1f}x")
     print("\nother parts:")
     for k, v in OTHER.items():
         print(f"  ${v:4d}  {k}")

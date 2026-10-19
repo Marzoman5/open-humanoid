@@ -1,0 +1,56 @@
+# Low-cost integrated joint actuators (curated from raw/actuators-raw.yaml). Snapshot 2026-10-19.
+# ALL specs are vendor/retailer claims: no independent bench data, dyno data or failure reports were found for any
+# commercial actuator here. Peak torque is transient; vendors and retailers advise designing to rated torque with heat sinking.
+# price_usd = cheapest listing found (aifitlab, China-shipped, mostly BACKORDERED on 2026-10-19); us_facing_usd = openelab.com DDP
+# (duties included) or roboticscenter.ai (SF stock claim, 4-6 wk backorder + ~USD 67 shipping on RS03). Null = unknown.
+schema_version: 1
+accessed: 2026-10-19
+retailers:
+  aifitlab: {url: "https://aifitlab.com", ships_from: "China, SF Express 7-12 business days", duties: "finalised at checkout, buyer liable", stock: "'Only Motor' variants backordered"}
+  openelab_com: {url: "https://openelab.com", ships_from: "US warehouses (NJ, Arlington) or China; 10-20 working days if restock needed", duties: "stated included on .com USD pages (conflicts with .io EUR pages)"}
+  roboticscenter_ai: {url: "https://www.roboticscenter.ai/store/brand/robstride/", ships_from: "claims some San Francisco stock", duties: null}
+actuators:
+- {id: robstride_rs05, peak_nm: 5.5, rated_nm: 1.6, no_load_rpm: 480, mass_g: 191, size_mm: [46,46,44], volt_v: "48 (15-60)", bus: "CAN 1 Mbps", encoder: "dual 14-bit", ratio: 7.75, price_usd: 110, us_facing_usd: 155, source: "https://aifitlab.com/products/robstride-05-motor", kind: vendor}
+- {id: robstride_rs00, peak_nm: 14, rated_nm: 5, no_load_rpm: 315, mass_g: 310, size_mm: [57,57,51], volt_v: "48 (24-60)", bus: "CAN 1 Mbps", encoder: "dual 14-bit", ratio: 10, price_usd: 125, us_facing_usd: 185, source: "https://aifitlab.com/products/robstride-00-motor", kind: vendor}
+- {id: robstride_rs01, peak_nm: 17, rated_nm: 6, mass_g: 380, volt_v: "36 (24-48)", bus: CAN, encoder: "SINGLE 14-bit", ratio: 7.75, price_usd: 158, us_facing_usd: 185, source: "https://openelab.com/products/robstride01-joint-bldc-gear-motor", kind: vendor}
+- {id: robstride_rs02, peak_nm: 17, rated_nm: 6, no_load_rpm: 410, mass_g: 405, size_mm: [78.5,78.5,45.5], volt_v: "48 (24-60)", bus: "CAN 1 Mbps (CANFD, IP67 variants)", encoder: "dual 14-bit", ratio: 7.75, price_usd: 145, us_facing_usd: 175, source: "https://aifitlab.com/products/robstride-02-motor", kind: vendor, note: "matches repo research/actuators/robstride-02: 6/17 N.m, 405 g, USD 145 re-verified"}
+- {id: robstride_rs06, peak_nm: 36, rated_nm: 11, no_load_rpm: 480, mass_g: 621, size_mm: [88,88,49], volt_v: "48 (15-60)", bus: "CAN 1 Mbps", encoder: "dual 14-bit", ratio: 9, price_usd: 210, us_facing_usd: 222, source: "https://aifitlab.com/products/robstride-06-motor", kind: vendor, note: "new since the repo's RS02/03/04 notes; best USD/N.m and N.m/kg in the 20-40 N.m class on paper"}
+- {id: robstride_rs10p, peak_nm: 42, rated_nm: 14, mass_g: 460, volt_v: "48 (15-60)", encoder: "dual 14-bit", ratio: 25, price_usd: null, us_facing_usd: 234, source: "https://openelab.com/products/robstride-10p-qdd-joint-actuator", kind: vendor, note: "25:1, less backdrivable; pre-order"}
+- {id: robstride_rs03, peak_nm: 60, rated_nm: 20, no_load_rpm: 195, mass_g: 880, size_mm: [106,106,56], volt_v: "48 (15-60)", bus: "CAN 1 Mbps", encoder: "dual 14-bit", ratio: 9, price_usd: 225, us_facing_usd: 250, source: "https://aifitlab.com/products/robstride-03-motor", kind: vendor, note: "matches repo note"}
+- {id: robstride_rs04, peak_nm: 120, rated_nm: 40, mass_g: 1420, size_mm: [120,120,56], volt_v: "48 (15-60)", encoder: "dual 14-bit", ratio: 9, price_usd: 255, us_facing_usd: 295, source: "https://aifitlab.com/products/robstride-04-motor", kind: vendor}
+- {id: damiao_dm_j3507, peak_nm: 3, rated_nm: 0.8, mass_g: 150, ratio: 7, price_usd: 120, kind: vendor, source: "Damiao 2025 catalog"}
+- {id: damiao_dm_j4310, peak_nm: "7 (catalog) or 12.5 (aifitlab V4 table): CONFLICT", rated_nm: 3, mass_g: 300, volt_v: "24 (24-48)", bus: "CAN / CAN-FD", encoder: "dual 14/16-bit", ratio: 10, price_usd: 125, us_facing_usd: 167, source: "https://aifitlab.com/products/damiao-dm-j4310-2ec-v1-1-servo-motor", kind: vendor}
+- {id: damiao_dm_j4340, peak_nm: 27, rated_nm: 9, no_load_rpm: "52 at 24 V, 100 at 48 V", mass_g: 362, ratio: 40, price_usd: 155, source: "Damiao 2025 selection catalog + aifitlab listing (see raw/actuators-raw.yaml)", kind: vendor, note: "40:1: slow, not backdrivable; arms/waist, not dynamic legs. Roboto Origin pays CNY 949 for the 4340P"}
+- {id: damiao_dm_j6006, peak_nm: "11-12 (conflict)", rated_nm: 4, mass_g: 335, ratio: 6, price_usd: 150, kind: vendor}
+- {id: damiao_dm_j8006, peak_nm: 20, rated_nm: 8, no_load_rpm: "194 at 24 V", mass_g: 559, ratio: 6, price_usd: 210, kind: vendor, note: "RS06 gives about 1.8x the peak at similar price and mass"}
+- {id: damiao_dm_j8009p, peak_nm: 40, rated_nm: 20, mass_g: 921, ratio: 9, price_usd: 395, kind: vendor}
+- {id: damiao_dm_j6248p, peak_nm: 97, rated_nm: 30, no_load_rpm: 60, mass_g: 628, ratio: 48, price_usd: 265, kind: vendor, note: "48:1, 60 rpm: not a walking-leg actuator"}
+- {id: damiao_dm_j10010l, peak_nm: 120, rated_nm: 40, mass_g: 1375, ratio: 10, price_usd: 265, kind: vendor, note: "Roboto Origin BOM: CNY 1,989 each"}
+- {id: xiaomi_cybergear, peak_nm: 12, rated_nm: 4, mass_g: 317, volt_v: 24, encoder: "SINGLE 14-bit", ratio: 7.75, price_usd: 179, kind: vendor, note: "dominated by RS02 now (17 N.m, USD 145)"}
+- {id: unitree_go_m8010_6, peak_nm: 23.7, mass_g: 530, volt_v: "12-30", bus: "RS-485 4 Mbps", encoder: "15-bit", ratio: 6.33, price_usd: 280, us_facing_usd: 369, kind: vendor, note: "dominated by RS06; Qmini robot uses 11 of these"}
+- {id: cubemars_ak45_36, peak_nm: 24, rated_nm: 8, mass_g: 349, ratio: 36, backlash_arcmin: 12, price_usd: 186, kind: vendor, note: "36:1, poor backdrivability"}
+- {id: cubemars_ak70_10, peak_nm: 24.8, rated_nm: 8.3, mass_g: "521-621 (conflict)", ratio: 10, price_usd: 399, us_facing_usd: 564, kind: vendor, note: "RobotShop USD 563.76 in stock; MEVITA robot uses 6"}
+- {id: cubemars_ak10_9, peak_nm: 53, rated_nm: 18, mass_g: 940, ratio: 9, price_usd: 699, kind: vendor}
+- {id: myactuator_rmd_x6_40, peak_nm: 40, rated_nm: 18, volt_v: 48, price_usd: 545, kind: paper, note: "AGILOped paper BOM price; no US-store USD list found for MyActuator"}
+- {id: feetech_sts3250, peak_nm: 4.9, rated_nm: 1.57, mass_g: 74.5, volt_v: "6-12", bus: "TTL serial bus", encoder: "12-bit magnetic", ratio: 345, price_usd: 74, us_facing_usd: 97, kind: vendor, note: "the Adam servo class; no hobby bus servo above ~8 N.m found; Dynamixel XM540 10.6 N.m is USD 494 and sold out"}
+diy:
+  moteus_r4_11: {price_usd: 94, volt_v: "10-44", bus: "CAN-FD 5 Mbps", license: "firmware Apache-2.0", source: "https://mjbots.com/products/moteus-r4-11"}
+  odrive_s1: {price_usd: 149, volt_v: "12-48", stock: "sold out on page"}
+  bhl_actuator_6512: {cost_us_usd: 188, cost_china_usd: 157, breakdown_us: {motor: 129, driver: 19, encoder: 3, bearings: 23, fasteners: 5, printed: 4, misc: 5}, peak_nm: "about 20 (secondary); 27.6 is our upper bound at the config current limit", backlash_deg_max: 1.3, reducer: "PLA cycloidal, ratio 15 inferred", source: "https://arxiv.org/html/2504.17249v1"}
+  bhl_actuator_5010: {cost_us_usd: 136, cost_china_usd: 94, peak_nm: "about 12 (secondary)"}
+  mjbots_qdd100: {price_usd: 879, peak_nm: 16, note: "not stocked, MOQ 50"}
+  realistic_per_joint_diy_usd: "136-188 (BHL, US prices) for 12-20 N.m class with single encoder and printed reducer; about the same price as a bought RS06 (36 N.m, steel gears, dual encoders) once your time is counted"
+cheapest_by_class:
+  wrist_neck_1_5nm: [{id: robstride_rs05, usd: 110}, {id: damiao_dm_j3507, usd: 120}, {id: feetech_sts3250, usd: 74}]
+  shoulder_elbow_5_20nm: [{id: robstride_rs00, usd: 125}, {id: robstride_rs02, usd: 145}]
+  ankle_hip_yaw_10_30nm: [{id: robstride_rs02, usd: 145}, {id: cubemars_ak45_36, usd: 186}]
+  hip_knee_30_60nm: [{id: robstride_rs06, usd: 210}, {id: robstride_rs10p, usd: 234}, {id: robstride_rs03, usd: 225}]
+  heavy_100plus_nm: [{id: robstride_rs04, usd: 255}, {id: damiao_dm_j10010l, usd: 265}]
+caveats:
+- "Floor price of any torque-capable integrated joint is about USD 110-145 per joint at retail; 21-23 joints therefore cost USD 2.4-3.3k before anything else is bought."
+- "Almost all items backordered or pre-order on 2026-10-19; expect 3-8 weeks for a first order."
+- "US duties on Chinese motors are not established by an authoritative source here (sources conflict: 2.5% MFN, +25% Section 301 in some, plus other layers). Treat landed cost as unknown; openelab.com says duties are included."
+- "No MuJoCo/Isaac actuator models exist for RobStride, Damiao or CubeMars; Adam would need its own system identification. Noetix's Bumi repo gives a delay-and-PD actuator model for a robot of this class (BSD-3)."
+- "No brakes are listed on any of these; holding a pose costs continuous current."
+- "RobStride/CubeMars/Damiao control protocols are CAN-based and community drivers exist (damiao-motor, DM_Control_Python, LeRobot Damiao bus, robstride_ros2 unofficial, moteus Apache-2.0). RobStride manuals and STEP files are on GitHub (RobStride/Product_Information); licence/SDK terms not read."
+- "Supply-chain concentration: one Chinese vendor family (RobStride) fills nearly every torque class with no second US source."

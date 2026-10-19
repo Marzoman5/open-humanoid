@@ -1,0 +1,241 @@
+# Low-cost / open humanoids, half B (K-Scale, Berkeley, Duke, Roboto Origin, Asimov, small open bipeds).
+# Read-only web + public GitHub API. Access date for every URL: 2026-10-19.
+# null = unknown, never guessed. Numbers from fetched repo files/papers where noted; WebFetch is a summarising
+# fetcher so paper numbers are "fetcher-reported" (not independently re-read). Nothing here is a conclusion.
+meta:
+  accessed: 2026-10-19
+  limits: [docs.kscale.dev unreachable (DNS fail x2), docs.zeroth.bot unreachable, Asimov BOM gated behind email form, aiwiki.ai 429, BHL BOM is a Google Sheet (not fetched)]
+  fx_note: "CNY->USD conversion for Roboto Origin BOM is the researcher's own ~7.1 CNY/USD assumption, not a sourced rate"
+
+robots:
+
+  - name: K-Bot
+    maker: K-Scale Labs (US)
+    height_m: 1.4          # secondary (aiwiki.ai via search snippet); outside 0.5-1.3 band
+    mass_kg: 34            # secondary; another page says ~30
+    dof: {total: 20, legs: 10, arms: 10, note: "secondary, 5 per limb; not verified in repo"}
+    actuators: "Robstride motors per secondary sources (K-Scale repo 'kscalelabs/robstride' is a Robstride driver); per-joint models/torque NOT found; 'quasi-direct drive 6:1-10:1' is a secondary claim; 48 V hands/arms bus per kbot mechanical README"
+    in_house_actuator: false
+    compute: null
+    battery: null
+    walking_evidence: "kscalelabs/kbot-joystick README embeds real-robot videos; ksim-kbot repo has walking/standing tasks + deploy code. No paper, no speeds/terrains."
+    price_usd: 8999
+    price_notes: "Founders pre-sale price (Bolte interview coverage); another outlet cited $2,999 pre-sale vs Unitree G1 cut. Only ~2 units shipped (secondary), rest refunded."
+    sold_where: "NOT sold: K-Scale ceased operations early Nov 2025 (humanoidsdaily, news). Pre-orders refunded/liquidated."
+    openness:
+      code_license_file: "kscalelabs/kbot LICENSE = MIT (2025 K-Scale Labs). README text still says GPLv3 -> README and LICENSE file DISAGREE; trust file."
+      hardware_license_file: "LICENSE-HW = CERN-OHL-S v2 (strongly reciprocal)"
+      cad: "Onshape public link in mechanical/README.md; repo itself holds only READMEs + images (no STEP). Electrical README just points to docs.kscale.dev (unreachable)."
+      org: "github.com/kscalelabs repos all MIT (kbot, ksim, kos, firmware, zeroth-bot, actuator ...); last kbot push 2025-11-07"
+    company_status: "Wound down Nov 2025 after failed Series A; CEO says should have launched Z-Bot first; IP released open-source (secondary). ~US$400k cash left, raised ~4-4.75M (conflicting, secondary)."
+    sources:
+      - {url: "https://github.com/kscalelabs/kbot", type: repo}
+      - {url: "https://www.humanoidsdaily.com/news/watch-k-scale-labs-ceo-explains-shutdown-i-bet-the-farm-on-the-k-bot-launch", type: news}
+      - {url: "https://news.pedaily.cn/202511/557563.shtml", type: news-snippet, note: "search result only"}
+      - {url: "https://aiwiki.ai/wiki/k_scale_k_bot", type: secondary-wiki, note: "search snippet only; fetch 429"}
+
+  - name: K-Scale Z-Bot / Zeroth-01 Bot (kscalelabs/zeroth-bot)
+    maker: K-Scale Labs / Jingxiang Mo (MIT copyright 2024)
+    height_m: 0.4          # secondary (~1.5 ft); a skills page says ~40 cm
+    mass_kg: null          # 'under 20 lb' per techeblog snippet (secondary)
+    dof: {total: null, note: "sources conflict: 12 / 16 / 18"}
+    actuators: "Feetech STS3215 serial servos (repo has kos-zbot/firmware/sts3215/ driver + feetech/); Hiwonder LSBC v1.6 servo driver script"
+    in_house_actuator: false
+    compute: "firmware dir has Sophgo 'cvitek'/cviwrapper code (Milk-V Duo class SoC, inferred)"
+    battery: null
+    walking_evidence: "ksim PPO walking example with ZBotConfig exists (secondary); no paper; no verified video seen by researcher"
+    price_usd: 999
+    price_notes: "Announced retail price (Automate, Interesting Engineering, secondary). README says 'BoM starts at $350'. Never confirmed shipping."
+    sold_where: "Not sold; company defunct."
+    openness: {code_license_file: "MIT (repo LICENSE)", hardware: "MIT per README; models in repo"}
+    sources:
+      - {url: "https://github.com/kscalelabs/zeroth-bot", type: repo}
+      - {url: "https://ai.engineer/talks/your-personal-open-source-humanoid-robot-for-8-999-jingxiang-jx-mo-k-scale-labs", type: talk}
+      - {url: "https://www.automate.org/robotics/industry-insights/k-scale-is-building-a-sub-1-000-humanoid-research-robot", type: secondary}
+
+  - name: Berkeley Humanoid Lite
+    maker: UC Berkeley Hybrid Robotics Lab (Chi, Liao, Long, Huang, Shao, Nikolic, Li, Sreenath)
+    height_m: 0.8          # paper: "stands 0.8 m tall"; press says ~1 m (disagree)
+    mass_kg: 16            # paper
+    dof: {total: 22, legs: 12, arms: 10, note: "repo configs/policy_humanoid_legs.yaml lists 22 joints: 5-DOF arms, 6-DOF legs; paper BOM = 10x6512 + 12x5010 actuators"}
+    actuators:
+      type: "3D-printed (PLA) cycloidal gear actuator + BLDC drone motor + B-G431B-ESC1 driver + AS5600 encoder, CAN 1 Mbps; modular, built by the user"
+      models: {"6512": "MAD Components M6C12 150KV drone motor", "5010": "5010 BLDC drone motor"}
+      per_actuator_cost_usd: {"6512": {us: 188, china: 157}, "5010": {us: 136, china: 94}}
+      per_actuator_breakdown_6512_us: {motor: 129, driver: 19, encoder: 3, bearings: 23, fasteners: 5, printed_parts: 4, misc: 5}
+      peak_torque_nm: null   # paper text has no torque table (performance-factor chart is an image). Measured: torque tracking error within +-0.5 Nm; stiffness ~319 Nm/rad (6512); example motor_configuration.json has gear_ratio -15 (unclear which actuator)
+      in_house: "design is in-house/open; motors are off-the-shelf hobby parts"
+    compute: "Intel N95 mini PC (torso), policy 25 Hz MLP onboard; low-level 250 Hz over 4 USB-CAN; BNO085 IMU"
+    battery: "6S 4000 mAh LiPo, ~30 min (paper)"
+    walking_evidence: "Paper Fig.14: zero-shot sim2real Isaac Gym PPO biped walking, tracks user velocity command, used ~30% of actuator torque limit. NO speeds, terrains, success rates, trial counts reported. Video on project site (biped locomotion)."
+    price_usd: 4312
+    price_notes: "Paper BOM total US $4,312 / China $3,236. Includes: mini PC $129, 4 USB-CAN $68, 2 hubs $36, IMU $13, battery $70, 10x6512 $1,880, 12x5010 $1,632, 2 grippers $72, extrusion $39, printed parts $200, misc structure $50, misc electronics $123. Abstract: 'under $5,000'. Charger/tools/printer not stated."
+    sold_where: "DIY only; print yourself, order parts (Amazon/Taobao sheet), ~a week to assemble per press."
+    openness:
+      code_license_file: "root LICENCE (sic) = MIT, (c) 2025 Berkeley Humanoid Lite Project Developers"
+      other_assets: "README: all other assets CC BY-SA 4.0 (README claim only; no separate license file for CAD found in repo root)"
+      cad: "Onshape docs for robot, 6512, 5010, USB-CAN case; MakerWorld .3mf print files; releases page"
+    status: "repo pushed 2026-03-10, ~2k stars; no Lite 2 mentioned on site"
+    sources:
+      - {url: "https://arxiv.org/html/2504.17249v1", type: paper, note: "via summariser; numbers fetcher-reported"}
+      - {url: "https://github.com/HybridRobotics/Berkeley-Humanoid-Lite", type: repo}
+      - {url: "https://berkeley-humanoid-lite.gitbook.io/docs/releases", type: docs}
+      - {url: "https://lite.berkeley-humanoid.org/", type: project-site}
+
+  - name: Berkeley Humanoid (non-lite, legs-only)
+    maker: UC Berkeley Hybrid Robotics
+    height_m: 0.85
+    mass_kg: 16            # without arms; 22 kg est. with 4-DOF arms (not built)
+    dof: {total: 12, legs: 12, arms: 0}
+    actuators:
+      type: "custom in-house 9:1 planetary actuators, EtherCAT"
+      models_peak_sustained_nm: {"5013": [9.7, 4.59], "8513": [45.3, 18.9], "8518": [62.6, 26.1], "10413": [81.1, 34.2]}
+      per_actuator_cost_usd: {"5013": 422, "8513": 570, "8518": 639, "10413": 676}
+    compute: "Intel i7-1255U onboard"
+    battery: "2x DJI TB50"
+    walking_evidence: "STRONG for this class (fetcher-reported from paper): omnidirectional walking on grass, brick, trails, asphalt, 4 cm stairs, ~20 deg trail, 364 m campus walk, kick recovery, hops; 38 falls logged, 2 hardware failures."
+    price_usd: 9955
+    price_notes: "Table 3 total, legs-only. ~$15k est. with arms."
+    openness: "Paper promised Isaac Lab code; no license stated in paper."
+    sources:
+      - {url: "https://arxiv.org/html/2407.21781", type: paper}
+
+  - name: Duke Humanoid v1
+    maker: Duke General Robotics Lab (Boyuan Chen)
+    height_m: 1.0          # shoulder-to-foot
+    mass_kg: 30
+    dof: {total: 10, legs: 10, arms: 0}
+    actuators:
+      type: "Motorevo BLDC + planetary (no model number given)"
+      detail: "hip rot/abd, knee 18:1 72 Nm rated; hip flex 20:1 80 Nm rated; ankle 10:1 40 Nm rated; EtherCAT 2 kHz"
+      cost: null
+    compute: "tethered; no onboard compute/battery yet; Teensy 4.0 IMU/load cells"
+    walking_evidence: "Real: flat carpet walking at 0.3 m/s, 3 trials, CoT 1.13 -> 0.77 with passive policy (31% lower). Running only in sim."
+    price_usd: null
+    openness: "paper says open-sourced; no license named in paper (repo license not checked)"
+    sources:
+      - {url: "https://arxiv.org/html/2409.19795v2", type: paper}
+
+  - name: Roboto Origin (RPO, formerly ATOM 01)
+    maker: Shanghai RoboParty Technology Co., Ltd. (founded 2025-02-21)
+    height_m: 1.25         # humanoid.guide + search snippets (secondary); README gives none
+    mass_kg: 34            # secondary
+    dof: {total: 23, note: "BOM = 14x DM4340P + 9x DM10010L = 23 actuators; leg/arm split not extracted"}
+    actuators:
+      type: "DAMIAO (Damiao Technology) integrated QDD joint motors, off-the-shelf, CAN"
+      bom_v1_0_1_2026-01-05:
+        DM_4340P_48V: {qty: 14, unit_cny: 949, note: "DM-J4340P-2EC class: ~9 Nm rated / 27 Nm peak, 40:1, ~375 g (reseller + Damiao selection manual snippets)"}
+        DM_10010L: {qty: 9, unit_cny: 1989, note: "DM-J10010L-2EC class: ~40 Nm rated / 120 Nm peak, 10:1, ~1.37 kg (reseller snippets)"}
+        actuator_subtotal_cny: 31187   # 13286 + 17901 per BOM rows
+      in_house: false
+    compute: "D-Robotics RDK X5 8GB (CNY 599 in BOM)"
+    battery: "48 V 15 Ah Li-ion pack, CNY 528 in BOM (140x140x115 mm); ~2 h claim secondary"
+    walking_evidence: "README: 'running and jumping prototype', demo GIFs in repo; 'can easily achieve walking and running' with released train/deploy code. ~3 m/s claim is secondary. No paper, no independent test found."
+    price_usd: null
+    price_notes: "Own BOM total CNY 49,743.53 (header says 49,713) = roughly $7,000 at ~7.1 CNY/USD (my conversion; Origin of Bots independently estimates $7,000). Actuators ~63% of BOM. Structural CNC parts alone CNY 15,670. Retail listings conflict: humanoid.guide $4,900 'prototype'; aifitlab $8,950 / $12,450 kit w/o battery. Treat $4,900 as unverified."
+    sold_where: "DIY from Taobao + JLC prototyping per README; some resellers list kit (backorder)."
+    openness:
+      hardware_license_file: "rpo_hardware repo: CERN-OHL-W-2.0 (weak reciprocal) for CAD/PCB/BOM/URDF; software GPL-3.0; docs CC-BY-SA-4.0; V1.0 and V2.0 not compatible"
+      aggregator: "roboto_origin repo GPL-3.0 (aggregation layer only); roboparty_train has no license listed on GitHub"
+      cad: "STL/assembly + Gerbers in V2.0 dir; BOM_EN.md in roboto_origin/assets"
+    sources:
+      - {url: "https://github.com/Roboparty/roboto_origin", type: repo}
+      - {url: "https://github.com/Roboparty/rpo_hardware", type: repo}
+      - {url: "https://github.com/Roboparty/roboto_origin/blob/main/assets/BOM_EN.md", type: bom}
+      - {url: "https://humanoid.guide/product/roboto-origin/", type: aggregator-secondary}
+
+  - name: Asimov 1
+    maker: Menlo Research (Singapore) / asimov.inc
+    height_m: 1.2
+    mass_kg: 35
+    dof: {total: 25, legs: 12, arms: 10, waist: 1, neck: 2}
+    actuators: "model/maker NOT disclosed in repo or public pages; BOM gated by email; sim model defines no actuators. 13S4P Li-ion battery."
+    compute: "Radxa CM5 (motion) + Raspberry Pi 5 (media), 5x 1 Mbps CAN"
+    walking_evidence: "menloresearch/cyclotron README shows 'sim2real' image of Asimov 1 walking in sim and on real robot; asimov-1 README roadmap lists 'Locomotion policy' as upcoming. No numbers."
+    price_usd: 20000
+    price_notes: "asimov-1 README: DIY kit 'shipping now for $20,000' (earlier press: $15k target). menlo.ai page shows $499 deposit. Kit excludes tools, hands."
+    openness:
+      hardware_license_file: "HARDWARE-LICENSE.txt = CERN-OHL-S-2.0"
+      software_license_file: "SOFTWARE-LICENSE.txt = GPL-2.0"
+      cad: "STEP in mechanical/ASV1, KiCad boards, MJCF/URDF; 7075 Al + MJF PA12"
+    sources:
+      - {url: "https://github.com/menloresearch/asimov-1", type: repo}
+      - {url: "https://menlo.ai/asimov-1", type: vendor}
+      - {url: "https://github.com/menloresearch/cyclotron", type: repo}
+
+  - name: Unitree Qmini
+    maker: Unitree Robotics
+    height_m: null
+    mass_kg: null
+    dof: {total: 11, legs: 10, arms: 0, note: "10 leg motors + 1 neck motor reserved"}
+    actuators: "11x Unitree 8010 motors (README); FDM-printed structure (PLA / PETG-CF / TPU feet); Raspberry Pi 4B default"
+    walking_evidence: "repo has sim video only; software repo vsislab/RoboTamer4Qmini linked; real walking not verified by me"
+    price_usd: null
+    openness: "LICENSE = CC BY-NC-SA 4.0 (NON-COMMERCIAL); STEP v1/v2 zips, DIY PDF, BOM referenced"
+    sources: [{url: "https://github.com/unitreerobotics/Qmini", type: repo}]
+
+  - name: MEVITA
+    maker: Univ. of Tokyo (haraduka)
+    height_m: null
+    mass_kg: 19.8
+    dof: {legs: 10, note: "5 per leg, legs-only biped"}
+    actuators: "CubeMars (T-Motor) AK10-9 V2.0 x4 (hip pitch, knee) + AK70-10 x6 (hip yaw/roll, ankle); 48 V from 2x24 V LiPo; Jetson Orin Nano + Livox Mid-360"
+    walking_evidence: "RL (legged_gym) sim2real walking on uneven indoor floor, grass, dirt, tiles, gentle slope; no speeds; falls at excess speed"
+    price_usd: null
+    openness: "Google Drive hardware files; repo license not stated"
+    sources: [{url: "https://arxiv.org/html/2508.17684", type: paper}, {url: "https://github.com/haraduka/mevita", type: repo}]
+
+  - name: AGILOped
+    maker: Univ. Bonn NimbRo
+    height_m: 1.10
+    mass_kg: 14.5
+    dof: {total: 10, note: "10 actuators controlling 12 joints; 5 joints per leg, ankle passive, 1-DOF arms"}
+    actuators: "10x MyActuator RMD X6-40 (18 Nm rated / 40 Nm peak, 48 V CAN), $545 each; off-the-shelf"
+    compute: "Raspberry Pi 3B+ + PiCAN2; optional Jetson"
+    battery: "2x 26.1 V 4.5 Ah LiPo in series, 1.5-2.5 h"
+    walking_evidence: "Real robot: CPG balanced walking on artificial grass, ~10 cm jump, falls/get-up; no speed/distance"
+    price_usd: 6380
+    price_notes: "paper BOM: 10x$545 + batteries 2x$150 + IMU $30 + Pi $35 + PiCAN $70 + misc $495; +Jetson $200-2000"
+    openness: "design files at nimbro.net/Humanoid/AGILOped; license not named"
+    sources: [{url: "https://arxiv.org/html/2509.09364", type: paper}]
+
+  - name: ToddlerBot 2.0
+    maker: Stanford TML (Haochen Shi et al.)
+    height_m: 0.56
+    mass_kg: 3.4
+    dof: {total: 30}
+    actuators: "Dynamixel; v2.0 has toddlerbot_2xc (same motors as v1) and toddlerbot_2xm (upgraded hip+arm motors). ROBOTIS kit page lists 24 Dynamixels (XC430-W250 x2, XL430 x6, XC330 x8, XC430-T240BB x4, XM430 x4)"
+    compute: "Jetson Orin NX 16GB"
+    walking_evidence: "v1 paper sim2real; 2.0 changelog (2025-08-25): faster walking, crawl, cartwheel (low success rate admitted), VR teleop"
+    price_usd: 4335.51
+    price_notes: "ROBOTIS US 'Dynamixel parts ONLY' bundle (sold out; Americas only); not whole robot. Paper: under $6,000 total; korben ~$4,300 (secondary)."
+    openness: "repo hshi74/toddlerbot LICENSE = MIT; Onshape CAD; MakerWorld"
+    sources:
+      - {url: "https://github.com/hshi74/toddlerbot", type: repo}
+      - {url: "https://www.robotis.us/toddlerbot-bundle-kit/", type: retailer}
+
+  - name: Unitree R1 / R1 Air (reference only; half A has detail)
+    height_m: 1.23
+    mass_kg: 29
+    price_usd: 5900
+    price_notes: "Unitree page: R1 Air $4,900 (20 DOF, ~27 kg) / R1 $5,900 (26 DOF), excl. tax and shipping; in-house PMSM actuators; closed"
+    sources: [{url: "https://www.unitree.com/R1", type: manufacturer}]
+
+  - name: HighTorque Mini Pi+ Pro (RoboCup kid-size class)
+    height_m: 0.68
+    mass_kg: 14.8          # sources disagree 13-14.8; 0.65 m variant exists
+    dof: {total: 22}
+    price_usd: 6750
+    price_notes: "RoboCup 2026 team offer 1 unit $6,750 (10% off); reseller lists Mini Pi series $8,145 backorder. Closed hardware, open SDK."
+    sources: [{url: "https://lists.robocup.org/archives/list/robocup-humanoid@lists.robocup.org/thread/5JYZ2BHHFSSQSSNSUPYUAHHYK7HRL5PY/", type: vendor-mailing-list-snippet}]
+
+planned_or_unproven:
+  - {name: "marc0builds humanoid H1", height_m: "1.0-1.2 (plan)", budget_eur: "1,000-1,400 target", actuators: "3D-printed QDD cycloidal-planetary after CKraft11 Ironless-QDD (MIT); ankles Steadywin GIM6010-8; ODrive-compatible MKS XDrive Mini", walking_evidence: "none; status planning", license: "CC BY-NC 4.0 own designs", url: "https://github.com/marc0builds/humanoid-robot"}
+  - {name: "HOPEJr (TheRobotStudio / Hugging Face)", note: "Humanoid/ dir updated for Robstride 02; press: ~$3,000 target, 66 DOF; arm+hand teleop is the developed part; no walking evidence seen", license: "none on repo", url: "https://github.com/TheRobotStudio/HOPEJr"}
+  - {name: "Tinker (Yuexuan9)", note: "small biped, BOM < RMB 20,000, 90% off-the-shelf motors/controllers, claims 1 m/s walk (README, unverified), AGPL-3.0, height null", url: "https://github.com/Yuexuan9/Tinker"}
+  - {name: "Poppy Humanoid", note: "Dynamixel (21x MX-28 in 2013 report), kit EUR 7,862-9,972 at Generation Robots (undated); project activity unverified"}
+  - {name: "Primo (RobStride, 30 actuators)", note: "claimed in one search snippet only; repo not found; unverified"}
+  - {name: "Booster K1", note: "95 cm, 19.5 kg, 22 DOF; retail GBP 12.9k to EUR 15k (RobotShop/Funduino snippets)"}
+  - {name: "Noetix Bumi", note: "covered in bumi-faraday-zyre-raw.yaml (94 cm, 12 kg, RMB 9,998 per snippets)"}
+
+unreached: [Open Duck Mini new data (already in benchmarks.yaml), Hiwonder, NimbRo-OP2X, MOS-9 specs, Zeroth docs site, K-Bot per-joint motor models, BHL peak torques, HighTorque Hi]
