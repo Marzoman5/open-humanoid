@@ -15,7 +15,9 @@ All tools are subcommands of `oh` (or `python -m openhumanoid`). Each prints a s
 | `oh render <id>` | sim or CAD model | `generated/renders/*.png` | front/side/¾/back + contact sheet for review gates |
 | `oh catalog [--category actuator]` | catalog | — | `✓` verified, `~` estimate |
 | `oh new <id> [--extends adam]` | `variants/_template` | `variants/<id>/` | |
-| `oh coord status\|new\|claim\|set\|done\|release\|handoff\|resume` | `coordination/` | task / handoff files | protocol: `coordination/README.md` |
+| `oh coord status\|new\|claim\|set\|done\|release\|handoff\|resume` | `coordination/` | task / handoff files | protocol: `coordination/README.md`. `status --json`, `claim --session <id>`, `handoff --auto` |
+| `oh gate [<gate-id> [variant]]` | spec, catalog, `pipeline/gates.yaml` | `variants/<id>/generated/gates/<gate>.json` | the only writer of gate records. `--smoke` (validate + size + stand, nothing recorded), `--status`. Exit 3 for placeholder gates. See `docs/harness.md` |
+| `oh check provenance [variant]` | catalog, spec `provenance:` | — | warn-first; exit 2 only past the `G-provenance` thresholds |
 
 ## Sizing model (v0.1)
 

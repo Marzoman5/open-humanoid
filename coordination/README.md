@@ -6,7 +6,7 @@ How many agents (and humans) work at once without overwriting each other, and ho
 
 | Object | Where | Purpose |
 |---|---|---|
-| **Task** | `tasks/T-NNNN.md` | One unit of work: goal, done-when, `paths` it may write, status, owner |
+| **Task** | `tasks/T-<yyyymmdd>-<4 hex>.md` (legacy `T-NNNN` stays valid) | One unit of work: goal, done-when, `paths` it may write, status, owner |
 | **Claim** | `owner` + `status: claimed` in the task file | "I'm working on this". Checked against other claims for path overlap |
 | **Handoff** | `handoffs/<date>-<task>-<agent>.md` | State dump so a fresh session can resume: done, next, gotchas |
 | **Workstream** | `workstreams.yaml` | Lanes of work (mech, sim, software…), the paths each owns, and a suggested model tier |
@@ -22,13 +22,21 @@ open ──claim──► claimed ──► in_progress ──► review ──�
 ```
 
 ```bash
-oh coord status                                  # board: who's on what, overlapping claims
+oh coord status [--json]                         # board: who's on what, overlapping claims (--json for hooks/scripts)
 oh coord new "Leg module CAD" --stream mech --paths modules/joints/ variants/adam/cad/leg/
-oh coord claim T-0004 --agent mech-1             # refuses if paths overlap an active claim
+oh coord claim T-0004 --agent mech-1 --session <id>   # refuses if paths overlap an active claim; --session lets hooks find your paths
 oh coord set T-0004 in_progress
-oh coord handoff T-0004 --agent mech-1           # writes a handoff template to fill in
+oh coord handoff T-0004 --agent mech-1           # writes a handoff template to fill in (--auto: pre-filled stub, used by PreCompact)
 oh coord done T-0004
 ```
+
+### Task ids
+
+New tasks are `T-<yyyymmdd>-<4 hex>` (e.g. `T-20261019-3fa2`): the day plus random digits, so two branches creating tasks at once never collide and nobody renumbers at merge. They sort by day. Never assume the number is a counter. Old ids (`T-0007`) remain valid.
+
+### Hooks and gates
+
+Claude Code hooks read `oh coord status --json` and the local session map written by `claim --session` to warn on writes outside your `paths`, remind you of your task and handoff at session start, and block "done" without a PASS gate record. See [docs/harness.md](../docs/harness.md).
 
 ## Rules
 

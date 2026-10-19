@@ -6,15 +6,20 @@ This file works with any agent (Claude, Codex, Cursor, local models). `CLAUDE.md
 
 **Open Humanoid is a humanoid-building toolkit, not a single robot.** Adam (`variants/adam/`) is the first reference variant. Every tool, schema, and module must still work when someone asks for a 2 m, $100k, non-modular, LLM-free gutter-cleaning humanoid designed in SolidWorks. Read `docs/vision.md` once per session if you are doing design work.
 
-## The seven rules
+## The rules
+
+Two rules need your judgment, because nothing can check them for you:
 
 1. **The spec is the source of truth.** A variant's `spec.yaml` drives everything. If a number appears in CAD, sim, BOM, or firmware, it comes from the spec or from a generated file. Don't hard-code it elsewhere.
 2. **Framework code is variant-agnostic.** Nothing in `openhumanoid/`, `schemas/`, `catalog/`, `cad/`, `sim/`, `software/core/`, or `prompts/` may assume Adam, a size, a budget, a CAD tool, or a part. Variant specifics go in `variants/<id>/`. If you need a new knob, add it to the schema with a default.
-3. **Never hand-edit `generated/` folders.** Change the spec or the generator and re-run the `oh` command. Generated files carry a header saying what made them.
-4. **Claim before you write.** Use `oh coord claim <task> --agent <name>` and commit the claim. Only touch paths your task lists. See `coordination/README.md`.
-5. **Interfaces are frozen by default.** Changing `schemas/*`, `modules/INTERFACE.md`, `cad/EXPORT_CONTRACT.md`, or `software/core` public APIs needs a decision record in `docs/decisions/` and a schema version bump.
-6. **Be honest about numbers.** Every catalog price/spec carries `verified:` and `source:`. Never present an estimate as verified. If sizing says "infeasible", report it. Don't tune assumptions until it passes.
-7. **Checkpoint often.** Your context window will run out. After every phase gate, or whenever you'd hate to lose your state, update your task file and write a handoff (`oh coord handoff`). A fresh session must be able to resume from the repo alone.
+
+The rest are enforced by hooks and gates ([docs/harness.md](docs/harness.md)). Read the pointer, and don't try to route around the check; a blocked action says what to do instead.
+
+3. **`generated/` is write-protected** (hook). Change the spec or generator and re-run the `oh` command.
+4. **Claim before you write:** `oh coord claim <task> --agent <name> --session <id>` and commit the claim (`coordination/README.md`). The hook warns on writes outside your claimed `paths`.
+5. **Interfaces and gate thresholds are frozen** (hook): `schemas/*`, `modules/INTERFACE.md`, `cad/EXPORT_CONTRACT.md`, `pipeline/`. Changing one (or a `software/core` public API, not hook-checked) needs an ADR in `docs/decisions/` and a task whose `paths` list the file.
+6. **Numbers carry provenance** (`oh check provenance`): every catalog part has `verified:` and `source:`, every tuned spec constant has a `provenance:` entry. Never present an estimate as verified; if sizing says "infeasible", report it, don't tune assumptions until it passes.
+7. **Done means a PASS gate record at HEAD** (`oh gate --status`; the Stop hook blocks "done" without it). Checkpoint at every phase gate with a real handoff (`oh coord handoff`); hooks only re-inject state and write a stub. A fresh session must be able to resume from the repo alone.
 
 ## Where things go
 
@@ -26,13 +31,15 @@ This file works with any agent (Claude, Codex, Cursor, local models). `CLAUDE.md
 | Something only one robot uses | `variants/<id>/…` |
 | A prompt others should reuse | `prompts/<area>/<name>.md` with the header block from `prompts/README.md` |
 | A design decision | `docs/decisions/NNNN-title.md` (copy `0000-template.md`) |
-| A unit of work for an agent | `oh coord new …` → `coordination/tasks/T-NNNN.md` |
+| A unit of work for an agent | `oh coord new …` → `coordination/tasks/T-<yyyymmdd>-<hex>.md` |
+| A pipeline gate | `pipeline/gates.yaml` + a check in `openhumanoid/gate.py` (ADR task; hook-protected) |
 
 ## Running things
 
 ```bash
 .venv/Scripts/python -m openhumanoid --help    # or `oh --help` after `pip install -e .`
 .venv/Scripts/python -m pytest -q
+oh gate --smoke adam                           # validate + size + sim stand, about a second
 ```
 
 ## Token efficiency
