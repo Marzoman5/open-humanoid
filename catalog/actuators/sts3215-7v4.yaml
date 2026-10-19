@@ -1,14 +1,64 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: sts3215-7v4
 name: Feetech STS3215 (7.4 V, 19.5 kg·cm)
 category: actuator
 tier: hobby
 price_usd:
-  typical: 14
+  typical: 20.99
+  low: 13.99
+  high: 23.99
   unit: each
-  as_of: 2026-10 (est)
-  low: 12
-  high: 20
+  as_of: '2026-10-19'
+  basis: typical = Seeed C001 at 10+ ($20.99); Waveshare 33014 $16.31 at 4+ (tiers unlabelled); OpenELAB $23.99 flat DDP; WowRobo $13.99 at 10+ SOLD OUT.
+verified: true
+source: 'https://ftservo.github.io/ftservo-wiki/products/datasheets/st/ (Feetech wiki spec table); https://www.feetechrc.com/en/2020-05-13_56655.html; listings below. Feetech''s own
+  PDF datasheet was not reachable (the only PDF found is a machine-translated 2020 copy: https://core-electronics.com.au/attachments/uploads/sts3215-smart-servo-datasheet-translated.pdf).'
+vendors:
+- name: OpenELAB
+  url: https://openelab.com/products/feetech-sts3215-c001-servo-7
+  price: 23.99
+  sku: Feetech-STS3215-C001 (7.4V)
+  price_qty10: 23.99
+  price_qty25: 23.99
+  shipping: free over $55 via YunExpress 8-15 bd (page also says USPS 3-7 bd; warehouse label says China)
+  duty: included (DDP)
+  stock: pre-order notice, 10-20 working days after restock
+  checked: '2026-10-19'
+- name: Seeed Studio
+  url: https://www.seeedstudio.com/STS3215-19kg-cm-7-4V-Serial-Servo-p-6338.html
+  price: 21.99
+  sku: 108090023 (C001)
+  price_qty10: 20.99
+  price_qty25: 20.99
+  ship_from: US or China warehouse
+  stock: In stock (no count)
+  shipping: not visible
+  duty: not stated
+  checked: '2026-10-19'
+- name: Waveshare
+  url: https://www.waveshare.com/st3215-servo.htm?sku=33014
+  price: 16.99
+  sku: 33014 (ST3215-7.4V, 19.5kg.cm@7.4V)
+  price_qty10: 16.31
+  price_qty25: 16.31
+  shipping: not visible
+  ship_from: assumed Shenzhen
+  stock: not shown
+  note: tier prices 16.59/16.39/16.31 unlabelled thresholds; page selector text inconsistent (shows 30kg.cm@12V) - confirm cart line says 7.4V
+  checked: '2026-10-19'
+- name: RobotShop
+  url: https://www.robotshop.com/products/magnetic-encoding-servo-sts3215-74v-19kgcm
+  price: 34.32
+  sku: RB-Fit-111
+  stock: out of stock (fetch) / 3 in stock (snippet)
+  checked: '2026-10-19'
+- name: WowRobo
+  url: https://shop.wowrobo.com/products/feetech-sts3215-c001-servo-7-4v-19-5kg-high-torque-servo-for-so-arm100-101
+  price: 15.99
+  sku: C001 7.4V
+  price_qty10: 13.99
+  stock: SOLD OUT on product page
+  checked: '2026-10-19'
 mass_kg: 0.055
 dimensions_mm:
 - 45.2
@@ -18,7 +68,7 @@ actuator:
   family: feetech_sts
   type: serial_bus_servo
   stall_torque_nm: 1.912
-  no_load_speed_rad_s: 4.72
+  no_load_speed_rad_s: 5.445
   voltage_v:
   - 6.0
   - 8.4
@@ -28,10 +78,10 @@ actuator:
   backlash_deg: 0.5
   armature_kg_m2: 0.02
   resolution_bits: 12
-notes: Same body as the 12 V version. Used by SO-100/101 arms. 2S battery.
-verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+notes: 'CORRECTION 2026-10-19: no_load_speed_rad_s was 4.72 (the 12 V figure). Waveshare and OpenELAB both give 0.192 s/60deg = 52 rpm @7.4 V = 5.445 rad/s. Stall 19.5 kg.cm @7.4 V (16.5
+  @6 V), rated 5 kg.cm, 2.5 A stall, 55 g, 1:345. Listed operating range is 4-7.4 V (Waveshare, OpenELAB) or 6-7.4 V (others): the catalog''s 8.4 V upper bound is a FULL 2S CHARGE, above
+  every listed rating (see research/actuators/feetech-sts3215/notes.md). Same body as the 12 V part. Case/gear material contradicted across listings (copper/aluminium vs plastic). C044
+  (1:191) and C046 (1:147) are different parts at the same price.'
 
 # Mechanical interface data for CAD (openhumanoid/cad/components/servo.py). Each entry: {v, src, conf}.
 # conf: vendor = vendor listing/datasheet number | derived | estimate = engineering judgement, MUST be confirmed with the

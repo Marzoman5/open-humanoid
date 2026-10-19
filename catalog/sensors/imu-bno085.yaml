@@ -1,16 +1,36 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: imu-bno085
 name: BNO085 9-DOF IMU breakout
 category: sensor
 tier: hobby
 price_usd:
-  typical: 15
+  typical: 29.5
+  low: 27.15
+  high: 34.95
   unit: each
-  as_of: 2026-10 (est)
-  low: 10
-  high: 25
-mass_kg: 0.003
-notes: On-chip sensor fusion (quaternion out). Clones are cheaper.
+  as_of: '2026-10-19'
+  basis: 'Adafruit #4754 $29.50 (1-9); SparkFun BNO086 $34.95; eBay clone-ish $27.15 (snippet)'
 verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+source: 'https://www.adafruit.com/product/4754 ($29.50, in stock, 2.5 g, 25.6x22.7x4.6 mm); https://www.sparkfun.com/sparkfun-vr-imu-breakout-bno086-qwiic.html (BNO086, $34.95, 3 g);
+  bare chip Digi-Key BNO085 $12.29 (0 stock). verified false: only one fetched vendor sells the BNO085 itself (SparkFun''s is the BNO086, a likely drop-in).'
+vendors:
+- name: Adafruit
+  url: https://www.adafruit.com/product/4754
+  price: 29.5
+  sku: 4754 BNO085
+  price_qty10: 26.55
+  stock: in stock, ships today
+  ship_from: Brooklyn NY
+  checked: '2026-10-19'
+- name: SparkFun (BNO086 successor)
+  url: https://www.sparkfun.com/sparkfun-vr-imu-breakout-bno086-qwiic.html
+  price: 34.95
+  sku: SEN-22857
+  stock: in stock
+  checked: '2026-10-19'
+- name: eBay (snippet)
+  url: https://www.ebay.com/itm/397452467951
+  price: 27.15
+  checked: '2026-10-19'
+mass_kg: 0.003
+notes: Catalog said $15; live price $29.50. No priced Chinese clone found, authenticity of clones unknown. BNO086 listed by Mouser as a likely drop-in (same pinout/software).

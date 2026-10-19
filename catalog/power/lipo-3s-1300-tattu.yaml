@@ -1,31 +1,48 @@
-# Catalog part: schema schemas/catalog-part.schema.json. Added by T-0017 (concept engine power/voltage trade study), accessed 2026-10-19.
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: lipo-3s-1300-tattu
 name: Tattu 3S 11.1 V 1300 mAh 75C LiPo (XT60)
 category: power
 tier: hobby
 price_usd:
-  typical: 20.0
-  low: 16.0
-  high: 28.0
+  typical: 26.99
+  low: 17.0
+  high: 26.99
   unit: each
-  as_of: '2026-10 (price NOT captured: GetFPV page returned 403; estimate)'
-verified: false
-source: 'https://www.getfpv.com/tattu-1300mah-3s-75c-lipo-battery.html (about 120 g, 75x35x22 mm per search snippet); also
-  https://alofthobbies.com/products/tattu-3s-1300mah-75c-xt60 (120 g, 72x36x25 mm), https://readymaderc.com/products/details/tattu-1300mah-45c-3s1p-lipo-battery-xt60
-  (122 g, 72x36x23 mm), https://botland.com.pl/en/battery-li-half/13359-tattu-li-pol-battery-pack-1300mah-75c-3s-111v-6928493368893.html
-  (130 g). PRICE IS AN ESTIMATE. verified=false: figures come from retailer listings read via web search 2026-10-19; vendors
-  disagree on weight (+-20 g stated tolerance) and no price was cross-checked at two vendors. Re-check at P7 (R5 Buy).'
+  as_of: '2026-10-19'
+  basis: RaceDayQuads and WREKD $26.99 in stock (ground only); Aloft $17.00 sold out; Genstattu $19.59 OOS
+verified: true
+source: https://www.racedayquads.com/products/tattu-11-1v-3s-1300mah-75c-lipo-micro-battery-xt60 ($26.99, in stock, ground only); https://wrekd.com/products/tattu-11-1v-3s-1300mah-75c-lipo-battery-xt60
+  ($26.99, FL warehouse, USPS Ground Advantage only); manufacturer shop https://genstattu.com/tattu-1300mah-75c-3s1p-lipo-battery-pack-with-xt60-plug.html (72x36x22 mm, 122 g +-20 g,
+  $19.59 out of stock)
 vendors:
-- name: GetFPV
-  url: https://www.getfpv.com/tattu-1300mah-3s-75c-lipo-battery.html
+- name: RaceDayQuads
+  url: https://www.racedayquads.com/products/tattu-11-1v-3s-1300mah-75c-lipo-micro-battery-xt60
+  price: 26.99
+  stock: in stock
+  shipping: ground only; cost not visible
+  ship_from: Sarasota FL (pickup) - ship-from not stated
+  checked: '2026-10-19'
+- name: WREKD
+  url: https://wrekd.com/products/tattu-11-1v-3s-1300mah-75c-lipo-battery-xt60
+  price: 26.99
+  stock: '''in stock'' but flagged pre-order 0-1 days'
+  shipping: USPS Ground Advantage only; free over $199
+  ship_from: Florida
   checked: '2026-10-19'
 - name: Aloft Hobbies
   url: https://alofthobbies.com/products/tattu-3s-1300mah-75c-xt60
+  price: 17.0
+  stock: sold out
+  checked: '2026-10-19'
+- name: Genstattu (manufacturer)
+  url: https://genstattu.com/tattu-1300mah-75c-3s1p-lipo-battery-pack-with-xt60-plug.html
+  price: 19.59
+  stock: out of stock
   checked: '2026-10-19'
 mass_kg: 0.122
 dimensions_mm:
-- 75
-- 35
+- 72
+- 36
 - 22
 specs:
   cells: 3
@@ -33,3 +50,4 @@ specs:
   c_rating: 75
   energy_wh: 14.4
   chemistry: LiPo
+notes: 'CORRECTION: dimensions 75x35x22 -> 72x36x22 mm (three vendors incl. the manufacturer shop). Price $20 est -> $26.99. 14.4 Wh only.'

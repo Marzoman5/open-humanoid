@@ -1,20 +1,40 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: waveshare-bus-servo-adapter
 name: Waveshare Bus Servo Adapter (A)
 category: electronics
 tier: hobby
 price_usd:
-  typical: 8
+  typical: 4.99
+  low: 4.3
+  high: 11.3
   unit: each
-  as_of: 2026-10 (est)
-  low: 6
-  high: 12
+  as_of: '2026-10-19'
+  basis: Waveshare $4.99 fetched; Sunsky $4.30 (snippet); eBay $11.30 (snippet, ships from China)
+verified: false
+source: 'https://www.waveshare.com/bus-servo-adapter-a.htm ($4.99); wiki https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A) (UART jumper A=UART/B=USB; RX-RX, TX-TX; input 9-12.6 V).
+  verified false: only one fetched vendor; no US-stocked vendor confirmed; USB chip and UART pinout not stated.'
+vendors:
+- name: Waveshare
+  url: https://www.waveshare.com/bus-servo-adapter-a.htm
+  price: 4.99
+  sku: '25514'
+  shipping: not visible
+  stock: Add to Cart present
+  checked: '2026-10-19'
+- name: eBay (snippet)
+  url: https://www.ebay.com/itm/266416385826
+  price: 11.3
+  ship_from: China (snippet)
+  checked: '2026-10-19'
+- name: Sunsky (snippet)
+  url: https://www.sunsky-online.com/p/TBD06006922/Waveshare-25514-Serial-Bus-Servo-Driver-Board-for-ST-SC-Series-Serial-Bus-Servos.htm
+  price: 4.3
+  checked: '2026-10-19'
 mass_kg: 0.01
 specs:
   interface: USB/UART to Feetech TTL bus
   input_v:
   - 9
   - 12.6
-verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+notes: Catalog said $8; Waveshare lists $4.99. A jumper selects UART (for a Pi Zero GPIO) or USB. Size 42x33 mm. Input 9-12.6 V (5-8.4 V 'can also be input', not stated as supported)
+  - relevant to the 2S candidates.

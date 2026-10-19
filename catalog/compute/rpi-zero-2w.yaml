@@ -1,15 +1,63 @@
-# Catalog part: schema schemas/catalog-part.schema.json. Updated by T-0017 (dimensions, mass, sources), accessed 2026-10-19.
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: rpi-zero-2w
 name: Raspberry Pi Zero 2 W
 category: compute
 tier: hobby
 price_usd:
-  typical: 15
+  typical: 17.43
+  low: 16.35
+  high: 19.05
   unit: each
-  as_of: 2026-10 (est)
-  low: 15
-  high: 20
+  as_of: '2026-10-19'
+  basis: median of five US list prices; EVERY US vendor read was out of stock on 2026-10-19.
+verified: true
+source: 'https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/ (65x30 mm, quad A53 1 GHz, 512 MB); prices: https://www.pishop.us/product/raspberry-pi-zero-2-w/ ($17.25), https://www.canakit.com/raspberry-pi-zero-2-w.html
+  ($16.35), https://vilros.com/products/raspberry-pi-zero-2-w ($17.43), https://www.adafruit.com/product/5291 ($19.05), https://www.sparkfun.com/raspberry-pi-zero-2-w.html ($19.00).
+  Pi Zero line was NOT hit by the 2026 memory price rises: https://www.raspberrypi.com/news/more-memory-driven-price-rises/ . Mass 16 g (Kubii) vs 10 g (Little Bird) still unresolved;
+  thickness 5.2 mm from Little Bird.'
+vendors:
+- name: PiShop.us
+  url: https://www.pishop.us/product/raspberry-pi-zero-2-w/
+  price: 17.25
+  sku: 1799 / SC1146
+  stock: no Add to Cart shown; limit 1/order
+  ship_from: USA (page metadata)
+  checked: '2026-10-19'
+- name: CanaKit
+  url: https://www.canakit.com/raspberry-pi-zero-2-w.html
+  price: 16.35
+  stock: SOLD OUT
+  checked: '2026-10-19'
+- name: Vilros
+  url: https://vilros.com/products/raspberry-pi-zero-2-w
+  price: 17.43
+  sku: RPZW2
+  shipping: free in USA, ETA not visible
+  stock: SOLD OUT
+  checked: '2026-10-19'
+- name: Adafruit
+  url: https://www.adafruit.com/product/5291
+  price: 19.05
+  sku: 5291 (no header)
+  stock: out of stock
+  checked: '2026-10-19'
+- name: SparkFun
+  url: https://www.sparkfun.com/raspberry-pi-zero-2-w.html
+  price: 19.0
+  sku: DEV-18713
+  stock: out of stock; limit 1
+  checked: '2026-10-19'
+- name: Digi-Key
+  url: https://www.digikey.com/en/products/detail/raspberry-pi/SC0721/24627135
+  price: 18.0
+  sku: SC0721
+  stock: 0; 420 expected 2027-06-07 (54 wk)
+  checked: '2026-10-19'
 mass_kg: 0.016
+dimensions_mm:
+- 65
+- 30
+- 5.2
 specs:
   cpu: 4x Cortex-A53 1 GHz
   ram_gb: 0.5
@@ -18,14 +66,5 @@ specs:
   power_w_typical: 2.0
   power_w_peak: 6.8
   power_w_idle: 0.6
-notes: Enough for a small MLP locomotion policy at 50 Hz. Not for onboard LLM/vision.
-verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md
-  | dims/mass added 2026-10-19 by T-0017: 65x30 mm (Kubii, Little Bird; 5.2 mm max height Little Bird), mass 16 g (Kubii;
-  Little Bird says 10 g). Power: research/methods/e (CNX Software: idle ~120 mA @5 V = 0.6 W; stress 1.35 A = 6.8 W); typical
-  2.0 W for a 50 Hz policy plus Wi-Fi is an ASSUMPTION. Prices unchanged and unverified. | URLs: https://kubii.com/en/nano-computers/3455-raspberry-pi-zero-2-w-wh.html
-  (65x30.5 mm, 16 g), https://littlebirdelectronics.com.au/products/raspberry-pi-zero-2-w-2 (65x30x5.2 mm, 10 g)'
-dimensions_mm:
-- 65
-- 30
-- 5.2
+notes: 'AVAILABILITY RISK: no confirmed in-stock US vendor on 2026-10-19 (only a $89.95 CanaKit kit has Add to Cart). Candidates A, B, D and the duck variant depend on this board. Enough
+  for a small MLP policy at 50 Hz; not for onboard LLM/vision. Alternatives are NOT yet sourced (suggestions only: Orange Pi Zero 2W, Radxa Zero 3W, Pi 3A+).'

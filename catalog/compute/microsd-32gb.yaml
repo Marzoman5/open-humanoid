@@ -1,15 +1,30 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: microsd-32gb
 name: microSD 32 GB (A1)
 category: compute
 tier: hobby
 price_usd:
-  typical: 7
+  typical: 12.0
+  low: 9.97
+  high: 19.95
   unit: each
-  as_of: 2026-10 (est)
-  low: 5
-  high: 10
-mass_kg: 0.001
+  as_of: '2026-10-19'
+  basis: search snippets only
 verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+source: 'estimate: snippets only, pages not fetched. CDW SanDisk Ultra 32 GB $9.97 (https://cdwg.com/product/sandisk-ultra-flash-memory-card-32-gb-microsdhc-uhs-i/6400259, 403 on fetch);
+  PiShop SanDisk Ultra 32 GB $14.95, official Raspberry Pi 32 GB A2 $19.95 (https://www.pishop.us/product/raspberry-pi-sd-card-32gb/).'
+vendors:
+- name: CDW
+  url: https://cdwg.com/product/sandisk-ultra-flash-memory-card-32-gb-microsdhc-uhs-i/6400259
+  price: 9.97
+  stock: 759 (snippet)
+  checked: '2026-10-19'
+- name: PiShop.us
+  url: https://www.pishop.us/product/microsd-card-32-gb-class-10-blank/
+  price: 14.95
+  checked: '2026-10-19'
+- name: PiShop.us (official Pi A2)
+  url: https://www.pishop.us/product/raspberry-pi-sd-card-32gb/
+  price: 19.95
+  checked: '2026-10-19'
+mass_kg: 0.001

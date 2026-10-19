@@ -1,19 +1,19 @@
-# Catalog part: schema schemas/catalog-part.schema.json. Added by T-0017 (concept engine power/voltage trade study), accessed 2026-10-19.
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: psu-rpi5-27w
 name: Raspberry Pi 27 W USB-C power supply (bench / charger-side, not on the robot)
 category: power
 tier: hobby
 price_usd:
-  typical: 14.0
+  typical: 14.4
   low: 12.0
   high: 20.0
   unit: each
-  as_of: 2026-10-19 (PB Tech AUD 22.28 incl. GST ~ US$14)
+  as_of: '2026-10-19'
+  basis: MCCI (US) $14.40 backorder; PB Tech AU AUD 22.28 converted
 verified: false
-source: 'https://www.pbtech.com/au/product/SEVRBP0512/Raspberry-Pi-Official-27W-Power-Supply-Black-AU-Pl (5.1 V 5 A; 9 V 3
-  A; 12 V 2.25 A; 15 V 1.8 A); https://grobotronics.com/raspberry-pi-5-27w-usb-c-power-supply-black.html?sl=en (52x36x36 mm,
-  ~160 g); https://digitec.ch/en/s1/product/raspberry-pi-official-5-power-supply-27w-usb-c-development-board-accessories-38955882
-  (150 g). Mains adapter: bench use, or the USB-C PD source for the SkyRC B6 Neo.'
+source: 'https://www.pbtech.com/au/product/SEVRBP0512/Raspberry-Pi-Official-27W-Power-Supply-Black-AU-Pl (5.1 V 5 A; 9 V 3 A; 12 V 2.25 A; 15 V 1.8 A); https://grobotronics.com/raspberry-pi-5-27w-usb-c-power-supply-black.html?sl=en
+  (52x36x36 mm, ~160 g); https://digitec.ch/en/s1/product/raspberry-pi-official-5-power-supply-27w-usb-c-development-board-accessories-38955882 (150 g). Mains adapter: bench use, or
+  the USB-C PD source for the SkyRC B6 Neo.'
 vendors:
 - name: PB Tech AU
   url: https://www.pbtech.com/au/product/SEVRBP0512/Raspberry-Pi-Official-27W-Power-Supply-Black-AU-Pl
@@ -26,3 +26,5 @@ dimensions_mm:
 - 36
 specs:
   output_5v_a: 5.0
+notes: 'Official Raspberry Pi 27 W PSU: 5.1 V/5 A, 9 V/3 A, 12 V/2.25 A, 15 V/1.8 A (https://www.raspberrypi.com/products/27w-power-supply/). As a SkyRC B6 Neo PD source it can only
+  use the 12 V or 15 V profile (~2 A charge into 3S); negotiation NOT verified. US stock: MCCI https://store.mcci.com/products/raspberry-pi-27w-usb-c-power-supply $14.40, backorder.'

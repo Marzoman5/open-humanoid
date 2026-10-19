@@ -1,0 +1,23 @@
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
+id: fuse-atc-20a-inline
+name: Inline ATC/ATO blade fuse holder, 14 AWG leads + 20 A fuse (battery main line)
+category: electronics
+tier: hobby
+price_usd:
+  typical: 4.5
+  low: 3.25
+  high: 7.0
+  unit: each
+  as_of: '2026-10-19'
+  basis: Del City 78332 holder (20 A, 14 ga, 32 V) $3.25 + ~$1.25 fuse (estimate)
+verified: false
+source: 'estimate: holder https://www.delcity.net/store/fuses-fuse-accessories/holders-circuit-taps/atc-ato-blade/inline-with-led/78332/ ($3.25); fuse curves from the Littelfuse 257
+  ATO datasheet read second-hand via a search snippet (https://datasheets.ibselectronics.com/257003-Littelfuse-datasheet-9908840.pdf, PDF itself 403): 110% >=100 h, 135% 0.75-600 s,
+  200% 0.15-5 s, 350% 0.08-0.5 s; 15 A part min I2t 340 A2s.'
+mass_kg: 0.015
+specs:
+  fuse_a: 20
+  voltage_rating_vdc: 32
+notes: 'Sizing: a 15 A ATO survives a single ~1 s burst at 16 A only just (107% of rating, I2t 256 < 340 A2s) and derates ~25% in a hot enclosure, so 15 A is marginal for the all-leg
+  stall transient. Recommend 20 A (opens in 0.15-5 s at 40 A). The fuse protects the 14 AWG wire and XT60 (~30 A), not the servos. ATO is obsolescent (ATOF replaces it). At 2S the same
+  power draws ~1.6x the current: recheck against the R10 peak current for B. Breaker alternative: Eaton Shortstop 15 A $3.40 (hold/trip curve not verified).'

@@ -1,15 +1,18 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: fastener-kit-m2-m3
 name: M2/M3 socket-head screw + heat-set insert kit
 category: hardware
 tier: hobby
 price_usd:
-  typical: 15
+  typical: 20.0
+  low: 10.0
+  high: 60.0
   unit: each
-  as_of: 2026-10 (est)
-  low: 10
-  high: 22
-mass_kg: 0.08
+  as_of: '2026-10-19'
+  basis: 'estimate: screw kits ~$10 (Amazon snippets); heat-set insert kits $10-50 (VXB 170 pcs $49.98)'
 verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+source: 'estimate: search snippets only. https://vxb.com/fr/products/heat-set-inserts-for-plastic-3d-printing-kit-with ($49.98, 170 pcs M2/M3 brass); https://www.albanycountyfasteners.com/metric-socket-cap-screw-assortment-kit-p/1060-090.htm
+  ($67.55, 441 pcs A2); Amazon M2 565-pc kit $9.99 (URL not captured). STS3215 mounting/horn screw sizes NOT confirmed (Waveshare pages list none; Seeed''s C047 ships 18 screws per servo).
+  Open Duck Mini uses M3x10, M3x6 + M3 heat-set inserts (https://github.com/apirrone/Open_Duck_Mini/blob/v2/docs/assembly_guide.md).'
+mass_kg: 0.08
+notes: 'Price band widened: kits are cheap on Amazon (~$10 each) but no Amazon page was readable. Typical raised $15 -> $20 as an estimate (screws + inserts).'

@@ -1,0 +1,25 @@
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
+id: psu-usbc-pd-65w
+name: USB-C PD 65 W GaN charger offering 20 V (UGREEN Nexode / Anker class) - powers the SkyRC B6 Neo PD input
+category: power
+tier: hobby
+price_usd:
+  typical: 29.99
+  low: 22.0
+  high: 34.99
+  unit: each
+  as_of: '2026-10-19'
+  basis: 'deal-site snapshots: UGREEN Nexode Air 65W $29.99 (Jun 2026), Nexode 3-port $22.77-31.19, Anker Nano 65W $34.99'
+verified: false
+source: 'estimate: deal-site snippets only (https://slickdeals.net/f/19578405-ugreen-nexode-air-65w-usb-c-gan-charger-w-foldable-prongs-usb-c-cable-24-99-free-shipping-w-prime-or-on-35
+  ; https://cordcuttersnews.com/ugreen-65w-usb-c-charger-drops-to-record-low-23-99/). UL listing not confirmed; no Amazon page was readable.'
+mass_kg: 0.12
+dimensions_mm:
+- 60
+- 45
+- 28
+specs:
+  output_20v_a: 3.25
+notes: 'Replaces the ''DC supply'' gap in the challenge (row 14). B6 Neo PD port: 12-20 V, 80 W max, so any 45-100 W PD brick with a 20 V profile works; check the listing says UL/ETL.
+  Cheaper but unverified: the official Raspberry Pi 27 W supply (psu-rpi5-27w, MCCI $14.40 backorder) via its 12 V profile, ~2 A charge. Alternative: Adafruit #352 12 V 5 A UL ($24.95,
+  OOS) + barrel-to-XT60 adaptor (not found). mass/dims are typical for the class, not read from a listing.'

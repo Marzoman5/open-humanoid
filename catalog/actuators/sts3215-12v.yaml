@@ -1,14 +1,80 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: sts3215-12v
 name: Feetech STS3215 (12 V, 30 kg·cm)
 category: actuator
 tier: hobby
 price_usd:
-  typical: 16
+  typical: 20.9
+  low: 13.99
+  high: 27.99
   unit: each
-  as_of: 2026-10 (est)
-  low: 13
-  high: 22
+  as_of: '2026-10-19'
+  basis: typical = qty>=10 price at the median-priced of three stocked listings (Seeed $20.90 at 10+; Waveshare $20.63 at 4+, OpenELAB $27.99 flat DDP). low = WowRobo $13.99 at 10+ (SOLD
+    OUT, unconfirmed). high = OpenELAB $27.99 (fastest US, duty included). Shipping, sales tax and tariffs are NOT in these unit prices; see variants/adam/sourcing/QUOTES.md.
+verified: true
+source: 'https://ftservo.github.io/ftservo-wiki/products/datasheets/st/ (Feetech wiki spec table); https://www.feetechrc.com/en/2020-05-13_56655.html; listings below. Feetech''s own
+  PDF datasheet was not reachable (the only PDF found is a machine-translated 2020 copy: https://core-electronics.com.au/attachments/uploads/sts3215-smart-servo-datasheet-translated.pdf).'
+vendors:
+- name: OpenELAB (US warehouse Somerset NJ, or Shenzhen, 'depending on stock')
+  url: https://openelab.com/products/feetech-sts3215-c018-servo-12v
+  price: 27.99
+  sku: Feetech-STS3215-C018
+  price_qty10: 27.99
+  price_qty25: 27.99
+  shipping: 'free over $55 (USPS Ground Advantage 3-7 bd; Priority 1-4 bd $13.99-15.99); else $7.99. China warehouse: YunExpress 8-15 bd'
+  duty: included in price (DDP)
+  stock: Add-to-cart shown; US-warehouse stock for this SKU not confirmed; backorder dispatch 10-20 days
+  checked: '2026-10-19'
+- name: Seeed Studio
+  url: https://www.seeedstudio.com/STS3215-30KG-Serial-Servo-p-6340.html
+  price: 22.0
+  sku: 108090003 (C047, 12V 30Kg)
+  price_qty10: 20.9
+  price_qty25: 20.9
+  ship_from: US, China or Germany warehouse (default not visible)
+  stock: In stock (no count)
+  shipping: 'not visible on product page; late-2025 promo post: US warehouse USPS Priority 3-5 d, Ground 6-9 d'
+  duty: not stated
+  checked: '2026-10-19'
+- name: Waveshare
+  url: https://www.waveshare.com/st3215-servo.htm?sku=22414
+  price: 21.99
+  sku: 22414 (ST3215 30kg.cm@12V)
+  price_qty10: 20.63
+  price_qty25: 20.63
+  shipping: '''Worldwide shipping'', cost/ETA not visible (shipping page 404)'
+  ship_from: assumed Shenzhen (not stated)
+  stock: not shown
+  note: tier prices 21.19/20.79/20.63 seen but thresholds unlabelled; weight shown as 89 g (vs 55 g elsewhere) - unreliable
+  checked: '2026-10-19'
+- name: DigiKey (DFRobot SER0070)
+  url: https://www.digikey.com/en/products/detail/dfrobot/SER0070/28531107
+  price: 24.88
+  sku: SER0070
+  stock: 0; 1 expected 2026-11-09
+  checked: '2026-10-19'
+- name: RobotShop
+  url: https://robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215
+  price: 31.71
+  sku: RB-Fit-155
+  stock: backorder
+  note: page fetch $31.71; search snippets say $49.22 'price includes tariffs (in USA)' - unresolved, assume $49.22 for a US buyer
+  checked: '2026-10-19'
+- name: WowRobo
+  url: https://shop.wowrobo.com/products/feetech-sts3215-servo-12v-30kg-high-torque-servo-for-so-arm100
+  price: 15.99
+  sku: C018 12V 30KG
+  price_qty10: 13.99
+  stock: SOLD OUT on product page (every pack option)
+  note: 5 pcs $14.99 each, 10 pcs $13.99 each; far below peers, unconfirmed stock
+  checked: '2026-10-19'
+- name: AIFitLab
+  url: https://aifitlab.com/products/feetech-sts3215-servo-motor
+  price: 26.0
+  sku: ST-3215-C018
+  stock: backordered
+  ship_from: China
+  checked: '2026-10-19'
 mass_kg: 0.055
 dimensions_mm:
 - 45.2
@@ -28,11 +94,11 @@ actuator:
   backlash_deg: 0.5
   armature_kg_m2: 0.02
   resolution_bits: 12
-notes: De-facto standard for sub-$1k humanoids/arms (Open Duck Mini, SO-101). Magnetic
-  encoder, current sensing.
-verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+notes: 'Spec check 2026-10-19: 30 kg.cm stall @12 V, 0.222 s/60deg (45 rpm) @12 V, 2.7 A stall, 1:345, 12-bit magnetic encoder, 45.2x24.7x35 mm, 55 g (OpenELAB, ServoDatabase) all agree
+  across vendors and the Feetech wiki. RATED torque is only 10 kg.cm @12 V (vendor), 30 is a locked-rotor figure. Operating range is disputed: Feetech wiki 9-12.6 V, Waveshare 6-12.6
+  V, OpenELAB/Seeed 4-14 V; catalog keeps 9-12.6 V (do not design to 14 V). C018 and C047 are listed with identical specs but nobody confirms they are identical hardware. Seeed C047
+  datasheet: 1 servo + 2 horns + 18 screws + 1 JST wire per unit. Gear/case material disagrees across listings (metal vs steel, PA+GF case). Failure evidence (anecdotal): research/actuators/feetech-sts3215/notes.md
+  and QUOTES.md section 7. Datasheet column ''verified'' rests on the Feetech wiki spec table, not a PDF.'
 
 # Mechanical interface data for CAD (openhumanoid/cad/components/servo.py). Each entry: {v, src, conf}.
 # conf: vendor = vendor listing/datasheet number | derived | estimate = engineering judgement, MUST be confirmed with the
