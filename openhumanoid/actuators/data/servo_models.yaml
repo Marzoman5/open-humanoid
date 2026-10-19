@@ -38,7 +38,7 @@ models:
     voltage_rating_v: [4.0, 7.4]    # Waveshare 7.4 V SKU 4-7.4 V; Evelta/rcdrone 6-7.4 V. Catalog says 6-8.4 (estimate)
     stall_nm: {v: 1.912, at_v: 7.4, kind: datasheet, source: "https://www.feetechrc.com/en/2020-05-13_56655.html  'Stall Torque 19.5kg.cm@7.4V' = 1.912 N.m"}
     stall_current_a: {v: 2.5, at_v: 7.4, kind: datasheet, source: "https://www.waveshare.com/st3215-servo.htm (7.4 V SKU)"}
-    rated_continuous_nm: {v: 0.490, kind: datasheet, source: "Seeed C001 lists rated 5 kg.cm @7.4V = 0.490 N.m (26% of stall); Evelta says 6.5 (labelled 6 V). Vendor rating, not a measured thermal limit (research/actuators/feetech-sts3215/notes.md)"}
+    rated_continuous_nm: {v: 0.490, alt: [0.637], kind: datasheet, source: "Seeed C001 lists rated 5 kg.cm @7.4V = 0.490 N.m (26% of stall); Evelta says 6.5 kg.cm = 0.637 N.m (labelled 6 V; `alt`, challenge-2 row 2: the RMS verdicts are shown at both 0.49 and 0.64). Vendor rating, not a measured thermal limit (research/actuators/feetech-sts3215/notes.md)"}
     noload_rad_s: {v: 5.67, kind: derived, source: "= vin_ref*pwm_max/kt from BAM m4 kt=1.2653 (5.67 rad/s = 54 rpm); vendor 52 rpm @7.4V = 5.45 rad/s"}
     dc: {mode: bam}                 # kt, R from the BAM file
     mass_kg: {v: 0.055, kind: datasheet, source: "Evelta, tolerance 1 g"}

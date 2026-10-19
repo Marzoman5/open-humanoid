@@ -107,34 +107,50 @@ def voltage_rating_report(robot: Robot, pack: Pack) -> dict:
     return out
 
 
-def bus_analysis(robot: Robot, ms: dict, dem_batt_branch: dict, pack: Pack, load_w: float) -> dict:
-    """Branch currents, sag and fuse sizing from the time-resolved battery power of the worst motion per branch."""
+def bus_analysis(robot: Robot, ms: dict, dem_batt_branch: dict, pack: Pack, load_w: float, transient: dict | None = None) -> dict:
+    """Branch currents, sag and fuse sizing. The peak legitimate draw is the larger of the worst frozen motion and the R10 push transient
+    (challenge-2 row 15: a fuse sized from the walk alone would blow on the push it exists to survive); the all-leg stall current is reported
+    as the fault case (what a fuse would have to carry to ride through a stalled leg, not a design draw)."""
     v = v_nominal(pack)
     r_branch = config.value("power.wire_resistance_ohm_per_branch")
-    total_peak_w = ms["batt_total_peak_w"] + load_w
+    motion_w = ms["batt_total_peak_w"] + load_w
+    r10_w = (transient["total_w"] + load_w) if transient and transient.get("total_w") else 0.0
+    total_peak_w = max(motion_w, r10_w)
     i_total = total_peak_w / v
-    # a pack under that load: iterate sag once
     v_sag = pack.voltage(i_total, soc=0.2)
     i_total = total_peak_w / max(v_sag, 1.0)
+    i_motion = motion_w / max(pack.voltage(motion_w / v, soc=0.2), 1.0)
+    i_r10 = r10_w / max(pack.voltage(r10_w / v, soc=0.2), 1.0) if r10_w else 0.0
     branches = {}
     min_v = 1e9
-    for b, w in dem_batt_branch.items():
+    br_w = dict(dem_batt_branch)
+    if transient:
+        for k, w in transient["branch_w"].items():
+            br_w[k] = max(br_w.get(k, 0.0), w)
+    for b_, w in br_w.items():
         i_b = w / v_sag
         v_far = v_sag - i_b * r_branch
         min_v = min(min_v, v_far)
-        branches[b] = {"peak_w": round(w, 1), "peak_a": round(i_b, 2), "voltage_at_far_servo_v": round(v_far, 2)}
+        branches[b_] = {"peak_w": round(w, 1), "peak_a": round(i_b, 2), "voltage_at_far_servo_v": round(v_far, 2)}
     low_rating = min(s.voltage_rating_v[0] for s in robot.servo.values())
-    fuse = next((f for f in FUSE_STEPS_A if f >= config.value("power.fuse_margin") * i_total), None)
+    margin = config.value("power.fuse_margin")
+    nxt = lambda a: next((f for f in FUSE_STEPS_A if f >= margin * a), None)   # noqa: E731
+    leg_stall = sum(s.stall_current_a * (v / s.vin_ref) for n, s in robot.servo.items() if n.split("_")[0] in ("hip", "knee", "ankle"))
     stall_total = sum(s.stall_current_a for s in robot.servo.values())
     return {"pack_nominal_v": round(v, 2), "peak_total_a": round(i_total, 2), "peak_total_w": round(total_peak_w, 1),
+            "peak_from_frozen_motions_a": round(i_motion, 2), "peak_from_r10_transient_a": round(i_r10, 2),
+            "r10_transient_scenario": (transient or {}).get("scenario"),
             "sag_at_peak_v": round(v - v_sag, 2), "v_at_peak_v": round(v_sag, 2), "branches": branches,
             "min_voltage_at_far_servo_v": round(min_v, 2), "servo_min_operating_v": low_rating,
             "min_voltage_ok": bool(min_v >= low_rating),
-            "fuse_a": fuse, "fuse_rule": f"{config.value('power.fuse_margin')} x peak legitimate draw, next standard value",
+            "fuse_a": nxt(i_total), "fuse_a_if_sized_from_motions_only": nxt(i_motion),
+            "fuse_blows_on_r10_if_sized_from_motions_only": bool(i_r10 > (nxt(i_motion) or 0)),
+            "fuse_rule": f"{margin} x peak legitimate draw (larger of the frozen motions and the R10 push transient), next standard value",
+            "all_leg_servos_stalled_a": round(leg_stall, 1), "fuse_a_to_ride_through_all_leg_stall": nxt(leg_stall),
             "all_servos_stalled_a": round(stall_total, 1),
             "pack_limit_a": round(pack.max_discharge_a, 1),
             "pack_c_ok": bool(i_total <= config.gate("pack_peak_current_fraction_of_c") * pack.max_discharge_a),
-            "connector_rating_note": "STS3215 connector current rating is unknown (research/methods/e); the fuse must also stay below the wiring limit"}
+            "connector_rating_note": "STS3215 connector current rating is unknown (research/methods/e); the fuse must also stay below the wiring/connector limit"}
 
 
 def cost_report(robot: Robot) -> dict:

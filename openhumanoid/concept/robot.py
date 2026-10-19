@@ -115,25 +115,68 @@ def _joint_list(concept: dict, tpl: dict) -> list[dict]:
     return out
 
 
-def apply_floors(props: dict, h: float, joints: list[dict]) -> tuple[dict, list[str]]:
-    """Raise proportions to the packaging floors (thresholds.yaml `packaging_floors`). Returns (props, notes)."""
+VERTICAL_KEYS = ("ankle_height", "shank", "thigh", "pelvis", "torso", "neck", "head")
+
+
+def packaging_set(concept: dict) -> list[str]:
+    """Which packaging floors apply: `t0004` (default, the T-0004 proportion floors) and/or `cad_foundation` (the facts from the CAD leg)."""
+    p = concept.get("packaging", ["t0004"])
+    return [p] if isinstance(p, str) else list(p)
+
+
+def apply_floors(props: dict, h: float, joints: list[dict], cad: bool = False) -> tuple[dict, list[str]]:
+    """Raise proportions to the packaging floors (thresholds.yaml `packaging_floors`; with cad=True also `packaging_cad_foundation`:
+    an absolute ankle height, and the height the floors add is taken pro rata from the other vertical proportions so `h` stays the
+    standing height). Returns (props, notes)."""
     from . import config
     fl = config.thresholds()["packaging_floors"]
+    cf = config.thresholds()["packaging_cad_foundation"]
     props, notes = dict(props), []
+    s0 = sum(props[k] for k in VERTICAL_KEYS)
+    pinned: set[str] = set()
 
     def floor(key, minimum, why):
         if props[key] * h < minimum - 1e-9:
             notes.append(f"{key}: {props[key] * h * 1000:.1f} mm -> {minimum * 1000:.1f} mm ({why})")
             props[key] = minimum / h
+            pinned.add(key)
 
-    floor("ankle_height", fl["ankle_height_frac"]["value"] * h, "T-0004 ankle-roll servo stand-off")
+    if cad:
+        floor("ankle_height", cf["ankle_height_m_min"], "CAD foundation: 35 mm servos on intersecting axes")
+    else:
+        floor("ankle_height", fl["ankle_height_frac"]["value"] * h, "T-0004 ankle-roll servo stand-off")
     floor("foot_length", fl["foot_length_m_at_ref"]["value"] * h / fl["reference_height_m"], "T-0004 foot size")
     floor("foot_width", fl["foot_width_m_at_ref"]["value"] * h / fl["reference_height_m"], "T-0004 foot size")
     floor("hip_width", fl["hip_width_m_min"]["value"], "servo-fixed hip spacing")
     floor("shoulder_width", fl["shoulder_width_frac"]["value"] * h, "T-0004 arm clearance")
     for k in ("thigh", "shank", "upper_arm", "forearm"):
         floor(k, fl["link_length_m_min"]["value"], "servo housing")
+    if cad and cf["keep_total_height"]:
+        s1 = sum(props[k] for k in VERTICAL_KEYS)
+        free = [k for k in VERTICAL_KEYS if k not in pinned]
+        if s1 > s0 + 1e-9 and free:
+            sc = (s0 - sum(props[k] for k in VERTICAL_KEYS if k in pinned)) / sum(props[k] for k in free)
+            for k in free:
+                props[k] *= sc
+            notes.append(f"standing height kept at {h * 1000:.0f} mm: the other vertical proportions scaled x{sc:.3f} "
+                         f"(thigh {props['thigh'] * h * 1000:.0f} mm, shank {props['shank'] * h * 1000:.0f} mm)")
     return props, notes
+
+
+def apply_cad_rom(joints: list[dict]) -> list[str]:
+    """Intersect the joint ranges with the CAD-limited ranges (in place); returns notes."""
+    from . import config
+    rom = config.thresholds()["packaging_cad_foundation"]["rom_deg"]
+    notes = []
+    for j in joints:
+        lim = rom.get(j["name"])
+        if lim:
+            lo, hi = max(j["range"][0], lim[0]), min(j["range"][1], lim[1])
+            if [lo, hi] != list(j["range"]):
+                notes.append(f"{j['name']} range {list(j['range'])} -> [{lo}, {hi}] deg (CAD-limited)")
+                j["rom_spec_deg"] = list(j["range"])
+                j["range"] = [lo, hi]
+    return notes
 
 
 def build_spec(concept: dict) -> dict:
@@ -144,8 +187,13 @@ def build_spec(concept: dict) -> dict:
     spec["body"]["height_m"] = float(concept["height_m"])
     spec["body"]["proportions"] = {**spec["body"]["proportions"], **concept.get("proportions", {})}
     jl = _joint_list(concept, tpl)
-    spec["body"]["proportions"], floor_notes = apply_floors(spec["body"]["proportions"], float(concept["height_m"]), jl)
+    cad = "cad_foundation" in packaging_set(concept)
+    spec["body"]["proportions"], floor_notes = apply_floors(spec["body"]["proportions"], float(concept["height_m"]), jl, cad=cad)
+    if cad:
+        floor_notes += apply_cad_rom(jl)
     spec["_floor_notes"] = floor_notes
+    if "body_overrides" in concept:                  # e.g. {mass_kg: 2.107}: pin the total mass of a robot whose real mass is known (known-robot calibration)
+        spec["body"] = {**spec["body"], **concept["body_overrides"]}
     spec["kinematics"] = {"template": tpl["id"], "mirror": True, "joints": jl}
     spec["locomotion"] = deep_merge(spec["locomotion"], concept.get("locomotion", {}))
     if "mass_model" in concept:
@@ -162,7 +210,7 @@ def part_list(concept: dict) -> list[dict]:
 
 def build_robot(concept, *, actuator_variants: dict | None = None, structure_scale: float = 1.0,
                 wiring_scale: float = 1.0) -> Robot:
-    """structure_scale: multiplier on the printed structure+shell mass (nominal 1.0; evidence band 0.9-1.8).
+    """structure_scale: multiplier on the printed structure+shell mass (nominal 1.0; band 0.55-1.4 around the ODM-recentred 11.9 kg per m^3).
     wiring_scale: multiplier on wiring harness + misc electronics (nominal 1.0; band 0.8-1.5).
     Servo, battery and board masses are taken from the catalog as listed (no band)."""
     concept = load_concept(concept)
@@ -227,5 +275,5 @@ def mass_sanity(robot: Robot) -> dict:
     return {"component_sum_kg": round(robot.total_mass, 3), "benchmark_fit_kg": round(bm, 3), "ratio": round(ratio, 3),
             "status": f"{status} the sanity band (0.6x-1.6x of the fit)",
             "note": "The fit 18.5*h^2.28 (N=9, R2 0.93, research/robots/benchmarks.md) and the ToddlerBot/OP3 masses are SANITY BOUNDS "
-                    "ONLY. The mass used everywhere in this report is the component sum (catalog masses as listed; printed structure x0.9-1.8 and "
-                    "wiring/electronics x0.8-1.5 bands); the structure term is a pre-CAD guess."}
+                    "ONLY. The mass used everywhere in this report is the component sum (catalog masses as listed; printed structure x0.55-1.4 around the "
+                    "Open Duck Mini-recentred nominal and wiring/electronics x0.8-1.5 bands); the structure term is a pre-CAD guess."}

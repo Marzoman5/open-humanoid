@@ -74,6 +74,7 @@ class ServoSpec:
     protective_fraction: float = 0.2
     release_time_s: float = 1.0
     backlash_rad: float = 0.0087  # +-0.5 deg: datasheet <=0.5 deg; Robonine measured 0.87 deg on one 12 V unit
+    rated_alt_nm: tuple = ()       # other retailer figures for the rated continuous torque (the 'rated' label is contested); reported as a sensitivity
     notes: tuple = field(default_factory=tuple)
 
     # ---- derived capability (all at a supply voltage `vin`) -----------------------------------------------------
@@ -164,6 +165,7 @@ def _resolve(entry: dict, key: str, vin_op: float | None, variant: str | None) -
         error_gain=fw["error_gain"], error_gain_ratio=bam["error_gain_ratio"], delay_s=bam["command_delay"],
         rate_limit_rad_s=0.894 * ratio_noload, armature=bam["armature"] * scale.get("armature", 1.0), friction=fr,
         stall_nm_ref=stall, stall_current_a=stall_i, rated_continuous_nm=entry["rated_continuous_nm"]["v"],
+        rated_alt_nm=tuple(entry["rated_continuous_nm"].get("alt", ())),
         noload_rad_s_ref=noload, mass_kg=entry["mass_kg"]["v"], rth_k_per_w=entry["thermal"]["rth_k_per_w"],
         tau_th_s=entry["thermal"]["tau_s"], uncertainty=dict(entry["uncertainty"]), notes=tuple(notes),
         protection_time_s=prot["protection_time_s"]["v"], overload_fraction=prot["overload_fraction"]["v"],

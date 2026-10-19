@@ -31,7 +31,12 @@ class IdealBank:
         self.n, self.dt = len(specs), dt
         tf = np.ones(self.n) if torque_frac is None else np.asarray(torque_frac, float)
         self.cap = np.where(tf < 1, np.array([x.stall_nm_ref for x in specs]) * tf, 1e3)
-        self.kp, self.kd = kp, kd
+        # The PD is explicit at the sim step: with a small joint inertia (e.g. the ST3025 armature sensitivity, 0.004) a damping of 6 N.m.s/rad is
+        # numerically unstable (kd*dt/I > 2). Cap kd at 0.6*I/dt and keep the damping ratio at 1 (kp = kd^2 / 4I); for the BAM armature (0.0234)
+        # neither cap binds, so every earlier result is unchanged.
+        inertia = np.array([max(float(x.armature), 1e-6) for x in specs])
+        self.kd = np.minimum(kd, 0.6 * inertia / dt)
+        self.kp = np.minimum(kp, self.kd ** 2 / (4.0 * inertia))
         self.vin = np.array([s.vin_ref for s in specs], float)
         self.kt_cur = np.array([s.kt_current for s in specs])
         self.R_heat = np.array([s.R_heat for s in specs])
@@ -85,6 +90,8 @@ class PlayConfig:
     push: tuple | None = None          # (t_seconds_into_reference, dv[3]): velocity impulse applied to the free base; default: ref.meta['push']
     model_hook: object = None          # callable(MjModel) applied after the model is built (COM shift, floor friction)
     cmd_offset: tuple | None = None   # (t_log, offsets[T, n]) learned by `learn_offsets` (stand-in for policy feedforward)
+    record_inverse: bool = False       # keep pre-step state, acceleration and foot contact forces at the logged steps (mj_inverse cross-check, closed-chain fighting)
+    init_vel: bool = False             # start with the reference velocities (a periodic gait replayed from mid-cycle, no lead-in): base v_ref and joint dq_ref
 
 
 @dataclass
@@ -112,6 +119,22 @@ class Log:
 
     def sl(self):
         return slice(self.warmup_n, None)
+
+
+def _foot_forces(mujoco, model, data, foot_geoms: dict) -> dict:
+    """Summed contact force (world frame: x, y, z) on the left / right foot geoms."""
+    out = {"l": np.zeros(3), "r": np.zeros(3)}
+    f6 = np.zeros(6)
+    for ci in range(data.ncon):
+        c = data.contact[ci]
+        side = foot_geoms.get(int(c.geom1)) or foot_geoms.get(int(c.geom2))
+        if side is None:
+            continue
+        mujoco.mj_contactForce(model, data, ci, f6)
+        R = c.frame.reshape(3, 3)                      # rows: normal, tangent1, tangent2 (world)
+        fw = R.T @ f6[:3]
+        out[side] += fw if int(c.geom2) in foot_geoms else -fw
+    return out
 
 
 def _servo_scales(robot: Robot, cfg: PlayConfig):
@@ -182,6 +205,9 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
     data.qpos[:3] = p_ref[0] + np.array([0, 0, 0.001])
     data.qpos[3:7] = qu_ref[0]
     data.qpos[qadr] = q_ref[0]
+    if cfg.init_vel:
+        data.qvel[:3] = v_ref[warm]
+        data.qvel[dadr] = dq_ref[warm]
     mujoco.mj_forward(model, data)
     bank.reset(q_ref[0] / ratio)
 
@@ -197,6 +223,14 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
     vin = pack.voltage(0.0) if pack else float(np.mean([s.vin_ref for s in specs]))
     ce = compute_power_w_total = cfg.compute_w / max(cfg.regulator_eff, 0.5)
 
+    INV: list = []
+    foot_geoms = {}
+    if cfg.record_inverse:
+        for gi in range(model.ngeom):
+            nm = model.geom(gi).name
+            if nm.startswith("foot_") or nm.endswith("_foot_bottom_tpu") or nm in ("foot_l", "foot_r"):
+                side = "l" if (nm.endswith("_l") or nm.startswith("left")) else "r"
+                foot_geoms[gi] = side
     L = {k: [] for k in ("t", "q", "dq", "q_ref", "tau", "omega", "cur", "pb", "ph", "T", "vin", "it", "as", "bz", "tilt", "fl")}
     fell = False
     log_every = cfg.log_every
@@ -250,7 +284,12 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
             a_use = 0.0
         if k == k_push:
             data.qvel[:3] += np.asarray(push[1], float)[:3]
+        rec = None
+        if cfg.record_inverse and k % log_every == 0:
+            rec = (data.qpos.copy(), data.qvel.copy(), data.xfrc_applied.copy(), data.qfrc_actuator.copy())
         mujoco.mj_step(model, data)
+        if rec is not None:
+            INV.append(rec + (data.qacc.copy(), _foot_forces(mujoco, model, data, foot_geoms)))
         if not np.all(np.isfinite(data.qpos)):
             fell = True
             break
@@ -282,7 +321,7 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
                 break
     A = {k: np.array(v) for k, v in L.items()}
     wn_log = int(round(warm / log_every))
-    extras = {"friction_budget": A["fl"], "mass_kg": mass, "pack_soc_end": pack.soc if pack else None,
+    extras = {"inverse_records": INV, "friction_budget": A["fl"], "mass_kg": mass, "pack_soc_end": pack.soc if pack else None,
               "sat_frac": (getattr(bank, "sat_steps", np.zeros(n)) / max(getattr(bank, "steps", 1), 1)).tolist(),
               "protection_trips": getattr(bank, "trips", np.zeros(n, int)).tolist(),
               "assist_mean_bw": float(np.mean(A["as"][wn_log:])) if len(A["as"]) > wn_log else 0.0,

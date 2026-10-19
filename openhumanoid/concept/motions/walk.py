@@ -15,12 +15,21 @@ from .common import fill_legs, finish, knee_flex_from, rest_upper_body, set_col,
 from .lipm import PreviewController
 
 
-def frozen_gait() -> dict:
-    """Walk spec shared by every candidate (thresholds.yaml `motions.walk`): absolute speed, step time, turn rate, clearance."""
+def frozen_gait(step_time_s: float | None = None) -> dict:
+    """Walk spec shared by every candidate (thresholds.yaml `motions.walk`): absolute speed, step time, turn rate, clearance.
+    `step_time_s` picks another member of the frozen step-time SET (gait_sweep.step_time_s): speed and turn rate stay, so the
+    step length and the yaw per step scale with it, and the number of steps keeps the walk about as long as the default."""
     w = config.walk_spec()
-    return {"step_len": w["speed_mps"] * w["step_time_s"], "step_time": w["step_time_s"], "clearance": w["clearance_m"],
-            "ds_fraction": w["ds_fraction"], "turn_per_step": w["turn_rate_rad_s"] * w["step_time_s"],
-            "arm_swing": w["arm_swing"], "n_steps": w["n_steps"]}
+    st = float(step_time_s) if step_time_s else float(w["step_time_s"])
+    n = max(int(round(w["n_steps"] * w["step_time_s"] / st)), 4)
+    return {"step_len": w["speed_mps"] * st, "step_time": st, "clearance": w["clearance_m"],
+            "ds_fraction": w["ds_fraction"], "turn_per_step": w["turn_rate_rad_s"] * st,
+            "arm_swing": w["arm_swing"], "n_steps": n}
+
+
+def chosen_step_time(kin: RobotKin) -> float | None:
+    """The step time this robot's concept selected from the frozen set (None: the default)."""
+    return (kin.robot.concept.get("gait") or {}).get("step_time_s")
 
 
 def walk(kin: RobotKin, mode: str = "forward", n_steps: int | None = None, dt: float = 0.01, *, landing_shift: int = 0,
@@ -28,7 +37,8 @@ def walk(kin: RobotKin, mode: str = "forward", n_steps: int | None = None, dt: f
     """mode: forward | backward | turn. `over` overrides frozen gait keys (stress variants and the diagnostic ladder).
     landing_shift: swing foot lands this many samples (10 ms each) later (+) or earlier (-) than the ZMP plan assumes.
     capture_n / capture_m: swing foot of step `capture_n` lands `capture_m` further out sideways (one lateral capture step)."""
-    gait = {**frozen_gait(), **{k: v for k, v in over.items() if v is not None}}
+    st_over = over.get("step_time")
+    gait = {**frozen_gait(st_over if st_over is not None else chosen_step_time(kin)), **{k: v for k, v in over.items() if v is not None}}
     n_steps = n_steps or int(gait["n_steps"])
     lg = kin.lg
     L = {"forward": 1.0, "backward": -1.0, "turn": 0.0}[mode] * gait["step_len"]
@@ -86,8 +96,13 @@ def walk(kin: RobotKin, mode: str = "forward", n_steps: int | None = None, dt: f
         cur[swing] = b.copy()
     final_mid = 0.5 * (cur["l"][:2] + cur["r"][:2])
 
+    inboard = float(gait.get("zmp_inboard", 0.0))          # ZMP target this far towards the midline from the foot centre (0 for the frozen gait; a wide, knock-kneed stance like Open Duck Mini's needs it)
+
     def centre(p):
-        return p[:2] + lg.foot_off * np.array([math.cos(p[2]), math.sin(p[2])])
+        c = p[:2] + lg.foot_off * np.array([math.cos(p[2]), math.sin(p[2])])
+        if inboard:
+            c = c - inboard * math.copysign(1.0, p[1]) * np.array([-math.sin(p[2]), math.cos(p[2])])
+        return c
 
     zmp = np.zeros((T, 2))
     mid0 = 0.5 * (centre(init["l"]) + centre(init["r"]))
@@ -147,4 +162,6 @@ def walk(kin: RobotKin, mode: str = "forward", n_steps: int | None = None, dt: f
                        "clearance_m": gait["clearance"], "gait": {k: float(v) for k, v in gait.items()}})
     ref.stance = np.stack([foot["l"][:, 2] < 1e-4, foot["r"][:, 2] < 1e-4], 1)
     ref.meta["walk_window"] = [n_init * dt, (n_init + S * n_step) * dt]
+    ref.aux = {"foot": foot, "com": com_t, "zmp": zmp, "support": support, "land": land, "init": init, "dt": dt, "n_init": n_init,
+               "n_step": n_step, "n_ss": n_ss, "n_ds": n_ds, "zc": zc, "off0": off0, "pelvis_z": sg["pelvis_z"], "gait": gait, "n_steps": S}
     return ref

@@ -1,0 +1,1328 @@
+{
+ "licence_note": "Open Duck Mini's Playground and reference-motion repositories have NO LICENSE: read from a scratch folder at run time, nothing copied or committed; only derived numbers are recorded here",
+ "gates": {
+  "peak_frac_of_stall": 0.7,
+  "rms_over_rated_0.49": 1.0,
+  "rms_over_rated_0.64": 1.0,
+  "envelope_util": 0.9,
+  "overload_run_ratio": 1.0
+ },
+ "servo": "sts3215-7v4",
+ "odm_facts": {
+  "L1": 0.07865006357276515,
+  "L2": 0.07865006357276515,
+  "hip_pitch_offset_xy": [
+   -0.035059999999999,
+   0.1091500000000046
+  ],
+  "foot_len": 0.10318135947465741,
+  "foot_w": 0.04143720723108857,
+  "foot_off": 0.013333170398487547,
+  "ankle_h": 0.038931057259273476,
+  "foot_y": 0.10237798063356063,
+  "foot_y_plan": 0.08172991023532325,
+  "sole_tilt_deg_at_home": 2.3240108464148523,
+  "total_mass_kg": 2.1071406999999995,
+  "com_above_hip_pitch_m": 0.047968474877534806,
+  "home_knee_flex_deg": 78.38062637389662
+ },
+ "structure_mass": {
+  "odm_total_kg": 2.107,
+  "servos": 14,
+  "servo_kg_each": 0.055,
+  "servo_total_kg": 0.77,
+  "non_servo_kg": 1.337,
+  "electronics_wiring_estimate_kg": 0.456,
+  "electronics_note": "catalog masses of the same parts as the duck-like concept (Pi Zero 2 W, microSD, bus adapter, IMU, 2S pack, buck, switch, wiring) + 0.12 kg misc: an ESTIMATE (ODM publishes no mass breakdown)",
+  "structure_implied_kg": 0.881,
+  "engine_nominal_structure_kg_at_0.42m": 0.474,
+  "engine_coefficient_kg_per_m3": 6.4,
+  "implied_coefficient_kg_per_m3": 11.89,
+  "gap_factor": 1.86,
+  "duck_like_non_servo_kg_before": 0.93,
+  "recentre_if_gap_above": 1.5,
+  "recentre": true
+ },
+ "a_own_reference": {
+  "model": "Open Duck Mini MJCF, its own armature 0.027, 7.4 V STS3215 servo model, ranges relaxed so the replay can follow the reference (its knee swings to ~115 deg, past the +-90 deg of the MJCF)",
+  "reference": "polynomial fit, period 0.54 s, smoothed to 6 harmonics",
+  "commands": {
+   "dx=0.148": {
+    "table_key": [
+     0.148,
+     -0.037,
+     -0.074
+    ],
+    "mean_speed_mps": 0.161,
+    "step_time_s": 0.27,
+    "gates_smoothed": {
+     "peak_frac_of_stall": 4.3183078174540785,
+     "rms_over_rated_0.49": 12.101930899955818,
+     "rms_over_rated_0.64": 9.30917761535063,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.17500000000000007,
+     "speed_over_noload": 1.9828440986134237,
+     "peak_nm_max": 8.256604546972198,
+     "rms_nm_max": 5.929946140978351,
+     "worst_joint_peak": "knee_r"
+    },
+    "gates_raw_polynomial": {
+     "peak_frac_of_stall": 7.48625369511572,
+     "rms_over_rated_0.49": 15.582369425671155,
+     "rms_over_rated_0.64": 11.986438019747043,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.14500000000000005,
+     "speed_over_noload": 1.8497811460196025,
+     "peak_nm_max": 14.313717065061256,
+     "rms_nm_max": 7.635361018578866,
+     "worst_joint_peak": "ankle_pitch_r"
+    },
+    "base_residual_bw_mean": 0.0031,
+    "friction_cone_violations": 0.053
+   },
+   "dx=0.074": {
+    "table_key": [
+     0.074,
+     -0.037,
+     -0.074
+    ],
+    "mean_speed_mps": 0.088,
+    "step_time_s": 0.27,
+    "gates_smoothed": {
+     "peak_frac_of_stall": 3.7753997930041994,
+     "rms_over_rated_0.49": 10.888541576623151,
+     "rms_over_rated_0.64": 8.375801212787039,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.10500000000000002,
+     "speed_over_noload": 1.8379114058570298,
+     "peak_nm_max": 7.218564404224029,
+     "rms_nm_max": 5.3353853725453435,
+     "worst_joint_peak": "knee_r"
+    },
+    "gates_raw_polynomial": {
+     "peak_frac_of_stall": 6.56642137772188,
+     "rms_over_rated_0.49": 14.109139077280963,
+     "rms_over_rated_0.64": 10.85318390560074,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.14000000000000004,
+     "speed_over_noload": 1.717019630863535,
+     "peak_nm_max": 12.554997674204234,
+     "rms_nm_max": 6.9134781478676715,
+     "worst_joint_peak": "knee_l"
+    },
+    "base_residual_bw_mean": 0.0007,
+    "friction_cone_violations": 0.034
+   }
+  }
+ },
+ "b_frozen_on_odm": {
+  "combos": [
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.0,
+    "ik_failed_samples": 54,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 5.3251216070078655,
+     "rms_over_rated_0.49": 5.317839059499091,
+     "rms_over_rated_0.64": 4.090645430383916,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.15000000000000005,
+     "speed_over_noload": 1.536947803368766,
+     "peak_nm_max": 10.18163251259904,
+     "rms_nm_max": 2.6057411391545546,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 8.5
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.03,
+    "ik_failed_samples": 0,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 2.202423235705506,
+     "rms_over_rated_0.49": 4.955885151157158,
+     "rms_over_rated_0.64": 3.8122193470439676,
+     "envelope_util": 2.500482768768135,
+     "overload_run_ratio": 0.13000000000000003,
+     "speed_over_noload": 0.7736870253119641,
+     "peak_nm_max": 4.211033226668927,
+     "rms_nm_max": 2.4283837240670074,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 2.9
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.05,
+    "ik_failed_samples": 43,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 1.7171539600912444,
+     "rms_over_rated_0.49": 5.136610569168905,
+     "rms_over_rated_0.64": 3.951238899360696,
+     "envelope_util": 1.7171539600912444,
+     "overload_run_ratio": 0.15000000000000005,
+     "speed_over_noload": 0.6384402463692266,
+     "peak_nm_max": 3.2831983716944593,
+     "rms_nm_max": 2.5169391788927635,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 7.4
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.0,
+    "ik_failed_samples": 161,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 8.65145682714578,
+     "rms_over_rated_0.49": 18.87693861480007,
+     "rms_over_rated_0.64": 14.520722011384668,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.12500000000000003,
+     "speed_over_noload": 1.8998436862131443,
+     "peak_nm_max": 16.541585453502734,
+     "rms_nm_max": 9.249699921252034,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 22.1
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.03,
+    "ik_failed_samples": 18,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 1.2381267756587169,
+     "rms_over_rated_0.49": 3.4172356343428603,
+     "rms_over_rated_0.64": 2.628642795648354,
+     "envelope_util": 1.2381267756587169,
+     "overload_run_ratio": 0.16000000000000006,
+     "speed_over_noload": 0.6663342373183722,
+     "peak_nm_max": 2.3672983950594664,
+     "rms_nm_max": 1.6744454608280015,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 5.4
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.05,
+    "ik_failed_samples": 0,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 1.101320057800431,
+     "rms_over_rated_0.49": 3.222557371777628,
+     "rms_over_rated_0.64": 2.4788902859827906,
+     "envelope_util": 1.1697381863769958,
+     "overload_run_ratio": 0.2150000000000001,
+     "speed_over_noload": 0.6960159035413274,
+     "peak_nm_max": 2.105723950514424,
+     "rms_nm_max": 1.5790531121710376,
+     "worst_joint_peak": "ankle_pitch_l"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 2.3
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.0,
+    "ik_failed_samples": 298,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 3.1393496708536275,
+     "rms_over_rated_0.49": 6.92296525053655,
+     "rms_over_rated_0.64": 5.325357885028115,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.16000000000000006,
+     "speed_over_noload": 1.2388365299247688,
+     "peak_nm_max": 6.002436570672136,
+     "rms_nm_max": 3.3922529727629094,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 35.0
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.03,
+    "ik_failed_samples": 136,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 1.0679801749433513,
+     "rms_over_rated_0.49": 2.673085345861354,
+     "rms_over_rated_0.64": 2.0562194968164262,
+     "envelope_util": 1.0679801749433513,
+     "overload_run_ratio": 0.14000000000000004,
+     "speed_over_noload": 0.7035794472458228,
+     "peak_nm_max": 2.0419780944916877,
+     "rms_nm_max": 1.3098118194720636,
+     "worst_joint_peak": "knee_l"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 19.4
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.05,
+    "ik_failed_samples": 0,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 1.0629991320075196,
+     "rms_over_rated_0.49": 2.517747246560649,
+     "rms_over_rated_0.64": 1.9367286512004995,
+     "envelope_util": 1.0629991320075196,
+     "overload_run_ratio": 0.2500000000000001,
+     "speed_over_noload": 0.7331737827471683,
+     "peak_nm_max": 2.0324543403983775,
+     "rms_nm_max": 1.2336961508147182,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 3.0
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.0,
+    "ik_failed_samples": 42,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 6.5496011896332025,
+     "rms_over_rated_0.49": 11.45250190487551,
+     "rms_over_rated_0.64": 8.809616849904238,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.14500000000000005,
+     "speed_over_noload": 2.9304505235797143,
+     "peak_nm_max": 12.522837474578683,
+     "rms_nm_max": 5.611725933389,
+     "worst_joint_peak": "knee_l"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 7.1
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.03,
+    "ik_failed_samples": 20,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 3.7118673496018992,
+     "rms_over_rated_0.49": 9.128120780000721,
+     "rms_over_rated_0.64": 7.021631369231324,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.13500000000000004,
+     "speed_over_noload": 1.4185923626048649,
+     "peak_nm_max": 7.0970903724388315,
+     "rms_nm_max": 4.4727791822003535,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 4.0
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.05,
+    "ik_failed_samples": 0,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 4.3901028832114575,
+     "rms_over_rated_0.49": 6.9639212121998755,
+     "rms_over_rated_0.64": 5.356862470922981,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.11500000000000003,
+     "speed_over_noload": 1.1242449188071681,
+     "peak_nm_max": 8.393876712700306,
+     "rms_nm_max": 3.412321393977939,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 2.4
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.0,
+    "ik_failed_samples": 82,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 4.72767257738506,
+     "rms_over_rated_0.49": 14.429366156902026,
+     "rms_over_rated_0.64": 11.099512428386173,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.19000000000000009,
+     "speed_over_noload": 1.703481318705938,
+     "peak_nm_max": 9.039309967960234,
+     "rms_nm_max": 7.0703894168819925,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 11.8
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.03,
+    "ik_failed_samples": 25,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 3.533979502801976,
+     "rms_over_rated_0.49": 10.284888837534577,
+     "rms_over_rated_0.64": 7.911452951949675,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.18000000000000008,
+     "speed_over_noload": 1.2901272186867139,
+     "peak_nm_max": 6.756968809357378,
+     "rms_nm_max": 5.039595530391943,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 4.9
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.05,
+    "ik_failed_samples": 0,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 3.4823898261583466,
+     "rms_over_rated_0.49": 4.774023943385597,
+     "rms_over_rated_0.64": 3.6723261102966127,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.19000000000000009,
+     "speed_over_noload": 1.1055409831577152,
+     "peak_nm_max": 6.6583293476147585,
+     "rms_nm_max": 2.3392717322589425,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 2.0
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.0,
+    "ik_failed_samples": 355,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 4.7330099369037155,
+     "rms_over_rated_0.49": 18.536151803169442,
+     "rms_over_rated_0.64": 14.258578310130341,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.18000000000000008,
+     "speed_over_noload": 1.7453842092641902,
+     "peak_nm_max": 9.049514999359904,
+     "rms_nm_max": 9.082714383553027,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 42.4
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.03,
+    "ik_failed_samples": 83,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 5.356726557205196,
+     "rms_over_rated_0.49": 14.912915258993205,
+     "rms_over_rated_0.64": 11.47147327614862,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.2500000000000001,
+     "speed_over_noload": 1.4920953728416904,
+     "peak_nm_max": 10.242061177376334,
+     "rms_nm_max": 7.307328476906671,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 11.5
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.05,
+    "ik_failed_samples": 0,
+    "range_violation": "",
+    "gates": {
+     "peak_frac_of_stall": 3.70025142810716,
+     "rms_over_rated_0.49": 4.304397299950627,
+     "rms_over_rated_0.64": 3.3110748461158668,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.2050000000000001,
+     "speed_over_noload": 1.128874160705158,
+     "peak_nm_max": 7.07488073054089,
+     "rms_nm_max": 2.109154676975807,
+     "worst_joint_peak": "knee_r"
+    },
+    "base_residual_bw_mean": 0.0,
+    "seconds": 2.4
+   }
+  ],
+  "best": {
+   "stance_knee_flex_deg": 77.0,
+   "step_time_s": 0.5,
+   "zmp_inboard_m": 0.05,
+   "ik_failed_samples": 0,
+   "range_violation": "",
+   "gates": {
+    "peak_frac_of_stall": 1.0629991320075196,
+    "rms_over_rated_0.49": 2.517747246560649,
+    "rms_over_rated_0.64": 1.9367286512004995,
+    "envelope_util": 1.0629991320075196,
+    "overload_run_ratio": 0.2500000000000001,
+    "speed_over_noload": 0.7331737827471683,
+    "peak_nm_max": 2.0324543403983775,
+    "rms_nm_max": 1.2336961508147182,
+    "worst_joint_peak": "knee_r"
+   },
+   "base_residual_bw_mean": 0.0,
+   "seconds": 3.0
+  }
+ },
+ "d_old_duck_like_check": {
+  "combos": [
+   {
+    "stance_knee_flex_deg": 45.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.0,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 2.1087870593342743,
+     "rms_over_rated_0.49": 4.59313826866919,
+     "rms_over_rated_0.64": 3.533183283591684,
+     "envelope_util": 2.1087870593342743,
+     "overload_run_ratio": 0.075,
+     "speed_over_noload": 0.6848016740926134,
+     "peak_nm_max": 4.032000857447132,
+     "rms_nm_max": 2.250637751647903,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": true,
+     "reason": "",
+     "tether_mean_bw": 0.0078,
+     "gates": {
+      "peak_frac_of_stall": 1.265299820977985,
+      "rms_over_rated_0.49": 4.001487736789635,
+      "rms_over_rated_0.64": 3.07806748983818,
+      "envelope_util": 1.265299820977985,
+      "overload_run_ratio": 0.07,
+      "speed_over_noload": 0.6387432862713419,
+      "peak_nm_max": 2.4192532577099075,
+      "rms_nm_max": 1.9607289910269208,
+      "worst_joint_peak": "knee_r"
+     }
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.108
+   },
+   {
+    "stance_knee_flex_deg": 45.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.0,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 1.298299829622283,
+     "rms_over_rated_0.49": 2.814070084273774,
+     "rms_over_rated_0.64": 2.1646692955952105,
+     "envelope_util": 1.298299829622283,
+     "overload_run_ratio": 0.06999999999999999,
+     "speed_over_noload": 0.6882762570021047,
+     "peak_nm_max": 2.482349274237805,
+     "rms_nm_max": 1.3788943412941492,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": true,
+     "reason": "",
+     "tether_mean_bw": 0.0064,
+     "gates": {
+      "peak_frac_of_stall": 0.95310236302015,
+      "rms_over_rated_0.49": 2.552671241316164,
+      "rms_over_rated_0.64": 1.9635932625508952,
+      "envelope_util": 0.9858669333802353,
+      "overload_run_ratio": 0.07,
+      "speed_over_noload": 0.6412887381616778,
+      "peak_nm_max": 1.8223317180945267,
+      "rms_nm_max": 1.2508089082449203,
+      "worst_joint_peak": "knee_l"
+     }
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.108
+   },
+   {
+    "stance_knee_flex_deg": 45.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.0,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 0.9677390731922236,
+     "rms_over_rated_0.49": 1.8612394526164924,
+     "rms_over_rated_0.64": 1.4317226558588403,
+     "envelope_util": 1.0349139044898914,
+     "overload_run_ratio": 0.06499999999999999,
+     "speed_over_noload": 0.6862124885663828,
+     "peak_nm_max": 1.8503171079435314,
+     "rms_nm_max": 0.9120073317820813,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": true,
+     "reason": "",
+     "tether_mean_bw": 0.0054,
+     "gates": {
+      "peak_frac_of_stall": 0.8710260643037482,
+      "rms_over_rated_0.49": 1.7123165018595274,
+      "rms_over_rated_0.64": 1.317166539891944,
+      "envelope_util": 0.8859206199161831,
+      "overload_run_ratio": 0.060000000000000005,
+      "speed_over_noload": 0.6575626356640542,
+      "peak_nm_max": 1.6654018349487665,
+      "rms_nm_max": 0.8390350859111684,
+      "worst_joint_peak": "knee_r"
+     }
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.108
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.0,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 2.367889282536278,
+     "rms_over_rated_0.49": 4.968596390094222,
+     "rms_over_rated_0.64": 3.821997223149401,
+     "envelope_util": 2.603643459072154,
+     "overload_run_ratio": 0.08,
+     "speed_over_noload": 0.7489374298868171,
+     "peak_nm_max": 4.527404308209363,
+     "rms_nm_max": 2.4346122311461684,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": true,
+     "reason": "",
+     "tether_mean_bw": 0.0078,
+     "gates": {
+      "peak_frac_of_stall": 1.3861704165352404,
+      "rms_over_rated_0.49": 4.412639246350189,
+      "rms_over_rated_0.64": 3.394337881807837,
+      "envelope_util": 1.5463558095414318,
+      "overload_run_ratio": 0.08,
+      "speed_over_noload": 0.6985544193189764,
+      "peak_nm_max": 2.6503578364153797,
+      "rms_nm_max": 2.1621932307115923,
+      "worst_joint_peak": "knee_r"
+     }
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.108
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.0,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 1.4803494620915534,
+     "rms_over_rated_0.49": 3.0529792898935697,
+     "rms_over_rated_0.64": 2.3484456076104383,
+     "envelope_util": 1.6939871917438734,
+     "overload_run_ratio": 0.08,
+     "speed_over_noload": 0.7580809299963438,
+     "peak_nm_max": 2.83042817151905,
+     "rms_nm_max": 1.4959598520478492,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": true,
+     "reason": "",
+     "tether_mean_bw": 0.0064,
+     "gates": {
+      "peak_frac_of_stall": 1.0244884121645415,
+      "rms_over_rated_0.49": 2.727934365366398,
+      "rms_over_rated_0.64": 2.0984110502818445,
+      "envelope_util": 1.2666300919117652,
+      "overload_run_ratio": 0.08,
+      "speed_over_noload": 0.7051612417801351,
+      "peak_nm_max": 1.9588218440586034,
+      "rms_nm_max": 1.336687839029535,
+      "worst_joint_peak": "knee_l"
+     }
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.108
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.0,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 1.101118569619298,
+     "rms_over_rated_0.49": 2.032884729865649,
+     "rms_over_rated_0.64": 1.5637574845120377,
+     "envelope_util": 1.4576739454655088,
+     "overload_run_ratio": 0.075,
+     "speed_over_noload": 0.7758651972450148,
+     "peak_nm_max": 2.1053387051120978,
+     "rms_nm_max": 0.996113517634168,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": true,
+     "reason": "",
+     "tether_mean_bw": 0.0054,
+     "gates": {
+      "peak_frac_of_stall": 0.9833380868029654,
+      "rms_over_rated_0.49": 1.8381740824613633,
+      "rms_over_rated_0.64": 1.4139800634318178,
+      "envelope_util": 1.2001211949613588,
+      "overload_run_ratio": 0.07,
+      "speed_over_noload": 0.7412048133821049,
+      "peak_nm_max": 1.8801424219672698,
+      "rms_nm_max": 0.900705300406068,
+      "worst_joint_peak": "knee_r"
+     }
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.108
+   },
+   {
+    "stance_knee_flex_deg": 30.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.0,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 3.220028818484902,
+     "rms_over_rated_0.49": 6.073085895231089,
+     "rms_over_rated_0.64": 4.671604534793145,
+     "envelope_util": 9.105790373245588,
+     "overload_run_ratio": 0.09000000000000001,
+     "speed_over_noload": 0.9262347472175341,
+     "peak_nm_max": 6.156695100943133,
+     "rms_nm_max": 2.9758120886632335,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": true,
+     "reason": "",
+     "tether_mean_bw": 0.0089,
+     "gates": {
+      "peak_frac_of_stall": 5.485501410798376,
+      "rms_over_rated_0.49": 14.510536983354786,
+      "rms_over_rated_0.64": 11.161951525657528,
+      "envelope_util": 9.99,
+      "overload_run_ratio": 0.22000000000000006,
+      "speed_over_noload": 0.872489570491207,
+      "peak_nm_max": 10.488278697446495,
+      "rms_nm_max": 7.110163121843845,
+      "worst_joint_peak": "knee_r"
+     }
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.108
+   },
+   {
+    "stance_knee_flex_deg": 30.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.0,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 2.1132215252350206,
+     "rms_over_rated_0.49": 3.8988346428896254,
+     "rms_over_rated_0.64": 2.999103571453558,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.09000000000000001,
+     "speed_over_noload": 0.9721569070030265,
+     "peak_nm_max": 4.040479556249359,
+     "rms_nm_max": 1.9104289750159165,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": true,
+     "reason": "",
+     "tether_mean_bw": 0.0066,
+     "gates": {
+      "peak_frac_of_stall": 1.4796729483368756,
+      "rms_over_rated_0.49": 3.557005320697073,
+      "rms_over_rated_0.64": 2.7361579389977484,
+      "envelope_util": 4.726855085077977,
+      "overload_run_ratio": 0.09,
+      "speed_over_noload": 0.9045281565632626,
+      "peak_nm_max": 2.829134677220106,
+      "rms_nm_max": 1.7429326071415658,
+      "worst_joint_peak": "knee_r"
+     }
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.108
+   },
+   {
+    "stance_knee_flex_deg": 30.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.0,
+    "feasible": false,
+    "notes": [
+     "leg IK unreachable at 24 of 590 samples"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 4.125729362861573,
+     "rms_over_rated_0.49": 8.89309461157459,
+     "rms_over_rated_0.64": 6.84084200890353,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.13500000000000004,
+     "speed_over_noload": 1.3354414824263656,
+     "peak_nm_max": 7.888394541791328,
+     "rms_nm_max": 4.357616359671549,
+     "worst_joint_peak": "hip_pitch_l"
+    },
+    "pd_harness": {
+     "valid": true,
+     "reason": "",
+     "tether_mean_bw": 0.0074,
+     "gates": {
+      "peak_frac_of_stall": 26.90288392666716,
+      "rms_over_rated_0.49": 33.058104146991475,
+      "rms_over_rated_0.64": 25.42931088230113,
+      "envelope_util": 9.99,
+      "overload_run_ratio": 0.2700000000000001,
+      "speed_over_noload": 1.3763220816224282,
+      "peak_nm_max": 51.43831406778761,
+      "rms_nm_max": 16.19847103202582,
+      "worst_joint_peak": "knee_l"
+     }
+    },
+    "base_residual_bw_mean": 0.0001,
+    "total_mass_kg": 2.108
+   },
+   {
+    "stance_knee_flex_deg": 20.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.0,
+    "feasible": false,
+    "notes": [
+     "leg IK unreachable at 4 of 590 samples"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 10.079900864797652,
+     "rms_over_rated_0.49": 9.121396210851156,
+     "rms_over_rated_0.64": 7.016458623731658,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.09500000000000001,
+     "speed_over_noload": 1.6808721263879949,
+     "peak_nm_max": 19.27277045349311,
+     "rms_nm_max": 4.469484143317066,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "ideal playback fell over",
+     "tether_mean_bw": 0.0152,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.108
+   },
+   {
+    "stance_knee_flex_deg": 20.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.0,
+    "feasible": false,
+    "notes": [
+     "leg IK unreachable at 72 of 575 samples"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 2.852562072453364,
+     "rms_over_rated_0.49": 11.037740352930886,
+     "rms_over_rated_0.64": 8.490569502254527,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.11500000000000003,
+     "speed_over_noload": 1.4866892444539408,
+     "peak_nm_max": 5.454098682530832,
+     "rms_nm_max": 5.408492772936134,
+     "worst_joint_peak": "knee_l"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "tether supplied 4.0% of body weight on average (limit 1%)",
+     "tether_mean_bw": 0.0399,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0001,
+    "total_mass_kg": 2.108
+   },
+   {
+    "stance_knee_flex_deg": 20.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.0,
+    "feasible": false,
+    "notes": [
+     "leg IK unreachable at 143 of 590 samples"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 2.724794084462781,
+     "rms_over_rated_0.49": 8.897941516552248,
+     "rms_over_rated_0.64": 6.844570397347883,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.10500000000000002,
+     "speed_over_noload": 1.4046491413466546,
+     "peak_nm_max": 5.209806289492837,
+     "rms_nm_max": 4.359991343110601,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": true,
+     "reason": "",
+     "tether_mean_bw": 0.0079,
+     "gates": {
+      "peak_frac_of_stall": 30.29401845045987,
+      "rms_over_rated_0.49": 45.94556625662955,
+      "rms_over_rated_0.64": 35.342743274330424,
+      "envelope_util": 9.99,
+      "overload_run_ratio": 0.26000000000000006,
+      "speed_over_noload": 1.4846241041935409,
+      "peak_nm_max": 57.92216327727927,
+      "rms_nm_max": 22.51332746574848,
+      "worst_joint_peak": "knee_r"
+     }
+    },
+    "base_residual_bw_mean": 0.0002,
+    "total_mass_kg": 2.108
+   }
+  ],
+  "best": {
+   "stance_knee_flex_deg": 45.0,
+   "step_time_s": 0.5,
+   "zmp_inboard_m": 0.0,
+   "feasible": true,
+   "notes": [],
+   "gates_mintorque": {
+    "peak_frac_of_stall": 0.9677390731922236,
+    "rms_over_rated_0.49": 1.8612394526164924,
+    "rms_over_rated_0.64": 1.4317226558588403,
+    "envelope_util": 1.0349139044898914,
+    "overload_run_ratio": 0.06499999999999999,
+    "speed_over_noload": 0.6862124885663828,
+    "peak_nm_max": 1.8503171079435314,
+    "rms_nm_max": 0.9120073317820813,
+    "worst_joint_peak": "knee_r"
+   },
+   "pd_harness": {
+    "valid": true,
+    "reason": "",
+    "tether_mean_bw": 0.0054,
+    "gates": {
+     "peak_frac_of_stall": 0.8710260643037482,
+     "rms_over_rated_0.49": 1.7123165018595274,
+     "rms_over_rated_0.64": 1.317166539891944,
+     "envelope_util": 0.8859206199161831,
+     "overload_run_ratio": 0.060000000000000005,
+     "speed_over_noload": 0.6575626356640542,
+     "peak_nm_max": 1.6654018349487665,
+     "rms_nm_max": 0.8390350859111684,
+     "worst_joint_peak": "knee_r"
+    }
+   },
+   "base_residual_bw_mean": 0.0,
+   "total_mass_kg": 2.108
+  }
+ },
+ "c_frozen_on_odm_like": {
+  "combos": [
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.0,
+    "feasible": false,
+    "notes": [
+     "joint range violations: hip_roll_l: [-0.495,0.385] outside [-0.436,0.436]; hip_roll_r: [-0.496,0.346] outside [-0.436,0.436]; knee_l: [0.930"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 34.74104867787077,
+     "rms_over_rated_0.49": 23.889003534269378,
+     "rms_over_rated_0.64": 18.376156564822598,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.15000000000000005,
+     "speed_over_noload": 0.7905547915137997,
+     "peak_nm_max": 66.42488507208891,
+     "rms_nm_max": 11.705611731791995,
+     "worst_joint_peak": "hip_roll_r"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "tether supplied 5.0% of body weight on average (limit 1%)",
+     "tether_mean_bw": 0.0498,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.03,
+    "feasible": false,
+    "notes": [
+     "joint range violations: knee_l: [1.180,1.604] outside [0.000,1.571]; knee_r: [1.180,1.600] outside [0.000,1.571]"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 5.6778938302898085,
+     "rms_over_rated_0.49": 15.407648624360313,
+     "rms_over_rated_0.64": 11.852037403354085,
+     "envelope_util": 6.154480556940939,
+     "overload_run_ratio": 0.1950000000000001,
+     "speed_over_noload": 0.6658218430327172,
+     "peak_nm_max": 10.856133003514113,
+     "rms_nm_max": 7.549747825936553,
+     "worst_joint_peak": "knee_l"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "tether supplied 3.6% of body weight on average (limit 1%)",
+     "tether_mean_bw": 0.0358,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.0,
+    "feasible": false,
+    "notes": [
+     "joint range violations: hip_roll_l: [-0.540,0.394] outside [-0.436,0.436]; hip_roll_r: [-0.562,0.350] outside [-0.436,0.436]"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 114.67450703131449,
+     "rms_over_rated_0.49": 77.55236764897607,
+     "rms_over_rated_0.64": 59.655667422289284,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.1950000000000001,
+     "speed_over_noload": 0.7093484007349941,
+     "peak_nm_max": 219.25765744387328,
+     "rms_nm_max": 38.000660147998275,
+     "worst_joint_peak": "hip_roll_r"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "ideal playback fell over",
+     "tether_mean_bw": 0.0288,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.03,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 1.4535840412149768,
+     "rms_over_rated_0.49": 2.827917280902016,
+     "rms_over_rated_0.64": 2.1753209853092432,
+     "envelope_util": 1.4535840412149768,
+     "overload_run_ratio": 0.2600000000000001,
+     "speed_over_noload": 0.7283700832353861,
+     "peak_nm_max": 2.7792526868030354,
+     "rms_nm_max": 1.385679467641988,
+     "worst_joint_peak": "hip_roll_l"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "tether supplied 2.7% of body weight on average (limit 1%)",
+     "tether_mean_bw": 0.0269,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.0,
+    "feasible": false,
+    "notes": [
+     "joint range violations: hip_roll_l: [-0.588,0.595] outside [-0.436,0.436]; hip_roll_r: [-0.629,0.539] outside [-0.436,0.436]"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 179.37932618309534,
+     "rms_over_rated_0.49": 189.45771368765372,
+     "rms_over_rated_0.64": 145.73670283665672,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.3700000000000002,
+     "speed_over_noload": 0.7507727531547278,
+     "peak_nm_max": 342.9732716620783,
+     "rms_nm_max": 92.83427970695033,
+     "worst_joint_peak": "hip_roll_r"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "ideal playback fell over",
+     "tether_mean_bw": 0.0252,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   },
+   {
+    "stance_knee_flex_deg": 77.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.03,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 1.4447648033423186,
+     "rms_over_rated_0.49": 2.6606725062777343,
+     "rms_over_rated_0.64": 2.0466711586751805,
+     "envelope_util": 1.4447648033423186,
+     "overload_run_ratio": 0.3250000000000002,
+     "speed_over_noload": 0.7743491479681794,
+     "peak_nm_max": 2.762390303990513,
+     "rms_nm_max": 1.3037295280760899,
+     "worst_joint_peak": "hip_roll_l"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "tether supplied 3.4% of body weight on average (limit 1%)",
+     "tether_mean_bw": 0.0339,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.0,
+    "feasible": false,
+    "notes": [
+     "leg IK unreachable at 28 of 590 samples"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 3.1543535318165334,
+     "rms_over_rated_0.49": 8.225951098218264,
+     "rms_over_rated_0.64": 6.327654690937126,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.2000000000000001,
+     "speed_over_noload": 1.5052314220886147,
+     "peak_nm_max": 6.0311239528332115,
+     "rms_nm_max": 4.03071603812695,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "tether supplied 4.1% of body weight on average (limit 1%)",
+     "tether_mean_bw": 0.0409,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.25,
+    "zmp_inboard_m": 0.03,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 2.872678373399633,
+     "rms_over_rated_0.49": 6.308789027298593,
+     "rms_over_rated_0.64": 4.852914636383533,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.1950000000000001,
+     "speed_over_noload": 1.1080761252980007,
+     "peak_nm_max": 5.4925610499400985,
+     "rms_nm_max": 3.0913066233763105,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "tether supplied 4.5% of body weight on average (limit 1%)",
+     "tether_mean_bw": 0.0448,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.0,
+    "feasible": false,
+    "notes": [
+     "leg IK unreachable at 50 of 575 samples",
+     "joint range violations: hip_roll_l: [-0.448,0.307] outside [-0.436,0.436]; hip_roll_r: [-0.462,0.277] outside [-0.436,0.436]"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 22.041359110398588,
+     "rms_over_rated_0.49": 14.403911963074634,
+     "rms_over_rated_0.64": 11.07993227928818,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.2000000000000001,
+     "speed_over_noload": 1.3210592233013108,
+     "peak_nm_max": 42.1430786190821,
+     "rms_nm_max": 7.057916861906571,
+     "worst_joint_peak": "hip_roll_r"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "ideal playback fell over",
+     "tether_mean_bw": 0.0311,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.35,
+    "zmp_inboard_m": 0.03,
+    "feasible": true,
+    "notes": [],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 2.4280537920271574,
+     "rms_over_rated_0.49": 4.164158165224072,
+     "rms_over_rated_0.64": 3.2031985886339016,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.2550000000000001,
+     "speed_over_noload": 1.0831556830464266,
+     "peak_nm_max": 4.642438850355925,
+     "rms_nm_max": 2.0404375009597953,
+     "worst_joint_peak": "knee_r"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "tether supplied 3.0% of body weight on average (limit 1%)",
+     "tether_mean_bw": 0.0301,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.0,
+    "feasible": false,
+    "notes": [
+     "leg IK unreachable at 283 of 590 samples",
+     "joint range violations: hip_roll_l: [-0.493,0.488] outside [-0.436,0.436]; hip_roll_r: [-0.523,0.448] outside [-0.436,0.436]"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 80.18686530635563,
+     "rms_over_rated_0.49": 57.85967455424286,
+     "rms_over_rated_0.64": 44.5074419648022,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.27000000000000013,
+     "speed_over_noload": 1.3239023688881613,
+     "peak_nm_max": 153.31728646575195,
+     "rms_nm_max": 28.351240531579,
+     "worst_joint_peak": "hip_roll_r"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "ideal playback fell over",
+     "tether_mean_bw": 0.0242,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   },
+   {
+    "stance_knee_flex_deg": 40.0,
+    "step_time_s": 0.5,
+    "zmp_inboard_m": 0.03,
+    "feasible": false,
+    "notes": [
+     "leg IK unreachable at 42 of 590 samples"
+    ],
+    "gates_mintorque": {
+     "peak_frac_of_stall": 3.499048861562968,
+     "rms_over_rated_0.49": 9.204890561107108,
+     "rms_over_rated_0.64": 7.080685047005467,
+     "envelope_util": 9.99,
+     "overload_run_ratio": 0.3250000000000002,
+     "speed_over_noload": 1.5401810318007008,
+     "peak_nm_max": 6.6901814233083945,
+     "rms_nm_max": 4.5103963749424825,
+     "worst_joint_peak": "knee_l"
+    },
+    "pd_harness": {
+     "valid": false,
+     "reason": "tether supplied 3.9% of body weight on average (limit 1%)",
+     "tether_mean_bw": 0.0387,
+     "gates": null
+    },
+    "base_residual_bw_mean": 0.0,
+    "total_mass_kg": 2.107
+   }
+  ],
+  "best": {
+   "stance_knee_flex_deg": 77.0,
+   "step_time_s": 0.5,
+   "zmp_inboard_m": 0.03,
+   "feasible": true,
+   "notes": [],
+   "gates_mintorque": {
+    "peak_frac_of_stall": 1.4447648033423186,
+    "rms_over_rated_0.49": 2.6606725062777343,
+    "rms_over_rated_0.64": 2.0466711586751805,
+    "envelope_util": 1.4447648033423186,
+    "overload_run_ratio": 0.3250000000000002,
+    "speed_over_noload": 0.7743491479681794,
+    "peak_nm_max": 2.762390303990513,
+    "rms_nm_max": 1.3037295280760899,
+    "worst_joint_peak": "hip_roll_l"
+   },
+   "pd_harness": {
+    "valid": false,
+    "reason": "tether supplied 3.4% of body weight on average (limit 1%)",
+    "tether_mean_bw": 0.0339,
+    "gates": null
+   },
+   "base_residual_bw_mean": 0.0,
+   "total_mass_kg": 2.107
+  }
+ },
+ "odm_sim_vs_datasheet": {
+  "odm_sim_forcerange_nm": 3.23,
+  "datasheet_stall_7v4_nm": 1.912,
+  "ratio": 1.69,
+  "note": "ODM's training sim lets each servo deliver 3.23 N.m (and kp 13.37 N.m/rad); the 7.4 V datasheet stall the gates use is 1.912 N.m"
+ }
+}

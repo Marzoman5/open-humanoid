@@ -1,0 +1,2635 @@
+{
+ "candidate": "C-3s-sts3250-knees",
+ "packaging": [
+  "t0004",
+  "cad_foundation"
+ ],
+ "heights": [
+  {
+   "height_m": 0.4,
+   "mass_kg": 2.798,
+   "packaging_notes": [
+    "ankle_height: 18.0 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+    "foot_length: 68.0 mm -> 73.6 mm (T-0004 foot size)",
+    "foot_width: 30.0 mm -> 44.0 mm (T-0004 foot size)",
+    "hip_width: 60.0 mm -> 70.0 mm (servo-fixed hip spacing)",
+    "shoulder_width: 120.0 mm -> 144.0 mm (T-0004 arm clearance)",
+    "standing height kept at 400 mm: the other vertical proportions scaled x0.872 (thigh 78 mm, shank 78 mm)",
+    "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+    "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+    "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+   ],
+   "gait": {
+    "stance_knee_flex_deg": 45,
+    "step_time_s": 0.35,
+    "worst_margin": 0.557
+   },
+   "joint_gates_pass": false,
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup, pickup_0.45m",
+   "invalid_motions": {
+    "pickup": "ideal playback fell over",
+    "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 112.8 mm (target not reached with the available arm joints); pregrasp_ik_m = 62.8 mm (target not reached with the available arm joints); lift_ik_m = 149.5 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.098,-0.431] outside [-1.047,0.436]; ankle_pitch_r: [-1.098,-0.431] outside [-1.047,0.436]"
+   },
+   "rom_clamps": [
+    "squat_120",
+    "sit_to_stand_130"
+   ],
+   "push": {
+    "stand_fwd": {
+     "valid": true,
+     "demand_ok": false,
+     "strategy": "ankle+1step@200ms",
+     "recoverable_at_required": false,
+     "peak_frac_of_stall": 0.7734202655010013,
+     "why": [
+      "knee_r operating point 1.05x the torque-speed envelope"
+     ],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_fwd",
+      "largest_recoverable_Ns": 0.414,
+      "dv_mps": 0.148,
+      "mass_kg": 2.798,
+      "best_strategy": "ankle",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.652
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.652
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.63
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.528
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.414
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.369
+       },
+       {
+        "option": "ankle+hip",
+        "plan_limit_Ns": 0.334
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.3127394052524827,
+       "peak_joint": "ankle_pitch_l",
+       "util_max": 0.3127394052524827,
+       "omega_peak": 1.238260854930024,
+       "ok": true
+      }
+     }
+    },
+    "stand_lat": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.31135670714291064,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_lat",
+      "largest_recoverable_Ns": 0.773,
+      "dv_mps": 0.276,
+      "mass_kg": 2.798,
+      "best_strategy": "ankle",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.773
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.322
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.159
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.152
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.6641609625252334,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.6641609625252334,
+       "omega_peak": 1.7658486574249466,
+       "ok": true
+      }
+     }
+    },
+    "walk_fwd": {
+     "valid": false,
+     "demand_ok": false,
+     "strategy": null,
+     "recoverable_at_required": false,
+     "peak_frac_of_stall": null,
+     "why": [],
+     "reason": "reference infeasible: push 0.45 N.s = dv 0.161 m/s (walk_fwd), strategy ankle; reaction delay 25 ms; initial capture-poi",
+     "largest_recoverable": {
+      "scenario": "walk_fwd",
+      "largest_recoverable_Ns": 0.367,
+      "dv_mps": 0.131,
+      "mass_kg": 2.798,
+      "best_strategy": "ankle",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.431
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.431
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.367
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.347
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.347
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.33
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.284
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.27
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.228
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.147
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.651939071485972,
+       "peak_joint": "knee_r",
+       "util_max": 0.6573408679649145,
+       "omega_peak": 3.419644910698733,
+       "ok": true
+      }
+     }
+    },
+    "walk_lat_out": {
+     "valid": true,
+     "demand_ok": false,
+     "strategy": "ankle",
+     "recoverable_at_required": false,
+     "peak_frac_of_stall": 0.8855361791456939,
+     "why": [
+      "knee_r operating point 1.37x the torque-speed envelope"
+     ],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_out",
+      "largest_recoverable_Ns": 0.159,
+      "dv_mps": 0.057,
+      "mass_kg": 2.798,
+      "best_strategy": "ankle",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.637
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.7976781962301884,
+       "peak_joint": "ankle_pitch_r",
+       "util_max": 0.9932524046791148,
+       "omega_peak": 4.235464605212716,
+       "ok": true
+      }
+     }
+    },
+    "walk_lat_in": {
+     "valid": true,
+     "demand_ok": false,
+     "strategy": "ankle+1step@150ms",
+     "recoverable_at_required": false,
+     "peak_frac_of_stall": 1.2253942727095266,
+     "why": [
+      "knee_r needs 1.23 of stall (limit 1.0)",
+      "knee_r operating point 3.69x the torque-speed envelope"
+     ],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_in",
+      "largest_recoverable_Ns": 0.333,
+      "dv_mps": 0.119,
+      "mass_kg": 2.798,
+      "best_strategy": "ankle",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.461
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.333
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.3
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.287
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.166
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.155
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.7583162967433746,
+       "peak_joint": "ankle_pitch_r",
+       "util_max": 0.8256226647317969,
+       "omega_peak": 3.8951568822543305,
+       "ok": true
+      }
+     }
+    }
+   },
+   "largest_recoverable_Ns": {
+    "stand_fwd": 0.414,
+    "stand_lat": 0.773,
+    "walk_fwd": 0.367,
+    "walk_lat_out": 0.159,
+    "walk_lat_in": 0.333
+   },
+   "required_impulse_Ns": 0.45,
+   "largest_recoverable_min_Ns": 0.159,
+   "largest_recoverable_min_dv_mps": 0.057,
+   "feasible": false,
+   "feasible_ignoring_the_high_table_pickup": false,
+   "violations": [
+    {
+     "constraint": "motion pickup invalid: ideal playback fell over",
+     "factor": 99.0,
+     "kind": "invalid motion"
+    },
+    {
+     "constraint": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+     "factor": 99.0,
+     "kind": "invalid motion"
+    },
+    {
+     "constraint": "R10 walk_lat_out (ankle; largest 0.159 N.s vs 0.45)",
+     "factor": 2.83,
+     "kind": "R10"
+    },
+    {
+     "constraint": "torque-speed envelope @ hip_pitch_r",
+     "factor": 1.8,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "torque-speed envelope @ hip_pitch_l",
+     "factor": 1.7,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "RMS vs rated @ knee_r",
+     "factor": 1.43,
+     "kind": "joint gate"
+    }
+   ],
+   "binding": "motion pickup invalid: ideal playback fell over",
+   "binding_ignoring_the_high_table_pickup": "motion pickup invalid: ideal playback fell over",
+   "seconds": 194.1
+  },
+  {
+   "height_m": 0.45,
+   "mass_kg": 3.12,
+   "packaging_notes": [
+    "ankle_height: 20.2 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+    "foot_length: 76.5 mm -> 82.8 mm (T-0004 foot size)",
+    "foot_width: 33.8 mm -> 49.5 mm (T-0004 foot size)",
+    "hip_width: 67.5 mm -> 70.0 mm (servo-fixed hip spacing)",
+    "shoulder_width: 135.0 mm -> 162.0 mm (T-0004 arm clearance)",
+    "standing height kept at 450 mm: the other vertical proportions scaled x0.891 (thigh 90 mm, shank 90 mm)",
+    "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+    "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+    "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+   ],
+   "gait": {
+    "stance_knee_flex_deg": 45,
+    "step_time_s": 0.5,
+    "worst_margin": 1.11
+   },
+   "joint_gates_pass": false,
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "invalid_motions": {
+    "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 76.8 mm (target not reached with the available arm joints); pregrasp_ik_m = 33.5 mm (target not reached with the available arm joints); lift_ik_m = 111.7 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.065,-0.425] outside [-1.047,0.436]; ankle_pitch_r: [-1.065,-0.425] outside [-1.047,0.436]"
+   },
+   "rom_clamps": [
+    "squat_120",
+    "sit_to_stand_130"
+   ],
+   "push": {
+    "stand_fwd": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.36746408501955513,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_fwd",
+      "largest_recoverable_Ns": 0.615,
+      "dv_mps": 0.197,
+      "mass_kg": 3.12,
+      "best_strategy": "ankle+1step@200ms",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 1.442
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.836
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.817
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.703
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.689
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.594
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.5
+       },
+       {
+        "option": "ankle+hip",
+        "plan_limit_Ns": 0.423
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.409
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.7437568220009362,
+       "peak_joint": "knee_r",
+       "util_max": 0.992297092691304,
+       "omega_peak": 3.7222865278041235,
+       "ok": true
+      }
+     }
+    },
+    "stand_lat": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.25055357489166113,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_lat",
+      "largest_recoverable_Ns": 0.862,
+      "dv_mps": 0.276,
+      "mass_kg": 3.12,
+      "best_strategy": "ankle",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.862
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.47
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.273
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.269
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.125
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.106
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.685567749314512,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.685567749314512,
+       "omega_peak": 1.5634480509638036,
+       "ok": true
+      }
+     }
+    },
+    "walk_fwd": {
+     "valid": true,
+     "demand_ok": false,
+     "strategy": "ankle+1step@150ms",
+     "recoverable_at_required": false,
+     "peak_frac_of_stall": 1.024950629398835,
+     "why": [
+      "knee_r needs 1.02 of stall (limit 1.0)",
+      "knee_r operating point 2.10x the torque-speed envelope"
+     ],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_fwd",
+      "largest_recoverable_Ns": 0.411,
+      "dv_mps": 0.132,
+      "mass_kg": 3.12,
+      "best_strategy": "ankle",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.492
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.427
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.411
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.381
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.348
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.348
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.325
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.309
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.294
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.286
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.28
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.557539683623012,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.557539683623012,
+       "omega_peak": 2.955265028722533,
+       "ok": true
+      }
+     }
+    },
+    "walk_lat_out": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.6299741279102484,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_out",
+      "largest_recoverable_Ns": 0.517,
+      "dv_mps": 0.166,
+      "mass_kg": 3.12,
+      "best_strategy": "ankle",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.591
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.6410412243757667,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.8598587024412473,
+       "omega_peak": 4.789873730353145,
+       "ok": true
+      }
+     }
+    },
+    "walk_lat_in": {
+     "valid": true,
+     "demand_ok": false,
+     "strategy": "ankle+1step@200ms",
+     "recoverable_at_required": false,
+     "peak_frac_of_stall": 0.7182999988472675,
+     "why": [
+      "knee_r operating point 1.07x the torque-speed envelope"
+     ],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_in",
+      "largest_recoverable_Ns": 0.402,
+      "dv_mps": 0.129,
+      "mass_kg": 3.12,
+      "best_strategy": "ankle+1step@250ms",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.761
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.55
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.494
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.402
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.384
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.294
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.27
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.261
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.216
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.197
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.145
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.6895993330479739,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.8897642832404022,
+       "omega_peak": 4.62356712639556,
+       "ok": true
+      }
+     }
+    }
+   },
+   "largest_recoverable_Ns": {
+    "stand_fwd": 0.615,
+    "stand_lat": 0.862,
+    "walk_fwd": 0.411,
+    "walk_lat_out": 0.517,
+    "walk_lat_in": 0.402
+   },
+   "required_impulse_Ns": 0.45,
+   "largest_recoverable_min_Ns": 0.402,
+   "largest_recoverable_min_dv_mps": 0.129,
+   "feasible": false,
+   "feasible_ignoring_the_high_table_pickup": false,
+   "violations": [
+    {
+     "constraint": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+     "factor": 99.0,
+     "kind": "invalid motion"
+    },
+    {
+     "constraint": "R10 walk_lat_in (ankle+1step@200ms; largest 0.402 N.s vs 0.45)",
+     "factor": 1.12,
+     "kind": "R10"
+    },
+    {
+     "constraint": "R10 walk_fwd (ankle+1step@150ms; largest 0.411 N.s vs 0.45)",
+     "factor": 1.09,
+     "kind": "R10"
+    }
+   ],
+   "binding": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+   "binding_ignoring_the_high_table_pickup": "R10 walk_lat_in (ankle+1step@200ms; largest 0.402 N.s vs 0.45)",
+   "seconds": 183.9
+  },
+  {
+   "height_m": 0.5,
+   "mass_kg": 3.523,
+   "packaging_notes": [
+    "ankle_height: 22.5 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+    "foot_length: 85.0 mm -> 92.0 mm (T-0004 foot size)",
+    "foot_width: 37.5 mm -> 55.0 mm (T-0004 foot size)",
+    "shoulder_width: 150.0 mm -> 180.0 mm (T-0004 arm clearance)",
+    "standing height kept at 500 mm: the other vertical proportions scaled x0.907 (thigh 102 mm, shank 102 mm)",
+    "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+    "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+    "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+   ],
+   "gait": {
+    "stance_knee_flex_deg": 40,
+    "step_time_s": 0.5,
+    "worst_margin": 0.949
+   },
+   "joint_gates_pass": false,
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "invalid_motions": {
+    "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 45.6 mm (target not reached with the available arm joints); pregrasp_ik_m = 22.1 mm (target not reached with the available arm joints); lift_ik_m = 78.1 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.698,2.094] outside [0.000,2.007]; knee_r: [0.698,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.059,-0.378] outside [-1.047,0.436]; ankle_pitch_r: [-1.059,-0.378] outside [-1.047,0.436]"
+   },
+   "rom_clamps": [
+    "squat_120",
+    "sit_to_stand_130"
+   ],
+   "push": {
+    "stand_fwd": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.41906094293453094,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_fwd",
+      "largest_recoverable_Ns": 0.819,
+      "dv_mps": 0.232,
+      "mass_kg": 3.524,
+      "best_strategy": "ankle+1step@200ms",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 1.85
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.959
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.945
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.819
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.806
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.709
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.603
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.575
+       },
+       {
+        "option": "ankle+hip",
+        "plan_limit_Ns": 0.531
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.7486977210756669,
+       "peak_joint": "hip_pitch_r",
+       "util_max": 0.9881162787072311,
+       "omega_peak": 3.8770429515322373,
+       "ok": true
+      }
+     }
+    },
+    "stand_lat": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.2112796172207596,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_lat",
+      "largest_recoverable_Ns": 1.017,
+      "dv_mps": 0.289,
+      "mass_kg": 3.524,
+      "best_strategy": "ankle",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 1.017
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.553
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.33
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.325
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.167
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.139
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.8344004440921443,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.8344004440921443,
+       "omega_peak": 1.4448733384029881,
+       "ok": true
+      }
+     }
+    },
+    "walk_fwd": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.6684979373125337,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_fwd",
+      "largest_recoverable_Ns": 0.497,
+      "dv_mps": 0.141,
+      "mass_kg": 3.524,
+      "best_strategy": "ankle",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.584
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.512
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.497
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.462
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.427
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.427
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.402
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.392
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.378
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.367
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.359
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.6680447635895136,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.6680447635895136,
+       "omega_peak": 2.5568681517307956,
+       "ok": true
+      }
+     }
+    },
+    "walk_lat_out": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.7278050265094862,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_out",
+      "largest_recoverable_Ns": 0.714,
+      "dv_mps": 0.203,
+      "mass_kg": 3.524,
+      "best_strategy": "ankle",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.714
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.7972003544443279,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.8567704812794954,
+       "omega_peak": 5.080554171988658,
+       "ok": true
+      }
+     }
+    },
+    "walk_lat_in": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle+1step@200ms",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.7789919930388319,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_in",
+      "largest_recoverable_Ns": 0.479,
+      "dv_mps": 0.136,
+      "mass_kg": 3.524,
+      "best_strategy": "ankle+1step@200ms",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.873
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.639
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.583
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.47
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.445
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.347
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.347
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.322
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.258
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.239
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.178
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.7880888856701697,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.9222141517819277,
+       "omega_peak": 4.422517408930914,
+       "ok": true
+      }
+     }
+    }
+   },
+   "largest_recoverable_Ns": {
+    "stand_fwd": 0.819,
+    "stand_lat": 1.017,
+    "walk_fwd": 0.497,
+    "walk_lat_out": 0.714,
+    "walk_lat_in": 0.479
+   },
+   "required_impulse_Ns": 0.45,
+   "largest_recoverable_min_Ns": 0.479,
+   "largest_recoverable_min_dv_mps": 0.136,
+   "feasible": false,
+   "feasible_ignoring_the_high_table_pickup": false,
+   "violations": [
+    {
+     "constraint": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+     "factor": 99.0,
+     "kind": "invalid motion"
+    },
+    {
+     "constraint": "peak torque @ hip_roll_l",
+     "factor": 1.05,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "peak torque @ hip_roll_r",
+     "factor": 1.04,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "RMS vs rated @ hip_roll_l",
+     "factor": 1.01,
+     "kind": "joint gate"
+    }
+   ],
+   "binding": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+   "binding_ignoring_the_high_table_pickup": "peak torque @ hip_roll_l",
+   "seconds": 199.7
+  },
+  {
+   "height_m": 0.55,
+   "mass_kg": 4.016,
+   "packaging_notes": [
+    "ankle_height: 24.8 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+    "foot_length: 93.5 mm -> 101.2 mm (T-0004 foot size)",
+    "foot_width: 41.2 mm -> 60.5 mm (T-0004 foot size)",
+    "shoulder_width: 165.0 mm -> 198.0 mm (T-0004 arm clearance)",
+    "standing height kept at 550 mm: the other vertical proportions scaled x0.920 (thigh 114 mm, shank 114 mm)",
+    "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+    "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+    "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+   ],
+   "gait": {
+    "stance_knee_flex_deg": 40,
+    "step_time_s": 0.35,
+    "worst_margin": 0.801
+   },
+   "joint_gates_pass": false,
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "invalid_motions": {
+    "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 21.5 mm (target not reached with the available arm joints); pregrasp_ik_m = 7.1 mm (target not reached with the available arm joints); lift_ik_m = 49.3 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.698,2.094] outside [0.000,2.007]; knee_r: [0.698,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.054,-0.373] outside [-1.047,0.436]; ankle_pitch_r: [-1.054,-0.373] outside [-1.047,0.436]"
+   },
+   "rom_clamps": [
+    "squat_120",
+    "sit_to_stand_130"
+   ],
+   "push": {
+    "stand_fwd": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.4515761805482311,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_fwd",
+      "largest_recoverable_Ns": 1.028,
+      "dv_mps": 0.256,
+      "mass_kg": 4.016,
+      "best_strategy": "ankle+1step@200ms",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 2.295
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 1.2
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 1.197
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 1.028
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 1.017
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.894
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.755
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.733
+       },
+       {
+        "option": "ankle+hip",
+        "plan_limit_Ns": 0.669
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.8364278808392239,
+       "peak_joint": "hip_pitch_r",
+       "util_max": 0.8364278808392239,
+       "omega_peak": 3.6267765452178176,
+       "ok": true
+      }
+     }
+    },
+    "stand_lat": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.1733338442142885,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_lat",
+      "largest_recoverable_Ns": 1.08,
+      "dv_mps": 0.269,
+      "mass_kg": 4.016,
+      "best_strategy": "ankle",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 1.234
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.712
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.439
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.437
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.237
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.205
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.8660394470687769,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.8660394470687769,
+       "omega_peak": 1.18639739309943,
+       "ok": true
+      }
+     }
+    },
+    "walk_fwd": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.7704117114816745,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_fwd",
+      "largest_recoverable_Ns": 0.706,
+      "dv_mps": 0.176,
+      "mass_kg": 4.016,
+      "best_strategy": "ankle+1step@200ms",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.85
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.85
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.706
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.706
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.661
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.606
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.606
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.589
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.525
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.514
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.458
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.8055719881848512,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.9963836896721802,
+       "omega_peak": 4.54236530761329,
+       "ok": true
+      }
+     }
+    },
+    "walk_lat_out": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.8092387201707458,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_out",
+      "largest_recoverable_Ns": 0.946,
+      "dv_mps": 0.236,
+      "mass_kg": 4.016,
+      "best_strategy": "ankle",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 1.081
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.9090079481367203,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.9090079481367203,
+       "omega_peak": 3.77721994981466,
+       "ok": true
+      }
+     }
+    },
+    "walk_lat_in": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.8076945315678544,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_in",
+      "largest_recoverable_Ns": 0.598,
+      "dv_mps": 0.149,
+      "mass_kg": 4.016,
+      "best_strategy": "ankle+1step@200ms",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.88
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.641
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.606
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.598
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.394
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.366
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.242
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.203
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.13
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.9627002986531765,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.9709671497347621,
+       "omega_peak": 4.436943531738304,
+       "ok": true
+      }
+     }
+    }
+   },
+   "largest_recoverable_Ns": {
+    "stand_fwd": 1.028,
+    "stand_lat": 1.08,
+    "walk_fwd": 0.706,
+    "walk_lat_out": 0.946,
+    "walk_lat_in": 0.598
+   },
+   "required_impulse_Ns": 0.45,
+   "largest_recoverable_min_Ns": 0.598,
+   "largest_recoverable_min_dv_mps": 0.149,
+   "feasible": false,
+   "feasible_ignoring_the_high_table_pickup": false,
+   "violations": [
+    {
+     "constraint": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+     "factor": 99.0,
+     "kind": "invalid motion"
+    },
+    {
+     "constraint": "peak torque @ hip_roll_l",
+     "factor": 1.25,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "RMS vs rated @ hip_roll_l",
+     "factor": 1.21,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "peak torque @ hip_roll_r",
+     "factor": 1.19,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "RMS vs rated @ knee_r",
+     "factor": 1.14,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "RMS vs rated @ knee_l",
+     "factor": 1.07,
+     "kind": "joint gate"
+    }
+   ],
+   "binding": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+   "binding_ignoring_the_high_table_pickup": "peak torque @ hip_roll_l",
+   "seconds": 147.1
+  },
+  {
+   "height_m": 0.6,
+   "mass_kg": 4.606,
+   "packaging_notes": [
+    "ankle_height: 27.0 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+    "foot_length: 102.0 mm -> 110.4 mm (T-0004 foot size)",
+    "foot_width: 45.0 mm -> 66.0 mm (T-0004 foot size)",
+    "shoulder_width: 180.0 mm -> 216.0 mm (T-0004 arm clearance)",
+    "standing height kept at 600 mm: the other vertical proportions scaled x0.930 (thigh 126 mm, shank 126 mm)",
+    "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+    "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+    "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+   ],
+   "gait": {
+    "stance_knee_flex_deg": 45,
+    "step_time_s": 0.35,
+    "worst_margin": 0.663
+   },
+   "joint_gates_pass": false,
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "invalid_motions": {
+    "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+   },
+   "rom_clamps": [
+    "squat_120",
+    "sit_to_stand_130"
+   ],
+   "push": {
+    "stand_fwd": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.4830861912308489,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_fwd",
+      "largest_recoverable_Ns": 1.319,
+      "dv_mps": 0.286,
+      "mass_kg": 4.606,
+      "best_strategy": "ankle+2step@200ms",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 2.85
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 1.642
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 1.405
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 1.402
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 1.402
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 1.216
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 1.214
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 1.053
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.894
+       },
+       {
+        "option": "ankle+hip",
+        "plan_limit_Ns": 0.848
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.819
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.9423018841271369,
+       "peak_joint": "hip_pitch_r",
+       "util_max": 0.9943849103820865,
+       "omega_peak": 3.4768903990614812,
+       "ok": true
+      }
+     }
+    },
+    "stand_lat": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.2248268316067759,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_lat",
+      "largest_recoverable_Ns": 1.129,
+      "dv_mps": 0.245,
+      "mass_kg": 4.606,
+      "best_strategy": "ankle",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 1.505
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 1.031
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.68
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.664
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.394
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.364
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.192
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.145
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.9121817263277051,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.9121817263277051,
+       "omega_peak": 0.9761452791906231,
+       "ok": true
+      }
+     }
+    },
+    "walk_fwd": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.9310871596062283,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_fwd",
+      "largest_recoverable_Ns": 0.927,
+      "dv_mps": 0.201,
+      "mass_kg": 4.606,
+      "best_strategy": "ankle+1step@200ms",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 1.236
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 1.236
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 1.02
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 1.02
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.867
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.867
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.859
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.811
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.745
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.736
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.65
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.9868462419841455,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.9868462419841455,
+       "omega_peak": 4.027145785612928,
+       "ok": true
+      }
+     }
+    },
+    "walk_lat_out": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.909980654033221,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_out",
+      "largest_recoverable_Ns": 0.5,
+      "dv_mps": 0.109,
+      "mass_kg": 4.606,
+      "best_strategy": "ankle",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 1.333
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.9554987535355183,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.9554987535355183,
+       "omega_peak": 2.704012453408974,
+       "ok": true
+      }
+     }
+    },
+    "walk_lat_in": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.9503219348283439,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_in",
+      "largest_recoverable_Ns": 0.609,
+      "dv_mps": 0.132,
+      "mass_kg": 4.606,
+      "best_strategy": "ankle",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 1.225
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.872
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.848
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.791
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.572
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.547
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.367
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.325
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.214
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.167
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.9585222889688685,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.9585222889688685,
+       "omega_peak": 2.4279465762044663,
+       "ok": true
+      }
+     }
+    }
+   },
+   "largest_recoverable_Ns": {
+    "stand_fwd": 1.319,
+    "stand_lat": 1.129,
+    "walk_fwd": 0.927,
+    "walk_lat_out": 0.5,
+    "walk_lat_in": 0.609
+   },
+   "required_impulse_Ns": 0.45,
+   "largest_recoverable_min_Ns": 0.5,
+   "largest_recoverable_min_dv_mps": 0.109,
+   "feasible": false,
+   "feasible_ignoring_the_high_table_pickup": false,
+   "violations": [
+    {
+     "constraint": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+     "factor": 99.0,
+     "kind": "invalid motion"
+    },
+    {
+     "constraint": "peak torque @ hip_roll_l",
+     "factor": 1.51,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "RMS vs rated @ hip_roll_l",
+     "factor": 1.47,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "peak torque @ hip_roll_r",
+     "factor": 1.44,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "RMS vs rated @ hip_roll_r",
+     "factor": 1.27,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "torque-speed envelope @ hip_roll_l",
+     "factor": 1.17,
+     "kind": "joint gate"
+    }
+   ],
+   "binding": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+   "binding_ignoring_the_high_table_pickup": "peak torque @ hip_roll_l",
+   "seconds": 156.5
+  },
+  {
+   "height_m": 0.65,
+   "mass_kg": 5.304,
+   "packaging_notes": [
+    "ankle_height: 29.2 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+    "foot_length: 110.5 mm -> 119.6 mm (T-0004 foot size)",
+    "foot_width: 48.8 mm -> 71.5 mm (T-0004 foot size)",
+    "shoulder_width: 195.0 mm -> 234.0 mm (T-0004 arm clearance)",
+    "standing height kept at 650 mm: the other vertical proportions scaled x0.940 (thigh 137 mm, shank 137 mm)",
+    "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+    "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+    "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+   ],
+   "gait": {
+    "stance_knee_flex_deg": 45,
+    "step_time_s": 0.25,
+    "worst_margin": 0.567
+   },
+   "joint_gates_pass": false,
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "invalid_motions": {
+    "pickup_0.45m": "ideal playback fell over"
+   },
+   "rom_clamps": [
+    "squat_120",
+    "sit_to_stand_130"
+   ],
+   "push": {
+    "stand_fwd": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.5053158949487861,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_fwd",
+      "largest_recoverable_Ns": 1.083,
+      "dv_mps": 0.204,
+      "mass_kg": 5.304,
+      "best_strategy": "ankle",
+      "limited_by": "plan: reach / capture point",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 3.0
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 2.039
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 1.764
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 1.745
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 1.745
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 1.519
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 1.516
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 1.325
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 1.095
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 1.083
+       },
+       {
+        "option": "ankle+hip",
+        "plan_limit_Ns": 1.061
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.8878755662819882,
+       "peak_joint": "ankle_pitch_r",
+       "util_max": 0.8878755662819882,
+       "omega_peak": 0.9981788448147461,
+       "ok": true
+      }
+     }
+    },
+    "stand_lat": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.268768647566972,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "stand_lat",
+      "largest_recoverable_Ns": 1.142,
+      "dv_mps": 0.215,
+      "mass_kg": 5.304,
+      "best_strategy": "ankle",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 1.827
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 1.308
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.883
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.859
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.528
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.494
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.278
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.222
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.7070803027398903,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.7070803027398903,
+       "omega_peak": 0.7609719204187976,
+       "ok": true
+      }
+     }
+    },
+    "walk_fwd": {
+     "valid": true,
+     "demand_ok": false,
+     "strategy": "ankle",
+     "recoverable_at_required": false,
+     "peak_frac_of_stall": 1.0387707358405631,
+     "why": [
+      "hip_roll_l needs 1.04 of stall (limit 1.0)",
+      "hip_roll_l operating point 1.04x the torque-speed envelope"
+     ],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_fwd",
+      "largest_recoverable_Ns": 0.0,
+      "dv_mps": 0.0,
+      "mass_kg": 5.304,
+      "best_strategy": null,
+      "limited_by": "no strategy recovers even a small push",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 3.0
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 1.555
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 1.289
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 1.269
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 1.269
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 1.047
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 1.044
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 0.956
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.861
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.661
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ]
+     }
+    },
+    "walk_lat_out": {
+     "valid": true,
+     "demand_ok": true,
+     "strategy": "ankle",
+     "recoverable_at_required": true,
+     "peak_frac_of_stall": 0.7597606387094437,
+     "why": [],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_out",
+      "largest_recoverable_Ns": 0.676,
+      "dv_mps": 0.127,
+      "mass_kg": 5.304,
+      "best_strategy": "ankle",
+      "limited_by": "actuators (torque / speed demand)",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 1.803
+       },
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ],
+      "at_largest": {
+       "peak_frac_of_stall": 0.9166795069232294,
+       "peak_joint": "hip_roll_l",
+       "util_max": 0.9166795069232294,
+       "omega_peak": 2.3948642769627506,
+       "ok": true
+      }
+     }
+    },
+    "walk_lat_in": {
+     "valid": true,
+     "demand_ok": false,
+     "strategy": "ankle",
+     "recoverable_at_required": false,
+     "peak_frac_of_stall": 1.0934768857312525,
+     "why": [
+      "hip_roll_l needs 1.09 of stall (limit 1.0)",
+      "hip_roll_l operating point 1.09x the torque-speed envelope"
+     ],
+     "reason": "",
+     "largest_recoverable": {
+      "scenario": "walk_lat_in",
+      "largest_recoverable_Ns": 0.0,
+      "dv_mps": 0.0,
+      "mass_kg": 5.304,
+      "best_strategy": null,
+      "limited_by": "no strategy recovers even a small push",
+      "at_search_ceiling": false,
+      "strategies": [
+       {
+        "option": "ankle+1step@150ms",
+        "plan_limit_Ns": 1.344
+       },
+       {
+        "option": "ankle",
+        "plan_limit_Ns": 1.112
+       },
+       {
+        "option": "ankle+2step@150ms",
+        "plan_limit_Ns": 0.923
+       },
+       {
+        "option": "ankle+1step@200ms",
+        "plan_limit_Ns": 0.891
+       },
+       {
+        "option": "ankle+1step@250ms",
+        "plan_limit_Ns": 0.555
+       },
+       {
+        "option": "ankle+2step@200ms",
+        "plan_limit_Ns": 0.527
+       },
+       {
+        "option": "ankle+1step@300ms",
+        "plan_limit_Ns": 0.302
+       },
+       {
+        "option": "ankle+2step@250ms",
+        "plan_limit_Ns": 0.252
+       },
+       {
+        "option": "ankle+1step@350ms",
+        "plan_limit_Ns": 0.111
+       },
+       {
+        "option": "ankle+2step@300ms",
+        "plan_limit_Ns": 0.0
+       },
+       {
+        "option": "ankle+2step@350ms",
+        "plan_limit_Ns": 0.0
+       }
+      ]
+     }
+    }
+   },
+   "largest_recoverable_Ns": {
+    "stand_fwd": 1.083,
+    "stand_lat": 1.142,
+    "walk_fwd": 0.0,
+    "walk_lat_out": 0.676,
+    "walk_lat_in": 0.0
+   },
+   "required_impulse_Ns": 0.45,
+   "largest_recoverable_min_Ns": 0.0,
+   "largest_recoverable_min_dv_mps": 0.0,
+   "feasible": false,
+   "feasible_ignoring_the_high_table_pickup": false,
+   "violations": [
+    {
+     "constraint": "motion pickup_0.45m invalid: ideal playback fell over",
+     "factor": 99.0,
+     "kind": "invalid motion"
+    },
+    {
+     "constraint": "R10 walk_fwd (ankle; largest 0.0 N.s vs 0.45)",
+     "factor": 99.0,
+     "kind": "R10"
+    },
+    {
+     "constraint": "R10 walk_lat_in (ankle; largest 0.0 N.s vs 0.45)",
+     "factor": 99.0,
+     "kind": "R10"
+    },
+    {
+     "constraint": "RMS vs rated @ hip_roll_l",
+     "factor": 1.76,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "peak torque @ hip_roll_l",
+     "factor": 1.73,
+     "kind": "joint gate"
+    },
+    {
+     "constraint": "RMS vs rated @ knee_r",
+     "factor": 1.6,
+     "kind": "joint gate"
+    }
+   ],
+   "binding": "motion pickup_0.45m invalid: ideal playback fell over",
+   "binding_ignoring_the_high_table_pickup": "R10 walk_fwd (ankle; largest 0.0 N.s vs 0.45)",
+   "seconds": 202.9
+  }
+ ],
+ "feasible_heights_m": [],
+ "max_feasible_height_m": null,
+ "min_feasible_height_m": null,
+ "feasible_heights_ignoring_the_high_table_pickup_m": [],
+ "max_feasible_height_ignoring_the_high_table_pickup_m": null,
+ "binding_by_height": {
+  "0.40": "motion pickup invalid: ideal playback fell over",
+  "0.45": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+  "0.50": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+  "0.55": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+  "0.60": "motion pickup_0.45m invalid: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the han",
+  "0.65": "motion pickup_0.45m invalid: ideal playback fell over"
+ },
+ "binding_by_height_ignoring_the_high_table_pickup": {
+  "0.40": "motion pickup invalid: ideal playback fell over",
+  "0.45": "R10 walk_lat_in (ankle+1step@200ms; largest 0.402 N.s vs 0.45)",
+  "0.50": "peak torque @ hip_roll_l",
+  "0.55": "peak torque @ hip_roll_l",
+  "0.60": "peak torque @ hip_roll_l",
+  "0.65": "R10 walk_fwd (ankle; largest 0.0 N.s vs 0.45)"
+ },
+ "note": "nominal gates only (no bounds sweep / Monte Carlo / servo-in-the-loop), gait chosen per height from the frozen set, CAD-foundation floors applied; a ceiling, not a robust answer"
+}
