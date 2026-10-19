@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _common import log, run  # noqa: E402
+from _common import ACTIVE_STATUSES, log, run, session_task  # noqa: E402
 from shellwrites import write_targets  # noqa: E402
 
 FILE_TOOLS = {"Edit", "Write", "MultiEdit", "NotebookEdit"}
@@ -95,11 +95,10 @@ def covered(rel: str, task_paths: list[str]) -> bool:
     return False
 
 
-def claim_of(payload: dict, cfg: dict):
+def claim_of(payload: dict, cfg: dict, root: Path):
     """(task_meta | None, is_commander). Commander = no registered active claim, or a task in a commander stream."""
-    from openhumanoid import coord
-    meta = coord.session_task(payload.get("session_id"))
-    if not meta or meta.get("status") not in coord.ACTIVE:
+    meta = session_task(root, payload.get("session_id"))
+    if not meta or meta.get("status") not in ACTIVE_STATUSES:
         return None, True
     if meta.get("stream") in cfg.get("commander_streams", ["coordination"]):
         return meta, True
@@ -121,7 +120,7 @@ def handle(payload: dict, root: Path, cfg: dict):
     if not raw:
         return None
 
-    meta, commander = claim_of(payload, cfg)
+    meta, commander = claim_of(payload, cfg, root)
     rules = cfg.get("protected") or DEFAULT_PROTECTED
     always = [a for a in cfg.get("always_allowed", ["coordination/"])]
     mode = cfg.get("claimed_paths", "warn")

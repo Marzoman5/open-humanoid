@@ -12,15 +12,18 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _common import log, run  # noqa: E402
+from _common import log, run, session_task  # noqa: E402
 
 
 def handle(payload: dict, root: Path, cfg: dict):
     if payload.get("stop_hook_active") or cfg.get("stop_gate", "block") == "off":
         return None
-    from openhumanoid import coord, gate
+    try:
+        from openhumanoid import gate  # absent on a branch that predates the gates: nothing to check
+    except ImportError:
+        return None
 
-    task = coord.session_task(payload.get("session_id"))
+    task = session_task(root, payload.get("session_id"))
     if not task or task.get("status") != "in_progress":
         return None
     gates = task.get("gates") or gate.gates_for_phase(task.get("phase"))

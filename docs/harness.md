@@ -78,6 +78,13 @@ Hooks only receive a session id. `oh coord claim <task> --agent <name> --session
 
 A catch-all claim like `./` or `*` never authorises protected files. Outside the protected set, a worker writing outside its claimed `paths` gets a visible warning (`claimed_paths: warn`; set `enforce` to deny). `coordination/` is always allowed. Reverting generated output with `git checkout --` is fine; hooks only look at what a command writes.
 
+### Where Claude Code loads these hooks from (read this before testing)
+
+- **CLI, or a folder you opened directly:** the checkout's own `.claude/settings.json`.
+- **Desktop-app worktree sessions** (the Code tab's worktree option): Claude Code reads settings and hooks from the **main checkout's root**, not the worktree, and `${CLAUDE_PROJECT_DIR}` points there ([worktrees docs](https://code.claude.com/docs/en/worktrees#what-worktrees-share-with-the-main-checkout)). So the hooks apply to worktree sessions only after `.claude/settings.json` and `tools/hooks/` are on the main branch. The hook payload's `cwd` is the worktree, and the scripts derive the repo root from it, so claims, `hooks.yaml` and `generated/` are judged against the worktree being edited.
+- **Version skew is expected:** the scripts come from main while the worktree may be on an older branch. Hooks therefore keep their protection logic self-contained (`_common.session_task`, built-in default rules) and degrade when `openhumanoid.gate` or the new `coord` functions are missing.
+- Verified live on 2026-10-19: a headless CLI session started in the worktree ran the `SessionStart` hook; a desktop-app worktree session on the unmerged branch ran none of them (no context block, no denials), exactly as the docs predict.
+
 ### Failure behaviour and escape hatches
 
 - Any exception, timeout (watchdog 1.8 s; 100 s for the smoke run), unreadable config, or missing Python/PyYAML → the hook does nothing and exits 0. The error goes to `coordination/.local/hooks.log`.

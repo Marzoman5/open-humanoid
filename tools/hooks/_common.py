@@ -84,6 +84,30 @@ def ensure_deps(root: Path | None, raw_stdin: bytes | None = None) -> None:
     os._exit(r.returncode)
 
 
+ACTIVE_STATUSES = {"claimed", "in_progress", "review"}
+
+
+def session_task(root: Path, session_id: str | None) -> dict | None:
+    """Front matter of the task this session claimed (via `oh coord claim --session`), or None.
+
+    Deliberately self-contained (no `openhumanoid` import): in the desktop app a worktree session runs the hook scripts of the
+    MAIN checkout against its own worktree, which may be on an older branch whose coord.py doesn't know about sessions yet.
+    """
+    import yaml
+    if not session_id:
+        return None
+    try:
+        tid = json.loads((root / "coordination" / ".local" / "sessions.json").read_text(encoding="utf-8")).get(session_id)
+        if not tid or not tid.replace("-", "").isalnum():
+            return None
+        text = (root / "coordination" / "tasks" / f"{tid}.md").read_text(encoding="utf-8")
+        if not text.startswith("---"):
+            return None
+        return yaml.safe_load(text.split("---", 2)[1]) or None
+    except Exception:
+        return None
+
+
 def load_hook_config(root: Path) -> dict:
     import yaml
     f = root / "pipeline" / "hooks.yaml"

@@ -616,3 +616,19 @@ def test_hook_output_is_utf8_even_when_the_locale_is_not(repo):
     assert r.returncode == 0
     text = r.stdout.decode("utf-8")  # strict: raises if the bytes aren't valid UTF-8
     assert "\u00b7" in text and "\ufffd" not in text
+
+
+def test_hooks_degrade_gracefully_on_a_branch_that_predates_the_harness(worker):
+    """Desktop-app worktree sessions run the MAIN checkout's hook scripts against their own (possibly older) worktree."""
+    pkg = worker / "openhumanoid"
+    pkg.mkdir()
+    (pkg / "__init__.py").write_text("")
+    (pkg / "coord.py").write_text("ACTIVE = set()\n")  # no status_data / session_task / handoff(auto) / gate module
+    # protection and claims need no openhumanoid code at all
+    assert edit(worker, "variants/adam/generated/sizing.json")[0] == 2
+    assert edit(worker, "schemas/spec.schema.json")[0] == 2
+    assert edit(worker, "modules/joints/a.yaml")[:2] == (0, "")
+    code, out, _, _ = run_hook(worker, "session_start.py", {"source": "startup"}, expect_exit=0)
+    assert "predates the harness" in out and "Session id" in out and "git log -5" in out and "YOUR TASK: T-0100" in out
+    assert run_hook(worker, "stop.py", {}, expect_exit=0)[1] == ""
+    run_hook(worker, "precompact.py", {"trigger": "auto"}, expect_exit=0)  # fails open

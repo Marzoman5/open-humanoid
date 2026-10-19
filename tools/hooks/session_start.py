@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _common import log, run  # noqa: E402
+from _common import log, run, session_task  # noqa: E402
 
 MAX_CHARS = 9000  # Claude Code truncates hook context at 10k
 
@@ -36,10 +36,13 @@ def variant_for(task: dict | None, default: str) -> str:
 
 
 def handle(payload: dict, root: Path, cfg: dict):
-    from openhumanoid import coord, gate
-
     sid, source = payload.get("session_id") or "", payload.get("source", "startup")
-    task = coord.session_task(sid)
+    task = session_task(root, sid)
+    try:
+        from openhumanoid import coord, gate
+        coord.status_data, gate.smoke  # a branch that predates the harness lacks these: degrade, don't fail
+    except (ImportError, AttributeError):
+        coord = gate = None
     L = [f"== Open Humanoid session context ({source}) =="]
 
     env_file = os.environ.get("CLAUDE_ENV_FILE")
@@ -52,20 +55,24 @@ def handle(payload: dict, root: Path, cfg: dict):
     L.append(f"Session id: {sid or '?'}. To work a task: `oh coord claim <task> --agent <name> --session {sid or '<id>'}` then commit the claim "
              "(this registers your claimed paths with the hooks).")
 
-    # Board (compact: active + ready)
-    data = coord.status_data()
-    active = [t for t in data["tasks"] if t["status"] in coord.ACTIVE or t["status"] == "blocked"]
-    L.append(f"\nProfile: {data['profile']} · board (active/blocked) — run `oh coord status` for all:")
-    for t in active:
-        L.append(f"  {t['id']} {t['status']:11} {str(t['owner'] or '-'):14} {t['title']}")
-    L.append("  Ready to claim: " + (", ".join(data["ready"]) or "none"))
-    if data["conflicts"]:
-        L.append("  ! path conflicts: " + "; ".join(f"{c['a']}~{c['b']}" for c in data["conflicts"]))
+    if coord is None:
+        L.append("\nThis checkout's branch predates the harness (no `oh gate`, no session claims): merge main to get them. "
+                 "Protected-path rules still apply.")
+    else:
+        # Board (compact: active + ready)
+        data = coord.status_data()
+        active = [t for t in data["tasks"] if t["status"] in coord.ACTIVE or t["status"] == "blocked"]
+        L.append(f"\nProfile: {data['profile']} · board (active/blocked) — run `oh coord status` for all:")
+        for t in active:
+            L.append(f"  {t['id']} {t['status']:11} {str(t['owner'] or '-'):14} {t['title']}")
+        L.append("  Ready to claim: " + (", ".join(data["ready"]) or "none"))
+        if data["conflicts"]:
+            L.append("  ! path conflicts: " + "; ".join(f"{c['a']}~{c['b']}" for c in data["conflicts"]))
 
     # This session's task + handoff
     if task:
         L.append(f"\nYOUR TASK: {task['id']} [{task.get('status')}] {task.get('title')}\n  paths: {', '.join(task.get('paths', []))}")
-        h = coord.latest_handoff(task["id"])
+        h = coord.latest_handoff(task["id"]) if coord else None
         L.append(f"  newest handoff: {h.relative_to(root).as_posix() if h else 'none yet'}")
         if h:
             body = h.read_text(encoding="utf-8").strip().splitlines()
@@ -79,7 +86,7 @@ def handle(payload: dict, root: Path, cfg: dict):
     L.append("\nBranch: " + (git(root, "branch", "--show-current") or "?") + "\ngit log -5:\n" + "\n".join("  " + ln for ln in git(root, "log", "--oneline", "-5").splitlines()))
 
     # Smoke gate: reports, never blocks
-    if cfg.get("smoke_on_session_start", True):
+    if gate is not None and cfg.get("smoke_on_session_start", True):
         variant = variant_for(task, gate.default_variant())
         try:
             res = gate.smoke(variant)

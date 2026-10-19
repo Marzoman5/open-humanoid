@@ -11,17 +11,16 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _common import log, run  # noqa: E402
+from _common import log, run, session_task  # noqa: E402
 
 
 def handle(payload: dict, root: Path, cfg: dict):
     if cfg.get("precompact_handoff", True) is False:
         return None
-    from openhumanoid import coord
-
-    task = coord.session_task(payload.get("session_id"))
+    task = session_task(root, payload.get("session_id"))
     if not task:
         return None
+    from openhumanoid import coord  # older branches lack handoff(auto=...): then the AttributeError fails open
     recent = coord.latest_handoff(task["id"])
     if recent and time.time() - recent.stat().st_mtime < 120:
         return None
