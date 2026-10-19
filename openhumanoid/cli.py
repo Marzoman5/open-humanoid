@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import sys
 
@@ -140,13 +141,16 @@ def cmd_new(a):
 def cmd_coord(a):
     from . import coord
     if a.action == "status":
-        print(coord.status_report())
+        print(json.dumps(coord.status_data(), indent=1) if a.json else coord.status_report())
     elif a.action == "new":
         p = coord.new(a.title, a.stream, a.paths or [], a.depends or [], a.size, a.goal or "", phase=a.phase)
         print("created", p)
     elif a.action == "claim":
-        coord.claim(a.task, a.agent, a.force)
-        print(f"{a.task} claimed by {a.agent}. Commit this change now.")
+        session = a.session or os.environ.get("CLAUDE_SESSION_ID")
+        coord.claim(a.task, a.agent, a.force, session)
+        print(f"{a.task} claimed by {a.agent}. Commit this change now."
+              + (f" (session {session[:8]} registered: hooks now know your claimed paths)" if session else
+                 " (no --session given: hooks can't tell which paths you claimed, so they won't enforce them)"))
     elif a.action == "set":
         coord.set_status(a.task, a.status, a.agent, a.note or "")
         print(f"{a.task} -> {a.status}")
@@ -157,11 +161,58 @@ def cmd_coord(a):
         coord.set_status(a.task, "open", a.agent, a.note or "released")
         print(f"{a.task} released")
     elif a.action == "handoff":
-        print("fill in:", coord.handoff(a.task, a.agent))
+        print("fill in:" if not a.auto else "auto stub:", coord.handoff(a.task, a.agent, auto=a.auto))
     elif a.action == "resume":
         h = coord.latest_handoff(a.task)
         print(h.read_text(encoding="utf-8") if h else f"no handoff for {a.task}")
     return 0
+
+
+def cmd_gate(a):
+    from . import gate
+    if a.smoke or a.status:
+        variant = a.args[0] if a.args else None
+        if a.status:
+            if a.json:
+                print(json.dumps(gate.status_rows(variant), indent=1))
+            else:
+                print(gate.status_text(variant))
+            return 0
+        res = gate.smoke(variant)
+        for r in res:
+            print(f"  {r['gate']:12} {r['status'].upper():5} {r['summary']}")
+        bad = [r["gate"] for r in res if r["status"] != "pass"]
+        print(f"smoke {'PASS' if not bad else 'FAIL: ' + ', '.join(bad)} ({gate.default_variant() if not variant else variant}; not recorded: smoke is a health check, run `oh gate <id>` for evidence)")
+        return 0 if not bad else 2
+    if not a.args:
+        for g, d in gate.load_gates().items():
+            print(f"{g:18} {d.get('status'):12} {','.join(map(str, gate._as_list(d.get('phase')))):8} {d.get('description', '').strip()[:90]}")
+        return 0
+    r = gate.run_gate(a.args[0], a.args[1] if len(a.args) > 1 else None)
+    if r["status"] == "not_implemented":
+        print(r["summary"])
+        return gate.NOT_IMPLEMENTED
+    print(f"{r['gate']} [{r['variant']}] {r['status'].upper()}: {r['summary']}")
+    print(f"  record: variants/{r['variant']}/generated/gates/{r['gate']}.json @ {(r['sha'] or '?')[:8]}{' (DIRTY tree: commit, then re-run for a record that counts)' if r['dirty'] else ''}")
+    return 0 if r["status"] == "pass" else 2
+
+
+def cmd_check(a):
+    from . import gate, provenance
+    rep = provenance.check(a.variant)
+    if a.json:
+        print(json.dumps(rep, indent=1))
+    else:
+        print(provenance.format_report(rep))
+    # Warn-first: the exit code only reflects the threshold in pipeline/gates.yaml (G-provenance).
+    th = gate.load_gates().get("G-provenance", {}).get("thresholds", {})
+    c = rep["counts"]
+    over = [k for k, lim in (("catalog_missing", th.get("max_catalog_missing", 0)), ("catalog_bad", th.get("max_catalog_bad", 0)),
+                             ("spec_missing", th.get("max_spec_missing", 10**6)), ("spec_bad", th.get("max_spec_bad", 10**6)),
+                             ("spec_estimates", th.get("max_spec_estimates", 10**6)), ("catalog_estimates", th.get("max_catalog_estimates", 10**6)))
+            if c[k] > lim]
+    print("provenance gate threshold: " + ("EXCEEDED: " + ", ".join(over) if over else "ok (warnings above are not yet enforced)"))
+    return 2 if over else 0
 
 
 def main(argv=None) -> int:
@@ -189,13 +240,25 @@ def main(argv=None) -> int:
     s = sub.add_parser("new", help="create a variant from variants/_template")
     s.add_argument("id"); s.add_argument("--name"); s.add_argument("--extends"); s.set_defaults(f=cmd_new)
 
+    s = sub.add_parser("gate", help="run a pipeline gate and record the result (pipeline/gates.yaml); --smoke, --status")
+    s.add_argument("args", nargs="*", help="<gate-id> [variant]; with --smoke/--status: [variant]")
+    s.add_argument("--smoke", action="store_true", help="validate + size + sim stand, short, nothing recorded")
+    s.add_argument("--status", action="store_true", help="latest record per gate and whether it is at HEAD")
+    s.add_argument("--json", action="store_true"); s.set_defaults(f=cmd_gate)
+    s = sub.add_parser("check", help="consistency checks (provenance)")
+    s.add_argument("what", choices=["provenance"]); s.add_argument("variant", nargs="?", default="adam")
+    s.add_argument("--json", action="store_true"); s.set_defaults(f=cmd_check)
+
     c = sub.add_parser("coord", help="multi-agent coordination")
     c.add_argument("action", choices=["status", "new", "claim", "set", "done", "release", "handoff", "resume"])
-    c.add_argument("task", nargs="?", help="task id (T-0001) or title for `new`")
+    c.add_argument("task", nargs="?", help="task id (T-0007 or T-20261019-3fa2) or title for `new`")
     c.add_argument("status", nargs="?", help="for `set`")
     c.add_argument("--agent"); c.add_argument("--stream", default="framework"); c.add_argument("--paths", nargs="*")
     c.add_argument("--depends", nargs="*"); c.add_argument("--size", default="M"); c.add_argument("--goal"); c.add_argument("--phase")
     c.add_argument("--note"); c.add_argument("--force", action="store_true")
+    c.add_argument("--json", action="store_true", help="status: machine-readable board")
+    c.add_argument("--session", help="claim: Claude Code session id, so hooks can map the session to the task's paths (default $CLAUDE_SESSION_ID)")
+    c.add_argument("--auto", action="store_true", help="handoff: pre-filled stub (used by the PreCompact hook)")
     c.set_defaults(f=cmd_coord)
 
     a = ap.parse_args(argv)

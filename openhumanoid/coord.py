@@ -5,18 +5,24 @@ text, so they merge in git and humans can edit them. See coordination/README.md 
 """
 from __future__ import annotations
 
+import json
 import re
+import secrets
+import subprocess
 from datetime import datetime
 from fnmatch import fnmatch
 from pathlib import Path
 
 import yaml
 
-from .paths import coordination_dir
+from .paths import coordination_dir, repo_root
 
 STATUSES = ["open", "claimed", "in_progress", "review", "blocked", "done"]
 ACTIVE = {"claimed", "in_progress", "review"}
 FM = re.compile(r"^---\n(.*?)\n---\n?(.*)$", re.S)
+# Legacy sequential ids (T-0007) stay valid. New ids are T-<yyyymmdd>-<4 hex> so two branches creating
+# tasks at once can never pick the same number (no shared counter, no renumbering at merge).
+ID_RE = re.compile(r"^T-(?:\d{4}|\d{8}-[0-9a-f]{4})$")
 
 
 def tasks_dir() -> Path:
@@ -45,6 +51,8 @@ def all_tasks() -> list[tuple[Path, dict, str]]:
 
 
 def find(task_id: str) -> Path:
+    if not ID_RE.match(task_id):
+        raise ValueError(f"'{task_id}' is not a task id (expected T-0007 or T-20261019-3fa2)")
     p = tasks_dir() / f"{task_id}.md"
     if not p.exists():
         raise FileNotFoundError(f"No task {task_id}")
@@ -82,10 +90,20 @@ def _log(body: str, line: str) -> str:
     return body.rstrip() + f"\n- {_now()} {line}\n"
 
 
+def new_id(now: datetime | None = None) -> str:
+    """A collision-proof task id: T-<yyyymmdd>-<4 hex>. Sorts by creation day, readable, no shared counter."""
+    day = (now or datetime.now()).strftime("%Y%m%d")
+    taken = {p.stem for p in tasks_dir().glob("T-*.md")}
+    for _ in range(100):
+        tid = f"T-{day}-{secrets.token_hex(2)}"
+        if tid not in taken:
+            return tid
+    raise RuntimeError("could not find a free task id")
+
+
 def new(title: str, stream: str, paths: list[str], depends: list[str] | None = None, size: str = "M",
         goal: str = "", done_when: str = "", phase: str | None = None) -> Path:
-    nums = [int(p.stem.split("-")[1]) for p in tasks_dir().glob("T-*.md")]
-    tid = f"T-{(max(nums) + 1) if nums else 1:04d}"
+    tid = new_id()
     meta = {"id": tid, "title": title, "status": "open", "stream": stream, "phase": phase, "owner": None,
             "paths": paths, "depends_on": depends or [], "size": size, "created": _now()}
     body = (f"\n## Goal\n{goal or 'TODO'}\n\n## Done when\n{done_when or '- [ ] TODO'}\n\n## Notes\n\n## Log\n"
@@ -95,7 +113,7 @@ def new(title: str, stream: str, paths: list[str], depends: list[str] | None = N
     return path
 
 
-def claim(task_id: str, agent: str, force: bool = False) -> list[tuple[str, str, str]]:
+def claim(task_id: str, agent: str, force: bool = False, session: str | None = None) -> list[tuple[str, str, str]]:
     path = find(task_id)
     meta, body = read(path)
     if meta.get("status") in ACTIVE and meta.get("owner") not in (None, agent) and not force:
@@ -111,7 +129,45 @@ def claim(task_id: str, agent: str, force: bool = False) -> list[tuple[str, str,
         raise RuntimeError(f"Cannot claim {task_id}: " + " | ".join(msg) + " (use --force only if a human agreed)")
     meta.update(status="claimed", owner=agent, claimed=_now())
     write(path, meta, _log(body, f"claimed by {agent}" + (" (forced)" if force else "")))
+    if session:
+        register_session(session, task_id)
     return c
+
+
+# --- session -> task map (local to this checkout, never committed) --------------------------------
+# Hooks only get a session id from Claude Code. `oh coord claim --session <id>` records which task that
+# session works on, so a hook can look up the task's claimed paths without scanning every task file.
+
+def sessions_file() -> Path:
+    d = coordination_dir() / ".local"
+    d.mkdir(parents=True, exist_ok=True)
+    return d / "sessions.json"
+
+
+def load_sessions() -> dict[str, str]:
+    try:
+        return json.loads(sessions_file().read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def register_session(session: str, task_id: str) -> None:
+    m = load_sessions()
+    m[session] = task_id
+    sessions_file().write_text(json.dumps(m, indent=1, sort_keys=True), encoding="utf-8")
+
+
+def session_task(session: str | None) -> dict | None:
+    """The task front matter for a session id, or None (= unclaimed session, e.g. the commander)."""
+    if not session:
+        return None
+    tid = load_sessions().get(session)
+    if not tid:
+        return None
+    try:
+        return read(find(tid))[0]
+    except (OSError, ValueError, FileNotFoundError):
+        return None
 
 
 def set_status(task_id: str, status: str, agent: str | None = None, note: str = "") -> None:
@@ -125,11 +181,34 @@ def set_status(task_id: str, status: str, agent: str | None = None, note: str = 
     write(path, meta, _log(body, f"{status}" + (f" by {agent}" if agent else "") + (f": {note}" if note else "")))
 
 
-def handoff(task_id: str, agent: str) -> Path:
+def _git(*args: str) -> str:
+    try:
+        r = subprocess.run(["git", *args], cwd=repo_root(), capture_output=True, text=True, timeout=10)
+        return r.stdout.strip() if r.returncode == 0 else ""
+    except (OSError, subprocess.SubprocessError):
+        return ""
+
+
+def handoff(task_id: str, agent: str, auto: bool = False) -> Path:
+    """Write a handoff template. `auto=True` (PreCompact hook) pre-fills what the repo already knows:
+    branch, HEAD, uncommitted files and recent commits, so a stub is useful even if nobody fills it in."""
     meta, _ = read(find(task_id))
     d = coordination_dir() / "handoffs"
     d.mkdir(exist_ok=True)
     path = d / f"{datetime.now():%Y-%m-%d-%H%M}-{task_id}-{agent}.md"
+    if auto:
+        dirty = _git("status", "--short") or "(clean)"
+        branch, head = _git("branch", "--show-current"), _git("rev-parse", "--short", "HEAD")
+        lines = [
+            f"# Handoff (AUTO STUB): {task_id} {meta['title']}", "",
+            f"- **Agent:** {agent}", f"- **When:** {_now()}", f"- **Task status:** {meta['status']}",
+            f"- **Branch/commit:** {branch} @ {head}",
+            "- **Written by:** PreCompact hook, because the conversation was about to be compacted. Refine it after compaction.", "",
+            "## Uncommitted files", "```", dirty, "```", "",
+            "## Recent commits", "```", _git("log", "--oneline", "-8"), "```", "",
+            "## Done so far", "- (unknown: fill in)", "", "## Next steps (in order)", "1. (unknown: fill in)", ""]
+        path.write_text("\n".join(lines), encoding="utf-8")
+        return path
     path.write_text(
         f"# Handoff: {task_id} {meta['title']}\n\n- **Agent:** {agent}\n- **When:** {_now()}\n- **Task status:** {meta['status']}\n"
         f"- **Branch/commit:** \n\n## Done so far\n- \n\n## Next steps (in order)\n1. \n\n## Gotchas / decisions made\n- \n\n"
@@ -142,11 +221,32 @@ def latest_handoff(task_id: str) -> Path | None:
     return hs[-1] if hs else None
 
 
+def status_data() -> dict:
+    """Machine-readable board for hooks and scripts (`oh coord status --json`)."""
+    rows = all_tasks()
+    sessions = load_sessions()
+    by_task: dict[str, list[str]] = {}
+    for sid, tid in sessions.items():
+        by_task.setdefault(tid, []).append(sid)
+    tasks = []
+    for _, m, _ in rows:
+        tasks.append({"id": m["id"], "title": m.get("title", ""), "status": m.get("status", "open"),
+                      "stream": m.get("stream"), "phase": m.get("phase"), "owner": m.get("owner"),
+                      "paths": m.get("paths", []), "depends_on": m.get("depends_on", []),
+                      "gates": m.get("gates", []), "sessions": by_task.get(m["id"], [])})
+    act = [t for t in tasks if t["status"] in ACTIVE]
+    clashes = [{"a": a["id"], "b": b["id"], "paths": [p, q]} for i, a in enumerate(act) for b in act[i + 1:]
+               for p in a["paths"] for q in b["paths"] if paths_overlap(p, q)]
+    done = {t["id"] for t in tasks if t["status"] == "done"}
+    ready = [t["id"] for t in tasks if t["status"] == "open" and all(d in done for d in t["depends_on"])]
+    return {"profile": active_profile(), "tasks": tasks, "conflicts": clashes, "ready": ready}
+
+
 def status_report() -> str:
     rows = all_tasks()
-    lines = [f"Profile: {active_profile()}", "", f"{'ID':7} {'STATUS':12} {'STREAM':12} {'OWNER':14} TITLE"]
+    lines = [f"Profile: {active_profile()}", "", f"{'ID':16} {'STATUS':12} {'STREAM':12} {'OWNER':14} TITLE"]
     for _, m, _ in sorted(rows, key=lambda r: (STATUSES.index(r[1].get("status", "open")), r[1]["id"])):
-        lines.append(f"{m['id']:7} {m.get('status',''):12} {str(m.get('stream','')):12} {str(m.get('owner') or '-'):14} {m['title']}")
+        lines.append(f"{m['id']:16} {m.get('status',''):12} {str(m.get('stream','')):12} {str(m.get('owner') or '-'):14} {m['title']}")
     # Conflict scan among active tasks
     act = [m for _, m, _ in rows if m.get("status") in ACTIVE]
     clashes = []

@@ -2,12 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/open-humanoid/open-humanoid/schemas/spec.schema.json",
   "title": "Open Humanoid variant spec",
-  "description": "Schema v0.1 for variants/<id>/spec.yaml. Changing this file requires an ADR and a schema_version bump.",
+  "description": "Schema v0.2 for variants/<id>/spec.yaml (v0.1 specs still validate; v0.2 adds `provenance`, ADR 0013). Changing this file requires an ADR and a schema_version bump.",
   "type": "object",
   "required": ["schema_version", "id", "name", "goals", "body", "kinematics"],
   "additionalProperties": false,
   "properties": {
-    "schema_version": { "const": "0.1" },
+    "schema_version": { "enum": ["0.1", "0.2"], "description": "0.2 adds the `provenance` map (ADR 0013). 0.1 specs remain valid." },
     "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
     "name": { "type": "string" },
     "version": { "type": "string" },
@@ -154,6 +154,26 @@
         "dynamic_factor": { "type": "object", "additionalProperties": { "type": "number" } },
         "continuous_fraction_default": { "type": "number" },
         "peak_fraction": { "type": "number" }
+      }
+    },
+
+    "provenance": {
+      "type": "object",
+      "description": "Where each tuned constant under analysis: and mass_model: came from (ADR 0013). Keys are dotted paths (a prefix covers its children). Checked by `oh check provenance`.",
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string", "minLength": 1 },
+          {
+            "type": "object",
+            "required": ["source"],
+            "additionalProperties": false,
+            "properties": {
+              "source": { "type": "string", "minLength": 1, "description": "http(s) URL | repo file path | measurement:<repo path> | estimate: <why>" },
+              "note": { "type": "string" },
+              "as_of": { "type": "string" }
+            }
+          }
+        ]
       }
     },
 
