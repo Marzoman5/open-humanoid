@@ -38,7 +38,8 @@ P = {
     "idler_plate_t": 7.5,      # bearing seat 4 mm + shoulder; was 5.6
     "cover_t": 6.5,            # was 4.4: the rear covers are the first thing a backward fall touches (floor 4.2 mm under the low-head counterbore)
     "cover_t_idler": 6.5,      # blind relief for the servo's back stub (3.4) + the printed idler pin + >= 1.6 mm behind them; was 5.6
-    "housing_wall_ankle_pitch": 2.4,   # the shank's lower housing wall sets the 1 mm gap to the foot plate top: unchanged
+    "housing_wall_by_joint": {"ankle_pitch": 2.4,    # the shank's lower housing wall sets the 1 mm gap to the foot plate top: unchanged
+                              "hip_roll": 5.0},      # the roll servo's housing is the open U that carries the yaw bracket's torsion (side impact on the thigh)
     "housing_wall": 3.2,       # servo pocket walls, was 2.4 (load-path minimum): the yaw column and housings carry torque as thin-walled sections
     "web_radius": {"hip_pitch": 24.0, "knee": 30.0},   # fork web distance from the pitch axis: knee needs >= 30 for 115+ deg of flexion
     "web_t": {"hip_pitch": 10.0, "knee": 10.0},   # was 3.2 (torsion of the web carries the pitch torque from the horn plate to the beam); hip: 10 mm cost 1.2 deg of flexion
@@ -51,7 +52,7 @@ P = {
     "sole_t": 6.5,             # was 3.2 (the heel and sole behind the plate are the next weakest section)
     "foot_plate_t": 8.0,       # horn plate of the foot; was 4.3 (the thin 90 deg cantilever)
     "foot_plate_t_top": 5.3,   # thickness at the horn screws (limited by the S5 housing: 21.2 - 15.9)
-    "foot_plate_step_above_axis": 0.0,   # the thick part ends at the roll axis height (its corners would sweep into the S5 housing at +-30 deg roll)
+    "foot_plate_step_above_axis": -9.0,  # the thick part ends 9 mm below the roll axis (z = 29): above it the thin part carries the washer counterbores (down to 29.8) and keeps the screw tool corridors free; also its corners would sweep into the S5 housing at +-30 deg roll
     "foot_plate_w": 40.0,
     "foot_plate_w_top": 30.0,  # the thin upper part (horn screws, washers: 2 x 11.5 wide) is narrower: its corners sweep the +-30 deg roll arc under the shank      # was 28
     "foot_rib_t": 4.0,         # three ribs along the sole from the plate to the toe
@@ -153,7 +154,7 @@ def build(ctx) -> Assembly:
     H = {}
     for n in LEG:
         has_idler = idl[n] is not None
-        H[n] = servo_housing(A[n], part=f"housing_{J[n]}", cover_part=f"cover_{J[n]}", wall=(P["housing_wall_ankle_pitch"] if n == "ankle_pitch" else P["housing_wall"]),
+        H[n] = servo_housing(A[n], part=f"housing_{J[n]}", cover_part=f"cover_{J[n]}", wall=P["housing_wall_by_joint"].get(n, P["housing_wall"]),
                              cover_t=P["cover_t_idler"] if has_idler else P["cover_t"],
                              idler={"bearing": idl[n]["bearing"], "gap_mm": idl[n]["gap_mm"]} if has_idler else None)
 

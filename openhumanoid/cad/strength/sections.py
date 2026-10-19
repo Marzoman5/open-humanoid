@@ -105,7 +105,7 @@ def section_geometry(mesh: trimesh.Trimesh, origin: np.ndarray, normal: np.ndarr
         M = np.eye(4)
         M[0, :3], M[1, :3], M[2, :3] = u, v, n
         M[:3, 3] = -M[:3, :3] @ origin
-        planar, _ = path.to_planar(to_2D=M, check=False)
+        planar, _ = (path.to_2D if hasattr(path, "to_2D") else path.to_planar)(to_2D=M, check=False)
         polys = [p for p in planar.polygons_full if p.area > 1e-6]
     except Exception:  # noqa: BLE001
         return None
