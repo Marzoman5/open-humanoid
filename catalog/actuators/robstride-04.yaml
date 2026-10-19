@@ -1,0 +1,21 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: robstride-04
+name: RobStride 04 QDD actuator
+category: actuator
+tier: research
+price_usd: {typical: 450, low: 380, high: 550, unit: each, as_of: 2026-10 (est)}
+mass_kg: 1.42
+actuator:
+  family: robstride
+  type: bldc_qdd
+  stall_torque_nm: 120
+  continuous_torque_nm: 40
+  no_load_speed_rad_s: 17.49
+  voltage_v: [24, 60]
+  feedback: torque
+  bus: can
+  backlash_deg: 0.1
+  armature_kg_m2: 0.01
+notes: Peak torque listed as stall_torque_nm. Specs/prices are low-confidence estimates.
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md'

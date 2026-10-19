@@ -1,0 +1,15 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: bearing-kit-small
+name: Small flanged ball bearings (assorted, e.g. F688/MR85)
+category: hardware
+tier: hobby
+price_usd:
+  typical: 12
+  unit: each
+  as_of: 2026-10 (est)
+  low: 8
+  high: 18
+mass_kg: 0.05
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

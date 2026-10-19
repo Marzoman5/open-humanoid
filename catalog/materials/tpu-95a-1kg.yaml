@@ -1,0 +1,17 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: tpu-95a-1kg
+name: TPU 95A filament 1.75 mm
+category: material
+tier: hobby
+price_usd:
+  typical: 25
+  unit: kg
+  as_of: 2026-10 (est)
+  low: 18
+  high: 35
+specs:
+  density_g_cm3: 1.21
+notes: Foot soles, bumpers.
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

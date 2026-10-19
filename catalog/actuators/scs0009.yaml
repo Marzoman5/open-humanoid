@@ -1,0 +1,27 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: scs0009
+name: Feetech SCS0009 micro serial bus servo
+category: actuator
+tier: hobby
+price_usd:
+  typical: 5
+  unit: each
+  as_of: 2026-10 (est)
+  low: 4
+  high: 8
+mass_kg: 0.013
+actuator:
+  family: feetech
+  type: serial_bus_servo
+  stall_torque_nm: 0.226
+  no_load_speed_rad_s: 10.47
+  voltage_v:
+  - 4.8
+  - 6.0
+  feedback: position
+  bus: feetech_ttl
+  resolution_bits: 10
+notes: Fingers, eyes, small face mechanisms. Needs a 5-6 V rail.
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

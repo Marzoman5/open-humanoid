@@ -1,0 +1,637 @@
+{
+  "generated_by": "oh size",
+  "date": "2026-10-19",
+  "variant": "adam",
+  "feasible": true,
+  "reason": "ok",
+  "height_m": 0.5,
+  "height_mode": "maximize",
+  "limiting_factor": "over budget: $401 > $400",
+  "joints_base": [
+    "hip_yaw",
+    "hip_roll",
+    "hip_pitch",
+    "knee",
+    "ankle_pitch",
+    "ankle_roll",
+    "shoulder_pitch",
+    "elbow"
+  ],
+  "optional_added": [],
+  "optional_dropped": [
+    "shoulder_roll",
+    "neck_yaw"
+  ],
+  "sweep": [
+    {
+      "height_m": 0.4,
+      "feasible": true,
+      "reason": "ok",
+      "cost": 390.59
+    },
+    {
+      "height_m": 0.41,
+      "feasible": true,
+      "reason": "ok",
+      "cost": 391.32
+    },
+    {
+      "height_m": 0.42,
+      "feasible": true,
+      "reason": "ok",
+      "cost": 392.09
+    },
+    {
+      "height_m": 0.43,
+      "feasible": true,
+      "reason": "ok",
+      "cost": 392.91
+    },
+    {
+      "height_m": 0.44,
+      "feasible": true,
+      "reason": "ok",
+      "cost": 393.75
+    },
+    {
+      "height_m": 0.45,
+      "feasible": true,
+      "reason": "ok",
+      "cost": 394.64
+    },
+    {
+      "height_m": 0.46,
+      "feasible": true,
+      "reason": "ok",
+      "cost": 395.58
+    },
+    {
+      "height_m": 0.47,
+      "feasible": true,
+      "reason": "ok",
+      "cost": 396.54
+    },
+    {
+      "height_m": 0.48,
+      "feasible": true,
+      "reason": "ok",
+      "cost": 397.57
+    },
+    {
+      "height_m": 0.49,
+      "feasible": true,
+      "reason": "ok",
+      "cost": 398.62
+    },
+    {
+      "height_m": 0.5,
+      "feasible": true,
+      "reason": "ok",
+      "cost": 399.72
+    },
+    {
+      "height_m": 0.51,
+      "feasible": false,
+      "reason": "over budget: $401 > $400",
+      "cost": 400.87
+    },
+    {
+      "height_m": 0.52,
+      "feasible": false,
+      "reason": "over budget: $402 > $400",
+      "cost": 402.06
+    },
+    {
+      "height_m": 0.53,
+      "feasible": false,
+      "reason": "over budget: $403 > $400",
+      "cost": 403.3
+    },
+    {
+      "height_m": 0.54,
+      "feasible": false,
+      "reason": "over budget: $405 > $400",
+      "cost": 404.59
+    },
+    {
+      "height_m": 0.55,
+      "feasible": false,
+      "reason": "over budget: $662 > $400",
+      "cost": 661.92
+    },
+    {
+      "height_m": 0.56,
+      "feasible": false,
+      "reason": "over budget: $663 > $400",
+      "cost": 663.3
+    },
+    {
+      "height_m": 0.57,
+      "feasible": false,
+      "reason": "over budget: $665 > $400",
+      "cost": 664.73
+    },
+    {
+      "height_m": 0.58,
+      "feasible": false,
+      "reason": "over budget: $666 > $400",
+      "cost": 666.23
+    },
+    {
+      "height_m": 0.59,
+      "feasible": false,
+      "reason": "over budget: $668 > $400",
+      "cost": 667.75
+    },
+    {
+      "height_m": 0.6,
+      "feasible": false,
+      "reason": "over budget: $669 > $400",
+      "cost": 669.34
+    },
+    {
+      "height_m": 0.61,
+      "feasible": false,
+      "reason": "over budget: $671 > $400",
+      "cost": 671.0
+    },
+    {
+      "height_m": 0.62,
+      "feasible": false,
+      "reason": "over budget: $673 > $400",
+      "cost": 672.68
+    },
+    {
+      "height_m": 0.63,
+      "feasible": false,
+      "reason": "over budget: $674 > $400",
+      "cost": 674.44
+    },
+    {
+      "height_m": 0.64,
+      "feasible": false,
+      "reason": "over budget: $676 > $400",
+      "cost": 676.27
+    },
+    {
+      "height_m": 0.65,
+      "feasible": false,
+      "reason": "torque/speed: no actuator meets 'hip_pitch_l'",
+      "cost": null
+    },
+    {
+      "height_m": 0.66,
+      "feasible": false,
+      "reason": "torque/speed: no actuator meets 'hip_pitch_l'",
+      "cost": null
+    },
+    {
+      "height_m": 0.67,
+      "feasible": false,
+      "reason": "torque/speed: no actuator meets 'hip_pitch_l'",
+      "cost": null
+    },
+    {
+      "height_m": 0.68,
+      "feasible": false,
+      "reason": "torque/speed: no actuator meets 'hip_pitch_l'",
+      "cost": null
+    },
+    {
+      "height_m": 0.69,
+      "feasible": false,
+      "reason": "torque/speed: no actuator meets 'hip_pitch_l'",
+      "cost": null
+    },
+    {
+      "height_m": 0.7,
+      "feasible": false,
+      "reason": "torque/speed: no actuator meets 'hip_pitch_l'",
+      "cost": null
+    },
+    {
+      "height_m": 0.71,
+      "feasible": false,
+      "reason": "torque/speed: no actuator meets 'hip_pitch_l'",
+      "cost": null
+    },
+    {
+      "height_m": 0.72,
+      "feasible": false,
+      "reason": "torque/speed: no actuator meets 'hip_pitch_l'",
+      "cost": null
+    },
+    {
+      "height_m": 0.73,
+      "feasible": false,
+      "reason": "torque/speed: no actuator meets 'hip_pitch_l'",
+      "cost": null
+    },
+    {
+      "height_m": 0.74,
+      "feasible": false,
+      "reason": "torque/speed: no actuator meets 'hip_pitch_l'",
+      "cost": null
+    },
+    {
+      "height_m": 0.75,
+      "feasible": false,
+      "reason": "torque/speed: no actuator meets 'hip_pitch_l'",
+      "cost": null
+    }
+  ],
+  "mass": {
+    "structure_kg": 0.8,
+    "actuators_kg": 0.88,
+    "electronics_kg": 0.12,
+    "compute_power_kg": 0.51,
+    "total_kg": 2.31
+  },
+  "geometry_m": {
+    "ankle_height": 0.0225,
+    "shank": 0.1125,
+    "thigh": 0.1125,
+    "pelvis": 0.03,
+    "torso": 0.125,
+    "neck": 0.0175,
+    "head": 0.07,
+    "hip_width": 0.075,
+    "shoulder_width": 0.15,
+    "upper_arm": 0.085,
+    "forearm": 0.085,
+    "foot_length": 0.085,
+    "foot_width": 0.0375
+  },
+  "segment_mass_kg": {
+    "torso": 0.98,
+    "pelvis": 0.3,
+    "head": 0.064,
+    "thigh": 0.174,
+    "shank": 0.166,
+    "foot": 0.024,
+    "upper_arm": 0.087,
+    "forearm": 0.032
+  },
+  "actuators": {
+    "hip_yaw_l": "sts3215-12v",
+    "hip_yaw_r": "sts3215-12v",
+    "hip_roll_l": "sts3215-12v",
+    "hip_roll_r": "sts3215-12v",
+    "hip_pitch_l": "sts3215-12v",
+    "hip_pitch_r": "sts3215-12v",
+    "knee_l": "sts3215-12v",
+    "knee_r": "sts3215-12v",
+    "ankle_pitch_l": "sts3215-12v",
+    "ankle_pitch_r": "sts3215-12v",
+    "ankle_roll_l": "sts3215-12v",
+    "ankle_roll_r": "sts3215-12v",
+    "shoulder_pitch_l": "sts3215-12v",
+    "shoulder_pitch_r": "sts3215-12v",
+    "elbow_l": "sts3215-12v",
+    "elbow_r": "sts3215-12v"
+  },
+  "cost_usd": {
+    "actuators": 256.0,
+    "fixed_parts": 125.0,
+    "material": 18.72,
+    "material_kg": 1.04,
+    "total": 399.72
+  },
+  "gaits": {
+    "walk": {
+      "required": true,
+      "ok": true,
+      "worst_joint": "shoulder_pitch_l",
+      "worst_margin": 1.04,
+      "limit": "speed",
+      "failing": []
+    },
+    "run": {
+      "required": false,
+      "ok": false,
+      "worst_joint": "knee_l",
+      "worst_margin": 0.37,
+      "limit": "speed",
+      "failing": [
+        "ankle_pitch_l",
+        "ankle_pitch_r",
+        "hip_pitch_l",
+        "hip_pitch_r",
+        "hip_roll_l",
+        "hip_roll_r",
+        "knee_l",
+        "knee_r"
+      ]
+    }
+  },
+  "joint_checks": {
+    "hip_yaw_l": {
+      "walk": {
+        "ok": true,
+        "limit": "continuous",
+        "margins": {
+          "continuous": 5.26,
+          "peak": 6.99,
+          "speed": 5.49
+        }
+      }
+    },
+    "hip_yaw_r": {
+      "walk": {
+        "ok": true,
+        "limit": "continuous",
+        "margins": {
+          "continuous": 5.26,
+          "peak": 6.99,
+          "speed": 5.49
+        }
+      }
+    },
+    "hip_roll_l": {
+      "walk": {
+        "ok": true,
+        "limit": "continuous",
+        "margins": {
+          "continuous": 1.32,
+          "peak": 1.75,
+          "speed": 3.66
+        }
+      }
+    },
+    "hip_roll_r": {
+      "walk": {
+        "ok": true,
+        "limit": "continuous",
+        "margins": {
+          "continuous": 1.32,
+          "peak": 1.75,
+          "speed": 3.66
+        }
+      }
+    },
+    "hip_pitch_l": {
+      "walk": {
+        "ok": true,
+        "limit": "continuous",
+        "margins": {
+          "continuous": 1.18,
+          "peak": 1.56,
+          "speed": 1.37
+        }
+      }
+    },
+    "hip_pitch_r": {
+      "walk": {
+        "ok": true,
+        "limit": "continuous",
+        "margins": {
+          "continuous": 1.18,
+          "peak": 1.56,
+          "speed": 1.37
+        }
+      }
+    },
+    "knee_l": {
+      "walk": {
+        "ok": true,
+        "limit": "speed",
+        "margins": {
+          "continuous": 1.18,
+          "peak": 1.56,
+          "speed": 1.1
+        }
+      }
+    },
+    "knee_r": {
+      "walk": {
+        "ok": true,
+        "limit": "speed",
+        "margins": {
+          "continuous": 1.18,
+          "peak": 1.56,
+          "speed": 1.1
+        }
+      }
+    },
+    "ankle_pitch_l": {
+      "walk": {
+        "ok": true,
+        "limit": "continuous",
+        "margins": {
+          "continuous": 1.23,
+          "peak": 1.64,
+          "speed": 1.83
+        }
+      }
+    },
+    "ankle_pitch_r": {
+      "walk": {
+        "ok": true,
+        "limit": "continuous",
+        "margins": {
+          "continuous": 1.23,
+          "peak": 1.64,
+          "speed": 1.83
+        }
+      }
+    },
+    "ankle_roll_l": {
+      "walk": {
+        "ok": true,
+        "limit": "continuous",
+        "margins": {
+          "continuous": 2.24,
+          "peak": 2.97,
+          "speed": 3.66
+        }
+      }
+    },
+    "ankle_roll_r": {
+      "walk": {
+        "ok": true,
+        "limit": "continuous",
+        "margins": {
+          "continuous": 2.24,
+          "peak": 2.97,
+          "speed": 3.66
+        }
+      }
+    },
+    "shoulder_pitch_l": {
+      "walk": {
+        "ok": true,
+        "limit": "speed",
+        "margins": {
+          "continuous": 9.49,
+          "peak": 13.44,
+          "speed": 1.04
+        }
+      }
+    },
+    "shoulder_pitch_r": {
+      "walk": {
+        "ok": true,
+        "limit": "speed",
+        "margins": {
+          "continuous": 9.49,
+          "peak": 13.44,
+          "speed": 1.04
+        }
+      }
+    },
+    "elbow_l": {
+      "walk": {
+        "ok": true,
+        "limit": "speed",
+        "margins": {
+          "continuous": 70.56,
+          "peak": 99.97,
+          "speed": 1.07
+        }
+      }
+    },
+    "elbow_r": {
+      "walk": {
+        "ok": true,
+        "limit": "speed",
+        "margins": {
+          "continuous": 70.56,
+          "peak": 99.97,
+          "speed": 1.07
+        }
+      }
+    }
+  },
+  "requirements": {
+    "walk": {
+      "hip_yaw_l": {
+        "base": "hip_yaw",
+        "limb": "leg",
+        "continuous_nm": 0.224,
+        "peak_nm": 0.358,
+        "speed_rad_s": 0.829,
+        "swing_load_nm": 0.105
+      },
+      "hip_yaw_r": {
+        "base": "hip_yaw",
+        "limb": "leg",
+        "continuous_nm": 0.224,
+        "peak_nm": 0.358,
+        "speed_rad_s": 0.829,
+        "swing_load_nm": 0.105
+      },
+      "hip_roll_l": {
+        "base": "hip_roll",
+        "limb": "leg",
+        "continuous_nm": 0.895,
+        "peak_nm": 1.432,
+        "speed_rad_s": 1.244,
+        "swing_load_nm": 0.105
+      },
+      "hip_roll_r": {
+        "base": "hip_roll",
+        "limb": "leg",
+        "continuous_nm": 0.895,
+        "peak_nm": 1.432,
+        "speed_rad_s": 1.244,
+        "swing_load_nm": 0.105
+      },
+      "hip_pitch_l": {
+        "base": "hip_pitch",
+        "limb": "leg",
+        "continuous_nm": 1.0,
+        "peak_nm": 1.6,
+        "speed_rad_s": 3.318,
+        "swing_load_nm": 0.105
+      },
+      "hip_pitch_r": {
+        "base": "hip_pitch",
+        "limb": "leg",
+        "continuous_nm": 1.0,
+        "peak_nm": 1.6,
+        "speed_rad_s": 3.318,
+        "swing_load_nm": 0.105
+      },
+      "knee_l": {
+        "base": "knee",
+        "limb": "leg",
+        "continuous_nm": 1.0,
+        "peak_nm": 1.6,
+        "speed_rad_s": 4.147,
+        "swing_load_nm": 0.105
+      },
+      "knee_r": {
+        "base": "knee",
+        "limb": "leg",
+        "continuous_nm": 1.0,
+        "peak_nm": 1.6,
+        "speed_rad_s": 4.147,
+        "swing_load_nm": 0.105
+      },
+      "ankle_pitch_l": {
+        "base": "ankle_pitch",
+        "limb": "leg",
+        "continuous_nm": 0.953,
+        "peak_nm": 1.525,
+        "speed_rad_s": 2.488,
+        "swing_load_nm": 0.105
+      },
+      "ankle_pitch_r": {
+        "base": "ankle_pitch",
+        "limb": "leg",
+        "continuous_nm": 0.953,
+        "peak_nm": 1.525,
+        "speed_rad_s": 2.488,
+        "swing_load_nm": 0.105
+      },
+      "ankle_roll_l": {
+        "base": "ankle_roll",
+        "limb": "leg",
+        "continuous_nm": 0.526,
+        "peak_nm": 0.841,
+        "speed_rad_s": 1.244,
+        "swing_load_nm": 0.105
+      },
+      "ankle_roll_r": {
+        "base": "ankle_roll",
+        "limb": "leg",
+        "continuous_nm": 0.526,
+        "peak_nm": 0.841,
+        "speed_rad_s": 1.244,
+        "swing_load_nm": 0.105
+      },
+      "shoulder_pitch_l": {
+        "base": "shoulder_pitch",
+        "limb": "arm",
+        "continuous_nm": 0.124,
+        "peak_nm": 0.186,
+        "speed_rad_s": 4.4,
+        "swing_load_nm": 0.099
+      },
+      "shoulder_pitch_r": {
+        "base": "shoulder_pitch",
+        "limb": "arm",
+        "continuous_nm": 0.124,
+        "peak_nm": 0.186,
+        "speed_rad_s": 4.4,
+        "swing_load_nm": 0.099
+      },
+      "elbow_l": {
+        "base": "elbow",
+        "limb": "arm",
+        "continuous_nm": 0.017,
+        "peak_nm": 0.025,
+        "speed_rad_s": 4.4,
+        "swing_load_nm": 0.013
+      },
+      "elbow_r": {
+        "base": "elbow",
+        "limb": "arm",
+        "continuous_nm": 0.017,
+        "peak_nm": 0.025,
+        "speed_rad_s": 4.4,
+        "swing_load_nm": 0.013
+      }
+    }
+  }
+}

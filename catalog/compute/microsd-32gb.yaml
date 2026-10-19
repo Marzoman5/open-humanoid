@@ -1,0 +1,15 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: microsd-32gb
+name: microSD 32 GB (A1)
+category: compute
+tier: hobby
+price_usd:
+  typical: 7
+  unit: each
+  as_of: 2026-10 (est)
+  low: 5
+  high: 10
+mass_kg: 0.001
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

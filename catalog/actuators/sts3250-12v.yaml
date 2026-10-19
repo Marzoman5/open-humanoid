@@ -1,0 +1,29 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: sts3250-12v
+name: Feetech STS3250 (12 V, 50 kg·cm)
+category: actuator
+tier: hobby
+price_usd:
+  typical: 32
+  unit: each
+  as_of: 2026-10 (est)
+  low: 26
+  high: 45
+mass_kg: 0.072
+actuator:
+  family: feetech_sts
+  type: serial_bus_servo
+  stall_torque_nm: 4.903
+  no_load_speed_rad_s: 6.98
+  voltage_v:
+  - 9.0
+  - 12.6
+  feedback: position_current
+  bus: feetech_ttl
+  backlash_deg: 0.5
+  armature_kg_m2: 0.03
+  resolution_bits: 12
+notes: Speed/mass figures are low-confidence estimates.
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

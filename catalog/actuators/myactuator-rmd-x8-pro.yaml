@@ -1,0 +1,29 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: myactuator-rmd-x8-pro
+name: MyActuator RMD-X8-Pro
+category: actuator
+tier: research
+price_usd:
+  typical: 420
+  unit: each
+  as_of: 2026-10 (est)
+  low: 380
+  high: 500
+mass_kg: 0.71
+actuator:
+  family: myactuator
+  type: bldc_planetary
+  stall_torque_nm: 35
+  continuous_torque_nm: 13
+  no_load_speed_rad_s: 19.9
+  voltage_v:
+  - 24
+  - 48
+  feedback: torque
+  bus: can
+  gear_ratio: 6
+  backlash_deg: 0.15
+  armature_kg_m2: 0.004
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

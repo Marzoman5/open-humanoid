@@ -1,0 +1,35 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: sts3215-12v
+name: Feetech STS3215 (12 V, 30 kg·cm)
+category: actuator
+tier: hobby
+price_usd:
+  typical: 16
+  unit: each
+  as_of: 2026-10 (est)
+  low: 13
+  high: 22
+mass_kg: 0.055
+dimensions_mm:
+- 45.2
+- 24.7
+- 35
+actuator:
+  family: feetech_sts
+  type: serial_bus_servo
+  stall_torque_nm: 2.942
+  no_load_speed_rad_s: 4.72
+  voltage_v:
+  - 9.0
+  - 12.6
+  feedback: position_current
+  bus: feetech_ttl
+  gear_ratio: 345
+  backlash_deg: 0.5
+  armature_kg_m2: 0.02
+  resolution_bits: 12
+notes: De-facto standard for sub-$1k humanoids/arms (Open Duck Mini, SO-101). Magnetic
+  encoder, current sensing.
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

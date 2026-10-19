@@ -1,0 +1,9 @@
+# solo: one session at a time. For small token budgets. DEFAULT.
+name: solo
+max_parallel_sessions: 1
+subagents: cheap_only        # subagents only for wide read-only searches, on the light tier
+models: { top: opus, mid: sonnet, light: haiku }
+phase_order: sequential
+checkpoint: every_gate_and_30_tool_calls
+on_context_full: prompt_user  # stop at the next checkpoint and hand the user a resume line
+notes: Prefer finishing one phase cleanly over starting many. Skip optional polish.

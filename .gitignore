@@ -1,0 +1,27 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+
+# Sim / training scratch (keep results you want to share in variants/<id>/generated/)
+runs/
+*.mp4
+*.npz
+
+# CAD tool scratch / lock files
+~$*
+*.SLDPRT.bak
+*.FCStd1
+*.FCBak
+
+# OS
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Local, per-machine agent state (never committed)
+coordination/.local/

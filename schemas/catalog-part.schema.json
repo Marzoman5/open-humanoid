@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Open Humanoid catalog part",
+  "description": "One file per part in catalog/<category>/<id>.yaml. Prices are estimates unless verified=true.",
+  "type": "object",
+  "required": ["id", "name", "category", "price_usd", "verified", "source"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "name": { "type": "string" },
+    "category": { "enum": ["actuator", "compute", "power", "sensor", "electronics", "material", "hardware"] },
+    "tier": { "enum": ["hobby", "prosumer", "research", "industrial"] },
+    "price_usd": {
+      "type": "object",
+      "required": ["typical"],
+      "properties": {
+        "typical": { "type": "number", "minimum": 0 },
+        "low": { "type": "number", "minimum": 0 },
+        "high": { "type": "number", "minimum": 0 },
+        "unit": { "type": "string", "description": "each, kg, kit…" },
+        "as_of": { "type": "string" }
+      }
+    },
+    "verified": { "type": "boolean", "description": "true only after a human/agent checked live listings (see prompts/sourcing/)." },
+    "source": { "type": "string", "description": "Where the numbers came from (datasheet URL, listing URL, or 'estimate: …')." },
+    "vendors": {
+      "type": "array",
+      "items": { "type": "object", "properties": { "name": { "type": "string" }, "url": { "type": "string" }, "price": { "type": "number" }, "checked": { "type": "string" } } }
+    },
+    "mass_kg": { "type": "number", "minimum": 0 },
+    "dimensions_mm": { "type": "array", "items": { "type": "number" } },
+    "actuator": {
+      "type": "object",
+      "description": "Required when category=actuator.",
+      "required": ["stall_torque_nm", "no_load_speed_rad_s", "voltage_v", "feedback"],
+      "properties": {
+        "family": { "type": "string" },
+        "type": { "enum": ["hobby_pwm_servo", "serial_bus_servo", "smart_servo", "bldc_qdd", "bldc_harmonic", "bldc_planetary", "linear"] },
+        "stall_torque_nm": { "type": "number" },
+        "continuous_torque_nm": { "type": "number" },
+        "no_load_speed_rad_s": { "type": "number" },
+        "voltage_v": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 },
+        "feedback": { "enum": ["none", "position", "position_current", "torque"] },
+        "bus": { "type": "string" },
+        "gear_ratio": { "type": "number" },
+        "backlash_deg": { "type": "number" },
+        "armature_kg_m2": { "type": "number", "description": "Reflected rotor inertia, used by the sim." },
+        "resolution_bits": { "type": "integer" }
+      }
+    },
+    "specs": { "type": "object", "description": "Free-form category-specific specs (capacity_mah, ram_gb, …)." },
+    "notes": { "type": "string" }
+  }
+}

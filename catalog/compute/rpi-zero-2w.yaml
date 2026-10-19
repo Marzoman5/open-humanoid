@@ -1,0 +1,21 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: rpi-zero-2w
+name: Raspberry Pi Zero 2 W
+category: compute
+tier: hobby
+price_usd:
+  typical: 15
+  unit: each
+  as_of: 2026-10 (est)
+  low: 15
+  high: 20
+mass_kg: 0.011
+specs:
+  cpu: 4x Cortex-A53 1 GHz
+  ram_gb: 0.5
+  wifi: true
+  power_w: 3
+notes: Enough for a small MLP locomotion policy at 50 Hz. Not for onboard LLM/vision.
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

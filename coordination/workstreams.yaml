@@ -1,0 +1,41 @@
+# Workstreams: lanes of work, the paths each one normally owns, and a suggested model tier.
+# Model tiers: "top" = most capable (design, architecture, hard debugging); "mid" = routine
+# implementation; "light" = search, formatting, bulk edits. Map tiers to models in your profile.
+
+streams:
+  framework:
+    description: Toolkit code, CLI, schemas (schema changes need an ADR)
+    owns: [openhumanoid/, tests/, schemas/]
+    tier: top
+  mech:
+    description: Mechanical design, modules, CAD, export contract outputs
+    owns: [modules/, cad/, "variants/*/cad/"]
+    tier: top
+  sim:
+    description: Simulation models, scenarios, RL training, policy evaluation
+    owns: [sim/, "variants/*/sim/"]
+    tier: top
+  software:
+    description: Robot runtime core, HAL drivers, plugins, firmware
+    owns: [software/]
+    tier: mid
+  electronics:
+    description: Wiring, power budget, PCBs, bus layout
+    owns: ["variants/*/electronics/"]
+    tier: mid
+  sourcing:
+    description: Catalog upkeep, price verification, BOM sourcing
+    owns: [catalog/, "variants/*/sourcing/"]
+    tier: light
+  design:
+    description: Industrial design, design language, shells and look
+    owns: [docs/design-language.md, "variants/*/design-language.md", "variants/*/cad/shell/"]
+    tier: top
+  docs:
+    description: Build guides, tutorials, READMEs, prompts
+    owns: [docs/, prompts/, "variants/*/build-guide/"]
+    tier: mid
+  coordination:
+    description: Task board hygiene, merges, orchestrator duties
+    owns: [coordination/]
+    tier: light

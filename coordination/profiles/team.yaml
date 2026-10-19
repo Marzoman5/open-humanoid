@@ -1,0 +1,10 @@
+# team: one session per active workstream.
+name: team
+max_parallel_sessions: 6
+subagents: allowed
+models: { top: opus, mid: sonnet, light: haiku }
+lanes: per_workstream
+phase_order: overlap_where_independent
+branching: branch_per_task
+checkpoint: every_gate_and_30_tool_calls
+on_context_full: new_session

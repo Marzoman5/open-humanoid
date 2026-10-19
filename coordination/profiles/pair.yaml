@@ -1,0 +1,9 @@
+# pair: two concurrent sessions, design lane and sim/software lane.
+name: pair
+max_parallel_sessions: 2
+subagents: allowed
+models: { top: opus, mid: sonnet, light: haiku }
+lanes: [[mech, design, sourcing], [sim, software, framework, docs]]
+phase_order: overlap_where_independent
+checkpoint: every_gate_and_30_tool_calls
+on_context_full: new_session

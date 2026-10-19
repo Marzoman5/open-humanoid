@@ -1,0 +1,15 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: fastener-kit-m2-m3
+name: M2/M3 socket-head screw + heat-set insert kit
+category: hardware
+tier: hobby
+price_usd:
+  typical: 15
+  unit: each
+  as_of: 2026-10 (est)
+  low: 10
+  high: 22
+mass_kg: 0.08
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

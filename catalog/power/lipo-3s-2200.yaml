@@ -1,0 +1,20 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: lipo-3s-2200
+name: 3S 11.1 V 2200 mAh LiPo (XT60)
+category: power
+tier: hobby
+price_usd:
+  typical: 22
+  unit: each
+  as_of: 2026-10 (est)
+  low: 15
+  high: 30
+mass_kg: 0.18
+specs:
+  cells: 3
+  capacity_mah: 2200
+  c_rating: 30
+  energy_wh: 24.4
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

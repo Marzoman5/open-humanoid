@@ -1,0 +1,16 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: imu-bno085
+name: BNO085 9-DOF IMU breakout
+category: sensor
+tier: hobby
+price_usd:
+  typical: 15
+  unit: each
+  as_of: 2026-10 (est)
+  low: 10
+  high: 25
+mass_kg: 0.003
+notes: On-chip sensor fusion (quaternion out). Clones are cheaper.
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

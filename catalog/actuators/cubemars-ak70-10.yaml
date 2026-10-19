@@ -1,0 +1,29 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: cubemars-ak70-10
+name: CubeMars AK70-10
+category: actuator
+tier: research
+price_usd:
+  typical: 430
+  unit: each
+  as_of: 2026-10 (est)
+  low: 400
+  high: 480
+mass_kg: 0.521
+actuator:
+  family: cubemars
+  type: bldc_planetary
+  stall_torque_nm: 24.8
+  continuous_torque_nm: 8.3
+  no_load_speed_rad_s: 15.5
+  voltage_v:
+  - 24
+  - 48
+  feedback: torque
+  bus: can
+  gear_ratio: 10
+  backlash_deg: 0.2
+  armature_kg_m2: 0.003
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

@@ -1,0 +1,29 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: dxl-xm430-w350
+name: Dynamixel XM430-W350-T
+category: actuator
+tier: prosumer
+price_usd:
+  typical: 290
+  unit: each
+  as_of: 2026-10 (est)
+  low: 260
+  high: 320
+mass_kg: 0.082
+actuator:
+  family: dynamixel
+  type: smart_servo
+  stall_torque_nm: 4.1
+  no_load_speed_rad_s: 4.82
+  voltage_v:
+  - 10.0
+  - 14.8
+  feedback: torque
+  bus: dynamixel_ttl
+  gear_ratio: 353.5
+  backlash_deg: 0.25
+  armature_kg_m2: 0.02
+  resolution_bits: 12
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

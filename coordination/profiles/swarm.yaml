@@ -1,0 +1,11 @@
+# swarm: orchestrator plus many workers. Strict claims, branch per task, PR merges.
+name: swarm
+max_parallel_sessions: unlimited
+subagents: allowed
+models: { orchestrator: opus, top: opus, mid: sonnet, light: haiku }
+lanes: per_task
+orchestrator: { owns: [coordination/], duties: [split tasks, assign, review, merge, resolve conflicts] }
+phase_order: dependency_graph
+branching: branch_per_task
+checkpoint: every_task_status_change
+on_context_full: orchestrator

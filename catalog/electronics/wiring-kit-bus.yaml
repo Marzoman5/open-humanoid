@@ -1,0 +1,15 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: wiring-kit-bus
+name: 3-pin servo bus extension cables + JST kit
+category: electronics
+tier: hobby
+price_usd:
+  typical: 10
+  unit: each
+  as_of: 2026-10 (est)
+  low: 6
+  high: 15
+mass_kg: 0.04
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

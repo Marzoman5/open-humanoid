@@ -1,0 +1,26 @@
+# __NAME__: Open Humanoid variant
+# Created with `oh new`. Everything not set here comes from the parent (extends) or toolkit defaults.
+# Full field reference: schemas/spec.schema.json · Example: variants/adam/spec.yaml
+
+schema_version: "0.1"
+extends: adam            # remove to start from toolkit defaults only
+id: __ID__
+name: __NAME__
+version: 0.0.1
+status: concept
+
+goals:
+  priorities: [walking, aesthetics]
+  budget_usd: { target: 400, hard_cap: 400 }
+
+body:
+  height_m: { mode: maximize, target: 0.5, min: 0.4, max: 0.75, step: 0.01 }
+
+kinematics:
+  joints:                 # lists replace the parent's list entirely. Copy and edit Adam's if extending
+    - { name: hip_yaw,     limb: leg, axis: z, range: [-45, 45],  priority: required }
+    - { name: hip_roll,    limb: leg, axis: x, range: [-30, 45],  priority: required }
+    - { name: hip_pitch,   limb: leg, axis: y, range: [-110, 60], priority: required }
+    - { name: knee,        limb: leg, axis: y, range: [0, 130],   priority: required }
+    - { name: ankle_pitch, limb: leg, axis: y, range: [-60, 60],  priority: required }
+    - { name: ankle_roll,  limb: leg, axis: x, range: [-30, 30],  priority: required }

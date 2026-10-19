@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openhumanoid"
+version = "0.1.0"
+description = "Open Humanoid: a toolkit for designing, simulating, sourcing and building humanoid robots of any size or budget."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT (software); CERN-OHL-S-2.0 (hardware); CC-BY-SA-4.0 (docs)" }
+dependencies = ["pyyaml>=6", "numpy>=1.24", "jsonschema>=4"]
+
+[project.optional-dependencies]
+sim = ["mujoco>=3.1"]
+cad = ["build123d>=0.7"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+oh = "openhumanoid.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["openhumanoid*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

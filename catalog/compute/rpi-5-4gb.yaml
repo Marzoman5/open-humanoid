@@ -1,0 +1,19 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: rpi-5-4gb
+name: Raspberry Pi 5 (4 GB)
+category: compute
+tier: hobby
+price_usd:
+  typical: 60
+  unit: each
+  as_of: 2026-10 (est)
+  low: 55
+  high: 70
+mass_kg: 0.046
+specs:
+  cpu: 4x Cortex-A76 2.4 GHz
+  ram_gb: 4
+  power_w: 8
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

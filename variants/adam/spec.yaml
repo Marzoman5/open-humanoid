@@ -1,0 +1,123 @@
+# Adam: Open Humanoid reference variant #1
+# Source of truth for this robot. Derived values are written to ./generated/ by `oh` commands.
+# Schema: schemas/spec.schema.json   Decisions: docs/decisions/0006-adam-targets.md
+
+schema_version: "0.1"
+id: adam
+name: Adam
+version: 0.1.0
+status: concept            # concept | design | prototype | released
+
+goals:
+  priorities: [walking, motion, aesthetics, running, llm]   # ordered, most important first
+  budget_usd:
+    target: 400
+    hard_cap: 400
+    includes: [actuators, structure, fasteners, electronics, compute, battery, charger]
+    excludes: [printer, tools]
+
+body:
+  height_m: { mode: maximize, target: 0.5, min: 0.40, max: 0.75, step: 0.01 }
+  architecture:
+    style: modular          # modular | integrated
+    shell: true             # frame + cosmetic shell (see docs/design-language.md)
+  # Fractions of total height. Stylized adult proportions (not chibi).
+  proportions:
+    ankle_height: 0.045
+    shank: 0.225
+    thigh: 0.225
+    pelvis: 0.06
+    torso: 0.25
+    neck: 0.035
+    head: 0.14
+    hip_width: 0.15          # distance between left/right hip joints
+    shoulder_width: 0.30
+    upper_arm: 0.17
+    forearm: 0.17            # includes hand
+    foot_length: 0.17
+    foot_width: 0.075
+
+# Joints. priority: required joints are always built (height is maximized with them);
+# optional ones are then added in listed order while the budget allows. Ranges in degrees.
+# Arms are required for Adam because "motion" is priority #2.
+kinematics:
+  template: biped_v1
+  mirror: true                # *_l and *_r generated from each limb joint
+  joints:
+    - { name: hip_yaw,        limb: leg,  axis: z, range: [-45, 45],   priority: required }
+    - { name: hip_roll,       limb: leg,  axis: x, range: [-30, 45],   priority: required }
+    - { name: hip_pitch,      limb: leg,  axis: y, range: [-110, 60],  priority: required }
+    - { name: knee,           limb: leg,  axis: y, range: [0, 130],    priority: required }
+    - { name: ankle_pitch,    limb: leg,  axis: y, range: [-60, 60],   priority: required }
+    - { name: ankle_roll,     limb: leg,  axis: x, range: [-30, 30],   priority: required }
+    - { name: shoulder_pitch, limb: arm,  axis: y, range: [-180, 60],  priority: required }
+    - { name: elbow,          limb: arm,  axis: y, range: [-130, 0],   priority: required }
+    - { name: shoulder_roll,  limb: arm,  axis: x, range: [-10, 160],  priority: optional }
+    - { name: neck_yaw,       limb: head, axis: z, range: [-90, 90],   priority: optional }
+
+locomotion:
+  walk:
+    required: true
+    step_freq_hz: 2.0         # gait cycle frequency
+    knee_amplitude_rad: 0.6   # peak-to-peak knee swing
+    stance_knee_flex_deg: 40  # crouched walking posture
+  run:
+    required: false           # stretch goal: sizing reports feasibility, does not constrain
+    step_freq_hz: 3.0
+    knee_amplitude_rad: 1.2
+    stance_knee_flex_deg: 50
+
+actuation:
+  selection: auto             # auto | fixed (fixed = use overrides only)
+  uniform: true               # one actuator model for every joint (simpler bus, spares, firmware)
+  require_feedback: position
+  supply_voltage_v: [11.1, 12.6]   # 3S LiPo range. Candidates must accept it
+  overrides: {}               # e.g. { knee: sts3250-12v }
+
+# Non-actuator BOM lines (catalog ids). Structure/filament is computed from the mass model.
+bom:
+  fixed:
+    - { part: rpi-zero-2w, qty: 1 }
+    - { part: microsd-32gb, qty: 1 }
+    - { part: waveshare-bus-servo-adapter, qty: 1 }
+    - { part: imu-bno085, qty: 1 }
+    - { part: lipo-3s-2200, qty: 1 }
+    - { part: charger-b3-3s, qty: 1 }
+    - { part: buck-5v-5a, qty: 1 }
+    - { part: power-switch-xt60, qty: 1 }
+    - { part: fastener-kit-m2-m3, qty: 1 }
+    - { part: bearing-kit-small, qty: 1 }
+    - { part: wiring-kit-bus, qty: 1 }
+  material: pla-plus-1kg       # catalog id used for printed-structure costing
+
+mass_model:
+  structure_kg_at_1m: 6.4      # printed frame+shell ≈ k·h³. Calibrate after CAD (P3)
+  electronics_kg: 0.12         # boards, wiring, IMU
+  waste_factor: 1.3            # supports, failed prints
+
+analysis:
+  safety_factor: 1.25
+  dynamic_factor: { walk: 1.6, run: 2.8 }
+  continuous_fraction_default: 0.40   # continuous/stall when catalog lacks continuous torque
+  peak_fraction: 0.85                 # usable fraction of stall for short dynamic peaks
+
+manufacturing:
+  processes: [fdm]
+  printer_bed_mm: [220, 220, 250]
+  materials: [pla-plus, petg, tpu]
+
+cad:
+  backend: build123d          # build123d | onshape | solidworks | freecad | other
+  source: variants/adam/cad/  # or an Onshape document URL with pinned version, etc.
+
+sim:
+  engine: mujoco
+  timestep_s: 0.002
+
+software:
+  hal: feetech_sts            # sim | feetech_sts | dynamixel | can_bldc | …
+  plugins: [rl_walking]       # llm_mcp comes later (priority 5)
+
+compute:
+  onboard: rpi-zero-2w        # runs the locomotion policy
+  offboard: optional          # LLM / heavy perception on a PC or cloud

@@ -1,0 +1,29 @@
+# Catalog part: schema schemas/catalog-part.schema.json
+id: dxl-xl430-w250
+name: Dynamixel XL430-W250-T
+category: actuator
+tier: prosumer
+price_usd:
+  typical: 50
+  unit: each
+  as_of: 2026-10 (est)
+  low: 45
+  high: 60
+mass_kg: 0.057
+actuator:
+  family: dynamixel
+  type: smart_servo
+  stall_torque_nm: 1.5
+  no_load_speed_rad_s: 5.97
+  voltage_v:
+  - 6.5
+  - 12.0
+  feedback: position_current
+  bus: dynamixel_ttl
+  gear_ratio: 258.5
+  backlash_deg: 0.25
+  armature_kg_m2: 0.01
+  resolution_bits: 12
+verified: false
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
+  Verify with prompts/sourcing/part-sourcing.md'

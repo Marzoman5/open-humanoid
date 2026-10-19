@@ -1,0 +1,33 @@
+# Module manifest template: copy to modules/<kind>/<id>/module.yaml
+id: example-knee-s
+kind: joint                    # joint | leg | arm | hand | head | torso | foot | attachment | sensor
+name: Example knee joint, size class S
+version: 0.0.1
+status: concept                # concept | prototype | tested | released
+authors: []
+license: CERN-OHL-S-2.0
+
+valid:                          # tools refuse to place the module outside these
+  height_m: [0.4, 0.7]
+  actuator_family: [feetech_sts]
+  interface_class: S
+
+provides:
+  joints:                       # spec joint base names this module implements
+    - { name: knee, axis: y, range: [0, 130] }
+  plugins: []
+
+requires:
+  actuators: { knee: sts3215-12v }   # or a family/requirement
+  hal: feetech_sts
+
+interfaces:                     # see modules/INTERFACE.md
+  proximal: { class: S, type: mount }
+  distal: { class: S, type: mount }
+
+parameters:                     # exposed to the variant spec (module instance overrides)
+  link_length_m: { default: 0.11, min: 0.08, max: 0.16 }
+
+cad:
+  backend: build123d
+  export: cad/export/           # must meet cad/EXPORT_CONTRACT.md

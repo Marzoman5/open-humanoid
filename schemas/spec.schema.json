@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-humanoid/open-humanoid/schemas/spec.schema.json",
+  "title": "Open Humanoid variant spec",
+  "description": "Schema v0.1 for variants/<id>/spec.yaml. Changing this file requires an ADR and a schema_version bump.",
+  "type": "object",
+  "required": ["schema_version", "id", "name", "goals", "body", "kinematics"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "status": { "enum": ["concept", "design", "prototype", "released"] },
+    "extends": { "type": "string", "description": "Parent variant id (or path to a spec.yaml). Child values win; lists replace." },
+    "description": { "type": "string" },
+
+    "goals": {
+      "type": "object",
+      "required": ["budget_usd"],
+      "properties": {
+        "priorities": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ordered. Known values: walking, running, motion, aesthetics, manipulation, llm, payload, endurance, cost."
+        },
+        "budget_usd": {
+          "type": "object",
+          "required": ["target"],
+          "properties": {
+            "target": { "type": "number", "exclusiveMinimum": 0 },
+            "hard_cap": { "type": "number", "exclusiveMinimum": 0 },
+            "includes": { "type": "array", "items": { "type": "string" } },
+            "excludes": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+
+    "body": {
+      "type": "object",
+      "required": ["height_m"],
+      "properties": {
+        "height_m": {
+          "oneOf": [
+            { "type": "number", "exclusiveMinimum": 0 },
+            {
+              "type": "object",
+              "required": ["mode"],
+              "properties": {
+                "mode": { "enum": ["fixed", "maximize", "minimize"] },
+                "target": { "type": "number" },
+                "min": { "type": "number" },
+                "max": { "type": "number" },
+                "step": { "type": "number", "exclusiveMinimum": 0 }
+              }
+            }
+          ]
+        },
+        "architecture": {
+          "type": "object",
+          "properties": {
+            "style": { "enum": ["modular", "integrated"] },
+            "shell": { "type": "boolean" }
+          }
+        },
+        "proportions": {
+          "type": "object",
+          "additionalProperties": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }
+        },
+        "mass_kg": { "type": "number", "description": "Optional fixed total mass; otherwise estimated by the mass model." }
+      }
+    },
+
+    "kinematics": {
+      "type": "object",
+      "required": ["joints"],
+      "properties": {
+        "template": { "type": "string" },
+        "mirror": { "type": "boolean" },
+        "joints": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["name", "limb", "axis", "range"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "limb": { "enum": ["leg", "arm", "head", "torso", "hand", "attachment"] },
+              "axis": { "enum": ["x", "y", "z"] },
+              "range": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 },
+              "priority": { "enum": ["required", "optional"] },
+              "actuator": { "type": "string", "description": "Pin a catalog actuator for this joint." }
+            }
+          }
+        }
+      }
+    },
+
+    "locomotion": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "required": { "type": "boolean" },
+          "step_freq_hz": { "type": "number" },
+          "knee_amplitude_rad": { "type": "number" },
+          "stance_knee_flex_deg": { "type": "number" }
+        }
+      }
+    },
+
+    "actuation": {
+      "type": "object",
+      "properties": {
+        "selection": { "enum": ["auto", "fixed"] },
+        "uniform": { "type": "boolean" },
+        "require_feedback": { "enum": ["none", "position", "position_current", "torque"] },
+        "supply_voltage_v": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 },
+        "allowed_families": { "type": "array", "items": { "type": "string" } },
+        "overrides": { "type": "object", "additionalProperties": { "type": "string" } }
+      }
+    },
+
+    "bom": {
+      "type": "object",
+      "properties": {
+        "fixed": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["part", "qty"],
+            "properties": { "part": { "type": "string" }, "qty": { "type": "number" }, "note": { "type": "string" } }
+          }
+        },
+        "material": { "type": "string" }
+      }
+    },
+
+    "mass_model": {
+      "type": "object",
+      "properties": {
+        "structure_kg_at_1m": { "type": "number" },
+        "electronics_kg": { "type": "number" },
+        "waste_factor": { "type": "number" }
+      }
+    },
+
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "safety_factor": { "type": "number" },
+        "dynamic_factor": { "type": "object", "additionalProperties": { "type": "number" } },
+        "continuous_fraction_default": { "type": "number" },
+        "peak_fraction": { "type": "number" }
+      }
+    },
+
+    "manufacturing": { "type": "object" },
+    "cad": {
+      "type": "object",
+      "properties": {
+        "backend": { "type": "string" },
+        "source": { "type": "string" }
+      }
+    },
+    "sim": { "type": "object" },
+    "software": {
+      "type": "object",
+      "properties": {
+        "hal": { "type": "string" },
+        "plugins": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "compute": { "type": "object" },
+    "modules": {
+      "type": "array",
+      "description": "Module instances used by this variant (see modules/README.md).",
+      "items": { "type": "object", "required": ["module"], "properties": { "module": { "type": "string" }, "at": { "type": "string" } } }
+    },
+    "notes": { "type": "string" }
+  }
+}
