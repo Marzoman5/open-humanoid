@@ -287,7 +287,7 @@ def leg_parts(c: Ctx) -> list[dict]:
 
 def _zones(c: Ctx):
     out = []
-    for key in ("gripper", "elbow", "shoulder_roll"):
+    for key in (("gripper", "wrist"), ("elbow",), ("shoulder_roll",)):   # the forearm zone spans the wrist servo too (lever 9b)
         zs = [z for b in c.seg("arm_core_l") if b["id"].startswith(key) for z in b["z"]]
         out.append((min(zs) - 3.1, max(zs) + 3.1))
     return out
@@ -306,7 +306,7 @@ def arm_parts(c: Ctx) -> list[dict]:
 
     def adepth(z, d):
         """Never thinner than B4's depth offset over every arm box spanning z (a gripper slice next to the elbow keeps its depth)."""
-        need = [(b["x"][1] - b["x"][0]) + (26.0 if b["id"].startswith("elbow") else 19.7)
+        need = [(b["x"][1] - b["x"][0]) + (26.0 if b["id"].startswith(("elbow", "wrist")) else 19.7)
                 for b in c.seg("arm_core_l") if b["z"][0] - 3.1 - ARM_WIN <= z <= b["z"][1] + 3.1 + ARM_WIN]
         return max([d] + need)
 

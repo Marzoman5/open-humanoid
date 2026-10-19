@@ -85,6 +85,9 @@ class Levers:
     knee_up: bool = False
     ankle_up: bool = False
     legs: str = "6dof"
+    upper: float = 0.19        # upper arm, fraction of H (lever 9a)
+    fore: float = 0.21         # forearm incl. hand to the hand end, fraction of H (lever 9a)
+    wrist: str = ""            # wrist-pitch servo id, "" = no wrist (lever 9b)
 
     def tag(self) -> str:
         d, b = asdict(self), asdict(Levers())
@@ -102,8 +105,8 @@ def landmarks(lv: Levers) -> dict:
     neck_base = chin - 0.30 * head_h
     s = neck_base - (S0.AX + HOUS + SHELL)
     h, k, a = 0.50 * H, 0.27 * H, 66.0
-    e = s - 0.19 * H
-    hand_end = e - 0.21 * H
+    e = s - lv.upper * H
+    hand_end = e - lv.fore * H
     P = servo(lv.pitch)
     chest_top = s + P.AX + HOUS                     # top of the shoulder-pitch housings
     return dict(H=H, head_h=head_h, chin=chin, neck_base_r1=neck_base, s=s, h=h, k=k, a=a, e=e, hand_end=hand_end,
@@ -199,7 +202,14 @@ def layout(lv: Levers, cant: float = 21.0) -> dict:
     ez0, ez1 = e - A.AX - HOUS, e + A.L - A.AX + HOUS
     arm.append(("elbow_servo", [0.0, ay((ez0 + ez1) / 2), (ez0 + ez1) / 2], [A.W + 2 * HOUS, A.H + BOSS + 2 * HOUS, ez1 - ez0]))
     gz1 = ez0 - 3
+    if lv.wrist:     # wrist-pitch servo below the elbow servo, long axis down, axis across y (like the elbow); the gripper hangs below it
+        W_ = servo(lv.wrist)
+        wz1, wz0 = gz1, gz1 - W_.L - 2 * HOUS
+        arm.append(("wrist_servo", [0.0, ay((wz0 + wz1) / 2), (wz0 + wz1) / 2], [W_.W + 2 * HOUS, W_.H + BOSS + 2 * HOUS, wz1 - wz0]))
+        gz1 = wz0 - 3
     gz0 = gz1 - G.L - 2 * HOUS
+    if gz0 < L["hand_end"] + 8:
+        notes.append(f"gripper servo bottom {gz0:.1f} mm is below the hand end + 8 mm ({L['hand_end'] + 8:.1f}): the forearm is too short for this stack")
     arm.append(("gripper_servo", [0.0, ay((gz0 + gz1) / 2), (gz0 + gz1) / 2], [G.H + 2 * HOUS, G.W + 2 * HOUS, gz1 - gz0]))
     for nm, c, sz in arm:
         for i, (cc, ss) in enumerate(R2A.rotated_slices(c, sz, cant, 12)):

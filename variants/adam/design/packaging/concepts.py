@@ -74,6 +74,22 @@ def combined(id_, desc, *, five_dof=False, arm=True, neck=True, links=True, wais
     return make(id_, desc, **kw)
 
 
+def arm_lever(base: dict, id_: str, desc: str, *, upper=None, fore=None, wrist=False) -> dict:
+    """Lever 9 (commander, after the pickup-planner fix): longer upper arm / forearm and/or a wrist-pitch joint on top of a package."""
+    c = copy.deepcopy(base)
+    c["id"], c["description"] = id_, desc
+    if upper is not None:
+        c["proportions"]["upper_arm"] = upper
+    if fore is not None:
+        c["proportions"]["forearm"] = fore
+    if wrist:
+        names = [j if isinstance(j, str) else j["name"] for j in c["joints"]]
+        c["joints"].insert(names.index("gripper"), "wrist")
+        c["actuators"]["wrist"] = "sts3045m"
+        c["x_rail_servos"] = RAIL
+    return c
+
+
 HEADER = ("# Packaging-for-look study (T-20261019-c1aa), PROVISIONAL (bench pending). DATA for variants/adam/design/packaging/engine.py,\n"
           "# which wraps r1_calibrated.py (strict / half / ODM-calibrated gates, R10). Written by packaging/concepts.py; re-run, do not edit.\n"
           "# Base: R1x-ckh23-knee110 (the R1 recommended hardware). Pack in the engine stays the R1 engine pack (Tattu 1300 value; the\n"
@@ -90,7 +106,12 @@ def write_all(extra: list[dict] | None = None) -> list[Path]:
 
 
 if __name__ == "__main__":
-    for p in write_all([combined("PK-C1-package", "Combined package C1: small arm + neck servos (6 V rail), no waist yaw, pack low, "
+    C2 = combined("PK-C2-package", "x", waist=True, pack_low=False)
+    L9 = [arm_lever(C2, "PK-C2-L9a-longarm", "C2 + lever 9a: longer arms (upper arm 0.19 -> 0.20 H, forearm 0.21 -> 0.23 H; hand end "
+                    "0.40 -> 0.37 H).", upper=0.20, fore=0.23),
+          arm_lever(C2, "PK-C2-L9b-wrist", "C2 + lever 9b: wrist-pitch joint (STS3045M on the 6 V rail) between elbow and gripper.", wrist=True),
+          arm_lever(C2, "PK-C2-L9ab", "C2 + lever 9a + 9b: longer arms and a wrist-pitch joint.", upper=0.20, fore=0.23, wrist=True)]
+    for p in write_all(L9 + [combined("PK-C1-package", "Combined package C1: small arm + neck servos (6 V rail), no waist yaw, pack low, "
                                  "knee + ankle-pitch servos relocated through 1:1 parallelograms, 6-DOF legs."),
                         combined("PK-C1-5dof", "Combined package C1 with 5-DOF legs (no ankle roll).", five_dof=True),
                         combined("PK-C2-package", "Combined package C2 (recommended look package): small arm + neck servos (6 V rail), "

@@ -146,6 +146,11 @@ def joint_table(res: dict) -> dict:
 
 
 def main(argv=None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == "pickup":      # the engine's pickup reach scan with the same rail-servo patch: engine.py pickup <pickup args>
+        install()
+        from openhumanoid.concept.motions import pickup
+        return pickup.main(argv[1:])
     ap = argparse.ArgumentParser()
     ap.add_argument("concepts", nargs="+")
     ap.add_argument("--heights", nargs="+", type=float, default=[0.55])
