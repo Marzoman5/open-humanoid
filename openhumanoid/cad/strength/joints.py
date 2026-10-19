@@ -96,7 +96,8 @@ def build_connection(model: Model, child: str, parent: str, sites: list[SiteRec]
     return Connection(child, parent, ins_part, scr_part, C, d, u, v, bolts, patch, area, ed_s, ed_i, notes)
 
 
-def solve_connection(con: Connection, F_on_insert_from_screw: np.ndarray, M_on_insert_from_screw: np.ndarray, cell: float = 1.0) -> dict:
+def solve_connection(con: Connection, F_on_insert_from_screw: np.ndarray, M_on_insert_from_screw: np.ndarray, cell: float = 1.0,
+                     preload_n: float | None = None) -> dict:
     """Bolt tensions / shears and patch pressure for the load that the SCREW part exerts on the INSERT part, wrench about C in the link frame."""
     d, u, v = con.d, con.u, con.v
     Fd = float(F_on_insert_from_screw @ d)                  # positive = along +d = tension on the bolts (net)
@@ -120,14 +121,20 @@ def solve_connection(con: Connection, F_on_insert_from_screw: np.ndarray, M_on_i
         cells = P
     Ep = 1700.0
     kc = Ep * dA / 10.0
+    if preload_n is None:
+        fr = float(pv(policy()["fasteners"], "preload_fraction_of_clamp", default=0.0))
+        clamp = float(policy()["handling"]["screw_clamp_force_n"].get(thread, 0.0))
+        preload_n = fr * clamp
+    # preloaded joint: bolt force P + kb s while it stays in tension, the patch starts compressed by delta0 = sum(P) / (kc N_cells)
+    delta0 = (preload_n * len(pts)) / (kc * len(cells)) if (len(cells) and preload_n > 0) else 0.0
 
     def forces(x):
         s0, a, b = x
         sb = s0 + a * pts[:, 0] + b * pts[:, 1]
-        T = kb * np.maximum(sb, 0.0)
+        T = np.maximum(preload_n + kb * sb, 0.0)
         if len(cells):
             sc = s0 + a * cells[:, 0] + b * cells[:, 1]
-            Pn = kc * np.maximum(-sc, 0.0)
+            Pn = kc * np.maximum(delta0 - sc, 0.0)
         else:
             sc, Pn = np.zeros(0), np.zeros(0)
         return sb, T, sc, Pn
@@ -162,4 +169,4 @@ def solve_connection(con: Connection, F_on_insert_from_screw: np.ndarray, M_on_i
     return {"tension": [float(t) for t in T], "shear": V, "patch_pressure_max_mpa": p_max,
             "residual": float(np.linalg.norm(resid(best.x))), "separated": bool(np.any(T <= 1e-6) and Fd + 1e-9 > 0 and False),
             "net_axial_n": Fd, "moment_nmm": [Mu, Mv], "shear_force_n": [Fu, Fv], "torque_nmm": Mz,
-            "patch_area_mm2": con.patch_area}
+            "patch_area_mm2": con.patch_area, "preload_n": float(preload_n)}

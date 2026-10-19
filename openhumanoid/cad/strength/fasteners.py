@@ -155,8 +155,11 @@ def connection_checks(model: Model, topo: Topology, con: Connection, pl_child: P
     pull_cap = pull_ref * scale * orient
     where = f"{con.child} -> {con.parent}: {len(con.bolts)} x {th}, patch {con.patch_area:.0f} mm2"
     Tmax = max(res["tension"]) if res["tension"] else 0.0
+    # the safety factor multiplies the EXTERNAL part of the bolt tension only: the preload is a known, controlled load (clamp of a hand-tightened screw)
+    Tpre = float(res.get("preload_n", 0.0))
+    Tdem = Tpre / sf + max(Tmax - Tpre, 0.0) if sf > 0 else Tmax
     Vmax = max(res["shear"]) if res["shear"] else 0.0
-    rows.append(Row(ins.id, case, cls, "insert_pullout", pull_cap / (sf * Tmax) if Tmax > 1e-9 else 1e9, Tmax, pull_cap, sf, "N", where,
+    rows.append(Row(ins.id, case, cls, "insert_pullout", pull_cap / (sf * Tdem) if Tdem > 1e-9 else 1e9, Tmax, pull_cap, sf, "N", where,
                     "heat-set insert pulls out of its boss", gate, {"patch_pressure_mpa": res["patch_pressure_max_mpa"], "net_axial_n": res["net_axial_n"],
                                                                  "moment_nmm": res["moment_nmm"], "orientation_factor": orient}))
     # screw head pull-through on the screw part
@@ -170,10 +173,10 @@ def connection_checks(model: Model, topo: Topology, con: Connection, pl_child: P
     punch = math.pi * D_h * t_floor * shear_allow(m_s, con.d, scr.print_up)
     head_area = math.pi / 4.0 * (D_h ** 2 - d_h ** 2)
     cap_h = min(m_s.tensile(90.0) * head_area, punch)
-    rows.append(Row(scr.id, case, cls, "screw_head_pull_through", cap_h / (sf * Tmax) if Tmax > 1e-9 else 1e9, Tmax, cap_h, sf, "N", where + f", floor {t_floor:.1f} mm",
+    rows.append(Row(scr.id, case, cls, "screw_head_pull_through", cap_h / (sf * Tdem) if Tdem > 1e-9 else 1e9, Tmax, cap_h, sf, "N", where + f", floor {t_floor:.1f} mm",
                     "screw head pulls through the counterbore floor", gate))
     cap_scr = SCREW_YIELD * THREAD_AREA.get(th, 5.03)
-    rows.append(Row(scr.id, case, cls, "screw_tension", cap_scr / (sf * max(Tmax, 1e-9)), Tmax, cap_scr, sf, "N", where, "steel screw yields in tension", gate))
+    rows.append(Row(scr.id, case, cls, "screw_tension", cap_scr / (sf * max(Tdem, 1e-9)), Tmax, cap_scr, sf, "N", where, "steel screw yields in tension", gate))
     # shear: bearing in the clearance hole + tear-out in both parts
     L = con.bolts[0]["length"]
     t_hole = max(L - INSERT_LEN.get(th, 5.7) + 1.0, t_s if np.isfinite(t_s) else 2.0)

@@ -72,7 +72,7 @@ fasteners:
   insert_ref_material: PETG
   insert_scales_with_strength: true
   screw_steel_proof_mpa: {v: 640.0, kind: sourced, src: "ISO 898-1 class 8.8 proof stress 580 MPa (d<=16: Rp0.2 640 min yield); a bought A2-70 screw is weaker (450 MPa), the check uses 450 for stainless", check_as: 450.0}
-  preload_fraction_of_proof: {v: 0.0, kind: assumption, src: "hand-tightened printed joints: no credit is taken for preload (conservative)"}
+  preload_fraction_of_clamp: {v: 0.5, kind: assumption, src: "a hand-tightened screw (handling.screw_clamp_force_n) keeps half of its clamp force after creep and thermal cycling of printed plastic; the bolted-joint model starts from that preload (VDI 2230 style: the joint stays closed until the external load beats the clamped patch)", test: "tighten 3 M3 screws with a torque screwdriver, log the clamp with a load washer / re-torque check after 24 h at 40 C"}
   screw_stiffness_gpa: 200.0
 
 # ---- fall model ------------------------------------------------------------------------------------------------------------

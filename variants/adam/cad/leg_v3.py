@@ -34,7 +34,7 @@ from openhumanoid.cad.housing import servo_housing
 # ---- design parameters of this leg (everything dimensional that is not a catalog/DFM/interface number)
 P = {
     "plate_t": 8.0,            # horn plate: low-head counterbore 1.8-2.3 + floor; was 4.3 (thin plates were the first strength failures)
-    "plate_t_hip_roll": 6.5,   # the hip roll plate stays at 6.5: 8 mm cost 6.6 deg of hip extension (ROM sweep) and the walk margins do not need it
+    "plate_t_hip_roll": 8.0,   # the hip roll plate carries the roll torque to the cradle bridge; 8 mm instead of 6.5 costs 2.5 deg of hip extension (layout_v3: +33)
     "idler_plate_t": 7.5,      # bearing seat 4 mm + shoulder; was 5.6
     "cover_t": 6.5,            # was 4.4: the rear covers are the first thing a backward fall touches (floor 4.2 mm under the low-head counterbore)
     "cover_t_idler": 6.5,      # blind relief for the servo's back stub (3.4) + the printed idler pin + >= 1.6 mm behind them; was 5.6
@@ -51,10 +51,12 @@ P = {
     "bridge_above_axis": 24.0, # roll bracket bridge starts this far above the hip axis (outside the fork sweep)
     "sole_t": 6.5,             # was 3.2 (the heel and sole behind the plate are the next weakest section)
     "foot_plate_t": 8.0,       # horn plate of the foot; was 4.3 (the thin 90 deg cantilever)
-    "foot_plate_t_top": 5.3,   # thickness at the horn screws (limited by the S5 housing: 21.2 - 15.9)
-    "foot_plate_step_above_axis": -9.0,  # the thick part ends 9 mm below the roll axis (z = 29): above it the thin part carries the washer counterbores (down to 29.8) and keeps the screw tool corridors free; also its corners would sweep into the S5 housing at +-30 deg roll
+    "foot_plate_t_top": 5.3,   # plate thickness at the horn screws (S5 housing front face at x = -14.9: 21.2 - 14.9 - 1 gap)
+    "foot_plate_step_above_axis": -9.0,   # thick (8) part ends 9 mm below the roll axis (z = 29), under the washer counterbores (down to 29.8)
+    "foot_plate_top_above_axis": 11.5,    # plate top: covers the washer counterbores (7 + 3.2 + 1.3 wall)
+    "foot_plate_w_top": 30.0,  # the thin upper part is narrower: its corners sweep the +-30 deg roll arc under the shank
+    "foot_ribs": [(-12.0, 36.0), (0.0, 22.0), (12.0, 36.0)],   # (y offset, rib height above the sole at the plate): two tall ribs carry the moment up to the horn
     "foot_plate_w": 40.0,
-    "foot_plate_w_top": 30.0,  # the thin upper part (horn screws, washers: 2 x 11.5 wide) is narrower: its corners sweep the +-30 deg roll arc under the shank      # was 28
     "foot_rib_t": 4.0,         # three ribs along the sole from the plate to the toe
     "foot_rib_h": 22.0,        # rib height at the plate (above the sole top), tapering to rib_h_end at the tip
     "foot_rib_h_end": 8.0,
@@ -346,13 +348,13 @@ def build(ctx) -> Assembly:
     hm = horn_plate_feat(n, mate=f"servo_{J[n]}")
     shp, st = h6w.build(s6, adds=[horn_plate], extra=[hm, *ins], name=bpid)
     printed(bpid, shp, child_link[n], st, rename={"housing": bpid, "cover": f"cover_{J['ankle_roll']}"},
-            expect=horn_expect(n, child_link[n]) + pocket_expect("ankle_roll", child_link[n]))
+            expect=horn_expect(n, child_link[n]) + pocket_expect("ankle_roll", child_link[n]), up=(0, 0, 1))     # idler inserts point along y: never along the build axis
     iplate = box_s(n, -14, 14, y0p, fw / 2, z_in - tp, z_in, P["corner_r"])
     seat = idler_seat(idl[n]["bearing"], plate_t=tp, part=ipid, boss=False, at=S[n] * loc_from((0, 0, z_in), (0, 0, 1), (1, 0, 0)))
     scr = [screw_clearance("M3", through=tp + 0.5, counterbore=True, head="low", part=ipid, mates=bpid, length=12, tag=f"idler_screw_{i}",
                            at=loc_from((x, inner_idl - tp, z), (0, -1, 0), (1, 0, 0))) for i, (x, z) in enumerate(pts)]
     ishape, isites = apply(iplate, seat, *scr, name=ipid)
-    printed(ipid, ishape, child_link[n], isites, expect=seat_expect(n, child_link[n]))
+    printed(ipid, ishape, child_link[n], isites, expect=seat_expect(n, child_link[n]), up=(0, 0, 1))
 
     # ---- 6. foot: thick horn plate on S6's horn, 5 mm sole, three tapered ribs, 4 mm cantilever-root fillets; printed on its side (up = +y) so the
     #         bending stress of the plate (z) and of the sole/ribs (x) both run along the filaments.
@@ -362,9 +364,12 @@ def build(ctx) -> Assembly:
     ax = ifs.axis_origin(J[n])
     x_plate0 = wp(S[n], 0, 0, zp0[n]).X
     hpf, wf, st = P["foot_plate_t"], min(P["foot_plate_w"], fwid - 4.0), P["sole_t"]
-    hpt = P["foot_plate_t_top"]                      # the plate is STEPPED: thick below the S5 housing, thin where the horn screws are (the housing's front face is 15.9 mm from the plate)
+    # The plate is STEPPED: 8 mm thick below z_step, 5.3 mm above it. Above the step the plate carries the horn screws; it may not grow toward +x there because the
+    # S5 housing's front face is at x = -14.9 and the +-30 deg roll swings the plate's corners under it (ROM sweep). The bending moment the plate has to carry up to
+    # the horn height is taken by two TALL ribs at y = +-12 (outside the screws' tool corridors), not by the thin plate.
+    hpt = P["foot_plate_t_top"]
     z_step = ax[2] + P["foot_plate_step_above_axis"]
-    z_top = ax[2] + 11.5                             # 11.5 mm above the axis: covers the washer counterbores (7 + 3.2 + 1.3 wall); keeps the 1 mm gap to the shank
+    z_top = ax[2] + P["foot_plate_top_above_axis"]
     plate = box_at(bd.Location(), (hpf, wf, z_step), (x_plate0 + hpf / 2, ax[1], z_step / 2))
     plate = bd.fillet(plate.edges().filter_by(bd.Axis.X).filter_by_position(bd.Axis.Z, z_step - 0.01, z_step + 0.01), 5.0)
     top = box_at(bd.Location(), (hpt, P["foot_plate_w_top"], z_top - z_step + 1.0), (x_plate0 + hpt / 2, ax[1], (z_top + z_step - 1.0) / 2))
@@ -373,8 +378,8 @@ def build(ctx) -> Assembly:
     sole = box_at(bd.Location(), (fl, fwid, st), (ax[0] - 0.33 * fl + fl / 2, ax[1], st / 2))
     body = safe_union(plate, sole, "foot")
     xr0 = x_plate0 + hpf - 0.5
-    for yy in (-0.5 * (wf - P["foot_rib_t"] - 8.0), 0.0, 0.5 * (wf - P["foot_rib_t"] - 8.0)):
-        pts = [(xr0, st - 0.5), (xr0 + P["foot_rib_len"], st - 0.5), (xr0 + P["foot_rib_len"], st + P["foot_rib_h_end"]), (xr0, st + P["foot_rib_h"])]
+    for yy, rh in P["foot_ribs"]:
+        pts = [(xr0, st - 0.5), (xr0 + P["foot_rib_len"], st - 0.5), (xr0 + P["foot_rib_len"], st + P["foot_rib_h_end"]), (xr0, st + rh)]
         wire = bd.Wire.make_polygon([bd.Vector(x, ax[1] + yy - P["foot_rib_t"] / 2, z) for x, z in pts], close=True)
         rib = bd.extrude(bd.Face(wire), amount=P["foot_rib_t"], dir=(0, 1, 0))
         body = safe_union(body, rib, "foot ribs")
