@@ -46,3 +46,27 @@ def _shrink(path: Path, max_kb: int = 280) -> None:
             break
         im = im.resize((int(im.width * 0.85), int(im.height * 0.85)), Image.LANCZOS)
         im = im.quantize(colors=128).convert("RGB") if path.suffix == ".png" else im
+
+
+def clay_compare(items: list, path: Path, size=(1500, 620), view=(1.0, -1.2, 0.8)) -> None:
+    """Side-by-side clay renders (one trimesh per panel, same camera direction). `items` = [(title, trimesh.Trimesh), ...]."""
+    import pyvista as pv
+
+    pv.OFF_SCREEN = True
+    n = len(items)
+    pl = pv.Plotter(shape=(1, n), off_screen=True, window_size=list(size))
+    for i, (title, tm) in enumerate(items):
+        pl.subplot(0, i)
+        pl.set_background("white")
+        faces = np.hstack([np.full((len(tm.faces), 1), 3), tm.faces]).ravel()
+        poly = pv.PolyData(np.asarray(tm.vertices), faces)
+        pl.add_mesh(poly, color="#c8c2b6", smooth_shading=True, specular=0.25, ambient=0.35, diffuse=0.8)
+        pl.add_mesh(poly.extract_feature_edges(feature_angle=40), color="#5a5650", line_width=1.0)
+        pl.add_text(title, font_size=10, color="black")
+        pl.camera_position = [(view[0], view[1], view[2]), (0, 0, 0), (0, 0, 1)]
+        pl.reset_camera()
+        pl.camera.zoom(1.25)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    pl.screenshot(str(path))
+    pl.close()
+    _shrink(path)

@@ -1,0 +1,5324 @@
+{
+ "ok": true,
+ "parts": {
+  "foot_l": {
+   "worst": {
+    "part": "foot_l",
+    "case": "push_fwd",
+    "cls": "push",
+    "check": "horn_pull_through",
+    "margin": 1.4604,
+    "demand": 197.5677,
+    "allowable": 865.5616,
+    "sf": 3.0,
+    "unit": "N",
+    "where": "ankle_roll_l: axial pull on a horn screw",
+    "mode": "screw head pulls through the plate floor",
+    "gate": true,
+    "info": {}
+   },
+   "worst_unprotected": {
+    "part": "foot_l",
+    "case": "fall_contact_side_ankle_roll_l_link_rigid",
+    "cls": "fall_rigid",
+    "check": "horn_tear_out",
+    "margin": 0.1693,
+    "demand": 2363.1781,
+    "allowable": 400.092,
+    "sf": 1.0,
+    "unit": "N",
+    "where": "ankle_roll_l: ligament 3.3 mm from the bolt hole to the plate edge",
+    "mode": "horn screw tears out through the plate edge",
+    "gate": false,
+    "info": {}
+   },
+   "ok": true,
+   "by_check": {
+    "buckling": {
+     "part": "foot_l",
+     "case": "push_back",
+     "cls": "push",
+     "check": "buckling",
+     "margin": 119.3453,
+     "demand": 9.0,
+     "allowable": 3222.3242,
+     "sf": 3.0,
+     "unit": "N (Euler)",
+     "where": "member length 102 mm along [1.0, 0.0, 0.0]",
+     "mode": "Euler buckling of a slender printed member",
+     "gate": true,
+     "info": {}
+    },
+    "fatigue": {
+     "part": "foot_l",
+     "case": "push_back",
+     "cls": "push",
+     "check": "fatigue",
+     "margin": 1.6,
+     "demand": 7.8306,
+     "allowable": 12.529,
+     "sf": 1.0,
+     "unit": "MPa (peak stress vs endurance)",
+     "where": "plane [1.0, 0.0, 0.0] @ -23.1 mm, fibre at [-23.1, -22.5, -38.0]",
+     "mode": "fatigue crack at fillet corner r=2.0 mm, t=6.5 mm (endurance 0.17 x UTS assumption, 500000 cycles)",
+     "gate": true,
+     "info": {
+      "sigma_mpa": 4.783551278009762,
+      "kt": 1.6312383203013407,
+      "endurance_mpa": 12.529028110856643,
+      "phi_deg": 90.0
+     }
+    },
+    "horn_bearing": {
+     "part": "foot_l",
+     "case": "fall_pivot_side",
+     "cls": "fall",
+     "check": "horn_bearing",
+     "margin": 1.8999,
+     "demand": 15.0742,
+     "allowable": 57.28,
+     "sf": 2.0,
+     "unit": "MPa",
+     "where": "ankle_roll_l: 4 x M2 on a 14 mm circle, shank 3.5 mm in the plate",
+     "mode": "horn screw bears on the plate under the counterbore",
+     "gate": true,
+     "info": {
+      "V_per_screw_n": 105.51945260928676,
+      "tau_nmm": -2255.039598318693,
+      "t_plate_mm": 5.300000000000001
+     }
+    },
+    "horn_pull_through": {
+     "part": "foot_l",
+     "case": "push_fwd",
+     "cls": "push",
+     "check": "horn_pull_through",
+     "margin": 1.4604,
+     "demand": 197.5677,
+     "allowable": 865.5616,
+     "sf": 3.0,
+     "unit": "N",
+     "where": "ankle_roll_l: axial pull on a horn screw",
+     "mode": "screw head pulls through the plate floor",
+     "gate": true,
+     "info": {}
+    },
+    "horn_screw": {
+     "part": "foot_l",
+     "case": "fall_pivot_side",
+     "cls": "fall",
+     "check": "horn_screw",
+     "margin": 2.6483,
+     "demand": 105.5195,
+     "allowable": 558.9,
+     "sf": 2.0,
+     "unit": "N",
+     "where": "ankle_roll_l: horn screw shear",
+     "mode": "steel screw shears",
+     "gate": true,
+     "info": {}
+    },
+    "horn_tear_out": {
+     "part": "foot_l",
+     "case": "fall_pivot_side",
+     "cls": "fall",
+     "check": "horn_tear_out",
+     "margin": 1.8958,
+     "demand": 105.5195,
+     "allowable": 400.092,
+     "sf": 2.0,
+     "unit": "N",
+     "where": "ankle_roll_l: ligament 3.3 mm from the bolt hole to the plate edge",
+     "mode": "horn screw tears out through the plate edge",
+     "gate": true,
+     "info": {}
+    },
+    "section": {
+     "part": "foot_l",
+     "case": "push_fwd",
+     "cls": "push",
+     "check": "section",
+     "margin": 1.5782,
+     "demand": 12.0984,
+     "allowable": 57.28,
+     "sf": 3.0,
+     "unit": "MPa (equivalent, incl. Kt)",
+     "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+     "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+     "gate": true,
+     "info": {
+      "sigma_mpa": 2.424246446865014,
+      "tau_mpa": 0.05569802762274808,
+      "kt": 2.4711106915071577,
+      "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+      "phi_deg": 90.0,
+      "N": -59.887274276430354,
+      "M_nmm": [
+       0.0004308186933756211,
+       -3430.2311998636615
+      ],
+      "V_n": [
+       -8.999999999999998,
+       0.0
+      ],
+      "T_nmm": 2.4917559025758603e-14,
+      "normal": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "pos_mm": -1.3999999999999986,
+      "fibre_xyz": [
+       -21.2,
+       -15.0,
+       -1.4
+      ],
+      "section_area_mm2": 242.3784212151593,
+      "section_t_mm": 5.300000000000001
+     }
+    }
+   }
+  }
+ },
+ "scenarios": [
+  {
+   "name": "walk_toe",
+   "class": "walk",
+   "desc": "single-support peak, centre of pressure toe (+21.1, +0.0) mm of the ankle, tangential 0.00 F_n",
+   "kind": "assumption",
+   "prov": "F_n = 1.5 x weight (50.1 N) ASSUMPTION; centre of pressure offset = peak ankle torque / F_n, with the peak torque from the concept report (R1-P1-0p60-3s-sts3250-knee-hiproll): ankle pitch 1.59 N.m, roll 0.83 N.m (SOURCED); tangential force fitted so the hip_pitch torque equals its concept peak 1.32 N.m (SOURCED), limit mu 0.3",
+   "info": {
+    "cop_mm": [
+     21.14017383247957,
+     0.0
+    ],
+    "F_n": 75.16797224999999,
+    "tangential_over_normal": 0.0,
+    "servo_cap_scale": 1.0
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -1.556,
+    "knee_l": 2.136,
+    "ankle_pitch_l": -1.632,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 2.2440382885235977e-14
+  },
+  {
+   "name": "walk_heel",
+   "class": "walk",
+   "desc": "single-support peak, centre of pressure heel (-21.1, +0.0) mm of the ankle, tangential 0.00 F_n [servo-limited x0.64: no joint transmits more than 1 x stall]",
+   "kind": "assumption",
+   "prov": "F_n = 1.5 x weight (50.1 N) ASSUMPTION; centre of pressure offset = peak ankle torque / F_n, with the peak torque from the concept report (R1-P1-0p60-3s-sts3250-knee-hiproll): ankle pitch 1.59 N.m, roll 0.83 N.m (SOURCED); tangential force fitted so the hip_pitch torque equals its concept peak 1.32 N.m (SOURCED), limit mu 0.3",
+   "info": {
+    "cop_mm": [
+     -21.14017383247957,
+     0.0
+    ],
+    "F_n": 75.16797224999999,
+    "tangential_over_normal": 0.0,
+    "servo_cap_scale": 0.6369858756179971
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 1.045,
+    "knee_l": 3.328,
+    "ankle_pitch_l": 0.969,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 4.676814491233472e-15
+  },
+  {
+   "name": "walk_lat",
+   "class": "walk",
+   "desc": "single-support peak, centre of pressure lat (+0.0, +11.1) mm of the ankle, tangential 0.10 F_n [servo-limited x0.90: no joint transmits more than 1 x stall]",
+   "kind": "assumption",
+   "prov": "F_n = 1.5 x weight (50.1 N) ASSUMPTION; centre of pressure offset = peak ankle torque / F_n, with the peak torque from the concept report (R1-P1-0p60-3s-sts3250-knee-hiproll): ankle pitch 1.59 N.m, roll 0.83 N.m (SOURCED); tangential force fitted so the hip_roll torque equals its concept peak 3.12 N.m (SOURCED), limit mu 0.3",
+   "info": {
+    "cop_mm": [
+     0.0,
+     11.076871905374567
+    ],
+    "F_n": 75.16797224999999,
+    "tangential_over_normal": 0.09606794767438522,
+    "servo_cap_scale": 0.897640195835104
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 2.797,
+    "hip_pitch_l": 0.033,
+    "knee_l": 3.328,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.994
+   },
+   "equilibrium_residual_n": 1.4787596928808004e-14
+  },
+  {
+   "name": "walk_med",
+   "class": "walk",
+   "desc": "single-support peak, centre of pressure med (+0.0, -11.1) mm of the ankle, tangential 0.10 F_n [servo-limited x0.90: no joint transmits more than 1 x stall]",
+   "kind": "assumption",
+   "prov": "F_n = 1.5 x weight (50.1 N) ASSUMPTION; centre of pressure offset = peak ankle torque / F_n, with the peak torque from the concept report (R1-P1-0p60-3s-sts3250-knee-hiproll): ankle pitch 1.59 N.m, roll 0.83 N.m (SOURCED); tangential force fitted so the hip_roll torque equals its concept peak 3.12 N.m (SOURCED), limit mu 0.3",
+   "info": {
+    "cop_mm": [
+     0.0,
+     -11.076871905374567
+    ],
+    "F_n": 75.16797224999999,
+    "tangential_over_normal": 0.09648962811816042,
+    "servo_cap_scale": 0.897640195835104
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.0,
+    "hip_roll_l": -2.796,
+    "hip_pitch_l": 0.033,
+    "knee_l": 3.328,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": -0.995
+   },
+   "equilibrium_residual_n": 5.981326545168031e-15
+  },
+  {
+   "name": "stand",
+   "class": "walk",
+   "desc": "standing on one foot, centre of pressure at the foot centre",
+   "kind": "derived",
+   "prov": "weight 50.1 N from the R1 shelled mass 5.11 kg",
+   "info": {
+    "servo_cap_scale": 1.0
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -0.912,
+    "knee_l": -0.912,
+    "ankle_pitch_l": -0.912,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 4.9682480351975755e-15
+  },
+  {
+   "name": "stall_hip_yaw_l_toe",
+   "class": "stall",
+   "desc": "hip_yaw_l at stall (2.94 N.m) against a blocked foot at the toe: 43 N [servo-limited x0.20: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 68.3 mm",
+   "info": {
+    "joint": "hip_yaw_l",
+    "force_n": 43.04945858940591,
+    "point": "toe",
+    "servo_cap_scale": 0.20289347422385431
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.597,
+    "hip_roll_l": 2.94,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.332
+   },
+   "equilibrium_residual_n": 5.981326545168031e-15
+  },
+  {
+   "name": "stall_hip_yaw_l_heel",
+   "class": "stall",
+   "desc": "hip_yaw_l at stall (2.94 N.m) against a blocked foot at the heel: 87 N [servo-limited x0.10: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 33.7 mm",
+   "info": {
+    "joint": "hip_yaw_l",
+    "force_n": 87.40344622697563,
+    "point": "heel",
+    "servo_cap_scale": 0.10027249005400607
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.295,
+    "hip_roll_l": -2.94,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": -0.333
+   },
+   "equilibrium_residual_n": 5.981326545168031e-15
+  },
+  {
+   "name": "stall_hip_yaw_l_lat",
+   "class": "stall",
+   "desc": "hip_yaw_l at stall (2.94 N.m) against a blocked foot at the lat: 104 N [servo-limited x0.09: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 28.4 mm",
+   "info": {
+    "joint": "hip_yaw_l",
+    "force_n": 103.5680791262475,
+    "point": "lat",
+    "servo_cap_scale": 0.08703706059365464
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.256,
+    "hip_roll_l": 1.854,
+    "hip_pitch_l": 2.356,
+    "knee_l": 1.392,
+    "ankle_pitch_l": 0.428,
+    "ankle_roll_l": 0.209
+   },
+   "equilibrium_residual_n": 9.242606680004428e-15
+  },
+  {
+   "name": "stall_hip_yaw_l_med",
+   "class": "stall",
+   "desc": "hip_yaw_l at stall (2.94 N.m) against a blocked foot at the med: 104 N [servo-limited x0.08: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 28.4 mm",
+   "info": {
+    "joint": "hip_yaw_l",
+    "force_n": 103.5680791262475,
+    "point": "med",
+    "servo_cap_scale": 0.08182582189717026
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.241,
+    "hip_roll_l": 1.743,
+    "hip_pitch_l": -2.299,
+    "knee_l": -1.392,
+    "ankle_pitch_l": -0.486,
+    "ankle_roll_l": 0.197
+   },
+   "equilibrium_residual_n": 9.242606680004428e-15
+  },
+  {
+   "name": "stall_hip_roll_l_toe",
+   "class": "stall",
+   "desc": "hip_roll_l at stall (4.90 N.m) against a blocked foot at the toe: 15 N [servo-limited x0.60: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 4.903 N.m (catalog) / lever 336.0 mm",
+   "info": {
+    "joint": "hip_roll_l",
+    "force_n": 14.592261904761905,
+    "point": "toe",
+    "servo_cap_scale": 0.5985675335096742
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.597,
+    "hip_roll_l": 2.94,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.332
+   },
+   "equilibrium_residual_n": 5.981326545168031e-15
+  },
+  {
+   "name": "stall_hip_roll_l_heel",
+   "class": "stall",
+   "desc": "hip_roll_l at stall (4.90 N.m) against a blocked foot at the heel: 15 N [servo-limited x0.60: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 4.903 N.m (catalog) / lever 336.0 mm",
+   "info": {
+    "joint": "hip_roll_l",
+    "force_n": 14.592261904761905,
+    "point": "heel",
+    "servo_cap_scale": 0.5985675335096742
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.294,
+    "hip_roll_l": 2.94,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.332
+   },
+   "equilibrium_residual_n": 5.981326545168031e-15
+  },
+  {
+   "name": "stall_hip_roll_l_lat",
+   "class": "stall",
+   "desc": "hip_roll_l at stall (4.90 N.m) against a blocked foot at the lat: 15 N [servo-limited x0.60: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 4.903 N.m (catalog) / lever 336.8 mm",
+   "info": {
+    "joint": "hip_roll_l",
+    "force_n": 14.559654105221481,
+    "point": "lat",
+    "servo_cap_scale": 0.5984837302458499
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.151,
+    "hip_roll_l": 2.939,
+    "hip_pitch_l": -0.053,
+    "knee_l": -0.053,
+    "ankle_pitch_l": -0.053,
+    "ankle_roll_l": 0.343
+   },
+   "equilibrium_residual_n": 5.981326545168031e-15
+  },
+  {
+   "name": "stall_hip_roll_l_med",
+   "class": "stall",
+   "desc": "hip_roll_l at stall (4.90 N.m) against a blocked foot at the med: 15 N [servo-limited x0.60: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 4.903 N.m (catalog) / lever 336.8 mm",
+   "info": {
+    "joint": "hip_roll_l",
+    "force_n": 14.559654105221481,
+    "point": "med",
+    "servo_cap_scale": 0.5986442747587184
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.151,
+    "hip_roll_l": 2.94,
+    "hip_pitch_l": -0.033,
+    "knee_l": -0.033,
+    "ankle_pitch_l": -0.033,
+    "ankle_roll_l": 0.344
+   },
+   "equilibrium_residual_n": 1.634803403760543e-14
+  },
+  {
+   "name": "stall_hip_pitch_l_toe",
+   "class": "stall",
+   "desc": "hip_pitch_l at stall (2.94 N.m) against a blocked foot at the toe: 9 N",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 342.9 mm",
+   "info": {
+    "joint": "hip_pitch_l",
+    "force_n": 8.58027367910251,
+    "point": "toe",
+    "servo_cap_scale": 1.0
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 2.899,
+    "knee_l": 1.764,
+    "ankle_pitch_l": 0.629,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "stall_hip_pitch_l_heel",
+   "class": "stall",
+   "desc": "hip_pitch_l at stall (2.94 N.m) against a blocked foot at the heel: 9 N",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 337.7 mm",
+   "info": {
+    "joint": "hip_pitch_l",
+    "force_n": 8.712344081385357,
+    "point": "heel",
+    "servo_cap_scale": 1.0
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 2.899,
+    "knee_l": 1.728,
+    "ankle_pitch_l": 0.558,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "stall_hip_pitch_l_lat",
+   "class": "stall",
+   "desc": "hip_pitch_l at stall (2.94 N.m) against a blocked foot at the lat: 9 N",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 336.4 mm",
+   "info": {
+    "joint": "hip_pitch_l",
+    "force_n": 8.744315767916648,
+    "point": "lat",
+    "servo_cap_scale": 1.0
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.196,
+    "hip_roll_l": -0.005,
+    "hip_pitch_l": 2.899,
+    "knee_l": 1.72,
+    "ankle_pitch_l": 0.541,
+    "ankle_roll_l": -0.01
+   },
+   "equilibrium_residual_n": 7.494005416219807e-16
+  },
+  {
+   "name": "stall_hip_pitch_l_med",
+   "class": "stall",
+   "desc": "hip_pitch_l at stall (2.94 N.m) against a blocked foot at the med: 9 N",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 336.4 mm",
+   "info": {
+    "joint": "hip_pitch_l",
+    "force_n": 8.744315767916648,
+    "point": "med",
+    "servo_cap_scale": 1.0
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.196,
+    "hip_roll_l": 0.015,
+    "hip_pitch_l": 2.899,
+    "knee_l": 1.72,
+    "ankle_pitch_l": 0.541,
+    "ankle_roll_l": 0.01
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "stall_knee_l_toe",
+   "class": "stall",
+   "desc": "knee_l at stall (4.90 N.m) against a blocked foot at the toe: 23 N [servo-limited x0.38: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 4.903 N.m (catalog) / lever 212.3 mm",
+   "info": {
+    "joint": "knee_l",
+    "force_n": 23.094660536572395,
+    "point": "toe",
+    "servo_cap_scale": 0.38005347283033
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 2.942,
+    "knee_l": 1.82,
+    "ankle_pitch_l": 0.698,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 7.147060721024445e-16
+  },
+  {
+   "name": "stall_knee_l_heel",
+   "class": "stall",
+   "desc": "knee_l at stall (4.90 N.m) against a blocked foot at the heel: 24 N [servo-limited x0.37: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 4.903 N.m (catalog) / lever 203.8 mm",
+   "info": {
+    "joint": "knee_l",
+    "force_n": 24.058028607301694,
+    "point": "heel",
+    "servo_cap_scale": 0.36826676614237813
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 2.942,
+    "knee_l": 1.762,
+    "ankle_pitch_l": 0.583,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 2.0816681711721685e-16
+  },
+  {
+   "name": "stall_knee_l_lat",
+   "class": "stall",
+   "desc": "knee_l at stall (4.90 N.m) against a blocked foot at the lat: 24 N [servo-limited x0.37: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 4.903 N.m (catalog) / lever 201.7 mm",
+   "info": {
+    "joint": "knee_l",
+    "force_n": 24.30276844397982,
+    "point": "lat",
+    "servo_cap_scale": 0.3653147793145499
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.199,
+    "hip_roll_l": -0.012,
+    "hip_pitch_l": 2.942,
+    "knee_l": 1.748,
+    "ankle_pitch_l": 0.554,
+    "ankle_roll_l": -0.017
+   },
+   "equilibrium_residual_n": 8.778180738338287e-16
+  },
+  {
+   "name": "stall_knee_l_med",
+   "class": "stall",
+   "desc": "knee_l at stall (4.90 N.m) against a blocked foot at the med: 24 N [servo-limited x0.37: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 4.903 N.m (catalog) / lever 201.7 mm",
+   "info": {
+    "joint": "knee_l",
+    "force_n": 24.30276844397982,
+    "point": "med",
+    "servo_cap_scale": 0.3653147793145499
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.199,
+    "hip_roll_l": 0.022,
+    "hip_pitch_l": 2.942,
+    "knee_l": 1.748,
+    "ankle_pitch_l": 0.554,
+    "ankle_roll_l": 0.017
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "stall_ankle_pitch_l_toe",
+   "class": "stall",
+   "desc": "ankle_pitch_l at stall (2.94 N.m) against a blocked foot at the toe: 31 N [servo-limited x0.34: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 95.0 mm",
+   "info": {
+    "joint": "ankle_pitch_l",
+    "force_n": 30.966095508981848,
+    "point": "toe",
+    "servo_cap_scale": 0.34116607259247334
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 2.942,
+    "knee_l": 1.951,
+    "ankle_pitch_l": 0.96,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 1.124100812432971e-15
+  },
+  {
+   "name": "stall_ankle_pitch_l_heel",
+   "class": "stall",
+   "desc": "ankle_pitch_l at stall (2.94 N.m) against a blocked foot at the heel: 40 N [servo-limited x0.24: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 74.1 mm",
+   "info": {
+    "joint": "ankle_pitch_l",
+    "force_n": 39.709665347173754,
+    "point": "heel",
+    "servo_cap_scale": 0.23895056314058213
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 2.942,
+    "knee_l": 1.801,
+    "ankle_pitch_l": 0.66,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 3.885780586188048e-16
+  },
+  {
+   "name": "stall_ankle_pitch_l_lat",
+   "class": "stall",
+   "desc": "ankle_pitch_l at stall (2.94 N.m) against a blocked foot at the lat: 43 N [servo-limited x0.21: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 68.2 mm",
+   "info": {
+    "joint": "ankle_pitch_l",
+    "force_n": 43.11264580282473,
+    "point": "lat",
+    "servo_cap_scale": 0.2102241681102482
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.197,
+    "hip_roll_l": -0.047,
+    "hip_pitch_l": 2.942,
+    "knee_l": 1.759,
+    "ankle_pitch_l": 0.575,
+    "ankle_roll_l": -0.052
+   },
+   "equilibrium_residual_n": 1.2536951095120469e-15
+  },
+  {
+   "name": "stall_ankle_pitch_l_med",
+   "class": "stall",
+   "desc": "ankle_pitch_l at stall (2.94 N.m) against a blocked foot at the med: 43 N [servo-limited x0.21: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 68.2 mm",
+   "info": {
+    "joint": "ankle_pitch_l",
+    "force_n": 43.11264580282473,
+    "point": "med",
+    "servo_cap_scale": 0.2102241681102482
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.197,
+    "hip_roll_l": 0.057,
+    "hip_pitch_l": 2.942,
+    "knee_l": 1.759,
+    "ankle_pitch_l": 0.575,
+    "ankle_roll_l": 0.052
+   },
+   "equilibrium_residual_n": 5.551115123125783e-16
+  },
+  {
+   "name": "stall_ankle_roll_l_toe",
+   "class": "stall",
+   "desc": "ankle_roll_l at stall (2.94 N.m) against a blocked foot at the toe: 77 N [servo-limited x0.11: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 38.0 mm",
+   "info": {
+    "joint": "ankle_roll_l",
+    "force_n": 77.42105263157895,
+    "point": "toe",
+    "servo_cap_scale": 0.1128175595625763
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.597,
+    "hip_roll_l": 2.94,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.332
+   },
+   "equilibrium_residual_n": 5.981326545168031e-15
+  },
+  {
+   "name": "stall_ankle_roll_l_heel",
+   "class": "stall",
+   "desc": "ankle_roll_l at stall (2.94 N.m) against a blocked foot at the heel: 77 N [servo-limited x0.11: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 38.0 mm",
+   "info": {
+    "joint": "ankle_roll_l",
+    "force_n": 77.42105263157895,
+    "point": "heel",
+    "servo_cap_scale": 0.1128175595625763
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.294,
+    "hip_roll_l": 2.94,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.332
+   },
+   "equilibrium_residual_n": 5.981326545168031e-15
+  },
+  {
+   "name": "stall_ankle_roll_l_lat",
+   "class": "stall",
+   "desc": "ankle_roll_l at stall (2.94 N.m) against a blocked foot at the lat: 67 N [servo-limited x0.15: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 44.2 mm",
+   "info": {
+    "joint": "ankle_roll_l",
+    "force_n": 66.61891038295914,
+    "point": "lat",
+    "servo_cap_scale": 0.14632823572220313
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.145,
+    "hip_roll_l": 2.935,
+    "hip_pitch_l": -0.129,
+    "knee_l": -0.129,
+    "ankle_pitch_l": -0.129,
+    "ankle_roll_l": 0.43
+   },
+   "equilibrium_residual_n": 5.981326545168031e-15
+  },
+  {
+   "name": "stall_ankle_roll_l_med",
+   "class": "stall",
+   "desc": "ankle_roll_l at stall (2.94 N.m) against a blocked foot at the med: 67 N [servo-limited x0.15: no joint transmits more than 1 x stall]",
+   "kind": "derived",
+   "prov": "stall torque 2.942 N.m (catalog) / lever 44.2 mm",
+   "info": {
+    "joint": "ankle_roll_l",
+    "force_n": 66.61891038295914,
+    "point": "med",
+    "servo_cap_scale": 0.1466637701686373
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.146,
+    "hip_roll_l": 2.942,
+    "hip_pitch_l": 0.043,
+    "knee_l": 0.043,
+    "ankle_pitch_l": 0.043,
+    "ankle_roll_l": 0.431
+   },
+   "equilibrium_residual_n": 1.634803403760543e-14
+  },
+  {
+   "name": "push_fwd",
+   "class": "push",
+   "desc": "R10 push (0.45 N.s over 0.05 s = 9 N), ankle at stall: centre of pressure (+48.9, +0.0) mm",
+   "kind": "derived",
+   "prov": "impulse 0.45 N.s (R10, SOURCED provisional); duration 0.05 s ASSUMED; F_n = 1.2 x weight ASSUMED",
+   "info": {
+    "cop_mm": [
+     48.92376220777993,
+     0.0
+    ],
+    "servo_cap_scale": 1.0
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -0.07,
+    "knee_l": 1.723,
+    "ankle_pitch_l": -2.391,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 4.676814491233472e-15
+  },
+  {
+   "name": "push_back",
+   "class": "push",
+   "desc": "R10 push (0.45 N.s over 0.05 s = 9 N), ankle at stall: centre of pressure (-48.9, +0.0) mm",
+   "kind": "derived",
+   "prov": "impulse 0.45 N.s (R10, SOURCED provisional); duration 0.05 s ASSUMED; F_n = 1.2 x weight ASSUMED",
+   "info": {
+    "cop_mm": [
+     -48.92376220777993,
+     0.0
+    ],
+    "servo_cap_scale": 1.0
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 0.136,
+    "knee_l": 4.174,
+    "ankle_pitch_l": 2.305,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 4.676814491233472e-15
+  },
+  {
+   "name": "push_lat",
+   "class": "push",
+   "desc": "R10 push (0.45 N.s over 0.05 s = 9 N), ankle at stall: centre of pressure (+0.0, +22.5) mm",
+   "kind": "derived",
+   "prov": "impulse 0.45 N.s (R10, SOURCED provisional); duration 0.05 s ASSUMED; F_n = 1.2 x weight ASSUMED",
+   "info": {
+    "cop_mm": [
+     0.0,
+     22.5
+    ],
+    "servo_cap_scale": 1.0
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.0,
+    "hip_roll_l": -1.481,
+    "hip_pitch_l": 0.033,
+    "knee_l": 2.948,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 1.011
+   },
+   "equilibrium_residual_n": 4.170275236248244e-15
+  },
+  {
+   "name": "fall_pivot_fwd",
+   "class": "fall",
+   "desc": "toppling fwd: ground reaction 2.0 x weight on the foot edge it pivots on [servo-limited x0.41: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "pivot_load_factor 2.0 ASSUMED (drop test)",
+   "info": {
+    "servo_cap_scale": 0.4128012806865337
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -2.871,
+    "knee_l": -2.871,
+    "ankle_pitch_l": -2.871,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 4.676814491233472e-15
+  },
+  {
+   "name": "fall_pivot_back",
+   "class": "fall",
+   "desc": "toppling back: ground reaction 2.0 x weight on the foot edge it pivots on [servo-limited x0.87: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "pivot_load_factor 2.0 ASSUMED (drop test)",
+   "info": {
+    "servo_cap_scale": 0.871634220404274
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 2.897,
+    "knee_l": 2.897,
+    "ankle_pitch_l": 2.897,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 8.229528170033973e-15
+  },
+  {
+   "name": "fall_pivot_side",
+   "class": "fall",
+   "desc": "toppling side: ground reaction 2.0 x weight on the foot edge it pivots on",
+   "kind": "assumption",
+   "prov": "pivot_load_factor 2.0 ASSUMED (drop test)",
+   "info": {
+    "servo_cap_scale": 1.0
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 2.26,
+    "hip_pitch_l": -1.781,
+    "knee_l": -1.781,
+    "ankle_pitch_l": -1.781,
+    "ankle_roll_l": 2.255
+   },
+   "equilibrium_residual_n": 1.1782241848834474e-14
+  },
+  {
+   "name": "landing_heel",
+   "class": "fall",
+   "desc": "stumble / step-down landing on one foot (3.0 x weight) on the heel [servo-limited x0.58: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "landing_load_factor 3.0 ASSUMED (drop test)",
+   "info": {
+    "servo_cap_scale": 0.581089480269516
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 2.897,
+    "knee_l": 2.897,
+    "ankle_pitch_l": 2.897,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 8.229528170033973e-15
+  },
+  {
+   "name": "landing_toe",
+   "class": "fall",
+   "desc": "stumble / step-down landing on one foot (3.0 x weight) on the toe [servo-limited x0.28: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "landing_load_factor 3.0 ASSUMED (drop test)",
+   "info": {
+    "servo_cap_scale": 0.27520085379102255
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -2.871,
+    "knee_l": -2.871,
+    "ankle_pitch_l": -2.871,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 4.9682480351975755e-15
+  },
+  {
+   "name": "landing_flat",
+   "class": "fall",
+   "desc": "stumble / step-down landing on one foot (3.0 x weight) on the flat",
+   "kind": "assumption",
+   "prov": "landing_load_factor 3.0 ASSUMED (drop test)",
+   "info": {
+    "servo_cap_scale": 0.9997254289933343
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -2.649,
+    "knee_l": -2.649,
+    "ankle_pitch_l": -2.649,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 1.2073675392798577e-14
+  },
+  {
+   "name": "fall_contact_fwd_hip_pitch_l_link_protected",
+   "class": "fall",
+   "desc": "fwd fall, floor contact on hip_pitch_l_link at [18.0, 36.0, -24.0]: 507 N (protected, stop 10 mm) [servo-limited x0.25: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "fwd",
+    "link": "hip_pitch_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.25014860600938493
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -1.099,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 3.013,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_fwd_hip_pitch_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "fwd fall, floor contact on hip_pitch_l_link at [18.0, 36.0, -24.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "fwd",
+    "link": "hip_pitch_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -14.64,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 40.687,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_fwd_knee_l_link_protected",
+   "class": "fall",
+   "desc": "fwd fall, floor contact on knee_l_link at [18.0, 36.0, -163.0]: 507 N (protected, stop 10 mm) [servo-limited x0.04: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "fwd",
+    "link": "knee_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.03703200276643998
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.175,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 3.013,
+    "knee_l": 0.477,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_fwd_knee_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "fwd fall, floor contact on knee_l_link at [18.0, 36.0, -163.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "fwd",
+    "link": "knee_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -15.724,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 275.087,
+    "knee_l": 46.764,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_fwd_ankle_pitch_l_link_protected",
+   "class": "fall",
+   "desc": "fwd fall, floor contact on ankle_pitch_l_link at [18.0, 44.0, -270.0]: 507 N (protected, stop 10 mm) [servo-limited x0.02: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "fwd",
+    "link": "ankle_pitch_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.022311909028636338
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.015,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 3.013,
+    "knee_l": 1.485,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_fwd_ankle_pitch_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "fwd fall, floor contact on ankle_pitch_l_link at [18.0, 44.0, -270.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "fwd",
+    "link": "ankle_pitch_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -2.199,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 456.602,
+    "knee_l": 228.279,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_fwd_ankle_roll_l_link_protected",
+   "class": "fall",
+   "desc": "fwd fall, floor contact on ankle_roll_l_link at [68.0, 45.0, -333.0]: 507 N (protected, stop 10 mm) [servo-limited x0.02: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "fwd",
+    "link": "ankle_roll_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.01810432888875075
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 3.013,
+    "knee_l": 1.773,
+    "ankle_pitch_l": 0.533,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_fwd_ankle_roll_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "fwd fall, floor contact on ankle_roll_l_link at [68.0, 45.0, -333.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "fwd",
+    "link": "ankle_roll_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": 562.73,
+    "knee_l": 334.407,
+    "ankle_pitch_l": 106.085,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_back_hip_pitch_l_link_protected",
+   "class": "fall",
+   "desc": "back fall, floor contact on hip_pitch_l_link at [-18.0, 36.0, -24.0]: 507 N (protected, stop 10 mm) [servo-limited x0.23: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "back",
+    "link": "hip_pitch_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.23069034001989755
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 1.079,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -2.871,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_back_hip_pitch_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "back fall, floor contact on hip_pitch_l_link at [-18.0, 36.0, -24.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "back",
+    "link": "hip_pitch_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 15.586,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -40.897,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_back_knee_l_link_protected",
+   "class": "fall",
+   "desc": "back fall, floor contact on knee_l_link at [-18.0, 35.0, -163.0]: 507 N (protected, stop 10 mm) [servo-limited x0.03: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "back",
+    "link": "knee_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.034238721883055254
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.172,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -2.871,
+    "knee_l": -0.525,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_back_knee_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "back fall, floor contact on knee_l_link at [-18.0, 35.0, -163.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "back",
+    "link": "knee_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 16.7,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -275.307,
+    "knee_l": -46.984,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_back_ankle_pitch_l_link_protected",
+   "class": "fall",
+   "desc": "back fall, floor contact on ankle_pitch_l_link at [-68.0, 45.0, -275.0]: 507 N (protected, stop 10 mm) [servo-limited x0.02: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "back",
+    "link": "ankle_pitch_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.020286996616953632
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.002,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -2.871,
+    "knee_l": -1.481,
+    "ankle_pitch_l": -0.091,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_back_ankle_pitch_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "back fall, floor contact on ankle_pitch_l_link at [-68.0, 45.0, -275.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "back",
+    "link": "ankle_pitch_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.252,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -464.61,
+    "knee_l": -236.288,
+    "ankle_pitch_l": -7.965,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_back_ankle_roll_l_link_protected",
+   "class": "fall",
+   "desc": "back fall, floor contact on ankle_roll_l_link at [-34.0, 45.0, -333.0]: 507 N (protected, stop 10 mm) [servo-limited x0.02: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "back",
+    "link": "ankle_roll_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.016746841504257766
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -2.871,
+    "knee_l": -1.724,
+    "ankle_pitch_l": -0.576,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_back_ankle_roll_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "back fall, floor contact on ankle_roll_l_link at [-34.0, 45.0, -333.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "back",
+    "link": "ankle_roll_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -562.816,
+    "knee_l": -334.494,
+    "ankle_pitch_l": -106.171,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 6.800116025829084e-16
+  },
+  {
+   "name": "fall_contact_side_hip_pitch_l_link_protected",
+   "class": "fall",
+   "desc": "side fall, floor contact on hip_pitch_l_link at [0.0, 76.0, 1.0]: 507 N (protected, stop 10 mm) [servo-limited x0.30: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "side",
+    "link": "hip_pitch_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.2954644211891688
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.0,
+    "hip_roll_l": 0.134,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 3.608224830031759e-16
+  },
+  {
+   "name": "fall_contact_side_hip_pitch_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "side fall, floor contact on hip_pitch_l_link at [0.0, 76.0, 1.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "side",
+    "link": "hip_pitch_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.0,
+    "hip_roll_l": 1.462,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 2.1371793224034263e-15
+  },
+  {
+   "name": "fall_contact_side_knee_l_link_protected",
+   "class": "fall",
+   "desc": "side fall, floor contact on knee_l_link at [0.0, 76.0, -134.0]: 507 N (protected, stop 10 mm) [servo-limited x0.04: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "side",
+    "link": "knee_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.04325902326123022
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.0,
+    "hip_roll_l": -2.94,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 1.634803403760543e-14
+  },
+  {
+   "name": "fall_contact_side_knee_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "side fall, floor contact on knee_l_link at [0.0, 76.0, -134.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "side",
+    "link": "knee_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.0,
+    "hip_roll_l": -226.904,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 5.898059818321144e-14
+  },
+  {
+   "name": "fall_contact_side_ankle_pitch_l_link_protected",
+   "class": "fall",
+   "desc": "side fall, floor contact on ankle_pitch_l_link at [-4.0, 76.0, -270.0]: 507 N (protected, stop 10 mm) [servo-limited x0.02: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "side",
+    "link": "ankle_pitch_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.021495584670760935
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.048,
+    "hip_roll_l": -2.94,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 1.634803403760543e-14
+  },
+  {
+   "name": "fall_contact_side_ankle_pitch_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "side fall, floor contact on ankle_pitch_l_link at [-4.0, 76.0, -270.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "side",
+    "link": "ankle_pitch_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 7.493,
+    "hip_roll_l": -456.64,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 8.505141035897168e-13
+  },
+  {
+   "name": "fall_contact_side_ankle_roll_l_link_protected",
+   "class": "fall",
+   "desc": "side fall, floor contact on ankle_roll_l_link at [-11.0, 67.0, -330.0]: 507 N (protected, stop 10 mm) [servo-limited x0.02: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 507.3838126875,
+    "dir": "side",
+    "link": "ankle_roll_l_link",
+    "prot": "protected",
+    "servo_cap_scale": 0.017580710217156334
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.096,
+    "hip_roll_l": -2.94,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": -0.287
+   },
+   "equilibrium_residual_n": 1.634803403760543e-14
+  },
+  {
+   "name": "fall_contact_side_ankle_roll_l_link_rigid",
+   "class": "fall_rigid",
+   "desc": "side fall, floor contact on ankle_roll_l_link at [-11.0, 67.0, -330.0]: 1691 N (rigid, stop 3 mm)",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test)",
+   "info": {
+    "force_n": 1691.279375625,
+    "dir": "side",
+    "link": "ankle_roll_l_link",
+    "prot": "rigid"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 18.246,
+    "hip_roll_l": -558.326,
+    "hip_pitch_l": -0.043,
+    "knee_l": -0.043,
+    "ankle_pitch_l": -0.043,
+    "ankle_roll_l": -54.33
+   },
+   "equilibrium_residual_n": 8.505141035897168e-13
+  },
+  {
+   "name": "fall_inertial_x+_protected",
+   "class": "fall",
+   "desc": "leg inertia: 27 g equivalent along x+ (protected); supported at the hip [servo-limited x0.14: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 27 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 27.0,
+    "dir": "x+",
+    "servo_cap_scale": 0.13664793082827015
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.018,
+    "hip_roll_l": 0.0,
+    "hip_pitch_l": -3.061,
+    "knee_l": -1.216,
+    "ankle_pitch_l": -0.107,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 1.7763568394002505e-15
+  },
+  {
+   "name": "fall_inertial_x+_rigid",
+   "class": "fall_rigid",
+   "desc": "leg inertia: 90 g equivalent along x+ (rigid); supported at the hip",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 90 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 90.0,
+    "dir": "x+"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.449,
+    "hip_roll_l": 0.0,
+    "hip_pitch_l": -74.66,
+    "knee_l": -29.659,
+    "ankle_pitch_l": -2.605,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 2.4868995751603507e-14
+  },
+  {
+   "name": "fall_inertial_x-_protected",
+   "class": "fall",
+   "desc": "leg inertia: 27 g equivalent along x- (protected); supported at the hip [servo-limited x0.14: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 27 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 27.0,
+    "dir": "x-",
+    "servo_cap_scale": 0.13664793082827015
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.018,
+    "hip_roll_l": 0.0,
+    "hip_pitch_l": 3.061,
+    "knee_l": 1.216,
+    "ankle_pitch_l": 0.107,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 1.7763568394002505e-15
+  },
+  {
+   "name": "fall_inertial_x-_rigid",
+   "class": "fall_rigid",
+   "desc": "leg inertia: 90 g equivalent along x- (rigid); supported at the hip",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 90 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 90.0,
+    "dir": "x-"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.449,
+    "hip_roll_l": 0.0,
+    "hip_pitch_l": 74.66,
+    "knee_l": 29.659,
+    "ankle_pitch_l": 2.605,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 2.4868995751603507e-14
+  },
+  {
+   "name": "fall_inertial_y+_protected",
+   "class": "fall",
+   "desc": "leg inertia: 27 g equivalent along y+ (protected); supported at the hip [servo-limited x0.14: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 27 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 27.0,
+    "dir": "y+",
+    "servo_cap_scale": 0.13664793082827015
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -0.423,
+    "hip_roll_l": 3.019,
+    "hip_pitch_l": 0.0,
+    "knee_l": 0.0,
+    "ankle_pitch_l": 0.0,
+    "ankle_roll_l": 0.026
+   },
+   "equilibrium_residual_n": 2.6922908347160046e-15
+  },
+  {
+   "name": "fall_inertial_y+_rigid",
+   "class": "fall_rigid",
+   "desc": "leg inertia: 90 g equivalent along y+ (rigid); supported at the hip",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 90 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 90.0,
+    "dir": "y+"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": -10.313,
+    "hip_roll_l": 73.647,
+    "hip_pitch_l": 0.0,
+    "knee_l": 0.0,
+    "ankle_pitch_l": 0.0,
+    "ankle_roll_l": 0.624
+   },
+   "equilibrium_residual_n": 2.2771342740819555e-13
+  },
+  {
+   "name": "fall_inertial_y-_protected",
+   "class": "fall",
+   "desc": "leg inertia: 27 g equivalent along y- (protected); supported at the hip [servo-limited x0.14: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 27 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 27.0,
+    "dir": "y-",
+    "servo_cap_scale": 0.13664793082827015
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.423,
+    "hip_roll_l": -3.019,
+    "hip_pitch_l": 0.0,
+    "knee_l": 0.0,
+    "ankle_pitch_l": 0.0,
+    "ankle_roll_l": -0.026
+   },
+   "equilibrium_residual_n": 2.6922908347160046e-15
+  },
+  {
+   "name": "fall_inertial_y-_rigid",
+   "class": "fall_rigid",
+   "desc": "leg inertia: 90 g equivalent along y- (rigid); supported at the hip",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 90 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 90.0,
+    "dir": "y-"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 10.313,
+    "hip_roll_l": -73.647,
+    "hip_pitch_l": 0.0,
+    "knee_l": 0.0,
+    "ankle_pitch_l": 0.0,
+    "ankle_roll_l": -0.624
+   },
+   "equilibrium_residual_n": 2.2771342740819555e-13
+  },
+  {
+   "name": "fall_inertial_z-_protected",
+   "class": "fall",
+   "desc": "leg inertia: 27 g equivalent along z- (protected); supported at the hip [servo-limited x0.95: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 27 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 27.0,
+    "dir": "z-",
+    "servo_cap_scale": 0.9499635413359033
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.128,
+    "hip_pitch_l": -1.109,
+    "knee_l": -1.109,
+    "ankle_pitch_l": -1.109,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 9.325873406851315e-15
+  },
+  {
+   "name": "fall_inertial_z-_rigid",
+   "class": "fall_rigid",
+   "desc": "leg inertia: 90 g equivalent along z- (rigid); supported at the hip",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 90 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 90.0,
+    "dir": "z-"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.449,
+    "hip_pitch_l": -3.893,
+    "knee_l": -3.893,
+    "ankle_pitch_l": -3.893,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 2.4868995751603507e-14
+  },
+  {
+   "name": "fall_inertial_z+_protected",
+   "class": "fall",
+   "desc": "leg inertia: 27 g equivalent along z+ (protected); supported at the hip [servo-limited x0.95: no joint transmits more than 2 x stall]",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 27 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 27.0,
+    "dir": "z+",
+    "servo_cap_scale": 0.9499635413359033
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": -0.128,
+    "hip_pitch_l": 1.109,
+    "knee_l": 1.109,
+    "ankle_pitch_l": 1.109,
+    "ankle_roll_l": -0.0
+   },
+   "equilibrium_residual_n": 9.325873406851315e-15
+  },
+  {
+   "name": "fall_inertial_z+_rigid",
+   "class": "fall_rigid",
+   "desc": "leg inertia: 90 g equivalent along z+ (rigid); supported at the hip",
+   "kind": "assumption",
+   "prov": "E = m g dh = 5.11 x 9.81 x 0.270 = 13.5 J (dh from the CoM height 0.330 m, SOURCED fraction); phi, d, k_peak ASSUMED (drop-test); n = dh/d = 90 g (research/methods/d section 3)",
+   "info": {
+    "n_g": 90.0,
+    "dir": "z+"
+   },
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": -0.449,
+    "hip_pitch_l": 3.893,
+    "knee_l": 3.893,
+    "ankle_pitch_l": 3.893,
+    "ankle_roll_l": -0.0
+   },
+   "equilibrium_residual_n": 2.4868995751603507e-14
+  },
+  {
+   "name": "handling_lift_by_foot",
+   "class": "handling",
+   "desc": "robot picked up by one foot / ankle: whole weight through that leg, plus 50% jerk",
+   "kind": "assumption",
+   "prov": "lift_by_leg_over_weight ASSUMED",
+   "info": {},
+   "joint_tau_nm": {
+    "hip_yaw_l": 0.0,
+    "hip_roll_l": 0.005,
+    "hip_pitch_l": -1.347,
+    "knee_l": -1.347,
+    "ankle_pitch_l": -1.347,
+    "ankle_roll_l": 0.0
+   },
+   "equilibrium_residual_n": 2.2440382885235977e-14
+  }
+ ],
+ "context": {
+  "robot": {
+   "mass_kg": 5.11,
+   "height_m": 0.6,
+   "note": "mass is a pre-CAD guess (structure -15%/+40%); the check should be re-run when the BOM mass is real"
+  },
+  "concept": {
+   "candidate": "R1-P1-0p60-3s-sts3250-knee-hiproll",
+   "mass_kg": 4.595,
+   "height_m": 0.6,
+   "report": "variants/adam/generated/concept/R1-P1-0p60-3s-sts3250-knee-hiproll/report.json",
+   "gait": {
+    "stance_knee_flex_deg": 45,
+    "step_time_s": 0.5
+   },
+   "push": 0.45
+  },
+  "stall_nm": {
+   "hip_yaw_l": 2.942,
+   "hip_roll_l": 4.903,
+   "hip_pitch_l": 2.942,
+   "knee_l": 4.903,
+   "ankle_pitch_l": 2.942,
+   "ankle_roll_l": 2.942
+  },
+  "peaks_nm": {
+   "hip_roll_l": 3.1155450000000005,
+   "hip_roll_r": 3.0203100000000003,
+   "hip_yaw_r": 1.651647,
+   "ankle_pitch_l": 1.589064,
+   "ankle_pitch_r": 1.591785,
+   "knee_l": 2.662045,
+   "knee_r": 2.662045,
+   "hip_yaw_l": 1.5210390000000003,
+   "hip_pitch_r": 1.322406,
+   "hip_pitch_l": 1.322406,
+   "ankle_roll_r": 1.210845,
+   "waist_yaw": 0.985002,
+   "elbow_r": 0.873441,
+   "ankle_roll_l": 0.832626,
+   "gripper_r": 0.7646010000000001,
+   "shoulder_pitch_r": 0.655761,
+   "shoulder_roll_l": 0.639435,
+   "shoulder_roll_r": 0.639435,
+   "shoulder_pitch_l": 0.636714,
+   "neck_yaw": 0.503385,
+   "elbow_l": 0.293868,
+   "neck_pitch": 0.013605,
+   "gripper_l": 0.0027210000000000003
+  },
+  "weight_n": 50.1119815,
+  "k_walk": 1.5,
+  "mu": 0.3,
+  "stance_knee_flexion_deg": 45.0,
+  "foot": {
+   "link": "ankle_roll_l_link",
+   "part": "foot_l",
+   "z0": -38.0,
+   "x0": -33.660000000000004,
+   "x1": 68.34,
+   "y0": -22.5,
+   "y1": 22.5,
+   "ankle_x": 0.0,
+   "ankle_pitch_axis_z": 28.0
+  },
+  "fall": {
+   "energy_j": 13.530235005,
+   "com_height_m": 0.33,
+   "drop_m": 0.27,
+   "phi": 0.25,
+   "k_peak": 1.5,
+   "F_protected_n": 507.3838126875,
+   "F_rigid_n": 1691.279375625,
+   "n_g_protected": 27.0,
+   "n_g_rigid": 90.0
+  }
+ },
+ "n_rows": 457,
+ "wall_s": 22.8,
+ "rows_note": "only rows with margin < 1.5 (all classes) plus the worst row of every part x case x check are kept",
+ "rows": [
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_ankle_roll_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "horn_tear_out",
+   "margin": 0.1693,
+   "demand": 2363.1781,
+   "allowable": 400.092,
+   "sf": 1.0,
+   "unit": "N",
+   "where": "ankle_roll_l: ligament 3.3 mm from the bolt hole to the plate edge",
+   "mode": "horn screw tears out through the plate edge",
+   "gate": false,
+   "info": {}
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_ankle_roll_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "horn_bearing",
+   "margin": 0.1697,
+   "demand": 337.5969,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa",
+   "where": "ankle_roll_l: 4 x M2 on a 14 mm circle, shank 3.5 mm in the plate",
+   "mode": "horn screw bears on the plate under the counterbore",
+   "gate": false,
+   "info": {
+    "V_per_screw_n": 2363.1781051321477,
+    "tau_nmm": 54330.03113463901,
+    "t_plate_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_ankle_roll_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "horn_screw",
+   "margin": 0.2365,
+   "demand": 2363.1781,
+   "allowable": 558.9,
+   "sf": 1.0,
+   "unit": "N",
+   "where": "ankle_roll_l: horn screw shear",
+   "mode": "steel screw shears",
+   "gate": false,
+   "info": {}
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_fwd_ankle_roll_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "horn_pull_through",
+   "margin": 0.2552,
+   "demand": 3391.6437,
+   "allowable": 865.5616,
+   "sf": 1.0,
+   "unit": "N",
+   "where": "ankle_roll_l: axial pull on a horn screw",
+   "mode": "screw head pulls through the plate floor",
+   "gate": false,
+   "info": {}
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_back_ankle_roll_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "horn_pull_through",
+   "margin": 0.2553,
+   "demand": 3390.8603,
+   "allowable": 865.5616,
+   "sf": 1.0,
+   "unit": "N",
+   "where": "ankle_roll_l: axial pull on a horn screw",
+   "mode": "screw head pulls through the plate floor",
+   "gate": false,
+   "info": {}
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_fwd_ankle_roll_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 0.3014,
+   "demand": 190.0682,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 76.44816585280277,
+    "tau_mpa": 10.466769486816156,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     56410.09732693395
+    ],
+    "V_n": [
+     -1691.279375625,
+     0.0
+    ],
+    "T_nmm": 4.682507651582006e-12,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_back_ankle_roll_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 0.3014,
+   "demand": 190.0237,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 43.92172834126777,
+    "tau_mpa": 10.466769486816156,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     -56398.237027253555
+    ],
+    "V_n": [
+     1691.279375625,
+     0.0
+    ],
+    "T_nmm": -4.682507651582006e-12,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_ankle_roll_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 0.6772,
+   "demand": 84.5795,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-15.9, 15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 28.794665627859278,
+    "tau_mpa": 22.854392576286493,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     -51962.24000876401,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     -1691.279375625
+    ],
+    "T_nmm": -4917.114710262098,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -15.9,
+     15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_ankle_roll_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "horn_pull_through",
+   "margin": 0.9727,
+   "demand": 889.8095,
+   "allowable": 865.5616,
+   "sf": 1.0,
+   "unit": "N",
+   "where": "ankle_roll_l: axial pull on a horn screw",
+   "mode": "screw head pulls through the plate floor",
+   "gate": false,
+   "info": {}
+  },
+  {
+   "part": "foot_l",
+   "case": "push_fwd",
+   "cls": "push",
+   "check": "horn_pull_through",
+   "margin": 1.4604,
+   "demand": 197.5677,
+   "allowable": 865.5616,
+   "sf": 3.0,
+   "unit": "N",
+   "where": "ankle_roll_l: axial pull on a horn screw",
+   "mode": "screw head pulls through the plate floor",
+   "gate": true,
+   "info": {}
+  },
+  {
+   "part": "foot_l",
+   "case": "landing_flat",
+   "cls": "fall",
+   "check": "horn_pull_through",
+   "margin": 1.4813,
+   "demand": 292.1665,
+   "allowable": 865.5616,
+   "sf": 2.0,
+   "unit": "N",
+   "where": "ankle_roll_l: axial pull on a horn screw",
+   "mode": "screw head pulls through the plate floor",
+   "gate": true,
+   "info": {}
+  },
+  {
+   "part": "foot_l",
+   "case": "push_fwd",
+   "cls": "push",
+   "check": "section",
+   "margin": 1.5782,
+   "demand": 12.0984,
+   "allowable": 57.28,
+   "sf": 3.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 2.424246446865014,
+    "tau_mpa": 0.05569802762274808,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -59.887274276430354,
+    "M_nmm": [
+     0.0004308186933756211,
+     -3430.2311998636615
+    ],
+    "V_n": [
+     -8.999999999999998,
+     0.0
+    ],
+    "T_nmm": 2.4917559025758603e-14,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "landing_flat",
+   "cls": "fall",
+   "check": "section",
+   "margin": 1.6719,
+   "demand": 17.1305,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 3.008805511599612,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -150.04756308481095,
+    "M_nmm": [
+     0.00043081869362524054,
+     -4658.517428236668
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_pivot_side",
+   "cls": "fall",
+   "check": "section",
+   "margin": 2.0031,
+   "demand": 14.2981,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 3.254857916319469,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -99.97685947643036,
+    "M_nmm": [
+     2255.0395983186936,
+     -3104.555618086232
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "walk_toe",
+   "cls": "walk",
+   "check": "section",
+   "margin": 2.0071,
+   "demand": 9.513,
+   "allowable": 57.28,
+   "sf": 3.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 1.7254711557197309,
+    "tau_mpa": 9.667992748924277e-18,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -74.92086872643036,
+    "M_nmm": [
+     0.00043081869341724335,
+     -2612.585537289625
+    ],
+    "V_n": [
+     1.5622048889946868e-15,
+     0.0
+    ],
+    "T_nmm": -8.983172253170794e-21,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "push_back",
+   "cls": "push",
+   "check": "section",
+   "margin": 2.4055,
+   "demand": 7.9373,
+   "allowable": 57.28,
+   "sf": 3.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [1.0, 0.0, 0.0] @ -23.1 mm, fibre at [-23.1, -22.5, -38.0]",
+   "mode": "tensile rupture along the filaments; bending; Kt 1.6 at fillet corner r=2.0 mm, t=6.5 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 4.783551278009762,
+    "tau_mpa": 0.32765934072593356,
+    "kt": 1.6312383203013407,
+    "kt_reason": "fillet corner r=2.0 mm, t=6.5 mm",
+    "phi_deg": 90.0,
+    "N": -9.000000000000002,
+    "M_nmm": [
+     1526.0272234462614,
+     -7.429961263417841e-09
+    ],
+    "V_n": [
+     0.0,
+     60.12097126802619
+    ],
+    "T_nmm": -0.0004040699281498053,
+    "normal": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "pos_mm": -23.060000000000002,
+    "fibre_xyz": [
+     -23.06,
+     -22.5,
+     -38.0
+    ],
+    "section_area_mm2": 275.2299063021436,
+    "section_t_mm": 6.50549905333646
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "landing_toe",
+   "cls": "fall",
+   "check": "section",
+   "margin": 2.4342,
+   "demand": 11.7655,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 2.4688308895220983,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -41.125476758310135,
+    "M_nmm": [
+     0.0004308186933236768,
+     -3388.0839530929397
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_pivot_fwd",
+   "cls": "fall",
+   "check": "section",
+   "margin": 2.4342,
+   "demand": 11.7655,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 2.4688308895220974,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -41.12547675831013,
+    "M_nmm": [
+     0.0004308186933236768,
+     -3388.083953092939
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "handling_lift_by_foot",
+   "cls": "handling",
+   "check": "section",
+   "margin": 3.3472,
+   "demand": 8.5564,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 1.5030172128426833,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -74.92086872643036,
+    "M_nmm": [
+     0.00043081869341724335,
+     -2326.934176104625
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stand",
+   "cls": "walk",
+   "check": "section",
+   "margin": 3.3516,
+   "demand": 5.6968,
+   "allowable": 57.28,
+   "sf": 3.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 1.0008119979408912,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -49.86487797643036,
+    "M_nmm": [
+     0.0004308186933478729,
+     -1549.3127341230183
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "walk_med",
+   "cls": "walk",
+   "check": "section",
+   "margin": 3.7825,
+   "demand": 5.0478,
+   "allowable": 57.28,
+   "sf": 3.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, 15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.9838727435122163,
+    "tau_mpa": 0.2649208346054744,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -67.22668980744803,
+    "M_nmm": [
+     -985.6832117587792,
+     -918.147064197795
+    ],
+    "V_n": [
+     1.401770498305438e-15,
+     -6.510521226231506
+    ],
+    "T_nmm": -89.16386673499142,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "walk_lat",
+   "cls": "walk",
+   "check": "section",
+   "margin": 3.7837,
+   "demand": 5.0462,
+   "allowable": 57.28,
+   "sf": 3.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.9832961504117352,
+    "tau_mpa": 0.2637630735353941,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -67.22668980744803,
+    "M_nmm": [
+     984.6427163205561,
+     -918.147064197795
+    ],
+    "V_n": [
+     1.401770498305438e-15,
+     6.482068847116486
+    ],
+    "T_nmm": 88.77420144529331,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "push_lat",
+   "cls": "push",
+   "check": "section",
+   "margin": 4.0502,
+   "demand": 4.7142,
+   "allowable": 57.28,
+   "sf": 3.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.9569007331103138,
+    "tau_mpa": 0.3662206801266158,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -59.887274276430354,
+    "M_nmm": [
+     1023.6239313186933,
+     -817.631199863661
+    ],
+    "V_n": [
+     1.2487334203881273e-15,
+     -9.0
+    ],
+    "T_nmm": -123.25814980552958,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_pivot_back",
+   "cls": "fall",
+   "check": "section",
+   "margin": 5.7598,
+   "demand": 4.9724,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 2.0122228509563906,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -87.11153233176216,
+    "M_nmm": [
+     0.0004308186934509947,
+     1750.0147410569762
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "landing_heel",
+   "cls": "fall",
+   "check": "section",
+   "margin": 5.7598,
+   "demand": 4.9724,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 2.0122228509563906,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -87.11153233176216,
+    "M_nmm": [
+     0.0004308186934509947,
+     1750.0147410569762
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_roll_l_toe",
+   "cls": "stall",
+   "check": "section",
+   "margin": 10.1963,
+   "demand": 3.7451,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-15.9, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.17681507364714427,
+    "tau_mpa": 1.859209453919163,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     319.68145514846793,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     8.734454216660513
+    ],
+    "T_nmm": 716.5340085339885,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -15.9,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_ankle_roll_l_toe",
+   "cls": "stall",
+   "check": "section",
+   "margin": 10.1963,
+   "demand": 3.7451,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-15.9, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.17681507364714427,
+    "tau_mpa": 1.859209453919163,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     319.68145514846793,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     8.734454216660513
+    ],
+    "T_nmm": 716.5340085339885,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -15.9,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_yaw_l_toe",
+   "cls": "stall",
+   "check": "section",
+   "margin": 10.1963,
+   "demand": 3.7451,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-15.9, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.17681507364714424,
+    "tau_mpa": 1.8592094539191624,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     319.6814551484679,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     8.734454216660511
+    ],
+    "T_nmm": 716.5340085339883,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -15.9,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_ankle_pitch_l_toe",
+   "cls": "stall",
+   "check": "section",
+   "margin": 12.3644,
+   "demand": 3.0884,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 1.2492733161120775,
+    "tau_mpa": 0.04541897279279539,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 7.846358910500399,
+    "M_nmm": [
+     0.0004308186931880925,
+     897.947050699304
+    ],
+    "V_n": [
+     -7.339052612488006,
+     0.0
+    ],
+    "T_nmm": 2.0319038065865728e-14,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "walk_heel",
+   "cls": "walk",
+   "check": "section",
+   "margin": 16.1393,
+   "demand": 1.183,
+   "allowable": 57.28,
+   "sf": 3.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.29459278163907554,
+    "tau_mpa": 6.146807670098652e-18,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -47.63383309852591,
+    "M_nmm": [
+     0.000430818693341696,
+     362.3952889604197
+    ],
+    "V_n": [
+     9.93232035519933e-16,
+     0.0
+    ],
+    "T_nmm": -8.983172251595525e-21,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_yaw_l_lat",
+   "cls": "stall",
+   "check": "section",
+   "margin": 17.9865,
+   "demand": 2.1231,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.46736359746038764,
+    "tau_mpa": 0.8907337123629281,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     201.39305865174362,
+     267.252763810417
+    ],
+    "V_n": [
+     -7.13996213033391,
+     5.502530815110667
+    ],
+    "T_nmm": 331.4221175463601,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_y+_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 18.6273,
+   "demand": 3.0751,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.3307936299824069,
+    "tau_mpa": 1.4822092264327276,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.0,
+    "M_nmm": [
+     596.9361456119242,
+     0.0
+    ],
+    "V_n": [
+     0.0,
+     22.239317121267373
+    ],
+    "T_nmm": 533.7134856176265,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_y-_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 18.6273,
+   "demand": 3.0751,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-15.9, 15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.33079362998240647,
+    "tau_mpa": 1.4822092264327276,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.0,
+    "M_nmm": [
+     -596.9361456119242,
+     0.0
+    ],
+    "V_n": [
+     0.0,
+     -22.239317121267373
+    ],
+    "T_nmm": -533.7134856176265,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -15.9,
+     15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_yaw_l_med",
+   "cls": "stall",
+   "check": "section",
+   "margin": 19.3578,
+   "demand": 1.9727,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.2926446432480474,
+    "tau_mpa": 0.8374021090382255,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     189.33491872615448,
+     -239.74608879405315
+    ],
+    "V_n": [
+     6.712465536454891,
+     5.17307344009457
+    ],
+    "T_nmm": 311.57861924749517,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_knee_l_toe",
+   "cls": "stall",
+   "check": "section",
+   "margin": 20.6548,
+   "demand": 1.8488,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.7470072489011272,
+    "tau_mpa": 0.051427965320020676,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 3.0725101060998723,
+    "M_nmm": [
+     0.00043081869320130947,
+     541.8600762593361
+    ],
+    "V_n": [
+     -8.310019360383043,
+     0.0
+    ],
+    "T_nmm": 2.3007274729764065e-14,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_ankle_roll_l_med",
+   "cls": "stall",
+   "check": "section",
+   "margin": 21.0759,
+   "demand": 1.8119,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.4560467624245992,
+    "tau_mpa": 0.7093748969153288,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 5.225136220051087,
+    "M_nmm": [
+     419.71496090136577,
+     160.42513677937697
+    ],
+    "V_n": [
+     0.0,
+     8.407344109613113
+    ],
+    "T_nmm": 260.9248668306169,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_ankle_pitch_l_med",
+   "cls": "stall",
+   "check": "section",
+   "margin": 21.1885,
+   "demand": 1.8022,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.5770113765472014,
+    "tau_mpa": 0.5511310356132633,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 2.5501272890093594,
+    "M_nmm": [
+     51.818465541086944,
+     398.23483749776454
+    ],
+    "V_n": [
+     -8.76583440132766,
+     0.0
+    ],
+    "T_nmm": -197.23127402987234,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_ankle_pitch_l_lat",
+   "cls": "stall",
+   "check": "section",
+   "margin": 21.1885,
+   "demand": 1.8022,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, 14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.5770109309006286,
+    "tau_mpa": 0.5511310356132634,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 2.5501272890093594,
+    "M_nmm": [
+     -51.81760390370054,
+     398.23483749776454
+    ],
+    "V_n": [
+     -8.76583440132766,
+     0.0
+    ],
+    "T_nmm": 197.2312740298724,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_ankle_roll_l_lat",
+   "cls": "stall",
+   "check": "section",
+   "margin": 21.4501,
+   "demand": 1.7803,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.328003330728387,
+    "tau_mpa": 0.7077520031831067,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -4.719540529055019,
+    "M_nmm": [
+     418.7547463756533,
+     -148.21138655111037
+    ],
+    "V_n": [
+     0.0,
+     8.388109955543863
+    ],
+    "T_nmm": 260.32792812753945,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_knee_l_med",
+   "cls": "stall",
+   "check": "section",
+   "margin": 23.1766,
+   "demand": 1.6476,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.49190990857101113,
+    "tau_mpa": 0.5561276787207161,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 1.0101762658146765,
+    "M_nmm": [
+     17.169567519206577,
+     353.350611034895
+    ],
+    "V_n": [
+     -8.845306873774671,
+     0.0
+    ],
+    "T_nmm": -199.01940465993007,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_knee_l_lat",
+   "cls": "stall",
+   "check": "section",
+   "margin": 23.1766,
+   "demand": 1.6476,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, 14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.49190946292443805,
+    "tau_mpa": 0.5561276787207162,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 1.0101762658146765,
+    "M_nmm": [
+     -17.168705881820163,
+     353.350611034895
+    ],
+    "V_n": [
+     -8.845306873774671,
+     0.0
+    ],
+    "T_nmm": 199.01940465993013,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_pitch_l_med",
+   "cls": "stall",
+   "check": "section",
+   "margin": 23.9381,
+   "demand": 1.5952,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.46826044775271863,
+    "tau_mpa": 0.54904745049916,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.6977729423453952,
+    "M_nmm": [
+     10.140492741147757,
+     339.53345606393174
+    ],
+    "V_n": [
+     -8.732694619876275,
+     0.0
+    ],
+    "T_nmm": -196.48562894721616,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_pitch_l_lat",
+   "cls": "stall",
+   "check": "section",
+   "margin": 23.9381,
+   "demand": 1.5952,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, 14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.46826000210614543,
+    "tau_mpa": 0.5490474504991602,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.6977729423453952,
+    "M_nmm": [
+     -10.139631103761342,
+     339.53345606393174
+    ],
+    "V_n": [
+     -8.732694619876275,
+     0.0
+    ],
+    "T_nmm": 196.4856289472162,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_roll_l_med",
+   "cls": "stall",
+   "check": "section",
+   "margin": 24.5662,
+   "demand": 1.5544,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.2073544818705645,
+    "tau_mpa": 0.7337790786391939,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.8294635718111398,
+    "M_nmm": [
+     331.39823987100254,
+     24.003897750804228
+    ],
+    "V_n": [
+     0.0,
+     8.696576720406435
+    ],
+    "T_nmm": 269.9013021317517,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_pitch_l_toe",
+   "cls": "stall",
+   "check": "section",
+   "margin": 24.7369,
+   "demand": 1.5437,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.6232837706988781,
+    "tau_mpa": 0.05203507641888092,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 1.9572550288528379,
+    "M_nmm": [
+     0.00043081869320439717,
+     453.96021104550897
+    ],
+    "V_n": [
+     -8.408119780145674,
+     0.0
+    ],
+    "T_nmm": 2.3278877383224065e-14,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_roll_l_lat",
+   "cls": "stall",
+   "check": "section",
+   "margin": 24.7689,
+   "demand": 1.5417,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.1916665252529634,
+    "tau_mpa": 0.7335822936540194,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -0.3351003472653464,
+    "M_nmm": [
+     331.3093655560491,
+     -12.138751049942506
+    ],
+    "V_n": [
+     0.0,
+     8.694244471135757
+    ],
+    "T_nmm": 269.8289199593994,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_fwd_ankle_roll_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 27.1613,
+   "demand": 1.0544,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.42421990970027346,
+    "tau_mpa": 0.05684815115761816,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     312.2780278212514
+    ],
+    "V_n": [
+     -9.185843417722804,
+     0.0
+    ],
+    "T_nmm": 2.543209756449976e-14,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_x+_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 28.3853,
+   "demand": 2.0179,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.4648701784102433,
+    "tau_mpa": 0.13772947084797274,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.0,
+    "M_nmm": [
+     0.0,
+     -596.9361456119242
+    ],
+    "V_n": [
+     22.239317121267373,
+     0.0
+    ],
+    "T_nmm": 0.03877368238882188,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_x-_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 28.3853,
+   "demand": 2.0179,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, 14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.808969792988063,
+    "tau_mpa": 0.13772947084797274,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.0,
+    "M_nmm": [
+     0.0,
+     596.9361456119242
+    ],
+    "V_n": [
+     -22.239317121267373,
+     0.0
+    ],
+    "T_nmm": -0.03877368238882188,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_z-_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 28.4393,
+   "demand": 2.0141,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.8150648198896498,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 22.239317121267373,
+    "M_nmm": [
+     0.03877368238882188,
+     533.7134856176265
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_z+_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 28.4393,
+   "demand": 2.0141,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, 15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.32390184070500855,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -22.239317121267373,
+    "M_nmm": [
+     -0.03877368238882188,
+     -533.7134856176265
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_ankle_pitch_l_heel",
+   "cls": "stall",
+   "check": "section",
+   "margin": 29.2194,
+   "demand": 1.3069,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.5271714856217257,
+    "tau_mpa": 0.052311730436900954,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -4.063836252102234,
+    "M_nmm": [
+     0.00043081869322106727,
+     401.3698788033418
+    ],
+    "V_n": [
+     -8.45282308955269,
+     0.0
+    ],
+    "T_nmm": 2.3402643800154466e-14,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_back_ankle_roll_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 30.7111,
+   "demand": 0.9326,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.21708471378500924,
+    "tau_mpa": 0.05258559889719347,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     -277.44734452813833
+    ],
+    "V_n": [
+     8.497076292903573,
+     0.0
+    ],
+    "T_nmm": -2.3525164045055432e-14,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_yaw_l_heel",
+   "cls": "stall",
+   "check": "section",
+   "margin": 31.1527,
+   "demand": 1.2258,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -5.4 mm, fibre at [-15.9, 15.0, -5.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.3 at sharp corner r=0.0 mm, t=4.0 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.11699230815987799,
+    "tau_mpa": 0.5977545474455539,
+    "kt": 2.2780193008453873,
+    "kt_reason": "sharp corner r=0.0 mm, t=4.0 mm",
+    "phi_deg": 90.0,
+    "N": 0.2421881988458075,
+    "M_nmm": [
+     -285.7112240561636,
+     4.8677054298584395
+    ],
+    "V_n": [
+     0.0,
+     -8.764161192480268
+    ],
+    "T_nmm": 213.25011615447016,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -5.399999999999999,
+    "fibre_xyz": [
+     -15.9,
+     15.0,
+     -5.4
+    ],
+    "section_area_mm2": 298.89500430381344,
+    "section_t_mm": 4.0
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_roll_l_heel",
+   "cls": "stall",
+   "check": "section",
+   "margin": 31.2586,
+   "demand": 1.2216,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -5.4 mm, fibre at [-15.9, -15.0, -5.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.3 at sharp corner r=0.0 mm, t=4.0 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.1165946362404964,
+    "tau_mpa": 0.5957284003337974,
+    "kt": 2.2780193008453873,
+    "kt_reason": "sharp corner r=0.0 mm, t=4.0 mm",
+    "phi_deg": 90.0,
+    "N": 0.2421881988458075,
+    "M_nmm": [
+     284.7436382818259,
+     4.8677054298584395
+    ],
+    "V_n": [
+     0.0,
+     8.734454216660513
+    ],
+    "T_nmm": -212.5272841680393,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -5.399999999999999,
+    "fibre_xyz": [
+     -15.9,
+     -15.0,
+     -5.4
+    ],
+    "section_area_mm2": 298.89500430381344,
+    "section_t_mm": 4.0
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_ankle_roll_l_heel",
+   "cls": "stall",
+   "check": "section",
+   "margin": 31.2586,
+   "demand": 1.2216,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -5.4 mm, fibre at [-15.9, -15.0, -5.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.3 at sharp corner r=0.0 mm, t=4.0 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.1165946362404964,
+    "tau_mpa": 0.5957284003337974,
+    "kt": 2.2780193008453873,
+    "kt_reason": "sharp corner r=0.0 mm, t=4.0 mm",
+    "phi_deg": 90.0,
+    "N": 0.2421881988458075,
+    "M_nmm": [
+     284.7436382818259,
+     4.8677054298584395
+    ],
+    "V_n": [
+     0.0,
+     8.734454216660513
+    ],
+    "T_nmm": -212.5272841680393,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -5.399999999999999,
+    "fibre_xyz": [
+     -15.9,
+     -15.0,
+     -5.4
+    ],
+    "section_area_mm2": 298.89500430381344,
+    "section_t_mm": 4.0
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_knee_l_heel",
+   "cls": "stall",
+   "check": "section",
+   "margin": 32.3268,
+   "demand": 1.1813,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.47602375594960245,
+    "tau_mpa": 0.05407718460471965,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -1.216201354927823,
+    "M_nmm": [
+     0.0004308186932131833,
+     354.9587997436738
+    ],
+    "V_n": [
+     -8.738095085501769,
+     0.0
+    ],
+    "T_nmm": 2.4192453173499422e-14,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "stall_hip_pitch_l_heel",
+   "cls": "stall",
+   "check": "section",
+   "margin": 33.5209,
+   "demand": 1.1392,
+   "allowable": 57.28,
+   "sf": 1.5,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.458953876163962,
+    "tau_mpa": 0.053649286883092825,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -0.6213398006825319,
+    "M_nmm": [
+     0.0004308186932115363,
+     340.5519955511456
+    ],
+    "V_n": [
+     -8.668952969362119,
+     0.0
+    ],
+    "T_nmm": 2.400102502003374e-14,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_z-_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 49.8954,
+   "demand": 0.574,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.23228455881620458,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 6.337962134823402,
+    "M_nmm": [
+     0.011050075389815634,
+     152.10250585681476
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_z+_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 49.8954,
+   "demand": 0.574,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, 15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.09230848189240427,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": -6.337962134823402,
+    "M_nmm": [
+     -0.011050075389815634,
+     -152.10250585681476
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_ankle_roll_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 63.1452,
+   "demand": 0.4536,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-15.9, 15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.1515335533615812,
+    "tau_mpa": 0.12053893592184657,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     -274.05949660205846,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     -8.920167779734866
+    ],
+    "T_nmm": -25.933910647690382,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -15.9,
+     15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_y+_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 227.1934,
+   "demand": 0.1261,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.013560679520480498,
+    "tau_mpa": 0.060762247153980944,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.0,
+    "M_nmm": [
+     24.47102674034172,
+     0.0
+    ],
+    "V_n": [
+     0.0,
+     0.9116870002964723
+    ],
+    "T_nmm": 21.879253039437714,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_y-_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 227.1934,
+   "demand": 0.1261,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-15.9, 15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; shear / torsion; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.013560679520480479,
+    "tau_mpa": 0.060762247153980944,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.0,
+    "M_nmm": [
+     -24.47102674034172,
+     0.0
+    ],
+    "V_n": [
+     0.0,
+     -0.9116870002964723
+    ],
+    "T_nmm": -21.879253039437714,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -15.9,
+     15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_x+_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 346.2101,
+   "demand": 0.0827,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-21.2, -15.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.019057064395058557,
+    "tau_mpa": 0.005646134161634408,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.0,
+    "M_nmm": [
+     0.0,
+     -24.47102674034172
+    ],
+    "V_n": [
+     0.9116870002964723,
+     0.0
+    ],
+    "T_nmm": 0.0015895030407075143,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -21.2,
+     -15.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_inertial_x-_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 346.2101,
+   "demand": 0.0827,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, 14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.03316321449431784,
+    "tau_mpa": 0.005646134161634408,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.0,
+    "M_nmm": [
+     0.0,
+     24.47102674034172
+    ],
+    "V_n": [
+     -0.9116870002964723,
+     0.0
+    ],
+    "T_nmm": -0.0015895030407075143,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_fwd_hip_pitch_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 1279.7678,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_fwd_knee_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 1279.7678,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_fwd_ankle_pitch_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 1279.7678,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_back_hip_pitch_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 1279.7678,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_back_knee_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 1279.7678,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_back_ankle_pitch_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 1279.7678,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_hip_pitch_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 1279.7678,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_knee_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 1279.7678,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_ankle_pitch_l_link_protected",
+   "cls": "fall",
+   "check": "section",
+   "margin": 1279.7678,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 2.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": true,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_fwd_hip_pitch_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 2559.5356,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_fwd_knee_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 2559.5356,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_fwd_ankle_pitch_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 2559.5356,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_back_hip_pitch_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 2559.5356,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_back_knee_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 2559.5356,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_back_ankle_pitch_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 2559.5356,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_hip_pitch_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 2559.5356,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_knee_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 2559.5356,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  },
+  {
+   "part": "foot_l",
+   "case": "fall_contact_side_ankle_pitch_l_link_rigid",
+   "cls": "fall_rigid",
+   "check": "section",
+   "margin": 2559.5356,
+   "demand": 0.0224,
+   "allowable": 57.28,
+   "sf": 1.0,
+   "unit": "MPa (equivalent, incl. Kt)",
+   "where": "plane [0.0, 0.0, 1.0] @ -1.4 mm, fibre at [-0.6, -14.0, -1.4]",
+   "mode": "tensile rupture along the filaments; bending; Kt 2.5 at sharp corner r=0.0 mm, t=5.3 mm",
+   "gate": false,
+   "info": {
+    "sigma_mpa": 0.009056275776551664,
+    "tau_mpa": 0.0,
+    "kt": 2.4711106915071577,
+    "kt_reason": "sharp corner r=0.0 mm, t=5.3 mm",
+    "phi_deg": 90.0,
+    "N": 0.24710352356963744,
+    "M_nmm": [
+     0.00043081869320913194,
+     5.930149840195851
+    ],
+    "V_n": [
+     0.0,
+     0.0
+    ],
+    "T_nmm": 0.0,
+    "normal": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "pos_mm": -1.3999999999999986,
+    "fibre_xyz": [
+     -0.64,
+     -14.0,
+     -1.4
+    ],
+    "section_area_mm2": 242.3784212151593,
+    "section_t_mm": 5.300000000000001
+   }
+  }
+ ]
+}

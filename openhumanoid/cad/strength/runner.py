@@ -74,6 +74,17 @@ def run(model: Model, cfg: dict, only_cases: list[str] | None = None, only_parts
     return aggregate(rows, scen_info, ctx, topo, time.time() - t0, [p.id for p in printed])
 
 
+def _slim(rows: list[Row]) -> list[dict]:
+    keep: dict[tuple, Row] = {}
+    for r in rows:
+        k = (r.part, r.case, r.check)
+        if k not in keep or r.margin < keep[k].margin:
+            keep[k] = r
+    out = [r for r in keep.values() if r.margin < 1.5 or r.check == "section"]
+    out.sort(key=lambda r: (r.part, r.margin))
+    return [r.to_dict() for r in out]
+
+
 def apply_profiles(model: Model, cfg: dict) -> None:
     """Print profiles (perimeters, infill, material override) from the variant strength config onto the model's printed parts."""
     profs = cfg.get("print_profiles", {}) or {}
@@ -101,4 +112,5 @@ def aggregate(rows: list[Row], scen_info: list[dict], ctx: dict, topo, wall: flo
         }
     ok = all(v["ok"] for v in parts.values())
     return {"ok": ok, "parts": parts, "scenarios": scen_info, "context": ctx, "n_rows": len(rows), "wall_s": round(wall, 1),
-            "rows": [r.to_dict() for r in rows if r.margin < 3.0 or r.check in ("section", "fatigue")][:20000]}
+            "rows_note": "only rows with margin < 1.5 (all classes) plus the worst row of every part x case x check are kept",
+            "rows": _slim(rows)}
