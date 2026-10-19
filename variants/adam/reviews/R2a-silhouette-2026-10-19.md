@@ -366,3 +366,8 @@ This uses the post-merge pickup planner, with the object 50 mm behind the table 
 - Results: `.../results/` (look.md, engine_*.md, cost.md, scale.md, pickup/).
 - Concepts: `variants/adam/concepts/PK-*.yaml`; the final package is `PK-C3-package.yaml`.
 - Images (JPEG ≤ 300 KB): `docs/design-method/R2a-packaging/`.
+
+## Maintainer decision (2026-10-19 afternoon)
+- Take the cheap look levers: **L5c** (knee/ankle servos moved up via 1:1 parallelograms) **+ longer arms** (+$14). The small-servo arm package is not taken.
+- R6 for Adam becomes "best achievable at this scale, judged by the maintainer"; the Optimus-like silhouette is an **Eve** requirement (needs ~0.9–1.2 m and a QDD/planetary actuator class).
+- The budget is locked at ≤ $1,600 delivered (requirements R1).
