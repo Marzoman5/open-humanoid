@@ -1,0 +1,1620 @@
+# Packaging-for-look variant C2-L9ab (T-20261019-c1aa, PROVISIONAL): C2 + longer arms + wrist pitch
+# levers: arm=sts3045m+pitch=sts3045m+grip=scs0009+neck=scs0009+neck_yaw_at=neck+pack=chest_flat1300+knee_up=True+ankle_up=True+upper=0.2+fore=0.23+wrist=sts3045m
+# Written by variants/adam/design/packaging/study.py (capsule.py + layout.py); re-run, do not edit.
+schema: design-profiles/0.1
+name: adam-pack-C2-L9ab
+kind: design
+confidence: approximate
+height_m: 0.55
+head_unit_m: 0.084
+sources:
+- 'variants/adam/design/packaging/capsule.py (T-20261019-c1aa): R2a direction B (B4) rules made parametric, around the layout.py hard points for levers [arm=sts3045m+pitch=sts3045m+grip=scs0009+neck=scs0009+neck_yaw_at=neck+pack=chest_flat1300+knee_up=True+ankle_up=True+upper=0.2+fore=0.23+wrist=sts3045m]'
+blend:
+  k_m: 0.009
+  voxel_m: 0.0015
+notes: PROVISIONAL packaging-for-look variant [arm=sts3045m+pitch=sts3045m+grip=scs0009+neck=scs0009+neck_yaw_at=neck+pack=chest_flat1300+knee_up=True+ankle_up=True+upper=0.2+fore=0.23+wrist=sts3045m];
+  arm display cant 19.5 deg. Role dark = graphite under-structure; shell = matte warm white.
+segments:
+- id: head
+  role: shell
+  k_m: 0.002
+  stations:
+  - z: 0.4725
+    w: 0.0216
+    d: 0.0248
+    n: 2.2
+    cx: 0.003
+  - z: 0.4755
+    w: 0.04104
+    d: 0.0434
+    n: 2.5
+    cx: 0.003
+  - z: 0.4784
+    w: 0.04968
+    d: 0.05332
+    n: 2.8
+    cx: 0.0035
+  - z: 0.492
+    w: 0.054
+    d: 0.062
+    n: 2.2
+    cx: 0.005
+  - z: 0.53
+    w: 0.054
+    d: 0.062
+    n: 2.2
+    cx: 0.005
+  - z: 0.539
+    w: 0.05022
+    d: 0.05766
+    n: 2.2
+    cx: 0.005
+  - z: 0.5455
+    w: 0.03996
+    d: 0.04712
+    n: 2.4
+    cx: 0.005
+  - z: 0.5496
+    w: 0.01728
+    d: 0.02232
+    n: 2.2
+    cx: 0.005
+- id: visor
+  role: dark
+  k_m: 0.001
+  stations:
+  - z: 0.48722
+    w: 0.054
+    d: 0.062
+    n: 2.2
+    cx: 0.00565
+  - z: 0.4903
+    w: 0.054
+    d: 0.062
+    n: 2.2
+    cx: 0.00662
+  - z: 0.4958
+    w: 0.054
+    d: 0.062
+    n: 2.2
+    cx: 0.0073
+  - z: 0.5024
+    w: 0.054
+    d: 0.062
+    n: 2.2
+    cx: 0.00768
+  - z: 0.509
+    w: 0.054
+    d: 0.062
+    n: 2.2
+    cx: 0.0078
+  - z: 0.5156
+    w: 0.054
+    d: 0.062
+    n: 2.2
+    cx: 0.00768
+  - z: 0.5222
+    w: 0.054
+    d: 0.062
+    n: 2.2
+    cx: 0.0073
+  - z: 0.5277
+    w: 0.054
+    d: 0.062
+    n: 2.2
+    cx: 0.00662
+  - z: 0.53078
+    w: 0.054
+    d: 0.062
+    n: 2.2
+    cx: 0.00565
+- id: neck
+  role: dark
+  k_m: 0.003
+  stations:
+  - z: 0.44155
+    w: 0.03087
+    d: 0.042
+    n: 2.6
+    cx: 0.0056
+  - z: 0.4815
+    w: 0.03087
+    d: 0.042
+    n: 2.6
+    cx: 0.0056
+- id: chest
+  role: shell
+  k_m: 0.013
+  stations:
+  - z: 0.3987
+    w: 0.07595
+    d: 0.0303
+    n: 2.5
+    cx: -0.009
+  - z: 0.4027
+    w: 0.08831
+    d: 0.0443
+    n: 2.5
+    cx: -0.006
+  - z: 0.4051
+    w: 0.09578
+    d: 0.0563
+    n: 2.5
+    cx: -0.005
+  - z: 0.43
+    w: 0.09448
+    d: 0.0583
+    n: 2.5
+    cx: -0.005
+  - z: 0.4526
+    w: 0.09578
+    d: 0.0563
+    n: 2.5
+    cx: -0.005
+  - z: 0.4548
+    w: 0.07394
+    d: 0.04222
+    n: 2.3
+    cx: -0.009
+  - z: 0.4573
+    w: 0.038
+    d: 0.04
+    n: 2.5
+    cx: -0.012
+- id: back
+  role: shell
+  k_m: 0.013
+  stations:
+  - z: 0.3895
+    w: 0.07163
+    d: 0.04539
+    n: 2.5
+    cx: -0.00565
+  - z: 0.3975
+    w: 0.08288
+    d: 0.05992
+    n: 2.5
+    cx: -0.01165
+  - z: 0.4051
+    w: 0.10232
+    d: 0.069
+    n: 2.5
+    cx: -0.01565
+  - z: 0.4526
+    w: 0.10232
+    d: 0.069
+    n: 2.5
+    cx: -0.01565
+  - z: 0.456
+    w: 0.06549
+    d: 0.05266
+    n: 2.3
+    cx: -0.01065
+  - z: 0.4585
+    w: 0.03786
+    d: 0.03268
+    n: 2.6
+    cx: -0.00165
+- id: pelvis
+  role: shell
+  k_m: 0.013
+  stations:
+  - z: 0.29
+    w: 0.08002
+    d: 0.062
+    n: 2.5
+    cx: -0.002
+  - z: 0.298
+    w: 0.10005
+    d: 0.08
+    n: 2.5
+    cx: -0.001
+  - z: 0.3098
+    w: 0.11568
+    d: 0.094
+    n: 3.5
+    cx: -0.001
+  - z: 0.3353
+    w: 0.12069
+    d: 0.1
+    n: 3.5
+    cx: 0.003
+  - z: 0.3817
+    w: 0.12069
+    d: 0.1
+    n: 3.5
+    cx: 0.003
+  - z: 0.3845
+    w: 0.09595
+    d: 0.08
+    n: 2.5
+    cx: 0.003
+  - z: 0.3875
+    w: 0.07796
+    d: 0.062
+    n: 2.5
+    cx: 0.003
+- id: waist
+  role: dark
+  k_m: 0.003
+  stations:
+  - z: 0.376
+    w: 0.08798
+    d: 0.07
+    n: 2.6
+    cx: 0.002
+  - z: 0.4067
+    w: 0.08593
+    d: 0.07
+    n: 2.6
+    cx: 0.003
+- id: glute
+  role: shell
+  mirror: true
+  k_m: 0.01
+  stations:
+  - z: 0.238
+    w: 0.026
+    d: 0.026
+    n: 2.3
+    cx: -0.048
+    cy: 0.035
+  - z: 0.249
+    w: 0.046
+    d: 0.05
+    n: 2.4
+    cx: -0.058
+    cy: 0.035
+  - z: 0.2573
+    w: 0.04754
+    d: 0.062
+    n: 2.4
+    cx: -0.061
+    cy: 0.035
+  - z: 0.314
+    w: 0.04754
+    d: 0.062
+    n: 2.4
+    cx: -0.061
+    cy: 0.035
+  - z: 0.332
+    w: 0.046
+    d: 0.048
+    n: 2.4
+    cx: -0.052
+    cy: 0.035
+  - z: 0.352
+    w: 0.03
+    d: 0.03
+    n: 2.3
+    cx: -0.04
+    cy: 0.035
+- id: leg_core
+  role: dark
+  mirror: true
+  k_m: 0.003
+  stations:
+  - z: 0.04
+    w: 0.05
+    d: 0.042
+    n: 3.0
+    cy: 0.035
+  - z: 0.04685
+    w: 0.04098
+    d: 0.054
+    n: 3.0
+    cy: 0.035
+  - z: 0.08505
+    w: 0.04098
+    d: 0.054
+    n: 3.0
+    cy: 0.035
+  - z: 0.0917
+    w: 0.03358
+    d: 0.046
+    n: 3.0
+    cx: -0.0053
+    cy: 0.035
+  - z: 0.09835
+    w: 0.06264
+    d: 0.08008
+    n: 3.6
+    cx: -0.0106
+    cy: 0.035
+  - z: 0.12935
+    w: 0.06264
+    d: 0.08008
+    n: 3.6
+    cx: -0.0106
+    cy: 0.035
+  - z: 0.13455
+    w: 0.06264
+    d: 0.08008
+    n: 3.6
+    cx: -0.0106
+    cy: 0.035
+  - z: 0.16755
+    w: 0.04098
+    d: 0.054
+    n: 3.0
+    cy: 0.035
+  - z: 0.19687
+    w: 0.03358
+    d: 0.046
+    n: 3.0
+    cx: 0.0053
+    cy: 0.035
+  - z: 0.2262
+    w: 0.06264
+    d: 0.08008
+    n: 3.6
+    cx: 0.0106
+    cy: 0.035
+  - z: 0.2572
+    w: 0.06264
+    d: 0.08057
+    n: 3.6
+    cx: 0.01043
+    cy: 0.035
+  - z: 0.2624
+    w: 0.06264
+    d: 0.08057
+    n: 3.6
+    cx: 0.01043
+    cy: 0.035
+  - z: 0.3139
+    w: 0.06342
+    d: 0.054
+    n: 3.0
+    cy: 0.035
+  - z: 0.3219
+    w: 0.048
+    d: 0.04
+    n: 3.0
+    cy: 0.035
+- id: thigh
+  role: shell
+  mirror: true
+  k_m: 0.0045
+  stations:
+  - z: 0.1485
+    w: 0.03706
+    d: 0.0516
+    n: 3.0
+    cy: 0.035
+  - z: 0.1585
+    w: 0.04309
+    d: 0.06
+    n: 3.0
+    cy: 0.035
+  - z: 0.1645
+    w: 0.04309
+    d: 0.06
+    n: 3.0
+    cy: 0.035
+  - z: 0.19693
+    w: 0.05374
+    d: 0.07304
+    n: 3.0
+    cx: 0.0053
+    cy: 0.035
+  - z: 0.22935
+    w: 0.06438
+    d: 0.08608
+    n: 3.6
+    cx: 0.0106
+    cy: 0.035
+  - z: 0.24435
+    w: 0.06439
+    d: 0.08632
+    n: 3.0
+    cx: 0.01051
+    cy: 0.035
+  - z: 0.25935
+    w: 0.0644
+    d: 0.08657
+    n: 3.6
+    cx: 0.01043
+    cy: 0.035
+  - z: 0.26035
+    w: 0.0644
+    d: 0.08657
+    n: 3.6
+    cx: 0.01043
+    cy: 0.035
+  - z: 0.278
+    w: 0.07027
+    d: 0.058
+    n: 3.0
+    cy: 0.03713
+  - z: 0.28068
+    w: 0.06453
+    d: 0.07329
+    n: 3.0
+    cx: 0.00521
+    cy: 0.035
+  - z: 0.301
+    w: 0.06467
+    d: 0.06
+    n: 3.0
+    cy: 0.035
+  - z: 0.305
+    w: 0.05561
+    d: 0.0516
+    n: 3.0
+    cy: 0.035
+- id: shank
+  role: shell
+  mirror: true
+  k_m: 0.0045
+  stations:
+  - z: 0.05
+    w: 0.03792
+    d: 0.0528
+    n: 3.0
+    cy: 0.035
+  - z: 0.06
+    w: 0.04309
+    d: 0.06
+    n: 3.0
+    cy: 0.035
+  - z: 0.071
+    w: 0.04309
+    d: 0.06
+    n: 3.0
+    cy: 0.035
+  - z: 0.082
+    w: 0.04309
+    d: 0.06
+    n: 3.0
+    cy: 0.035
+  - z: 0.09175
+    w: 0.05374
+    d: 0.07304
+    n: 3.0
+    cx: -0.0053
+    cy: 0.035
+  - z: 0.1015
+    w: 0.06438
+    d: 0.08608
+    n: 3.6
+    cx: -0.0106
+    cy: 0.035
+  - z: 0.1165
+    w: 0.06438
+    d: 0.08608
+    n: 3.0
+    cx: -0.0106
+    cy: 0.035
+  - z: 0.1315
+    w: 0.06438
+    d: 0.08608
+    n: 3.6
+    cx: -0.0106
+    cy: 0.035
+  - z: 0.1325
+    w: 0.06438
+    d: 0.08608
+    n: 3.6
+    cx: -0.0106
+    cy: 0.035
+  - z: 0.1385
+    w: 0.04309
+    d: 0.06
+    n: 3.0
+    cy: 0.035
+  - z: 0.1425
+    w: 0.03792
+    d: 0.0528
+    n: 3.0
+    cy: 0.035
+- id: heel
+  role: dark
+  mirror: true
+  k_m: 0.006
+  stations:
+  - z: 0.003
+    w: 0.046
+    d: 0.05
+    n: 2.8
+    cx: -0.044
+    cy: 0.035
+  - z: 0.0203
+    w: 0.05231
+    d: 0.052
+    n: 2.8
+    cx: -0.044
+    cy: 0.035
+  - z: 0.0768
+    w: 0.05231
+    d: 0.052
+    n: 2.8
+    cx: -0.044
+    cy: 0.035
+  - z: 0.086
+    w: 0.028
+    d: 0.034
+    n: 2.6
+    cx: -0.034
+    cy: 0.035
+- id: heel_cover
+  role: shell
+  mirror: true
+  k_m: 0.004
+  stations:
+  - z: 0.016
+    w: 0.05031
+    d: 0.058
+    n: 3.0
+    cx: -0.044
+    cy: 0.035
+  - z: 0.022
+    w: 0.05531
+    d: 0.062
+    n: 3.0
+    cx: -0.044
+    cy: 0.035
+  - z: 0.072
+    w: 0.05531
+    d: 0.062
+    n: 3.0
+    cx: -0.044
+    cy: 0.035
+  - z: 0.08
+    w: 0.04831
+    d: 0.056
+    n: 3.0
+    cx: -0.042
+    cy: 0.035
+- id: foot
+  role: shell
+  axis: x
+  mirror: true
+  k_m: 0.003
+  stations:
+  - x: -0.04
+    w: 0.0516
+    d: 0.0198
+    n: 3.0
+    cy: 0.035
+    cz: 0.01144
+  - x: -0.02992
+    w: 0.057
+    d: 0.022
+    n: 3.0
+    cy: 0.035
+    cz: 0.0121
+  - x: 0.00031
+    w: 0.06
+    d: 0.022
+    n: 3.0
+    cy: 0.035
+    cz: 0.0121
+  - x: 0.0386
+    w: 0.0552
+    d: 0.01452
+    n: 3.0
+    cy: 0.035
+    cz: 0.0088
+  - x: 0.06077
+    w: 0.03
+    d: 0.0066
+    n: 2.6
+    cy: 0.035
+    cz: 0.0044
+- id: sole
+  role: dark
+  axis: x
+  mirror: true
+  k_m: 0.001
+  stations:
+  - x: -0.068
+    w: 0.042
+    d: 0.005
+    n: 3.0
+    cy: 0.035
+    cz: 0.003
+  - x: -0.06
+    w: 0.0531
+    d: 0.006
+    n: 3.0
+    cy: 0.035
+    cz: 0.003
+  - x: 0.0386
+    w: 0.0567
+    d: 0.006
+    n: 3.0
+    cy: 0.035
+    cz: 0.003
+  - x: 0.05978
+    w: 0.0327
+    d: 0.004
+    n: 2.6
+    cy: 0.035
+    cz: 0.002
+- id: arm_core
+  role: dark
+  mirror: true
+  k_m: 0.003
+  stations:
+  - z: 0.1955
+    w: 0.01677
+    d: 0.02012
+    n: 2.6
+    cy: 0.14663
+  - z: 0.2055
+    w: 0.0285
+    d: 0.03018
+    n: 2.8
+    cy: 0.14309
+  - z: 0.22616
+    w: 0.03521
+    d: 0.03856
+    n: 3.0
+    cy: 0.13578
+  - z: 0.23816
+    w: 0.03509
+    d: 0.05025
+    n: 2.8
+    cy: 0.13153
+  - z: 0.24819
+    w: 0.03356
+    d: 0.05025
+    n: 2.8
+    cy: 0.12798
+  - z: 0.25821
+    w: 0.03528
+    d: 0.05025
+    n: 2.8
+    cy: 0.12443
+  - z: 0.26823
+    w: 0.05463
+    d: 0.05025
+    n: 2.8
+    cy: 0.12088
+  - z: 0.27825
+    w: 0.05352
+    d: 0.05025
+    n: 2.8
+    cy: 0.11733
+  - z: 0.28828
+    w: 0.05241
+    d: 0.05025
+    n: 2.8
+    cy: 0.11378
+  - z: 0.2983
+    w: 0.05444
+    d: 0.05025
+    n: 2.8
+    cy: 0.11023
+  - z: 0.30832
+    w: 0.05459
+    d: 0.05025
+    n: 2.8
+    cy: 0.10668
+  - z: 0.31834
+    w: 0.0551
+    d: 0.0463
+    n: 2.8
+    cy: 0.10313
+  - z: 0.32837
+    w: 0.05294
+    d: 0.0463
+    n: 2.8
+    cy: 0.09958
+  - z: 0.33839
+    w: 0.05499
+    d: 0.0463
+    n: 2.8
+    cy: 0.09603
+  - z: 0.34841
+    w: 0.05401
+    d: 0.0463
+    n: 2.8
+    cy: 0.09248
+  - z: 0.35844
+    w: 0.05513
+    d: 0.0463
+    n: 2.8
+    cy: 0.08894
+  - z: 0.36846
+    w: 0.05308
+    d: 0.0463
+    n: 2.8
+    cy: 0.08539
+  - z: 0.38565
+    w: 0.03521
+    d: 0.03521
+    n: 2.8
+    cy: 0.0793
+  - z: 0.40285
+    w: 0.03798
+    d: 0.0542
+    n: 2.8
+    cy: 0.07321
+  - z: 0.41323
+    w: 0.03886
+    d: 0.0542
+    n: 2.8
+    cy: 0.06953
+  - z: 0.42361
+    w: 0.04063
+    d: 0.0542
+    n: 2.8
+    cy: 0.06586
+  - z: 0.43399
+    w: 0.04063
+    d: 0.0542
+    n: 2.8
+    cy: 0.06218
+  - z: 0.44437
+    w: 0.03886
+    d: 0.0542
+    n: 2.8
+    cy: 0.0585
+  - z: 0.45475
+    w: 0.03798
+    d: 0.0542
+    n: 2.8
+    cy: 0.05483
+  - z: 0.46075
+    w: 0.0285
+    d: 0.03018
+    n: 2.6
+    cy: 0.0527
+- id: deltoid
+  role: shell
+  mirror: true
+  k_m: 0.0045
+  stations:
+  - z: 0.40185
+    w: 0.02936
+    d: 0.04214
+    n: 2.8
+    cy: 0.07356
+  - z: 0.40685
+    w: 0.04194
+    d: 0.0602
+    n: 2.8
+    cy: 0.07179
+  - z: 0.41807
+    w: 0.04211
+    d: 0.0602
+    n: 2.8
+    cy: 0.06782
+  - z: 0.4293
+    w: 0.04306
+    d: 0.0602
+    n: 2.8
+    cy: 0.06384
+  - z: 0.44053
+    w: 0.0429
+    d: 0.0602
+    n: 2.8
+    cy: 0.05987
+  - z: 0.45175
+    w: 0.04274
+    d: 0.0602
+    n: 2.8
+    cy: 0.05589
+  - z: 0.45875
+    w: 0.02992
+    d: 0.04214
+    n: 2.8
+    cy: 0.05341
+- id: upper_arm
+  role: shell
+  mirror: true
+  k_m: 0.0045
+  stations:
+  - z: 0.33714
+    w: 0.04748
+    d: 0.04184
+    n: 2.8
+    cy: 0.09648
+  - z: 0.34214
+    w: 0.05935
+    d: 0.0523
+    n: 2.8
+    cy: 0.09471
+  - z: 0.3543
+    w: 0.05921
+    d: 0.0523
+    n: 2.8
+    cy: 0.0904
+  - z: 0.36646
+    w: 0.05875
+    d: 0.0523
+    n: 2.8
+    cy: 0.08609
+  - z: 0.37346
+    w: 0.047
+    d: 0.04184
+    n: 2.8
+    cy: 0.08362
+- id: forearm
+  role: shell
+  mirror: true
+  k_m: 0.0045
+  stations:
+  - z: 0.23216
+    w: 0.03
+    d: 0.045
+    n: 2.8
+    cy: 0.13365
+  - z: 0.24216
+    w: 0.03751
+    d: 0.05625
+    n: 2.8
+    cy: 0.13011
+  - z: 0.25359
+    w: 0.03708
+    d: 0.05625
+    n: 2.8
+    cy: 0.12606
+  - z: 0.26502
+    w: 0.05811
+    d: 0.05625
+    n: 2.8
+    cy: 0.12202
+  - z: 0.27645
+    w: 0.05909
+    d: 0.05625
+    n: 2.8
+    cy: 0.11797
+  - z: 0.28787
+    w: 0.05698
+    d: 0.05625
+    n: 2.8
+    cy: 0.11392
+  - z: 0.2993
+    w: 0.05796
+    d: 0.05625
+    n: 2.8
+    cy: 0.10988
+  - z: 0.31073
+    w: 0.05708
+    d: 0.05625
+    n: 2.8
+    cy: 0.10583
+  - z: 0.32216
+    w: 0.05843
+    d: 0.05625
+    n: 2.8
+    cy: 0.10178
+  - z: 0.32514
+    w: 0.04674
+    d: 0.045
+    n: 2.8
+    cy: 0.10073
+joints:
+- id: hip_l
+  pos:
+  - 0.0
+  - 0.035
+  - 0.275
+- id: knee_l
+  pos:
+  - 0.0
+  - 0.035
+  - 0.1485
+- id: ankle_l
+  pos:
+  - 0.0
+  - 0.035
+  - 0.066
+- id: shoulder_l
+  pos:
+  - 0.0
+  - 0.0603
+  - 0.4393
+- id: elbow_l
+  pos:
+  - 0.0
+  - 0.09925
+  - 0.3293
+hard_points:
+- id: shoulder_pitch_servos
+  segment: chest
+  center:
+  - 0.0
+  - 0.0
+  - 0.4288
+  size:
+  - 0.0203
+  - 0.0773
+  - 0.0413
+  margin_m: 0.0031
+- id: neck_yaw_servo
+  segment: neck
+  center:
+  - 0.0056
+  - 0.0
+  - 0.461225
+  size:
+  - 0.0285
+  - 0.0174
+  - 0.03255
+  margin_m: 0.0031
+- id: pack_tattu3s1300
+  segment: back
+  center:
+  - -0.0238
+  - 0.0
+  - 0.4288
+  size:
+  - 0.0273
+  - 0.0773
+  - 0.0413
+  margin_m: 0.0031
+- id: hip_yaw_servo_l
+  segment: pelvis
+  center:
+  - 0.0106
+  - 0.035
+  - 0.3585
+  size:
+  - 0.0505
+  - 0.03
+  - 0.0403
+  margin_m: 0.0031
+- id: hip_yaw_servo_r
+  segment: pelvis
+  center:
+  - 0.0106
+  - -0.035
+  - 0.3585
+  size:
+  - 0.0505
+  - 0.03
+  - 0.0403
+  margin_m: 0.0031
+- id: waist_yaw_servo
+  segment: pelvis
+  center:
+  - 0.0106
+  - 0.0
+  - 0.3585
+  size:
+  - 0.0505
+  - 0.03
+  - 0.0403
+  margin_m: 0.0031
+- id: pi5_adapter_buck_imu_bay
+  segment: pelvis
+  center:
+  - -0.0258
+  - 0.0
+  - 0.3435
+  size:
+  - 0.0223
+  - 0.0903
+  - 0.0613
+  margin_m: 0.0031
+- id: hip_pitch_servo_l
+  segment: leg_core_l
+  center:
+  - 0.0
+  - 0.035
+  - 0.2856
+  size:
+  - 0.03
+  - 0.052
+  - 0.0505
+  margin_m: 0.0031
+- id: hip_roll_servo_l
+  segment: glute_l
+  center:
+  - -0.0615
+  - 0.035
+  - 0.2856
+  size:
+  - 0.0403
+  - 0.03
+  - 0.0505
+  margin_m: 0.0031
+- id: knee_servo_l
+  segment: leg_core_l
+  center:
+  - 0.0106
+  - 0.035
+  - 0.24435
+  size:
+  - 0.0505
+  - 0.052
+  - 0.03
+  margin_m: 0.0031
+- id: knee_joint_l
+  segment: leg_core_l
+  center:
+  - 0.0
+  - 0.035
+  - 0.1485
+  size:
+  - 0.028
+  - 0.032
+  - 0.032
+  margin_m: 0.0031
+- id: ankle_pitch_servo_l
+  segment: leg_core_l
+  center:
+  - -0.0106
+  - 0.035
+  - 0.1165
+  size:
+  - 0.0505
+  - 0.052
+  - 0.03
+  margin_m: 0.0031
+- id: ankle_joint_l
+  segment: leg_core_l
+  center:
+  - 0.0
+  - 0.035
+  - 0.066
+  size:
+  - 0.028
+  - 0.032
+  - 0.032
+  margin_m: 0.0031
+- id: ankle_roll_servo_l
+  segment: heel_l
+  center:
+  - -0.044
+  - 0.035
+  - 0.0485
+  size:
+  - 0.0403
+  - 0.03
+  - 0.0503
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s1_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.066047
+  - 0.407851
+  size:
+  - 0.0345
+  - 0.012105
+  - 0.003809
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s2_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.069563
+  - 0.41166
+  size:
+  - 0.0345
+  - 0.021833
+  - 0.003809
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s3_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.068739
+  - 0.415469
+  size:
+  - 0.0345
+  - 0.022884
+  - 0.003809
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s4_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.06739
+  - 0.419278
+  size:
+  - 0.0345
+  - 0.022884
+  - 0.003809
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s5_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.066041
+  - 0.423087
+  size:
+  - 0.0345
+  - 0.022884
+  - 0.003809
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s6_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.064693
+  - 0.426896
+  size:
+  - 0.0345
+  - 0.022884
+  - 0.003809
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s7_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.063344
+  - 0.430704
+  size:
+  - 0.0345
+  - 0.022884
+  - 0.003809
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s8_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.061995
+  - 0.434513
+  size:
+  - 0.0345
+  - 0.022884
+  - 0.003809
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s9_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.060646
+  - 0.438322
+  size:
+  - 0.0345
+  - 0.022884
+  - 0.003809
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s10_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.059297
+  - 0.442131
+  size:
+  - 0.0345
+  - 0.022884
+  - 0.003809
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s11_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.058474
+  - 0.44594
+  size:
+  - 0.0345
+  - 0.021833
+  - 0.003809
+  margin_m: 0.0031
+- id: shoulder_roll_servo_s12_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.061989
+  - 0.449749
+  size:
+  - 0.0345
+  - 0.012105
+  - 0.003809
+  margin_m: 0.0031
+- id: elbow_servo_s1_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.090485
+  - 0.316372
+  size:
+  - 0.0203
+  - 0.013537
+  - 0.00426
+  margin_m: 0.0031
+- id: elbow_servo_s2_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.095745
+  - 0.320632
+  size:
+  - 0.0203
+  - 0.027074
+  - 0.00426
+  margin_m: 0.0031
+- id: elbow_servo_s3_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.100165
+  - 0.324891
+  size:
+  - 0.0203
+  - 0.038932
+  - 0.00426
+  margin_m: 0.0031
+- id: elbow_servo_s4_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.099306
+  - 0.329151
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: elbow_servo_s5_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.097797
+  - 0.333411
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: elbow_servo_s6_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.096289
+  - 0.33767
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: elbow_servo_s7_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.094781
+  - 0.34193
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: elbow_servo_s8_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.093272
+  - 0.346189
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: elbow_servo_s9_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.091764
+  - 0.350449
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: elbow_servo_s10_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.090904
+  - 0.354709
+  size:
+  - 0.0203
+  - 0.038932
+  - 0.00426
+  margin_m: 0.0031
+- id: elbow_servo_s11_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.095325
+  - 0.358968
+  size:
+  - 0.0203
+  - 0.027074
+  - 0.00426
+  margin_m: 0.0031
+- id: elbow_servo_s12_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.100585
+  - 0.363228
+  size:
+  - 0.0203
+  - 0.013537
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s1_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.106172
+  - 0.272072
+  size:
+  - 0.0203
+  - 0.013537
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s2_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.111432
+  - 0.276332
+  size:
+  - 0.0203
+  - 0.027074
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s3_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.115853
+  - 0.280591
+  size:
+  - 0.0203
+  - 0.038932
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s4_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.114993
+  - 0.284851
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s5_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.113485
+  - 0.289111
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s6_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.111976
+  - 0.29337
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s7_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.110468
+  - 0.29763
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s8_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.10896
+  - 0.301889
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s9_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.107451
+  - 0.306149
+  size:
+  - 0.0203
+  - 0.040229
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s10_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.106592
+  - 0.310409
+  size:
+  - 0.0203
+  - 0.038932
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s11_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.111012
+  - 0.314668
+  size:
+  - 0.0203
+  - 0.027074
+  - 0.00426
+  margin_m: 0.0031
+- id: wrist_servo_s12_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.116272
+  - 0.318928
+  size:
+  - 0.0203
+  - 0.013537
+  - 0.00426
+  margin_m: 0.0031
+- id: gripper_servo_s1_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.124561
+  - 0.242625
+  size:
+  - 0.03055
+  - 0.008653
+  - 0.002723
+  margin_m: 0.0031
+- id: gripper_servo_s2_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.127924
+  - 0.245347
+  size:
+  - 0.03055
+  - 0.017306
+  - 0.002723
+  margin_m: 0.0031
+- id: gripper_servo_s3_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.127954
+  - 0.24807
+  size:
+  - 0.03055
+  - 0.019295
+  - 0.002723
+  margin_m: 0.0031
+- id: gripper_servo_s4_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.127054
+  - 0.250793
+  size:
+  - 0.03055
+  - 0.019423
+  - 0.002723
+  margin_m: 0.0031
+- id: gripper_servo_s5_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.12609
+  - 0.253516
+  size:
+  - 0.03055
+  - 0.019423
+  - 0.002723
+  margin_m: 0.0031
+- id: gripper_servo_s6_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.125125
+  - 0.256239
+  size:
+  - 0.03055
+  - 0.019423
+  - 0.002723
+  margin_m: 0.0031
+- id: gripper_servo_s7_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.124161
+  - 0.258961
+  size:
+  - 0.03055
+  - 0.019423
+  - 0.002723
+  margin_m: 0.0031
+- id: gripper_servo_s8_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.123197
+  - 0.261684
+  size:
+  - 0.03055
+  - 0.019423
+  - 0.002723
+  margin_m: 0.0031
+- id: gripper_servo_s9_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.122233
+  - 0.264407
+  size:
+  - 0.03055
+  - 0.019423
+  - 0.002723
+  margin_m: 0.0031
+- id: gripper_servo_s10_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.121333
+  - 0.26713
+  size:
+  - 0.03055
+  - 0.019295
+  - 0.002723
+  margin_m: 0.0031
+- id: gripper_servo_s11_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.121363
+  - 0.269853
+  size:
+  - 0.03055
+  - 0.017306
+  - 0.002723
+  margin_m: 0.0031
+- id: gripper_servo_s12_l
+  segment: arm_core_l
+  center:
+  - 0.0
+  - 0.124725
+  - 0.272575
+  size:
+  - 0.03055
+  - 0.008653
+  - 0.002723
+  margin_m: 0.0031
+- id: neck_pitch_servo
+  segment: head
+  center:
+  - 0.0
+  - 0.0
+  - 0.49585
+  size:
+  - 0.0174
+  - 0.03255
+  - 0.0285
+  margin_m: 0.0031
+- id: camera
+  segment: head
+  center:
+  - 0.01545
+  - 0.0
+  - 0.51225
+  size:
+  - 0.0115
+  - 0.025
+  - 0.024
+  margin_m: 0.0031

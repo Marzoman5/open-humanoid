@@ -1,0 +1,98 @@
+# Packaging-for-look study (T-20261019-c1aa), PROVISIONAL (bench pending). DATA for variants/adam/design/packaging/engine.py,
+# which wraps r1_calibrated.py (strict / half / ODM-calibrated gates, R10). Written by packaging/concepts.py; re-run, do not edit.
+# Base: R1x-ckh23-knee110 (the R1 recommended hardware). Pack in the engine stays the R1 engine pack (Tattu 1300 value; the
+# build pack is the GNB 1850, runtime scaled as in R1). x_rail_servos = servos on a 6 V Pololu D36V50F6 rail (in-process model).
+id: PK-C2-package
+description: 'Combined package C2 (recommended look package): small arm + neck servos (6 V rail), waist yaw kept, flat Tattu 3S 1300 across the
+  upper back (= the engine pack), knee + ankle-pitch servos relocated through 1:1 parallelograms, 6-DOF legs.'
+base: adam
+height_m: 0.55
+template: humanoid_v2
+packaging:
+- t0004
+- cad_foundation
+proportions:
+  upper_arm: 0.19
+  forearm: 0.21
+joints:
+- hip_yaw
+- hip_roll
+- hip_pitch
+- name: knee
+  range:
+  - 0
+  - 110
+- name: ankle_pitch
+  range:
+  - -80
+  - 60
+- ankle_roll
+- waist_yaw
+- neck_yaw
+- neck_pitch
+- shoulder_pitch
+- shoulder_roll
+- elbow
+- gripper
+mass_model:
+  structure_kg_at_1m: 11.9
+actuator_default: sts3215-12v
+actuators:
+  knee: sts3250-12v
+  hip_roll: sts3250-12v
+  shoulder_pitch: sts3045m
+  shoulder_roll: sts3045m
+  elbow: sts3045m
+  gripper: scs0009
+  neck_yaw: scs0009
+  neck_pitch: scs0009
+locomotion:
+  walk:
+    stance_knee_flex_deg: 40
+power:
+  pack: lipo-3s-1300-tattu
+  charger: charger-skyrc-b6neo
+  regulator: buck-pololu-d36v50f5
+  compute: rpi-5-4gb
+parts:
+  onboard:
+  - part: rpi-5-4gb
+    qty: 1
+  - part: microsd-32gb
+    qty: 1
+  - part: waveshare-bus-servo-adapter
+    qty: 1
+  - part: imu-bno085
+    qty: 1
+  - part: cam-rpi-v3
+    qty: 1
+    power_w: 1.2
+  - part: lipo-3s-1300-tattu
+    qty: 1
+  - part: buck-pololu-d36v50f5
+    qty: 1
+  - part: power-switch-xt60
+    qty: 1
+  - part: fastener-kit-m2-m3
+    qty: 1
+  - part: bearing-kit-small
+    qty: 1
+  - part: wiring-kit-bus
+    qty: 1
+  offboard:
+  - part: charger-skyrc-b6neo
+    qty: 1
+x_rail_servos:
+  sts3045m: 6.0
+  scs0009: 6.0
+transmissions:
+  knee:
+    ratio: 1.0
+    efficiency: 0.95
+    note: '1:1 parallelogram (crank, rod, two M3 ball links): speed kept; 5% loss is an ASSUMPTION'
+    host: thigh
+  ankle_pitch:
+    ratio: 1.0
+    efficiency: 0.95
+    note: '1:1 parallelogram (crank, rod, two M3 ball links): speed kept; 5% loss is an ASSUMPTION'
+    host: shank

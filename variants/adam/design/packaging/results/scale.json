@@ -1,0 +1,134 @@
+{
+ "refs": {
+  "optimus_like": {
+   "thigh_upper": 0.08395172644127018,
+   "knee": 0.060000000000000005,
+   "calf_max": 0.06573584671065258,
+   "ankle": 0.04637682279770899,
+   "upper_arm": 0.04769901868530716,
+   "elbow": 0.04534883720930233,
+   "forearm": 0.04462466333205077,
+   "head_w": 0.082,
+   "shoulder_P3": null
+  },
+  "atlas_like": {
+   "thigh_upper": 0.0882021052631579,
+   "knee": 0.065,
+   "calf_max": 0.06992877492877493,
+   "ankle": 0.04943262411347519,
+   "upper_arm": 0.052773561811505505,
+   "elbow": 0.04622093023255815,
+   "forearm": 0.04462447996496608,
+   "head_w": 0.09200000000000001,
+   "shoulder_P3": null
+  }
+ },
+ "floors_mm": {
+  "STS3215 direct (R1 layout)": {
+   "thigh_upper": 58.2,
+   "knee": 58.2,
+   "calf_max": 58.2,
+   "ankle": 58.2,
+   "upper_arm": 36.2,
+   "elbow": 48.5,
+   "forearm": 36.2,
+   "head_w": 48.5
+  },
+  "STS3215 legs relocated (slim knee/ankle) + STS3045M arm + SCS0009 neck/gripper": {
+   "thigh_upper": 58.2,
+   "knee": 38.2,
+   "calf_max": 58.2,
+   "ankle": 38.2,
+   "upper_arm": 26.5,
+   "elbow": 42.7,
+   "forearm": 23.6,
+   "head_w": 38.75
+  }
+ },
+ "h_min_m": {
+  "STS3215 direct (R1 layout)": {
+   "thigh_upper": [
+    0.69,
+    0.66
+   ],
+   "knee": [
+    0.97,
+    0.9
+   ],
+   "calf_max": [
+    0.89,
+    0.83
+   ],
+   "ankle": [
+    1.25,
+    1.18
+   ],
+   "upper_arm": [
+    0.76,
+    0.69
+   ],
+   "elbow": [
+    1.07,
+    1.05
+   ],
+   "forearm": [
+    0.81,
+    0.81
+   ],
+   "head_w": [
+    0.59,
+    0.53
+   ]
+  },
+  "STS3215 legs relocated (slim knee/ankle) + STS3045M arm + SCS0009 neck/gripper": {
+   "thigh_upper": [
+    0.69,
+    0.66
+   ],
+   "knee": [
+    0.64,
+    0.59
+   ],
+   "calf_max": [
+    0.89,
+    0.83
+   ],
+   "ankle": [
+    0.82,
+    0.77
+   ],
+   "upper_arm": [
+    0.56,
+    0.5
+   ],
+   "elbow": [
+    0.94,
+    0.92
+   ],
+   "forearm": [
+    0.53,
+    0.53
+   ],
+   "head_w": [
+    0.47,
+    0.42
+   ]
+  }
+ },
+ "binding": {
+  "STS3215 direct (R1 layout)": {
+   "feature": "ankle",
+   "h_min_m": [
+    1.25,
+    1.18
+   ]
+  },
+  "STS3215 legs relocated (slim knee/ankle) + STS3045M arm + SCS0009 neck/gripper": {
+   "feature": "elbow",
+   "h_min_m": [
+    0.94,
+    0.92
+   ]
+  }
+ }
+}

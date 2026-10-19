@@ -1,0 +1,521 @@
+{
+ "candidate": "PK-C2-package",
+ "robot_height_m": 0.55,
+ "generated_by": "python -m openhumanoid.concept.motions.pickup",
+ "peak_factor": 1.52,
+ "reach": {
+  "side": "r",
+  "robot_height_m": 0.55,
+  "scan_m": [
+   0.3,
+   0.55,
+   0.025
+  ],
+  "resolution_m": 0.005,
+  "segments": [
+   {
+    "from_m": 0.3,
+    "to_m": 0.3938
+   }
+  ],
+  "min_reachable_m": 0.3,
+  "max_reachable_m": 0.3938,
+  "limits_outside": {
+   "0.3-0.3938": {
+    "just_below": null,
+    "just_above": "table collision",
+    "just_above_m": 0.3969,
+    "just_below_m": null
+   }
+  },
+  "object": {
+   "mass_kg": 0.15,
+   "radius_m": 0.02,
+   "half_height_m": 0.025,
+   "friction": 1.0
+  },
+  "edge_to_object_m": 0.05,
+  "tilt_limits_deg": [
+   -70.0,
+   45.0
+  ],
+  "rows": [
+   {
+    "table_m": 0.3,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 40.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 0.2,
+    "arm_reach_fraction": 0.643,
+    "table_clearance_mm": 7.1,
+    "standing_gap_mm": 20.6,
+    "balance_margin_mm": 50.6,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.325,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 40.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 8.7,
+    "arm_reach_fraction": 0.8,
+    "table_clearance_mm": 4.4,
+    "standing_gap_mm": 50.4,
+    "balance_margin_mm": 50.6,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.35,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 40.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 0.1,
+    "arm_reach_fraction": 0.939,
+    "table_clearance_mm": 5.5,
+    "standing_gap_mm": 77.0,
+    "balance_margin_mm": 50.6,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.375,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 40.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 7.6,
+    "arm_reach_fraction": 0.975,
+    "table_clearance_mm": 4.2,
+    "standing_gap_mm": 83.7,
+    "balance_margin_mm": 50.6,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.3875,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 30.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 13.3,
+    "arm_reach_fraction": 0.97,
+    "table_clearance_mm": 4.8,
+    "standing_gap_mm": 84.4,
+    "balance_margin_mm": 50.6,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.3938,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 20.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 13.9,
+    "arm_reach_fraction": 0.97,
+    "table_clearance_mm": 4.2,
+    "standing_gap_mm": 86.1,
+    "balance_margin_mm": 50.6,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.3969,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x8247); the body or arm meets the table at the grasp (x2563); table clearance x mm (forearm_r) at the grasp (x563)"
+   },
+   {
+    "table_m": 0.4,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x8350); the body or arm meets the table at the grasp (x2623); table clearance x mm (forearm_r) at the grasp (x509)"
+   },
+   {
+    "table_m": 0.425,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x7685); the body or arm meets the table at the grasp (x3305); table clearance x mm (forearm_r) at the grasp (x86)"
+   },
+   {
+    "table_m": 0.45,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x4735); the body or arm meets the table at the grasp (x2823); legs/waist out of range once the arm is out (x88)"
+   },
+   {
+    "table_m": 0.475,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x1870); the body or arm meets the table at the grasp (x1011); legs/waist out of range once the arm is out (x32)"
+   },
+   {
+    "table_m": 0.5,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x411); legs/waist out of range once the arm is out (x12); the body or arm meets the table at the grasp (x6)"
+   },
+   {
+    "table_m": 0.525,
+    "reachable": false,
+    "limit": "arm reach",
+    "why": ""
+   },
+   {
+    "table_m": 0.55,
+    "reachable": false,
+    "limit": "arm reach",
+    "why": ""
+   }
+  ]
+ },
+ "demand": [
+  {
+   "table_m": 0.3938,
+   "valid": true,
+   "reason": "",
+   "posture": {
+    "squat_deg": 20.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 13.9,
+    "table_min_clearance_m": 0.0042,
+    "standing_gap_m": 0.0861,
+    "balance_margin_min_m": 0.0506
+   },
+   "joints": {
+    "hip_yaw_l": {
+     "actuator": "sts3215-12v",
+     "peak_nm": 0.1147,
+     "stall_nm": 2.721,
+     "peak_frac_of_stall": 0.042,
+     "strict_margin": 16.61,
+     "calibrated_peak_frac": 0.028,
+     "calibrated_margin": 25.25,
+     "envelope_utilisation": 0.042,
+     "rms_over_rated": 0.017
+    },
+    "hip_yaw_r": {
+     "actuator": "sts3215-12v",
+     "peak_nm": 0.1258,
+     "stall_nm": 2.721,
+     "peak_frac_of_stall": 0.046,
+     "strict_margin": 15.15,
+     "calibrated_peak_frac": 0.03,
+     "calibrated_margin": 23.02,
+     "envelope_utilisation": 0.046,
+     "rms_over_rated": 0.018
+    },
+    "hip_roll_l": {
+     "actuator": "sts3250-12v",
+     "peak_nm": 0.1437,
+     "stall_nm": 4.535,
+     "peak_frac_of_stall": 0.032,
+     "strict_margin": 22.09,
+     "calibrated_peak_frac": 0.021,
+     "calibrated_margin": 33.58,
+     "envelope_utilisation": 0.032,
+     "rms_over_rated": 0.015
+    },
+    "hip_roll_r": {
+     "actuator": "sts3250-12v",
+     "peak_nm": 0.1446,
+     "stall_nm": 4.535,
+     "peak_frac_of_stall": 0.032,
+     "strict_margin": 21.95,
+     "calibrated_peak_frac": 0.021,
+     "calibrated_margin": 33.37,
+     "envelope_utilisation": 0.032,
+     "rms_over_rated": 0.015
+    },
+    "hip_pitch_l": {
+     "actuator": "sts3215-12v",
+     "peak_nm": 0.2646,
+     "stall_nm": 2.721,
+     "peak_frac_of_stall": 0.097,
+     "strict_margin": 7.2,
+     "calibrated_peak_frac": 0.064,
+     "calibrated_margin": 10.95,
+     "envelope_utilisation": 0.097,
+     "rms_over_rated": 0.155
+    },
+    "hip_pitch_r": {
+     "actuator": "sts3215-12v",
+     "peak_nm": 0.2756,
+     "stall_nm": 2.721,
+     "peak_frac_of_stall": 0.101,
+     "strict_margin": 6.91,
+     "calibrated_peak_frac": 0.067,
+     "calibrated_margin": 10.51,
+     "envelope_utilisation": 0.101,
+     "rms_over_rated": 0.168
+    },
+    "knee_l": {
+     "actuator": "sts3250-12v",
+     "peak_nm": 0.7962,
+     "stall_nm": 4.535,
+     "peak_frac_of_stall": 0.176,
+     "strict_margin": 3.99,
+     "calibrated_peak_frac": 0.115,
+     "calibrated_margin": 6.06,
+     "envelope_utilisation": 0.176,
+     "rms_over_rated": 0.165
+    },
+    "knee_r": {
+     "actuator": "sts3250-12v",
+     "peak_nm": 0.7962,
+     "stall_nm": 4.535,
+     "peak_frac_of_stall": 0.176,
+     "strict_margin": 3.99,
+     "calibrated_peak_frac": 0.115,
+     "calibrated_margin": 6.06,
+     "envelope_utilisation": 0.176,
+     "rms_over_rated": 0.164
+    },
+    "ankle_pitch_l": {
+     "actuator": "sts3215-12v",
+     "peak_nm": 0.4703,
+     "stall_nm": 2.721,
+     "peak_frac_of_stall": 0.173,
+     "strict_margin": 4.05,
+     "calibrated_peak_frac": 0.114,
+     "calibrated_margin": 6.16,
+     "envelope_utilisation": 0.173,
+     "rms_over_rated": 0.343
+    },
+    "ankle_pitch_r": {
+     "actuator": "sts3215-12v",
+     "peak_nm": 0.4744,
+     "stall_nm": 2.721,
+     "peak_frac_of_stall": 0.174,
+     "strict_margin": 4.02,
+     "calibrated_peak_frac": 0.115,
+     "calibrated_margin": 6.1,
+     "envelope_utilisation": 0.174,
+     "rms_over_rated": 0.36
+    },
+    "ankle_roll_l": {
+     "actuator": "sts3215-12v",
+     "peak_nm": 0.0622,
+     "stall_nm": 2.721,
+     "peak_frac_of_stall": 0.023,
+     "strict_margin": 30.62,
+     "calibrated_peak_frac": 0.015,
+     "calibrated_margin": 46.54,
+     "envelope_utilisation": 0.023,
+     "rms_over_rated": 0.018
+    },
+    "ankle_roll_r": {
+     "actuator": "sts3215-12v",
+     "peak_nm": 0.0952,
+     "stall_nm": 2.721,
+     "peak_frac_of_stall": 0.035,
+     "strict_margin": 20.01,
+     "calibrated_peak_frac": 0.023,
+     "calibrated_margin": 30.41,
+     "envelope_utilisation": 0.035,
+     "rms_over_rated": 0.022
+    },
+    "waist_yaw": {
+     "actuator": "sts3215-12v",
+     "peak_nm": 0.3524,
+     "stall_nm": 2.721,
+     "peak_frac_of_stall": 0.129,
+     "strict_margin": 5.41,
+     "calibrated_peak_frac": 0.085,
+     "calibrated_margin": 8.22,
+     "envelope_utilisation": 0.129,
+     "rms_over_rated": 0.054
+    },
+    "neck_yaw": {
+     "actuator": "scs0009",
+     "peak_nm": 0.0,
+     "stall_nm": 0.226,
+     "peak_frac_of_stall": 0.0,
+     "strict_margin": 17109.04,
+     "calibrated_peak_frac": 0.0,
+     "calibrated_margin": 26005.73,
+     "envelope_utilisation": 0.0,
+     "rms_over_rated": 0.0
+    },
+    "neck_pitch": {
+     "actuator": "scs0009",
+     "peak_nm": 0.0007,
+     "stall_nm": 0.226,
+     "peak_frac_of_stall": 0.003,
+     "strict_margin": 224.72,
+     "calibrated_peak_frac": 0.002,
+     "calibrated_margin": 341.57,
+     "envelope_utilisation": 0.0,
+     "rms_over_rated": 0.002
+    },
+    "shoulder_pitch_l": {
+     "actuator": "sts3045m",
+     "peak_nm": 0.017,
+     "stall_nm": 0.588,
+     "peak_frac_of_stall": 0.029,
+     "strict_margin": 24.19,
+     "calibrated_peak_frac": 0.019,
+     "calibrated_margin": 36.77,
+     "envelope_utilisation": 0.031,
+     "rms_over_rated": 0.083
+    },
+    "shoulder_pitch_r": {
+     "actuator": "sts3045m",
+     "peak_nm": 0.7457,
+     "stall_nm": 0.588,
+     "peak_frac_of_stall": 1.268,
+     "strict_margin": 0.55,
+     "calibrated_peak_frac": 0.834,
+     "calibrated_margin": 0.84,
+     "envelope_utilisation": 1.38,
+     "rms_over_rated": 1.681
+    },
+    "shoulder_roll_l": {
+     "actuator": "sts3045m",
+     "peak_nm": 0.0315,
+     "stall_nm": 0.588,
+     "peak_frac_of_stall": 0.054,
+     "strict_margin": 13.06,
+     "calibrated_peak_frac": 0.035,
+     "calibrated_margin": 19.86,
+     "envelope_utilisation": 0.057,
+     "rms_over_rated": 0.156
+    },
+    "shoulder_roll_r": {
+     "actuator": "sts3045m",
+     "peak_nm": 0.3568,
+     "stall_nm": 0.588,
+     "peak_frac_of_stall": 0.607,
+     "strict_margin": 1.15,
+     "calibrated_peak_frac": 0.399,
+     "calibrated_margin": 1.75,
+     "envelope_utilisation": 0.645,
+     "rms_over_rated": 0.28
+    },
+    "elbow_l": {
+     "actuator": "sts3045m",
+     "peak_nm": 0.0165,
+     "stall_nm": 0.588,
+     "peak_frac_of_stall": 0.028,
+     "strict_margin": 24.93,
+     "calibrated_peak_frac": 0.018,
+     "calibrated_margin": 37.89,
+     "envelope_utilisation": 0.03,
+     "rms_over_rated": 0.083
+    },
+    "elbow_r": {
+     "actuator": "sts3045m",
+     "peak_nm": 0.1917,
+     "stall_nm": 0.588,
+     "peak_frac_of_stall": 0.326,
+     "strict_margin": 2.15,
+     "calibrated_peak_frac": 0.214,
+     "calibrated_margin": 3.26,
+     "envelope_utilisation": 0.347,
+     "rms_over_rated": 0.503
+    },
+    "gripper_l": {
+     "actuator": "scs0009",
+     "peak_nm": 0.0002,
+     "stall_nm": 0.226,
+     "peak_frac_of_stall": 0.001,
+     "strict_margin": 782.68,
+     "calibrated_peak_frac": 0.001,
+     "calibrated_margin": 1189.67,
+     "envelope_utilisation": 0.0,
+     "rms_over_rated": 0.003
+    },
+    "gripper_r": {
+     "actuator": "scs0009",
+     "peak_nm": 0.0556,
+     "stall_nm": 0.226,
+     "peak_frac_of_stall": 0.246,
+     "strict_margin": 2.84,
+     "calibrated_peak_frac": 0.162,
+     "calibrated_margin": 4.32,
+     "envelope_utilisation": 0.304,
+     "rms_over_rated": 0.36
+    }
+   },
+   "worst_joint": "shoulder_pitch_r",
+   "worst_peak_frac": 1.268,
+   "arm_waist_gripper": {
+    "waist_yaw": {
+     "actuator": "sts3215-12v",
+     "peak_nm": 0.3524,
+     "stall_nm": 2.721,
+     "peak_frac_of_stall": 0.129,
+     "strict_margin": 5.41,
+     "calibrated_peak_frac": 0.085,
+     "calibrated_margin": 8.22,
+     "envelope_utilisation": 0.129,
+     "rms_over_rated": 0.054
+    },
+    "shoulder_pitch_r": {
+     "actuator": "sts3045m",
+     "peak_nm": 0.7457,
+     "stall_nm": 0.588,
+     "peak_frac_of_stall": 1.268,
+     "strict_margin": 0.55,
+     "calibrated_peak_frac": 0.834,
+     "calibrated_margin": 0.84,
+     "envelope_utilisation": 1.38,
+     "rms_over_rated": 1.681
+    },
+    "shoulder_roll_r": {
+     "actuator": "sts3045m",
+     "peak_nm": 0.3568,
+     "stall_nm": 0.588,
+     "peak_frac_of_stall": 0.607,
+     "strict_margin": 1.15,
+     "calibrated_peak_frac": 0.399,
+     "calibrated_margin": 1.75,
+     "envelope_utilisation": 0.645,
+     "rms_over_rated": 0.28
+    },
+    "elbow_r": {
+     "actuator": "sts3045m",
+     "peak_nm": 0.1917,
+     "stall_nm": 0.588,
+     "peak_frac_of_stall": 0.326,
+     "strict_margin": 2.15,
+     "calibrated_peak_frac": 0.214,
+     "calibrated_margin": 3.26,
+     "envelope_utilisation": 0.347,
+     "rms_over_rated": 0.503
+    },
+    "gripper_r": {
+     "actuator": "scs0009",
+     "peak_nm": 0.0556,
+     "stall_nm": 0.226,
+     "peak_frac_of_stall": 0.246,
+     "strict_margin": 2.84,
+     "calibrated_peak_frac": 0.162,
+     "calibrated_margin": 4.32,
+     "envelope_utilisation": 0.304,
+     "rms_over_rated": 0.36
+    }
+   },
+   "tether_pct_bw": 0.02,
+   "peak_factor": 1.52,
+   "gate": 0.7
+  },
+  {
+   "table_m": 0.4,
+   "valid": false,
+   "reason": "reference infeasible: pickup at 0.40 m: the arm covers this height but in every whole-body posture tried the forearm, hand or body would meet the table edge (object 50 mm behind the front edge) (table clearance -x mm (forearm_r) at the grasp (x8350); the body or arm meets the table at the grasp (x2623); table clearance x mm (forearm_r) at the grasp (x509)); COM tracking error 0.00 mm"
+  },
+  {
+   "table_m": 0.45,
+   "valid": false,
+   "reason": "reference infeasible: pickup at 0.45 m: the arm covers this height but in every whole-body posture tried the forearm, hand or body would meet the table edge (object 50 mm behind the front edge) (table clearance -x mm (forearm_r) at the grasp (x4735); the body or arm meets the table at the grasp (x2823); legs/waist out of range once the arm is out (x88)); COM tracking error 0.00 mm"
+  }
+ ],
+ "seconds": 1674.9
+}
