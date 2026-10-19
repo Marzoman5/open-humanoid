@@ -52,11 +52,10 @@ P = {
     "sole_t": 6.5,             # was 3.2 (the heel and sole behind the plate are the next weakest section)
     "foot_plate_t": 8.0,       # horn plate of the foot; was 4.3 (the thin 90 deg cantilever)
     "foot_plate_t_top": 5.3,   # plate thickness at the horn screws (S5 housing front face at x = -14.9: 21.2 - 14.9 - 1 gap)
-    "foot_plate_step_above_axis": -9.0,   # thick (8) part ends 9 mm below the roll axis (z = 29), under the washer counterbores (down to 29.8)
+    "foot_plate_step_above_axis": -11.5,  # thick (8) part ends 11.5 mm below the roll axis (z = 26.5), the 45 deg ramp ends at 29.2: under the washer counterbores (down to 30.3) and clear of the screw tool corridors
     "foot_plate_top_above_axis": 11.5,    # plate top: covers the washer counterbores (7 + 3.2 + 1.3 wall)
-    "foot_plate_w_top": 30.0,  # the thin upper part is narrower: its corners sweep the +-30 deg roll arc under the shank
     "foot_ribs": [(-12.0, 36.0), (0.0, 22.0), (12.0, 36.0)],   # (y offset, rib height above the sole at the plate): two tall ribs carry the moment up to the horn
-    "foot_plate_w": 40.0,
+    "foot_plate_w": 34.0,
     "foot_rib_t": 4.0,         # three ribs along the sole from the plate to the toe
     "foot_rib_h": 22.0,        # rib height at the plate (above the sole top), tapering to rib_h_end at the tip
     "foot_rib_h_end": 8.0,
@@ -84,7 +83,7 @@ def tup(v) -> tuple[float, float, float]:
 
 
 def _interfaces_v3(ctx):
-    """Interfaces for THIS design: layout_v3.yaml differs from layout_v2.yaml only in the CAD-limited hip pitch range (the thicker web and plate
+    """Interfaces for THIS design: strength/layout_leg_v3.yaml differs from layout_v2.yaml only in the CAD-limited hip pitch range (the thicker web and plate
     cost 4 deg of extension and 1.3 deg of flexion, see range_note). Generated in memory so the shared generated/interfaces.yaml (read by the
     concept loop and by leg_v2) is not touched; every number except that range equals the file's."""
     from pathlib import Path
@@ -92,7 +91,7 @@ def _interfaces_v3(ctx):
     from openhumanoid.cad import interfaces
 
     spec = ctx.spec
-    layout = interfaces.load_layout(spec, Path(ctx.variant_dir) / "cad" / "layout_v3.yaml")
+    layout = interfaces.load_layout(spec, Path(ctx.variant_dir) / "cad" / "strength" / "layout_leg_v3.yaml")
     try:
         from openhumanoid.simgen import load_sizing
 
@@ -370,11 +369,12 @@ def build(ctx) -> Assembly:
     hpt = P["foot_plate_t_top"]
     z_step = ax[2] + P["foot_plate_step_above_axis"]
     z_top = ax[2] + P["foot_plate_top_above_axis"]
-    plate = box_at(bd.Location(), (hpf, wf, z_step), (x_plate0 + hpf / 2, ax[1], z_step / 2))
-    plate = bd.fillet(plate.edges().filter_by(bd.Axis.X).filter_by_position(bd.Axis.Z, z_step - 0.01, z_step + 0.01), 5.0)
-    top = box_at(bd.Location(), (hpt, P["foot_plate_w_top"], z_top - z_step + 1.0), (x_plate0 + hpt / 2, ax[1], (z_top + z_step - 1.0) / 2))
-    top = bd.fillet(top.edges().filter_by(bd.Axis.X).filter_by_position(bd.Axis.Z, z_top - 0.01, z_top + 0.01), P["foot_corner_r"])      # round the top corners: they sweep the roll arc under the shank
-    plate = safe_union(plate, top, "foot plate step")
+    # plate profile in x-z, extruded along y: thick (hpf) below z_step, a 45 degree ramp (no sharp re-entrant step: the FEA found 80 MPa there), thin (hpt) above
+    ramp = hpf - hpt
+    prof = [(x_plate0, 0.0), (x_plate0 + hpf, 0.0), (x_plate0 + hpf, z_step), (x_plate0 + hpt, z_step + ramp), (x_plate0 + hpt, z_top), (x_plate0, z_top)]
+    wire = bd.Wire.make_polygon([bd.Vector(x, ax[1] - wf / 2, z) for x, z in prof], close=True)
+    plate = bd.extrude(bd.Face(wire), amount=wf, dir=(0, 1, 0))
+    plate = bd.fillet(plate.edges().filter_by(bd.Axis.X).filter_by_position(bd.Axis.Z, z_top - 0.01, z_top + 0.01), P["foot_corner_r"])      # round the top corners: they sweep the roll arc under the shank
     sole = box_at(bd.Location(), (fl, fwid, st), (ax[0] - 0.33 * fl + fl / 2, ax[1], st / 2))
     body = safe_union(plate, sole, "foot")
     xr0 = x_plate0 + hpf - 0.5

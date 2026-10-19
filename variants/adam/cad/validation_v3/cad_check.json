@@ -1658,22 +1658,22 @@
           {
             "check": "solid",
             "ok": true,
-            "msg": "valid single solid, 54606.6 mm3",
-            "volume": 54606.587402979785
+            "msg": "valid single solid, 54299.3 mm3",
+            "volume": 54299.34008852604
           },
           {
             "check": "step_roundtrip",
             "ok": true,
             "msg": "volume drift 1.3e-13, bbox drift 7.1e-15 mm",
-            "dv": 1.2804673574691686e-13,
+            "dv": 1.2903926955714938e-13,
             "dbbox": 7.105427357601002e-15
           },
           {
             "check": "stl",
             "ok": true,
-            "msg": "watertight, 3448 faces, volume agrees to 2.0e-05",
-            "faces": 3448,
-            "dv": 2.021204596909399e-05
+            "msg": "watertight, 3320 faces, volume agrees to 6.3e-05",
+            "faces": 3320,
+            "dv": 6.26796608423386e-05
           },
           {
             "check": "expect:ankle_roll_l: centre screw hole on the output axis",
@@ -1710,7 +1710,7 @@
             "pitch_mm": 0.25
           }
         ],
-        "volume_mm3": 54606.587402979785
+        "volume_mm3": 54299.34008852604
       }
     ],
     "assembly_check": {
