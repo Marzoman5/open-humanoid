@@ -37,13 +37,19 @@ class Housing:
     notes: list[str] = field(default_factory=list)
 
     def build(self, loc: bd.Location, adds: list[bd.Shape] | None = None, extra: list[FeatureResult] | None = None,
-              name: str = "bracket") -> tuple[bd.Shape, list[Site]]:
-        """Union `adds` (world shapes) with the placed raw block, then apply the housing features placed by `loc` and any `extra`
-        features (world frame). Returns (shape, sites) in the same frame as `loc`."""
+              name: str = "bracket", fillet: float | None = None) -> tuple[bd.Shape, list[Site]]:
+        """Union `adds` (world shapes) with the placed raw block, round the internal corners the union creates (dfm `fillet.default_mm`, set
+        `fillet=0` to skip), then apply the housing features placed by `loc` and any `extra` features (world frame). Returns (shape, sites)
+        in the same frame as `loc`."""
         base = loc * self.block
         for a in adds or []:       # bodies may only connect through each other: check for one solid after all are in
             base = safe_union(base, a, f"{name}+", single=False)
         check_solid(base, f"{name}: bodies do not form one solid (a plate or beam misses the housing)")
+        if adds and (fillet is None or fillet > 0):
+            from .fillets import fillet_internal
+
+            base, rep = fillet_internal(base, fillet, min_len=6.0, name=name)
+            self.notes.append(f"{name}: {rep['filleted']}/{rep['candidates']} internal edges filleted r={rep['radius_mm']:.1f}" + (f" ({'; '.join(rep['notes'])})" if rep["notes"] else ""))
         return apply(base, *[f.placed(loc) for f in self.feats], *(extra or []), name=name)
 
     def placed_cover(self, loc: bd.Location) -> tuple[bd.Shape, list[Site]]:
@@ -79,11 +85,13 @@ def servo_housing(actuator_id: str = "sts3215-12v", *, fit: str = "slip", wall: 
         feats.append(insert_boss("M3", part=part, mates=cover_part, tag=f"cover_insert_{i}",
                                  at=loc_from((x_ins, sy * y_ins, z_bot), (0, 0, -1), (1, 0, 0))))
     shape, sites = apply(block, *[f for f in feats], name=part)
+    cb_depth = scr["counterbore_depth"]
+    cover_screw_len = next(x for x in (8, 10, 12, 16, 20) if x >= cover_t - cb_depth + 4.5 - 1e-9)      # floor under the head + ~4.5 mm into the insert
     cov = box_at(bd.Location(), (xhi - xlo, yhi - ylo, cover_t), ((xlo + xhi) / 2, (ylo + yhi) / 2, z_bot - cover_t / 2))
     cov = bd.fillet(cov.edges().filter_by(bd.Axis.Z), 3.0)
     cfeats = []
     for i, sy in enumerate((-1, 1)):
-        cfeats.append(screw_clearance("M3", through=cover_t, counterbore=True, head="low", part=cover_part, mates=part, length=8,
+        cfeats.append(screw_clearance("M3", through=cover_t, counterbore=True, head="low", part=cover_part, mates=part, length=cover_screw_len,
                                       tag=f"cover_screw_{i}", at=loc_from((x_ins, sy * y_ins, z_bot - cover_t), (0, 0, -1), (1, 0, 0))))
     if stub_hole:
         d = P["back_boss_d"] + 2 * dfm.clearance("sliding") + dfm.hole_comp(P["back_boss_d"])

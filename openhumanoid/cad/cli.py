@@ -9,6 +9,7 @@
   access  <builder.py>             assembly access / order check
   check   <builder.py>             all three, JSON report to --out
   render  <builder.py>             clay views of the assembly
+  strength <builder.py>            G-strength: analytic + FEA strength check of the printed parts (exit non-zero on FAIL)
 
 A builder file defines  build(ctx) -> openhumanoid.cad.assembly.Assembly  where ctx has .spec, .interfaces, .variant_dir.
 Exit status is non-zero when a check fails, so the same command works as a gate.
@@ -192,6 +193,9 @@ def main(argv=None) -> int:
         s.add_argument("--side", default="l")
         s.add_argument("--gap", action="store_true", help="ROM: also report moving-gap violations")
         s.set_defaults(fn=fn)
+    from .strength.cli import add_parser as _add_strength
+
+    _add_strength(sp)
     a = ap.parse_args(argv)
     return a.fn(a)
 

@@ -110,9 +110,13 @@ def mesh_of(s: bd.Shape, tol: float = 0.05, ang: float = 0.2):
     import numpy as np
     import trimesh
 
-    verts, tris = s.tessellate(tol, ang)
-    m = trimesh.Trimesh(np.array([(v.X, v.Y, v.Z) for v in verts], float), np.array(tris, int), process=True)
-    m.merge_vertices()
+    m = None
+    for t_, a_ in ((tol, ang), (0.03, 0.15), (0.02, 0.1), (0.01, 0.05)):        # filleted parts can leave T-junctions at a coarse tolerance: refine until watertight
+        verts, tris = s.tessellate(t_, a_)
+        m = trimesh.Trimesh(np.array([(v.X, v.Y, v.Z) for v in verts], float), np.array(tris, int), process=True)
+        m.merge_vertices()
+        if m.is_watertight and m.is_winding_consistent:
+            break
     return m
 
 

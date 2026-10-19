@@ -1,0 +1,137 @@
+# Structural-strength policy for FDM-printed parts (G-strength). Read by openhumanoid/cad/strength/policy.py.
+# Variant-agnostic: nothing here names Adam. Variant numbers (robot mass, concept report, print profile per part) live in
+# variants/<id>/cad/strength.yaml.
+#
+# Every number has `src` and `kind`:
+#   sourced     - taken from a cited datasheet / paper (url or file)
+#   derived     - computed from sourced numbers (formula in `src`)
+#   assumption  - engineering judgement; NOT sourced; the physical test that would replace it is in `test`
+#   policy      - a rule we chose (safety factors)
+version: "0.1"
+
+# ---- safety-factor policy ---------------------------------------------------------------------------------------------------
+# margin = allowable / (SF * demand). A check passes at margin >= 1. SF multiplies the DEMAND (it is a load factor) and the allowable is
+# the weakest-direction strength of the printed material at the point (see materials.py), after the knockdowns below.
+safety_factors:
+  walk:     {sf: 3.0, fatigue: true,  gate: true,  kind: policy, src: "brief: >= 3 on fatigue-relevant walking loads; research/methods/d section 7: SF >= 3 on Z-direction static strength"}
+  push:     {sf: 3.0, fatigue: true,  gate: true,  kind: policy, src: "same class as walking (cyclic, repeated)"}
+  stall:    {sf: 1.5, fatigue: false, gate: true,  kind: policy, src: "brief: >= 1.5 on actuator stall; the servo cannot exceed stall, so the load is bounded"}
+  fall:     {sf: 2.0, fatigue: false, gate: true,  kind: policy, src: "brief: >= 2 static on fall (protected case: the stopping distance a bumper/TPU shell is designed to give)"}
+  fall_rigid: {sf: 1.0, fatigue: false, gate: false, kind: policy, src: "informational bound: rigid contact, no bumper; reported, not gated; tells you which parts NEED the bumper"}
+  handling: {sf: 2.0, fatigue: false, gate: true,  kind: policy, src: "assembly, lifting by an arm, screw clamp: user error is common and cheap to prevent"}
+  hardware: {sf: 2.0, fatigue: false, gate: true,  kind: policy, src: "screws, bearings: bolt-group, insert and bearing checks are scored with the load case that drives them"}
+
+# ---- fatigue ---------------------------------------------------------------------------------------------------------------
+fatigue:
+  design_life_cycles: {v: 500000, kind: assumption, src: "about 70 h of walking at 2 steps/s per leg-load cycle, a hobby robot's service life", test: "log real walking hours"}
+  sn_inverse_slope_k: {v: 5.5, kind: sourced, src: "Ezeh & Susmel 2018 (PLA S-N reference curve): research/methods/d section 4"}
+  reference_cycles: {v: 2000000, kind: sourced, src: "same: endurance limit defined at 2e6 cycles"}
+  # endurance limit as a fraction of the tensile strength of the same direction. PLA/ASA/Nylon12 sourced; the others borrow the
+  # lowest sourced value (PLA 0.10) because no source was found for them: research/methods/print_materials.yaml `fatigue_reference`.
+  endurance_fraction:
+    PLA: {v: 0.10, kind: sourced}
+    PLA_plus: {v: 0.10, kind: assumption, src: "borrowed from PLA"}
+    PETG: {v: 0.10, kind: assumption, src: "no PETG fraction found (Martins 2024 behind a captcha); PLA value borrowed (conservative vs ASA 0.25)", test: "tension-tension coupon, R=0.1, 3 coupons"}
+    ASA: {v: 0.25, kind: sourced, src: "Rodrigues 2026, Polymers 18(2):302"}
+    ABS: {v: 0.10, kind: assumption, src: "borrowed from PLA"}
+    CF_nylon: {v: 0.17, kind: assumption, src: "neat Nylon 12 value (Rodrigues 2026); CF filling is expected to be no worse, unverified", test: "coupon"}
+  notch_sensitivity_q: {v: 1.0, kind: assumption, src: "FDM PLA/PETG are notch sensitive; q = 1 applies the full Kt (conservative)"}
+
+# ---- material knock-downs --------------------------------------------------------------------------------------------------
+knockdown:
+  process: {v: 0.80, kind: assumption, src: "datasheet coupons are 100% infill, 2 walls, tuned printer, vendor says 'for reference only, not for design' (print_materials.yaml header). 0.8 covers a typical hobby printer with a dry-ish spool.", test: "print and break 3 tension coupons per orientation on the real printer; replace this by the measured ratio"}
+  hole_bearing_over_tensile: {v: 1.0, kind: assumption, src: "pin bearing strength in a printed hole ~ tensile strength of the in-plane direction"}
+  shear_over_tensile: {v: 0.5, kind: assumption, src: "shear allowable = 0.5 x tensile of the same direction (von Mises gives 0.577; interlayer shear is lower)"}
+  compression_over_tensile: {v: 1.0, kind: assumption, src: "plastic compression ~ tension for these materials"}
+  endurance_xy_z_same: {v: true, kind: sourced, src: "Ezeh & Susmel 2018: build direction has little effect on the endurance fraction"}
+
+# ---- print profile defaults (used for effective sections) -------------------------------------------------------------------
+print_profile:
+  perimeters: {v: 4, kind: policy, src: "dfm.yaml min_wall.structural (4 perimeters)"}
+  line_width_mm: {v: 0.45, kind: assumption, src: "0.4 mm nozzle, 0.45 mm extrusion width"}
+  infill_pct: {v: 40, kind: policy, src: "structural parts, gyroid/cubic"}
+  # An infill region transmits roughly its volume fraction of the stress. Perimeters and top/bottom skins are solid.
+  infill_efficiency: {v: 1.0, kind: assumption, src: "load-carrying fraction = infill_pct/100 (for gyroid/cubic at low strain); real value is below that", test: "bending coupon"}
+  mass_fill_fraction: {v: 0.45, kind: derived, src: "docs/cad-foundation.md: 35% effective fill at 15% infill; 45% for 40% infill with 4 perimeters"}
+
+# ---- stress concentration (internal corners) --------------------------------------------------------------------------------
+stress_concentration:
+  effective_min_radius_mm: {v: 0.3, kind: assumption, src: "a 'sharp' printed internal corner is rounded by the nozzle (0.2 mm radius) and the layer edges; 0.3 mm is used as the floor radius"}
+  kt_c: {v: 0.35, kind: derived, src: "fit of the Peterson flat-bar shoulder-fillet chart (D/d >= 2): Kt = 1 + c sqrt(t/r) gives 2.6 / 2.1 / 1.8 / 1.5 at r/t = 0.05 / 0.1 / 0.2 / 0.3 (chart values 2.6 / 2.1 / 1.7 / 1.5)"}
+  kt_cap: {v: 3.0, kind: assumption, src: "beyond 3 the FEA must decide"}
+  edge_min_length_mm: {v: 3.0, kind: policy, src: "short concave edges (hole bottoms, tiny pockets) are not load-bearing corners"}
+  detect_sharp_below_mm: {v: 1.0, kind: policy, src: "dfm.yaml fillet_load_path_mm (1.0)"}
+  zone_over_thickness: {v: 1.5, kind: assumption, src: "a sharp concave edge raises the stress of every section within 1.5 x t of it, transverse to the edge"}
+
+# ---- fasteners and holes ---------------------------------------------------------------------------------------------------
+fasteners:
+  insert_pullout_n:
+    M2: {v: 150.0, kind: assumption}
+    M2.5: {v: 220.0, kind: assumption}
+    M3: {v: 300.0, kind: assumption, src: "design allowable in PETG/PLA+ with 4 perimeters. CNC Kitchen reports ~1150 N (120 kgf) for M3 (research/methods/d section 5, UNVERIFIED: page 403); Sculpteo reports M2 477 N in MJF PA12. 300 N is about 1/4 of the unverified figure.", test: "pull 3 M3 inserts on the real printer with a luggage scale / force gauge"}
+  insert_ref_material: PETG
+  insert_scales_with_strength: true
+  screw_steel_proof_mpa: {v: 640.0, kind: sourced, src: "ISO 898-1 class 8.8 proof stress 580 MPa (d<=16: Rp0.2 640 min yield); a bought A2-70 screw is weaker (450 MPa), the check uses 450 for stainless", check_as: 450.0}
+  preload_fraction_of_clamp: {v: 0.5, kind: assumption, src: "a hand-tightened screw (handling.screw_clamp_force_n) keeps half of its clamp force after creep and thermal cycling of printed plastic; the bolted-joint model starts from that preload (VDI 2230 style: the joint stays closed until the external load beats the clamped patch)", test: "tighten 3 M3 screws with a torque screwdriver, log the clamp with a load washer / re-torque check after 24 h at 40 C"}
+  screw_stiffness_gpa: 200.0
+
+# ---- fall model ------------------------------------------------------------------------------------------------------------
+# Energy method: E = m g dh_com. A leg contact point takes a share phi of E and stops it over a distance d:
+#   F_avg = phi E / d ,  F_peak = k_peak F_avg.
+# The two stopping distances bound the answer: `protected` (a TPU bumper / compliant shell, the design intent, GATED) and `rigid`
+# (bare printed part against a hard floor, INFORMATIONAL). Nothing in the literature gives a stopping distance or peak factor for
+# 0.5 m printed humanoids (research/methods/d section 3), so these are ASSUMPTIONS and the drop test below replaces them.
+fall:
+  com_height_fraction: {v: 0.55, kind: sourced, src: "human-like CoM at 0.55 H; humanoid benchmark range 0.50-0.60"}
+  lying_com_height_m: {v: 0.06, kind: assumption, src: "torso half-thickness + shell"}
+  energy_fraction_leg_contact: {v: 0.25, kind: assumption, src: "arms, head, torso hit first; the leg contact point is allowed to absorb a quarter of the fall energy", test: "drop test (docs/strength.md section 9)"}
+  stop_distance_protected_mm: {v: 10.0, kind: assumption, src: "10 mm of TPU 95A bumper crush plus shell flex (TPU modulus 33.6 MPa, 551% elongation, research/methods/d). A 5 mm bare-PETG stopping distance gives 60 g for a 0.3 m drop (research/methods/d section 3, derived)", test: "accelerometer drop test with and without bumper"}
+  stop_distance_rigid_mm: {v: 3.0, kind: assumption, src: "bare printed part and hard floor: part flex only; research/methods/d section 3 uses 2-5 mm"}
+  peak_over_average: {v: 1.5, kind: assumption, src: "no published value (research/methods/d section 3); measure with the accelerometer"}
+  pivot_load_factor: {v: 2.0, kind: assumption, src: "a toppling robot loads the foot edge it pivots on with about 2 x weight (rotational acceleration + weight)"}
+  landing_load_factor: {v: 3.0, kind: assumption, src: "stumble / step-down landing on one foot = 3 g equivalent (a 20 mm drop onto a 7 mm stopping distance)"}
+
+# ---- walking / pushing -------------------------------------------------------------------------------------------------------
+walking:
+  grf_peak_over_weight: {v: 1.5, kind: assumption, src: "peak vertical ground reaction of a stiff-footed small biped in single support; human walking 1.1-1.3 BW with heel-strike transients to 1.5-3 BW", test: "foot force plate / load cell under one foot while walking"}
+  friction_tangential_over_normal: {v: 0.3, kind: assumption, src: "tangential ground force kept below mu = 0.3 for printed/rubber soles: horizontal force = 0.3 F"}
+  concept_headroom: {v: 1.25, kind: assumption, src: "the concept engine replays a frozen LIPM + IK walk open loop: its loads are a lower bound for a balancing controller (R1 report limitations); 25% headroom on every joint peak", test: "strain gauge / servo current logging while walking"}
+  stance_knee_flexion_deg: {v: 40, kind: sourced, src: "concept engine gait choice 40 deg stance knee flexion, 0.5 s step (R1 report, gait table)"}
+  push_impulse_ns: {v: 0.45, kind: sourced, src: "R10 provisional absolute push, variants/adam/reviews/R1-concept-2026-10-19.md section 1"}
+  push_duration_s: {v: 0.05, kind: assumption, src: "the push is applied in 50 ms (impulsive); ToddlerBot randomisation uses 0.2 s"}
+
+# ---- handling ---------------------------------------------------------------------------------------------------------------
+handling:
+  lift_by_arm_over_weight: {v: 1.0, kind: assumption, src: "the robot is picked up by one arm: the shoulder structure carries the whole weight; dynamic factor 1.0 (+ jerk 0.5 via SF)"}
+  lift_by_leg_over_weight: {v: 1.0, kind: assumption, src: "robot lifted by one ankle or foot (a common mistake): whole weight on one leg, applied at the ankle"}
+  screw_clamp_force_n: {M2: 120.0, M2.5: 180.0, M3: 250.0, kind: assumption, src: "hand tightening with a hex key: about 0.15 N.m on M3 and nut factor 0.2 (F = T / (K d)) = 250 N; the person stops when it feels tight, so the load is self-limiting and is checked with SF 1", sf: 1.0}
+  drop_from_bench_m: {v: 0.9, kind: assumption, src: "robot or part slips off a bench: 0.9 m free drop for a bare part; not gated"}
+  assembly_driver_torque_nm: {M2: 0.20, M2.5: 0.35, M3: 0.50, kind: assumption, src: "typical hand-tightening torque with a 2.5 mm hex key; insert-twist check"}
+
+# ---- joint torque bounds -----------------------------------------------------------------------------------------------------
+joint_torque:
+  stall_bound_factor: {v: 1.0, kind: policy, src: "a servo cannot push more than stall (catalog stall_torque_nm at the model voltage)"}
+  side_force_n: {v: 150.0, kind: assumption, src: "radial force a single-sided hobby servo output (bearing + 25T spline) carries before the servo, not the printed part, is the first thing to fail; hobby 30 kg.cm servos are usually good for 5-10 kgf radial (the STS3215 datasheet gives no value)", test: "hang a weight from a horn lever on a clamped servo"}
+  side_moment_over_stall: {v: 1.0, kind: assumption, src: "the non-axial moment a single-sided servo (no idler bearing) can carry through its output shaft and horn is taken as 1 x its stall torque (a 3 N.m servo carrying 3 N.m of side moment = 300 N at a 10 mm horn offset); beyond it the servo, not the printed part, fails first", test: "clamp a servo, hang a weight from a horn lever, measure shaft play vs side moment"}
+  back_drive_over_stall: {v: 2.0, kind: assumption, src: "a joint loaded from outside (fall, hard landing) slips or back-drives at about 2 x stall before the gear train fails; the printed structure only ever sees what the servo transmits", test: "back-drive one servo with a torque wrench until it slips; strip test"}
+
+# ---- section analysis settings -----------------------------------------------------------------------------------------------
+sections:
+  step_mm: 2.0
+  min_area_mm2: 10.0
+  min_thickness_mm: {v: 1.0, kind: policy, src: "a cut thinner than 1 mm grazes a face (tessellation sliver): not a load-path section; real ribs are >= dfm min_feature 0.8 mm"}
+  shear_form_factor: 1.5
+  torsion_note: "solid sections: tau = T t / J with the area-equivalent thin rectangle J = b t^3/3 (1 - 0.63 t/b); single-cell closed sections: Bredt-Batho"
+  stress_sample: "extreme fibre of the weighted section"
+
+# ---- buckling ------------------------------------------------------------------------------------------------------------------
+buckling:
+  slender_ratio_min: {v: 8.0, kind: policy, src: "members with L / t above 8 under compression get an Euler check"}
+  end_fixity_k: {v: 1.0, kind: assumption, src: "pinned-pinned (conservative) for ribs and webs"}
+
+# ---- FEA ------------------------------------------------------------------------------------------------------------------------
+fea:
+  mesh_size_mm: {v: 2.0, kind: policy}
+  refine_at_sharp_edges_mm: {v: 0.6, kind: policy}
+  poisson: {v: 0.38, kind: assumption, src: "typical printed PLA/PETG"}
+  stress_measure: "von Mises, orthotropic strength check by the weakest-direction rule (see docs/strength.md)"
