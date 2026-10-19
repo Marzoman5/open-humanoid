@@ -101,39 +101,48 @@ notes: 'Spec check 2026-10-19: 30 kg.cm stall @12 V, 0.222 s/60deg (45 rpm) @12 
   and QUOTES.md section 7. Datasheet column ''verified'' rests on the Feetech wiki spec table, not a PDF.'
 
 # Mechanical interface data for CAD (openhumanoid/cad/components/servo.py). Each entry: {v, src, conf}.
-# conf: vendor = vendor listing/datasheet number | derived | estimate = engineering judgement, MUST be confirmed with the
-# fit gauge (`python -m openhumanoid.cad gauge`) or calipers before the first full print. No vendor CAD file was used.
-# Frame: origin on the output axis at the horn-face plane; +z out of the horn face; +x toward the long end of the body; y = width.
+# conf: datasheet = vendor CAD/drawing | vendor = vendor listing | derived | estimate = engineering judgement (confirm with the fit gauge).
+# Vendor CAD read 2026-10-19 (T-20261019-f6e2; files local only, no licence grant): Waveshare ST3215 STEP + 2D drawing, Feetech ST-3215-C018 drawing
+# Frame: origin on the output axis at the TOP OF THE CASE ENVELOPE; +z out of the horn side; +x toward the long end; y = width.
+# The case is stepped (vendor CAD): 29 mm thick at the axis, 32 mm over most of the body, 35 mm over two bumps; the face around the
+# output is 2.5 mm below the envelope top, and the stock horn sinks into that recess (see horn_float).
 mechanical:
   body_mm:
-    v: [45.2, 24.7, 35.0]            # length (x), width (y), height along the axis (z, from horn face down to the back face)
-    src: https://servodatabase.com/servo/feetech/sts3215 ; https://www.waveshare.com/wiki/ST3215_Servo (45.22 x 35 x 24.72) ; https://www.robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215
-    conf: vendor
-  axis_from_near_end_mm: {v: 12.0, src: "estimate: horn axis sits ~12 mm from the short end (horn OD 20 nearly flush with the end); measure", conf: estimate}
-  corner_fillet_mm: {v: 1.5, src: "estimate", conf: estimate}
+    v: [45.22, 24.72, 35.0]          # length (x), width (y), envelope height along the axis (z)
+    src: "Feetech ST-3215-C018 drawing (45.22 x 24.72 x 35); vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d (bbox 45.223 x 24.723; case 34.85 incl. bumps)"
+    conf: datasheet
+  axis_from_near_end_mm: {v: 10.11, src: "vendor drawing: Waveshare ST3215-2D.zip (10.11); vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d (10.11)", conf: datasheet}
+  corner_fillet_mm: {v: 2.0, src: "vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d: vertical case edges R2.0", conf: datasheet}
   output_spline:
-    teeth: {v: 25, src: https://servodatabase.com/servo/feetech/sts3215, conf: vendor}
-    od_mm: {v: 5.9, src: https://servodatabase.com/servo/feetech/sts3215 ; https://www.robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215, conf: vendor}
-    boss_d_mm: {v: 10.0, src: "estimate: round boss around the spline", conf: estimate}
-    boss_h_mm: {v: 2.0, src: "estimate: horn seats ~2 mm above the case face", conf: estimate}
-    horn_float_mm: {v: 0.3, src: "estimate: air gap so the turning horn does not drag on the case boss", conf: estimate}
-    protrusion_mm: {v: 4.5, src: "estimate: spline end above the case face (boss 2.0 + spline 2.5)", conf: estimate}
-    center_screw: {v: M3, src: "estimate: STS-series horns are retained by a centre M3 screw", conf: estimate}
-  horn: {v: round_25t, src: "openhumanoid/cad/components/data/hardware.yaml#horns", conf: estimate}
+    teeth: {v: 25, src: "Feetech ST-3215-C018 drawing (25T)", conf: datasheet}
+    od_mm: {v: 5.9, src: "vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d (spline r 2.95); servodatabase 5.9", conf: datasheet}
+    boss_d_mm: {v: 10.0, src: "vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d: horn hub Ø10 inside the 2.5 mm recess around the output (there is no boss above the case)", conf: datasheet}
+    boss_h_mm: {v: 0.05, src: "derived from vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d: nothing stands above the envelope top before the horn; 0.05 is a token height (the component code needs a solid)", conf: derived}
+    horn_float_mm: {v: -0.30, src: "derived from vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d: horn underside 0.25 mm BELOW the envelope top (horn sits in the recess), = boss_h + float", conf: derived}
+    protrusion_mm: {v: 0.75, src: "vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d: spline end 0.75 above the envelope top (3.3 above the recessed face; Feetech ST-3215-C018 drawing: 3.4)", conf: datasheet}
+    center_screw: {v: M3, src: "Feetech ST-3215-C018 drawing ('M3X6' machine screw into the spline)", conf: datasheet}
+  horn: {v: round_25t, src: "openhumanoid/cad/components/data/hardware.yaml#horns (stock horn, dimensions from the same vendor CAD)", conf: datasheet}
   back_shaft:
-    note: "dual-axis, the back face carries a second output. Idler designs capture it in a bearing or idler horn on the far yoke plate."
-    spline_od_mm: {v: 5.9, src: "estimate: assumed same 25T spline as the front", conf: estimate}
-    protrusion_mm: {v: 3.0, src: "estimate", conf: estimate}
-    boss_d_mm: {v: 9.0, src: "estimate", conf: estimate}
+    note: "The back is a STATIC Ø6 boss (4.1 below the 29 mm face, 0.55 below the envelope) with a Ø2.6 pilot for a PA3.0x5 self-tapping screw. The stock idler horn (Ø19.2 x 2.2, inside the envelope's back recess) spins on it. The component's rotating 'stub' therefore models the PA3 screw head + washer (static in reality, modelled with the shafts: conservative)."
+    spline_od_mm: {v: 5.5, src: "derived: PA3 pan head Ø5.5 (ISO 7049 class) on the Ø6 boss; Feetech ST-3215-C018 drawing ('PA3.0X5 self-tapping screw' on the Ø6 back boss)", conf: derived}
+    protrusion_mm: {v: 3.0, src: "derived from vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d: boss 0.55 (modelled 1.0) + screw head 2.0 below the envelope bottom", conf: derived}
+    boss_d_mm: {v: 6.0, src: "Feetech ST-3215-C018 drawing (Ø6 back boss); vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d (r 3.0)", conf: datasheet}
   case_holes:
-    note: "tapped mounting holes in the two long side faces (y = +-W/2). Position and thread are ESTIMATES. The default servo_pocket does not rely on them."
-    thread: {v: M3, src: "estimate (SO-ARM-style servo brackets use M3-class screws)", conf: estimate}
-    depth_mm: {v: 6.0, src: "estimate", conf: estimate}
-    x_mm: {v: [0.0, 24.0], src: "estimate: along the body from the axis", conf: estimate}
-    z_mm: {v: [-8.0, -27.0], src: "estimate: down from the horn face", conf: estimate}
+    note: "The vendor CAD has NO holes in the long side faces. The real mounting holes are M2 holes in the top and bottom faces (face_holes). This key is kept because the component code reads it: x = the face-hole x positions, z = -0.5 (just under the top face), so interfaces.yaml lists them at the top edge. Design with face_holes, never with these."
+    thread: {v: M2, src: "Feetech ST-3215-C018 drawing ('4-M2.0'); vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d (Ø1.6 pilots)", conf: datasheet}
+    depth_mm: {v: 2.8, src: "vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d: bottom-face holes 2.8 deep, top-face holes 1.4 deep", conf: datasheet}
+    x_mm: {v: [8.3, 29.0], src: "vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d: top-face holes at x = 8.3 and 29.0 from the axis", conf: datasheet}
+    z_mm: {v: [-0.5], src: "convention only (see note)", conf: derived}
+  face_holes:
+    note: "M2 pilot holes (Ø1.6) in the case faces, x from the axis toward the long end, y across. Top = horn side. The Feetech drawings dimension a 12.5 mm pitch near the axis that does not match the Waveshare STEP; calipers decide before relying on them."
+    top: {v: [[8.3, 10.25], [8.3, -10.25], [29.0, 10.25], [29.0, -10.25]], src: "vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d (r 0.8, 1.4 deep)", conf: datasheet}
+    bottom: {v: [[8.3, 10.25], [8.3, -10.25], [32.75, 10.25], [32.75, -10.25]], src: "vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d (r 0.8, 2.8 deep, r 1.0 counterbore)", conf: datasheet}
+    case_screws: {v: [[-7.1, 9.35], [-7.1, -9.35], [32.75, 10.0], [32.75, -10.0]], src: "vendor CAD: Waveshare ST3215.step (ST3215-3D.zip), measured with build123d: 8 x PA2.0 self-tapping case screws, 4 per face (Feetech ST-3215-C018 drawing: '8-PA2.0')", conf: datasheet}
   cable:
-    connector: {v: "5264/2.54 3-pin x2 (daisy chain)", src: https://www.waveshare.com/wiki/ST3215_Servo, conf: vendor}
-    face: {v: "+x end face", src: "estimate", conf: estimate}
-    z_mm: {v: -26.0, src: "estimate: down from the horn face", conf: estimate}
-    socket_wh_mm: {v: [12.0, 8.0], src: "estimate", conf: estimate}
-    plug_len_mm: {v: 14.0, src: "estimate: plug + bend radius room beyond the end face", conf: estimate}
+    connector: {v: "5264/2.54 3-pin x2 (daisy chain)", src: "Feetech ST-3215-C018 drawing ('5264/2.54 3P'); https://www.waveshare.com/wiki/ST3215_Servo", conf: datasheet}
+    face: {v: "-z back face (plugs insert along the axis, from the back)", src: "Feetech ST-3215-C018 drawing: both sockets drawn on the back face, starting 12.5 from the axis toward the long end", conf: datasheet}
+    back_face_x_mm: {v: [12.5, 22.0], src: "Feetech ST-3215-C018 drawing: 12.5 from the axis to the sockets; 2 sockets side by side across the width (~20.5 span); far edge estimated", conf: estimate}
+    z_mm: {v: -30.0, src: "convention for the component code's end-face keep-out (code unchanged): plug room is reserved at the far end as well; the real plugs need room BELOW the back face (back_plug_room_mm)", conf: derived}
+    socket_wh_mm: {v: [12.0, 8.0], src: "estimate (5264 3-pin housing ~7.5 x 4.9 per socket, two sockets)", conf: estimate}
+    plug_len_mm: {v: 14.0, src: "estimate: plug + bend radius room", conf: estimate}
+    back_plug_room_mm: {v: 12.0, src: "estimate: 5264 plug ~7 mm + 5 mm bend of 26 AWG leads below the back face", conf: estimate}
