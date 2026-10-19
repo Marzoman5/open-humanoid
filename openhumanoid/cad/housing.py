@@ -37,13 +37,19 @@ class Housing:
     notes: list[str] = field(default_factory=list)
 
     def build(self, loc: bd.Location, adds: list[bd.Shape] | None = None, extra: list[FeatureResult] | None = None,
-              name: str = "bracket") -> tuple[bd.Shape, list[Site]]:
-        """Union `adds` (world shapes) with the placed raw block, then apply the housing features placed by `loc` and any `extra`
-        features (world frame). Returns (shape, sites) in the same frame as `loc`."""
+              name: str = "bracket", fillet: float | None = None) -> tuple[bd.Shape, list[Site]]:
+        """Union `adds` (world shapes) with the placed raw block, round the internal corners the union creates (dfm `fillet.default_mm`, set
+        `fillet=0` to skip), then apply the housing features placed by `loc` and any `extra` features (world frame). Returns (shape, sites)
+        in the same frame as `loc`."""
         base = loc * self.block
         for a in adds or []:       # bodies may only connect through each other: check for one solid after all are in
             base = safe_union(base, a, f"{name}+", single=False)
         check_solid(base, f"{name}: bodies do not form one solid (a plate or beam misses the housing)")
+        if adds and (fillet is None or fillet > 0):
+            from .fillets import fillet_internal
+
+            base, rep = fillet_internal(base, fillet, min_len=6.0, name=name)
+            self.notes.append(f"{name}: {rep['filleted']}/{rep['candidates']} internal edges filleted r={rep['radius_mm']:.1f}" + (f" ({'; '.join(rep['notes'])})" if rep["notes"] else ""))
         return apply(base, *[f.placed(loc) for f in self.feats], *(extra or []), name=name)
 
     def placed_cover(self, loc: bd.Location) -> tuple[bd.Shape, list[Site]]:

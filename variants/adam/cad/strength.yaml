@@ -17,6 +17,17 @@ leg:
   foot: {link: ankle_roll_l_link, part: foot_l}
 # the pelvis housing and its cover are a stand-in for the pelvis design (out of scope of the leg validation)
 exclude_parts: [housing_hip_yaw_l, cover_hip_yaw_l]
-# print profile: PETG, 4 perimeters, 40% infill unless a part says otherwise. Orientation comes from Part.print_up in the builder.
+# print profile: 4 perimeters, 40% infill unless a part says otherwise (the CF-nylon load-path parts use 6 perimeters). Material and orientation
+# come from Part.material / Part.print_up in the builder (leg_v3.py); a part id here overrides.
 print_profiles:
-  "*": {material: petg, perimeters: 4, infill_pct: 40}
+  "*": {perimeters: 4, infill_pct: 40}
+  yaw_bracket_l: {perimeters: 6}
+  roll_plate_l: {perimeters: 6}
+  roll_cradle_l: {perimeters: 6}
+  thigh_l: {perimeters: 6}
+  thigh_idler_l: {perimeters: 6}
+  shank_l: {perimeters: 6}
+  shank_idler_l: {perimeters: 6}
+  ankle_bracket_l: {perimeters: 6}
+  ankle_idler_l: {perimeters: 6}
+  foot_l: {perimeters: 6, infill_pct: 60}

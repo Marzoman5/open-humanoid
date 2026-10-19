@@ -214,7 +214,7 @@ class PartAnalyzer:
                             unit="MPa (equivalent, incl. Kt)", where=self.where(sec, res), mode=mode, gate=gate,
                             info={"sigma_mpa": res.sigma_tension, "tau_mpa": res.tau, "kt": kt, "kt_reason": kwhy, "phi_deg": ph,
                                   "N": res.N, "M_nmm": [res.Mu, res.Mv], "V_n": [res.Vu, res.Vv], "T_nmm": res.T,
-                                  "normal": n.round(3).tolist(), "pos_mm": sec.pos, "section_area_mm2": sec.A, "section_t_mm": sec.t_min}))
+                                  "normal": n.round(3).tolist(), "pos_mm": sec.pos, "fibre_xyz": np.asarray(res.where).round(2).tolist(), "section_area_mm2": sec.A, "section_t_mm": sec.t_min}))
         if worst_f is not None:
             uf, res, kt, kwhy, ph, n, sec, se = worst_f
             rows.append(Row(part.id, case, cls, "fatigue", margin=(1.0 / uf) if uf > 1e-12 else 1e9, demand=uf * se, allowable=se, sf=1.0,

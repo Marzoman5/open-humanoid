@@ -198,7 +198,7 @@ class Model:
                 prof = dict(profiles.get("*", {}))
                 prof.update(profiles.get(p.id, {}))
                 printed = p.process == "fdm" and not p.keepout
-                mat_name = prof.get("material", p.material)
+                mat_name = profiles.get(p.id, {}).get("material", p.material)      # a part-specific override wins; the builder's Part.material is the default
                 vol = float(m.volume) if m.is_watertight else float(p.shape.volume)
                 com = np.array(m.center_mass if m.is_watertight else m.centroid, float)
                 if printed:

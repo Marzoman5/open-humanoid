@@ -70,7 +70,7 @@ def run_cli(a) -> int:
 
     t0 = time.time()
     model = build_model(a.builder, a.variant, a.config, a.cache)
-    from ..spec import load_spec
+    from ...spec import load_spec
 
     cfg_path = a.config or str(Path(load_spec(a.variant)["_dir"]) / "cad" / "strength.yaml")
     cfg = loadcases.load_config(cfg_path)

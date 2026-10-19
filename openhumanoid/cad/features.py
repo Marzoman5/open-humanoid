@@ -233,14 +233,20 @@ def horn_mount(actuator_id: str = "sts3215-12v", *, plate_t: float = 4.3, mode: 
                                servo.params["boss_h"] + 0.5, z0=-servo.params["boss_h"] - 0.5))
     # centre screw: clear hole + counterbore from the outer face
     top = loc_from((0, 0, z_top), (0, 0, 1), (1, 0, 0))
+    # screw lengths follow the plate: floor under the counterbore + the horn thickness (+ 0.5 engagement margin), rounded up to a stock length
+    def _stock(L: float) -> int:
+        return next(x for x in (6, 8, 10, 12, 16, 20, 25, 30) if x >= L - 1e-9)
+
+    len_h = _stock(plate_t - hs["counterbore_depth"] + t_h + 0.5)
+    len_c = _stock(plate_t - cs["counterbore_depth"] + t_h + 0.5)
     ctr = screw_clearance(HP["center_screw"], through=plate_t + 1.0, counterbore=True,
-                          part=part, mates=mates or servo.id, length=6, tag="horn_center", head="low", at=top)
+                          part=part, mates=mates or servo.id, length=len_c, tag="horn_center", head="low", at=top)
     f = f.merged(ctr)
     for i, hole in enumerate(horn.holes):
         x, y = hole.frame.position.X, hole.frame.position.Y
         loc = loc_from((x, y, z_top), (0, 0, 1), (1, 0, 0))
         hf = screw_clearance(HP["screw"], through=plate_t + 1.0, counterbore=True,
-                             part=part, mates=mates or "horn", length=6, tag=f"horn_{i}", head="low", at=loc)
+                             part=part, mates=mates or "horn", length=len_h, tag=f"horn_{i}", head="low", at=loc)
         f = f.merged(hf)
     f.notes.append(f"horn mount {mode}: plate {plate_t} over horn {t_h}; underside z={z_under}, top z={z_top}")
     f.name = "horn_mount"

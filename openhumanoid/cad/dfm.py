@@ -57,6 +57,17 @@ def bed_usable(bed_mm=None) -> tuple[float, float, float]:
     return (bed[0] - 2 * m, bed[1] - 2 * m, bed[2] - m)
 
 
+def fillet_default() -> float:
+    """Default internal fillet radius (mm) for load-bearing concave corners."""
+    return float(_v(load_dfm()["fillet"]["default_mm"]))
+
+
+def fillet_min(thickness_mm: float | None = None) -> float:
+    """Minimum internal fillet radius (mm) at a corner between members of thickness t: max(min_internal, 0.5 t)."""
+    r = float(_v(load_dfm()["fillet"]["min_internal_mm"]))
+    return max(r, 0.5 * thickness_mm) if thickness_mm else r
+
+
 def z_knockdown(material: str) -> float:
     return float(load_dfm()["orientation"]["z_over_xy_strength"].get(material, 0.6))
 
