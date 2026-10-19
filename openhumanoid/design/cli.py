@@ -46,7 +46,7 @@ def cmd_render(a) -> int:
     from .studio import render_studio
 
     name, src, gen = resolve_source(a.target, a.source)
-    subj = load_subject(src, name, a.voxel)
+    subj = load_subject(src, a.name or name, a.voxel)
     out = Path(a.out) if a.out else gen / "renders" / "studio"
     r = render_studio(subj, out, refs=a.ref, zebra=a.zebra, clay=not a.no_clay, color_by_class=a.color_by_class)
     print(f"{name}: studio rig -> {out}  (review sheet: {r['sheet']})")
@@ -70,7 +70,7 @@ def cmd_metrics(a) -> int:
     from .meshio import load_subject
 
     name, src, gen = resolve_source(a.target, a.source)
-    subj = load_subject(src, name)
+    subj = load_subject(src, a.name or name)
     refs = dict(studio.reference_mask(r, "front") for r in (a.ref or []))
     approved = load_subject(a.approved, "approved") if a.approved else None
     out = Path(a.out) if a.out else gen / "design_metrics.json"
@@ -119,12 +119,13 @@ def build_parser(sp) -> None:
     s.add_argument("--ref", action="append", help="reference outline slot: name=path (profiles.yaml, mesh, or silhouette png); repeatable")
     s.add_argument("--zebra", action="store_true"); s.add_argument("--no-clay", action="store_true")
     s.add_argument("--color-by-class", action="store_true", help="tint servo/frame parts dark in the clay views")
-    s.add_argument("--voxel", type=float); s.add_argument("--out"); s.set_defaults(design_f=cmd_render)
+    s.add_argument("--voxel", type=float); s.add_argument("--out")
+    s.add_argument("--name", help="label printed on the sheet (use a neutral name for blind critic runs)"); s.set_defaults(design_f=cmd_render)
     s = sp.add_parser("massing", help="profiles.yaml -> smooth massing STL")
     s.add_argument("profiles"); s.add_argument("--voxel", type=float); s.add_argument("--out"); s.set_defaults(design_f=cmd_massing)
     s = sp.add_parser("metrics", help="code-measured rubric numbers -> generated/design_metrics.json")
     s.add_argument("target"); s.add_argument("--source"); s.add_argument("--ref", action="append")
-    s.add_argument("--approved", help="approved D1 profiles/mesh for the S1 IoU"); s.add_argument("--out")
+    s.add_argument("--approved", help="approved D1 profiles/mesh for the S1 IoU"); s.add_argument("--out"); s.add_argument("--name")
     s.add_argument("--strict", action="store_true", help="exit 1 if any numeric criterion fails")
     s.set_defaults(design_f=cmd_metrics)
     s = sp.add_parser("calibrate", help="run metrics over the reference set; check sleek vs toy separation")

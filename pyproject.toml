@@ -23,5 +23,8 @@ oh = "openhumanoid.cli:main"
 [tool.setuptools.packages.find]
 include = ["openhumanoid*"]
 
+[tool.setuptools.package-data]
+"openhumanoid.design" = ["*.yaml", "references/*.yaml", "sample/*.yaml"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

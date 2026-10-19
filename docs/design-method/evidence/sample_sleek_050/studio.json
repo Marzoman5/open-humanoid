@@ -1,0 +1,27 @@
+{
+  "subject": "sample_sleek_050",
+  "source": "profiles:openhumanoid\\design\\sample\\sample_sleek_050.yaml",
+  "height_m": 0.5,
+  "head_unit_m": 0.07,
+  "rig_version": 1,
+  "refs": [
+    "optimus_like",
+    "atlas_like"
+  ],
+  "zebra": true,
+  "files": {
+    "silhouette_front": "silhouette_front.png",
+    "overlay_front": "overlay_front.png",
+    "silhouette_side": "silhouette_side.png",
+    "overlay_side": "overlay_side.png",
+    "lineup_front": "lineup_front.png",
+    "lineup_side": "lineup_side.png",
+    "clay_front": "clay_front.png",
+    "clay_three_quarter": "clay_three_quarter.png",
+    "clay_side": "clay_side.png",
+    "clay_back": "clay_back.png",
+    "zebra_front": "zebra_front.png",
+    "zebra_three_quarter": "zebra_three_quarter.png",
+    "sheet": "sheet.png"
+  }
+}

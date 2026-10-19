@@ -1,0 +1,54 @@
+{
+ "_meta": {
+  "run": "design-critic prompt (.claude/agents/design-critic.md) executed by a Sonnet general-purpose subagent (the custom agent is not registered mid-session); blind: sheet + metrics only; design-1 = Adam CAD v0 meshes, design-2 = sample_sleek_050 smooth massing",
+  "candidate": "design-2",
+  "order": "cand_second"
+ },
+ "order": "cand_second",
+ "reads_as": "unfinished",
+ "reads_as_reason": "The form is adult and smooth, but it is a single undifferentiated clay body: no seams, no joint recesses, no visor or face detail, so it looks like an artist mannequin rather than a finished product.",
+ "criteria": {
+  "G1": {
+   "verdict": "PASS",
+   "evidence": "Human proportions with a small egg-shaped head, a visible neck and a tapered torso. No chibi head and no box torso, so it does not read as a toy or character. The mannequin look is a G2/G3 problem."
+  },
+  "G2": {
+   "verdict": "FAIL",
+   "evidence": "Chest, waist and pelvis, and thigh and shank, flow continuously, but there are no deliberate dark recesses at the shoulder, elbow, hip, knee or ankle; the arms hang as smooth tubes."
+  },
+  "G3": {
+   "verdict": "UNCERTAIN",
+   "evidence": "The clay render cannot show colour; geometrically there are no seams, gaps or inset zones where a dark under-structure or accent could appear."
+  },
+  "G4": {
+   "verdict": "PASS",
+   "evidence": "Rounded-oval sections and soft radii used consistently across head, torso, arms, legs and feet; shoulder caps slightly squarer."
+  },
+  "G6": {
+   "verdict": "PASS",
+   "evidence": "In the equal-height lineup, head size, shoulder cap, arm length and leg length match the references (IoU 0.756 / 0.775). Differences: pelvis/thigh flare more, waist pinches more, head is a plain egg, arms angle outward."
+  }
+ },
+ "pairwise": {
+  "preferred": "candidate",
+  "evidence": "Image A (baseline) has a box torso, rectangular shoulder blocks, stacked cuboid limbs, visible horizontal ledges and gaps, and a neck stalk, so it reads as a toy. Image B (candidate) has continuous curvature, a flowing silhouette and human proportions close to the references, and none of those toy cues. Image A has more mechanical interest, but it fails the sleek, calm, premium brief outright."
+ },
+ "top_changes": [
+  {
+   "criterion": "G2",
+   "change": "Add deliberate joint recesses: a short narrower station at the shoulder-to-upper-arm, elbow, hip-to-thigh and knee junctions (the dark-material zones).",
+   "profile_param": "segments[arm_l/arm_r].stations[elbow].w (reduce 15-20% over a short z span); segments[leg_l/leg_r].stations[knee].w and .d"
+  },
+  {
+   "criterion": "G3",
+   "change": "Give the head a defined visor: flatten and slightly widen the face zone so a glossy dark face plate can be assigned.",
+   "profile_param": "segments[head].stations[face].d (increase, flatten) and segments[head].stations[jaw].w"
+  },
+  {
+   "criterion": "G6",
+   "change": "Reduce the hip and thigh flare (hourglass read); bring the arms in closer to the torso.",
+   "profile_param": "segments[leg_l/leg_r].stations[thigh_top].w (reduce), segments[arm_l/arm_r].stations[shoulder].cy (inward)"
+  }
+ ],
+ "notes": "Station and segment names in top_changes are best guesses and must be matched to the real ids. The visual FAIL on G2 is not a numeric disagreement: the numeric set has no recess criterion."
+}

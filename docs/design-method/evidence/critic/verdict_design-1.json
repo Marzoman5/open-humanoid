@@ -1,0 +1,87 @@
+{
+  "step": "demo-design-1",
+  "round": 1,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL"
+      ],
+      "evidence": [
+        "Front and 3/4 clay views show a box torso with huge rectangular slab shoulders sitting on top of the chest with a hard horizontal ledge. Upper arms are rectangular blocks wider than the head. The head is a small rounded-rectangle capsule on a thin stick neck. Together this reads as a blocky character. Metrics agree: P3 shoulder width 0.476 H (band 0.22-0.29), P4 waist/shoulder 0.3857, P2b neck/head width 0.4255."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL"
+      ],
+      "evidence": [
+        "The silhouette is a stack of separate rectangles. There is a visible band at the belt line. Thigh, knee, shank and ankle are discrete boxes with white gaps between them in the equal-height silhouette. Joints are not deliberate dark recesses; they are exposed gaps and white hardware strips (forearm slits, thigh-to-knee gaps). Metrics agree: S3 ledge count 30 (band <=6), leg bumps 6 (band <=3), P8a/P9a/P9b failed."
+      ]
+    },
+    "G3": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL"
+      ],
+      "evidence": [
+        "The clay views are one uniform grey with no light shell / dark recess split. In the back view the same geometry is simply darker, so there is no designed under-structure. Visible grey hardware, hinge plates and forearm slits compete with the shells, so there are several visual voices instead of two tones. The zebra pass is dominated by black regions at the hip, thigh and knee, which suggests these parts are not covered by a smooth shell. Metrics agree: S5 hardware visible 0.186 front and 0.180 side (band <=0.005)."
+      ]
+    },
+    "G4": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL"
+      ],
+      "evidence": [
+        "Segments use different treatments: razor-edged slab shoulders and upper arms, a soft-rounded torso, round-capped fists, sharp-cornered box thighs, and chunky rounded-box shanks and feet. There is no common radius family or section squareness. The side view shows a square block foot and a box-like shoulder protruding behind the torso. Metrics agree: S4 flat area fraction 0.5755 (band <=0.3)."
+      ]
+    },
+    "G6": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL"
+      ],
+      "evidence": [
+        "At equal height next to optimus_like and atlas_like, design-1 is far broader at the shoulders. Its shoulders are square slabs, whereas the references have rounded deltoid caps and a narrow waist. Its legs are separated boxy blocks, whereas the references have continuous tapered thighs and calves. Its feet are heavy and tall, and its pelvis is as wide as its shoulders. Matching features: the head is a small, plain, rounded capsule at a roughly human head-to-height ratio (P1 passes), and hip and knee heights are in range (P6, P7). Metrics: S2 IoU vs refs 0.50 (optimus_like) and 0.51 (atlas_like)."
+      ]
+    },
+    "G5": {
+      "verdict": "NA",
+      "reason": "no baseline given"
+    }
+  },
+  "reads_as": "unfinished",
+  "numeric_hard_failures": [
+    "P2b",
+    "P3",
+    "P4",
+    "P10a",
+    "P10b",
+    "S3a",
+    "S4a",
+    "S5a",
+    "S5b"
+  ],
+  "top_changes": [
+    {
+      "criterion": "G1",
+      "change": "Cut shoulder and upper-arm width sharply, from roughly 0.48 H toward the 0.22-0.29 H band. Round the shoulder top into a deltoid cap that flows from the neck, instead of a flat ledge on the chest.",
+      "profile_param": "segments[upper_arm_*].stations[*].w and segments[torso].stations[shoulder].w (reduce w; raise n from box toward ~2-2.5 at the shoulder cap)"
+    },
+    {
+      "criterion": "G2",
+      "change": "Make the torso a continuous taper (shoulder, chest, waist at about 0.5-0.75 of shoulder width, pelvis narrower than shoulders), so chest, waist and pelvis form one flowing curve with no belt band. Thicken the neck.",
+      "profile_param": "segments[torso].stations[waist].w and segments[pelvis].stations[*].w (narrow w, and also the neck segment's w to raise neck/head width above 0.5)"
+    },
+    {
+      "criterion": "G4",
+      "change": "Unify the legs. Make each thigh a single tapering form that is widest near the top, and each shank a calf-to-ankle taper. Use one corner-radius family everywhere by setting n to the same value, around 2.5-3, on thighs, shanks, arms and feet. Lower and shorten the feet. Close or hide the gaps at the knee and ankle so the joints become recessed dark bands rather than open slits.",
+      "profile_param": "segments[thigh_*].stations[*].w/n, segments[shank_*].stations[*].w/n, segments[foot_*].stations[*].z/d (reduce foot height and length)"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}

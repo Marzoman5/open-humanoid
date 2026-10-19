@@ -1,0 +1,87 @@
+{
+  "step": "demo-design-2",
+  "round": 1,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "PASS",
+      "per_report": [
+        "PASS",
+        "PASS"
+      ],
+      "evidence": [
+        "Adult proportions with a small capsule head (P1 0.133 H), narrow waist, long legs, small foot. No chibi head, no box torso. Caveat: squared upper chest and flat shoulder tops; mannequin read.",
+        "Human proportions with a small egg-shaped head, a visible neck and a tapered torso. No chibi head and no box torso, so it does not read as a toy or character. The mannequin look is a G2/G3 problem."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Chest to waist to pelvis and thigh to shank flow, but the shoulder caps are separate tubes off a flat-topped chest block with a visible ledge; the pelvis/thigh top bulges as a kink; no deliberate dark joint recesses anywhere.",
+        "Chest, waist and pelvis, and thigh and shank, flow continuously, but there are no deliberate dark recesses at the shoulder, elbow, hip, knee or ankle; the arms hang as smooth tubes."
+      ]
+    },
+    "G3": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "One uniform clay surface; a single watertight part (M1 1/1), so no geometry for dark recesses or a shell/under-structure split.",
+        "The clay render cannot show colour; geometrically there are no seams, gaps or inset zones where a dark under-structure or accent could appear."
+      ]
+    },
+    "G4": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "PASS"
+      ],
+      "evidence": [
+        "Limbs, head and legs share soft rounding; the chest is squarer than the capsule limbs and the shoulder caps use a tighter radius; contour banding limits the judgement.",
+        "Rounded-oval sections and soft radii used consistently across head, torso, arms, legs and feet; shoulder caps slightly squarer."
+      ]
+    },
+    "G6": {
+      "verdict": "PASS",
+      "per_report": [
+        "PASS",
+        "PASS"
+      ],
+      "evidence": [
+        "At equal height the silhouette sits very close to both references (S2 IoU 0.756 / 0.775). Differs: hip/thigh flare wider, shoulders step out more abruptly, head fuller and shorter-necked.",
+        "In the equal-height lineup, head size, shoulder cap, arm length and leg length match the references (IoU 0.756 / 0.775). Differences: pelvis/thigh flare more, waist pinches more, head is a plain egg, arms angle outward."
+      ]
+    },
+    "G5": {
+      "verdict": "PASS",
+      "reason": "candidate preferred in both presentation orders"
+    }
+  },
+  "reads_as": "unfinished",
+  "numeric_hard_failures": [],
+  "top_changes": [
+    {
+      "criterion": "G2",
+      "change": "Remove the hip/thigh bulge and the abrupt shoulder ledge; round and lower the shoulder cap into a sloped shoulder line.",
+      "profile_param": "segments[leg_l/leg_r].stations[hip/thigh_top].w (reduce) and segments[torso].stations[shoulder].w / d"
+    },
+    {
+      "criterion": "G3",
+      "change": "Create a deliberate dark under-structure read: pronounced neck/waist groove and narrow joint waists at shoulder, elbow, hip and knee.",
+      "profile_param": "segments[torso].stations[neck].w, segments[leg_l].stations[knee].w / d"
+    },
+    {
+      "criterion": "G4",
+      "change": "Make the chest section rounder, in line with the limbs and head.",
+      "profile_param": "segments[torso].stations[chest].n"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}

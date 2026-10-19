@@ -51,7 +51,7 @@ def normalise(parts: dict, joints: dict | None = None):
     return out, jn, shift
 
 
-def from_profiles(path: str | Path, voxel_m: float | None = None) -> Subject:
+def from_profiles(path: str | Path, voxel_m: float | None = None, name: str | None = None) -> Subject:
     from .massing import build_massing, split_by_label
     from .profiles import load_profiles
 
@@ -60,7 +60,7 @@ def from_profiles(path: str | Path, voxel_m: float | None = None) -> Subject:
     parts = split_by_label(mesh, labels)
     # the massing is already in the profile frame (feet on z=0); do not re-centre so hard points stay valid
     joints = {j["id"]: tuple(j["pos"]) for j in prof.get("joints", [])}
-    return Subject(prof.get("name", Path(path).stem), parts, prof["height_m"], prof, joints,
+    return Subject(name or prof.get("name", Path(path).stem), parts, prof["height_m"], prof, joints,
                    prof.get("hard_points", []), f"profiles:{path}", {k: "shell" for k in parts}, mesh)
 
 
@@ -134,9 +134,9 @@ def from_mjcf(xml_path: str | Path, name: str, qpos: dict | None = None, visual_
 def load_subject(src: str | Path, name: str | None = None, voxel_m: float | None = None) -> Subject:
     """Dispatch on what `src` is: profiles .yaml, an .xml MJCF, a mesh file, or a directory of meshes."""
     src = Path(src)
-    name = name or src.stem
+    explicit, name = name, name or src.stem
     if src.suffix in (".yaml", ".yml"):
-        return from_profiles(src, voxel_m)
+        return from_profiles(src, voxel_m, explicit)
     if src.suffix == ".xml":
         return from_mjcf(src, name)
     if src.is_dir():

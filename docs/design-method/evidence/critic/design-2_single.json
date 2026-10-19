@@ -1,0 +1,50 @@
+{
+ "_meta": {
+  "run": "design-critic prompt (.claude/agents/design-critic.md) executed by a Sonnet general-purpose subagent (the custom agent is not registered mid-session); blind: sheet + metrics only; design-1 = Adam CAD v0 meshes, design-2 = sample_sleek_050 smooth massing",
+  "candidate": "design-2",
+  "order": "single"
+ },
+ "order": "single",
+ "reads_as": "unfinished",
+ "reads_as_reason": "It reads as a smooth, faceless artist mannequin with an hourglass torso, not a finished Optimus/Atlas-style product: the head has no visor, the chest has a squared top, and the waist and pelvis are pinched and flared.",
+ "criteria": {
+  "G1": {
+   "verdict": "FAIL",
+   "evidence": "Front and 3/4 clay views show a plain egg-shaped head with no visor or face plane. The chest is a flat, squared slab with a horizontal ledge at the shoulder line and square-looking upper corners. Below it the waist pinches sharply and the pelvis flares, so the body reads as a feminine mannequin. It is not chibi, but it is not a finished product either."
+  },
+  "G2": {
+   "verdict": "FAIL",
+   "evidence": "The legs flow well. In the zebra pass, thigh, knee and shank show clean nested ovals. The upper body does not. At the chest-to-waist-to-pelvis transition the zebra stripes break into noisy fragments, so curvature is discontinuous there. The front silhouette has an abrupt waist notch, a hip bulge with a diagonal crease where pelvis meets thigh, and a shoulder cap that sits like a separate pad."
+  },
+  "G3": {
+   "verdict": "UNCERTAIN",
+   "evidence": "The sheet shows one clay tone on one watertight part (M1 1/1). There are no modeled dark recesses at the neck, shoulder, elbow, hip or knee. Cannot judge two-tone discipline from this evidence, so it counts as no-pass."
+  },
+  "G4": {
+   "verdict": "FAIL",
+   "evidence": "The chest is a flat-sided, squarish block with a hard top edge. The arms, legs and head are round capsule and egg sections. The hip and thigh bulge and the shoulder caps use different, tighter radii than the rest of the body."
+  },
+  "G6": {
+   "verdict": "UNCERTAIN",
+   "evidence": "In the equal-height lineup, head size, shoulder caps, arm length, leg length and foot size closely match optimus_like and atlas_like (front IoU 0.7558 and 0.7751 in the metrics). It differs at the waist (narrower) and at the pelvis and upper thigh (flare). Cannot call it the same family."
+  }
+ },
+ "top_changes": [
+  {
+   "criterion": "G2",
+   "change": "Soften the waist pinch and the hip flare so chest, waist and pelvis read as one tapered column; trim the pelvis and upper-thigh outward bulge so there is no diagonal crease where pelvis meets thigh.",
+   "profile_param": "segments[torso].stations[waist].w (increase); segments[torso].stations[pelvis].w and segments[leg_l/leg_r].stations[thigh_top].w (reduce flare)"
+  },
+  {
+   "criterion": "G1",
+   "change": "Make the chest a rounded, capsule-like volume: raise the section roundness, shrink the width at the top chest station, tuck the shoulder caps into the chest curve. Give the head a distinct visor-style front.",
+   "profile_param": "segments[torso].stations[chest_top].n and .w; segments[head].stations[face].d and .n"
+  },
+  {
+   "criterion": "G4",
+   "change": "Bring torso, arm, leg and head sections onto one radius family by setting n equal across stations.",
+   "profile_param": "segments[torso|arm_l|arm_r|leg_l|leg_r|head].stations[*].n"
+  }
+ ],
+ "notes": "Station names are guessed from the metrics file; the author must map them to the real ids. All 19 numeric criteria pass, so the numbers do not catch these visual problems. The zebra pass shows clean leg continuity but fragmented stripes at the waist, pelvis and shoulder joins."
+}

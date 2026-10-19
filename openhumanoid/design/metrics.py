@@ -336,11 +336,28 @@ def _flatness(subject: Subject, H: float) -> dict:
     return {"S4_flat_area_fraction": flat_area / tot_area if tot_area else 0.0, "S4_worst_part_flat_fraction": worst}
 
 
+def _manifold_ok(meshes: dict) -> str:
+    """manifold3d accepts the mesh as a valid 2-manifold (what its booleans need): 'n/m' of the parts, or 'n/a' if missing."""
+    try:
+        import manifold3d as mf
+    except ImportError:
+        return "n/a (manifold3d not installed)"
+    ok = 0
+    for m in meshes.values():
+        try:
+            mm = mf.Manifold(mf.Mesh(vert_properties=np.asarray(m.vertices, np.float32), tri_verts=np.asarray(m.faces, np.uint32)))
+            ok += int(mm.status() == mf.Error.NoError)
+        except Exception:
+            pass
+    return f"{ok}/{len(meshes)}"
+
+
 def _printability(subject: Subject, bed_m=(0.22, 0.22, 0.25)) -> dict:
     M: dict = {}
     meshes = {subject.name: subject.whole} if subject.whole is not None else subject.parts
     M["M1_watertight_parts"] = f"{sum(1 for m in meshes.values() if m.is_watertight)}/{len(meshes)}"
     over = [k for k, m in meshes.items() if sorted(m.extents)[0] > min(bed_m) * 5 or max(m.extents) > 3 * max(bed_m)]
+    M["M1_manifold3d_valid"] = _manifold_ok(meshes)
     M["M1_parts_over_bed"] = over if subject.height_m <= 1.0 else "n/a (height > 1 m)"
     M["M1_not_computed"] = ["wall_thickness", "step_roundtrip", "frame_clearance", "rom_sweep"]
     M["M1_not_computed_reason"] = "needs the frame/servo model and the CAD geometry gate (T-0004 / cad check); not derivable from an outer mesh"

@@ -1,0 +1,54 @@
+{
+ "_meta": {
+  "run": "design-critic prompt (.claude/agents/design-critic.md) executed by a Sonnet general-purpose subagent (the custom agent is not registered mid-session); blind: sheet + metrics only; design-1 = Adam CAD v0 meshes, design-2 = sample_sleek_050 smooth massing",
+  "candidate": "design-2",
+  "order": "cand_first"
+ },
+ "order": "cand_first",
+ "reads_as": "unfinished",
+ "reads_as_reason": "Smooth, human-proportioned and clearly not a toy, but one seamless grey mannequin with no shell/recess separation, no visor-style head, and no joint detail.",
+ "criteria": {
+  "G1": {
+   "verdict": "PASS",
+   "evidence": "Adult proportions with a small capsule head (P1 0.133 H), narrow waist, long legs, small foot. No chibi head, no box torso. Caveat: squared upper chest and flat shoulder tops; mannequin read."
+  },
+  "G2": {
+   "verdict": "FAIL",
+   "evidence": "Chest to waist to pelvis and thigh to shank flow, but the shoulder caps are separate tubes off a flat-topped chest block with a visible ledge; the pelvis/thigh top bulges as a kink; no deliberate dark joint recesses anywhere."
+  },
+  "G3": {
+   "verdict": "FAIL",
+   "evidence": "One uniform clay surface; a single watertight part (M1 1/1), so no geometry for dark recesses or a shell/under-structure split."
+  },
+  "G4": {
+   "verdict": "UNCERTAIN",
+   "evidence": "Limbs, head and legs share soft rounding; the chest is squarer than the capsule limbs and the shoulder caps use a tighter radius; contour banding limits the judgement."
+  },
+  "G6": {
+   "verdict": "PASS",
+   "evidence": "At equal height the silhouette sits very close to both references (S2 IoU 0.756 / 0.775). Differs: hip/thigh flare wider, shoulders step out more abruptly, head fuller and shorter-necked."
+  }
+ },
+ "pairwise": {
+  "preferred": "candidate",
+  "evidence": "Image A (candidate) is a continuous, human-proportioned form close to the reference silhouettes. Image B (baseline) is stacked boxes: a floating small head on a thin stub neck, huge square shoulder blocks, a gapped waist band, slab thighs, boot-like feet with a protruding base plate, and exposed white gaps in the silhouette. The baseline reads as a toy or Lego-style robot."
+ },
+ "top_changes": [
+  {
+   "criterion": "G2",
+   "change": "Remove the hip/thigh bulge and the abrupt shoulder ledge; round and lower the shoulder cap into a sloped shoulder line.",
+   "profile_param": "segments[leg_l/leg_r].stations[hip/thigh_top].w (reduce) and segments[torso].stations[shoulder].w / d"
+  },
+  {
+   "criterion": "G3",
+   "change": "Create a deliberate dark under-structure read: pronounced neck/waist groove and narrow joint waists at shoulder, elbow, hip and knee.",
+   "profile_param": "segments[torso].stations[neck].w, segments[leg_l].stations[knee].w / d"
+  },
+  {
+   "criterion": "G4",
+   "change": "Make the chest section rounder, in line with the limbs and head.",
+   "profile_param": "segments[torso].stations[chest].n"
+  }
+ ],
+ "notes": "Judged from clay views and silhouettes only; numbers quoted from the metrics JSON; contour banding on torso/thighs limits G4."
+}

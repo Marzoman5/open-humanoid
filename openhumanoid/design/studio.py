@@ -254,7 +254,7 @@ def _compose_sheet(subject: Subject, files: dict, rig: dict, has_refs: bool):
     row1 = [load(k, W) for k in clay_keys]
     row2_keys = ["overlay_front" if has_refs else "silhouette_front", "overlay_side" if has_refs else "silhouette_side"]
     row2 = [load(k, 2 * W) for k in row2_keys]
-    row3 = [load("lineup_front", 4 * W)]
+    row3 = [load("lineup_front", 3 * W)]
     pad = 8
     rows = [r for r in (row1, row2, row3) if r and all(x is not None for x in r)]
     height = sum(max(x.height for x in r) for r in rows) + pad * (len(rows) + 2) + 40
@@ -269,4 +269,5 @@ def _compose_sheet(subject: Subject, files: dict, rig: dict, has_refs: bool):
             sheet.paste(im, (x, y))
             x += im.width + pad
         y += max(im.height for im in r) + pad
+    sheet.thumbnail((2400, 3000))
     return sheet
