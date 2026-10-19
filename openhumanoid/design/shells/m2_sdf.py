@@ -51,8 +51,8 @@ def sd_capsule_z(X, Y, Z, p0, p1, r):
 
 
 # ------------------------------------------------------------------------------------------------------- bead layout
-K_BLEND = 14.0   # smooth-union radius (mm)
-BEAD_ROUND = 0.62  # bead corner radius / smallest half-size: 1 = ellipsoid-like, 0 = box. Ellipsoids could not enclose the servo corners
+K_BLEND = 20.0   # smooth-union radius (mm)
+BEAD_ROUND = 0.8  # bead corner radius / smallest half-size: 1 = ellipsoid-like, 0 = box. Ellipsoids could not enclose the servo corners
 CAP_EXTRA = 0.7  # extra radius on top of servo corner + clearance + wall
 class Beads:
     """The primitive layout of one segment, sized from the target stations and calibrated against them."""
