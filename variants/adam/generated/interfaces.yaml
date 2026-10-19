@@ -3,106 +3,106 @@ schema: interfaces/0.1
 variant: adam
 layout: humanoid_v2_22dof
 layout_status: validation stand-in (not a concept-loop output)
-layout_sha: 94e9f79fa6d5
+layout_sha: 65de3f4b1b5e
 units: {length: mm, angle: deg}
 frame: 'world: x forward, y left, z up; zero pose = all joint angles 0; links axis-aligned with the world at the zero pose'
 height_mm: 600.0
 bed_mm: [220, 220, 250]
-proportions_mm: {ankle_height: 45.0, shank: 135.0, thigh: 135.0, pelvis: 36.0, torso: 150.0, neck: 21.0, head: 84.0, hip_width: 90.0, shoulder_width: 180.0,
-  upper_arm: 102.0, forearm: 102.0, foot_length: 102.0, foot_width: 45.0, h: 600.0, hip_y: 45.0, ankle: 45.0, hip_z: 315.0, knee_z: 180.0, shoulder_y: 90.0,
-  shoulder_z: 489.0}
+proportions_mm: {ankle_height: 66.0, shank: 135.0, thigh: 135.0, pelvis: 36.0, torso: 150.0, neck: 21.0, head: 84.0, hip_width: 90.0, shoulder_width: 180.0,
+  upper_arm: 102.0, forearm: 102.0, foot_length: 102.0, foot_width: 45.0, h: 600.0, hip_y: 45.0, ankle: 66.0, hip_z: 336.0, knee_z: 201.0, shoulder_y: 90.0,
+  shoulder_z: 510.0}
 links:
   pelvis:
     parent: null
-    origin_mm: [0.0, 0.0, 315.0]
+    origin_mm: [0.0, 0.0, 336.0]
     side: null
   hip_yaw_l_link:
     parent: pelvis
-    origin_mm: [0.0, 45.0, 315.0]
+    origin_mm: [0.0, 45.0, 336.0]
     side: l
   hip_roll_l_link:
     parent: hip_yaw_l_link
-    origin_mm: [0.0, 45.0, 315.0]
+    origin_mm: [0.0, 45.0, 336.0]
     side: l
   hip_pitch_l_link:
     parent: hip_roll_l_link
-    origin_mm: [0.0, 45.0, 315.0]
+    origin_mm: [0.0, 45.0, 336.0]
     side: l
   knee_l_link:
     parent: hip_pitch_l_link
-    origin_mm: [0.0, 45.0, 180.0]
+    origin_mm: [0.0, 45.0, 201.0]
     side: l
   ankle_pitch_l_link:
     parent: knee_l_link
-    origin_mm: [0.0, 45.0, 45.0]
+    origin_mm: [0.0, 45.0, 66.0]
     side: l
   ankle_roll_l_link:
     parent: ankle_pitch_l_link
-    origin_mm: [0.0, 45.0, 45.0]
+    origin_mm: [0.0, 45.0, 38.0]
     side: l
   hip_yaw_r_link:
     parent: pelvis
-    origin_mm: [0.0, -45.0, 315.0]
+    origin_mm: [0.0, -45.0, 336.0]
     side: r
   hip_roll_r_link:
     parent: hip_yaw_r_link
-    origin_mm: [0.0, -45.0, 315.0]
+    origin_mm: [0.0, -45.0, 336.0]
     side: r
   hip_pitch_r_link:
     parent: hip_roll_r_link
-    origin_mm: [0.0, -45.0, 315.0]
+    origin_mm: [0.0, -45.0, 336.0]
     side: r
   knee_r_link:
     parent: hip_pitch_r_link
-    origin_mm: [0.0, -45.0, 180.0]
+    origin_mm: [0.0, -45.0, 201.0]
     side: r
   ankle_pitch_r_link:
     parent: knee_r_link
-    origin_mm: [0.0, -45.0, 45.0]
+    origin_mm: [0.0, -45.0, 66.0]
     side: r
   ankle_roll_r_link:
     parent: ankle_pitch_r_link
-    origin_mm: [0.0, -45.0, 45.0]
+    origin_mm: [0.0, -45.0, 38.0]
     side: r
   shoulder_pitch_l_link:
     parent: pelvis
-    origin_mm: [0.0, 90.0, 489.0]
+    origin_mm: [0.0, 90.0, 510.0]
     side: l
   shoulder_roll_l_link:
     parent: shoulder_pitch_l_link
-    origin_mm: [0.0, 90.0, 489.0]
+    origin_mm: [0.0, 90.0, 510.0]
     side: l
   shoulder_yaw_l_link:
     parent: shoulder_roll_l_link
-    origin_mm: [0.0, 90.0, 489.0]
+    origin_mm: [0.0, 90.0, 510.0]
     side: l
   elbow_l_link:
     parent: shoulder_yaw_l_link
-    origin_mm: [0.0, 90.0, 387.0]
+    origin_mm: [0.0, 90.0, 408.0]
     side: l
   shoulder_pitch_r_link:
     parent: pelvis
-    origin_mm: [0.0, -90.0, 489.0]
+    origin_mm: [0.0, -90.0, 510.0]
     side: r
   shoulder_roll_r_link:
     parent: shoulder_pitch_r_link
-    origin_mm: [0.0, -90.0, 489.0]
+    origin_mm: [0.0, -90.0, 510.0]
     side: r
   shoulder_yaw_r_link:
     parent: shoulder_roll_r_link
-    origin_mm: [0.0, -90.0, 489.0]
+    origin_mm: [0.0, -90.0, 510.0]
     side: r
   elbow_r_link:
     parent: shoulder_yaw_r_link
-    origin_mm: [0.0, -90.0, 387.0]
+    origin_mm: [0.0, -90.0, 408.0]
     side: r
   neck_yaw_link:
     parent: pelvis
-    origin_mm: [0.0, 0.0, 510.0]
+    origin_mm: [0.0, 0.0, 531.0]
     side: null
   neck_pitch_link:
     parent: neck_yaw_link
-    origin_mm: [0.0, 0.0, 510.0]
+    origin_mm: [0.0, 0.0, 531.0]
     side: null
 joints:
   hip_yaw_l:
@@ -112,16 +112,18 @@ joints:
     parent_link: pelvis
     child_link: hip_yaw_l_link
     axis:
-      origin_mm: [0.0, 45.0, 315.0]
+      origin_mm: [0.0, 45.0, 336.0]
       direction: [0, 0, 1]
       name: z
     rom_deg: [-45, 45]
+    rom_spec_deg: [-45, 45]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: pelvis
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, 45.0, 381.0]
+        origin_mm: [0.0, 45.0, 402.0]
         z_dir: [0.0, 0.0, -1.0]
         x_dir: [0.0, -1.0, 0.0]
         y_dir: [-1.0, -0.0, -0.0]
@@ -131,39 +133,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, 45.0, 389.0]
+        at_mm: [-12.35, 45.0, 410.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-12.35, 45.0, 408.0]
+        at_mm: [-12.35, 45.0, 429.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-12.35, 21.0, 389.0]
+        at_mm: [-12.35, 21.0, 410.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-12.35, 21.0, 408.0]
+        at_mm: [-12.35, 21.0, 429.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [12.35, 45.0, 389.0]
+        at_mm: [12.35, 45.0, 410.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [12.35, 45.0, 408.0]
+        at_mm: [12.35, 45.0, 429.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [12.35, 21.0, 389.0]
+        at_mm: [12.35, 21.0, 410.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [12.35, 21.0, 408.0]
+        at_mm: [12.35, 21.0, 429.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, 45.0, 379.0]
+      seat_origin_mm: [0.0, 45.0, 400.0]
       dir: [0.0, 0.0, -1.0]
       type: round_25t
       od_mm: 20.0
@@ -175,7 +177,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, 45.0, 416.0]
+      origin_mm: [0.0, 45.0, 437.0]
       dir: [-0.0, -0.0, 1.0]
       stub_od_mm: 9.0
     idler: null
@@ -188,58 +190,60 @@ joints:
     parent_link: hip_yaw_l_link
     child_link: hip_roll_l_link
     axis:
-      origin_mm: [0.0, 45.0, 315.0]
+      origin_mm: [0.0, 45.0, 336.0]
       direction: [1, 0, 0]
       name: x
     rom_deg: [-30, 45]
+    rom_spec_deg: [-30, 45]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: hip_yaw_l_link
       mass_kg: 0.055
       frame:
-        origin_mm: [-25.0, 45.0, 315.0]
+        origin_mm: [-44.0, 45.0, 336.0]
         z_dir: [1.0, 0.0, 0.0]
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
-      horn_plane_offset_mm: -25.0
+      horn_plane_offset_mm: -44.0
       body_mm: [45.2, 24.7, 35.0]
       axis_from_near_end_mm: 12.0
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-33.0, 32.65, 315.0]
+        at_mm: [-52.0, 32.65, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-52.0, 32.65, 315.0]
+        at_mm: [-71.0, 32.65, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-33.0, 32.65, 339.0]
+        at_mm: [-52.0, 32.65, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-52.0, 32.65, 339.0]
+        at_mm: [-71.0, 32.65, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-33.0, 57.35, 315.0]
+        at_mm: [-52.0, 57.35, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-52.0, 57.35, 315.0]
+        at_mm: [-71.0, 57.35, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-33.0, 57.35, 339.0]
+        at_mm: [-52.0, 57.35, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-52.0, 57.35, 339.0]
+        at_mm: [-71.0, 57.35, 360.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [-23.0, 45.0, 315.0]
+      seat_origin_mm: [-42.0, 45.0, 336.0]
       dir: [1.0, 0.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -251,7 +255,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [-60.0, 45.0, 315.0]
+      origin_mm: [-79.0, 45.0, 336.0]
       dir: [-1.0, -0.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -264,16 +268,19 @@ joints:
     parent_link: hip_roll_l_link
     child_link: hip_pitch_l_link
     axis:
-      origin_mm: [0.0, 45.0, 315.0]
+      origin_mm: [0.0, 45.0, 336.0]
       direction: [0, 1, 0]
       name: y
-    rom_deg: [-110, 60]
+    rom_deg: [-110, 45]
+    rom_spec_deg: [-110, 60]
+    rom_note: 'CAD-limited from the spec''s +60 extension: the thigh''s rear face sweeps into the roll servo''s horn plate behind the hip (ROM
+      sweep: contact at 48 deg). Walking needs about 25.'
     actuator:
       id: sts3215-12v
       host_link: hip_roll_l_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, 62.5, 315.0]
+        origin_mm: [0.0, 62.5, 336.0]
         z_dir: [0.0, 1.0, 0.0]
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
@@ -283,39 +290,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 54.5, 315.0]
+        at_mm: [12.35, 54.5, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [12.35, 35.5, 315.0]
+        at_mm: [12.35, 35.5, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [12.35, 54.5, 339.0]
+        at_mm: [12.35, 54.5, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [12.35, 35.5, 339.0]
+        at_mm: [12.35, 35.5, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-12.35, 54.5, 315.0]
+        at_mm: [-12.35, 54.5, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-12.35, 35.5, 315.0]
+        at_mm: [-12.35, 35.5, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-12.35, 54.5, 339.0]
+        at_mm: [-12.35, 54.5, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-12.35, 35.5, 339.0]
+        at_mm: [-12.35, 35.5, 360.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, 64.5, 315.0]
+      seat_origin_mm: [0.0, 64.5, 336.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -327,13 +334,13 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, 27.5, 315.0]
+      origin_mm: [0.0, 27.5, 336.0]
       dir: [-0.0, -1.0, -0.0]
       stub_od_mm: 9.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
-      seat_origin_mm: [0.0, 26.0, 315.0]
+      seat_origin_mm: [0.0, 26.0, 336.0]
       seat_dir: [0.0, 1.0, 0.0]
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -344,16 +351,19 @@ joints:
     parent_link: hip_pitch_l_link
     child_link: knee_l_link
     axis:
-      origin_mm: [0.0, 45.0, 180.0]
+      origin_mm: [0.0, 45.0, 201.0]
       direction: [0, 1, 0]
       name: y
-    rom_deg: [0, 130]
+    rom_deg: [0, 115]
+    rom_spec_deg: [0, 130]
+    rom_note: 'CAD-limited from the spec''s 130: at 118 deg the heel (ankle-roll servo housing) meets the glute (hip-roll servo housing); 115
+      keeps 3 deg of margin and still covers the deep squat (knee 103 deg in the squat pose)'
     actuator:
       id: sts3215-12v
       host_link: hip_pitch_l_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, 62.5, 180.0]
+        origin_mm: [0.0, 62.5, 201.0]
         z_dir: [0.0, 1.0, 0.0]
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
@@ -363,39 +373,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 54.5, 180.0]
+        at_mm: [12.35, 54.5, 201.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [12.35, 35.5, 180.0]
+        at_mm: [12.35, 35.5, 201.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [12.35, 54.5, 204.0]
+        at_mm: [12.35, 54.5, 225.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [12.35, 35.5, 204.0]
+        at_mm: [12.35, 35.5, 225.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-12.35, 54.5, 180.0]
+        at_mm: [-12.35, 54.5, 201.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-12.35, 35.5, 180.0]
+        at_mm: [-12.35, 35.5, 201.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-12.35, 54.5, 204.0]
+        at_mm: [-12.35, 54.5, 225.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-12.35, 35.5, 204.0]
+        at_mm: [-12.35, 35.5, 225.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, 64.5, 180.0]
+      seat_origin_mm: [0.0, 64.5, 201.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -407,13 +417,13 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, 27.5, 180.0]
+      origin_mm: [0.0, 27.5, 201.0]
       dir: [-0.0, -1.0, -0.0]
       stub_od_mm: 9.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
-      seat_origin_mm: [0.0, 26.0, 180.0]
+      seat_origin_mm: [0.0, 26.0, 201.0]
       seat_dir: [0.0, 1.0, 0.0]
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -424,16 +434,18 @@ joints:
     parent_link: knee_l_link
     child_link: ankle_pitch_l_link
     axis:
-      origin_mm: [0.0, 45.0, 45.0]
+      origin_mm: [0.0, 45.0, 66.0]
       direction: [0, 1, 0]
       name: y
-    rom_deg: [-60, 60]
+    rom_deg: [-60, 30]
+    rom_spec_deg: [-60, 60]
+    rom_note: 'CAD-limited from the spec''s +60: the roll servo housing behind the ankle swings into the shank above +31 deg (ROM sweep)'
     actuator:
       id: sts3215-12v
       host_link: knee_l_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, 62.5, 45.0]
+        origin_mm: [0.0, 62.5, 66.0]
         z_dir: [0.0, 1.0, 0.0]
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
@@ -443,39 +455,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 54.5, 45.0]
+        at_mm: [12.35, 54.5, 66.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [12.35, 35.5, 45.0]
+        at_mm: [12.35, 35.5, 66.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [12.35, 54.5, 69.0]
+        at_mm: [12.35, 54.5, 90.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [12.35, 35.5, 69.0]
+        at_mm: [12.35, 35.5, 90.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-12.35, 54.5, 45.0]
+        at_mm: [-12.35, 54.5, 66.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-12.35, 35.5, 45.0]
+        at_mm: [-12.35, 35.5, 66.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-12.35, 54.5, 69.0]
+        at_mm: [-12.35, 54.5, 90.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-12.35, 35.5, 69.0]
+        at_mm: [-12.35, 35.5, 90.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, 64.5, 45.0]
+      seat_origin_mm: [0.0, 64.5, 66.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -487,13 +499,13 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, 27.5, 45.0]
+      origin_mm: [0.0, 27.5, 66.0]
       dir: [-0.0, -1.0, -0.0]
       stub_od_mm: 9.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
-      seat_origin_mm: [0.0, 26.0, 45.0]
+      seat_origin_mm: [0.0, 26.0, 66.0]
       seat_dir: [0.0, 1.0, 0.0]
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -504,16 +516,18 @@ joints:
     parent_link: ankle_pitch_l_link
     child_link: ankle_roll_l_link
     axis:
-      origin_mm: [0.0, 45.0, 45.0]
+      origin_mm: [0.0, 45.0, 38.0]
       direction: [1, 0, 0]
       name: x
     rom_deg: [-30, 30]
+    rom_spec_deg: [-30, 30]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: ankle_pitch_l_link
       mass_kg: 0.055
       frame:
-        origin_mm: [-26.5, 45.0, 45.0]
+        origin_mm: [-26.5, 45.0, 38.0]
         z_dir: [1.0, 0.0, 0.0]
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
@@ -523,39 +537,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-34.5, 32.65, 45.0]
+        at_mm: [-34.5, 32.65, 38.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-53.5, 32.65, 45.0]
+        at_mm: [-53.5, 32.65, 38.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-34.5, 32.65, 69.0]
+        at_mm: [-34.5, 32.65, 62.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-53.5, 32.65, 69.0]
+        at_mm: [-53.5, 32.65, 62.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-34.5, 57.35, 45.0]
+        at_mm: [-34.5, 57.35, 38.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-53.5, 57.35, 45.0]
+        at_mm: [-53.5, 57.35, 38.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-34.5, 57.35, 69.0]
+        at_mm: [-34.5, 57.35, 62.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-53.5, 57.35, 69.0]
+        at_mm: [-53.5, 57.35, 62.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [-24.5, 45.0, 45.0]
+      seat_origin_mm: [-24.5, 45.0, 38.0]
       dir: [1.0, 0.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -567,7 +581,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [-61.5, 45.0, 45.0]
+      origin_mm: [-61.5, 45.0, 38.0]
       dir: [-1.0, -0.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -580,16 +594,18 @@ joints:
     parent_link: pelvis
     child_link: hip_yaw_r_link
     axis:
-      origin_mm: [0.0, -45.0, 315.0]
+      origin_mm: [0.0, -45.0, 336.0]
       direction: [0, 0, 1]
       name: z
     rom_deg: [-45, 45]
+    rom_spec_deg: [-45, 45]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: pelvis
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, -45.0, 381.0]
+        origin_mm: [0.0, -45.0, 402.0]
         z_dir: [0.0, -0.0, -1.0]
         x_dir: [0.0, 1.0, 0.0]
         y_dir: [1.0, -0.0, 0.0]
@@ -599,39 +615,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, -45.0, 389.0]
+        at_mm: [12.35, -45.0, 410.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [12.35, -45.0, 408.0]
+        at_mm: [12.35, -45.0, 429.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [12.35, -21.0, 389.0]
+        at_mm: [12.35, -21.0, 410.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [12.35, -21.0, 408.0]
+        at_mm: [12.35, -21.0, 429.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-12.35, -45.0, 389.0]
+        at_mm: [-12.35, -45.0, 410.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-12.35, -45.0, 408.0]
+        at_mm: [-12.35, -45.0, 429.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-12.35, -21.0, 389.0]
+        at_mm: [-12.35, -21.0, 410.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-12.35, -21.0, 408.0]
+        at_mm: [-12.35, -21.0, 429.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, -45.0, 379.0]
+      seat_origin_mm: [0.0, -45.0, 400.0]
       dir: [0.0, -0.0, -1.0]
       type: round_25t
       od_mm: 20.0
@@ -643,7 +659,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, -45.0, 416.0]
+      origin_mm: [0.0, -45.0, 437.0]
       dir: [-0.0, 0.0, 1.0]
       stub_od_mm: 9.0
     idler: null
@@ -656,58 +672,60 @@ joints:
     parent_link: hip_yaw_r_link
     child_link: hip_roll_r_link
     axis:
-      origin_mm: [0.0, -45.0, 315.0]
+      origin_mm: [0.0, -45.0, 336.0]
       direction: [1, 0, 0]
       name: x
     rom_deg: [-45, 30]
+    rom_spec_deg: [-45, 30]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: hip_yaw_r_link
       mass_kg: 0.055
       frame:
-        origin_mm: [-25.0, -45.0, 315.0]
+        origin_mm: [-44.0, -45.0, 336.0]
         z_dir: [1.0, -0.0, 0.0]
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
-      horn_plane_offset_mm: -25.0
+      horn_plane_offset_mm: -44.0
       body_mm: [45.2, 24.7, 35.0]
       axis_from_near_end_mm: 12.0
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-33.0, -57.35, 315.0]
+        at_mm: [-52.0, -57.35, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-52.0, -57.35, 315.0]
+        at_mm: [-71.0, -57.35, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-33.0, -57.35, 339.0]
+        at_mm: [-52.0, -57.35, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-52.0, -57.35, 339.0]
+        at_mm: [-71.0, -57.35, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-33.0, -32.65, 315.0]
+        at_mm: [-52.0, -32.65, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-52.0, -32.65, 315.0]
+        at_mm: [-71.0, -32.65, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-33.0, -32.65, 339.0]
+        at_mm: [-52.0, -32.65, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-52.0, -32.65, 339.0]
+        at_mm: [-71.0, -32.65, 360.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [-23.0, -45.0, 315.0]
+      seat_origin_mm: [-42.0, -45.0, 336.0]
       dir: [1.0, -0.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -719,7 +737,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [-60.0, -45.0, 315.0]
+      origin_mm: [-79.0, -45.0, 336.0]
       dir: [-1.0, 0.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -732,16 +750,19 @@ joints:
     parent_link: hip_roll_r_link
     child_link: hip_pitch_r_link
     axis:
-      origin_mm: [0.0, -45.0, 315.0]
+      origin_mm: [0.0, -45.0, 336.0]
       direction: [0, 1, 0]
       name: y
-    rom_deg: [-110, 60]
+    rom_deg: [-110, 45]
+    rom_spec_deg: [-110, 60]
+    rom_note: 'CAD-limited from the spec''s +60 extension: the thigh''s rear face sweeps into the roll servo''s horn plate behind the hip (ROM
+      sweep: contact at 48 deg). Walking needs about 25.'
     actuator:
       id: sts3215-12v
       host_link: hip_roll_r_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, -62.5, 315.0]
+        origin_mm: [0.0, -62.5, 336.0]
         z_dir: [0.0, -1.0, 0.0]
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [-1.0, 0.0, 0.0]
@@ -751,39 +772,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, -54.5, 315.0]
+        at_mm: [-12.35, -54.5, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-12.35, -35.5, 315.0]
+        at_mm: [-12.35, -35.5, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-12.35, -54.5, 339.0]
+        at_mm: [-12.35, -54.5, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-12.35, -35.5, 339.0]
+        at_mm: [-12.35, -35.5, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [12.35, -54.5, 315.0]
+        at_mm: [12.35, -54.5, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [12.35, -35.5, 315.0]
+        at_mm: [12.35, -35.5, 336.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [12.35, -54.5, 339.0]
+        at_mm: [12.35, -54.5, 360.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [12.35, -35.5, 339.0]
+        at_mm: [12.35, -35.5, 360.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, -64.5, 315.0]
+      seat_origin_mm: [0.0, -64.5, 336.0]
       dir: [0.0, -1.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -795,13 +816,13 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, -27.5, 315.0]
+      origin_mm: [0.0, -27.5, 336.0]
       dir: [-0.0, 1.0, -0.0]
       stub_od_mm: 9.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
-      seat_origin_mm: [0.0, -26.0, 315.0]
+      seat_origin_mm: [0.0, -26.0, 336.0]
       seat_dir: [0.0, -1.0, 0.0]
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -812,16 +833,19 @@ joints:
     parent_link: hip_pitch_r_link
     child_link: knee_r_link
     axis:
-      origin_mm: [0.0, -45.0, 180.0]
+      origin_mm: [0.0, -45.0, 201.0]
       direction: [0, 1, 0]
       name: y
-    rom_deg: [0, 130]
+    rom_deg: [0, 115]
+    rom_spec_deg: [0, 130]
+    rom_note: 'CAD-limited from the spec''s 130: at 118 deg the heel (ankle-roll servo housing) meets the glute (hip-roll servo housing); 115
+      keeps 3 deg of margin and still covers the deep squat (knee 103 deg in the squat pose)'
     actuator:
       id: sts3215-12v
       host_link: hip_pitch_r_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, -62.5, 180.0]
+        origin_mm: [0.0, -62.5, 201.0]
         z_dir: [0.0, -1.0, 0.0]
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [-1.0, 0.0, 0.0]
@@ -831,39 +855,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, -54.5, 180.0]
+        at_mm: [-12.35, -54.5, 201.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-12.35, -35.5, 180.0]
+        at_mm: [-12.35, -35.5, 201.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-12.35, -54.5, 204.0]
+        at_mm: [-12.35, -54.5, 225.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-12.35, -35.5, 204.0]
+        at_mm: [-12.35, -35.5, 225.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [12.35, -54.5, 180.0]
+        at_mm: [12.35, -54.5, 201.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [12.35, -35.5, 180.0]
+        at_mm: [12.35, -35.5, 201.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [12.35, -54.5, 204.0]
+        at_mm: [12.35, -54.5, 225.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [12.35, -35.5, 204.0]
+        at_mm: [12.35, -35.5, 225.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, -64.5, 180.0]
+      seat_origin_mm: [0.0, -64.5, 201.0]
       dir: [0.0, -1.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -875,13 +899,13 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, -27.5, 180.0]
+      origin_mm: [0.0, -27.5, 201.0]
       dir: [-0.0, 1.0, -0.0]
       stub_od_mm: 9.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
-      seat_origin_mm: [0.0, -26.0, 180.0]
+      seat_origin_mm: [0.0, -26.0, 201.0]
       seat_dir: [0.0, -1.0, 0.0]
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -892,16 +916,18 @@ joints:
     parent_link: knee_r_link
     child_link: ankle_pitch_r_link
     axis:
-      origin_mm: [0.0, -45.0, 45.0]
+      origin_mm: [0.0, -45.0, 66.0]
       direction: [0, 1, 0]
       name: y
-    rom_deg: [-60, 60]
+    rom_deg: [-60, 30]
+    rom_spec_deg: [-60, 60]
+    rom_note: 'CAD-limited from the spec''s +60: the roll servo housing behind the ankle swings into the shank above +31 deg (ROM sweep)'
     actuator:
       id: sts3215-12v
       host_link: knee_r_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, -62.5, 45.0]
+        origin_mm: [0.0, -62.5, 66.0]
         z_dir: [0.0, -1.0, 0.0]
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [-1.0, 0.0, 0.0]
@@ -911,39 +937,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, -54.5, 45.0]
+        at_mm: [-12.35, -54.5, 66.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-12.35, -35.5, 45.0]
+        at_mm: [-12.35, -35.5, 66.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-12.35, -54.5, 69.0]
+        at_mm: [-12.35, -54.5, 90.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-12.35, -35.5, 69.0]
+        at_mm: [-12.35, -35.5, 90.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [12.35, -54.5, 45.0]
+        at_mm: [12.35, -54.5, 66.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [12.35, -35.5, 45.0]
+        at_mm: [12.35, -35.5, 66.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [12.35, -54.5, 69.0]
+        at_mm: [12.35, -54.5, 90.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [12.35, -35.5, 69.0]
+        at_mm: [12.35, -35.5, 90.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, -64.5, 45.0]
+      seat_origin_mm: [0.0, -64.5, 66.0]
       dir: [0.0, -1.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -955,13 +981,13 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, -27.5, 45.0]
+      origin_mm: [0.0, -27.5, 66.0]
       dir: [-0.0, 1.0, -0.0]
       stub_od_mm: 9.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
-      seat_origin_mm: [0.0, -26.0, 45.0]
+      seat_origin_mm: [0.0, -26.0, 66.0]
       seat_dir: [0.0, -1.0, 0.0]
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -972,16 +998,18 @@ joints:
     parent_link: ankle_pitch_r_link
     child_link: ankle_roll_r_link
     axis:
-      origin_mm: [0.0, -45.0, 45.0]
+      origin_mm: [0.0, -45.0, 38.0]
       direction: [1, 0, 0]
       name: x
     rom_deg: [-30, 30]
+    rom_spec_deg: [-30, 30]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: ankle_pitch_r_link
       mass_kg: 0.055
       frame:
-        origin_mm: [-26.5, -45.0, 45.0]
+        origin_mm: [-26.5, -45.0, 38.0]
         z_dir: [1.0, -0.0, 0.0]
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
@@ -991,39 +1019,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-34.5, -57.35, 45.0]
+        at_mm: [-34.5, -57.35, 38.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-53.5, -57.35, 45.0]
+        at_mm: [-53.5, -57.35, 38.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-34.5, -57.35, 69.0]
+        at_mm: [-34.5, -57.35, 62.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-53.5, -57.35, 69.0]
+        at_mm: [-53.5, -57.35, 62.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-34.5, -32.65, 45.0]
+        at_mm: [-34.5, -32.65, 38.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-53.5, -32.65, 45.0]
+        at_mm: [-53.5, -32.65, 38.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-34.5, -32.65, 69.0]
+        at_mm: [-34.5, -32.65, 62.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-53.5, -32.65, 69.0]
+        at_mm: [-53.5, -32.65, 62.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [-24.5, -45.0, 45.0]
+      seat_origin_mm: [-24.5, -45.0, 38.0]
       dir: [1.0, -0.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -1035,7 +1063,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [-61.5, -45.0, 45.0]
+      origin_mm: [-61.5, -45.0, 38.0]
       dir: [-1.0, 0.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -1048,16 +1076,18 @@ joints:
     parent_link: pelvis
     child_link: shoulder_pitch_l_link
     axis:
-      origin_mm: [0.0, 90.0, 489.0]
+      origin_mm: [0.0, 90.0, 510.0]
       direction: [0, 1, 0]
       name: y
     rom_deg: [-180, 60]
+    rom_spec_deg: [-180, 60]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: pelvis
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, 107.5, 489.0]
+        origin_mm: [0.0, 107.5, 510.0]
         z_dir: [0.0, 1.0, 0.0]
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
@@ -1067,39 +1097,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 99.5, 489.0]
+        at_mm: [12.35, 99.5, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [12.35, 80.5, 489.0]
+        at_mm: [12.35, 80.5, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [12.35, 99.5, 513.0]
+        at_mm: [12.35, 99.5, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [12.35, 80.5, 513.0]
+        at_mm: [12.35, 80.5, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-12.35, 99.5, 489.0]
+        at_mm: [-12.35, 99.5, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-12.35, 80.5, 489.0]
+        at_mm: [-12.35, 80.5, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-12.35, 99.5, 513.0]
+        at_mm: [-12.35, 99.5, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-12.35, 80.5, 513.0]
+        at_mm: [-12.35, 80.5, 534.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, 109.5, 489.0]
+      seat_origin_mm: [0.0, 109.5, 510.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -1111,7 +1141,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, 72.5, 489.0]
+      origin_mm: [0.0, 72.5, 510.0]
       dir: [-0.0, -1.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -1124,16 +1154,18 @@ joints:
     parent_link: shoulder_pitch_l_link
     child_link: shoulder_roll_l_link
     axis:
-      origin_mm: [0.0, 90.0, 489.0]
+      origin_mm: [0.0, 90.0, 510.0]
       direction: [1, 0, 0]
       name: x
     rom_deg: [-10, 160]
+    rom_spec_deg: [-10, 160]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: shoulder_pitch_l_link
       mass_kg: 0.055
       frame:
-        origin_mm: [-25.0, 90.0, 489.0]
+        origin_mm: [-25.0, 90.0, 510.0]
         z_dir: [1.0, 0.0, 0.0]
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
@@ -1143,39 +1175,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-33.0, 77.65, 489.0]
+        at_mm: [-33.0, 77.65, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-52.0, 77.65, 489.0]
+        at_mm: [-52.0, 77.65, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-33.0, 77.65, 513.0]
+        at_mm: [-33.0, 77.65, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-52.0, 77.65, 513.0]
+        at_mm: [-52.0, 77.65, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-33.0, 102.35, 489.0]
+        at_mm: [-33.0, 102.35, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-52.0, 102.35, 489.0]
+        at_mm: [-52.0, 102.35, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-33.0, 102.35, 513.0]
+        at_mm: [-33.0, 102.35, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-52.0, 102.35, 513.0]
+        at_mm: [-52.0, 102.35, 534.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [-23.0, 90.0, 489.0]
+      seat_origin_mm: [-23.0, 90.0, 510.0]
       dir: [1.0, 0.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -1187,7 +1219,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [-60.0, 90.0, 489.0]
+      origin_mm: [-60.0, 90.0, 510.0]
       dir: [-1.0, -0.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -1200,16 +1232,18 @@ joints:
     parent_link: shoulder_roll_l_link
     child_link: shoulder_yaw_l_link
     axis:
-      origin_mm: [0.0, 90.0, 489.0]
+      origin_mm: [0.0, 90.0, 510.0]
       direction: [0, 0, 1]
       name: z
     rom_deg: [-90, 90]
+    rom_spec_deg: [-90, 90]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: shoulder_roll_l_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, 90.0, 434.0]
+        origin_mm: [0.0, 90.0, 455.0]
         z_dir: [0.0, 0.0, -1.0]
         x_dir: [1.0, 0.0, 0.0]
         y_dir: [0.0, -1.0, 0.0]
@@ -1219,39 +1253,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [0.0, 77.65, 442.0]
+        at_mm: [0.0, 77.65, 463.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [0.0, 77.65, 461.0]
+        at_mm: [0.0, 77.65, 482.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [24.0, 77.65, 442.0]
+        at_mm: [24.0, 77.65, 463.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [24.0, 77.65, 461.0]
+        at_mm: [24.0, 77.65, 482.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [0.0, 102.35, 442.0]
+        at_mm: [0.0, 102.35, 463.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [0.0, 102.35, 461.0]
+        at_mm: [0.0, 102.35, 482.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [24.0, 102.35, 442.0]
+        at_mm: [24.0, 102.35, 463.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [24.0, 102.35, 461.0]
+        at_mm: [24.0, 102.35, 482.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, 90.0, 432.0]
+      seat_origin_mm: [0.0, 90.0, 453.0]
       dir: [0.0, 0.0, -1.0]
       type: round_25t
       od_mm: 20.0
@@ -1263,7 +1297,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, 90.0, 469.0]
+      origin_mm: [0.0, 90.0, 490.0]
       dir: [-0.0, -0.0, 1.0]
       stub_od_mm: 9.0
     idler: null
@@ -1276,16 +1310,18 @@ joints:
     parent_link: shoulder_yaw_l_link
     child_link: elbow_l_link
     axis:
-      origin_mm: [0.0, 90.0, 387.0]
+      origin_mm: [0.0, 90.0, 408.0]
       direction: [0, 1, 0]
       name: y
     rom_deg: [-130, 0]
+    rom_spec_deg: [-130, 0]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: shoulder_yaw_l_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, 107.5, 387.0]
+        origin_mm: [0.0, 107.5, 408.0]
         z_dir: [0.0, 1.0, 0.0]
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
@@ -1295,39 +1331,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 99.5, 387.0]
+        at_mm: [12.35, 99.5, 408.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [12.35, 80.5, 387.0]
+        at_mm: [12.35, 80.5, 408.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [12.35, 99.5, 411.0]
+        at_mm: [12.35, 99.5, 432.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [12.35, 80.5, 411.0]
+        at_mm: [12.35, 80.5, 432.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-12.35, 99.5, 387.0]
+        at_mm: [-12.35, 99.5, 408.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-12.35, 80.5, 387.0]
+        at_mm: [-12.35, 80.5, 408.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-12.35, 99.5, 411.0]
+        at_mm: [-12.35, 99.5, 432.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-12.35, 80.5, 411.0]
+        at_mm: [-12.35, 80.5, 432.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, 109.5, 387.0]
+      seat_origin_mm: [0.0, 109.5, 408.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -1339,7 +1375,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, 72.5, 387.0]
+      origin_mm: [0.0, 72.5, 408.0]
       dir: [-0.0, -1.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -1352,16 +1388,18 @@ joints:
     parent_link: pelvis
     child_link: shoulder_pitch_r_link
     axis:
-      origin_mm: [0.0, -90.0, 489.0]
+      origin_mm: [0.0, -90.0, 510.0]
       direction: [0, 1, 0]
       name: y
     rom_deg: [-180, 60]
+    rom_spec_deg: [-180, 60]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: pelvis
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, -107.5, 489.0]
+        origin_mm: [0.0, -107.5, 510.0]
         z_dir: [0.0, -1.0, 0.0]
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [-1.0, 0.0, 0.0]
@@ -1371,39 +1409,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, -99.5, 489.0]
+        at_mm: [-12.35, -99.5, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-12.35, -80.5, 489.0]
+        at_mm: [-12.35, -80.5, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-12.35, -99.5, 513.0]
+        at_mm: [-12.35, -99.5, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-12.35, -80.5, 513.0]
+        at_mm: [-12.35, -80.5, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [12.35, -99.5, 489.0]
+        at_mm: [12.35, -99.5, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [12.35, -80.5, 489.0]
+        at_mm: [12.35, -80.5, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [12.35, -99.5, 513.0]
+        at_mm: [12.35, -99.5, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [12.35, -80.5, 513.0]
+        at_mm: [12.35, -80.5, 534.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, -109.5, 489.0]
+      seat_origin_mm: [0.0, -109.5, 510.0]
       dir: [0.0, -1.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -1415,7 +1453,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, -72.5, 489.0]
+      origin_mm: [0.0, -72.5, 510.0]
       dir: [-0.0, 1.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -1428,16 +1466,18 @@ joints:
     parent_link: shoulder_pitch_r_link
     child_link: shoulder_roll_r_link
     axis:
-      origin_mm: [0.0, -90.0, 489.0]
+      origin_mm: [0.0, -90.0, 510.0]
       direction: [1, 0, 0]
       name: x
     rom_deg: [-160, 10]
+    rom_spec_deg: [-160, 10]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: shoulder_pitch_r_link
       mass_kg: 0.055
       frame:
-        origin_mm: [-25.0, -90.0, 489.0]
+        origin_mm: [-25.0, -90.0, 510.0]
         z_dir: [1.0, -0.0, 0.0]
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
@@ -1447,39 +1487,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-33.0, -102.35, 489.0]
+        at_mm: [-33.0, -102.35, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-52.0, -102.35, 489.0]
+        at_mm: [-52.0, -102.35, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-33.0, -102.35, 513.0]
+        at_mm: [-33.0, -102.35, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-52.0, -102.35, 513.0]
+        at_mm: [-52.0, -102.35, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-33.0, -77.65, 489.0]
+        at_mm: [-33.0, -77.65, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-52.0, -77.65, 489.0]
+        at_mm: [-52.0, -77.65, 510.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-33.0, -77.65, 513.0]
+        at_mm: [-33.0, -77.65, 534.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-52.0, -77.65, 513.0]
+        at_mm: [-52.0, -77.65, 534.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [-23.0, -90.0, 489.0]
+      seat_origin_mm: [-23.0, -90.0, 510.0]
       dir: [1.0, -0.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -1491,7 +1531,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [-60.0, -90.0, 489.0]
+      origin_mm: [-60.0, -90.0, 510.0]
       dir: [-1.0, 0.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -1504,16 +1544,18 @@ joints:
     parent_link: shoulder_roll_r_link
     child_link: shoulder_yaw_r_link
     axis:
-      origin_mm: [0.0, -90.0, 489.0]
+      origin_mm: [0.0, -90.0, 510.0]
       direction: [0, 0, 1]
       name: z
     rom_deg: [-90, 90]
+    rom_spec_deg: [-90, 90]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: shoulder_roll_r_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, -90.0, 434.0]
+        origin_mm: [0.0, -90.0, 455.0]
         z_dir: [0.0, -0.0, -1.0]
         x_dir: [1.0, -0.0, 0.0]
         y_dir: [-0.0, -1.0, 0.0]
@@ -1523,39 +1565,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [0.0, -102.35, 442.0]
+        at_mm: [0.0, -102.35, 463.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [0.0, -102.35, 461.0]
+        at_mm: [0.0, -102.35, 482.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [24.0, -102.35, 442.0]
+        at_mm: [24.0, -102.35, 463.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [24.0, -102.35, 461.0]
+        at_mm: [24.0, -102.35, 482.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [0.0, -77.65, 442.0]
+        at_mm: [0.0, -77.65, 463.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [0.0, -77.65, 461.0]
+        at_mm: [0.0, -77.65, 482.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [24.0, -77.65, 442.0]
+        at_mm: [24.0, -77.65, 463.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [24.0, -77.65, 461.0]
+        at_mm: [24.0, -77.65, 482.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, -90.0, 432.0]
+      seat_origin_mm: [0.0, -90.0, 453.0]
       dir: [0.0, -0.0, -1.0]
       type: round_25t
       od_mm: 20.0
@@ -1567,7 +1609,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, -90.0, 469.0]
+      origin_mm: [0.0, -90.0, 490.0]
       dir: [-0.0, 0.0, 1.0]
       stub_od_mm: 9.0
     idler: null
@@ -1580,16 +1622,18 @@ joints:
     parent_link: shoulder_yaw_r_link
     child_link: elbow_r_link
     axis:
-      origin_mm: [0.0, -90.0, 387.0]
+      origin_mm: [0.0, -90.0, 408.0]
       direction: [0, 1, 0]
       name: y
     rom_deg: [-130, 0]
+    rom_spec_deg: [-130, 0]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: shoulder_yaw_r_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, -107.5, 387.0]
+        origin_mm: [0.0, -107.5, 408.0]
         z_dir: [0.0, -1.0, 0.0]
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [-1.0, 0.0, 0.0]
@@ -1599,39 +1643,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, -99.5, 387.0]
+        at_mm: [-12.35, -99.5, 408.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-12.35, -80.5, 387.0]
+        at_mm: [-12.35, -80.5, 408.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-12.35, -99.5, 411.0]
+        at_mm: [-12.35, -99.5, 432.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-12.35, -80.5, 411.0]
+        at_mm: [-12.35, -80.5, 432.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [12.35, -99.5, 387.0]
+        at_mm: [12.35, -99.5, 408.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [12.35, -80.5, 387.0]
+        at_mm: [12.35, -80.5, 408.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [12.35, -99.5, 411.0]
+        at_mm: [12.35, -99.5, 432.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [12.35, -80.5, 411.0]
+        at_mm: [12.35, -80.5, 432.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, -109.5, 387.0]
+      seat_origin_mm: [0.0, -109.5, 408.0]
       dir: [0.0, -1.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -1643,7 +1687,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, -72.5, 387.0]
+      origin_mm: [0.0, -72.5, 408.0]
       dir: [-0.0, 1.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -1656,16 +1700,18 @@ joints:
     parent_link: pelvis
     child_link: neck_yaw_link
     axis:
-      origin_mm: [0.0, 0.0, 510.0]
+      origin_mm: [0.0, 0.0, 531.0]
       direction: [0, 0, 1]
       name: z
     rom_deg: [-90, 90]
+    rom_spec_deg: [-90, 90]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: pelvis
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, 0.0, 490.0]
+        origin_mm: [0.0, 0.0, 511.0]
         z_dir: [0.0, 0.0, 1.0]
         x_dir: [1.0, 0.0, 0.0]
         y_dir: [0.0, 1.0, 0.0]
@@ -1675,39 +1721,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [0.0, 12.35, 482.0]
+        at_mm: [0.0, 12.35, 503.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [0.0, 12.35, 463.0]
+        at_mm: [0.0, 12.35, 484.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [24.0, 12.35, 482.0]
+        at_mm: [24.0, 12.35, 503.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [24.0, 12.35, 463.0]
+        at_mm: [24.0, 12.35, 484.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [0.0, -12.35, 482.0]
+        at_mm: [0.0, -12.35, 503.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [0.0, -12.35, 463.0]
+        at_mm: [0.0, -12.35, 484.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [24.0, -12.35, 482.0]
+        at_mm: [24.0, -12.35, 503.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [24.0, -12.35, 463.0]
+        at_mm: [24.0, -12.35, 484.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, 0.0, 492.0]
+      seat_origin_mm: [0.0, 0.0, 513.0]
       dir: [0.0, 0.0, 1.0]
       type: round_25t
       od_mm: 20.0
@@ -1719,7 +1765,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, 0.0, 455.0]
+      origin_mm: [0.0, 0.0, 476.0]
       dir: [-0.0, -0.0, -1.0]
       stub_od_mm: 9.0
     idler: null
@@ -1732,16 +1778,18 @@ joints:
     parent_link: neck_yaw_link
     child_link: neck_pitch_link
     axis:
-      origin_mm: [0.0, 0.0, 510.0]
+      origin_mm: [0.0, 0.0, 531.0]
       direction: [0, 1, 0]
       name: y
     rom_deg: [-30, 30]
+    rom_spec_deg: [-30, 30]
+    rom_note: null
     actuator:
       id: sts3215-12v
       host_link: neck_yaw_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, 17.5, 510.0]
+        origin_mm: [0.0, 17.5, 531.0]
         z_dir: [0.0, 1.0, 0.0]
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
@@ -1751,39 +1799,39 @@ joints:
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 9.5, 510.0]
+        at_mm: [12.35, 9.5, 531.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [12.35, -9.5, 510.0]
+        at_mm: [12.35, -9.5, 531.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [12.35, 9.5, 534.0]
+        at_mm: [12.35, 9.5, 555.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [12.35, -9.5, 534.0]
+        at_mm: [12.35, -9.5, 555.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-12.35, 9.5, 510.0]
+        at_mm: [-12.35, 9.5, 531.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-12.35, -9.5, 510.0]
+        at_mm: [-12.35, -9.5, 531.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-12.35, 9.5, 534.0]
+        at_mm: [-12.35, 9.5, 555.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-12.35, -9.5, 534.0]
+        at_mm: [-12.35, -9.5, 555.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [0.0, 19.5, 510.0]
+      seat_origin_mm: [0.0, 19.5, 531.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -1795,7 +1843,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, -17.5, 510.0]
+      origin_mm: [0.0, -17.5, 531.0]
       dir: [-0.0, -1.0, -0.0]
       stub_od_mm: 9.0
     idler: null

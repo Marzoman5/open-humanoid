@@ -25,9 +25,11 @@ P = {
     "idler_plate_t": 5.0,      # bearing seat 4 mm + 1 mm shoulder
     "cover_t": 4.4,            # 2.6 mm low-head counterbore + 1.8 mm floor (the gate found 3.2 leaves 0.6 mm under the head)
     "cover_t_idler": 5.6,      # blind relief for the servo's back stub (3.4) + the printed idler pin + >= 1.6 mm behind them, 3.0 under the screws
-    "web_radius": 24.0,        # fork web distance from the pitch axis: clears the housing near-end corner (20.8) by >= 3 mm
+    "web_radius": {"hip_pitch": 24.0, "knee": 30.0},   # fork web distance from the pitch axis: knee needs >= 30 for 115+ deg of flexion (24 stops at 115)
     "web_t": 3.2,
     "fork_w": 28.0,            # plate width (fore-aft)
+    "corner_r": 9.0,
+    "bridge_above_axis": 24.0, # roll bracket bridge starts this far above the hip axis (outside the fork sweep)           # rounded plate/web corners shrink the swept radius
     "sole_t": 3.2,
     "bearing": "MR105ZZ",
     "idler_gap": 1.5,
@@ -101,9 +103,12 @@ def build(ctx) -> Assembly:
     def idler_zin(n):    # servo-frame z of the idler plate inner face
         return H[n].params["cover_back_z"] - idl[n]["gap_mm"]
 
-    def box_s(n, x0, x1, y0, y1, z0, z1):
-        """Box given in servo-frame coordinates of joint n, returned in world coordinates."""
-        return S[n] * box_at(bd.Location(), (x1 - x0, y1 - y0, z1 - z0), ((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2))
+    def box_s(n, x0, x1, y0, y1, z0, z1, r=0.0):
+        """Box given in servo-frame coordinates of joint n (corners rounded by r around the servo z axis), in world coordinates."""
+        b = box_at(bd.Location(), (x1 - x0, y1 - y0, z1 - z0), ((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2))
+        if r > 0:
+            b = bd.fillet(b.edges().filter_by(bd.Axis.Z), min(r, 0.45 * min(x1 - x0, y1 - y0)))
+        return S[n] * b
 
     # ------------------------------------------------------------------ purchased parts: servos, horns, bearings
     for n in LEG:
@@ -164,7 +169,13 @@ def build(ctx) -> Assembly:
     z_lo = (wp(s3, p3["outer_x"][0], 0, 0)).Z
     z_hi = (wp(s3, p3["outer_x"][1], 0, 0)).Z
     x_plate0 = (wp(S["hip_roll"], 0, 0, zp0["hip_roll"])).X
-    plate2 = box_at(bd.Location(), (wall_x + 1.0 - x_plate0, y_hi - y_lo, z_hi - z_lo), ((x_plate0 + wall_x + 1.0) / 2, (y_lo + y_hi) / 2, (z_lo + z_hi) / 2))
+    # The thigh fork's web swings back through this region when the hip extends, so the S2 horn plate is thin and joins the S3
+    # housing only through a bridge ABOVE the swept radius (the fork reaches 14 mm above the hip axis plus the web corner radius).
+    z_ax_hip = ifs.axis_origin(J["hip_pitch"])[2]
+    z_bridge0 = z_ax_hip + P["bridge_above_axis"]
+    plate2 = box_at(bd.Location(), (hp, y_hi - y_lo, z_hi - (z_ax_hip - 12.0)), (x_plate0 + hp / 2, (y_lo + y_hi) / 2, (z_hi + z_ax_hip - 12.0) / 2))
+    bridge = box_at(bd.Location(), (wall_x + 1.0 - x_plate0, y_hi - y_lo, z_hi - z_bridge0), ((x_plate0 + wall_x + 1.0) / 2, (y_lo + y_hi) / 2, (z_hi + z_bridge0) / 2))
+    plate2 = safe_union(plate2, bridge, "roll bracket plate+bridge")
     hm2 = horn_plate_feat("hip_roll", mate=f"servo_{J['hip_roll']}")
     shp, st = H["hip_pitch"].build(S["hip_pitch"], adds=[plate2], extra=[hm2], name="roll_bracket")
     printed(f"roll_bracket_{side}", shp, child_link["hip_roll"], st, rename={"housing": f"roll_bracket_{side}", "cover": f"cover_{J['hip_pitch']}"})
@@ -172,12 +183,12 @@ def build(ctx) -> Assembly:
     # ---- pitch forks: thigh (S3 fork + S4 housing), shank (S4 fork + S5 housing)
     def fork(n, nxt, pid):
         """Fork around joint n's housing (plates on the horn side and the idler side + web) carrying joint nxt's housing at its end."""
-        rho, tw, fw = P["web_radius"], P["web_t"], P["fork_w"]
+        rho, tw, fw = P["web_radius"][n], P["web_t"], P["fork_w"]
         z_in = idler_zin(n)
         x_far = rho + tw
-        horn_plate = box_s(n, -x_far, 14, -fw / 2, fw / 2, zp0[n], zp0[n] + hp)
-        idler_plate = box_s(n, -x_far, 14, -fw / 2, fw / 2, z_in - P["idler_plate_t"], z_in)
-        web = box_s(n, -x_far, -rho, -fw / 2, fw / 2, z_in - P["idler_plate_t"], zp0[n] + hp)
+        horn_plate = box_s(n, -x_far, 14, -fw / 2, fw / 2, zp0[n], zp0[n] + hp, P["corner_r"])
+        idler_plate = box_s(n, -x_far, 14, -fw / 2, fw / 2, z_in - P["idler_plate_t"], z_in, P["corner_r"])
+        web = box_s(n, -x_far, -rho, -fw / 2, fw / 2, z_in - P["idler_plate_t"], zp0[n] + hp, P["corner_r"])
         # beam down to the next housing's top: spans its block footprint
         hn = H[nxt].params
         ref = S[nxt]

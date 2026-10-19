@@ -1,0 +1,106 @@
+{
+  "sweep": {
+    "assembly": "adam_leg_v2_l",
+    "joints": {
+      "hip_yaw_l": {
+        "joint": "hip_yaw_l",
+        "range_deg": [
+          -45,
+          45
+        ],
+        "limit_pos": null,
+        "limit_neg": null,
+        "collisions": [],
+        "within_spec": true
+      },
+      "hip_roll_l": {
+        "joint": "hip_roll_l",
+        "range_deg": [
+          -30,
+          45
+        ],
+        "limit_pos": null,
+        "limit_neg": null,
+        "collisions": [],
+        "within_spec": true
+      },
+      "hip_pitch_l": {
+        "joint": "hip_pitch_l",
+        "range_deg": [
+          -110,
+          45
+        ],
+        "limit_pos": null,
+        "limit_neg": null,
+        "collisions": [],
+        "within_spec": true
+      },
+      "knee_l": {
+        "joint": "knee_l",
+        "range_deg": [
+          0,
+          115
+        ],
+        "limit_pos": null,
+        "limit_neg": null,
+        "collisions": [],
+        "within_spec": true
+      },
+      "ankle_pitch_l": {
+        "joint": "ankle_pitch_l",
+        "range_deg": [
+          -60,
+          30
+        ],
+        "limit_pos": null,
+        "limit_neg": null,
+        "collisions": [],
+        "within_spec": true
+      },
+      "ankle_roll_l": {
+        "joint": "ankle_roll_l",
+        "range_deg": [
+          -30,
+          30
+        ],
+        "limit_pos": null,
+        "limit_neg": null,
+        "collisions": [],
+        "within_spec": true
+      }
+    },
+    "ok": true,
+    "failing": []
+  },
+  "poses": [
+    {
+      "pose": "squat",
+      "q_deg": {
+        "hip_pitch_l": -88.0,
+        "knee_l": 103.5,
+        "ankle_pitch_l": -15.5
+      },
+      "collisions": [],
+      "ok": true
+    },
+    {
+      "pose": "step_forward",
+      "q_deg": {
+        "hip_pitch_l": -44.0,
+        "knee_l": 57.5,
+        "ankle_pitch_l": -13.5
+      },
+      "collisions": [],
+      "ok": true
+    },
+    {
+      "pose": "split_stance",
+      "q_deg": {
+        "hip_roll_l": 31.5,
+        "ankle_roll_l": -15.0
+      },
+      "collisions": [],
+      "ok": true
+    }
+  ]
+}

@@ -145,9 +145,11 @@ def generate(spec: dict, layout: dict, sizing: dict | None = None) -> dict:
                 rng = jd.get("range") or bj.get("range")
                 if axis_name is None or rng is None:
                     raise ValueError(f"joint {jd['name']}: axis/range missing from both spec and layout")
+                spec_rng = list(bj.get("range") or rng)
                 lo, hi = rng
                 if side == "r" and axis_name in ("x", "z"):
                     lo, hi = -hi, -lo
+                    spec_rng = [-spec_rng[1], -spec_rng[0]]
                 p = pts[jd["point"]]
                 p = _mirror_pt(p) if sgn < 0 else list(p)
                 jname = f"{jd['name']}{sfx}"
@@ -186,6 +188,8 @@ def generate(spec: dict, layout: dict, sizing: dict | None = None) -> dict:
                     "limb": limb, "side": side, "base": jd["name"], "parent_link": parent, "child_link": lname,
                     "axis": {"origin_mm": _vec(p), "direction": axis_dir, "name": axis_name},
                     "rom_deg": [lo, hi],
+                    "rom_spec_deg": spec_rng,
+                    "rom_note": jd.get("range_note"),
                     "actuator": {
                         "id": aid, "host_link": sv.get("host", parent).replace("_l_link", "_r_link") if side == "r" else sv.get("host", parent), "mass_kg": float(catalog.get(aid).get("mass_kg", 0.0)),
                         "frame": {"origin_mm": _vec(origin), "z_dir": _vec(z_dir), "x_dir": _vec(x_dir), "y_dir": _vec(y_dir)},

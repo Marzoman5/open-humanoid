@@ -42,8 +42,8 @@ def loc_from(origin=(0, 0, 0), z_dir=(0, 0, 1), x_dir=None) -> bd.Location:
 def axis_of(loc: bd.Location) -> tuple[bd.Vector, bd.Vector]:
     """(origin, unit z direction) of a Location."""
     p = loc.position
-    z = (loc * bd.Vector(0, 0, 1)) - (loc * bd.Vector(0, 0, 0))
-    return bd.Vector(p.X, p.Y, p.Z), z.normalized()
+    q = (loc * bd.Location((0, 0, 1))).position
+    return bd.Vector(p.X, p.Y, p.Z), bd.Vector(q.X - p.X, q.Y - p.Y, q.Z - p.Z).normalized()
 
 
 def volume(s: bd.Shape | None) -> float:
