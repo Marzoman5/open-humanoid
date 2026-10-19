@@ -1,0 +1,33 @@
+# Catalog part: schema schemas/catalog-part.schema.json. Added by T-0017 (concept engine power/voltage trade study), accessed 2026-10-19.
+id: lipo-2s-1200-nanotech
+name: Turnigy nano-tech 2S 7.4 V 1200 mAh LiPo (25-50C)
+category: power
+tier: hobby
+price_usd:
+  typical: 10.4
+  low: 9.89
+  high: 10.99
+  unit: each
+  as_of: 2026-10-19 (Red Wolf Airsoft listing, Tamiya/T-plug variants)
+verified: false
+source: 'https://www.redwolfairsoft.com/turnigy-nano-tech-7-4v-1200mah-2s-25-50c-lipo-airsoft-pack-tamiya.html (price $9.89-10.99;
+  weight 55-64 g and 125x20x12 mm depending on variant). Connector is Tamiya/T-plug: swap for XT30/XT60 for this robot. verified=false:
+  figures come from retailer listings read via web search 2026-10-19; vendors disagree on weight (+-20 g stated tolerance)
+  and no price was cross-checked at two vendors. Re-check at P7 (R5 Buy).'
+vendors:
+- name: Red Wolf Airsoft
+  url: https://www.redwolfairsoft.com/turnigy-nano-tech-7-4v-1200mah-2s-25-50c-lipo-airsoft-pack-tamiya.html
+  price: 10.99
+  checked: '2026-10-19'
+mass_kg: 0.064
+dimensions_mm:
+- 125
+- 20
+- 12
+specs:
+  cells: 2
+  capacity_mah: 1200
+  c_rating: 25
+  energy_wh: 8.9
+  chemistry: LiPo
+notes: 'Small 2S option. 25C continuous is only 30 A and 1.2 Ah gives ~9 Wh: runtime is the constraint, not current.'

@@ -1,4 +1,4 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json. Updated by T-0017 (concept engine power/voltage trade study), accessed 2026-10-19.
 id: rpi-5-4gb
 name: Raspberry Pi 5 (4 GB)
 category: compute
@@ -9,11 +9,21 @@ price_usd:
   as_of: 2026-10 (est)
   low: 55
   high: 70
-mass_kg: 0.046
+mass_kg: 0.062
 specs:
   cpu: 4x Cortex-A76 2.4 GHz
   ram_gb: 4
   power_w: 8
+  power_w_typical: 6.0
+  power_w_peak: 25.0
+  power_w_idle: 3.0
 verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md
+  | dims/mass added 2026-10-19 by T-0017: board 85x56 mm (hifiberry/retail spec); HEIGHT 17 mm is NOT confirmed (a retailer''s
+  packaging lists 25 mm); mass 62 g from a reseller (galaxus.de) listing. Power: the Pi 5 asks for 5 V 5 A (raspberrypi.com
+  product page, 27 W PSU); typical 6 W and idle 3 W are ASSUMPTIONS, 25 W is the supply rating. Prices unchanged and unverified
+  (the 2026 4 GB price may be above $60).'
+dimensions_mm:
+- 85
+- 56
+- 17

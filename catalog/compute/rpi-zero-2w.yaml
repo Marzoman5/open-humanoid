@@ -1,4 +1,4 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json. Updated by T-0017 (concept engine power/voltage trade study), accessed 2026-10-19.
 id: rpi-zero-2w
 name: Raspberry Pi Zero 2 W
 category: compute
@@ -9,13 +9,22 @@ price_usd:
   as_of: 2026-10 (est)
   low: 15
   high: 20
-mass_kg: 0.011
+mass_kg: 0.016
 specs:
   cpu: 4x Cortex-A53 1 GHz
   ram_gb: 0.5
   wifi: true
   power_w: 3
+  power_w_typical: 2.0
+  power_w_peak: 6.8
+  power_w_idle: 0.6
 notes: Enough for a small MLP locomotion policy at 50 Hz. Not for onboard LLM/vision.
 verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md
+  | dims/mass added 2026-10-19 by T-0017: 65x30 mm (Kubii, Little Bird; 5.2 mm max height Little Bird), mass 16 g (Kubii;
+  Little Bird says 10 g). Power: research/methods/e (CNX Software: idle ~120 mA @5 V = 0.6 W; stress 1.35 A = 6.8 W); typical
+  2.0 W for a 50 Hz policy plus Wi-Fi is an ASSUMPTION. Prices unchanged and unverified.'
+dimensions_mm:
+- 65
+- 30
+- 5.2

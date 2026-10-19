@@ -1,0 +1,35 @@
+# Catalog part: schema schemas/catalog-part.schema.json. Added by T-0017 (concept engine power/voltage trade study), accessed 2026-10-19.
+id: lipo-2s-2200-turnigy
+name: Turnigy 2S 7.4 V 2200 mAh 40C LiPo (XT60)
+category: power
+tier: hobby
+price_usd:
+  typical: 14.0
+  low: 11.0
+  high: 20.0
+  unit: each
+  as_of: '2026-10 (price NOT captured: HobbyKing page returned 403; estimate scaled from the 2S 1200 mAh listing)'
+verified: false
+source: 'https://hobbyking.com/turnigy-2200mah-2s-40c-lipo-pack-w-xt60.html (122 g, 106x35x16 mm, 40C, XT60/JST-XH per search
+  snippet); second source https://www.superdroidrobots.com/shop/item.aspx/lipo-battery-7-4v-2200-mah/1918 (generic 2200 mAh
+  2S: 134 g, 105x33x17 mm). PRICE IS AN ESTIMATE. verified=false: figures come from retailer listings read via web search
+  2026-10-19; vendors disagree on weight (+-20 g stated tolerance) and no price was cross-checked at two vendors. Re-check
+  at P7 (R5 Buy).'
+vendors:
+- name: HobbyKing
+  url: https://hobbyking.com/turnigy-2200mah-2s-40c-lipo-pack-w-xt60.html
+  checked: '2026-10-19'
+- name: SuperDroid Robots (generic 2200 mAh 2S)
+  url: https://www.superdroidrobots.com/shop/item.aspx/lipo-battery-7-4v-2200-mah/1918
+  checked: '2026-10-19'
+mass_kg: 0.122
+dimensions_mm:
+- 106
+- 35
+- 16
+specs:
+  cells: 2
+  capacity_mah: 2200
+  c_rating: 40
+  energy_wh: 16.3
+  chemistry: LiPo

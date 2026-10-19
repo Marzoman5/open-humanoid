@@ -1,0 +1,39 @@
+# Catalog part: schema schemas/catalog-part.schema.json. Added by T-0017 (concept engine power/voltage trade study), accessed 2026-10-19.
+id: buck-pololu-d36v50f5
+name: Pololu D36V50F5 5 V 5.5 A step-down regulator
+category: electronics
+tier: prosumer
+price_usd:
+  typical: 37.45
+  low: 34.95
+  high: 39.95
+  unit: each
+  as_of: '2026-10-19 (two Pololu snapshots: $34.95 and $39.95)'
+verified: false
+source: https://www.pololu.com/product/4091/specs ($39.95, 25.4x25.4x9.5 mm, 7.0 g, 5.5-50 V in, 5 V out, 5.5 A typical at
+  36 V in); https://core-electronics.com.au/catalog/product/view/sku/POLOLU-4091 and https://uk.robotshop.com/products/5v-55a-step-down-voltage-regulator-d36v50f5
+  agree on size and weight. Price differs between two Pololu snapshots; verified stays false.
+vendors:
+- name: Pololu
+  url: https://www.pololu.com/product/4091
+  price: 39.95
+  checked: '2026-10-19'
+- name: RobotShop UK
+  url: https://uk.robotshop.com/products/5v-55a-step-down-voltage-regulator-d36v50f5
+  price: 31.0
+  checked: '2026-10-19'
+mass_kg: 0.007
+dimensions_mm:
+- 25.4
+- 25.4
+- 9.5
+specs:
+  input_v:
+  - 5.5
+  - 50
+  output_v: 5.0
+  max_current_a: 5.5
+  efficiency: 0.92
+  quiescent_ma_max: 4
+notes: Fits a Raspberry Pi 5 (5 V 5 A request) from a 2S or 3S pack. specs.efficiency 0.92 is an assumption (the page gives
+  none). Continuous current at low input voltage is thermally limited.

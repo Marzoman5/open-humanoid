@@ -130,6 +130,7 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
     dadr = np.array([model.joint(x).dofadr[0] for x in names])
     aidx = np.array([model.actuator(x).id for x in names])
     ratio = robot.ratio
+    eff = robot.eff if robot.eff is not None else np.ones(n)
     specs = [robot.servo[x] for x in names]
     sc = _servo_scales(robot, cfg)
     if sc:
@@ -202,7 +203,8 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
         if pack:
             bank.set_supply(vin)
         tau = bank.control(cmd / ratio, theta, omega)
-        data.ctrl[aidx] = tau / ratio
+        # joint force from servo torque through the linkage: eta when the motor drives, 1/eta when the load back-drives it
+        data.ctrl[aidx] = tau * np.where(tau * omega >= 0, eff, 1.0 / eff) / ratio
         # friction budget from last step's constraint forces (BAM Mujoco controller convention)
         if cfg.mode == "servo":
             fric = np.zeros(model.nv)

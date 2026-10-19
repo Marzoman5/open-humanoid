@@ -46,6 +46,9 @@ class Robot:
     ratio: np.ndarray | None = None         # joint units per servo radian (1 for hinges)
     mass_breakdown: dict = field(default_factory=dict)
     power_parts: dict = field(default_factory=dict)
+    eff: np.ndarray | None = None           # transmission efficiency per joint (1.0 = direct drive)
+    transmissions: dict = field(default_factory=dict)   # joint name -> {ratio, efficiency, host, note}
+    mass_case: dict = field(default_factory=dict)
 
     @property
     def geom(self) -> dict:
@@ -68,9 +71,13 @@ class Robot:
         sizing = {"geometry_m": self.body.geom, "segment_mass_kg": self.body.seg_mass, "height_m": self.height,
                   "joints_base": [j["name"] for j in self.spec["kinematics"]["joints"]], "actuators": self.acts}
         jp = joint_params if joint_params is not None else self.default_joint_params()
-        limits = {n: float(self.servo[n].stall_cap(self.servo[n].vin_ref)) * 1.05 for n in self.names}
+        # servo-domain torque ceiling per joint, divided by the linkage ratio (the builder divides slides by the pinion ratio itself)
+        limits = {n: float(self.servo[n].stall_cap(self.servo[n].vin_ref)) * 1.05 / self.trans_ratio(n) for n in self.names}
         return simgen.build_mjcf(self.spec, sizing, actuator_mode="motor", joint_params=jp, extra_world_xml=extra_world_xml,
                                  torque_limits=limits, model_name=self.concept["id"])
+
+    def trans_ratio(self, name: str) -> float:
+        return float(self.transmissions.get(name, {}).get("ratio", 1.0))
 
     def default_joint_params(self) -> dict:
         out = {}
@@ -129,11 +136,25 @@ def part_list(concept: dict) -> list[dict]:
     return parts.get("onboard", []), parts.get("offboard", [])
 
 
-def build_robot(concept, *, actuator_variants: dict | None = None) -> Robot:
+def build_robot(concept, *, actuator_variants: dict | None = None, structure_scale: float = 0.0,
+                parts_scale: float = 1.0) -> Robot:
+    """structure_scale: fractional change of the printed structure+shell mass (nominal 0; evidence band -0.15..+0.40).
+    parts_scale: scale on every catalog-mass part (servos, battery, boards; evidence band +-5%)."""
     concept = load_concept(concept)
     spec = build_spec(concept)
+    spec["mass_model"] = {**spec["mass_model"], "structure_kg_at_1m": spec["mass_model"]["structure_kg_at_1m"] * (1 + structure_scale),
+                          "electronics_kg": spec["mass_model"]["electronics_kg"] * parts_scale}
     h = float(concept["height_m"])
     joints = expand_joints(spec)
+    # transmissions: a joint driven through a linkage/offset: servo angle = joint angle / ratio, efficiency eta, servo mounted on `host`
+    trans = {}
+    for key, tcfg in concept.get("transmissions", {}).items():
+        for j in joints:
+            if j["name"] == key or j["base"] == key:
+                trans[j["name"]] = {"ratio": float(tcfg.get("ratio", 1.0)), "efficiency": float(tcfg.get("efficiency", 1.0)),
+                                    "host": tcfg.get("host"), "note": tcfg.get("note", "")}
+                if tcfg.get("host"):
+                    j["host"] = tcfg["host"]
     default_act = concept["actuator_default"]
     overrides = concept.get("actuators", {})
     variants = {**concept.get("model_variants", {}), **(actuator_variants or {})}
@@ -147,35 +168,39 @@ def build_robot(concept, *, actuator_variants: dict | None = None) -> Robot:
     power_parts = {"onboard": [], "offboard": []}
     for item in onboard:
         p = catalog.get(item["part"])
-        fixed_mass += p.get("mass_kg", 0.0) * item.get("qty", 1)
+        fixed_mass += p.get("mass_kg", 0.0) * item.get("qty", 1) * parts_scale
         power_parts["onboard"].append({**item, "mass_kg": p.get("mass_kg", 0.0), "price": catalog.price(p)})
     for item in offboard:
         p = catalog.get(item["part"])
         power_parts["offboard"].append({**item, "mass_kg": p.get("mass_kg", 0.0), "price": catalog.price(p)})
     # wiring harness: assumed 6 g per servo (cable + connector), 25 g trunk
-    wiring = 0.006 * len(joints) + 0.025
-    act_mass = {n: servo[n].mass_kg for n in servo}
+    wiring = (0.006 * len(joints) + 0.025) * parts_scale
+    act_mass = {n: servo[n].mass_kg * parts_scale for n in servo}
     body = build_body(spec, h, joints, act_mass, fixed_mass + wiring)
     names = [j["name"] for j in joints if simgen.JOINT_BODY.get(j["base"])]
-    ratio = np.array([simgen.joint_kind(j["base"])["ratio"] if simgen.joint_kind(j["base"])["type"] == "slide" else 1.0
-                      for j in joints if simgen.JOINT_BODY.get(j["base"])])
+    sim_joints = [j for j in joints if simgen.JOINT_BODY.get(j["base"])]
+    ratio = np.array([(simgen.joint_kind(j["base"])["ratio"] if simgen.joint_kind(j["base"])["type"] == "slide" else 1.0)
+                      * trans.get(j["name"], {}).get("ratio", 1.0) for j in sim_joints])
+    eff = np.array([trans.get(j["name"], {}).get("efficiency", 1.0) for j in sim_joints])
     mb = {"structure_kg": body.breakdown["structure_kg"], "actuators_kg": body.breakdown["actuators_kg"],
           "onboard_parts_kg": round(fixed_mass, 4), "wiring_kg": round(wiring, 4),
           "electronics_misc_kg": spec["mass_model"]["electronics_kg"], "total_kg": round(body.total, 4)}
-    robot = Robot(concept, spec, h, body, joints, acts, servo, names=names, ratio=ratio, mass_breakdown=mb, power_parts=power_parts)
+    robot = Robot(concept, spec, h, body, joints, acts, servo, names=names, ratio=ratio, mass_breakdown=mb, power_parts=power_parts,
+                  eff=eff, transmissions=trans, mass_case={"structure_scale": structure_scale, "parts_scale": parts_scale})
     return robot
 
 
 def benchmark_mass_kg(height_m: float) -> float:
-    """Fit over 9 comparable robots (research/robots/benchmarks.md): mass = 18.5 * h^2.28, R^2 0.93."""
+    """SANITY BOUND ONLY (never Adam's estimate): fit over 9 comparable robots (research/robots/benchmarks.md), mass = 18.5 h^2.28."""
     return 18.5 * height_m ** 2.28
 
 
 def mass_sanity(robot: Robot) -> dict:
     bm = benchmark_mass_kg(robot.height)
     ratio = robot.total_mass / bm
-    status = "ok" if 0.75 <= ratio <= 1.35 else ("light" if ratio < 0.75 else "heavy")
+    status = "within" if 0.6 <= ratio <= 1.6 else ("below" if ratio < 0.6 else "above")
     return {"component_sum_kg": round(robot.total_mass, 3), "benchmark_fit_kg": round(bm, 3), "ratio": round(ratio, 3),
-            "status": status,
-            "note": "benchmark fit 18.5*h^2.28 (N=9, R2 0.93, research/robots/benchmarks.md); 'light' means the component sum is "
-                    "below what comparable robots weigh (printed structure mass is the least certain term)"}
+            "status": f"{status} the sanity band (0.6x-1.6x of the fit)",
+            "note": "The fit 18.5*h^2.28 (N=9, R2 0.93, research/robots/benchmarks.md) and the ToddlerBot/OP3 masses are SANITY BOUNDS "
+                    "ONLY. The mass used everywhere in this report is the component sum (catalog masses +-5% + printed structure with "
+                    "its own -15%/+40% band); the structure term is a pre-CAD guess."}

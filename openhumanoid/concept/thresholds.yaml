@@ -1,0 +1,119 @@
+# Concept-loop acceptance thresholds and evaluation constants: ONE file, one place to read, one place for the
+# commander to mirror into pipeline/gates.yaml (ADR 0011). Agents must not tune these to make a candidate pass.
+# Every entry carries a provenance class:
+#   measured            a published measurement or identification
+#   sourced_estimate    a number from a cited source that is not a measurement of this system (vendor claim, other robot)
+#   extrapolated        a measured/sourced number applied outside the range it was measured in
+#   assumption          our documented assumption, no data found
+#   gate                a pass/fail threshold set by the research recommendation (starting value), not a physical constant
+version: 1
+
+gates:
+  peak_torque_fraction_of_stall:
+    value: 0.70
+    class: gate
+    source: research/ai-engineering/RECOMMENDATIONS.md B4 ("p95 Monte Carlo peak <= 70% of measured stall at operating voltage")
+    note: peak = max of a 40 ms moving average of |motor torque| (single-sample contact spikes are excluded); stall = datasheet stall scaled to the pack's NOMINAL voltage (conservative reference), see actuator models.
+  rms_torque_vs_continuous:
+    value: 1.0
+    class: gate
+    source: RECOMMENDATIONS.md B4 ("RMS <= continuous rating"); the rating is the vendor 'rated torque' (26-33% of stall), not a measured thermal limit
+  thermal_limit_c:
+    value: 70.0
+    class: sourced_estimate
+    source: STS3215 Max_Temperature_Limit register default 70 C (research/actuators/feetech-sts3215/datasheet.yaml); Robonine saw an overheat flag at 70 C without active shutdown
+  thermal_horizon_s:
+    value: 600
+    class: gate
+    source: RECOMMENDATIONS.md B4 ("simulated 10-minute walk below thermal shutdown"); we simulate the 10-minute MIXED activity schedule below
+  envelope_utilisation_max:
+    value: 0.90
+    class: assumption
+    source: operating points (|tau|, |w|) must sit inside 90% of the torque-speed envelope; stands in for a speed-margin gate (no source). The lead's gates do not name a speed criterion.
+  tracking_error_deg:
+    value: 2.0
+    class: gate
+    source: RECOMMENDATIONS.md B4 ("held-out actuator-model tracking <= ~2 deg"). NOTED, not gating, in this tool: tracking of a reference by a P-servo with learned feedforward is not the same as model-vs-real error.
+    gating: false
+  assist_mean_fraction_of_weight:
+    value: 0.05
+    class: assumption
+    source: the playback tether may supply at most 6% of body weight; a gait whose mean assist exceeds 5% is not dynamically consistent. Reported as a warning.
+  mc_pass_rate_min:
+    value: 0.90
+    class: assumption
+    source: share of Monte Carlo samples that satisfy every per-sample criterion (upright, torque, envelope, grasp)
+  walk_speed_min_mps:
+    value: 0.05
+    class: assumption
+    source: requirement R2 says "walks around" but gives no speed. 0.05 m/s is a placeholder for "reads as walking"; the commander should set it.
+  runtime_min_min:
+    value: 15.0
+    class: gate
+    source: variants/adam/requirements.md "Should: run time >= 15 min of mixed activity per charge" (a Should, reported, not gating)
+    gating: false
+  pack_peak_current_fraction_of_c:
+    value: 0.8
+    class: assumption
+    source: peak battery draw must stay below 80% of C-rating x capacity (research/methods/e: choose C so peak < ~50% of C x capacity; judgement, not sourced)
+
+thermal:
+  ambient_c:
+    value: 35.0
+    class: assumption
+    source: closed printed shell with 22 servos and a Pi; no measurement. 22 C room + 13 K enclosure rise (research/methods/e says "derate for ambient inside a closed shell (null data)").
+  start_c:
+    value: 35.0
+    class: assumption
+    source: cold start inside the shell
+
+mass:
+  structure_band: {low: -0.15, high: 0.40}
+  structure_band_class: assumption
+  structure_band_source: maintainer/commander correction 2026-10-19. Before CAD the printed structure + shell mass is a guess, so it gets its own asymmetric band.
+  parts_band: 0.05
+  parts_band_class: sourced_estimate
+  parts_band_source: catalog masses (vendor figures; +-1 g on a 55 g servo ~ 2%; +-5% covers wiring/connectors)
+  benchmark_fit: {k: 18.5, n: 2.28}
+  benchmark_role: SANITY BOUND ONLY. The fit over nine comparable robots (research/robots/benchmarks.md) is never used as Adam's estimate.
+  wiring_kg_per_servo: {value: 0.006, class: assumption, source: cable + connector per servo}
+  wiring_kg_trunk: {value: 0.025, class: assumption, source: bus trunk, switch lead}
+
+monte_carlo:
+  n_samples: {value: 24, class: assumption, source: runtime budget; raise with --samples for a final gate}
+  seed: 1234
+  friction_floor: {low: 0.5, high: 1.0, class: sourced_estimate, source: Open Duck Mini randomize.py floor friction 0.5-1.0 (research/methods/domain_randomization_ranges.yaml)}
+  kp_scale: {low: 0.9, high: 1.1, class: sourced_estimate, source: Open Duck Mini kp +-10%; ToddlerBot kp +-10%}
+  latency_extra_ms: {low: 0.0, high: 40.0, class: sourced_estimate, source: Open Duck Mini action delay 0-2 control steps = up to 40 ms (jax randint upper bound exclusive)}
+  backlash_deg: {low: 0.2, high: 1.0, class: sourced_estimate, source: datasheet <= 0.5 deg; Robonine measured 0.87 deg on one 12 V unit}
+  com_shift_frac_h: {value: 0.03, class: assumption, source: torso COM shift +-3% of height per axis. Open Duck uses +-0.05 m on a 0.42 m robot (12%), which is a CAD-uncertainty level we do not claim for a printed torso; no data}
+  soc_range: {low: 0.15, high: 1.0, class: assumption, source: pack state of charge at the start of each activity}
+  pack_r_scale: {low: 0.8, high: 1.5, class: assumption, source: unit-to-unit and ageing spread of pack internal resistance}
+
+mixed_activity:
+  # 10-minute duty cycle, repeated. Seconds per 100 s cycle. Walking dominates because Adam's job is to walk around.
+  cycle_s: 100
+  schedule:
+    walk_forward: 32
+    stand: 14
+    walk_backward: 8
+    turn: 8
+    wave: 7
+    dance: 20
+    pickup: 8
+    squat_90: 3
+  class: assumption
+  source: invented usage mix (walk + wave + dance + pickup) as requested; no usage data exists
+
+power:
+  usable_battery_fraction: {value: 0.85, class: assumption, source: cutoff at 3.3 V/cell instead of 3.0 V (RECOMMENDATIONS/methods e: 3.0 V cutoff is the damage limit)}
+  regulator_efficiency: {value: 0.90, class: assumption, source: buck converter; catalog specs.efficiency overrides}
+  compute_power_w_default: {value: 3.0, class: assumption, source: used if the catalog part has no specs.power_w}
+
+walk_gait:
+  # The walking reference is Froude-scaled and then slowed down (time scaling) until the ideal-actuator demand fits the
+  # envelope. This ladder is tried from fastest to slowest.
+  step_time_ladder_s: [0.40, 0.50, 0.65, 0.85, 1.10, 1.40, 1.80, 2.40]
+  clearance_m_frac_h: 0.04
+  class: assumption
+  source: foot clearance 4% of height (18 mm at 0.45 m; the sole is 20 mm thick in the primitive model)
