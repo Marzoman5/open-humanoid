@@ -23,6 +23,8 @@ How a robot goes from "what I want" to "it works the first time it's assembled".
   - Was the research applied?
 
   Its report goes to `variants/<id>/reviews/challenge-<n>-<subject>.md`. The commander **answers every row in writing** (accept + action, or reject + reason) before proceeding. Nobody grades their own plan, including the commander.
+- **Advisor and escalation** (research E2, verified: +2.7 points at −11.9% cost). Executors (Sonnet) consult an Opus advisor on hard calls. After **two failed attempts** to pass the same gate or fix the same defect, an executor stops, writes what it tried, and escalates to Opus or the commander instead of trying a third variation.
+- **Fresh context per unit of work** (research D7, E3). Intake and planning happen in one session. Execution runs in fresh agents or sessions, each with one task and the repo as its only memory (task file, handoff, gates). Long sessions accumulate wrong assumptions.
 - **Lessons ledger** (`coordination/LESSONS.md`). Every caught mistake gets a row and is enforced somewhere real (hook, gate, test, skill, or prompt). The challenger reads it, so mistakes don't repeat.
 
 ## Phases

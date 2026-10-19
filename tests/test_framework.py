@@ -77,3 +77,15 @@ def test_sim_smoke(adam):
     reports.write_sizing(adam, size(adam))
     r = simgen.smoke_test(adam, seconds=1.0)
     assert r["ok"], r
+
+
+def test_repo_root_prefers_package_checkout(tmp_path, monkeypatch):
+    """Lesson 2026-10-19: running from another checkout's cwd must not switch repos."""
+    from pathlib import Path
+    from openhumanoid import paths
+    fake = tmp_path / "other_checkout"
+    (fake / "schemas").mkdir(parents=True)
+    (fake / "AGENTS.md").write_text("x")
+    monkeypatch.chdir(fake)
+    monkeypatch.delenv("OPENHUMANOID_ROOT", raising=False)
+    assert paths.repo_root() == Path(paths.__file__).resolve().parents[1]

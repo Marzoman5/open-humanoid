@@ -3,12 +3,17 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      MUJOCO_GL: egl
+      PYVISTA_OFF_SCREEN: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
-      - run: pip install -e ".[sim,dev]"
-      - run: pytest -q
+      - name: System libraries for offscreen rendering
+        run: sudo apt-get update && sudo apt-get install -y libegl1 libgl1 libosmesa6 xvfb
+      - run: pip install -e ".[sim,cad,dev,design]"
+      - run: xvfb-run -a pytest -q
       - name: Validate and size every variant
         run: |
           for d in variants/*/; do
@@ -17,4 +22,14 @@ jobs:
             oh size "$id" || echo "::warning::$id sizing infeasible"
           done
       - name: Generated files are up to date
-        run: git diff --exit-code -- 'variants/*/generated/*.json' || (echo "::error::run oh size/bom and commit generated files" && exit 1)
+        run: git diff --exit-code -- 'variants/*/generated/*.json' ':!variants/*/generated/gates/*' || (echo "::error::run oh size/bom and commit generated files" && exit 1)
+      - name: Regression - re-run every gate that has a record (research B2)
+        run: |
+          fail=0
+          for rec in variants/*/generated/gates/*.json; do
+            [ -e "$rec" ] || continue
+            id=$(echo "$rec" | cut -d/ -f2); gate=$(basename "$rec" .json)
+            [ "$gate" = "G-tests" ] && continue   # pytest already ran above
+            echo "== $gate $id"; xvfb-run -a oh gate "$gate" "$id" || fail=1
+          done
+          exit $fail
