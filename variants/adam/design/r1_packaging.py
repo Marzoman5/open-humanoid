@@ -103,7 +103,9 @@ def layout(H_m: float, arms: str, legs: str) -> dict:
     # ---------------- front (y) stack-up
     pack_w = PACK[1] + 2 * HOUS
     neck_slot_w = S_L + 2 * HOUS                                            # neck-yaw servo, long axis across y
-    if arms == "chest":
+    base = "arm" if arms.startswith("arm") else "chest"
+    lat, fwd = "lat" in arms, "fwd" in arms
+    if base == "chest":
         Tf = max(2 * (S_H + BOSS) + 2.4, pack_w, neck_slot_w)              # two pitch servos back to back + a 2.4 mm centre wall
         ya = Tf / 2 + SHELL + MOVE + SHELL + PLATE + HOUS + S_W / 2         # roll-servo centre: torso shell, gap, arm shell, horn plate, housing
         cap_half = S_W / 2 + HOUS + SHELL
@@ -113,21 +115,31 @@ def layout(H_m: float, arms: str, legs: str) -> dict:
         ya = Tf / 2 + PLATE + SHELL + MOVE + SHELL + HORN + (S_H + BOSS) / 2   # pitch-servo body centre in the shoulder cap
         cap_half = (S_H + BOSS) / 2 + HOUS + SHELL
         cap_depth = S_W / 2 + HOUS + SHELL
-    elbow_half = (S_H + BOSS) / 2 + HOUS + SHELL                            # elbow axis along y: 37 mm across
+    # lat: the elbow servo turned so its 24.7 mm face is lateral; its axis is then fore-aft, so it needs a right-angle (bevel) stage to drive
+    # the y-axis elbow: NOT in the catalog, ~3 mm more length (challenge-3 row 14, an option to price, not a validated part)
+    elbow_half = (S_W / 2 + HOUS + SHELL) if lat else ((S_H + BOSS) / 2 + HOUS + SHELL)
+    elbow_depth = (S_H / 2 + HOUS + SHELL) if lat else (S_W / 2 + HOUS + SHELL)
     fore_half = S_W / 2 + HOUS + SHELL                                      # gripper servo, 24.7 across
+    fore_depth = S_H / 2 + HOUS + SHELL
+    leg_depth = S_W / 2 + HOUS + SHELL                                      # thigh / shank servo housings, 24.7 mm fore-aft
+    # fwd: the shoulder joint (and the chest stack) moves forward until the hanging forearm and elbow pass in front of the thighs
+    dx = (leg_depth + MOVE + max(elbow_depth, fore_depth)) if fwd else 0.0
     hip_out = HIP_Y + FORK / 2 + SHELL                                      # thigh outer face
     yaw_half = HIP_Y + S_W / 2 + HOUS + SHELL                               # pelvis at the yaw-servo level
     # smallest A-pose cant: at every arm zone the arm's inner face must clear what is beside it by MOVE
-    zones = [  # (z_top, z_bot, arm half width there)
-        (s + AX + HOUS, s - (S_L - AX) - HOUS, cap_half),
-        (e + (S_L - AX) + HOUS, e - AX - HOUS, elbow_half),
-        (e - AX - HOUS, hand_end, fore_half)]
-    body = [(h + PELVIS_TOP, h + YAW_Z[0] - HOUS, yaw_half), (h + YAW_Z[0], 0.0, hip_out)]   # (z_top, z_bot, body half width)
+    zones = [  # (z_top, z_bot, arm half width there, arm half depth there)
+        (s + AX + HOUS, s - (S_L - AX) - HOUS, cap_half, cap_depth),
+        (e + (S_L - AX) + HOUS, e - AX - HOUS, elbow_half, elbow_depth),
+        (e - AX - HOUS, hand_end, fore_half, fore_depth)]
+    body = [(h + PELVIS_TOP, h + YAW_Z[0] - HOUS, yaw_half, (-AX - HOUS - SHELL, S_L - AX + HOUS + SHELL)),
+            (h + YAW_Z[0], 0.0, hip_out, (-leg_depth, leg_depth))]                      # (z_top, z_bot, body half width, body x range)
     tan_t = 0.0
-    for zt, zb, wa in zones:
-        for bt, bb, wb in body:
+    for zt, zb, wa, da in zones:
+        for bt, bb, wb, bx in body:
             lo, hi = max(zb, bb), min(zt, bt)
             if hi <= lo:
+                continue
+            if dx - da >= bx[1] + MOVE or dx + da <= bx[0] - MOVE:            # the arm passes in front of / behind this body part
                 continue
             d = s - hi                                                       # nearest-to-shoulder overlapping depth (worst)
             need_off = wb + MOVE + wa - ya
@@ -136,13 +148,17 @@ def layout(H_m: float, arms: str, legs: str) -> dict:
     cant = math.degrees(math.atan(tan_t))
     band_bot = neck_base - 0.14 * H
     arm_out_band = ya + cap_half + max(0.0, s - band_bot) * tan_t
-    if arms == "chest" and (e + (S_L - AX) + HOUS + SHELL) > band_bot:
+    if base == "chest" and (e + (S_L - AX) + HOUS + SHELL) > band_bot:
         arm_out_band = max(arm_out_band, ya + elbow_half + (s - band_bot) * tan_t)
     P3_est = 2 * arm_out_band / H
     # ---------------- side (x) stack-up of the chest: neck-yaw slot in front, shoulder servos, pack behind
     sv = S_W / 2 + HOUS
-    chest_x = (-(sv + PACK[0] + 2 * HOUS), sv + S_W + 2 * HOUS)
-    return dict(H=H, arms=arms, legs=legs, head_h=head_h, chin=chin, neck_base=neck_base, s=s, h=h, k=k, a=a, e=e, hand_end=hand_end,
+    chest_x = (dx - (sv + PACK[0] + 2 * HOUS), dx + sv + S_W + 2 * HOUS)
+    if fwd:
+        notes.append(f"shoulder joint and chest stack {dx:.0f} mm forward of the hip axis (the arms hang in front of the thighs); the trunk COM moves forward with it")
+    if lat:
+        notes.append("elbow servo turned lateral-face: needs a right-angle gear stage (not in the catalog)")
+    return dict(H=H, arms=arms, base=base, lat=lat, fwd=fwd, dx=dx, elbow_depth=elbow_depth, legs=legs, head_h=head_h, chin=chin, neck_base=neck_base, s=s, h=h, k=k, a=a, e=e, hand_end=hand_end,
                 Tf=Tf, ya=ya, cap_half=cap_half, cap_depth=cap_depth, elbow_half=elbow_half, fore_half=fore_half, hip_out=hip_out, yaw_half=yaw_half,
                 cant_deg=cant, tan_t=tan_t, P3_est=P3_est, shoulder_outer_est=2 * arm_out_band, chest_x=chest_x, chest_floor=chest_floor,
                 torso_fits=torso_fits, notes=notes)
@@ -172,24 +188,26 @@ def hard_points(L: dict) -> list[dict]:
     # chest
     cx0, cx1 = L["chest_x"]
     sv = S_W / 2 + HOUS
-    hp.append(_box("pack_3s1300", "torso", (cx0, -sv), (-PACK[1] / 2 - HOUS, PACK[1] / 2 + HOUS), (s + AX + HOUS - PACK[2] - 2 * HOUS, s + AX + HOUS)))
-    hp.append(_box("neck_yaw_servo", "torso", (sv, cx1), (-S_L / 2 - HOUS, S_L / 2 + HOUS), (s + AX + HOUS - S_H - 2 * HOUS, s + AX + HOUS)))
-    if L["arms"] == "chest":
-        hp.append(_box("shoulder_pitch_servos", "torso", (-sv, sv), (-L["Tf"] / 2, L["Tf"] / 2), (s - (S_L - AX) - HOUS, s + AX + HOUS)))
+    dx = L["dx"]
+    hp.append(_box("pack_3s1300", "torso", (cx0, dx - sv), (-PACK[1] / 2 - HOUS, PACK[1] / 2 + HOUS), (s + AX + HOUS - PACK[2] - 2 * HOUS, s + AX + HOUS)))
+    hp.append(_box("neck_yaw_servo", "torso", (dx + sv, cx1), (-S_L / 2 - HOUS, S_L / 2 + HOUS), (s + AX + HOUS - S_H - 2 * HOUS, s + AX + HOUS)))
+    if L["base"] == "chest":
+        hp.append(_box("shoulder_pitch_servos", "torso", (dx - sv, dx + sv), (-L["Tf"] / 2, L["Tf"] / 2), (s - (S_L - AX) - HOUS, s + AX + HOUS)))
     # arm (left), positions at the arm centre line with the cant applied at the box's mid height
     def ay(z):
         return L["ya"] + (s - z) * L["tan_t"]
-    if L["arms"] == "arm":
+    if L["base"] == "arm":
         z0, z1 = s - (S_L - AX) - HOUS, s + AX + HOUS
-        hp.append(_box("shoulder_pitch_servo_l", "arm_l", (-sv, sv), (ay((z0 + z1) / 2) - (S_H + BOSS) / 2 - HOUS, ay((z0 + z1) / 2) + (S_H + BOSS) / 2 + HOUS), (z0, z1)))
+        hp.append(_box("shoulder_pitch_servo_l", "arm_l", (dx - sv, dx + sv), (ay((z0 + z1) / 2) - (S_H + BOSS) / 2 - HOUS, ay((z0 + z1) / 2) + (S_H + BOSS) / 2 + HOUS), (z0, z1)))
         rz0, rz1 = z0 - S_L - 2 * HOUS, z0
     else:
         rz0, rz1 = s - (S_L - AX) - HOUS, s + AX + HOUS
-    hp.append(_box("shoulder_roll_servo_l", "arm_l", (-S_H / 2 - HOUS, S_H / 2 + HOUS), (ay((rz0 + rz1) / 2) - sv, ay((rz0 + rz1) / 2) + sv), (rz0, rz1)))
+    hp.append(_box("shoulder_roll_servo_l", "arm_l", (dx - S_H / 2 - HOUS, dx + S_H / 2 + HOUS), (ay((rz0 + rz1) / 2) - sv, ay((rz0 + rz1) / 2) + sv), (rz0, rz1)))
     ez0, ez1 = e - AX - HOUS, e + S_L - AX + HOUS
-    hp.append(_box("elbow_servo_l", "arm_l", (-sv, sv), (ay((ez0 + ez1) / 2) - (S_H + BOSS) / 2 - HOUS, ay((ez0 + ez1) / 2) + (S_H + BOSS) / 2 + HOUS), (ez0, ez1)))
+    ew, ed = (sv, S_H / 2 + HOUS) if L["lat"] else ((S_H + BOSS) / 2 + HOUS, sv)
+    hp.append(_box("elbow_servo_l", "arm_l", (dx - ed, dx + ed), (ay((ez0 + ez1) / 2) - ew, ay((ez0 + ez1) / 2) + ew), (ez0, ez1)))
     gz1 = ez0 - 3
-    hp.append(_box("gripper_servo_l", "arm_l", (-S_H / 2 - HOUS, S_H / 2 + HOUS), (ay(gz1 - 25) - sv, ay(gz1 - 25) + sv), (gz1 - S_L - 2 * HOUS, gz1)))
+    hp.append(_box("gripper_servo_l", "arm_l", (dx - S_H / 2 - HOUS, dx + S_H / 2 + HOUS), (ay(gz1 - 25) - sv, ay(gz1 - 25) + sv), (gz1 - S_L - 2 * HOUS, gz1)))
     # head: neck-pitch servo standing, camera in front of it
     np_ = L["chin"] + AX + HOUS + SHELL
     hp.append(_box("neck_pitch_servo", "head", (-sv, sv), (-(S_H + BOSS) / 2 - HOUS, (S_H + BOSS) / 2 + HOUS), (np_ - AX - HOUS, np_ + S_L - AX + HOUS)))
@@ -274,7 +292,7 @@ def profiles(L: dict, hps: list[dict], name: str) -> dict:
             return (L["fore_half"] * (0.5 if z < L["hand_end"] + 10 else 0.9), 14.0)
         return (L["fore_half"], 18.0)
     zs = _box_ends(hps, "arm_l") + [s + AX + HOUS + SHELL + 2, L["hand_end"] + 25, L["hand_end"] + 2]
-    ar = _stations(hps, "arm_l", zs, cy_fn=ay, cx0=0.0, floor=afloor, fa=FA_WIDTH)
+    ar = _stations(hps, "arm_l", zs, cy_fn=ay, cx0=L["dx"], floor=afloor, fa=FA_WIDTH)
     band_bot = L["neck_base"] - 0.14 * H
     arm_outer = max(1000 * (st.get("cy", 0) + st["w"] / 2) for st in ar if band_bot / 1000 <= st["z"] <= L["neck_base"] / 1000 + 0.01)
     L["shoulder_outer_sections"] = 2 * arm_outer
@@ -413,6 +431,7 @@ def main(argv=None) -> int:
     ap.add_argument("--legs", nargs="+", default=["6dof", "5dof"])
     ap.add_argument("--render", nargs="*", default=[], help="case names to render with the studio rig and draw hard points for")
     ap.add_argument("--no-metrics", action="store_true")
+    ap.add_argument("--tag", default="", help="write summary_<tag>.{json,md} instead of summary.{json,md}")
     a = ap.parse_args(argv)
     OUT.mkdir(parents=True, exist_ok=True)
     rows = []
@@ -452,7 +471,8 @@ def main(argv=None) -> int:
             summary[f"{arms}-{legs}"] = {"all_hard_pass_heights": ok, "min_all_hard_pass": min(ok) if ok else None,
                                          "pass_except_foot_gates_heights": ok_but_foot, "P3_pass_heights": p3,
                                          "P3_est_by_height": {f"{r['H_m']:.3f}": r["P3_est"] for r in rs}}
-    (OUT / "summary.json").write_text(json.dumps({"rows": rows, "min_height": summary}, indent=1, default=str), encoding="utf-8")
+    sfx = f"_{a.tag}" if a.tag else ""
+    (OUT / f"summary{sfx}.json").write_text(json.dumps({"rows": rows, "min_height": summary}, indent=1, default=str), encoding="utf-8")
     md = ["<!-- written by variants/adam/design/r1_packaging.py; re-run, do not edit -->", "# R1 packaging study: minimum not-a-toy height per layout", "",
           "| case | arm cant deg | shoulder outer mm (stack-up / sections) | P3 est | P3 measured | P4 | P1 | P6 | P7 | P10a | P10b | HP | hard gates failed |", "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for r in rows:
@@ -462,7 +482,7 @@ def main(argv=None) -> int:
     md += ["", "| layout | heights passing every numeric hard gate | passing all but the foot gates (P10a/b) | P3 <= 0.29 measured |", "|---|---|---|---|"]
     for k, s_ in summary.items():
         md.append(f"| {k} | {s_['all_hard_pass_heights']} | {s_['pass_except_foot_gates_heights']} | {s_['P3_pass_heights']} |")
-    (OUT / "summary.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    (OUT / f"summary{sfx}.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     return 0
 
 

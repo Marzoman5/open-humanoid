@@ -1,0 +1,91 @@
+{
+ "rows": [
+  {
+   "case": "chest-6dof-550",
+   "H_m": 0.55,
+   "arms": "chest",
+   "legs": "6dof",
+   "head_h": 71.5,
+   "s": 439.3,
+   "h": 275.0,
+   "k": 148.5,
+   "a": 66.0,
+   "Tf": 77.3,
+   "ya": 65.15,
+   "cant_deg": 13.83,
+   "P3_est": 0.36,
+   "shoulder_outer_est": 195.67,
+   "torso_fits": true,
+   "notes": [],
+   "shoulder_outer_sections": 210.58,
+   "metrics": {
+    "values": {
+     "P1": 0.134,
+     "P2a": 0.104,
+     "P2b": 0.82,
+     "P3": 0.399,
+     "P4": 0.632,
+     "P5": 1.178,
+     "P6": 0.5,
+     "P7": 0.27,
+     "P8a": null,
+     "P8b": null,
+     "P9a": 0.0,
+     "P9b": 0.259,
+     "P10a": 0.208,
+     "P10b": 0.034,
+     "S1a": null,
+     "S1b": null,
+     "S3a": 6,
+     "S3b": 5,
+     "S4a": 0.25,
+     "S4b": 0.192,
+     "S5a": null,
+     "S5b": null,
+     "HP": 1
+    },
+    "verdicts": {
+     "P1": "PASS",
+     "P2a": "FAIL",
+     "P2b": "PASS",
+     "P3": "FAIL",
+     "P4": "PASS",
+     "P5": "FAIL",
+     "P6": "PASS",
+     "P7": "PASS",
+     "P8a": "NA",
+     "P8b": "NA",
+     "P9a": "PASS",
+     "P9b": "PASS",
+     "P10a": "FAIL",
+     "P10b": "PASS",
+     "S1a": "NA",
+     "S1b": "NA",
+     "S3a": "PASS",
+     "S3b": "FAIL",
+     "S4a": "PASS",
+     "S4b": "PASS",
+     "S5a": "NA",
+     "S5b": "NA",
+     "HP": "PASS"
+    },
+    "hard_failed": [
+     "P3",
+     "P10a"
+    ],
+    "hp_failing": []
+   }
+  }
+ ],
+ "min_height": {
+  "chest-6dof": {
+   "all_hard_pass_heights": [],
+   "min_all_hard_pass": null,
+   "pass_except_foot_gates_heights": [],
+   "P3_pass_heights": [],
+   "P3_est_by_height": {
+    "0.550": 0.36
+   }
+  }
+ }
+}
