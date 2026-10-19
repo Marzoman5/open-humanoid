@@ -5,7 +5,8 @@ toddlerbot_xm430_w210:
   accessed: 2026-10-19
   model: "tau_m = kp(q_cmd-q) - (kd_min+kd)*qdot; linear torque-speed limit to zero at qdot_max; constant braking torque; passive-active ratio 3 (~58% gearbox efficiency); MuJoCo damping/armature/frictionloss"
   test_conditions: "motor test bed (powder brake to 5 N.m, driver motor 1 N.m, torque precision 3e-4 N.m); friction/damping from constant-RPM back-drive; armature from spin-down; chirp position tracking joint fit; supply voltage not stated in extracted text"
-  voltage: null
+  voltage: null   # re-checked 2026-10-19: paper states no test-bed supply voltage; only Table 2 footnote says vendor stall torques are 12 V
+  verified: "Table 3 XM430-W210 row (damping 0.0056, armature 0.0022, friction 0.025, tau_max 1.61, qdot_max 7.63, tau_brake 3.70) matches arxiv HTML exactly; 1.61/3.0 = 54 % of 12 V stall. tau_max is the fitted low-speed limit, not a continuous rating"
   simulator: MuJoCo
   dynamixel_to_sim_kp_factor: 150
   tracking_error_deg: 1.3

@@ -16,5 +16,6 @@ encoder: {v: "dual magnetic, 14-bit", poles: 42, source: "https://aifitlab.com/p
 comm: {v: "CAN 1 Mbps", source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
 operating_temp_c: {v: [-20, 50], source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}
 protection: {v: IP52, source: "https://rcdrone.top/nl/products/robstride-04-qdd-120n-m-integrated-actuator-module-48v-9-1-ratio-dual-magnetic-encoder-ip52-700w-output", accessed: 2026-10-19, kind: vendor}
+# VERIFIED 2026-10-19 vs aifitlab: 40/120 N.m, 48 V (15-60), 200/167 rpm, 0.7 A no-load, 27/90 A pk, Kt 2.1, 0.16 ohm, 0.211 mH, 9:1, 1420 g, 120x120x56, -20..50 C, $255. Page also lists back-EMF 16.9 Vrms/rpm (unit looks wrong, ignore). 700 W/IP52 not re-fetched. No official robstride.com spec page reachable
 backlash_deg: null
 price_usd: {v: 255, source: "https://aifitlab.com/products/robstride-04-motor", accessed: 2026-10-19, kind: vendor}

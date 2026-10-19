@@ -10,10 +10,11 @@ terminal_resistance_ohm: {v: 0.58, source: "https://aifitlab.com/products/robstr
 inductance_uh: {v: [187, 339], source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
 gear_ratio: {v: 7.75, type: planetary QDD, source: "https://pakronics.com.au/products/robstride-02-qdd-17n-m-integrated-actuator-module-dual-encoders-ss100064875", accessed: 2026-10-19, kind: vendor}
 rated_output_power_w: {v: 170, source: "https://pakronics.com.au/products/robstride-02-qdd-17n-m-integrated-actuator-module-dual-encoders-ss100064875", accessed: 2026-10-19, kind: vendor}
-weight_g: {v: 405, tol: 5, ip67_variant_g: 490, source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+weight_g: {v: 405, tol: 5, ip67_variant_g: null, source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
 size_mm: {v: [78.5, 78.5, 45.5], source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
 encoder: {v: "dual magnetic, 14-bit", poles: 28, source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
 comm: {v: "CAN 1 Mbps", source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
 operating_temp_c: {v: [-20, 50], source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}
+# VERIFIED 2026-10-19 vs aifitlab page: 6/17 N.m, 48 V (24-60), 410/360 rpm, 7/23 A pk, 0.5 A no-load, Kt 1.22, 0.58 ohm, 7.75:1, 405 g, 78.5x78.5x45.5, -20..50 C, $145. pakronics: 170 W, 7.75:1, 405 g. IP67 490 g not found on either page -> null
 backlash_deg: null
 price_usd: {v: 145, source: "https://aifitlab.com/products/robstride-02-motor", accessed: 2026-10-19, kind: vendor}

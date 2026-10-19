@@ -13,7 +13,10 @@ no_load_speed_rpm:
   - {v: 61, at: "12.0V", source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
 resolution_counts_per_rev: {v: 4096, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
 encoder: {v: "contactless absolute 12-bit, ams AS5601", source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
-backlash: null   # not on page read
+gear_material: {v: "engineering plastic", source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+standby_current_ma: {v: 52, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+verified: "2026-10-19 adversarial pass: all stall/speed/voltage/weight/ratio/defaults match e-Manual. Manual is internally inconsistent on min voltage limit (table default 60 = 6.0 V; description range 6.5-14.0 V)"
+backlash: null   # not on page (confirmed)
 input_voltage_v: {v: [6.5, 12.0], recommended: 11.1, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
 operating_temp_c: {v: [-5, 72], source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
 baud_rate_bps: {v: "9600 to 4500000 (default reg value 1 = 57600)", source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}

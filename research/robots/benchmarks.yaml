@@ -38,7 +38,7 @@ robots:
   sim: "Isaac Gym -> MuJoCo (sim2sim); moving to MuJoCo Playground"
   lessons:
     - "v1 alpha: 'too much play at some joints', hard to build; author upgraded XL330 -> XC330 because XL330 underpowered."
-    - "Used Rhoban BAM actuator identification (BAM includes a Feetech STS3215 7.4V model; only m1 model identified)."
+    - "Rhoban BAM ships a Feetech STS3215 7.4V model (m1/m4/m6); that Open Duck Mini used it is UNVERIFIED."
     - "STS3215 datasheet: overcurrent protection trips at >2 A for ~2 s; stall protection >80% locked-rotor for 2 s; reseller advises <=50% of max ratings for longevity."
     - "No public measured mass, speed, or overheating report found."
   sources:
@@ -53,8 +53,8 @@ robots:
   name: K-Scale Zeroth-01 (Zeroth Bot)
   height_m: null
   mass_kg: null
-  dof: {leg: 5, arm: 4, total: null, note: "5/leg, 4/arm per one secondary article (18 actuators); another says 16 servos - conflict"}
-  actuators: "Feetech STS3215/50 x16 (circuitdigest); conflicting count 18 elsewhere"
+  dof: {leg: null, arm: null, total: null, note: "per-limb DOF unsupported (repo and circuitdigest do not state it). Servo count 16 per circuitdigest and one other secondary source; 18 not found in any source re-checked; docs.zeroth.bot / docs.kscale.dev unreachable 2026-10-19"}
+  actuators: "Feetech STS3215/50 x16 (circuitdigest, secondary); repo README names only vendor Feetech, no count"
   compute: "Milk-V Duo S (SG2000), secondary article"
   battery: null
   cost_usd: {value: 350, year: 2025, basis: vendor, note: "BOM 'starts at $350', parts only"}
@@ -62,13 +62,14 @@ robots:
   sim_to_real_zero_shot: null   # README: basic locomotion, beta; SysID-calibrated actuators in RL repo; no transfer data
   sim: "K-Sim (MuJoCo, Isaac Sim, Genesis)"
   lessons:
-    - "Project 'public beta', expect breaking changes; K-Scale wound down Nov 2025 (secondary source) - ecosystem/support risk."
+    - "Project 'public beta', expect breaking changes; K-Scale shut down Nov 2025 (36kr: financing failed, team disbanded, refunds, IP to be open-sourced) - ecosystem/support risk. kscalelabs fork README says Public Beta; zeroth-robotics README says Public Alpha."
     - "Repo ships SysID-calibrated actuator models, i.e. actuator model treated as required for sim2real."
   sources:
     - {url: "https://github.com/kscalelabs/zeroth-bot", accessed: 2026-10-19}
     - {url: "https://github.com/zeroth-robotics/zeroth-bot", accessed: 2026-10-19}
     - {url: "https://circuitdigest.com/news/zeroth-bot-an-opensource-risc-v-powered-humanoid-robot", accessed: 2026-10-19}
     - {url: "https://aiwiki.ai/wiki/k-scale_labs", accessed: 2026-10-19}
+    - {url: "https://eu.36kr.com/en/p/3657117189890433", accessed: 2026-10-19, note: "closure Nov 2025"}
 - id: berkeley_humanoid_lite
   name: Berkeley Humanoid Lite
   height_m: {value: 0.8, basis: vendor, note: "one Berkeley news piece says ~1 m; paper and R&D World say 0.8"}
@@ -78,7 +79,7 @@ robots:
   torque_nm_peak: null
   compute: "Intel N95 mini PC; 4x CAN 1 Mbps"
   battery: {voltage_v: 22.2, wh: 88.8, note: "6S 4000 mAh LiPo; V and Wh derived at 3.7 V/cell; ~30 min"}
-  cost_usd: {value: 4312, year: 2025, basis: vendor, note: "BOM, US sourcing; $3,236 China; actuators $188 (6512) / $136 (5010)"}
+  cost_usd: {value: 4312, year: 2025, basis: vendor, note: "paper abstract says under $5,000; BOM total 4312 US sourcing; $3,236 China; actuators $188 (6512) / $136 (5010)"}
   walking_speed_mps: null
   sim_to_real_zero_shot: yes   # PPO in Isaac Gym transferred directly, 25 Hz
   sim: "Isaac Gym"
@@ -125,17 +126,17 @@ robots:
     - {url: "https://emanual.robotis.com/docs/en/platform/op3/introduction/", accessed: 2026-10-19}
 - id: hiwonder_ainex
   name: Hiwonder AiNex
-  height_m: null
-  mass_kg: null
-  dof: {total: 24, note: "Standard kit 24 incl. 2-DOF head; Starter listing shows 20"}
-  actuators: "Bus servos with temperature feedback; model not confirmed"
-  compute: "Raspberry Pi 5 (2/4/8 GB) or Pi 4B"
-  battery: null
+  height_m: null  # retailer lists product size 193x135x415 mm, axis unlabeled; hiwonder.com page not retrievable (JS)
+  mass_kg: {value: 2.45, basis: retailer, note: "Standard kit; Starter 2.25 kg; retailer listings only (robotshop/openelab via search), hiwonder.com unreachable"}
+  dof: {total: 24, note: "Standard 24DOF, Starter 20DOF (retailer listings)"}
+  actuators: "HX-35H / HX-35HM (magnetic encoder) / HX-12H serial bus servos per retailer listing; per-joint split not given"
+  compute: "Raspberry Pi 5 (2/4/8 GB) per vendor-linked page; one listing says Pi 4B"
+  battery: {voltage_v: 11.1, wh: null, note: "3500 mAh 5C LiPo per retailer listing (Wh = 38.9 derived, not stated)"}
   cost_usd: null
-  walking_speed_mps: null
+  walking_speed_mps: {value: 0.21, basis: retailer, note: "'Speed 21cm/s' in retailer listing, unverified"}
   sim_to_real_zero_shot: null
   sim: null
-  lessons: ["Hobby kit with IK walking; no RL reports found. Most specs unverified (retailer pages blocked)."]
+  lessons: ["Hobby kit with IK walking; no RL reports found. Specs are retailer-sourced only; official page not retrievable."]
   sources:
     - {url: "https://openelab.io/a/s/products/hiwonder-ainex-standard-pi5-2gb", accessed: 2026-10-19}
 - id: unitree_g1
@@ -170,13 +171,14 @@ robots:
     - {url: "https://www.futura-sciences.com/en/it-does-flips-talks-and-costs-barely-more-than-an-apple-vision-pro-this-humanoid-robot-has-the-internet-hooked_19360/", accessed: 2026-10-19}
 - id: unitree_r1
   name: Unitree R1
-  height_m: {value: 1.21, basis: vendor, note: "121-122 cm across sources"}
-  mass_kg: {value: 25, basis: vendor}
+  height_m: {value: 1.23, basis: vendor, note: "CORRECTED from 1.21; unitree.com/R1 lists 1230 mm for R1/R1 AIR/R1 EDU"}
+  mass_kg: {value: 29, basis: vendor, note: "CORRECTED from 25; unitree.com/R1: about 29 kg R1 (27 kg R1 AIR), with battery"}
   dof: {total: 26, note: "joints"}
-  cost_usd: {value: 5900, year: 2025, basis: vendor, note: "base 39,999 CNY"}
+  cost_usd: {value: 5900, year: 2026, basis: vendor, note: "unitree.com/R1: R1 $5,900, R1 AIR (20 DOF) $4,900, excl. tax/shipping"}
   battery: {voltage_v: null, wh: null, note: "removable, ~1 h"}
   sim_to_real_zero_shot: null
   sources:
+    - {url: "https://www.unitree.com/R1", accessed: 2026-10-19}
     - {url: "https://humanoid.guide/de/produkt/unitree-r1/", accessed: 2026-10-19}
     - {url: "https://www.techeblog.com/unitree-r1-humanoid-robot-price-video/", accessed: 2026-10-19}
 - id: booster_t1
@@ -187,7 +189,7 @@ robots:
   torque_nm_peak: {knee: 130, basis: vendor}
   compute: "Jetson AGX Orin (200 TOPS) + 14-core CPU"
   battery: {voltage_v: null, wh: null, note: "10.5 Ah; ~2 h walking"}
-  cost_usd: {value: 30000, year: 2026, basis: vendor, note: "single reseller listing, backorder"}
+  cost_usd: {value: 30000, year: 2026, basis: vendor, note: "single reseller listing (roboticscenter.ai), backorder; Generation Robots lists from EUR 32,500 excl VAT; RobotShop says T1 discontinued ahead of T2. Height 118/mass 30 corroborated by RoboCup spec sheets + datasheet"}
   walking_speed_mps: null
   sim_to_real_zero_shot: null
   sources:
@@ -200,18 +202,18 @@ robots:
   dof: {leg: 6, arm: 5, total: 25, note: "docs: 25 + 2 (waist 1, neck 2 listed)"}
   compute: "Radxa CM5 + Raspberry Pi 5"
   battery: {voltage_v: null, wh: null, note: "13S4P Li-ion"}
-  cost_usd: {value: 20000, year: 2026, basis: vendor, note: "DIY kit order page; $15-16k self-sourced claims"}
+  cost_usd: {value: 15000, year: 2026, basis: secondary, note: "CORRECTED from 20000 (not found on docs.menlo.ai); interestingengineering says about $15,000 close to BOM estimate; 20k unsupported"}
   sim_to_real_zero_shot: null
   sources:
     - {url: "https://docs.menlo.ai/asimov/1", accessed: 2026-10-19}
     - {url: "https://interestingengineering.com/ai-robotics/bipedal-humanoid-robot-kit-asimov", accessed: 2026-10-19}
 - id: poppy_humanoid
   name: Poppy Humanoid
-  height_m: {value: 0.84, basis: vendor, note: "80-85 cm across sources"}
+  height_m: null  # unsupported: generationrobots page re-checked, no height; fabbaloo 403
   mass_kg: null
   dof: {total: null, note: "21 MX-28 reported in 2013 article"}
   actuators: "Dynamixel MX-28, ~$219 each (2013)"
-  cost_usd: {value: 11000, year: 2013, basis: vendor, note: "kit now ~EUR 9,972"}
+  cost_usd: null  # unsupported: 2013 figure source blocked (403); generationrobots now lists Poppy Torso only (EUR 4,867-6,427 incl VAT)
   sim_to_real_zero_shot: null
   lessons: ["Premium Dynamixel actuators dominate cost; WPI project swapped to HerkuleX DRS-0201 (~$130) cutting ~$7k -> ~$4k."]
   sources:
@@ -219,7 +221,7 @@ robots:
     - {url: "https://www.fabbaloo.com/2013/11/adorable-3d-printed-humanoid-robot-html", accessed: 2026-10-19}
     - {url: "https://www.wpi.edu/sites/default/files/inline-image/Departments-Programs/Robotics-Engineering/MQP_3D Printed Robot Poster.pdf", accessed: 2026-10-19}
 not_found:
-  - "Bez1/HR-OS, RoboBuilder, Kondo KHR, Disney BD-1, Roboto Origin, Digit/Cassie, HF/Pollen: not researched to a citable level; omitted rather than guessed. K-Bot (unofficial, aiwiki): ~1.4 m, ~30 kg, Robstride, $8,999."
+  - "Bez1/HR-OS: could not be identified (searches return only a Univ. Toronto UTRA RoboSoccer humanoid named Bez, no dimensions; HR-OS1 no hits). Hamburg Bit-Bots Wolfgang (2024 spec sheet via search summary, PDF not parsable): 825 mm, 7.1 kg - too large for the 0.5 m class, not added to fit. RoboBuilder, Kondo KHR, Disney BD-1, Roboto Origin, Digit/Cassie, HF/Pollen: not researched to a citable level; omitted rather than guessed. K-Bot (unofficial, aiwiki): ~1.4 m, ~30 kg, Robstride, $8,999."
 reference_actuator:
   id: feetech_sts3215
   weight_g: 55
