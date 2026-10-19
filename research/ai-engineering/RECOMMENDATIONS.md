@@ -1,6 +1,16 @@
 # RECOMMENDATIONS: how Open Humanoid should do AI-driven engineering
 
-*T-0011 · 2026-10-19 · ai-eng-research. This is a gap analysis of the repo at `8271887` against the evidence in [01](01-ai-cad.md) · [02](02-ai-sim-robot-design.md) · [03](03-agentic-workflows.md) · [04](04-hardware-as-code.md) · [05](05-open-source-robot-practice.md) · [06](06-industrial-design-and-visual-review.md) · [prototypes](prototypes/README.md).*
+*T-0011 · 2026-10-19 · ai-eng-research. This is a gap analysis of the repo at `8271887` against the evidence in [01](01-ai-cad.md) · [02](02-ai-sim-robot-design.md) · [03](03-agentic-workflows.md) · [04](04-hardware-as-code.md) · [05](05-open-source-robot-practice.md) · [06](06-industrial-design-and-visual-review.md) · [07 (challenge pass)](07-challenging-our-assumptions.md) · [prototypes](prototypes/README.md).*
+
+> **Revised after the challenge pass.** The commander asked for every named tool and structure to be treated as a hypothesis. [07](07-challenging-our-assumptions.md) tests each one. Outcomes:
+> - The **toolkit is sound, but build it Adam-first** and extract generality on second use.
+> - **"One-shot" is the wrong framing.** The product is a gated, resumable harness.
+> - **Merge virtual prototyping and packaging** into one iterated concept loop.
+> - **The shell tool is decided by a one-segment bake-off** (agent code-CAD vs the maintainer in Onshape), not by assumption.
+> - **A blind critic was tested** and caught the "Roblox" render.
+> - **Demote team/swarm, FreeCAD and Blender.**
+>
+> The changes are folded into the rows marked ⟳ below and into section I.
 
 **Legend.** **NOW** = adopt now (next 1–2 sessions). **LATER** = adopt when the phase is reached or the trigger happens. **REJECT** = don't do this, with the reason. Effort: S < ½ session, M ≈ 1 session, L > 1 session.
 
@@ -17,15 +27,17 @@ The evidence says the same thing in every domain:
 
 | # | Recommendation | Status | Effort | Why |
 |---|---|---|---|---|
-| 1 | **Silhouette-first shell design.** A D1 proportion and silhouette sheet (`profiles.yaml` + overlay PNG with references and hard points) is approved before any 3D. 3D shells are *derived* from the profile functions via section-lofts, Gordon surfaces and SDF blends. The servo packages become keep-out volumes only. | NOW | M | Fixes the "Roblox" root causes 1, 4 and 5 directly. Prototyped, pip-only ([06 §3–5](06-industrial-design-and-visual-review.md)). |
-| 2 | **A separate design-critic subagent** with references, a written rubric, clay and silhouette renders on a fixed rig, and pairwise order-swapped judging. **Metrics decide anything numeric.** | NOW | S | Self-preference is documented ([2404.13076](https://arxiv.org/abs/2404.13076)). Anthropic's own harness found self-evaluation lenient. VLMs are poor at dimensions ([06 §6](06-industrial-design-and-visual-review.md)). |
+| 1 ⟳ | **Silhouette-first design, with the shell tool settled by evidence.** A D1 proportion and silhouette sheet (`profiles.yaml` + overlay PNG with references and hard points) is approved before any 3D. Then a **time-boxed leg-pair bake-off** compares agent code-CAD (shells derived from profiles by a tested loft/Gordon/SDF library) against the maintainer surfacing in Onshape for ≤ 3 h over agent-made scaffolding. Pick code if it reaches "same family"; otherwise use a hybrid. Servo packages are only keep-out volumes on every route. | NOW | M | D1 fixes "Roblox" root causes 1 and 4 on any route. Code-CAD is the only route that regenerates for other variants. Human surfacing is the only route proven to look good on open robots ([07 §3](07-challenging-our-assumptions.md#3-hypothesis-agent-written-code-cad-is-the-right-way-to-get-sleek-shells), [06](06-industrial-design-and-visual-review.md)). |
+| 2 ⟳ | **A separate design-critic subagent** with references, a written rubric, clay and silhouette renders on a fixed rig, and pairwise order-swapped judging. **Calibrate it few-shot with 5–10 maintainer-rated images.** **Metrics decide anything numeric.** | NOW | S | **Tested:** a blind Sonnet critic failed the Roblox render on G1/G2/G4/G6 with correct evidence, but underestimated shoulder width (0.40–0.42 H vs ≈0.45 H measured) ([07 §4](07-challenging-our-assumptions.md#4-experiment-does-a-blind-critic-catch-roblox)). Self-preference is documented ([2404.13076](https://arxiv.org/abs/2404.13076)). |
 | 3 | **Machine-readable gates + `oh gate <id>`**. A `pipeline/gates.yaml` lists every gate's command, threshold and evidence file. Only `oh gate` may write a pass record. Thresholds and golden values are hook-protected. | NOW | M | "Tests act as the spec" (Carlini). Claude Code has documented reward hacking that edits tests ([EvilGenie](https://arxiv.org/abs/2511.21654v1)). This mirrors the "only `passes` may change" feature list ([03](03-agentic-workflows.md)). |
 | 4 | **Hooks to enforce AGENTS.md.** PreToolUse blocks writes to `generated/`, gate files and unclaimed paths (including Bash redirects). A SessionStart hook (`startup|resume|compact`) injects `oh coord status`, the active task and the last handoff. A Stop hook runs `oh gate --current` before a phase may be declared done. | NOW | M | CLAUDE.md is advisory and hooks are deterministic, per Claude Code's own docs ([memory](https://code.claude.com/docs/en/memory), [hooks guide](https://code.claude.com/docs/en/hooks-guide)). |
-| 5 | **A virtual-prototyping phase before CAD**: measured actuator model → trajectory-optimised reference motions (walk, squat, get-up, push recovery) → per-joint peak, RMS and thermal envelopes → Monte Carlo p95 gate. It replaces quasi-static sizing as the mechanical go/no-go. | NOW (design) / LATER (full) | L | The biggest lever for mechanical "first try". DrEureka shows that measured bounds beat guessed ones on hardware ([02](02-ai-sim-robot-design.md)). Aligns with the commander's restructure. |
+| 5 ⟳ | **A concept loop before detailed CAD:** kinematics + hard-point packaging + D1 silhouette + virtual-prototyping envelopes on the concept's masses (measured actuator model → trajectory-optimised motions → peak/RMS/thermal → Monte Carlo p95), iterated until all pass. This replaces quasi-static sizing as the mechanical go/no-go. | NOW (design) / LATER (full) | L | Envelopes and packaging are coupled (concept → embodiment → detail; Fadini's bi-level co-design). Measured bounds beat guessed ones on hardware (DrEureka) ([02](02-ai-sim-robot-design.md), [07 §2](07-challenging-our-assumptions.md#2-h2h3h8-pipeline-shape-and-the-one-shot-framing)). |
 | 6 | **Phases become Claude Code skills** (`.claude/skills/<phase>/SKILL.md` plus `scripts/`). Heuristics live in the skill, checks live in scripts, and the one-shot prompt becomes a thin orchestrator that invokes skills. | NOW (P3 design skill first) / LATER (the rest) | M | Progressive disclosure keeps context lean. Skills carry `model`, `context: fork` and `disable-model-invocation` per phase ([03](03-agentic-workflows.md)). |
 | 7 | **Interface-first CAD.** Generate an `interfaces.yaml` (joint axes, servo envelopes, horn and mount patterns, clearances) from spec + sizing **before** part geometry. A build123d helper library (`openhumanoid/cad/`) provides loft-shell, Gordon-panel, servo-pocket and keep-out primitives. The geometry gate checks STEP round-trip and watertightness, not `is_valid`. | NOW | M | LLM CAD fails on lofts and shells and on silent booleans ([01](01-ai-cad.md)). ArtiCAD's connector-first pattern. Our own false-valid `offset()` finding. |
 
-Next most important: **#8, the rename question** (§H). It's cheap now and expensive later.
+Next most important:
+- **#8, the rename question** (§H). It's cheap now and expensive later.
+- **#9, Adam-first, extract on second use** (§I1). It changes how every framework task is scoped.
 
 ---
 
@@ -39,7 +51,7 @@ Next most important: **#8, the rename question** (§H). It's cheap now and expen
 | A4 | Upgrade `oh render`: pyvista clay (SSAO, 3-point light), orthographic silhouettes, reference overlay at equal height, head-unit grid, a fixed committed camera rig, and an optional zebra pass. Keep the MuJoCo render for sim. | NOW | Flat renders hide form (failure #6). Prototyped ([prototypes](prototypes/proto_clay.png)). |
 | A5 | `oh design metrics <id>` computes the §7 rubric numbers (P1–P10, S1–S5, M1) from mesh or profiles into `generated/design_metrics.json`. **Calibrate the bands** by running it on 3–4 normalised reference silhouettes first. | NOW (tool) / calibrate before gating | VLMs can't measure, so code must. The bands are anthropometric starting points and haven't been verified. |
 | A6 | Add a `design-critic` subagent (Sonnet; Opus only at R3). It gets images, references, the rubric and metrics, and **no code or transcript**. It returns per-criterion verdicts, a pairwise preference asked twice with the order swapped, and the top 3 changes mapped to profile parameters. Cap at 3 rounds per step. | NOW | Separate critic (self-preference), pairwise (GPTEval3D), swap order (position bias), round cap (CADCodeVerify plateau) ([06 §6](06-industrial-design-and-visual-review.md)). |
-| A7 | Hybrid shell toolchain: **build123d section-lofts (outer − inner) + Gordon panels + manifold3d SDF smooth-unions**. Add a `design` pip extra: `manifold3d trimesh pyvista scikit-image`. | NOW | All pip and all tested. No Blender or FreeCAD needed for the look. |
+| A7 ⟳ | Code shell toolchain for the R-code arm of the bake-off (and the default if it wins): **build123d section-lofts (outer − inner) + Gordon panels + manifold3d SDF smooth-unions**. Add a `design` pip extra: `manifold3d trimesh pyvista scikit-image`. | NOW | All pip and all tested. No Blender or FreeCAD needed for the look. |
 | A8 | Blender `bpy` (5.0.1 cp311 wheel) for beauty renders and sculpted shells. | LATER (only if the maintainer wants photoreal or the hybrid ceiling is hit) | Heavy install and mesh-only output. Its MCP socket has no auth ([01 §4](01-ai-cad.md)). |
 | A9 | Use the VLM to check dimensions, or let the authoring agent grade its own look. | **REJECT** | BenchCAD: 15–20 points worse from images. CADCodeVerify: 65–68% accurate. Self-preference bias. |
 
@@ -127,6 +139,19 @@ The ranking of levers is my synthesis. The evidence for each is linked above.
 |---|---|---|---|
 | H1 | **Rename the robot (or brand it so it can't be confused) before going public.** "Adam" is the name of a YC W25 *AI-for-mechanical-design* startup ([adam.new](https://adam.new); $4.1M seed, [TechCrunch 2025-10-31](https://techcrunch.com/2025/10/31/yc-alum-adam-raises-4-1m-to-turn-viral-text-to-3d-tool-into-ai-copilot/)) whose open-source CADAM has ~5.3k★ and uses Claude. "Open Humanoid Adam" in an AI-designs-hardware repo will be confused with them in search, and possibly in trademark. Renaming now costs one `sed` plus an ADR. After release it costs links, forks and SEO. | NOW (maintainer decision; this is a product judgement, not legal advice) | The variant id is in paths, specs and generated files. Eve's `extends: adam` is affected too. |
 
+## I. Challenge-pass changes to the overall approach ([07](07-challenging-our-assumptions.md))
+
+| ID | Recommendation | Status | Reasoning |
+|---|---|---|---|
+| I1 | **Adam-first, extract on second use.** Replace the one-shot prompt's "build the tool generically in the framework first" with: write tools in `openhumanoid/`, but generalise only parameters with ≥ 2 real consumers. Prove generality with a cheap second consumer (an "Adam-XL" 1.0 m sizing+sim variant, or Eve's sizing). | NOW | Every reproducible open robot started as one robot. LeRobot spread *through* a cheap reference arm. Anthropic: add complexity only when it is shown to help. The toolkit vision stays; its *differentiator* is the harness (gates, measured data, skills, rubric), which generalises naturally. |
+| I2 | **Reframe "one-shot"** as a gated, resumable pipeline (rename or reword `prompts/oneshot/`). "First try" means the *physical build* works first time, not that the *agent* gets it right in one pass. | NOW | Nobody credible one-shots systems this size: Carlini ran ~2,000 sessions, Anthropic's solo build broke, and METR horizons show where agents fall off. |
+| I3 | Demote the `team`/`swarm` profiles to catalog, sourcing and docs fan-out only. | NOW | ~15× tokens. Interdependent design suffers (Cognition, Anthropic). |
+| I4 | Defer the SolidWorks/FreeCAD adapters and the second `architecture.style`. Keep the schema fields and implement only what Adam uses. | NOW | No consumer, and double the work. |
+| I5 | ADR: the export contract allows **mesh-only cosmetic `process: fdm` parts** (STEP stays required for structural parts). | LATER (when the first shell lands) | SDF, generative and human-mesh shells can't produce meaningful STEP. |
+| I6 | Generative 3D (TRELLIS.2 etc.) as a shipping shell path. | **REJECT** (allowed as an optional form-finding reference only) | No precedent for servo-housing shells. Low floor (~1 in 10 usable). Licence traps: Hunyuan3D excludes the EU/UK/South Korea; SF3D has a revenue cap; TRELLIS.2 needs ≥ 24 GB GPU. |
+| I7 | Blender and FreeCAD as required installs. | **REJECT for now** | Not needed for the look (pip route tested) or for v1 analysis. Reconsider only for photoreal renders or human-requested drawings. |
+| I8 | Evaluate the Onshape **FeatureScript MCP** as a shared agent+human workspace if the bake-off picks the hybrid route. | LATER | New (2026-09-30), parametric features only, no independent evaluation. |
+
 ## Gap analysis summary (current repo vs best practice)
 
 | Area | We have | Best practice | Gap → rec |
@@ -146,7 +171,7 @@ The ranking of levers is my synthesis. The evidence for each is linked above.
 ## Suggested sequencing (for the commander; respect existing claims)
 
 1. **Next session (Sonnet, framework):** D3 hooks + B1 `oh gate` + B7 smoke. These are small and unblock everything else.
-2. **Same or next (Opus, the one heavy session):** A1/A2 D1 silhouette sheet for Adam + A5 metrics + A6 critic subagent, then **R2a with the maintainer**. Coordinate with T-0004's owner, because this touches `variants/adam/cad/` and `openhumanoid/cad/`.
-3. **T-0004 continues (Sonnet):** C2–C4 helpers + geometry gate, then shells derived from the approved profiles.
+2. **Same or next (Opus, the one heavy session):** A1/A2 D1 silhouette sheet for Adam, A5 metrics, and the A6 critic (few-shot calibrated with maintainer ratings). Then **R2a with the maintainer**. Coordinate with T-0004's owner, because this touches `variants/adam/cad/` and `openhumanoid/cad/`.
+3. **Leg-pair bake-off (Sonnet + ≤ 3 maintainer hours):** run the R-code arm (C2 helpers + A7) and the R-human arm in Onshape over exported scaffolding. Judge with the blind pairwise critic and then the maintainer, and log the human hours. Decide code vs hybrid for the full body ([07 §3](07-challenging-our-assumptions.md#3-hypothesis-agent-written-code-cad-is-the-right-way-to-get-sleek-shells)). T-0004 continues with C2–C4 and the geometry gate either way.
 4. **The P2 virtual-prototyping build** (B4/B5) once the benchmark stream delivers measured STS3215 data.
-5. Decide H1 and G5 with the maintainer at the next review stop.
+5. Decide H1 (rename), G5 (licence), I1 (Adam-first) and I2 (one-shot reframing) with the maintainer at the next review stop.
