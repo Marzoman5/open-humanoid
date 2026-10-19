@@ -275,5 +275,5 @@ def mass_sanity(robot: Robot) -> dict:
     return {"component_sum_kg": round(robot.total_mass, 3), "benchmark_fit_kg": round(bm, 3), "ratio": round(ratio, 3),
             "status": f"{status} the sanity band (0.6x-1.6x of the fit)",
             "note": "The fit 18.5*h^2.28 (N=9, R2 0.93, research/robots/benchmarks.md) and the ToddlerBot/OP3 masses are SANITY BOUNDS "
-                    "ONLY. The mass used everywhere in this report is the component sum (catalog masses as listed; printed structure x0.9-1.8 and "
-                    "wiring/electronics x0.8-1.5 bands); the structure term is a pre-CAD guess."}
+                    "ONLY. The mass used everywhere in this report is the component sum (catalog masses as listed; printed structure x0.55-1.4 around the "
+                    "Open Duck Mini-recentred nominal and wiring/electronics x0.8-1.5 bands); the structure term is a pre-CAD guess."}

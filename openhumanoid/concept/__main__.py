@@ -50,25 +50,12 @@ def cmd_compare(a) -> int:
 
 
 def cmd_sweep(a) -> int:
-    from .evaluate import Mods, run_bundle
-    from .robot import load_concept
-    c0 = load_concept(a.concept)
-    heights = a.heights or [0.40, 0.45, 0.50, 0.55, 0.60, 0.65]
-    out = []
-    print(f"{'h (m)':>6} {'mass kg':>8} {'joint gates':>11} {'worst margin':>13} {'push A/H/Cf/Cl':>15}  worst joint / first failures")
-    for h in heights:
-        c = dict(c0)
-        c["height_m"] = h
-        b = run_bundle(c, Mods(), table_height=a.table_height, thermal=False)
-        w, j = b.worst
-        pr = {k: bool(v["valid"] and v.get("ok")) for k, v in b.push_rows.items()}
-        flags = "/".join("Y" if pr.get(k) else "n" for k in ("push_ankle_fwd", "push_hip_fwd", "push_capture_fwd", "push_capture_lat"))
-        out.append({"height_m": h, "mass_kg": round(b.robot.total_mass, 3), "passes": b.passes, "worst_margin": round(w, 3), "worst_joint": j, "failing": b.failing()[:4],
-                    "push_demand_ok": pr})
-        print(f"{h:>6.2f} {b.robot.total_mass:>8.2f} {'PASS' if b.passes else 'FAIL':>11} {w:>13.2f} {flags:>15}  {j} | {'; '.join(b.failing()[:2])}")
-    if a.out:
-        Path(a.out).parent.mkdir(parents=True, exist_ok=True)
-        Path(a.out).write_text(json.dumps(out, indent=1), encoding="utf-8")
+    from .sweep import DEFAULT_HEIGHTS, run_sweep
+    from ..paths import variants_dir
+    out = Path(a.out) if a.out else variants_dir() / "adam" / "generated" / "concept" / "sweep"
+    pk = tuple(a.packaging) if a.packaging else ("t0004", "cad_foundation")
+    res = run_sweep(a.concept, tuple(a.heights) if a.heights else DEFAULT_HEIGHTS, out_root=out, packaging=pk, push_max=not a.no_push_max)
+    print(f"max feasible height: {res['max_feasible_height_m']} m; feasible: {res['feasible_heights_m']}")
     return 0
 
 
@@ -103,7 +90,8 @@ def main(argv=None) -> int:
     s = sub.add_parser("evaluate"); s.add_argument("concept"); s.add_argument("--quick", action="store_true", help="nominal gates only (no bounds sweep / Monte Carlo / mass cases)")
     s.add_argument("--samples", type=int); s.add_argument("--table-height", type=float); s.add_argument("--out"); s.set_defaults(f=cmd_evaluate)
     s = sub.add_parser("compare"); s.add_argument("reports", nargs="+"); s.set_defaults(f=cmd_compare)
-    s = sub.add_parser("sweep"); s.add_argument("concept"); s.add_argument("--heights", nargs="*", type=float); s.add_argument("--table-height", type=float)
+    s = sub.add_parser("sweep", help="height sweep with the gait sweep, the R10 gate and the packaging floors"); s.add_argument("concept"); s.add_argument("--heights", nargs="*", type=float)
+    s.add_argument("--packaging", nargs="*", help="floor sets: t0004 cad_foundation (default both)"); s.add_argument("--no-push-max", action="store_true", help="skip the largest-recoverable-push search")
     s.add_argument("--out"); s.set_defaults(f=cmd_sweep)
     s = sub.add_parser("calibrate-odm", help="Open Duck Mini calibration from a scratch copy of its Playground repo (read-only; nothing is copied into the repo)")
     s.add_argument("--odm-dir", required=True, help="folder with a clone of apirrone/Open_Duck_Playground (OUTSIDE this repository)"); s.add_argument("--out"); s.add_argument("--quick", action="store_true")

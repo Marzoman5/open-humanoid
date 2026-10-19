@@ -562,9 +562,12 @@ def gait_sweep(concept: dict, table_height: float | None = None) -> tuple[dict, 
             c.setdefault("locomotion", {}).setdefault("walk", {})["stance_knee_flex_deg"] = float(f)
             c["gait"] = {"step_time_s": float(st)}
             b = run_bundle(c, Mods(), table_height=table_height, thermal=False)
-            w, j = b.worst
+            # score = the worst margin among the VALID motions; only an invalid motion that depends on the gait (stand, walks, turn) disqualifies a combination,
+            # not e.g. a pickup that no gait can fix (that would make every combination tie at 0 and the choice arbitrary)
+            gait_invalid = {k: v for k, v in b.invalid.items() if k in ("stand", "walk_forward", "walk_backward", "turn")}
+            w, j = (min(((r["worst_margin"], r["joint"]) for r in b.rows.values()), default=(0.0, "")) if b.rows else (0.0, ""))
             rows.append({"stance_knee_flex_deg": f, "step_time_s": st, "worst_margin": round(w, 3), "worst_joint": j, "passes": b.passes,
-                         "invalid": dict(b.invalid), "failing": b.failing()[:3]})
+                         "invalid": gait_invalid, "other_invalid": {k: v[:60] for k, v in b.invalid.items() if k not in gait_invalid}, "failing": b.failing()[:3]})
     pool = [r for r in rows if not r["invalid"]] or rows
     best = max(pool, key=lambda r: r["worst_margin"])
     return best, rows
@@ -710,13 +713,15 @@ def _json(o):
 
 
 LIMITATIONS = [
-    "Open-loop reference replay: LIPM + analytic IK gait (no trajectory optimisation), so loads are a lower bound for a real balancing controller; stress walks bound some of the gap.",
-    "Torque demand includes the servo's reflected rotor inertia (BAM armature 0.0234 kg m^2), which dominates dynamic loads; that value is a 7.4 V identification used for all servos.",
-    "12 V STS3215 and STS3250 are datasheet-anchored with dynamics borrowed from the 7.4 V fit; the mid-speed torque curve is unverified (anchored vs pessimistic linear shown).",
-    "Printed structure mass is a pre-CAD guess; shells and brackets are not modelled. The benchmark fit is only a sanity bound / stress case.",
-    "Thermal: single lumped node, Rth/tau derived from one Robonine unit with assumed ambient; the model does not reproduce Robonine run 2, so thermal numbers are indicative and RMS <= rated is the thermal gate.",
+    "Open-loop reference replay: LIPM + analytic IK gait (no trajectory optimisation), so loads are a lower bound for a real balancing controller; stress walks bound some of the gap. A minimum-torque inverse-dynamics demand (no tether, no PD) agrees with the PD harness within about 4% on the sagittal leg joints.",
+    "Torque demand includes the servo's reflected rotor inertia (BAM armature 0.0234 kg m^2), which dominates dynamic loads; that value is a 7.4 V identification used for all servos. The only other armature in BAM's files that applies to a 12 V class servo (Waveshare ST3025, 0.00399) is reported as a SENSITIVITY row, not a bound.",
+    "12 V STS3215 and STS3250 are datasheet-anchored with dynamics borrowed from the 7.4 V fit; the mid-speed torque curve is unverified (anchored vs pessimistic linear shown). A bench test settles it.",
+    "Printed structure mass: the nominal (11.9 kg per m^3) was recentred on Open Duck Mini's back-out (its structure is 1.86x the old 6.4); shells and brackets of Adam are still not modelled. The benchmark fit is only a sanity bound / stress case.",
+    "Thermal: single lumped node, Rth/tau derived from one Robonine unit with assumed ambient; the model does not reproduce Robonine run 2, so thermal numbers are indicative and RMS <= rated is the thermal gate. The rated continuous torque of the 7.4 V part is contested (0.49 vs 0.637 N.m): the verdict is shown at both.",
+    "R10 (PROVISIONAL absolute impulse): LIPM plans with perfect state estimation, instant unloading of the stepping foot, no foot rotation, no foot/leg collision (cross-steps are placed a foot length away from the stance foot), backward pushes not run, lateral hip-roll (trunk roll) strategy not modelled, the hip strategy is forward only and counts only within the hip servos' speed. Walking pushes use the third step of the frozen gait.",
+    "Gait: stance knee flexion 20-45 deg and step time {0.25, 0.35, 0.5} s are swept identically for every candidate and the gates use the best feasible combination; Open Duck Mini itself walks at about 77 deg knee flexion and 0.27 s steps.",
     "Latency, backlash and kp need the closed loop (P5); here they are sensitivities on one walk, never gates.",
-    "Leg-table / self-collision, cable routing and packaging are not checked (T-0004 floors are applied only as proportion minimums).",
+    "Leg-table / self-collision, cable routing and packaging are not checked (T-0004 floors, and in the height sweep the CAD-foundation ankle height and ranges, are applied only as proportion / range minimums; the 106 mm hip stack is not modelled).",
     "Stand-up from a fall is not modelled; the quasi-static sit-to-stand at 130 deg knee is a proxy only.",
 ]
 
@@ -734,6 +739,18 @@ def to_markdown(r: dict) -> str:
           f"- packaging floors applied: {d['packaging_floors_applied'] or 'none'}"]
     if d["transmissions"]:
         L.append(f"- transmissions: {d['transmissions']}")
+    g = r.get("gait")
+    if g:
+        L += ["", "## Gait (rows 12-13: stance knee flexion x step time, the same set for every candidate)",
+              f"- chosen: **{g['chosen']['stance_knee_flex_deg']} deg, {g['chosen']['step_time_s']} s** (worst joint margin {g['chosen_worst_margin']}); at the old default 40 deg / 0.5 s: {g['at_the_old_default_40deg_0p5s'] and g['at_the_old_default_40deg_0p5s']['worst_margin']}",
+              "| flex deg | step s | worst margin | worst joint | passes | gait-dependent invalid |", "|---|---|---|---|---|---|"]
+        for x in g["sweep"]:
+            L.append(f"| {x['stance_knee_flex_deg']} | {x['step_time_s']} | {x['worst_margin']} | {x['worst_joint']} | {x['passes']} | {', '.join(x['invalid']) or '-'} |")
+    rd = r.get("rms_denominators")
+    if rd:
+        L += ["", "## RMS verdict at every circulating 'rated continuous torque' (row 2; 7.4 V STS3215 joints)", "| rated N.m | worst per-motion RMS / rated | gate | mixed-schedule RMS / rated | gate | worst joint / motion |", "|---|---|---|---|---|---|"]
+        for x in rd["rows"]:
+            L.append(f"| {x['rated_nm']} | {x['per_motion_rms_gate_worst']} | {'ok' if x['per_motion_rms_gate_ok'] else 'FAIL'} | {x.get('mixed_schedule_rms_worst', '-')} | {'ok' if x.get('mixed_schedule_ok') else 'FAIL'} | {x['worst_joint']} / {x['worst_motion']} |")
     m = r["mass"]
     L += ["", "## Mass", f"- component sum {m['total_kg']} kg: {m['breakdown_kg']}",
           f"- benchmark fit {m['sanity']['benchmark_fit_kg']} kg ({m['sanity']['status']}). {m['sanity']['note']}"]
@@ -753,7 +770,8 @@ def to_markdown(r: dict) -> str:
     if p:
         L += ["", "## Power", f"- pack {p['pack']['part']} {p['pack']['cells']}S {p['pack']['capacity_ah']} Ah ({p['pack']['energy_wh']} Wh, {p['pack']['mass_kg']} kg)",
               f"- average {p['average_power_w']} W -> runtime {p['runtime_min']} min (requirement {p['runtime_requirement_min']} min, ok={p['runtime_ok']})",
-              f"- peak bus {p['bus']['peak_total_a']} A, sag {p['bus']['sag_at_peak_v']} V, fuse {p['bus']['fuse_a']} A, min voltage at far servo {p['bus']['min_voltage_at_far_servo_v']} V (servo minimum {p['bus']['servo_min_operating_v']} V)",
+              f"- peak bus {p['bus']['peak_total_a']} A (frozen motions {p['bus']['peak_from_frozen_motions_a']} A, R10 push transient {p['bus']['peak_from_r10_transient_a']} A in {p['bus']['r10_transient_scenario']}), sag {p['bus']['sag_at_peak_v']} V, "
+              f"**fuse {p['bus']['fuse_a']} A** (a fuse sized from the motions alone would be {p['bus']['fuse_a_if_sized_from_motions_only']} A and blow on R10: {p['bus']['fuse_blows_on_r10_if_sized_from_motions_only']}); all leg servos stalled {p['bus']['all_leg_servos_stalled_a']} A -> {p['bus']['fuse_a_to_ride_through_all_leg_stall']} A (fault case); min voltage at far servo {p['bus']['min_voltage_at_far_servo_v']} V (servo minimum {p['bus']['servo_min_operating_v']} V)",
               f"- regulator: {p['regulator']}", f"- voltage rating: {p['voltage_rating']}"]
     t = r.get("thermal")
     if t:
@@ -785,7 +803,7 @@ def to_markdown(r: dict) -> str:
     if "bounds_sweep" in r:
         L += ["", "## Bounds sweep (tornado)", "| unknown | worst margin | delta | passes | failing |", "|---|---|---|---|---|"]
         for b in r["bounds_sweep"]:
-            L.append(f"| {b['label']} | {b['worst_margin']} ({b['worst_joint']}) | {b['delta_vs_nominal']} | {b['passes']} | {'; '.join(b['failing'][:2])} |")
+            L.append(f"| {'(sensitivity) ' if b.get('kind') == 'sensitivity' else ''}{b['label']} | {b['worst_margin']} ({b['worst_joint']}) | {b['delta_vs_nominal']} | {b['passes']} | {'; '.join(b['failing'][:2])} |")
     if "monte_carlo" in r:
         mc = r["monte_carlo"]
         L += ["", f"## Monte Carlo (quasi-static dimensions only, {mc['samples']} samples)", f"- pass rate {mc['pass_rate']}; worst p95 peak {mc['worst_p95_peak']} at {mc['worst_joint_p95_peak']}; {mc['note']}"]
