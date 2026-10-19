@@ -1,0 +1,191 @@
+{
+  "actuator": "sts3215-12v",
+  "bearing": "MR105ZZ",
+  "volume_cm3": 24.2,
+  "est_print_min": 29.0,
+  "tiles": [
+    {
+      "id": "G1",
+      "what": "servo pocket slice (L x W outline, corner radius, cable slot)",
+      "drop_servo": true,
+      "expect_mm": {
+        "pocket_L": 45.5,
+        "pocket_W": 25.0
+      },
+      "origin_mm": [
+        0.0,
+        0.0
+      ],
+      "size_mm": [
+        57.6,
+        29.8,
+        5.0
+      ]
+    },
+    {
+      "id": "G2",
+      "what": "servo height (35 mm across the axis) and width slots",
+      "expect_mm": {
+        "slot_H": 35.3,
+        "slot_W": 25.0
+      },
+      "origin_mm": [
+        63.6,
+        0.0
+      ],
+      "size_mm": [
+        43.3,
+        22.0,
+        6.0
+      ]
+    },
+    {
+      "id": "G3",
+      "what": "horn probe: the four screw slots span r = 4..9 mm; find where the horn's real holes sit",
+      "expect_mm": {
+        "horn_od": 20.0,
+        "bolt_circle_d_estimate": 14.0
+      },
+      "origin_mm": [
+        112.9,
+        0.0
+      ],
+      "size_mm": [
+        44.0,
+        30.0,
+        4.3
+      ]
+    },
+    {
+      "id": "G4",
+      "what": "M3 heat-set insert holes (index 1 = smallest). Pick the hole where the insert seats flush with a steady push.",
+      "nominal_d_mm": 4.0,
+      "ladder_delta_mm": [
+        -0.2,
+        -0.1,
+        0.0,
+        0.1,
+        0.2
+      ],
+      "depth_mm": 6.7,
+      "origin_mm": [
+        162.9,
+        0.0
+      ],
+      "size_mm": [
+        47.0,
+        9.0,
+        8.3
+      ]
+    },
+    {
+      "id": "G5",
+      "what": "MR105ZZ bearing seats (index 1 = tightest). Pick the seat where the bearing needs a firm thumb push and does not fall out.",
+      "bearing": "MR105ZZ",
+      "nominal_seat_d_mm": 10.1,
+      "ladder_delta_mm": [
+        -0.1,
+        0.0,
+        0.1,
+        0.2,
+        0.3
+      ],
+      "origin_mm": [
+        0.0,
+        36.0
+      ],
+      "size_mm": [
+        70.0,
+        13.2,
+        5.6
+      ]
+    },
+    {
+      "id": "G6",
+      "what": "clearance ladder: hole k takes the 5.0 mm peg at per-side clearance c_k. Smallest hole where the peg slides by hand = slip; where it also spins freely = rotating.",
+      "peg_d_mm": 5.0,
+      "per_side_clearance_mm": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.3,
+        0.4
+      ],
+      "hole_comp_mm": 0.2,
+      "origin_mm": [
+        76.0,
+        36.0
+      ],
+      "size_mm": [
+        62.0,
+        24.5,
+        7.0
+      ]
+    },
+    {
+      "id": "G7",
+      "what": "magnet pockets (open, +0.0..+0.3 mm). Last one is the covered, pause-print version.",
+      "ladder_delta_mm": [
+        0.0,
+        0.1,
+        0.2,
+        0.3
+      ],
+      "origin_mm": [
+        144.0,
+        36.0
+      ],
+      "size_mm": [
+        47.0,
+        10.0,
+        4.2
+      ]
+    },
+    {
+      "id": "G8",
+      "what": "wall steps (0.8..2.4 mm) and bridge spans (6, 12, 18 mm); note which walls print as solid lines and which bridges sag.",
+      "walls_mm": [
+        0.8,
+        1.2,
+        1.6,
+        2.0,
+        2.4
+      ],
+      "bridges_mm": [
+        6,
+        12,
+        18
+      ],
+      "origin_mm": [
+        0.0,
+        66.5
+      ],
+      "size_mm": [
+        68.0,
+        30.0,
+        7.6
+      ]
+    }
+  ],
+  "dfm_version": "0.1",
+  "estimates_to_confirm": [
+    "axis_from_near_end_mm",
+    "back_shaft.boss_d_mm",
+    "back_shaft.protrusion_mm",
+    "back_shaft.spline_od_mm",
+    "cable.face",
+    "cable.plug_len_mm",
+    "cable.socket_wh_mm",
+    "cable.z_mm",
+    "case_holes.depth_mm",
+    "case_holes.thread",
+    "case_holes.x_mm",
+    "case_holes.z_mm",
+    "output_spline.boss_d_mm",
+    "output_spline.boss_h_mm",
+    "output_spline.center_screw",
+    "output_spline.horn_float_mm",
+    "output_spline.protrusion_mm"
+  ]
+}

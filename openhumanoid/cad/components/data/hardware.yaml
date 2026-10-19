@@ -1,0 +1,120 @@
+# Purchased hardware used by every variant: screws, heat-set inserts, magnets, bearings, servo horns.
+# Every number is {v: value, src: <where>, conf: <how sure>}.  conf levels (strongest first):
+#   standard  - ISO/DIN dimension standard (not vendor dependent)
+#   datasheet - manufacturer drawing/datasheet
+#   vendor    - a vendor listing or vendor guide (indicative; brands differ)
+#   derived   - computed here from other cited numbers
+#   estimate  - engineering judgement. MUST be confirmed by the fit gauge (docs/cad-foundation.md) before a full print.
+# Units: mm. Access date for all URLs: 2026-10-19.
+# HONESTY NOTE: `standard` rows are ISO/DIN values; `vendor` rows (insert and magnet sizes, flanged bearings, horn OD) come from vendor guides
+# and listings that were read or recalled, not all re-fetched. Treat `vendor` as indicative and `estimate` as unverified until the gauge runs.
+units: mm
+
+screws:
+  # ISO 4762 / DIN 912 socket head cap screws. Hex key sizes and head dimensions are standard values.
+  # clearance_close/medium are ISO 273 through-hole diameters; counterbore is DIN 974-1 (for ISO 4762 heads).
+  M2:
+    pitch: {v: 0.4, src: "ISO 261 coarse pitch", conf: standard}
+    head_d: {v: 3.8, src: "ISO 4762 table (dk max 3.8)", conf: standard}
+    head_k: {v: 2.0, src: "ISO 4762 table (k max 2.0)", conf: standard}
+    hex_key: {v: 1.5, src: "ISO 4762 table (s = 1.5)", conf: standard}
+    clearance_close: {v: 2.2, src: "ISO 273 fine series", conf: standard}
+    clearance_medium: {v: 2.4, src: "ISO 273 medium series", conf: standard}
+    counterbore_d: {v: 4.4, src: "ISO 4749 / DIN 974-1 (d=4.4)", conf: standard}
+    counterbore_depth: {v: 2.3, src: "DIN 974-1 (t = 2.0 + 0.3 margin)", conf: derived}
+    low_head_k: {v: 1.5, src: "DIN 7984 low head cap screw (k = 1.5)", conf: standard}
+    low_counterbore_depth: {v: 1.8, src: "DIN 7984 k + 0.3 margin", conf: derived}
+    tap_drill: {v: 1.6, src: "ISO 261 / standard tap drill chart", conf: standard}
+    tool_corridor_d: {v: 6.0, src: "head + 2 mm either side for a 1.5 mm key or Ø3 driver shaft; estimate", conf: estimate}
+  M2.5:
+    pitch: {v: 0.45, src: "ISO 261 coarse pitch", conf: standard}
+    head_d: {v: 4.5, src: "ISO 4762 table", conf: standard}
+    head_k: {v: 2.5, src: "ISO 4762 table", conf: standard}
+    hex_key: {v: 2.0, src: "ISO 4762 table", conf: standard}
+    clearance_close: {v: 2.7, src: "ISO 273", conf: standard}
+    clearance_medium: {v: 2.9, src: "ISO 273", conf: standard}
+    counterbore_d: {v: 5.0, src: "ISO 4749 / DIN 974-1", conf: standard}
+    counterbore_depth: {v: 2.8, src: "DIN 974-1 + margin", conf: derived}
+    low_head_k: {v: 1.75, src: "DIN 7984 (interpolated between M2 1.5 and M3 2.0); verify on the bought screw", conf: estimate}
+    low_counterbore_depth: {v: 2.05, src: "k + 0.3 margin", conf: derived}
+    tap_drill: {v: 2.05, src: "standard tap drill chart", conf: standard}
+    tool_corridor_d: {v: 7.0, src: "estimate", conf: estimate}
+  M3:
+    pitch: {v: 0.5, src: "ISO 261 coarse pitch", conf: standard}
+    head_d: {v: 5.5, src: "ISO 4762 table (dk max 5.5)", conf: standard}
+    head_k: {v: 3.0, src: "ISO 4762 table (k = 3.0)", conf: standard}
+    hex_key: {v: 2.5, src: "ISO 4762 table (s = 2.5)", conf: standard}
+    clearance_close: {v: 3.2, src: "ISO 273 fine series", conf: standard}
+    clearance_medium: {v: 3.4, src: "ISO 273 medium series", conf: standard}
+    counterbore_d: {v: 6.0, src: "ISO 4749 / DIN 974-1 (d=6.0)", conf: standard}
+    counterbore_depth: {v: 3.4, src: "DIN 974-1 (t = 3.0 + 0.4 margin)", conf: derived}
+    low_head_k: {v: 2.0, src: "DIN 7984 low head cap screw (k = 2.0, dk = 5.5, s = 2.5)", conf: standard}
+    low_counterbore_depth: {v: 2.3, src: "DIN 7984 k + 0.3 margin", conf: derived}
+    tap_drill: {v: 2.5, src: "standard tap drill chart", conf: standard}
+    tool_corridor_d: {v: 8.0, src: "head + 2.5 mm either side for a 2.5 mm key or Ø4 driver shaft; estimate", conf: estimate}
+
+# Heat-set inserts (brass, knurled, for FDM). Brands differ by +-0.2 mm: the hole diameters are the
+# vendor-recommended values and are the first thing the fit gauge ladder (insert holes 3.8..4.4) confirms.
+inserts:
+  M2:
+    brand_ref: "generic M2 x 3 x 3.2 OD (Ruthex RX-M2x3 class)"
+    od: {v: 3.2, src: "https://www.ruthex.de/en/ (M2 x 3 insert OD ~3.2 mm); vendor", conf: vendor}
+    length: {v: 3.0, src: "same", conf: vendor}
+    hole_d: {v: 3.0, src: "vendor guidance: hole ~0.2 mm under insert OD; CNC Kitchen method https://www.cnckitchen.com/blog/tipps-amp-tricks-fr-gewindeeinstze-im-3d-druck-3awey (tune with test parts)", conf: vendor}
+    hole_depth: {v: 4.0, src: "length + 1.0 mm for displaced plastic (research/methods/d section 5 and vendor guides)", conf: derived}
+    wall: {v: 2.0, src: "research/methods/d-structural-fea-3d-print.md section 5 (keep >= 2 mm of material around the insert)", conf: vendor}
+  M3:
+    brand_ref: "generic M3 x 5.7 x 4.6 OD (Ruthex RX-M3x5.7 / CNC Kitchen class)"
+    od: {v: 4.6, src: "https://www.ruthex.de/en/ (M3 x 5.7 insert OD 4.6 mm); vendor", conf: vendor}
+    length: {v: 5.7, src: "same", conf: vendor}
+    hole_d: {v: 4.0, src: "vendor guidance (Ruthex/CNC Kitchen): hole ~0.6 mm under the knurled OD for a 4.6 mm insert; ladder-test on the printer", conf: vendor}
+    hole_depth: {v: 6.7, src: "length + 1.0 mm (research/methods/d section 5 'cavity depth' + vendor guides)", conf: derived}
+    wall: {v: 2.0, src: "research/methods/d-structural-fea-3d-print.md section 5", conf: vendor}
+    note: "Short inserts (M3 x 3-4 mm, OD 4.2-4.6) exist; use `insert:M3` with length override if the boss height is tight."
+
+magnets:
+  disc_6x3:
+    d: {v: 6.0, src: "catalog size 6 x 3 mm (task brief); N35-N42 discs, tolerance +-0.1 mm typical", conf: vendor}
+    h: {v: 3.0, src: "same", conf: vendor}
+    tolerance: {v: 0.1, src: "typical neodymium disc tolerance, vendor", conf: vendor}
+    mass_g: {v: 0.64, src: "derived: pi*3^2*3 mm3 * 7.5 g/cm3", conf: derived}
+
+bearings:
+  # Boundary dimensions per ISO 15:2017 (radial bearings, metric). Flanged variants add flange_d / flange_t (vendor typical).
+  # `ID x OD x B`.  The STS3215 back (idler) shaft size is an ESTIMATE (see catalog), so the bearing choice is a parameter.
+  MR83ZZ: {id: {v: 3, src: "ISO 15 3x8x3", conf: standard}, od: {v: 8, src: same, conf: standard}, w: {v: 3, src: same, conf: standard}}
+  623ZZ: {id: {v: 3, src: "ISO 15 3x10x4", conf: standard}, od: {v: 10, src: same, conf: standard}, w: {v: 4, src: same, conf: standard}}
+  MR85ZZ: {id: {v: 5, src: "ISO 15 / SKF/NSK miniature catalogue 5x8x2.5", conf: standard}, od: {v: 8, src: same, conf: standard}, w: {v: 2.5, src: same, conf: standard}}
+  MR105ZZ: {id: {v: 5, src: "ISO 15 5x10x4", conf: standard}, od: {v: 10, src: same, conf: standard}, w: {v: 4, src: same, conf: standard}}
+  685ZZ: {id: {v: 5, src: "ISO 15 5x11x5", conf: standard}, od: {v: 11, src: same, conf: standard}, w: {v: 5, src: same, conf: standard}}
+  625ZZ: {id: {v: 5, src: "ISO 15 5x16x5", conf: standard}, od: {v: 16, src: same, conf: standard}, w: {v: 5, src: same, conf: standard}}
+  MR126ZZ: {id: {v: 6, src: "ISO 15 6x12x4", conf: standard}, od: {v: 12, src: same, conf: standard}, w: {v: 4, src: same, conf: standard}}
+  606ZZ: {id: {v: 6, src: "ISO 15 6x17x6", conf: standard}, od: {v: 17, src: same, conf: standard}, w: {v: 6, src: same, conf: standard}}
+  688ZZ: {id: {v: 8, src: "ISO 15 8x16x5", conf: standard}, od: {v: 16, src: same, conf: standard}, w: {v: 5, src: same, conf: standard}}
+  F688ZZ:
+    id: {v: 8, src: "flanged 688: 8x16x5, flange 18 x 1.1 (vendor typical)", conf: vendor}
+    od: {v: 16, src: same, conf: vendor}
+    w: {v: 5, src: same, conf: vendor}
+    flange_d: {v: 18, src: same, conf: vendor}
+    flange_t: {v: 1.1, src: same, conf: vendor}
+  F685ZZ:
+    id: {v: 5, src: "flanged 685: 5x11x5, flange 12.5 x 1.0 (vendor typical)", conf: vendor}
+    od: {v: 11, src: same, conf: vendor}
+    w: {v: 5, src: same, conf: vendor}
+    flange_d: {v: 12.5, src: same, conf: vendor}
+    flange_t: {v: 1.0, src: same, conf: vendor}
+
+horns:
+  # Generic 25-tooth servo horn for Feetech STS-series (the stock horn or an aftermarket round horn).
+  # Spline numbers are vendor-listed; the bolt circle and hole size are ESTIMATES: measure your horn (the fit gauge
+  # has a slotted probe plate that tolerates any bolt circle between r=4 and r=9 mm).
+  round_25t:
+    teeth: {v: 25, src: "https://www.robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215 ('Horn Gear Spline 25T/OD 5.9mm')", conf: vendor}
+    spline_od: {v: 5.9, src: "https://servodatabase.com/servo/feetech/sts3215 (output shaft 5.9 mm, 25T)", conf: vendor}
+    od: {v: 20.0, src: "https://botland.com.pl/en/servo-horns/9198-round-aluminum-servo-horn-feetech-fk-rp-001-20mm-6mm.html (Feetech FK-RP-001: 20 mm round aluminium horn, 6 mm bore)", conf: vendor}
+    thickness: {v: 3.0, src: "estimate: typical aluminium round horn 3 mm, stock plastic horn 3-4 mm", conf: estimate}
+    bolt_circle_d: {v: 14.0, src: "estimate (stock horn pattern not published); measure; gauge probe plate covers r=4..9 mm", conf: estimate}
+    n_holes: {v: 4, src: "estimate", conf: estimate}
+    hole_d: {v: 2.2, src: "estimate: M2 clearance / M2.5 self-tapping; measure", conf: estimate}
+    screw: {v: M2, src: "estimate", conf: estimate}
+    center_screw: {v: M3, src: "estimate: STS-series horns are retained by a centre M3 screw into the spline end", conf: estimate}

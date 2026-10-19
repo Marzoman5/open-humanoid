@@ -1,0 +1,54 @@
+# Representative 22-DOF humanoid_v2 packaging layout, used to VALIDATE the CAD foundation on one leg (T-20261019-2426).
+#
+# THIS IS NOT ADAM'S FINAL LAYOUT. The concept loop (ADR 0012) has not frozen one; design freeze happens after the concept (R1) and
+# silhouette (R2a) reviews. The file exists so the CAD tooling can be exercised on a realistic servo stack today. When the concept loop
+# lands, replace this file (same schema, see openhumanoid/cad/interfaces.py) and re-run `python -m openhumanoid.cad interfaces adam`.
+#
+# 22 DOF = 2 legs x 6 (hip yaw/roll/pitch, knee, ankle pitch/roll) + 2 arms x 4 (shoulder pitch/roll/yaw, elbow) + neck 2 (yaw, pitch).
+# Only the leg is built in this validation; the arm and neck chains are declared for the DOF count and interface generation.
+# STS3215 throughout; the knee may be an STS3250 (same case: see actuators.overrides below).
+name: humanoid_v2_22dof
+status: validation stand-in (not a concept-loop output)
+height_m: 0.60               # 600 mm: between the sizing's 0.54 (budget-limited) and the spec max 0.75
+proportions:
+  ankle_height: 0.11         # 66 mm. The spec's 0.045 (27 mm) cannot hold a fork + roll servo + sole: found by the geometry gate / ROM sweep (docs/cad-foundation.md)
+actuators:
+  default: sts3215-12v
+  overrides: {}              # {knee: sts3250-12v} for the optional high-torque knee: same 45.2 x 24.7 x 35 case
+points:
+  hip: [0, hip_y, hip_z]
+  knee: [0, hip_y, knee_z]
+  ankle: [0, hip_y, ankle]
+  ankle_roll: [0, hip_y, ankle - 28]    # roll axis 28 mm below the pitch axis: the foot plate must sit outside the pitch housing's swing (ROM sweep)
+  shoulder: [0, shoulder_y, shoulder_z]
+  elbow: [0, shoulder_y, shoulder_z - upper_arm]
+  neck: [0, 0, shoulder_z + neck]
+roots:
+  pelvis: [0, 0, hip_z]
+limbs:
+  leg:
+    mirror: [l, r]
+    root: pelvis
+    joints:
+      # Gimbal hip (yaw, roll, pitch axes meet at the hip point: matches the sim's coincident joints). The yaw servo sits ABOVE the
+      # hip point because the pitch servo's housing (cable exit at its top) swings under the yaw horn plate.
+      - {name: hip_yaw,   point: hip, servo: {host: pelvis,           horn: [0, 0, -1], long: [0, -1, 0], horn_at: 66}}
+      - {name: hip_roll,  point: hip, servo: {host: hip_yaw_l_link,   horn: [1, 0, 0],  long: [0, 0, 1],  horn_at: -44}}
+      - {name: hip_pitch, range: [-110, 40], range_note: "CAD-limited from the spec's +60 extension: the thigh idler plate/rear face sweeps into the roll servo's horn plate behind the hip (ROM sweep: contact at 45 deg, 1 mm moving gap kept to 40). Walking needs about 25.", point: hip, servo: {host: hip_roll_l_link,  horn: [0, 1, 0],  long: [0, 0, 1],  horn_at: 17.5, idler: {bearing: MR105ZZ, gap_mm: 1.5}}}
+      - {name: knee,      range: [0, 115], range_note: "CAD-limited from the spec's 130: at 118 deg the heel (ankle-roll servo housing) meets the glute (hip-roll servo housing); 115 keeps 3 deg of margin and still covers the deep squat (knee 103 deg in the squat pose)", point: knee, servo: {host: hip_pitch_l_link, horn: [0, 1, 0], long: [0, 0, 1],  horn_at: 17.5, idler: {bearing: MR105ZZ, gap_mm: 1.5}}}
+      - {name: ankle_pitch, range: [-60, 25], range_note: "CAD-limited from the spec's +60: the roll servo housing behind the ankle swings into the shank above +29 deg (ROM sweep, 1 mm moving gap kept to 25)", point: ankle, servo: {host: knee_l_link,  horn: [0, 1, 0],  long: [0, 0, 1],  horn_at: 17.5, idler: {bearing: MR105ZZ, gap_mm: 1.5}}}
+      - {name: ankle_roll,  point: ankle_roll, servo: {host: ankle_pitch_l_link, horn: [1, 0, 0], long: [0, 0, 1], horn_at: -26.5}}
+  arm:
+    mirror: [l, r]
+    root: pelvis
+    joints:
+      - {name: shoulder_pitch, point: shoulder, servo: {host: pelvis, horn: [0, 1, 0], long: [0, 0, 1], horn_at: 17.5}}
+      - {name: shoulder_roll,  point: shoulder, servo: {host: shoulder_pitch_l_link, horn: [1, 0, 0], long: [0, 0, 1], horn_at: -25}}
+      - {name: shoulder_yaw, axis: z, range: [-90, 90], point: shoulder, servo: {host: shoulder_roll_l_link, horn: [0, 0, -1], long: [1, 0, 0], horn_at: -55}}
+      - {name: elbow, point: elbow, servo: {host: shoulder_yaw_l_link, horn: [0, 1, 0], long: [0, 0, 1], horn_at: 17.5}}
+  head:
+    mirror: []
+    root: pelvis
+    joints:
+      - {name: neck_yaw, point: neck, servo: {host: pelvis, horn: [0, 0, 1], long: [1, 0, 0], horn_at: -20}}
+      - {name: neck_pitch, axis: y, range: [-30, 30], point: neck, servo: {host: neck_yaw_link, horn: [0, 1, 0], long: [0, 0, 1], horn_at: 17.5}}

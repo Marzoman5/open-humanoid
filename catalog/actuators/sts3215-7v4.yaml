@@ -32,3 +32,41 @@ notes: Same body as the 12 V version. Used by SO-100/101 arms. 2S battery.
 verified: false
 source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
   Verify with prompts/sourcing/part-sourcing.md'
+
+# Mechanical interface data for CAD (openhumanoid/cad/components/servo.py). Each entry: {v, src, conf}.
+# conf: vendor = vendor listing/datasheet number | derived | estimate = engineering judgement, MUST be confirmed with the
+# fit gauge (`python -m openhumanoid.cad gauge`) or calipers before the first full print. No vendor CAD file was used.
+# Frame: origin on the output axis at the horn-face plane; +z out of the horn face; +x toward the long end of the body; y = width.
+mechanical:
+  body_mm:
+    v: [45.2, 24.7, 35.0]            # length (x), width (y), height along the axis (z, from horn face down to the back face)
+    src: https://servodatabase.com/servo/feetech/sts3215 ; https://www.waveshare.com/wiki/ST3215_Servo (45.22 x 35 x 24.72) ; https://www.robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215
+    conf: vendor
+  axis_from_near_end_mm: {v: 12.0, src: "estimate: horn axis sits ~12 mm from the short end (horn OD 20 nearly flush with the end); measure", conf: estimate}
+  corner_fillet_mm: {v: 1.5, src: "estimate", conf: estimate}
+  output_spline:
+    teeth: {v: 25, src: https://servodatabase.com/servo/feetech/sts3215, conf: vendor}
+    od_mm: {v: 5.9, src: https://servodatabase.com/servo/feetech/sts3215 ; https://www.robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215, conf: vendor}
+    boss_d_mm: {v: 10.0, src: "estimate: round boss around the spline", conf: estimate}
+    boss_h_mm: {v: 2.0, src: "estimate: horn seats ~2 mm above the case face", conf: estimate}
+    horn_float_mm: {v: 0.3, src: "estimate: air gap so the turning horn does not drag on the case boss", conf: estimate}
+    protrusion_mm: {v: 4.5, src: "estimate: spline end above the case face (boss 2.0 + spline 2.5)", conf: estimate}
+    center_screw: {v: M3, src: "estimate: STS-series horns are retained by a centre M3 screw", conf: estimate}
+  horn: {v: round_25t, src: "openhumanoid/cad/components/data/hardware.yaml#horns", conf: estimate}
+  back_shaft:
+    note: "dual-axis, the back face carries a second output. Idler designs capture it in a bearing or idler horn on the far yoke plate."
+    spline_od_mm: {v: 5.9, src: "estimate: assumed same 25T spline as the front", conf: estimate}
+    protrusion_mm: {v: 3.0, src: "estimate", conf: estimate}
+    boss_d_mm: {v: 9.0, src: "estimate", conf: estimate}
+  case_holes:
+    note: "tapped mounting holes in the two long side faces (y = +-W/2). Position and thread are ESTIMATES. The default servo_pocket does not rely on them."
+    thread: {v: M3, src: "estimate (SO-ARM-style servo brackets use M3-class screws)", conf: estimate}
+    depth_mm: {v: 6.0, src: "estimate", conf: estimate}
+    x_mm: {v: [0.0, 24.0], src: "estimate: along the body from the axis", conf: estimate}
+    z_mm: {v: [-8.0, -27.0], src: "estimate: down from the horn face", conf: estimate}
+  cable:
+    connector: {v: "5264/2.54 3-pin x2 (daisy chain)", src: https://www.waveshare.com/wiki/ST3215_Servo, conf: vendor}
+    face: {v: "+x end face", src: "estimate", conf: estimate}
+    z_mm: {v: -26.0, src: "estimate: down from the horn face", conf: estimate}
+    socket_wh_mm: {v: [12.0, 8.0], src: "estimate", conf: estimate}
+    plug_len_mm: {v: 14.0, src: "estimate: plug + bend radius room beyond the end face", conf: estimate}

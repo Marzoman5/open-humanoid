@@ -1,0 +1,89 @@
+# Boards, battery and power parts. Same {v, src, conf} convention as hardware.yaml. Units mm.
+# Catalog ids (catalog/*/*.yaml) are the keys. dims = [x, y, z] board footprint x, y and component height z.
+# holes = mounting hole centres from the board's lower-left corner (x, y), `hole_d` = hole diameter.
+# Several are ESTIMATES (clone boards vary); the packaging checks add `margin_mm` to every keep-out for that reason.
+# HONESTY NOTE: the Raspberry Pi, Adafruit and XT60 numbers were recalled from the published drawings/listings, NOT re-fetched in the
+# session that wrote this file (the PDFs were not opened). Their conf is therefore `vendor`, not `datasheet`. Verify against the board in hand.
+units: mm
+
+rpi-zero-2w:
+  label: Raspberry Pi Zero 2 W
+  dims: {v: [65.0, 30.0, 5.0], src: "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-mechanical-drawing.pdf (65 x 30 mm board; ~5 mm tall without GPIO header)", conf: vendor}
+  holes:
+    v: [[3.5, 3.5], [61.5, 3.5], [3.5, 26.5], [61.5, 26.5]]
+    src: "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-mechanical-drawing.pdf (holes 3.5 mm from the edges, 58 x 23 mm spacing)"
+    conf: vendor
+  hole_d: {v: 2.75, src: "same drawing (2.75 mm holes, M2.5 screws)", conf: vendor}
+  screw: M2.5
+  mass_kg: 0.011
+  margin_mm: 1.0
+
+rpi-5-4gb:
+  label: Raspberry Pi 5
+  dims: {v: [85.0, 56.0, 17.0], src: "https://datasheets.raspberrypi.com/rpi5/raspberry-pi-5-mechanical-drawing.pdf (85 x 56 mm; tallest part is the USB/Ethernet stack ~16-17 mm)", conf: vendor}
+  holes:
+    v: [[3.5, 3.5], [61.5, 3.5], [3.5, 52.5], [61.5, 52.5]]
+    src: "https://datasheets.raspberrypi.com/rpi5/raspberry-pi-5-mechanical-drawing.pdf (58 x 49 mm hole pattern, 3.5 mm from the board edge)"
+    conf: vendor
+  hole_d: {v: 2.75, src: "same drawing", conf: vendor}
+  screw: M2.5
+  mass_kg: 0.046
+  margin_mm: 1.5
+
+waveshare-bus-servo-adapter:
+  label: Waveshare Bus Servo Adapter (A)
+  dims: {v: [42.0, 28.0, 12.0], src: "estimate: https://www.waveshare.com/bus-servo-adapter-a.htm lists no outline in the text we could read; typical 42 x 28 board with USB-C and terminal block", conf: estimate}
+  holes:
+    v: [[3.0, 3.0], [39.0, 3.0], [3.0, 25.0], [39.0, 25.0]]
+    src: "estimate"
+    conf: estimate
+  hole_d: {v: 2.5, src: "estimate", conf: estimate}
+  screw: M2
+  mass_kg: 0.01
+  margin_mm: 2.0
+
+buck-5v-5a:
+  label: 5 V 5 A buck converter module
+  dims: {v: [43.0, 21.0, 14.0], src: "estimate: LM2596/XL4016-class modules are 43 x 21 x 14; the exact catalog module is not chosen", conf: estimate}
+  holes:
+    v: [[2.5, 2.5], [40.5, 2.5], [2.5, 18.5], [40.5, 18.5]]
+    src: "estimate"
+    conf: estimate
+  hole_d: {v: 3.0, src: "estimate", conf: estimate}
+  screw: M2.5
+  mass_kg: 0.015
+  margin_mm: 2.0
+
+imu-bno085:
+  label: BNO085 IMU breakout
+  dims: {v: [25.4, 17.8, 4.6], src: "https://www.adafruit.com/product/4754 (Adafruit BNO085 breakout, 25.4 x 17.8 x 4.6 mm listed); other breakouts differ", conf: vendor}
+  holes:
+    v: [[2.5, 2.5], [22.9, 2.5], [2.5, 15.3], [22.9, 15.3]]
+    src: "estimate: corner holes, ~2.5 mm in; verify against the bought breakout"
+    conf: estimate
+  hole_d: {v: 2.5, src: "estimate", conf: estimate}
+  screw: M2
+  mass_kg: 0.003
+  margin_mm: 1.0
+
+lipo-3s-2200:
+  label: 3S 2200 mAh LiPo
+  dims: {v: [105.0, 34.0, 24.0], src: "vendor typical for 3S 2200 mAh 20-35C packs (Turnigy/Zippy class 105-115 x 34-35 x 24-26 mm); this repo's catalog mass 0.18 kg", conf: vendor}
+  holes: {v: [], src: "none (strap or pocket retained)", conf: vendor}
+  mass_kg: 0.18
+  margin_mm: 2.0
+  note: "LiPo cells swell: keep >= 2 mm free on every side and never clamp. Lead exits one short end."
+
+xt60:
+  label: XT60 connector (male or female housing)
+  dims: {v: [15.8, 8.0, 16.0], src: "Amass XT60 drawing/datasheet class: body 15.8 x 8.0 x 16 mm", conf: vendor}
+  holes: {v: [], src: none, conf: vendor}
+  mass_kg: 0.008
+  margin_mm: 2.0
+
+power-switch-xt60:
+  label: Inline rocker power switch (panel mount) with XT60 pigtails
+  dims: {v: [21.0, 15.0, 22.0], src: "estimate: KCD1-class rocker switch, 21 x 15 mm panel cut-out, ~22 mm behind the panel", conf: estimate}
+  holes: {v: [], src: "snap-in; cut-out 21.2 x 15.2 mm", conf: estimate}
+  mass_kg: 0.02
+  margin_mm: 2.0

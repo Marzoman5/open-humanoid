@@ -1,0 +1,134 @@
+# Design-for-manufacture rules for FDM parts (0.4 mm nozzle, 0.2 mm layers unless stated). Read by openhumanoid/cad/dfm.py;
+# every helper and the geometry gate take their numbers from here, never from literals in part code.
+#
+# Sources:  [R-D]  research/methods/d-structural-fea-3d-print.md and research/methods/print_materials.yaml (vendor datasheets)
+#           [FDM]  common FDM practice from CNC Kitchen / Prusa / Slant3D design guides: indicative, printer dependent
+#           [STD]  ISO/DIN standard
+# Rules marked  tune: true  are *printer calibration values*. They are the first thing the fit gauge
+# (`python -m openhumanoid.cad gauge`) measures; edit this file with the gauge result, not the part code.
+# conf: datasheet | vendor | practice | derived | estimate   (see components/data/hardware.yaml for definitions).
+version: "0.1"
+nozzle_mm: 0.4
+layer_mm: 0.2
+
+# ---- clearances -----------------------------------------------------------------------------------------------------------
+# PER-SIDE gap between a nominal CAD surface and its mating surface, in mm. Diametral = 2x for round fits.
+# The numbers are for planar/linear fits; hole_compensation below is added on top for round holes.
+clearance:
+  press:    {per_side_mm: 0.05, use: "bearing OD in a seat, dowel pins, magnets glued in; tight, needs a gentle press", src: "[FDM] 0.05-0.1 mm per side", conf: practice, tune: true}
+  slip:     {per_side_mm: 0.15, use: "parts that must slide together by hand and then stay put (servo pocket, board in a tray)", src: "[FDM] 0.1-0.2 mm per side", conf: practice, tune: true}
+  sliding:  {per_side_mm: 0.25, use: "parts that slide repeatedly or tolerate a hot day / filament shrinkage differences", src: "[FDM] 0.2-0.3 mm per side", conf: practice, tune: true}
+  rotating: {per_side_mm: 0.35, use: "a printed part that spins on a pin or shaft without a bearing; moving joints between printed parts", src: "[FDM] 0.3-0.4 mm per side", conf: practice, tune: true}
+  loose:    {per_side_mm: 0.50, use: "cable channels, battery pockets (LiPo swells), clearance you never want to think about", src: "[FDM]", conf: practice}
+# Gap between two separately printed moving links (ROM sweep minimum, dynamic clearance). Includes servo play and print error.
+moving_gap_min_mm: {v: 1.0, src: "derived: rotating clearance 0.35 x 2 sides + 0.3 mm servo backlash/flex (backlash 0.5-0.9 deg at r~25 mm = 0.2-0.4 mm; research/actuators/feetech-sts3215/datasheet.yaml)", conf: derived}
+static_gap_min_mm: {v: 0.3, src: "[FDM] minimum visual/functional gap between parts that never move relative to each other", conf: practice}
+
+# ---- round holes ----------------------------------------------------------------------------------------------------------
+# FDM holes print undersize (the perimeter bulges inward). Add `add_mm` to the DIAMETER of every printed hole whose nominal is
+# the part being inserted. Tune with the gauge hole ladder.
+hole_compensation:
+  - {max_d_mm: 3.5, add_mm: 0.15, conf: practice, src: "[FDM] small holes lose 0.1-0.2 mm"}
+  - {max_d_mm: 10.0, add_mm: 0.20, conf: practice, src: "[FDM]"}
+  - {max_d_mm: 1000.0, add_mm: 0.25, conf: practice, src: "[FDM] large holes lose ~0.2-0.3 mm"}
+tune_hole_compensation: true
+
+# ---- walls and features ---------------------------------------------------------------------------------------------------
+min_wall:
+  cosmetic_mm: {v: 0.8, src: "2 perimeters at 0.4 nozzle", conf: practice}
+  structural_mm: {v: 1.6, src: "4 perimeters at 0.4 nozzle (design language shell wall = 1.6 mm)", conf: practice}
+  load_path_mm: {v: 2.4, src: "6 perimeters; load-path walls resist delamination better with more perimeters [R-D section 2]", conf: practice}
+  around_fastener_mm: {v: 2.0, src: "[R-D section 5] keep >= 2 mm of material around a heat-set insert", conf: vendor}
+  default_class: structural
+min_feature_mm: {v: 0.8, src: "2 perimeters; nothing thinner than this survives as a free rib", conf: practice}
+min_hole_d_mm: {v: 1.5, src: "[FDM]; smaller holes close up, drill them", conf: practice}
+fillet_load_path_mm: {v: 1.0, src: "[R-D section 4] fillet everything at stress concentrations (cyclic stress target < 10% of UTS)", conf: vendor}
+
+# ---- heat-set inserts and screws ------------------------------------------------------------------------------------------
+# Dimensions of each insert come from components/data/hardware.yaml (hole_d, hole_depth, wall); these are the boss rules.
+insert_boss:
+  wall_mm: {v: 2.0, src: "[R-D section 5] >= 2 mm of material around the insert", conf: vendor}
+  depth_extra_mm: {v: 1.0, src: "[R-D section 5] cavity deeper than the insert for displaced plastic", conf: vendor}
+  entry_chamfer_mm: {v: 0.4, src: "[FDM] helps the insert start straight", conf: practice}
+  min_floor_mm: {v: 1.2, src: "[FDM] material under the insert pocket (3 perimeters)", conf: practice}
+  axis_rule: "Insert axis lies in the XY print plane or along Z with the screw load across layers; never put screw TENSION along Z-only layer lines [R-D section 5]."
+  tune: true
+
+screw:
+  clearance_class: medium
+  head_gap_mm: {v: 0.3, src: "extra counterbore depth/diameter so the head does not bind", conf: practice}
+  min_engagement_diameters: {v: 1.5, src: "[STD-ish] thread engagement >= 1.5 x d in a heat-set insert (brass)", conf: practice}
+
+# ---- bearing seats --------------------------------------------------------------------------------------------------------
+bearing_seat:
+  fit: press
+  seat_d_over_od_mm: {v: 0.1, src: "[FDM] diametral: seat = OD + 0.1 after hole compensation is NOT applied (compensation is included here); tune with the gauge ladder", conf: practice, tune: true}
+  depth_under_width_mm: {v: 0.0, src: "seat depth = bearing width (flush); flanged bearings sit on the flange", conf: practice}
+  shoulder_mm: {v: 1.6, src: "[FDM] lip that stops the bearing: the structural wall (4 perimeters); the geometry gate flagged 1.0 mm as thin", conf: practice}
+  through_hole_over_id_mm: {v: 1.0, src: "[FDM] diametral: clear the inner race, not the shaft hole, so only the outer race carries load", conf: practice}
+  wall_mm: {v: 2.0, src: "[FDM] material around a pressed bearing, >= 5 perimeters", conf: practice}
+  chamfer_mm: {v: 0.3, src: "[FDM] lead-in chamfer", conf: practice}
+
+# ---- overhang / bridging / orientation ------------------------------------------------------------------------------------
+overhang:
+  max_unsupported_deg: {v: 45, src: "[FDM] measured from vertical; > 45 deg from vertical needs supports or a chamfer", conf: practice}
+  horizontal_hole_max_d_mm: {v: 6.0, src: "[FDM] horizontal round holes above this need teardrop/diamond shape or support", conf: practice}
+  teardrop_apex_deg: {v: 45, src: "[FDM]", conf: practice}
+bridge:
+  max_mm: {v: 12.0, src: "[FDM] PETG sags earlier than PLA (PLA 20-30 mm possible); use 12 mm as the general limit", conf: practice}
+  max_mm_pla: {v: 20.0, src: "[FDM]", conf: practice}
+elephant_foot_chamfer_mm: {v: 0.4, src: "[FDM] chamfer on first-layer edges that mate with other parts", conf: practice}
+
+orientation:
+  # Strength knockdown for load across layers. Values mirror research/methods/print_materials.yaml (z_over_xy_strength);
+  # tests/test_cad_foundation.py asserts they have not drifted. The safety factor is applied to the WEAKEST direction [R-D section 7].
+  z_over_xy_strength: {PLA: 0.78, PLA_plus: 0.73, PETG: 0.78, ASA: 0.73, ABS: 0.89, CF_nylon: 0.60}
+  safety_factor_on_z: {v: 3.0, src: "[R-D recommendation] >= 3 on Z-direction static strength", conf: vendor}
+  cyclic_stress_fraction_of_uts: {v: 0.10, src: "[R-D section 4] walking loads < 10% of UTS at stress concentrations", conf: vendor}
+  rules:
+    - "Orient the main load path (tension, bending) along the XY plane. Never load layer lines in tension (Z delamination 0.6-0.78x XY)."
+    - "Lay long brackets flat so their bending stress runs along the filament; stand only compression-loaded columns."
+    - "Print the face that carries a screw head or a bearing flat on the bed or use a counterbore, so the bearing face is a bottom/top skin, not a layer edge."
+    - "Servo yokes: print with the plate faces on the bed (plate in XY), horn and servo screws then clamp across the plate thickness (compression)."
+
+# ---- snap fits and magnets ------------------------------------------------------------------------------------------------
+snap_fit:
+  # allowable bending strain of a cantilever hook. DERIVED here as 0.4 x XY elongation at break from print_materials.yaml
+  # (PLA 5.7 -> 2.3 %, PETG 5.22 -> 2.1 %, PLA+ 6.3 -> 2.5 %), then rounded down. Z-printed hooks are not allowed.
+  allowable_strain_pct: {PLA: 2.0, PLA_plus: 1.5, PETG: 2.0, ASA: 1.5, CF_nylon: 1.5}
+  min_length_to_thickness: {v: 6.0, src: "[FDM] cantilever beams shorter than 6 x t cannot deflect enough without exceeding strain", conf: practice}
+  beam_thickness_mm: {v: [1.2, 2.0], src: "[FDM] 3-5 perimeters", conf: practice}
+  engagement_mm: {v: 0.8, src: "[FDM] hook depth; strain = 1.5*d*t/L^2 must stay under allowable", conf: practice}
+  orientation_rule: "Cantilever length lies in the XY plane (layers run along the beam). Never print a snap hook standing on its end."
+  gap_mm: {v: 0.3, src: "[FDM] relief gap around the beam", conf: practice}
+
+magnet:
+  # Pocket for a 6x3 neodymium disc. Hole compensation for the diameter is included in `extra_d_mm`.
+  extra_d_mm: {v: 0.2, src: "[FDM] 6.2 mm pocket for a 6.0 mm disc; with glue or a printed press fit of 0.1", conf: practice, tune: true}
+  extra_depth_mm: {v: 0.2, src: "[FDM]", conf: practice, tune: true}
+  cover_mm: {v: 0.6, src: "[FDM] 3 skin layers over the magnet face (pause the print, or insert from the back)", conf: practice}
+  floor_mm: {v: 0.8, src: "[FDM]", conf: practice}
+  wall_mm: {v: 1.2, src: "[FDM] 3 perimeters around the pocket", conf: practice}
+  mating_gap_mm: {v: 0.4, src: "derived: cover 0.6 each side is too thick for pull, so mating parts keep the cover <= 0.6 mm and gap <= 0.4 mm", conf: derived}
+  polarity_rule: "Mark polarity with a small asymmetric notch: a wrong-way magnet pair is a classic first-print failure."
+
+# ---- bed and splitting ----------------------------------------------------------------------------------------------------
+bed:
+  default_mm: [220, 220, 250]          # spec.manufacturing.printer_bed_mm overrides (variants/adam/spec.yaml)
+  edge_margin_mm: {v: 5.0, src: "[FDM] skirt/brim and bed-edge quality: usable volume = bed - 2 x margin in X and Y; Z margin 5 mm total", conf: practice}
+  note: "A print farm lets us print many parts at once but each part must still fit one printer; keep the 220x220x250 constraint."
+split:
+  alignment: dowel
+  dowel_d_mm: {v: 3.0, src: "3 mm filament offcut or steel pin as dowel; pocket gets slip clearance", conf: practice}
+  dowel_depth_mm: {v: 8.0, src: "[FDM] 2.5 x d", conf: practice}
+  dowel_count: {v: 2, src: "two dowels fix rotation", conf: practice}
+  min_cut_to_feature_mm: {v: 3.0, src: "[FDM] keep the cut plane at least this far from holes and bosses", conf: practice}
+  prefer: "cut across the long axis, perpendicular to the load path, in a low-stress region; add a bolted flange (inserts) when the joint carries bending."
+  glue_gap_mm: {v: 0.1, src: "[FDM] relief for cyanoacrylate/epoxy joint", conf: practice}
+
+# ---- assembly access ------------------------------------------------------------------------------------------------------
+access:
+  default_corridor_len_mm: {v: 30.0, src: "driver shaft plus hand room; used when the thread is not in tool_len_mm", conf: estimate}
+  # free length in front of a screw head the tool needs (stubby driver / bit holder; an L-key needs more swing room, not modelled)
+  tool_len_mm: {M2: 25.0, M2.5: 28.0, M3: 30.0}
+  min_tool_corridor_d: {M2: 6.0, M2.5: 7.0, M3: 8.0}
