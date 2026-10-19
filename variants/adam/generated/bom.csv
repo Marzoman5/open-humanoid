@@ -1,14 +1,14 @@
 part,name,category,qty,unit,unit_usd,low_usd,high_usd,ext_usd,verified,note
-sts3215-12v,"Feetech STS3215 (12 V, 30 kg·cm)",actuator,17,each,16.0,13.0,22.0,272.0,False,"actuators: ankle_pitch_l, ankle_pitch_r, ankle_roll_l, ankle_roll_r, elbow_l, elbow_r, hip_pitch_l, hip_pitch_r, hip_roll_l, hip_roll_r, hip_yaw_l, hip_yaw_r, knee_l, knee_r, neck_yaw, shoulder_pitch_l, shoulder_pitch_r"
-rpi-zero-2w,Raspberry Pi Zero 2 W,compute,1,each,15.0,15.0,20.0,15.0,False,
-microsd-32gb,microSD 32 GB (A1),compute,1,each,7.0,5.0,10.0,7.0,False,
-waveshare-bus-servo-adapter,Waveshare Bus Servo Adapter (A),electronics,1,each,8.0,6.0,12.0,8.0,False,
-imu-bno085,BNO085 9-DOF IMU breakout,sensor,1,each,15.0,10.0,25.0,15.0,False,
+sts3215-12v,"Feetech STS3215 (12 V, 30 kg·cm)",actuator,17,each,20.9,13.99,27.99,355.3,True,"actuators: ankle_pitch_l, ankle_pitch_r, ankle_roll_l, ankle_roll_r, elbow_l, elbow_r, hip_pitch_l, hip_pitch_r, hip_roll_l, hip_roll_r, hip_yaw_l, hip_yaw_r, knee_l, knee_r, neck_yaw, shoulder_pitch_l, shoulder_pitch_r"
+rpi-zero-2w,Raspberry Pi Zero 2 W,compute,1,each,17.43,16.35,19.05,17.43,True,
+microsd-32gb,microSD 32 GB (A1),compute,1,each,12.0,9.97,19.95,12.0,False,
+waveshare-bus-servo-adapter,Waveshare Bus Servo Adapter (A),electronics,1,each,4.99,4.3,11.3,4.99,False,
+imu-bno085,BNO085 9-DOF IMU breakout,sensor,1,each,29.5,27.15,34.95,29.5,False,
 lipo-3s-2200,3S 11.1 V 2200 mAh LiPo (XT60),power,1,each,22.0,15.0,30.0,22.0,False,
 charger-b3-3s,B3-style 2S/3S balance charger,power,1,each,9.0,6.0,14.0,9.0,False,
-buck-5v-5a,5 V 5 A buck converter,electronics,1,each,6.0,4.0,10.0,6.0,False,
-power-switch-xt60,XT60 pigtails + inline power switch,electronics,1,each,6.0,4.0,10.0,6.0,False,
-fastener-kit-m2-m3,M2/M3 socket-head screw + heat-set insert kit,hardware,1,each,15.0,10.0,22.0,15.0,False,
+buck-5v-5a,"5 V buck converter, 4 A rated (5 A with heat dissipation), 7-24 V in: DFRobot DFR0831",electronics,1,each,5.56,4.5,6.21,5.56,True,
+power-switch-xt60,XT60 pigtails + inline power switch,electronics,1,each,6.0,4.0,13.0,6.0,False,
+fastener-kit-m2-m3,M2/M3 socket-head screw + heat-set insert kit,hardware,1,each,20.0,10.0,60.0,20.0,False,
 bearing-kit-small,"Small flanged ball bearings (assorted, e.g. F688/MR85)",hardware,1,each,12.0,8.0,18.0,12.0,False,
 wiring-kit-bus,3-pin servo bus extension cables + JST kit,electronics,1,each,10.0,6.0,15.0,10.0,False,
-pla-plus-1kg,PLA+ filament 1.75 mm,material,1.24,kg,18.0,13.0,25.0,22.32,False,printed frame + shell incl. waste
+pla-plus-1kg,PLA+ filament 1.75 mm,material,1.24,kg,18.0,9.67,22.0,22.32,False,printed frame + shell incl. waste
