@@ -128,48 +128,32 @@ joints:
         x_dir: [0.0, -1.0, 0.0]
         y_dir: [-1.0, -0.0, -0.0]
       horn_plane_offset_mm: 66.0
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, 45.0, 410.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-12.35, 45.0, 429.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 36.7, 402.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-12.35, 21.0, 410.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-12.35, 21.0, 429.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 16.0, 402.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [12.35, 45.0, 410.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [12.35, 45.0, 429.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 36.7, 402.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [12.35, 21.0, 410.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [12.35, 21.0, 429.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 16.0, 402.5]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, 45.0, 399.7]
+      seat_origin_mm: [0.0, 45.0, 402.25]
       dir: [0.0, 0.0, -1.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -179,7 +163,7 @@ joints:
     back:
       origin_mm: [0.0, 45.0, 437.0]
       dir: [-0.0, -0.0, 1.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -206,48 +190,32 @@ joints:
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
       horn_plane_offset_mm: -44.0
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-52.0, 32.65, 336.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-71.0, 32.65, 336.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-44.5, 32.64, 344.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-52.0, 32.65, 360.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-71.0, 32.65, 360.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-44.5, 32.64, 365.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-52.0, 57.35, 336.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-71.0, 57.35, 336.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-44.5, 57.36, 344.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-52.0, 57.35, 360.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-71.0, 57.35, 360.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-44.5, 57.36, 365.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [-41.7, 45.0, 336.0]
+      seat_origin_mm: [-44.25, 45.0, 336.0]
       dir: [1.0, 0.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -257,7 +225,7 @@ joints:
     back:
       origin_mm: [-79.0, 45.0, 336.0]
       dir: [-1.0, -0.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -285,48 +253,32 @@ joints:
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
       horn_plane_offset_mm: 17.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 54.5, 336.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [12.35, 35.5, 336.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 62.0, 344.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [12.35, 54.5, 360.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [12.35, 35.5, 360.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 62.0, 365.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-12.35, 54.5, 336.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-12.35, 35.5, 336.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 62.0, 344.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-12.35, 54.5, 360.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-12.35, 35.5, 360.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 62.0, 365.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, 64.8, 336.0]
+      seat_origin_mm: [0.0, 62.25, 336.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -336,7 +288,7 @@ joints:
     back:
       origin_mm: [0.0, 27.5, 336.0]
       dir: [-0.0, -1.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
@@ -368,48 +320,32 @@ joints:
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
       horn_plane_offset_mm: 17.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 54.5, 201.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [12.35, 35.5, 201.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 62.0, 209.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [12.35, 54.5, 225.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [12.35, 35.5, 225.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 62.0, 230.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-12.35, 54.5, 201.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-12.35, 35.5, 201.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 62.0, 209.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-12.35, 54.5, 225.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-12.35, 35.5, 225.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 62.0, 230.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, 64.8, 201.0]
+      seat_origin_mm: [0.0, 62.25, 201.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -419,7 +355,7 @@ joints:
     back:
       origin_mm: [0.0, 27.5, 201.0]
       dir: [-0.0, -1.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
@@ -451,48 +387,32 @@ joints:
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
       horn_plane_offset_mm: 17.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 54.5, 66.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [12.35, 35.5, 66.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 62.0, 74.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [12.35, 54.5, 90.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [12.35, 35.5, 90.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 62.0, 95.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-12.35, 54.5, 66.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-12.35, 35.5, 66.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 62.0, 74.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-12.35, 54.5, 90.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-12.35, 35.5, 90.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 62.0, 95.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, 64.8, 66.0]
+      seat_origin_mm: [0.0, 62.25, 66.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -502,7 +422,7 @@ joints:
     back:
       origin_mm: [0.0, 27.5, 66.0]
       dir: [-0.0, -1.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
@@ -533,48 +453,32 @@ joints:
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
       horn_plane_offset_mm: -26.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-34.5, 32.65, 38.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-53.5, 32.65, 38.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-27.0, 32.64, 46.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-34.5, 32.65, 62.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-53.5, 32.65, 62.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-27.0, 32.64, 67.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-34.5, 57.35, 38.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-53.5, 57.35, 38.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-27.0, 57.36, 46.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-34.5, 57.35, 62.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-53.5, 57.35, 62.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-27.0, 57.36, 67.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [-24.2, 45.0, 38.0]
+      seat_origin_mm: [-26.75, 45.0, 38.0]
       dir: [1.0, 0.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -584,7 +488,7 @@ joints:
     back:
       origin_mm: [-61.5, 45.0, 38.0]
       dir: [-1.0, -0.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -611,48 +515,32 @@ joints:
         x_dir: [0.0, 1.0, 0.0]
         y_dir: [1.0, -0.0, 0.0]
       horn_plane_offset_mm: 66.0
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, -45.0, 410.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [12.35, -45.0, 429.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -36.7, 402.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [12.35, -21.0, 410.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [12.35, -21.0, 429.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -16.0, 402.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-12.35, -45.0, 410.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-12.35, -45.0, 429.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -36.7, 402.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-12.35, -21.0, 410.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-12.35, -21.0, 429.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -16.0, 402.5]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, -45.0, 399.7]
+      seat_origin_mm: [0.0, -45.0, 402.25]
       dir: [0.0, -0.0, -1.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -662,7 +550,7 @@ joints:
     back:
       origin_mm: [0.0, -45.0, 437.0]
       dir: [-0.0, 0.0, 1.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -689,48 +577,32 @@ joints:
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
       horn_plane_offset_mm: -44.0
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-52.0, -57.35, 336.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-71.0, -57.35, 336.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-44.5, -57.36, 344.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-52.0, -57.35, 360.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-71.0, -57.35, 360.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-44.5, -57.36, 365.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-52.0, -32.65, 336.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-71.0, -32.65, 336.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-44.5, -32.64, 344.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-52.0, -32.65, 360.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-71.0, -32.65, 360.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-44.5, -32.64, 365.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [-41.7, -45.0, 336.0]
+      seat_origin_mm: [-44.25, -45.0, 336.0]
       dir: [1.0, -0.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -740,7 +612,7 @@ joints:
     back:
       origin_mm: [-79.0, -45.0, 336.0]
       dir: [-1.0, 0.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -768,48 +640,32 @@ joints:
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [-1.0, 0.0, 0.0]
       horn_plane_offset_mm: 17.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, -54.5, 336.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-12.35, -35.5, 336.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -62.0, 344.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-12.35, -54.5, 360.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-12.35, -35.5, 360.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -62.0, 365.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [12.35, -54.5, 336.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [12.35, -35.5, 336.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -62.0, 344.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [12.35, -54.5, 360.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [12.35, -35.5, 360.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -62.0, 365.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, -64.8, 336.0]
+      seat_origin_mm: [0.0, -62.25, 336.0]
       dir: [0.0, -1.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -819,7 +675,7 @@ joints:
     back:
       origin_mm: [0.0, -27.5, 336.0]
       dir: [-0.0, 1.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
@@ -851,48 +707,32 @@ joints:
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [-1.0, 0.0, 0.0]
       horn_plane_offset_mm: 17.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, -54.5, 201.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-12.35, -35.5, 201.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -62.0, 209.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-12.35, -54.5, 225.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-12.35, -35.5, 225.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -62.0, 230.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [12.35, -54.5, 201.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [12.35, -35.5, 201.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -62.0, 209.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [12.35, -54.5, 225.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [12.35, -35.5, 225.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -62.0, 230.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, -64.8, 201.0]
+      seat_origin_mm: [0.0, -62.25, 201.0]
       dir: [0.0, -1.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -902,7 +742,7 @@ joints:
     back:
       origin_mm: [0.0, -27.5, 201.0]
       dir: [-0.0, 1.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
@@ -934,48 +774,32 @@ joints:
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [-1.0, 0.0, 0.0]
       horn_plane_offset_mm: 17.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, -54.5, 66.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-12.35, -35.5, 66.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -62.0, 74.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-12.35, -54.5, 90.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-12.35, -35.5, 90.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -62.0, 95.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [12.35, -54.5, 66.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [12.35, -35.5, 66.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -62.0, 74.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [12.35, -54.5, 90.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [12.35, -35.5, 90.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -62.0, 95.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, -64.8, 66.0]
+      seat_origin_mm: [0.0, -62.25, 66.0]
       dir: [0.0, -1.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -985,7 +809,7 @@ joints:
     back:
       origin_mm: [0.0, -27.5, 66.0]
       dir: [-0.0, 1.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler:
       bearing: MR105ZZ
       gap_mm: 1.5
@@ -1016,48 +840,32 @@ joints:
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
       horn_plane_offset_mm: -26.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-34.5, -57.35, 38.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-53.5, -57.35, 38.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-27.0, -57.36, 46.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-34.5, -57.35, 62.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-53.5, -57.35, 62.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-27.0, -57.36, 67.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-34.5, -32.65, 38.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-53.5, -32.65, 38.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-27.0, -32.64, 46.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-34.5, -32.65, 62.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-53.5, -32.65, 62.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-27.0, -32.64, 67.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [-24.2, -45.0, 38.0]
+      seat_origin_mm: [-26.75, -45.0, 38.0]
       dir: [1.0, -0.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -1067,7 +875,7 @@ joints:
     back:
       origin_mm: [-61.5, -45.0, 38.0]
       dir: [-1.0, 0.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -1094,48 +902,32 @@ joints:
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
       horn_plane_offset_mm: 17.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 99.5, 510.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [12.35, 80.5, 510.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 107.0, 518.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [12.35, 99.5, 534.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [12.35, 80.5, 534.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 107.0, 539.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-12.35, 99.5, 510.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-12.35, 80.5, 510.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 107.0, 518.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-12.35, 99.5, 534.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-12.35, 80.5, 534.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 107.0, 539.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, 109.8, 510.0]
+      seat_origin_mm: [0.0, 107.25, 510.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -1145,7 +937,7 @@ joints:
     back:
       origin_mm: [0.0, 72.5, 510.0]
       dir: [-0.0, -1.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -1172,48 +964,32 @@ joints:
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
       horn_plane_offset_mm: -25.0
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-33.0, 77.65, 510.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-52.0, 77.65, 510.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-25.5, 77.64, 518.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-33.0, 77.65, 534.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-52.0, 77.65, 534.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-25.5, 77.64, 539.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-33.0, 102.35, 510.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-52.0, 102.35, 510.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-25.5, 102.36, 518.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-33.0, 102.35, 534.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-52.0, 102.35, 534.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-25.5, 102.36, 539.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [-22.7, 90.0, 510.0]
+      seat_origin_mm: [-25.25, 90.0, 510.0]
       dir: [1.0, 0.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -1223,7 +999,7 @@ joints:
     back:
       origin_mm: [-60.0, 90.0, 510.0]
       dir: [-1.0, -0.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -1250,48 +1026,32 @@ joints:
         x_dir: [1.0, 0.0, 0.0]
         y_dir: [0.0, -1.0, 0.0]
       horn_plane_offset_mm: -55.0
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [0.0, 77.65, 463.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [0.0, 77.65, 482.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [8.3, 77.64, 455.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [24.0, 77.65, 463.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [24.0, 77.65, 482.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [29.0, 77.64, 455.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [0.0, 102.35, 463.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [0.0, 102.35, 482.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [8.3, 102.36, 455.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [24.0, 102.35, 463.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [24.0, 102.35, 482.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [29.0, 102.36, 455.5]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, 90.0, 452.7]
+      seat_origin_mm: [0.0, 90.0, 455.25]
       dir: [0.0, 0.0, -1.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -1301,7 +1061,7 @@ joints:
     back:
       origin_mm: [0.0, 90.0, 490.0]
       dir: [-0.0, -0.0, 1.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -1328,48 +1088,32 @@ joints:
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
       horn_plane_offset_mm: 17.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 99.5, 408.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [12.35, 80.5, 408.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 107.0, 416.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [12.35, 99.5, 432.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [12.35, 80.5, 432.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 107.0, 437.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-12.35, 99.5, 408.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-12.35, 80.5, 408.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 107.0, 416.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-12.35, 99.5, 432.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-12.35, 80.5, 432.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 107.0, 437.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, 109.8, 408.0]
+      seat_origin_mm: [0.0, 107.25, 408.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -1379,7 +1123,7 @@ joints:
     back:
       origin_mm: [0.0, 72.5, 408.0]
       dir: [-0.0, -1.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -1406,48 +1150,32 @@ joints:
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [-1.0, 0.0, 0.0]
       horn_plane_offset_mm: 17.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, -99.5, 510.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-12.35, -80.5, 510.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -107.0, 518.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-12.35, -99.5, 534.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-12.35, -80.5, 534.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -107.0, 539.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [12.35, -99.5, 510.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [12.35, -80.5, 510.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -107.0, 518.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [12.35, -99.5, 534.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [12.35, -80.5, 534.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -107.0, 539.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, -109.8, 510.0]
+      seat_origin_mm: [0.0, -107.25, 510.0]
       dir: [0.0, -1.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -1457,7 +1185,7 @@ joints:
     back:
       origin_mm: [0.0, -72.5, 510.0]
       dir: [-0.0, 1.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -1484,48 +1212,32 @@ joints:
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
       horn_plane_offset_mm: -25.0
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-33.0, -102.35, 510.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-52.0, -102.35, 510.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-25.5, -102.36, 518.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-33.0, -102.35, 534.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-52.0, -102.35, 534.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-25.5, -102.36, 539.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-33.0, -77.65, 510.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-52.0, -77.65, 510.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-25.5, -77.64, 518.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-33.0, -77.65, 534.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-52.0, -77.65, 534.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-25.5, -77.64, 539.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [-22.7, -90.0, 510.0]
+      seat_origin_mm: [-25.25, -90.0, 510.0]
       dir: [1.0, -0.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -1535,7 +1247,7 @@ joints:
     back:
       origin_mm: [-60.0, -90.0, 510.0]
       dir: [-1.0, 0.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -1562,48 +1274,32 @@ joints:
         x_dir: [1.0, -0.0, 0.0]
         y_dir: [-0.0, -1.0, 0.0]
       horn_plane_offset_mm: -55.0
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [0.0, -102.35, 463.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [0.0, -102.35, 482.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [8.3, -102.36, 455.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [24.0, -102.35, 463.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [24.0, -102.35, 482.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [29.0, -102.36, 455.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [0.0, -77.65, 463.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [0.0, -77.65, 482.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [8.3, -77.64, 455.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [24.0, -77.65, 463.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [24.0, -77.65, 482.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [29.0, -77.64, 455.5]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, -90.0, 452.7]
+      seat_origin_mm: [0.0, -90.0, 455.25]
       dir: [0.0, -0.0, -1.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -1613,7 +1309,7 @@ joints:
     back:
       origin_mm: [0.0, -90.0, 490.0]
       dir: [-0.0, 0.0, 1.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -1640,48 +1336,32 @@ joints:
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [-1.0, 0.0, 0.0]
       horn_plane_offset_mm: 17.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.35, -99.5, 408.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [-12.35, -80.5, 408.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -107.0, 416.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-12.35, -99.5, 432.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [-12.35, -80.5, 432.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, -107.0, 437.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [12.35, -99.5, 408.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [12.35, -80.5, 408.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -107.0, 416.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [12.35, -99.5, 432.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [12.35, -80.5, 432.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, -107.0, 437.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, -109.8, 408.0]
+      seat_origin_mm: [0.0, -107.25, 408.0]
       dir: [0.0, -1.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -1691,7 +1371,7 @@ joints:
     back:
       origin_mm: [0.0, -72.5, 408.0]
       dir: [-0.0, 1.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -1718,48 +1398,32 @@ joints:
         x_dir: [1.0, 0.0, 0.0]
         y_dir: [0.0, 1.0, 0.0]
       horn_plane_offset_mm: -20.0
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [0.0, 12.35, 503.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [0.0, 12.35, 484.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [8.3, 12.36, 510.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [24.0, 12.35, 503.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [24.0, 12.35, 484.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [29.0, 12.36, 510.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [0.0, -12.35, 503.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [0.0, -12.35, 484.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [8.3, -12.36, 510.5]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [24.0, -12.35, 503.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [24.0, -12.35, 484.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [29.0, -12.36, 510.5]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, 0.0, 513.3]
+      seat_origin_mm: [0.0, 0.0, 510.75]
       dir: [0.0, 0.0, 1.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -1769,7 +1433,7 @@ joints:
     back:
       origin_mm: [0.0, 0.0, 476.0]
       dir: [-0.0, -0.0, -1.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
@@ -1796,48 +1460,32 @@ joints:
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [1.0, 0.0, 0.0]
       horn_plane_offset_mm: 17.5
-      body_mm: [45.2, 24.7, 35.0]
-      axis_from_near_end_mm: 12.0
-      corner_radius_mm: 35.423
+      body_mm: [45.22, 24.72, 35.0]
+      axis_from_near_end_mm: 10.11
+      corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [12.35, 9.5, 531.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_01
-        at_mm: [12.35, -9.5, 531.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 17.0, 539.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [12.35, 9.5, 555.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_+y_11
-        at_mm: [12.35, -9.5, 555.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [12.36, 17.0, 560.0]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-12.35, 9.5, 531.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_01
-        at_mm: [-12.35, -9.5, 531.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 17.0, 539.3]
+        thread: M2
+        depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-12.35, 9.5, 555.0]
-        thread: M3
-        depth_mm: 6.0
-      - id: case_-y_11
-        at_mm: [-12.35, -9.5, 555.0]
-        thread: M3
-        depth_mm: 6.0
+        at_mm: [-12.36, 17.0, 560.0]
+        thread: M2
+        depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, 19.8, 531.0]
+      seat_origin_mm: [0.0, 17.25, 531.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
-      od_mm: 20.0
-      thickness_mm: 3.0
+      od_mm: 19.2
+      thickness_mm: 2.5
       bolt_circle_d_mm: 14.0
       n_holes: 4
       screw: M2
@@ -1847,11 +1495,9 @@ joints:
     back:
       origin_mm: [0.0, -17.5, 531.0]
       dir: [-0.0, -1.0, -0.0]
-      stub_od_mm: 9.0
+      stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
-estimates_to_confirm: [axis_from_near_end_mm, back_shaft.boss_d_mm, back_shaft.protrusion_mm, back_shaft.spline_od_mm, cable.face, cable.plug_len_mm,
-  cable.socket_wh_mm, cable.z_mm, case_holes.depth_mm, case_holes.thread, case_holes.x_mm, case_holes.z_mm, output_spline.boss_d_mm, output_spline.boss_h_mm,
-  output_spline.center_screw, output_spline.horn_float_mm, output_spline.protrusion_mm]
+estimates_to_confirm: [cable.plug_len_mm, cable.socket_wh_mm]
 problems: []

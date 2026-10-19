@@ -1,0 +1,65 @@
+# Region B (upper body) packaging layout of Adam v2 (frozen concept V2a-0p55-longarm, ADR 0015). Task T-20261019-f6e2.
+#
+# Same schema as variants/adam/cad/layout_v2.yaml (openhumanoid/cad/interfaces.py docstring). Region A (pelvis + legs) adds its
+# limbs to the full-body layout later; this file is the upper-body section and the source of interfaces_upper.yaml.
+#
+# Every point is a hard point of the frozen concept (variants/adam/design/profiles.yaml joints/hard_points, R1 landmarks in
+# variants/adam/design/silhouette/hardpoints.py) unless its comment says otherwise:
+#   shoulder (0, 65.15, 439.3): R1 shoulder roll axis.  elbow = shoulder - upper_arm (0.20 H = 110 mm, V2a L9a).
+#   forearm 0.23 H = 126.5 mm INCLUDES the hand (humanoid_v2 template: hand = max(45, 0.09 H) = 49.5 mm, forearm link 77 mm).
+#   waist yaw: R1 waist-yaw servo between the hip-yaw servos, horn up; axis moved to x = 0 (R1 box centre 10.6 = servo centre, axis
+#     12 mm from the near end). Horn face z 382 (R1 box top 378.65 + 3.4): the 6806 ring bearing's seat must clear the hip-yaw
+#     housings (top 380.6 in leg_v2) -> region A contract, interfaces/README.md.
+#   neck yaw: R1 "neck-yaw servo in a front chest slot, long axis across y" (r1_packaging.py). Axis on the centre line (y = 0, R1's
+#     centred box would put it at y = -12.5) and as far back as the shoulder-pitch housings allow (x = 30.8). FINDING: the yaw axis
+#     is 26-28 mm ahead of the head centre (cx 3-5): the head orbits r ~ 27 mm when it turns (README section "Findings").
+#   neck pitch: R1 neck-pitch servo standing in the head (box centre z 506.9, near end down -> axis z 496). The servo is HOSTED BY THE HEAD
+#     (it turns with it) and the neck post grips its horn and its stock idler horn: with the servo on the post, its housing would sweep
+#     the whole head interior over +-30 deg and leave no room for the camera or the head frame (README, Findings).
+#   neck yaw z 451: its horn plate must clear the shoulder-pitch housings (top 451.96) by the 1 mm moving gap.
+# Ranges: concept engine defaults (openhumanoid/concept/robot.py) unless noted. Gripper: pinion on the servo horn (m1, z24, pitch
+#   radius 12 mm = the template's 0.012 m/rad), so the joint is the servo angle; 0..40 mm opening = 0..191 deg (README).
+name: adam_v2a_upper
+status: frozen-concept region B layout (T-20261019-f6e2); region A legs not included
+height_m: 0.55
+proportions:
+  upper_arm: 0.20
+  forearm: 0.23
+actuators:
+  default: sts3215-12v
+  overrides: {}
+points:
+  waist: [0, 0, 382.0]
+  shoulder: [0, 65.15, 439.3]
+  elbow: [0, 65.15, 329.3]
+  gripper: [0, 65.15, 266.0]
+  neck_yaw: [30.8, 0, 451.0]
+  neck_pitch: [0, 0, 496.0]
+roots:
+  pelvis: [0, 0, 275.0]          # hip-joint height (R1 hip 275 mm); the pelvis link frame is region A's
+limbs:
+  torso:
+    mirror: []
+    root: pelvis
+    joints:
+      - {name: waist_yaw, axis: z, range: [-60, 60], point: waist, servo: {host: pelvis, horn: [0, 0, 1], long: [1, 0, 0], horn_at: 0}}
+  arm:
+    mirror: [l, r]
+    root: waist_yaw_link
+    joints:
+      # pitch servos back to back across the chest: horn face at y = +-41 (centre covers 2.9 mm apart), long axis down
+      - {name: shoulder_pitch, axis: y, range: [-180, 60], point: shoulder, servo: {host: waist_yaw_link, horn: [0, 1, 0], long: [0, 0, -1], horn_at: -24.15}}
+      # roll servo hangs below the shoulder point, horn forward; the upper arm is a fork: horn plate in front, and behind, an idler plate
+      # bolted to the servo's STOCK IDLER HORN (spins on the static back boss; vendor CAD) through a window in the housing cover.
+      # (The leg's printed pin + MR105ZZ idler is 3 mm wider per joint: it would leave the deltoid envelope.)
+      - {name: shoulder_roll, axis: x, range: [-10, 160], point: shoulder, servo: {host: shoulder_pitch_l_link, horn: [1, 0, 0], long: [0, 0, -1], horn_at: 17.5}}
+      # elbow servo in the upper arm, long axis up, horn outward; the forearm is a fork (horn plate out, idler-horn plate in)
+      - {name: elbow, axis: y, range: [-130, 0], point: elbow, servo: {host: shoulder_roll_l_link, horn: [0, 1, 0], long: [0, 0, 1], horn_at: 17.5}}
+      # gripper servo along the forearm, horn forward, pinion on the horn drives the jaw rack along y
+      - {name: gripper, axis: x, range: [0, 191], point: gripper, servo: {host: elbow_l_link, horn: [1, 0, 0], long: [0, 0, 1], horn_at: 17.5}}
+  head:
+    mirror: []
+    root: waist_yaw_link
+    joints:
+      - {name: neck_yaw, axis: z, range: [-90, 90], point: neck_yaw, servo: {host: waist_yaw_link, horn: [0, 0, 1], long: [0, 1, 0], horn_at: 0}}
+      - {name: neck_pitch, axis: y, range: [-30, 30], point: neck_pitch, servo: {host: neck_pitch_link, horn: [0, 1, 0], long: [0, 0, 1], horn_at: 19.15}}
