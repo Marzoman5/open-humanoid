@@ -19,7 +19,10 @@ A proof of concept that is genuinely impressive and fun to walk around and inter
 | R8 | **Works anywhere, standalone**: walking, balance, behaviors, and control run on board. No PC, network, or LLM needed to function | All behaviors run on the onboard computer in the sim-HAL bring-up; a handheld controller works with no network |
 | R9 | **Commandable**: handheld gamepad and/or phone, plus a documented command API (velocity, poses, motion clips) that an off-board LLM can drive later | API spec exists; the same commands drive sim and hardware |
 
+| R10 | **Balance recovery / fall prevention**: recovers from moderate pushes and stumbles (ankle and hip strategies, capture steps) instead of falling | Concept push-recovery stress cases pass actuator limits including delay; P5 policy recovers from defined push impulses in sim under randomization |
+
 ## Should
+- Self-righting: getting back up after a face-plant is **not required yet** (maintainer, 2026-10-19). Design so a sit-to-stand / kneel-to-stand is feasible; full get-up-from-prone is a later goal.
 - Height: as tall as the budget and the physics allow (the previous plan was ~0.5 m).
 - Run time ≥ 15 min of mixed activity per charge (to be confirmed by the power trade study).
 - Reuse proven, license-compatible open-source designs and code (Open Duck Mini, ToddlerBot, SO-100…) instead of reinventing them. Credit and licenses are tracked.

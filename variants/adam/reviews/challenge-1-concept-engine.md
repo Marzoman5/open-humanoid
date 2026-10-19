@@ -39,3 +39,7 @@ Answers are recorded below once given.
 1. **R5 table height = coffee/side table, about 0.40–0.50 m.** A dining table (0.75 m) is above a ~0.5 m robot's head and isn't realistic at this budget. PROVISIONAL.
 2. **No purchase before the concept decision** (nothing is bought overnight). The decision runs on the tornado. If the winner flips on torque-speed, armature or Rth, the decision is marked **conditional**, and buying one bench servo per candidate voltage (~$15–30, counted as test equipment, not inside the $550) becomes the first purchase, before the main order. PROVISIONAL.
 3. **Self-righting is a SHOULD, not a MUST.** The concept must show a sit-to-stand / kneel-to-stand proxy is feasible within limits. Full get-up-from-prone is designed in P5 if margins allow. PROVISIONAL.
+
+## Maintainer answer (2026-10-19, after the restart)
+- **Q3 get-up:** "preventing a fall is a must; getting back up from a face plant is not a must yet." Recorded as **R10 (MUST): balance recovery / fall prevention**, plus a SHOULD for sit-to-stand feasibility. This replaces provisional answer 3. Push-recovery stress cases (ankle and hip strategies, lateral and forward capture steps, with actuator delay) were added to the concept engine's scope.
+- Q1 (table height) and Q2 (bench servo) remain as provisionally answered above until the maintainer says otherwise.
