@@ -1,0 +1,54 @@
+# Catalog part: schema schemas/catalog-part.schema.json (added by T-20261019-c669, 2026-10-19)
+id: lipo-3s-1850-gnb
+name: GNB (Gaoneng) 3S 11.1 V 1850 mAh 100C LiPo (XT60), Yellow Label lightweight
+category: power
+tier: hobby
+price_usd:
+  typical: 25.99
+  low: 25.99
+  high: 57.5
+  unit: each
+  as_of: '2026-10-19'
+  basis: Pyrodrone $25.99 in stock (US, ground only). rcdrone.top $57.50 sold out. KiwiQuads NZ$41.99 (New Zealand, not a US source).
+verified: false
+source: 'https://pyrodrone.com/collections/gnb-gaoneng-lipo-batteries/products/gaoneng-gnb-1850mah-11-1v-3s-100c-lipo-battery-xt60 (SKU K2-10520, $25.99, in stock, 75x29x34 mm, 146 g +-1%,
+  100C continuous, XT60 85 mm lead, JST-XH 40 mm balance lead); KiwiQuads https://www.kiwiquads.co.nz/product/gnb-battery-11-1v-100c-1850mah-3s/comment-page-2 (29x34x75 mm, 146 g +-4 g, 100C
+  continuous / 200C burst, XT60); model number GNB18503S100A from https://rcdrone.top/products/gaoneng-gnb1850-3s-lipo (403 to the fetcher; read via search snippet). No manufacturer datasheet found.'
+vendors:
+- name: Pyrodrone
+  url: https://pyrodrone.com/collections/gnb-gaoneng-lipo-batteries/products/gaoneng-gnb-1850mah-11-1v-3s-100c-lipo-battery-xt60
+  price: 25.99
+  sku: K2-10520
+  stock: in stock
+  shipping: ground only (USPS Ground Advantage / UPS Ground), US only; free over $199; cost not visible
+  checked: '2026-10-19'
+- name: KiwiQuads (NZ)
+  url: https://www.kiwiquads.co.nz/product/gnb-battery-11-1v-100c-1850mah-3s/comment-page-2
+  price: 41.99
+  currency: NZD
+  stock: in stock on one fetch, out of stock in a search snippet; not a US source
+  checked: '2026-10-19'
+- name: rcdrone.top
+  url: https://rcdrone.top/products/gaoneng-gnb1850-3s-lipo
+  price: 57.5
+  stock: sold out (search snippet)
+  checked: '2026-10-19'
+mass_kg: 0.146
+dimensions_mm:
+- 75
+- 29
+- 34
+specs:
+  cells: 3
+  capacity_mah: 1850
+  c_rating: 100
+  c_rating_burst: 200
+  energy_wh: 20.5
+  chemistry: LiPo
+  connector: XT60 (85 mm discharge lead)
+  balance_connector: JST-XH (40 mm lead)
+  model_number: GNB18503S100A
+notes: 'NOT verified: only ONE US vendor (Pyrodrone) has it in stock, no manufacturer datasheet was found, and the C rating is the vendor figure (treat 100C as marketing; the usable limit is the
+  pack internal resistance, measure it on the bench). One KiwiQuads page lists "4S" in its spec table, an apparent listing error (all other sources say 3S 11.1 V). Dimensions are L x W x H =
+  75 x 29 x 34 mm per Pyrodrone. Mass 146 g +-1% (Pyrodrone) or +-4 g (KiwiQuads). No GNB 3S 1500 mAh pack exists at Pyrodrone (its 1500-2000 mAh collection has only 4S/6S 1500s) or at any other
+  source found; the 3S 1500 alternative is lipo-3s-1500-lumenier. Energy 20.5 Wh vs 14.4 Wh for the Tattu 1300. Batteries ship ground-only in the US.'

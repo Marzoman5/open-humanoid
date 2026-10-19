@@ -1,0 +1,57 @@
+# Catalog part: schema schemas/catalog-part.schema.json (added by T-20261019-c669, 2026-10-19)
+id: wago-221-415
+name: WAGO 221-415 Lever-Nuts 5-conductor splicing connector (24-12 AWG, 20 A UL / 32 A IEC)
+category: electronics
+tier: hobby
+price_usd:
+  typical: 0.9
+  low: 0.59
+  high: 1.74
+  unit: each (sold in packs of 10; minimum buy is a $9.00 pack)
+  as_of: '2026-10-19'
+  basis: AutomationDirect $9.00 per 10-pack ($0.90 each, 51 in stock, page read). Wired4Signs 10-pack $17.39 (search snippet, $1.74 each; its page showed only the 1000-pack at $1,159.04). Crescent Electric $0.59 each in a 1000-bag (snippet). R1 used 2 x $0.92 from Del City (403 to the fetcher, unconfirmed).
+verified: true
+source: 'Ratings: AutomationDirect cut sheet https://cdn.automationdirect.com/static/specs/cutsheet/221-415_K006-0000_cutsheet.pdf (WAGO 221-415, 24-12 AWG solid and stranded, 20 A, 600 V,
+  polycarbonate, UL file E201573 / E69654, pack of 10; read from the downloaded PDF text) and https://www.wired4signsusa.com/products/221-series-wago-lever-nuts (450 V / 32 A to EN 60664, 600 V / 20 A to UL Group C).
+  Dimensions: https://core-electronics.com.au/wago-snap-action-solderless-connection-5-conductor-221-415.html (30 x 8.4 x 18.6 mm, 32 A, 450 V, 0.2-4 mm2). Price: https://www.automationdirect.com/pn/221-415/K006-0000.
+  WAGO own datasheet could not be fetched (the wago.com product page returned no values).'
+vendors:
+- name: AutomationDirect
+  url: https://www.automationdirect.com/pn/221-415/K006-0000
+  price: 0.9
+  sku: 221-415/K006-0000
+  pack: 10 for $9.00
+  stock: 51 available
+  checked: '2026-10-19'
+- name: Wired4Signs
+  url: https://www.wired4signsusa.com/products/221-series-wago-lever-nuts
+  price: 1.74
+  sku: 221-415-0010
+  pack: 10 for $17.39 (search snippet; page read showed the 1000-pack only)
+  stock: InStock per snippet, ships from Knoxville TN
+  checked: '2026-10-19'
+- name: Crescent Electric
+  url: https://crescentelectric.com/product/460427/lever-nuts-splicing-connector-5-conductor-with-operating-levers-24-12-awg-transparent-housing-bag-of-1000-pieces
+  price: 0.59
+  pack: bag of 1000
+  stock: 1211 available per snippet (page 403)
+  checked: '2026-10-19'
+mass_kg: 0.004
+dimensions_mm:
+- 30
+- 8.4
+- 18.6
+
+specs:
+  conductors: 5
+  rated_current_a_ul: 20
+  rated_voltage_v_ul: 600
+  rated_current_a_iec: 32
+  rated_voltage_v_iec: 450
+  awg_range: 24-12
+  mm2_range: 0.2-4
+notes: 'USE THE UL FIGURE, 20 A, for the R1 star point: 32 A is the EN 60664 rating with a 4 mm2 conductor. Each connector is ONE bus bar, so it carries 20 A in total across its five openings.
+  The R1 trunk (20 A ATO fuse) therefore sits exactly AT one connector''s UL rating, with no margin (the fuse opens in 0.15-5 s at 2x, a sustained 20 A will warm the connector). COUNT: the R1 star has 1 trunk +
+  7 segment feeds = 8 wires per polarity, which needs two 221-415 per polarity joined by a jumper (5 + 5 - 2 = 8 openings), i.e. 4 connectors, not 2 (a 6-conductor 221-615 holds 6, still not 8). One 10-pack
+  covers it. Mass is an upper bound: a pack of 10 ships at 0.096 lb (43.5 g) including packaging. dimensions_mm = 30 x 8.4 x 18.6 exactly as Core Electronics lists them (stated "W x H x D"; one
+  retailer, axis assignment and lever-open height unconfirmed, measure one). Distributor pages disagree (450 V vs 600 V, 24-12 vs 24-10 AWG); the 600 V / 24-12 AWG pair matches the UL cut sheet. The 222 series is a different, older part.'

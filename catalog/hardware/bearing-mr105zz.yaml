@@ -1,0 +1,43 @@
+# Catalog part: schema schemas/catalog-part.schema.json (added by T-20261019-c669, 2026-10-19)
+id: bearing-mr105zz
+name: MR105ZZ miniature ball bearing, 5 x 10 x 4 mm, shielded (STS3215 idler bearing in the CAD foundation)
+category: hardware
+tier: hobby
+price_usd:
+  typical: 0.85
+  low: 0.77
+  high: 6.45
+  unit: each
+  as_of: '2026-10-19'
+  basis: 'eBay US 10-packs, SEARCH SNIPPETS ONLY (pages 403): Sunlightmall $7.69/10 + $2 ship, Apex RC Products about $8.99/10 (NY) + $1 ship, Fullforce RC $8.90/10 (ID) + $5.20 ship, QJZBearings 2-pack $12.91 (CA, free Priority). OpenBuilds $1.19 each (snippet, no currency shown).'
+verified: false
+source: 'Size is ISO 15 5 x 10 x 4 (openhumanoid/cad/components/data/hardware.yaml); the CAD foundation (docs/cad-foundation.md) uses MR105ZZ as the default idler bearing. No page with a live price
+  could be read: eBay (403 and snippets), https://us.openbuilds.com/mini-ball-bearing-105zz-5x10x4 (DNS failure), https://3dprintingusa.com (MF105ZZ flanged only, 404 on the page tried). Listing
+  evidence: https://www.ebay.de/itm/256928993318 and https://www.ebay.de/itm/321355172392 (search results).'
+vendors:
+- name: Apex RC Products (eBay)
+  url: https://www.ebay.de/itm/321355172392
+  price: 0.9
+  pack: 10 for about $8.99
+  stock: not read (snippet; 996 sold)
+  checked: '2026-10-19'
+- name: Fullforce RC (eBay)
+  url: https://www.ebay.de/itm/256928993318
+  price: 0.89
+  pack: 10 for $8.90
+  stock: not read (snippet)
+  checked: '2026-10-19'
+mass_kg: 0.0007
+dimensions_mm:
+- 10
+- 10
+- 4
+specs:
+  bore_mm: 5
+  od_mm: 10
+  width_mm: 4
+  shield: ZZ (metal)
+  flanged: false
+notes: 'NOT verified: prices are search snippets only (eBay pages blocked, OpenBuilds unreachable) and there is no manufacturer datasheet for a generic bearing (ISO 15 gives the size). Whether MR105ZZ
+  actually fits the STS3215 back-shaft support is still a bench fact, not a catalog fact: bearing-kit-small says the right size is unknown; confirm on the fit-gauge print (G5 bearing ladder). The flanged equivalent is MF105ZZ (5 x 10 x 4); do not mix them. eBay sellers for this
+  part are mostly China-direct; US ground shipments of 10-packs run $1-5. Mass is the standard figure for this size (about 0.7 g), not read from a listing.'

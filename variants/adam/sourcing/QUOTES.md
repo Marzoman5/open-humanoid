@@ -251,4 +251,45 @@ Recommended order: **A**, fall back to **B** if Seeed shows China-only or a long
 - STS3215 mounting/horn screw sizes, back-shaft bearing size, Pi 5 mass and height, Pi Zero mass, Camera Module 3 official mass.
 - Real current tariff rates (secondary sources only).
 
-Catalog `verified: true` (9 parts): sts3215-12v, sts3215-7v4, rpi-zero-2w (price and spec only; no stock), rpi-5-4gb, cam-rpi-v3, buck-5v-5a, buck-pololu-d36v50f5, lipo-3s-1300-tattu, charger-skyrc-b6neo. The rule used: at least two live vendor rows read and a manufacturer or standards-body spec match. Everything else stays false with the reason in `source`.
+Catalog `verified: true` (9 parts at T-0002; T-20261019-c669 adds rpi-5-1gb and wago-221-415, see section 10): sts3215-12v, sts3215-7v4, rpi-zero-2w (price and spec only; no stock), rpi-5-4gb, cam-rpi-v3, buck-5v-5a, buck-pololu-d36v50f5, lipo-3s-1300-tattu, charger-skyrc-b6neo. The rule used: at least two live vendor rows read and a manufacturer or standards-body spec match. Everything else stays false with the reason in `source`.
+
+## 10. R1 provisional-concept parts (T-20261019-c669, checked 2026-10-19)
+
+Read-only again: nothing bought, carted or signed in to. The catalog files are the source for every number below; each has `source:` and `vendors[]`. Fetcher limits as in the header (summarizing WebFetch; eBay, Amazon, GetFPV, Digi-Key part pages, Molex, Del City and Home Depot returned 403 or timed out). Prices that came only from a search snippet are marked.
+
+| Catalog id | Part | Price used | Verified? | Evidence and what is still open |
+|---|---|---|---|---|
+| `rpi-5-1gb` | Raspberry Pi 5, 1 GB | **$49.50** (Adafruit #6447, in stock, max 2). SparkFun DEV-30447 $50.00 out of stock. PiShop $45.00, stock not shown | **true** | The variant exists on raspberrypi.com (model selector: "1GB RAM - Unit only"). Official price is $45 (CNX Software). Only Adafruit had it in stock. Mass and 17 mm height are carried over from the 4 GB board and are unconfirmed |
+| `lipo-3s-1850-gnb` | GNB (Gaoneng) 3S 1850 mAh 100C XT60, 75 x 29 x 34 mm, 146 g | **$25.99** (Pyrodrone SKU K2-10520, in stock, ground shipping, US only) | false | One US vendor. KiwiQuads (NZ$41.99) matches the specs; rcdrone.top $57.50 is sold out. No manufacturer datasheet found; 100C continuous / 200C burst is a seller figure. One KiwiQuads page says "4S" in a spec table (looks like a listing error). 20.5 Wh |
+| `lipo-3s-1500-lumenier` | Lumenier 3S 1500 mAh 75C XT60, 76 x 34 x 27 mm, 130 g | **$31.49** (RaceDayQuads, in stock) | false | **No GNB 3S 1500 mAh exists** at Pyrodrone (its 1500-2000 mAh collection has 4S/6S 1500s only) or anywhere found, so the alternative is the Lumenier the R1 review named. GetFPV (403) not read. 16.65 Wh |
+| `wago-221-415` | WAGO 221-415 five-conductor lever connector | **$0.90 each** (AutomationDirect $9.00 per 10-pack, 51 in stock). Wired4Signs 10-pack $17.39 (snippet) | **true** | **UL 486C rating: 20 A, 600 V, 24-12 AWG (UL file E201573 / E69654). IEC/EN 60664 rating: 32 A, 450 V.** Use 20 A. See 10.1 for the count |
+| `wire-silicone-16awg` | 16 AWG silicone wire, 252 strands, 3.0 mm OD, red + black | **$9.98** (BNTECHGO 2 x 10 ft kit; 10 ft total $8.48; 50 ft $19.98) | false | Seller specs only (no datasheet): 200 C, 600 V. Common Sense RC $16.99 / 25 ft but not in stock. Ampacity reference is Powerstream's generic table: **22 A chassis wiring (free air), 3.7 A power transmission**; Engineering ToolBox gives 15 A single core. Shipping unread |
+| `wire-silicone-18awg` | 18 AWG silicone wire, 150 strands, red + black | **$9.48** (BNTECHGO 2 x 10 ft kit; 10 ft total $7.98) | false | Same caveats. Powerstream: **16 A chassis wiring, 2.3 A power transmission**; ToolBox 9.5 A. The Thrifty Bot $15.00 / 25 ft |
+| `conn-mini-spox-5264-3p` | Molex Mini-SPOX 5264 housing (+ 5263 terminals): the servo-lead connector family | **$0.21** each (Altex 10-pack $2.09). LCSC 2-circuit housing $0.025 | false | **Rating citation: Molex part-page data for the 5267 header with mating housing 5264: "Current - Maximum per Contact 3.0A, Voltage - Maximum 250V", -55 to +105 C**; terminals 28-22 AWG. LCSC and Arrow list the same 3 A. Waveshare names the servo connector "5264/2.54 3P" (2.54 mm pitch) while Molex Mini-SPOX is 2.50 mm: the real servo lead may be a clone with no published rating. The Molex site itself timed out |
+| `horn-25t-aluminum-disc` | Generic 25T aluminium disc horn, 20 mm, 4 x M3 on 14 mm | **~$5 placeholder** (DFRobot FIT0037 A$4.85; ThinkRobotics INR 49.99; no US shop read) | false | STS3215 output is **25T / OD 5.9 mm** (Feetech wiki, C018 model page; the stock horn is POM). No seller claims STS3215 fit; FIT0037 lists a 5.3 mm spline. Servos ship with horns (Seeed C047: 2 + 18 screws). Buy one disc and test it on the bench servo |
+| `bearing-mr105zz` | MR105ZZ 5 x 10 x 4 mm shielded bearing | **~$0.90 each** (US eBay 10-packs $7.69-8.99, snippets only) | false | No page could be read. Whether it fits the STS3215 back stub is a bench fact |
+
+### 10.1 What the R1 review should change
+
+1. **WAGO count.** The star has 1 trunk + 7 segment feeds = 8 wires per polarity. One 221-415 holds 5; two joined by a jumper hold 8 (5 + 5 - 2). R1 priced "2 x 221-415" ($1.85); the build needs **4** (two per polarity), and the cheapest real purchase is one $9.00 10-pack.
+2. **The trunk equals the connector's UL rating.** A 20 A fuse on a trunk into a 20 A (UL) connector leaves no margin. The 32 A figure is the IEC rating with a 4 mm2 conductor and should not be quoted for a 16 AWG, 20 A trunk.
+3. **16 AWG at 22 A is Powerstream's free-air "chassis" figure, not a rating of this wire.** Inside a bundle the stricter tables (Engineering ToolBox: 15 A for 16 AWG, 9.5 A for 18 AWG) apply. The R1 note "16 AWG trunk (22 A chassis)" holds for a single wire in air only; the bench temperature-rise test is the check.
+4. **3 A per contact is a Molex figure** for genuine Mini-SPOX. The servos' own leads have no published rating (see the table), and the STS3250's 4.2 A stall exceeds 3 A either way.
+5. **No GNB 3S 1500.** The Lumenier 1500 is the alternative; its cross-section is 34 x 27 mm against 29 x 34 mm for the GNB.
+
+### 10.2 BOM change (R1 recommended build, $1514 at the R1 accounting)
+
+`variants/adam/sourcing/totals.py` now carries the new price keys (`pi5_1gb`, `lipo3s_1850`, `lipo3s_1500`, `wago_x4`, `wire16`, `wire18`, `bearing_mr105zz`, `horn25t_alu`). No A-E candidate references them, so the section 1 tables did not move (output diffed identical). `design/r1_cost.py` is outside this task's paths, so its R1 totals stay at **$1514**; the commander has to swap the lines in:
+
+| Line | `r1_cost.py` now | With these catalog entries | Sticker change |
+|---|---|---|---|
+| Pi 5 1 GB | $49.50 | $49.50 (verified) | $0 |
+| GNB 3S 1850 | $25.99 | $25.99 (not verified) | $0 |
+| WAGO star connectors | $1.85 (2 x $0.924) | $3.60 (4 x $0.90), or $9.00 if the pack is the unit | +$1.75 to +$7.15 |
+| 16 AWG + 18 AWG silicone wire | not priced (the $10 `wiring` line is the bus extension cables) | $9.98 + $9.48 = $19.46 (or $16.46 with the 10 ft kits), shipping unread | +$16.5 to +$19.5 |
+| Bearings | $12 estimate | $8.99 per 10-pack (unverified) | -$3.01, if it replaces the estimate |
+| Horns | $0 | $0 (servos ship with them) | $0 |
+
+Net: **about +$15 to +$24 sticker, which is +$18 to +$28 on the R1 total** after 7.53% tax and 10% contingency (x1.183). The recommended Path 1 build moves from about $1514 to about **$1530-1545**. That is not decision-relevant against a cap it already misses by 2.8x. The Lean and P2 rows move by the same amount, since they use the same wiring.
+
+Still not checked: shipping at BNTECHGO and Pyrodrone; whether the STS3215 lead connector is Molex-rated; WAGO's own datasheet (the UL figures are from the AutomationDirect cut sheet and Wired4Signs).

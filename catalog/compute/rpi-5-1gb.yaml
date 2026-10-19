@@ -1,0 +1,53 @@
+# Catalog part: schema schemas/catalog-part.schema.json (added by T-20261019-c669, 2026-10-19)
+id: rpi-5-1gb
+name: Raspberry Pi 5 (1 GB)
+category: compute
+tier: hobby
+price_usd:
+  typical: 49.5
+  low: 45.0
+  high: 50.0
+  unit: each
+  as_of: '2026-10-19'
+  basis: Adafruit $49.50 IN STOCK (max 2/order); SparkFun $50.00 out of stock; PiShop $45.00 (no cart button, stock not stated). Official launch price $45 (CNX Software, 2025-12-01).
+verified: true
+source: 'Existence + spec: https://www.raspberrypi.com/products/raspberry-pi-5/ (model selector lists "Raspberry Pi 5 1GB RAM - Unit only"; 5 V / 5 A USB-C PD). Datasheet-class docs: product
+  brief https://pip-assets.raspberrypi.com/categories/892-raspberry-pi-5/documents/RP-008348-DS-8-raspberry-pi-5-product-brief.pdf (over the fetcher size limit, not read) and mechanical drawing
+  RP-008347-DS-1 (binary, dimensions not machine-readable). Prices read live: https://www.adafruit.com/product/6447 (#6447, $49.50, in stock, ships today); https://www.sparkfun.com/raspberry-pi-5-1gb.html
+  (DEV-30447, $50.00, out of stock); https://www.pishop.us/product/raspberry-pi-5-1gb/ (SKU 9021-Pi5-1GB, $45.00, stock not shown). CanaKit sells it only as a $104.95 kit. Launch and price:
+  https://www.cnx-software.com/2025-12-01/raspberry-pi-5-1gb-launched-for-45-most-other-pi-4-5-models-get-a-price-increase'
+vendors:
+- name: Adafruit
+  url: https://www.adafruit.com/product/6447
+  price: 49.5
+  sku: '6447'
+  stock: in stock, 'order now to ship today', max 2/customer
+  checked: '2026-10-19'
+- name: SparkFun
+  url: https://www.sparkfun.com/raspberry-pi-5-1gb.html
+  price: 50.0
+  sku: DEV-30447
+  stock: out of stock (notify-me offered)
+  checked: '2026-10-19'
+- name: PiShop.us
+  url: https://www.pishop.us/product/raspberry-pi-5-1gb/
+  price: 45.0
+  sku: 9021-Pi5-1GB
+  stock: not stated (no Add to Cart button in the fetched text; max purchase 50)
+  checked: '2026-10-19'
+mass_kg: 0.062
+dimensions_mm:
+- 85
+- 56
+- 17
+specs:
+  cpu: 4x Cortex-A76 2.4 GHz
+  ram_gb: 1
+  power_w: 8
+  power_w_typical: 6.0
+  power_w_peak: 25.0
+  power_w_idle: 3.0
+  supply: 5 V / 5 A USB-C PD recommended (a 3 A supply runs it with reduced USB current)
+notes: 'Same 85x56 mm board and SoC as rpi-5-4gb, so the CAD outline already in openhumanoid/cad/components is valid. Height 17 mm and mass are carried over from rpi-5-4gb and are NOT confirmed
+  by any official page (retailer listings give 45-62 g across the 4/8/16 GB boards): weigh the real board. Only ONE US vendor had it in stock on 2026-10-19 (Adafruit), so "verified" means the
+  variant exists and three live prices were read, not that stock is deep. Whether a 3 A buck (DFR0831) runs it with no USB load is a bring-up check, not a datasheet fact.'

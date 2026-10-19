@@ -1,0 +1,44 @@
+# Catalog part: schema schemas/catalog-part.schema.json (added by T-20261019-c669, 2026-10-19)
+id: horn-25t-aluminum-disc
+name: 25T aluminium servo horn, round 20 mm disc, 4 x M3 on 14 mm (generic; STS3215 fit NOT confirmed by any seller)
+category: hardware
+tier: hobby
+price_usd:
+  typical: 5.0
+  low: 0.5
+  high: 25.19
+  unit: each
+  as_of: '2026-10-19'
+  basis: No USD price read at a US shop. DFRobot FIT0037 (Core Electronics AU) A$4.85-5.33 ex/inc GST; ThinkRobotics INR 49.99; Probots INR 39; RJXHobby 25T arm $25.19 (snippet, a different design). The $5.00 is a placeholder.
+verified: false
+source: 'Fit data: STS3215 output spline is 25T / OD 5.9 mm, https://ftservo.github.io/ftservo-wiki/products/models/st-3215-c018/main/ (Feetech wiki, "25T/OD5.9mm"); the stock horn is plastic POM,
+  https://www.roboticscenter.ai/ar/store/product/feetech-feetech-sts3215. Candidate horn: DFRobot FIT0037 https://core-electronics.com.au/metal-servo-horn.html (20 mm OD, M3 holes, 25-tooth spline
+  listed as 5.3 mm diameter, 2 g, 12 in stock). Other 25T discs (no STS3215 claim): https://thinkrobotics.com/products/25t-metal-servo-disc (20 mm, 2 g, in stock), https://probots.co.in/25t-circular-metal-servo-horn-mg996r-mg995.html
+  (20 mm, 14 mm hole spacing, M3). Pololu #3433 Power HD SR8 25T (1.8 g, lists Feetech FS5115M etc., not STS3215) is discontinued, https://www.pololu.com/product/3433.'
+vendors:
+- name: Core Electronics (DFRobot FIT0037)
+  url: https://core-electronics.com.au/metal-servo-horn.html
+  price: 3.2
+  currency: AUD 4.85 ex GST (about USD 3.2); Australia, not a US source
+  stock: 12 listed
+  checked: '2026-10-19'
+- name: ThinkRobotics (India)
+  url: https://thinkrobotics.com/products/25t-metal-servo-disc
+  price: 0.6
+  currency: INR 49.99; ships to USA not stated
+  stock: in stock
+  checked: '2026-10-19'
+mass_kg: 0.002
+dimensions_mm:
+- 20
+- 20
+- 5
+specs:
+  spline_teeth: 25
+  od_mm: 20
+  mount: 4 x M3 on 14 mm spacing (Probots, ThingBits)
+  material: aluminium (alloy not stated)
+notes: 'NOT verified, and the fit is the problem: Feetech''s STS3215 is 25T / OD 5.9 mm but DFRobot''s FIT0037 lists its spline as 5.3 mm. A 25T horn that is not cut for the 5.9 mm OD may be loose or may
+  not seat; no seller states STS3215 compatibility, and a Core Electronics note says a Power HD horn for the HD-1235MG does not fit Feetech FT5335M, so brand-specific spline variation exists. Cheapest safe option:
+  each STS3215 ships with horns in the box (Seeed C047: 2 horns + 18 screws, per the catalog sts3215-12v datasheet note) (plastic POM). Buy ONE
+  aluminium disc and try it on the bench STS3215 before ordering 23. dimensions_mm: thickness 5 mm is a guess; the CAD horn model has the real numbers. Prices converted at about 0.66 USD/AUD, 0.012 USD/INR.'
