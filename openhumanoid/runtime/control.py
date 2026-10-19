@@ -140,11 +140,15 @@ class BehaviourManager:
         self.done_cb = None
         self.arm_swing_state = np.zeros(2)
         self.hold_after = None
+        self.carry = None
+        self.carry_mask = None
         self.trim = np.zeros(model.n)
         self.damp_kd = 0.03
         self.damp_mask = np.array([0.0 if n.startswith('gripper') else 1.0 for n in model.names])
-        self.trim_ki = 0.0                 # 1/s: removes the servo's load-proportional steady-state error (stand-in for the servo I-coefficient)
-        self.trim_leak = 0.15
+        self._tgt_prev = None
+        self.trim_mask = np.array([0.0 if (n.split('_')[0] in ('hip', 'knee', 'ankle', 'gripper')) else 1.0 for n in model.names])
+        self.trim_ki = 3.0                 # 1/s: removes the servo's load-proportional steady-state error (stand-in for the servo I-coefficient)
+        self.trim_leak = 0.05
         self.trim_limit = 0.2
         self.leg_mask = np.array([n.split("_")[0] in ("hip", "knee", "ankle") for n in model.names])
 
@@ -181,6 +185,8 @@ class BehaviourManager:
         if self.mode in ("crouch", "fall", "limp"):
             return False, f"refused: robot is in {self.mode}"
         if name == "stand":
+            if params.get("release"):
+                self.carry = None
             self._stop_ref()
             self.behaviour = "stand"
             self.cmd_vel[:] = 0
@@ -217,6 +223,8 @@ class BehaviourManager:
             self.overlay_wave = None
         if name in (None, "dance", "pickup"):
             self._stop_ref()
+            if name in (None, "pickup"):
+                self.carry = None
         if name in (None, "walk"):
             self.cmd_vel[:] = 0
             if self.behaviour == "walk":
@@ -243,8 +251,7 @@ class BehaviourManager:
             return
         self.mode = mode
         if mode == "crouch":
-            from ..concept.motions.posture import squat
-            ref = self.clips("crouch") if self.clips else squat(self.m.kin, 100.0, down_s=3.0, hold_s=0.5)
+            ref = self.clips("crouch")
             self.player = RefPlayer(ref, self.q_out, blend_s=0.6)
             self.player_kind = "crouch"
             self.overlay_wave = None
@@ -259,6 +266,7 @@ class BehaviourManager:
         """-> (q_target, torque_limit, contact_hint)."""
         dt = self.dt
         m = self.m
+        self._s_now = s
         if self.mode == "fall":
             self.contact = np.array([0.0, 0.0])
             return self._fall_q.copy(), np.ones(m.n), self.contact
@@ -283,11 +291,11 @@ class BehaviourManager:
             tgt = self.gait.update(est, dt, allow_capture=True)
             q = self.gait.solve_legs(tgt, self.q_rest.copy())
             q = self._upper_body(q, est, tgt)
-            q = self._trim(q, s, tgt.contact)
-            q = self.stab.apply(q, est, tgt.contact)
             contact = tgt.contact
             tl = np.ones(m.n) * self.tl_grip
         q = self._overlays(q, est)
+        q = self._trim(q, s, contact)
+        q = self.stab.apply(q, est, contact)
         q = self._damp(q, s)
         self.q_out = q
         self.contact = contact
@@ -299,25 +307,23 @@ class BehaviourManager:
         return q - self.damp_kd * s.dq * self.damp_mask
 
     def _trim(self, q: np.ndarray, s: HalState, contact: np.ndarray) -> np.ndarray:
-        """Slow integrator on the load-bearing leg joints: trim += ki (cmd - measured) so gravity sag does not shift the COM plan."""
-        g = np.ones(self.m.n)
-        for i, side in enumerate("lr"):
-            w = min(1.0, 2.0 * float(contact[i]))
-            for base in ("hip_yaw", "hip_roll", "hip_pitch", "knee", "ankle_pitch", "ankle_roll"):
-                k = self.m.index.get(f"{base}_{side}")
-                if k is not None:
-                    g[k] = w
-        err = (self.q_out - s.q) * self.leg_mask * g          # last command vs where the joint actually is
-        self.trim += self.dt * (self.trim_ki * err - self.trim_leak * self.trim * (1 - g * self.leg_mask))
-        self.trim = np.clip(self.trim, -self.trim_limit, self.trim_limit)
-        return q + self.trim * self.leg_mask
+        """Slow integrator on the joints' load-proportional steady-state error: trim += ki (previous target - measured). The firmware is
+        P-only (the Feetech I coefficient is the hardware equivalent); without it a held arm sags by torque / stiffness. Upper-body and
+        gripper-free joints only; the legs rely on the gait's COM-bias estimate and the ankle integrator."""
+        if self._tgt_prev is not None:
+            err = (self._tgt_prev - s.q) * self.trim_mask
+            self.trim = np.clip(self.trim + self.dt * (self.trim_ki * err - self.trim_leak * self.trim), -self.trim_limit, self.trim_limit)
+        self._tgt_prev = q.copy()
+        return q + self.trim * self.trim_mask
 
     def _play_reference(self, est: EstState) -> np.ndarray:
         p = self.player
         q = p.q(self.dt)
-        q = self.stab.apply(q, est, np.array([0.5, 0.5]))
         if p.done:
             kind = self.player_kind
+            if kind == "pickup":
+                self.carry = np.where(self.leg_mask > 0, 0.0, q)         # keep holding the object: the upper body stays where the clip ended
+                self.carry_mask = self.leg_mask == 0
             self.player = None
             self.player_kind = ""
             self.behaviour = "stand"
@@ -339,6 +345,8 @@ class BehaviourManager:
             k = m.index.get(f"shoulder_pitch_{s}")
             if k is not None:
                 q[k] = self.q_rest[k] + self.arm_swing_state[i]
+        if self.carry is not None:
+            q[self.carry_mask] = self.carry[self.carry_mask]
         return q
 
     def _overlays(self, q: np.ndarray, est: EstState) -> np.ndarray:

@@ -53,7 +53,7 @@ class SimConfig:
 
 
 class SimHAL(Hal):
-    def __init__(self, model: RobotModel, cfg: SimConfig | None = None, q0: np.ndarray | None = None):
+    def __init__(self, model: RobotModel, cfg: SimConfig | None = None, q0: np.ndarray | None = None, scene_xml: str = ""):
         import mujoco
         self.mj = mujoco
         self.m = model
@@ -62,7 +62,7 @@ class SimHAL(Hal):
         self.names = model.names
         self.control_hz = c.control_hz
         self.rng = np.random.default_rng(c.seed)
-        self.mjm = model.robot.build_model()
+        self.mjm = model.robot.build_model(scene_xml)
         self.mjm.opt.timestep = c.sim_dt
         if c.floor_friction is not None:
             self.mjm.geom_friction[self.mjm.geom("floor").id, 0] = c.floor_friction

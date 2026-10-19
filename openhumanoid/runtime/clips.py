@@ -41,7 +41,9 @@ class ClipStore:
             return pickup(k, table_height_m=params.get("table_height_m", 0.30))
         if name == "crouch":
             from ..concept.motions.posture import squat
-            return squat(k, 100.0, down_s=3.0, hold_s=0.5)
+            ref = squat(k, 100.0, down_s=3.0, hold_s=0.5)
+            n = int((0.8 + 3.0 + 0.5) / ref.dt)          # down and hold only: the lowering ends at the bottom, the safety layer then torques off
+            return Reference("crouch", ref.dt, ref.q[:n], ref.base_pos[:n], ref.base_quat[:n], ref.feasible, ref.notes, ref.meta)
         if name == "stand":
             from ..concept.motions.posture import stand
             return stand(k, params.get("duration", 4.0))
