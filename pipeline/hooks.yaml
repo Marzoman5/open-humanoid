@@ -1,0 +1,40 @@
+# Configuration for the Claude Code hooks in tools/hooks/ (ADR 0011, docs/harness.md).
+# Hook-protected like gates.yaml: an agent can't switch off the thing that constrains it.
+# Human kill switch (no edit needed): create the file coordination/.local/hooks.off . Delete it to turn the hooks back on.
+
+enabled: true
+
+# What happens when a worker session (a registered claim) edits a file outside its claimed `paths`:
+#   warn (default) | enforce (deny) | off
+claimed_paths: warn
+always_allowed: [coordination/]          # task logs, handoffs: every session writes these
+commander_streams: [coordination]        # a task in these streams is treated like the commander: no claimed-path checks
+
+# Stop hook: block "done" while the session's in_progress task has no PASS gate record at HEAD. block | warn | off
+stop_gate: block
+smoke_on_session_start: true             # run `oh gate --smoke` at startup/resume/compact/fork (reports, never blocks)
+precompact_handoff: true                 # PreCompact writes a handoff stub
+
+# Protected paths (glob, relative to the repo root). First match wins.
+#   worker:    action for a session with a registered claim: deny | ask | warn
+#   commander: action for an unclaimed / coordination session. `ask` makes a human confirm, so the commander is never locked out.
+#   covered_by_claim_ok: a worker may edit the file if its task's `paths` explicitly list it (an ADR / harness task).
+protected:
+  - name: generated
+    patterns: ["**/generated/**"]
+    worker: deny
+    commander: deny
+    covered_by_claim_ok: false
+    hint: "Never hand-edit generated/. Change the spec or the generator and re-run the `oh` command that produces it (`oh gate <id>` writes gates/*.json)."
+  - name: gate-config
+    patterns: ["pipeline/**", "tools/hooks/**", ".claude/settings.json", "coordination/.local/hooks.off"]
+    worker: deny
+    commander: ask
+    covered_by_claim_ok: true
+    hint: "Gate thresholds and the enforcement harness can't be loosened by the agent being gated. Open an ADR task whose `paths` name this file, or ask the maintainer."
+  - name: contracts
+    patterns: ["schemas/**", "cad/EXPORT_CONTRACT.md", "modules/INTERFACE.md", "**/INTERFACE.md"]
+    worker: deny
+    commander: ask
+    covered_by_claim_ok: true
+    hint: "Interfaces are frozen (AGENTS.md). Changing one needs an ADR in docs/decisions/ and a schema_version bump: claim an ADR task that lists this path."

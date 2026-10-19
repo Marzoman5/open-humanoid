@@ -54,13 +54,13 @@ def head_sha() -> str | None:
 
 
 def is_dirty() -> bool:
-    """Uncommitted changes, ignoring generated/ (gates and tools rewrite those themselves)."""
+    """Uncommitted changes, ignoring generated/ (tools rewrite those) and coordination/ (task logs, handoffs)."""
     out = _git("status", "--porcelain")
     if out is None:
         return False
     for line in out.splitlines():
         path = line[3:].replace("\\", "/")
-        if "/generated/" not in path and not path.startswith("coordination/.local/"):
+        if "/generated/" not in path and not path.startswith("coordination/"):
             return True
     return False
 
