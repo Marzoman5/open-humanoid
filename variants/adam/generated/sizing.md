@@ -3,10 +3,10 @@
 
 **Result:** ✅ feasible (ok) · **height 0.53 m** (mode: maximize)
 
-**What stops it being taller:** over budget: $1356 > $550
+**What stops it being taller:** over budget: $661 > $550
 
 **Estimated mass:** 2.52 kg (structure 0.95 · actuators 0.94 · compute/power 0.52 · electronics 0.12)
-**Estimated cost:** $526.08 (actuators $355 · other parts $148 · filament 1.24 kg $22) vs cap $550
+**Estimated cost:** $419.30 (actuators $272 · other parts $125 · filament 1.24 kg $22) vs cap $550
 
 Optional joints added: neck_yaw · dropped for budget/torque: shoulder_roll
 
@@ -43,31 +43,31 @@ Optional joints added: neck_yaw · dropped for budget/torque: shoulder_roll
 
 | h (m) | feasible | cost | reason |
 |---|---|---|---|
-| 0.40 | ✅ | $492 | ok |
-| 0.41 | ✅ | $493 | ok |
-| 0.42 | ✅ | $494 | ok |
-| 0.43 | ✅ | $495 | ok |
-| 0.44 | ✅ | $496 | ok |
-| 0.45 | ✅ | $497 | ok |
-| 0.46 | ✅ | $497 | ok |
-| 0.47 | ✅ | $498 | ok |
-| 0.48 | ✅ | $499 | ok |
-| 0.49 | ✅ | $500 | ok |
-| 0.50 | ✅ | $502 | ok |
-| 0.51 | ✅ | $503 | ok |
-| 0.52 | ✅ | $504 | ok |
-| 0.53 | ✅ | $505 | ok |
-| 0.54 | — | $1356 | over budget: $1356 > $550 |
-| 0.55 | — | $1357 | over budget: $1357 > $550 |
-| 0.56 | — | $1359 | over budget: $1359 > $550 |
-| 0.57 | — | $1360 | over budget: $1360 > $550 |
-| 0.58 | — | $1362 | over budget: $1362 > $550 |
-| 0.59 | — | $1363 | over budget: $1363 > $550 |
-| 0.60 | — | $1365 | over budget: $1365 > $550 |
-| 0.61 | — | $1366 | over budget: $1366 > $550 |
-| 0.62 | — | $1368 | over budget: $1368 > $550 |
-| 0.63 | — | $1370 | over budget: $1370 > $550 |
-| 0.64 | — | $1372 | over budget: $1372 > $550 |
+| 0.40 | ✅ | $391 | ok |
+| 0.41 | ✅ | $391 | ok |
+| 0.42 | ✅ | $392 | ok |
+| 0.43 | ✅ | $393 | ok |
+| 0.44 | ✅ | $394 | ok |
+| 0.45 | ✅ | $395 | ok |
+| 0.46 | ✅ | $396 | ok |
+| 0.47 | ✅ | $397 | ok |
+| 0.48 | ✅ | $398 | ok |
+| 0.49 | ✅ | $399 | ok |
+| 0.50 | ✅ | $400 | ok |
+| 0.51 | ✅ | $401 | ok |
+| 0.52 | ✅ | $402 | ok |
+| 0.53 | ✅ | $403 | ok |
+| 0.54 | — | $661 | over budget: $661 > $550 |
+| 0.55 | — | $662 | over budget: $662 > $550 |
+| 0.56 | — | $663 | over budget: $663 > $550 |
+| 0.57 | — | $665 | over budget: $665 > $550 |
+| 0.58 | — | $666 | over budget: $666 > $550 |
+| 0.59 | — | $668 | over budget: $668 > $550 |
+| 0.60 | — | $669 | over budget: $669 > $550 |
+| 0.61 | — | $671 | over budget: $671 > $550 |
+| 0.62 | — | $673 | over budget: $673 > $550 |
+| 0.63 | — | $674 | over budget: $674 > $550 |
+| 0.64 | — | $676 | over budget: $676 > $550 |
 | 0.65 | — |  | torque/speed: no actuator meets 'hip_pitch_l' |
 | 0.66 | — |  | torque/speed: no actuator meets 'hip_pitch_l' |
 | 0.67 | — |  | torque/speed: no actuator meets 'hip_pitch_l' |
