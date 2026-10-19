@@ -50,6 +50,8 @@ class PartRec:
     sites: list[SiteRec] = field(default_factory=list)
     meta: dict = field(default_factory=dict)
     profile: dict = field(default_factory=dict)      # perimeters, infill_pct, fill_fraction (from the variant strength config)
+    corners: list = field(default_factory=list)      # internal corners: sharp concave edges and concave fillets (corners.py)
+    step: bytes | None = None                        # STEP file of the printed part (link frame, mm) for the tet mesher
 
     @property
     def printed(self) -> bool:
@@ -211,10 +213,26 @@ class Model:
                 for s in p.sites:
                     o = s.frame.position
                     zq = (s.frame * __import__("build123d").Location((0, 0, 1))).position
-                    sites.append(SiteRec(s.id, s.kind, s.part or p.id, s.thread, float(s.length_mm), s.mates,
+                    sites.append(SiteRec(s.id, s.kind, p.id, s.thread, float(s.length_mm), s.mates,
                                          np.array([o.X, o.Y, o.Z]), np.array([zq.X - o.X, zq.Y - o.Y, zq.Z - o.Z])))
+                cor = []
+                step_b = None
+                if printed:
+                    import tempfile, os
+
+                    with tempfile.TemporaryDirectory() as td:
+                        fp = os.path.join(td, "part.step")
+                        __import__("build123d").export_step(p.shape, fp)
+                        step_b = open(fp, "rb").read()
+                    from .corners import corners as _corners
+
+                    try:
+                        cor = _corners(p.shape)
+                    except Exception as exc:  # noqa: BLE001
+                        cor = []
+                        prof = {**prof, "corner_error": str(exc)}
                 parts[p.id] = PartRec(p.id, ln, p.kind, "fdm" if printed else "purchased", mat_name, p.catalog, mass, up, m, vol, com,
-                                      sites, dict(p.meta or {}), prof)
+                                      sites, dict(p.meta or {}), prof, cor, step_b)
         joints: dict[str, JointRec] = {}
         for jn, jd in asm.joints().items():
             ij = ifs.d["joints"].get(jn)

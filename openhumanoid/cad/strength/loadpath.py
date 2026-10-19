@@ -80,12 +80,23 @@ class Topology:
         self.order: dict[str, list[str]] = {}
         self._build()
 
+    def resolve(self, name: str | None) -> str | None:
+        if name is None or name in self.m.parts:
+            return name
+        for prefix, table in (("housing_", self.housing), ("cover_", self.cover)):
+            if name.startswith(prefix) and name[len(prefix):] in table:
+                return table[name[len(prefix):]]
+        return name
+
     def _contact_score(self, hw: PartRec, cand: list[PartRec], tol: float = 0.7, n: int = 400) -> dict[str, float]:
         """Share of surface samples of a purchased part within `tol` mm of each candidate printed part."""
         pts, _ = trimesh.sample.sample_surface(hw.mesh, n, seed=1)
+        fk0 = self.m.fk({})
+        w = pts @ fk0[hw.link][0].T + fk0[hw.link][1]
         out = {}
         for c in cand:
-            d = _min_dist_points(c.mesh, pts)
+            Rc, tc = fk0[c.link]
+            d = _min_dist_points(c.mesh, (w - tc) @ Rc)
             out[c.id] = float((d < tol).mean())
         return out
 
@@ -143,6 +154,11 @@ class Topology:
                 continue
             d = [(_min_dist_points(c.mesh, p.com[None, :])[0], c.id) for c in printed]
             self.hw_owner[pid] = min(d)[1]
+        # ---- site ownership and the names fasteners mate with (a helper names the part 'housing_<joint>' even when it is a bracket)
+        for pid, pr in m.parts.items():
+            for st in pr.sites:
+                st.part = pid
+                st.mates = self.resolve(st.mates)
         # ---- tree of printed parts per link
         for L in m.links:
             printed = [p.id for p in m.parts_in(L, True)]

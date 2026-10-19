@@ -92,8 +92,8 @@ def plane_basis(normal: np.ndarray, hint: np.ndarray | None = None):
     return u, v, n
 
 
-def slice_mesh(mesh: trimesh.Trimesh, origin: np.ndarray, normal: np.ndarray, shell: float, fill: float) -> Section | None:
-    """Effective section of `mesh` by the plane through `origin` with normal `normal`. None when the plane misses the part."""
+def section_geometry(mesh: trimesh.Trimesh, origin: np.ndarray, normal: np.ndarray):
+    """(shapely geometry in (u, v) plane coordinates relative to `origin`, u, v, n) or None."""
     u, v, n = plane_basis(normal)
     try:
         path = mesh.section(plane_origin=origin, plane_normal=n)
@@ -101,17 +101,26 @@ def slice_mesh(mesh: trimesh.Trimesh, origin: np.ndarray, normal: np.ndarray, sh
         return None
     if path is None:
         return None
-    # planar polygons in our own (u, v) coordinates
-    pts3 = None
-    polys = []
     try:
         M = np.eye(4)
         M[0, :3], M[1, :3], M[2, :3] = u, v, n
         M[:3, 3] = -M[:3, :3] @ origin
         planar, _ = path.to_planar(to_2D=M, check=False)
-        polys = list(planar.polygons_full)
+        polys = [p for p in planar.polygons_full if p.area > 1e-6]
     except Exception:  # noqa: BLE001
         return None
+    if not polys:
+        return None
+    return unary_union(polys), u, v, n
+
+
+def slice_mesh(mesh: trimesh.Trimesh, origin: np.ndarray, normal: np.ndarray, shell: float, fill: float) -> Section | None:
+    """Effective section of `mesh` by the plane through `origin` with normal `normal`. None when the plane misses the part."""
+    g = section_geometry(mesh, origin, normal)
+    if g is None:
+        return None
+    geom, u, v, n = g
+    polys = [geom]
     polys = [p for p in polys if p.area > 1e-6]
     if not polys:
         return None
@@ -177,6 +186,7 @@ def slice_mesh(mesh: trimesh.Trimesh, origin: np.ndarray, normal: np.ndarray, sh
 class StressResult:
     sigma: float            # max |normal stress| at the extreme fibre (MPa), tension or compression
     sigma_tension: float    # max tensile stress (MPa)
+    sigma_compression: float  # max compressive stress magnitude (MPa), 0 if none
     tau: float              # shear stress estimate (V + torsion) at the same section (MPa)
     N: float
     Vu: float
@@ -206,7 +216,7 @@ def stress(sec: Section, F_int: np.ndarray, M_int: np.ndarray, shear_form: float
     T = float(M_int @ n)
     tau_v = shear_form * math.hypot(Vu, Vv) / sec.A
     tau_t = abs(T) * sec.t_tors / sec.J
-    return StressResult(sigma=float(np.max(np.abs(s))), sigma_tension=float(s[i_t]), tau=float(tau_v + tau_t), N=N, Vu=Vu, Vv=Vv, T=T,
+    return StressResult(sigma=float(np.max(np.abs(s))), sigma_tension=float(s[i_t]), sigma_compression=float(max(-np.min(s), 0.0)), tau=float(tau_v + tau_t), N=N, Vu=Vu, Vv=Vv, T=T,
                         Mu=float(M_int @ u), Mv=float(M_int @ v),
                         where=sec.to3(float(sec.verts_uv[i_t, 0]), float(sec.verts_uv[i_t, 1])), bending_axis=float(math.degrees(math.atan2(ab[1], ab[0]))))
 

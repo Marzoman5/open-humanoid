@@ -115,7 +115,8 @@ joint_torque:
 # ---- section analysis settings -----------------------------------------------------------------------------------------------
 sections:
   step_mm: 2.0
-  min_area_mm2: 4.0
+  min_area_mm2: 10.0
+  min_thickness_mm: {v: 1.0, kind: policy, src: "a cut thinner than 1 mm grazes a face (tessellation sliver): not a load-path section; real ribs are >= dfm min_feature 0.8 mm"}
   shear_form_factor: 1.5
   torsion_note: "solid sections: tau = T t / J with J = A^4 / (40 Ip); single-cell closed sections: Bredt-Batho"
   stress_sample: "extreme fibre of the weighted section"
