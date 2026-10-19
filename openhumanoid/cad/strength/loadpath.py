@@ -231,13 +231,12 @@ def solve(model: Model, topo: Topology, sc: Scenario, mass_override: dict[str, f
         d = [(_min_dist_points(p.mesh, pl[None, :])[0], p.id) for p in printed if p.id not in topo.exclude] or [(0, printed[0].id)]
         tgt = min(d)[1]
         loads[tgt].loads.append(Load(pl, vec_link(c.link, c.force), np.zeros(3), c.label or "contact", {"type": "sphere", "r": 4.0}))
-    # ---- servo wrenches onto housings; bearing reactions onto idler plates and pins
+    # ---- servo wrenches onto housings; bearing reactions onto idler plates and pins.
+    # The distal wrench W_j of a joint reaches the host side through TWO paths when the joint has an idler: the servo (horn shaft + case) and the
+    # pin the idler bearing rides on. The pin carries -R_b at the bearing centre; the housing gets W_j minus that.
     for jn, j in model.joints.items():
         w = W[jn]
-        hsg = topo.housing.get(jn)
-        if hsg and hsg in loads:
-            hl = loads[hsg].link
-            loads[hsg].loads.append(Load(to_link(hl, w["O"]), vec_link(hl, w["F"]), vec_link(hl, w["M"]), f"distal wrench of {jn}"))
+        F_house, M_house = w["F"].copy(), w["M"].copy()
         if j.idler_bearing and j.child_link in topo.idler:
             a = w["axis"]
             Ph = fk[j.child_link][0] @ (j.horn_seat - fk0_origin(model, j.child_link)) + fk[j.child_link][1]
@@ -256,7 +255,13 @@ def solve(model: Model, topo: Topology, sc: Scenario, mass_override: dict[str, f
                 if pin and pin in loads:
                     pl_ = loads[pin].link
                     loads[pin].loads.append(Load(to_link(pl_, cb), vec_link(pl_, -Rb), np.zeros(3), f"pin load from the idler bearing of {jn}", {"type": "annulus", "c": to_link(pl_, cb), "axis": vec_link(pl_, a), "r0": 0.0, "r1": 3.0, "half": 2.6}))
+                    F_house = F_house + Rb                         # remove the pin's share (-R_b) from the wrench the servo case receives
+                    M_house = M_house + np.cross(cb - O, Rb)
                 diag.setdefault("bearing_reaction_n", {})[jn] = float(np.linalg.norm(Rb))
+        hsg = topo.housing.get(jn)
+        if hsg and hsg in loads:
+            hl = loads[hsg].link
+            loads[hsg].loads.append(Load(to_link(hl, w["O"]), vec_link(hl, F_house), vec_link(hl, M_house), f"distal wrench of {jn}"))
     # ---- tree: totals and the wrench each child hands to its parent
     for L, order in topo.order.items():
         R, t = fk[L]

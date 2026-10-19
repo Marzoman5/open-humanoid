@@ -35,6 +35,21 @@ def policy() -> dict:
     return yaml.safe_load(POLICY_PATH.read_text(encoding="utf-8"))
 
 
+def override(extra: dict | None) -> None:
+    """Merge a variant's overrides (strength.yaml keys `policy_overrides`) into the cached policy (deep merge). Idempotent."""
+    if not extra:
+        return
+
+    def merge(a, b):
+        for k, v in b.items():
+            if isinstance(v, dict) and isinstance(a.get(k), dict):
+                merge(a[k], v)
+            else:
+                a[k] = v
+
+    merge(policy(), extra)
+
+
 def pv(d, *path, default=None):
     """Walk the policy dict and unwrap a {v: ...} leaf."""
     cur = d

@@ -95,6 +95,7 @@ fall:
 walking:
   grf_peak_over_weight: {v: 1.5, kind: assumption, src: "peak vertical ground reaction of a stiff-footed small biped in single support; human walking 1.1-1.3 BW with heel-strike transients to 1.5-3 BW", test: "foot force plate / load cell under one foot while walking"}
   friction_tangential_over_normal: {v: 0.3, kind: assumption, src: "tangential ground force kept below mu = 0.3 for printed/rubber soles: horizontal force = 0.3 F"}
+  concept_headroom: {v: 1.25, kind: assumption, src: "the concept engine replays a frozen LIPM + IK walk open loop: its loads are a lower bound for a balancing controller (R1 report limitations); 25% headroom on every joint peak", test: "strain gauge / servo current logging while walking"}
   stance_knee_flexion_deg: {v: 40, kind: sourced, src: "concept engine gait choice 40 deg stance knee flexion, 0.5 s step (R1 report, gait table)"}
   push_impulse_ns: {v: 0.45, kind: sourced, src: "R10 provisional absolute push, variants/adam/reviews/R1-concept-2026-10-19.md section 1"}
   push_duration_s: {v: 0.05, kind: assumption, src: "the push is applied in 50 ms (impulsive); ToddlerBot randomisation uses 0.2 s"}

@@ -20,6 +20,10 @@ from .policy import policy
 def run(model: Model, cfg: dict, only_cases: list[str] | None = None, only_parts: list[str] | None = None, verbose: bool = False,
         analyzers: dict | None = None) -> dict:
     t0 = time.time()
+    from .policy import override
+
+    override(cfg.get("policy_overrides"))
+    apply_profiles(model, cfg)
     excl = set(cfg.get("exclude_parts", []))
     topo = Topology(model, list(excl))
     scs, ctx = loadcases.build(model, cfg, only_cases)
@@ -68,6 +72,17 @@ def run(model: Model, cfg: dict, only_cases: list[str] | None = None, only_parts
     for p in printed:
         rows += clamp_checks(model, topo, p)
     return aggregate(rows, scen_info, ctx, topo, time.time() - t0, [p.id for p in printed])
+
+
+def apply_profiles(model: Model, cfg: dict) -> None:
+    """Print profiles (perimeters, infill, material override) from the variant strength config onto the model's printed parts."""
+    profs = cfg.get("print_profiles", {}) or {}
+    for p in model.printed_parts():
+        prof = dict(profs.get("*", {}))
+        prof.update(profs.get(p.id, {}))
+        if "material" in profs.get(p.id, {}):
+            p.material = profs[p.id]["material"]
+        p.profile = {**p.profile, **prof}
 
 
 def aggregate(rows: list[Row], scen_info: list[dict], ctx: dict, topo, wall: float, part_ids: list[str]) -> dict:

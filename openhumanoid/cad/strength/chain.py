@@ -38,6 +38,7 @@ class Scenario:
     root: str | None = None       # link whose subtree is analysed (None = every link)
     cap_factor: float | None = None   # scale the external loading so no joint torque exceeds cap_factor x stall (None: not servo limited)
     cap_mode: str = "contacts"        # contacts | field
+    cap_nm: dict | None = None        # per-joint absolute torque caps (N.m); overrides cap_factor x stall for the joints listed
     info: dict = field(default_factory=dict)
 
 
@@ -94,7 +95,7 @@ def scale_to_cap(model: Model, sc: Scenario, stall: dict[str, float], mass_overr
     w1 = joint_wrenches(model, sc, mass_override)
     s = 1.0
     for jn, d in w1.items():
-        cap = stall.get(jn, 0.0) * 1000.0 * sc.cap_factor
+        cap = (sc.cap_nm[jn] if sc.cap_nm and jn in sc.cap_nm else stall.get(jn, 0.0) * sc.cap_factor) * 1000.0
         if cap <= 0:
             continue
         t0, t1 = w0[jn]["tau"], d["tau"]

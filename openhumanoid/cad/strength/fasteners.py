@@ -39,10 +39,10 @@ def _thickness(mesh, p: np.ndarray, d: np.ndarray, offsets: list[np.ndarray]) ->
         for i in range(0, len(t) - 1, 2):
             vals.append(float(t[i + 1] - t[i]))
             break
-    return float(np.median(vals)) if vals else float("nan")
+    return float(np.max(vals)) if vals else float("nan")      # the full slab: probes that fall in a counterbore return only the floor
 
 
-def _perp(d: np.ndarray, r: float, n: int = 4, rot: float = math.pi / 4) -> list[np.ndarray]:
+def _perp(d: np.ndarray, r: float, n: int = 12, rot: float = 0.2) -> list[np.ndarray]:
     u, v, _ = plane_basis(d)
     return [r * (math.cos(rot + 2 * math.pi * i / n) * u + math.sin(rot + 2 * math.pi * i / n) * v) for i in range(n)]
 
@@ -82,6 +82,9 @@ def horn_checks(model: Model, topo: Topology, j: JointRec, pl: PartLoads, part: 
     t_pl = _thickness(part.mesh, hs, a, off)
     t_floor = max((t_pl - cb) if np.isfinite(t_pl) else 1.6, 0.8)
     d_s, d_h, D_h = SHANK_D.get(th, 2.0), HOLE_D.get(th, 2.4), HEAD_D.get(th, 3.8)
+    wsh = (part.meta or {}).get("horn_washer_od_mm")                          # builder: horn_mount(washer_od=...) records it on the part
+    if wsh:
+        D_h = float(wsh)
     rows = []
     # bearing of the screw shank on the hole wall
     sig_br = V / (d_s * t_floor)

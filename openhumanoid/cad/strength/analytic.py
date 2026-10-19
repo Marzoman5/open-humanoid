@@ -76,13 +76,7 @@ class PartAnalyzer:
     # ---- normals --------------------------------------------------------------------------------------------------
     def normals(self) -> list[np.ndarray]:
         out = [np.array([1.0, 0, 0]), np.array([0, 1.0, 0]), np.array([0, 0, 1.0])]
-        V = np.asarray(self.mesh.vertices)
-        c = V - V.mean(axis=0)
-        w, vec = np.linalg.eigh(np.cov(c.T))
-        long_ax = vec[:, -1]
-        if max(abs(float(long_ax @ o)) for o in out) < 0.97:
-            out.append(long_ax / np.linalg.norm(long_ax))
-        return out
+        return out          # oblique planes through L-shaped parts cut grazing corner slivers, not load-path sections: axis-aligned only
 
     def stack(self) -> list[dict]:
         if self._stack is not None:

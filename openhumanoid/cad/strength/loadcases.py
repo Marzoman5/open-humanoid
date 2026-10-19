@@ -295,6 +295,10 @@ def build(model: Model, cfg: dict, only: list[str] | None = None) -> tuple[list[
     for sc in scs:
         if sc.cls in ("walk", "push", "stall"):
             sc.cap_factor = float(pv(pol, "joint_torque", "stall_bound_factor"))
+            if sc.cls == "walk" and peaks:
+                # walking: no joint torque above its concept-engine peak (plus headroom for what the open-loop replay does not see), never above stall
+                head = float(pv(pol, "walking", "concept_headroom"))
+                sc.cap_nm = {j: min(max(head * peaks[j]["peak_nm"], 0.2 * stall[j]), stall[j]) for j in stall if j in peaks}
         elif sc.cls == "fall":
             sc.cap_factor = bd
             sc.cap_mode = "field" if sc.name.startswith("fall_inertial") else "contacts"

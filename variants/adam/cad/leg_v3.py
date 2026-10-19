@@ -35,8 +35,9 @@ from openhumanoid.cad.housing import servo_housing
 P = {
     "plate_t": 6.5,            # horn plate: low-head counterbore 1.8-2.3 + floor; was 4.3 (thin plates were the first strength failures)
     "idler_plate_t": 7.5,      # bearing seat 4 mm + shoulder; was 5.6
-    "cover_t": 4.4,            # 2.6 mm low-head counterbore + 1.8 mm floor (the gate found 3.2 leaves 0.6 mm under the head)
-    "cover_t_idler": 5.6,      # blind relief for the servo's back stub (3.4) + the printed idler pin + >= 1.6 mm behind them
+    "cover_t": 6.5,            # was 4.4: the rear covers are the first thing a backward fall touches (floor 4.2 mm under the low-head counterbore)
+    "cover_t_idler": 6.5,      # blind relief for the servo's back stub (3.4) + the printed idler pin + >= 1.6 mm behind them; was 5.6
+    "housing_wall": 3.2,       # servo pocket walls, was 2.4 (load-path minimum): the yaw column and housings carry torque as thin-walled sections
     "web_radius": {"hip_pitch": 24.0, "knee": 30.0},   # fork web distance from the pitch axis: knee needs >= 30 for 115+ deg of flexion
     "web_t": 8.0,              # was 3.2: the web carries the whole leg load from the beam to the plates (bending of a 3.2 mm web failed first)
     "fork_w": 36.0,            # plate width (fore-aft); was 28
@@ -52,6 +53,7 @@ P = {
     "foot_rib_h_end": 8.0,
     "foot_rib_len": 62.0,
     "foot_fillet": 4.0,        # cantilever root radius (dfm fillet.cantilever_root_mm)
+    "horn_washer_od": 5.0,     # ISO 7089 M2 washers under the horn screw heads (bearing area under a low-head M2 is only 6.8 mm2)
     "join_screw": "M3x35L",    # roll cradle to roll plate (through the 29.8 mm cradle into inserts in the bridge)
     "bearing": "MR105ZZ",
     "idler_gap": 1.5,
@@ -117,7 +119,7 @@ def build(ctx) -> Assembly:
     def printed(pid, shape_w, link, sites_w, rename=None, wall_class="structural", up=(0, 1, 0), expect=None, meta=None, material=None):
         sites = [site_to_link(s, link, pid, rename) for s in sites_w]
         pt = Part(pid, to_link(shape_w, link), "frame", material or P["structure_material"], color="frame", sites=sites, print_up=up,
-                  meta={"wall_class": wall_class, "expect": expect or [], **(meta or {})})
+                  meta={"wall_class": wall_class, "expect": expect or [], "horn_washer_od_mm": P["horn_washer_od"], **(meta or {})})
         add_part(link, pt)
         return pt
 
@@ -125,7 +127,7 @@ def build(ctx) -> Assembly:
     H = {}
     for n in LEG:
         has_idler = idl[n] is not None
-        H[n] = servo_housing(A[n], part=f"housing_{J[n]}", cover_part=f"cover_{J[n]}",
+        H[n] = servo_housing(A[n], part=f"housing_{J[n]}", cover_part=f"cover_{J[n]}", wall=P["housing_wall"],
                              cover_t=P["cover_t_idler"] if has_idler else P["cover_t"],
                              idler={"bearing": idl[n]["bearing"], "gap_mm": idl[n]["gap_mm"]} if has_idler else None)
 
@@ -194,7 +196,7 @@ def build(ctx) -> Assembly:
         printed(f"cover_{J[n]}", c_shape, host_link[n], c_sites, rename={"housing": f"housing_{J[n]}"}, up=(0, 0, 1), material="petg")
 
     def horn_plate_feat(n, mate):
-        return horn_mount(A[n], plate_t=hp, mode="flat", part="", mates=mate).placed(S[n] * get_component(A[n]).frames["horn_seat"])
+        return horn_mount(A[n], plate_t=hp, mode="flat", part="", mates=mate, washer_od=P["horn_washer_od"]).placed(S[n] * get_component(A[n]).frames["horn_seat"])
 
     # ---- pelvis mount: the yaw servo's housing alone (pelvis design is out of scope)
     pid = f"housing_{J['hip_yaw']}"
@@ -286,7 +288,7 @@ def build(ctx) -> Assembly:
         pid, ipid = f"{nm}_{side}", f"{nm}_idler_{side}"
         ms, mst, isn, ist = fork(n, nxt, pid, ipid)
         printed(pid, ms, child_link[n], mst, rename={"housing": pid, "cover": f"cover_{J[nxt]}"},
-                expect=horn_expect(n, child_link[n]) + pocket_expect(nxt, child_link[n]))
+                expect=horn_expect(n, child_link[n]) + pocket_expect(nxt, child_link[n]), up=(1, 0, 0))     # standing on the front face: the lateral bending stays in-layer
         printed(ipid, isn, child_link[n], ist, expect=seat_expect(n, child_link[n]), wall_class="structural")
 
     # ---- 5. ankle bracket: horn plate + S6's widened housing (behind the ankle) + removable idler plate
@@ -303,7 +305,7 @@ def build(ctx) -> Assembly:
     inner_idl = wp(S[n], 0, 0, z_in).Y
     cy = ifs.axis_origin("ankle_roll_l")[1]
     hw6 = h6["outer_y"][1]
-    h6w = servo_housing(A["ankle_roll"], part=f"housing_{J['ankle_roll']}", cover_part=f"cover_{J['ankle_roll']}", cover_t=P["cover_t"],
+    h6w = servo_housing(A["ankle_roll"], part=f"housing_{J['ankle_roll']}", cover_part=f"cover_{J['ankle_roll']}", cover_t=P["cover_t"], wall=P["housing_wall"],
                         side_extra=(inner_horn - cy - hw6 + 0.5, cy - inner_idl - hw6))      # S6 y' = -world y: [0] -> +y (horn side), [1] -> -y (idler side)
     bpid, ipid = f"ankle_bracket_{side}", f"ankle_idler_{side}"
     pts = [(x, ax_n[2] + dz) for x in (-40.0, -54.0) for dz in (-7.0, 7.0)]          # (world x, world z) of the idler plate screws
@@ -341,7 +343,7 @@ def build(ctx) -> Assembly:
 
     body, frep = fillet_internal(body, P["foot_fillet"], min_len=6.0, name="foot")
     asm.notes.append(f"foot: {frep['filleted']}/{frep['candidates']} internal edges filleted r={frep['radius_mm']:.1f}")
-    hmf = horn_mount("sts3215-12v", plate_t=hpf, mode="flat", part="", mates=f"servo_{J[n]}").placed(S[n] * get_component(A[n]).frames["horn_seat"])
+    hmf = horn_mount("sts3215-12v", plate_t=hpf, mode="flat", part="", mates=f"servo_{J[n]}", washer_od=P["horn_washer_od"]).placed(S[n] * get_component(A[n]).frames["horn_seat"])
     shp, st_ = apply(body, hmf, name="foot")
     printed(f"foot_{side}", shp, child_link[n], st_, expect=horn_expect(n, child_link[n]), up=(0, 1, 0))
 

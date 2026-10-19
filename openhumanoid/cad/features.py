@@ -202,7 +202,7 @@ def servo_pocket(actuator_id: str = "sts3215-12v", clearance: str | float = "sli
 
 
 def horn_mount(actuator_id: str = "sts3215-12v", *, plate_t: float = 4.3, mode: str = "flat", part: str = "", mates: str | None = None,
-               fit: str = "slip", at: bd.Location | None = None) -> FeatureResult:
+               fit: str = "slip", washer_od: float | None = None, at: bd.Location | None = None) -> FeatureResult:
     """Features on the plate that attaches to the servo horn, in the servo's `horn_seat` frame (origin on the axis at the horn's
     underside, +z away from the servo).
 
@@ -211,6 +211,8 @@ def horn_mount(actuator_id: str = "sts3215-12v", *, plate_t: float = 4.3, mode: 
                      inside the plate; saves one horn thickness of axial stack; the plate thickness above the horn is `plate_t`.
     Cuts: central M3 screw hole (counterbored from the outer face), horn screw holes on the horn's bolt circle (counterbored),
     boss relief under the plate. Sites: one centre screw + one per horn hole (tool access from +z).
+    `washer_od`: ISO 7089 M2 washers (OD 5.0, 0.3 thick) under the horn screw heads: the counterbore is widened to hold them. A low-head M2 has
+    only 6.8 mm2 of bearing area under the head, which is the first limit when the plate carries a moment through the horn (G-strength).
     Raises if the plate is thinner than the counterbore needs.
     """
     servo = get_component(actuator_id)
@@ -224,7 +226,7 @@ def horn_mount(actuator_id: str = "sts3215-12v", *, plate_t: float = 4.3, mode: 
     hs = get_component("screw:" + HP["screw"] + "x6L").params
     cs = get_component("screw:" + HP["center_screw"] + "x6L").params
     gap = float(val(dfm.load_dfm()["screw"]["head_gap_mm"]))
-    min_t = max(hs["counterbore_depth"], cs["counterbore_depth"]) + gap + dfm.min_wall("structural")
+    min_t = max(hs["counterbore_depth"] + (0.3 if washer_od else 0.0), cs["counterbore_depth"]) + gap + dfm.min_wall("structural")
     if plate_t < min_t - 1e-9:
         raise CadOpError(f"horn_mount: plate_t {plate_t} < {min_t:.2f} needed for counterbored screws (depth + head gap + 1.6 mm structural floor)")
     if mode == "recessed":
@@ -247,6 +249,11 @@ def horn_mount(actuator_id: str = "sts3215-12v", *, plate_t: float = 4.3, mode: 
         loc = loc_from((x, y, z_top), (0, 0, 1), (1, 0, 0))
         hf = screw_clearance(HP["screw"], through=plate_t + 1.0, counterbore=True,
                              part=part, mates=mates or "horn", length=len_h, tag=f"horn_{i}", head="low", at=loc)
+        if washer_od:
+            wd = washer_od + 0.2 + dfm.hole_comp(washer_od)
+            wh = hs["counterbore_depth"] + gap + 0.3
+            hf.cut.append(cyl_along(bd.Location(), wd, wh + 1.0, z0=-wh))
+            hf.notes.append(f"washer counterbore d{wd:.2f} x {wh:.2f}")
         f = f.merged(hf)
     f.notes.append(f"horn mount {mode}: plate {plate_t} over horn {t_h}; underside z={z_under}, top z={z_top}")
     f.name = "horn_mount"

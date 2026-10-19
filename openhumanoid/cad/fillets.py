@@ -19,6 +19,9 @@ from . import dfm
 from .core import CadOpError, check_solid
 
 
+LOG: list[dict] = []          # one report per fillet_internal call (the builder or the CLI may print it)
+
+
 def _unit(v):
     n = np.linalg.norm(v)
     return v / n if n > 1e-12 else v
@@ -91,6 +94,7 @@ def fillet_internal(shape: bd.Shape, r: float | None = None, min_len: float = 6.
                 continue
         edges.append(e)
     rep = {"name": name, "candidates": len(edges), "filleted": 0, "skipped": 0, "radius_mm": r, "notes": []}
+    LOG.append(rep)
     if not edges:
         return shape, rep
     v0 = float(shape.volume)
