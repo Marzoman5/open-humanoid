@@ -1,0 +1,1101 @@
+{
+  "ok": false,
+  "order": [
+    {
+      "step": 1,
+      "part": "servo_hip_yaw_l",
+      "link": "pelvis",
+      "move": [
+        0,
+        0,
+        1
+      ],
+      "free_dirs": 6,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 2,
+      "part": "cover_hip_yaw_l",
+      "link": "pelvis",
+      "move": [
+        0,
+        0,
+        1
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 3,
+      "part": "housing_hip_yaw_l",
+      "link": "pelvis",
+      "move": [
+        0,
+        0,
+        -1
+      ],
+      "free_dirs": 1,
+      "screws": [
+        "cover_screw_0",
+        "cover_screw_1"
+      ],
+      "blocked_screws": []
+    },
+    {
+      "step": 4,
+      "part": "shaft_hip_yaw_l",
+      "link": "hip_yaw_l_link",
+      "move": [
+        0,
+        0,
+        -1
+      ],
+      "free_dirs": 5,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 5,
+      "part": "shaftb_hip_yaw_l",
+      "link": "hip_yaw_l_link",
+      "move": [
+        0,
+        0,
+        1
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 6,
+      "part": "horn_hip_yaw_l",
+      "link": "hip_yaw_l_link",
+      "move": [
+        0,
+        0,
+        -1
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 7,
+      "part": "yaw_bracket_l",
+      "link": "hip_yaw_l_link",
+      "move": [
+        0,
+        0,
+        -1
+      ],
+      "free_dirs": 5,
+      "screws": [
+        "horn_center",
+        "horn_0",
+        "horn_1",
+        "horn_2",
+        "horn_3"
+      ],
+      "blocked_screws": []
+    },
+    {
+      "step": 8,
+      "part": "servo_hip_roll_l",
+      "link": "hip_yaw_l_link",
+      "move": [
+        -1,
+        0,
+        0
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 9,
+      "part": "cover_hip_roll_l",
+      "link": "hip_yaw_l_link",
+      "move": [
+        -1,
+        0,
+        0
+      ],
+      "free_dirs": 1,
+      "screws": [
+        "cover_screw_0",
+        "cover_screw_1"
+      ],
+      "blocked_screws": []
+    },
+    {
+      "step": 10,
+      "part": "shaft_hip_roll_l",
+      "link": "hip_roll_l_link",
+      "move": [
+        0,
+        0,
+        -1
+      ],
+      "free_dirs": 4,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 11,
+      "part": "shaftb_hip_roll_l",
+      "link": "hip_roll_l_link",
+      "move": [
+        -1,
+        0,
+        0
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 12,
+      "part": "horn_hip_roll_l",
+      "link": "hip_roll_l_link",
+      "move": [
+        1,
+        0,
+        0
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 13,
+      "part": "roll_bracket_l",
+      "link": "hip_roll_l_link",
+      "move": [
+        0,
+        0,
+        -1
+      ],
+      "free_dirs": 4,
+      "screws": [
+        "horn_center",
+        "horn_0",
+        "horn_1",
+        "horn_2",
+        "horn_3"
+      ],
+      "blocked_screws": []
+    },
+    {
+      "step": 14,
+      "part": "servo_hip_pitch_l",
+      "link": "hip_roll_l_link",
+      "move": [
+        0,
+        -1,
+        0
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 15,
+      "part": "shaft_hip_pitch_l",
+      "link": "hip_pitch_l_link",
+      "move": [
+        0,
+        0,
+        1
+      ],
+      "free_dirs": 5,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 16,
+      "part": "shaftb_hip_pitch_l",
+      "link": "hip_pitch_l_link",
+      "move": [
+        0,
+        0,
+        -1
+      ],
+      "free_dirs": 4,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 17,
+      "part": "horn_hip_pitch_l",
+      "link": "hip_pitch_l_link",
+      "move": [
+        0,
+        1,
+        0
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 18,
+      "part": "servo_knee_l",
+      "link": "hip_pitch_l_link",
+      "move": [
+        0,
+        0,
+        -1
+      ],
+      "free_dirs": 5,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 19,
+      "part": "shaft_knee_l",
+      "link": "knee_l_link",
+      "move": [
+        0,
+        0,
+        1
+      ],
+      "free_dirs": 5,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 20,
+      "part": "shaftb_knee_l",
+      "link": "knee_l_link",
+      "move": [
+        0,
+        0,
+        1
+      ],
+      "free_dirs": 5,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 21,
+      "part": "horn_knee_l",
+      "link": "knee_l_link",
+      "move": [
+        0,
+        1,
+        0
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 22,
+      "part": "servo_ankle_pitch_l",
+      "link": "knee_l_link",
+      "move": [
+        0,
+        0,
+        -1
+      ],
+      "free_dirs": 5,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 23,
+      "part": "shaft_ankle_pitch_l",
+      "link": "ankle_pitch_l_link",
+      "move": [
+        0,
+        0,
+        1
+      ],
+      "free_dirs": 5,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 24,
+      "part": "shaftb_ankle_pitch_l",
+      "link": "ankle_pitch_l_link",
+      "move": [
+        0,
+        0,
+        1
+      ],
+      "free_dirs": 5,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 25,
+      "part": "horn_ankle_pitch_l",
+      "link": "ankle_pitch_l_link",
+      "move": [
+        0,
+        1,
+        0
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 26,
+      "part": "servo_ankle_roll_l",
+      "link": "ankle_pitch_l_link",
+      "move": [
+        0,
+        0,
+        1
+      ],
+      "free_dirs": 5,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 27,
+      "part": "cover_ankle_roll_l",
+      "link": "ankle_pitch_l_link",
+      "move": [
+        -1,
+        0,
+        0
+      ],
+      "free_dirs": 1,
+      "screws": [
+        "cover_screw_0",
+        "cover_screw_1"
+      ],
+      "blocked_screws": []
+    },
+    {
+      "step": 28,
+      "part": "shaft_ankle_roll_l",
+      "link": "ankle_roll_l_link",
+      "move": [
+        0,
+        0,
+        1
+      ],
+      "free_dirs": 5,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 29,
+      "part": "shaftb_ankle_roll_l",
+      "link": "ankle_roll_l_link",
+      "move": [
+        -1,
+        0,
+        0
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 30,
+      "part": "horn_ankle_roll_l",
+      "link": "ankle_roll_l_link",
+      "move": [
+        1,
+        0,
+        0
+      ],
+      "free_dirs": 1,
+      "screws": [],
+      "blocked_screws": []
+    },
+    {
+      "step": 31,
+      "part": "foot_l",
+      "link": "ankle_roll_l_link",
+      "move": [
+        0,
+        0,
+        -1
+      ],
+      "free_dirs": 4,
+      "screws": [
+        "horn_center",
+        "horn_0",
+        "horn_1",
+        "horn_2",
+        "horn_3"
+      ],
+      "blocked_screws": []
+    }
+  ],
+  "subassemblies": {
+    "pelvis": {
+      "parts": [
+        "servo_hip_yaw_l",
+        "cover_hip_yaw_l",
+        "housing_hip_yaw_l"
+      ],
+      "order": [
+        "servo_hip_yaw_l",
+        "cover_hip_yaw_l",
+        "housing_hip_yaw_l"
+      ],
+      "bench_assemblable": true
+    },
+    "hip_yaw_l_link": {
+      "parts": [
+        "shaft_hip_yaw_l",
+        "shaftb_hip_yaw_l",
+        "horn_hip_yaw_l",
+        "servo_hip_roll_l",
+        "cover_hip_roll_l",
+        "yaw_bracket_l"
+      ],
+      "order": [
+        "shaft_hip_yaw_l",
+        "shaftb_hip_yaw_l",
+        "horn_hip_yaw_l",
+        "yaw_bracket_l",
+        "servo_hip_roll_l",
+        "cover_hip_roll_l"
+      ],
+      "bench_assemblable": true
+    },
+    "hip_roll_l_link": {
+      "parts": [
+        "shaft_hip_roll_l",
+        "shaftb_hip_roll_l",
+        "horn_hip_roll_l",
+        "servo_hip_pitch_l",
+        "cover_hip_pitch_l",
+        "roll_bracket_l"
+      ],
+      "order": [
+        "shaft_hip_roll_l",
+        "shaftb_hip_roll_l",
+        "horn_hip_roll_l",
+        "roll_bracket_l",
+        "servo_hip_pitch_l"
+      ],
+      "bench_assemblable": true
+    },
+    "hip_pitch_l_link": {
+      "parts": [
+        "shaft_hip_pitch_l",
+        "shaftb_hip_pitch_l",
+        "horn_hip_pitch_l",
+        "bearing_hip_pitch_l",
+        "servo_knee_l",
+        "cover_knee_l",
+        "thigh_l"
+      ],
+      "order": [
+        "shaft_hip_pitch_l",
+        "shaftb_hip_pitch_l",
+        "horn_hip_pitch_l",
+        "servo_knee_l"
+      ],
+      "bench_assemblable": false
+    },
+    "knee_l_link": {
+      "parts": [
+        "shaft_knee_l",
+        "shaftb_knee_l",
+        "horn_knee_l",
+        "bearing_knee_l",
+        "servo_ankle_pitch_l",
+        "cover_ankle_pitch_l",
+        "shank_l"
+      ],
+      "order": [
+        "shaft_knee_l",
+        "shaftb_knee_l",
+        "horn_knee_l",
+        "servo_ankle_pitch_l"
+      ],
+      "bench_assemblable": false
+    },
+    "ankle_pitch_l_link": {
+      "parts": [
+        "shaft_ankle_pitch_l",
+        "shaftb_ankle_pitch_l",
+        "horn_ankle_pitch_l",
+        "bearing_ankle_pitch_l",
+        "servo_ankle_roll_l",
+        "cover_ankle_roll_l",
+        "ankle_bracket_l"
+      ],
+      "order": [
+        "shaft_ankle_pitch_l",
+        "shaftb_ankle_pitch_l",
+        "horn_ankle_pitch_l",
+        "servo_ankle_roll_l",
+        "cover_ankle_roll_l"
+      ],
+      "bench_assemblable": false
+    },
+    "ankle_roll_l_link": {
+      "parts": [
+        "shaft_ankle_roll_l",
+        "shaftb_ankle_roll_l",
+        "horn_ankle_roll_l",
+        "foot_l"
+      ],
+      "order": [
+        "shaft_ankle_roll_l",
+        "shaftb_ankle_roll_l",
+        "horn_ankle_roll_l",
+        "foot_l"
+      ],
+      "bench_assemblable": true
+    }
+  },
+  "tree": {
+    "pelvis": {
+      "parent": null,
+      "parts": [
+        "servo_hip_yaw_l",
+        "cover_hip_yaw_l",
+        "housing_hip_yaw_l"
+      ]
+    },
+    "hip_yaw_l_link": {
+      "parent": "pelvis",
+      "parts": [
+        "shaft_hip_yaw_l",
+        "shaftb_hip_yaw_l",
+        "horn_hip_yaw_l",
+        "yaw_bracket_l",
+        "servo_hip_roll_l",
+        "cover_hip_roll_l"
+      ]
+    },
+    "hip_roll_l_link": {
+      "parent": "hip_yaw_l_link",
+      "parts": [
+        "shaft_hip_roll_l",
+        "shaftb_hip_roll_l",
+        "horn_hip_roll_l",
+        "roll_bracket_l",
+        "servo_hip_pitch_l"
+      ]
+    },
+    "hip_pitch_l_link": {
+      "parent": "hip_roll_l_link",
+      "parts": [
+        "shaft_hip_pitch_l",
+        "shaftb_hip_pitch_l",
+        "horn_hip_pitch_l",
+        "servo_knee_l"
+      ]
+    },
+    "knee_l_link": {
+      "parent": "hip_pitch_l_link",
+      "parts": [
+        "shaft_knee_l",
+        "shaftb_knee_l",
+        "horn_knee_l",
+        "servo_ankle_pitch_l"
+      ]
+    },
+    "ankle_pitch_l_link": {
+      "parent": "knee_l_link",
+      "parts": [
+        "shaft_ankle_pitch_l",
+        "shaftb_ankle_pitch_l",
+        "horn_ankle_pitch_l",
+        "servo_ankle_roll_l",
+        "cover_ankle_roll_l"
+      ]
+    },
+    "ankle_roll_l_link": {
+      "parent": "ankle_pitch_l_link",
+      "parts": [
+        "shaft_ankle_roll_l",
+        "shaftb_ankle_roll_l",
+        "horn_ankle_roll_l",
+        "foot_l"
+      ]
+    }
+  },
+  "stuck_parts": [],
+  "cyclic_parts": [
+    "ankle_bracket_l",
+    "bearing_ankle_pitch_l",
+    "bearing_hip_pitch_l",
+    "bearing_knee_l",
+    "cover_ankle_pitch_l",
+    "cover_hip_pitch_l",
+    "cover_knee_l",
+    "shank_l",
+    "thigh_l"
+  ],
+  "unreachable_screws": [
+    {
+      "site": "horn_center",
+      "part": "roll_bracket_l",
+      "mate": "servo_hip_roll_l",
+      "blocked_by": "roll_bracket_l",
+      "why": "the part itself / its mate covers the tool corridor"
+    },
+    {
+      "site": "horn_0",
+      "part": "roll_bracket_l",
+      "mate": "servo_hip_roll_l",
+      "blocked_by": "roll_bracket_l",
+      "why": "the part itself / its mate covers the tool corridor"
+    },
+    {
+      "site": "horn_1",
+      "part": "roll_bracket_l",
+      "mate": "servo_hip_roll_l",
+      "blocked_by": "roll_bracket_l",
+      "why": "the part itself / its mate covers the tool corridor"
+    },
+    {
+      "site": "horn_2",
+      "part": "roll_bracket_l",
+      "mate": "servo_hip_roll_l",
+      "blocked_by": "roll_bracket_l",
+      "why": "the part itself / its mate covers the tool corridor"
+    },
+    {
+      "site": "horn_3",
+      "part": "roll_bracket_l",
+      "mate": "servo_hip_roll_l",
+      "blocked_by": "roll_bracket_l",
+      "why": "the part itself / its mate covers the tool corridor"
+    },
+    {
+      "site": "horn_center",
+      "part": "foot_l",
+      "mate": "servo_ankle_roll_l",
+      "blocked_by": "foot_l",
+      "why": "the part itself / its mate covers the tool corridor"
+    },
+    {
+      "site": "horn_0",
+      "part": "foot_l",
+      "mate": "servo_ankle_roll_l",
+      "blocked_by": "foot_l",
+      "why": "the part itself / its mate covers the tool corridor"
+    },
+    {
+      "site": "horn_1",
+      "part": "foot_l",
+      "mate": "servo_ankle_roll_l",
+      "blocked_by": "foot_l",
+      "why": "the part itself / its mate covers the tool corridor"
+    },
+    {
+      "site": "horn_2",
+      "part": "foot_l",
+      "mate": "servo_ankle_roll_l",
+      "blocked_by": "foot_l",
+      "why": "the part itself / its mate covers the tool corridor"
+    },
+    {
+      "site": "horn_3",
+      "part": "foot_l",
+      "mate": "servo_ankle_roll_l",
+      "blocked_by": "foot_l",
+      "why": "the part itself / its mate covers the tool corridor"
+    }
+  ],
+  "serviceability": [
+    {
+      "site": "cover_hip_yaw_l:cover_screw_0",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "cover_hip_yaw_l:cover_screw_1",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "cover_hip_roll_l:cover_screw_0",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "cover_hip_roll_l:cover_screw_1",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "yaw_bracket_l:horn_center",
+      "serviceable_assembled": false,
+      "blocked_by": [
+        "servo_hip_pitch_l",
+        "roll_bracket_l"
+      ]
+    },
+    {
+      "site": "yaw_bracket_l:horn_0",
+      "serviceable_assembled": false,
+      "blocked_by": [
+        "servo_hip_pitch_l",
+        "roll_bracket_l"
+      ]
+    },
+    {
+      "site": "yaw_bracket_l:horn_1",
+      "serviceable_assembled": false,
+      "blocked_by": [
+        "servo_hip_pitch_l",
+        "roll_bracket_l"
+      ]
+    },
+    {
+      "site": "yaw_bracket_l:horn_2",
+      "serviceable_assembled": false,
+      "blocked_by": [
+        "servo_hip_pitch_l",
+        "roll_bracket_l"
+      ]
+    },
+    {
+      "site": "yaw_bracket_l:horn_3",
+      "serviceable_assembled": false,
+      "blocked_by": [
+        "servo_hip_pitch_l",
+        "roll_bracket_l"
+      ]
+    },
+    {
+      "site": "cover_hip_pitch_l:cover_screw_0",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "cover_hip_pitch_l:cover_screw_1",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "roll_bracket_l:horn_center",
+      "serviceable_assembled": false,
+      "blocked_by": [
+        "servo_hip_pitch_l"
+      ]
+    },
+    {
+      "site": "roll_bracket_l:horn_0",
+      "serviceable_assembled": false,
+      "blocked_by": [
+        "servo_hip_pitch_l"
+      ]
+    },
+    {
+      "site": "roll_bracket_l:horn_1",
+      "serviceable_assembled": false,
+      "blocked_by": [
+        "servo_hip_pitch_l"
+      ]
+    },
+    {
+      "site": "roll_bracket_l:horn_2",
+      "serviceable_assembled": false,
+      "blocked_by": [
+        "servo_hip_pitch_l"
+      ]
+    },
+    {
+      "site": "roll_bracket_l:horn_3",
+      "serviceable_assembled": false,
+      "blocked_by": [
+        "servo_hip_pitch_l"
+      ]
+    },
+    {
+      "site": "cover_knee_l:cover_screw_0",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "cover_knee_l:cover_screw_1",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "thigh_l:horn_center",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "thigh_l:horn_0",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "thigh_l:horn_1",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "thigh_l:horn_2",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "thigh_l:horn_3",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "cover_ankle_pitch_l:cover_screw_0",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "cover_ankle_pitch_l:cover_screw_1",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "shank_l:horn_center",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "shank_l:horn_0",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "shank_l:horn_1",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "shank_l:horn_2",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "shank_l:horn_3",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "cover_ankle_roll_l:cover_screw_0",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "cover_ankle_roll_l:cover_screw_1",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "ankle_bracket_l:horn_center",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "ankle_bracket_l:horn_0",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "ankle_bracket_l:horn_1",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "ankle_bracket_l:horn_2",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "ankle_bracket_l:horn_3",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "foot_l:horn_center",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "foot_l:horn_0",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "foot_l:horn_1",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "foot_l:horn_2",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    },
+    {
+      "site": "foot_l:horn_3",
+      "serviceable_assembled": true,
+      "blocked_by": []
+    }
+  ],
+  "n_parts": 40,
+  "precedence": [
+    {
+      "before": "cover_hip_pitch_l",
+      "after": "thigh_l",
+      "why": "thigh_l would block every insertion path of cover_hip_pitch_l"
+    },
+    {
+      "before": "bearing_hip_pitch_l",
+      "after": "thigh_l",
+      "why": "thigh_l would block every insertion path of bearing_hip_pitch_l"
+    },
+    {
+      "before": "cover_knee_l",
+      "after": "shank_l",
+      "why": "shank_l would block every insertion path of cover_knee_l"
+    },
+    {
+      "before": "thigh_l",
+      "after": "cover_hip_pitch_l",
+      "why": "cover_hip_pitch_l would block every insertion path of thigh_l"
+    },
+    {
+      "before": "thigh_l",
+      "after": "bearing_hip_pitch_l",
+      "why": "bearing_hip_pitch_l would block every insertion path of thigh_l"
+    },
+    {
+      "before": "bearing_knee_l",
+      "after": "shank_l",
+      "why": "shank_l would block every insertion path of bearing_knee_l"
+    },
+    {
+      "before": "cover_ankle_pitch_l",
+      "after": "ankle_bracket_l",
+      "why": "ankle_bracket_l would block every insertion path of cover_ankle_pitch_l"
+    },
+    {
+      "before": "shank_l",
+      "after": "cover_knee_l",
+      "why": "cover_knee_l would block every insertion path of shank_l"
+    },
+    {
+      "before": "shank_l",
+      "after": "bearing_knee_l",
+      "why": "bearing_knee_l would block every insertion path of shank_l"
+    },
+    {
+      "before": "bearing_ankle_pitch_l",
+      "after": "ankle_bracket_l",
+      "why": "ankle_bracket_l would block every insertion path of bearing_ankle_pitch_l"
+    },
+    {
+      "before": "ankle_bracket_l",
+      "after": "cover_ankle_pitch_l",
+      "why": "cover_ankle_pitch_l would block every insertion path of ankle_bracket_l"
+    },
+    {
+      "before": "ankle_bracket_l",
+      "after": "bearing_ankle_pitch_l",
+      "why": "bearing_ankle_pitch_l would block every insertion path of ankle_bracket_l"
+    },
+    {
+      "before": "yaw_bracket_l",
+      "after": "servo_hip_pitch_l",
+      "why": "servo_hip_pitch_l blocks the tool corridor of screw horn_center on yaw_bracket_l"
+    },
+    {
+      "before": "servo_hip_yaw_l",
+      "after": "servo_hip_pitch_l",
+      "why": "servo_hip_pitch_l blocks the tool corridor of screw horn_center (mate servo_hip_yaw_l)"
+    },
+    {
+      "before": "yaw_bracket_l",
+      "after": "roll_bracket_l",
+      "why": "roll_bracket_l blocks the tool corridor of screw horn_center on yaw_bracket_l"
+    },
+    {
+      "before": "servo_hip_yaw_l",
+      "after": "roll_bracket_l",
+      "why": "roll_bracket_l blocks the tool corridor of screw horn_center (mate servo_hip_yaw_l)"
+    },
+    {
+      "before": "roll_bracket_l",
+      "after": "servo_hip_pitch_l",
+      "why": "servo_hip_pitch_l blocks the tool corridor of screw horn_center on roll_bracket_l"
+    },
+    {
+      "before": "servo_hip_roll_l",
+      "after": "servo_hip_pitch_l",
+      "why": "servo_hip_pitch_l blocks the tool corridor of screw horn_center (mate servo_hip_roll_l)"
+    }
+  ],
+  "prep": [
+    {
+      "site": "housing_hip_yaw_l:cover_insert_0",
+      "kind": "insert",
+      "thread": "M3"
+    },
+    {
+      "site": "housing_hip_yaw_l:cover_insert_1",
+      "kind": "insert",
+      "thread": "M3"
+    },
+    {
+      "site": "yaw_bracket_l:cover_insert_0",
+      "kind": "insert",
+      "thread": "M3"
+    },
+    {
+      "site": "yaw_bracket_l:cover_insert_1",
+      "kind": "insert",
+      "thread": "M3"
+    },
+    {
+      "site": "roll_bracket_l:cover_insert_0",
+      "kind": "insert",
+      "thread": "M3"
+    },
+    {
+      "site": "roll_bracket_l:cover_insert_1",
+      "kind": "insert",
+      "thread": "M3"
+    },
+    {
+      "site": "thigh_l:cover_insert_0",
+      "kind": "insert",
+      "thread": "M3"
+    },
+    {
+      "site": "thigh_l:cover_insert_1",
+      "kind": "insert",
+      "thread": "M3"
+    },
+    {
+      "site": "shank_l:cover_insert_0",
+      "kind": "insert",
+      "thread": "M3"
+    },
+    {
+      "site": "shank_l:cover_insert_1",
+      "kind": "insert",
+      "thread": "M3"
+    },
+    {
+      "site": "ankle_bracket_l:cover_insert_0",
+      "kind": "insert",
+      "thread": "M3"
+    },
+    {
+      "site": "ankle_bracket_l:cover_insert_1",
+      "kind": "insert",
+      "thread": "M3"
+    }
+  ]
+}

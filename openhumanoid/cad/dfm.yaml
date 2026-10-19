@@ -64,7 +64,7 @@ bearing_seat:
   fit: press
   seat_d_over_od_mm: {v: 0.1, src: "[FDM] diametral: seat = OD + 0.1 after hole compensation is NOT applied (compensation is included here); tune with the gauge ladder", conf: practice, tune: true}
   depth_under_width_mm: {v: 0.0, src: "seat depth = bearing width (flush); flanged bearings sit on the flange", conf: practice}
-  shoulder_mm: {v: 1.0, src: "[FDM] lip that stops the bearing, >= 1 mm (2 perimeters+)", conf: practice}
+  shoulder_mm: {v: 1.6, src: "[FDM] lip that stops the bearing: the structural wall (4 perimeters); the geometry gate flagged 1.0 mm as thin", conf: practice}
   through_hole_over_id_mm: {v: 1.0, src: "[FDM] diametral: clear the inner race, not the shaft hole, so only the outer race carries load", conf: practice}
   wall_mm: {v: 2.0, src: "[FDM] material around a pressed bearing, >= 5 perimeters", conf: practice}
   chamfer_mm: {v: 0.3, src: "[FDM] lead-in chamfer", conf: practice}
@@ -128,5 +128,7 @@ split:
 
 # ---- assembly access ------------------------------------------------------------------------------------------------------
 access:
-  default_corridor_len_mm: {v: 40.0, src: "short hex key / driver shaft plus hand room", conf: estimate}
+  default_corridor_len_mm: {v: 30.0, src: "driver shaft plus hand room; used when the thread is not in tool_len_mm", conf: estimate}
+  # free length in front of a screw head the tool needs (stubby driver / bit holder; an L-key needs more swing room, not modelled)
+  tool_len_mm: {M2: 25.0, M2.5: 28.0, M3: 30.0}
   min_tool_corridor_d: {M2: 6.0, M2.5: 7.0, M3: 8.0}

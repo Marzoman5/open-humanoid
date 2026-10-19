@@ -26,9 +26,22 @@ from .assembly import Assembly, Placed
 from .core import Site, axis_of, bboxes_overlap, bbox_tuple, overlap_volume
 
 CLASH = 2.0
-PATH_LEN = 120.0
-PATH_STEP = 3.0
+PATH_LEN = 90.0
+PATH_STEP = 2.0
 AXES = [(0, 0, 1), (0, 0, -1), (1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0)]
+
+
+def _manifold(shape: bd.Shape):
+    """manifold3d solid from a tessellation (0.1 mm); about 35x faster than an OCC common on these brackets. None if the tessellation
+    is not a closed manifold (caller falls back to OCC)."""
+    import manifold3d as m3d
+    import numpy as np
+
+    from .core import mesh_of
+
+    m = mesh_of(shape, tol=0.1)
+    man = m3d.Manifold(m3d.Mesh(vert_properties=np.asarray(m.vertices, dtype=np.float32), tri_verts=np.asarray(m.faces, dtype=np.uint32)))
+    return None if man.is_empty() else man
 
 
 @dataclass
@@ -37,12 +50,18 @@ class Unit:
     shapes: list[bd.Shape]
     parts: list[str]
     link: str | None = None
+    _mans: list | None = field(default=None, repr=False)
 
     def bbox(self):
         bbs = [bbox_tuple(s) for s in self.shapes]
         lo = tuple(min(b[0][i] for b in bbs) for i in range(3))
         hi = tuple(max(b[1][i] for b in bbs) for i in range(3))
         return lo, hi
+
+    def mans(self):
+        if self._mans is None:
+            self._mans = [_manifold(s) for s in self.shapes]
+        return self._mans
 
 
 def _bb_overlap(a, b, pad=0.0) -> bool:
@@ -56,29 +75,34 @@ def _swept_bbox(bb, d, length):
     return tuple(min(lo[i], lo2[i]) for i in range(3)), tuple(max(hi[i], hi2[i]) for i in range(3))
 
 
+def _overlap(ma, sa, mb, sb, dx=(0.0, 0.0, 0.0)) -> float:
+    """Overlap volume of body a (moved by dx) with body b. Manifold meshes when both exist, OCC otherwise."""
+    if ma is not None and mb is not None:
+        return float((ma.translate(dx) ^ mb).volume()) if any(dx) else float((ma ^ mb).volume())
+    return overlap_volume(bd.Location(dx) * sa if any(dx) else sa, sb)
+
+
 def path_blocked_by(mover: Unit, d, static: Unit, mate_overlap: bool, length: float = PATH_LEN, step: float = PATH_STEP) -> bool:
     """Does moving `mover` from its final pose by t*d (t in (0, length]) hit `static`? Final-pose overlap (a designed press fit) only
     counts as blocking if it grows."""
-    bbm, bbs = mover.bbox(), static.bbox()
-    if not _bb_overlap(_swept_bbox(bbm, d, length), bbs, 0.0):
+    if not _bb_overlap(_swept_bbox(mover.bbox(), d, length), static.bbox(), 0.0):
         return False
+    mm, sm = mover.mans(), static.mans()
     base = 0.0
     if mate_overlap:
-        base = sum(overlap_volume(a, b) for a in mover.shapes for b in static.shapes if bboxes_overlap(a, b))
+        base = sum(max(_overlap(mm[i], mover.shapes[i], sm[k], static.shapes[k]), 0.0) for i in range(len(mm)) for k in range(len(sm))
+                   if bboxes_overlap(mover.shapes[i], static.shapes[k]))
+    bbs = [bbox_tuple(s) for s in mover.shapes]
+    sbs = [bbox_tuple(s) for s in static.shapes]
     t = step
     while t <= length + 1e-9:
-        loc = bd.Location((d[0] * t, d[1] * t, d[2] * t))
-        for m in mover.shapes:
-            mm = None
-            for s in static.shapes:
-                bm = bbox_tuple(m)
-                moved_bb = ((bm[0][0] + d[0] * t, bm[0][1] + d[1] * t, bm[0][2] + d[2] * t),
-                            (bm[1][0] + d[0] * t, bm[1][1] + d[1] * t, bm[1][2] + d[2] * t))
-                if not _bb_overlap(moved_bb, bbox_tuple(s)):
+        dx = (d[0] * t, d[1] * t, d[2] * t)
+        for i, bm in enumerate(bbs):
+            moved_bb = (tuple(bm[0][j] + dx[j] for j in range(3)), tuple(bm[1][j] + dx[j] for j in range(3)))
+            for k, sb in enumerate(sbs):
+                if not _bb_overlap(moved_bb, sb):
                     continue
-                mm = mm or (loc * m)
-                v = overlap_volume(mm, s)
-                if v > max(CLASH, base + CLASH):
+                if _overlap(mm[i], mover.shapes[i], sm[k], static.shapes[k], dx) > max(CLASH, base + CLASH):
                     return True
         t += step
     return False
@@ -110,30 +134,23 @@ def _unit_dirs(unit: Unit, sites: list[Site]) -> list:
 
 def corridor_blockers(site: Site, units: dict[str, Unit], owner_unit: str) -> list[str]:
     cor = site.corridor()
+    cm = _manifold(cor)
     out = []
     for uid, u in units.items():
-        for s in u.shapes:
+        sh, ms = u.shapes, u.mans()
+        for s, m in zip(sh, ms):
             if not bboxes_overlap(cor, s):
                 continue
-            if overlap_volume(cor, s) > CLASH * 0.5:
+            if _overlap(cm, cor, m, s) > CLASH * 0.5:
                 out.append(uid)
                 break
     return out
 
 
-def analyse(asm: Assembly, q: dict[str, float] | None = None, *, by_link: bool = True) -> dict:
-    """Derive the assembly order and check every screw corridor and every insertion path at pose q."""
-    pl = [p for p in asm.placed(q) if not p.part.hardware and not p.part.keepout]
-    part_link = {p.part.id: p.link for p in pl}
-    # units: one per part (the order is part level; the subassembly tree is derived afterwards)
-    units = {p.part.id: Unit(p.part.id, [p.shape], [p.part.id], p.link) for p in pl}
-    sites = [s for _, s in asm.world_sites(q) if s.part in units]
-    allowed = set(asm.allowed_pairs)
-
-    # ---- precedence graph:  before[a] = set of units that must come BEFORE a
+def _plan(units: dict[str, Unit], sites: list[Site], allowed: set, link_rank: dict, uid_list: list[str]) -> dict:
+    """Precedence graph -> topological order -> step-by-step simulation, for the given units only."""
     before: dict[str, set[str]] = {u: set() for u in units}
     reasons: dict[tuple[str, str], str] = {}
-    problems: list[dict] = []
 
     def add(a_before: str, b_after: str, why: str):
         if a_before == b_after:
@@ -141,23 +158,21 @@ def analyse(asm: Assembly, q: dict[str, float] | None = None, *, by_link: bool =
         before[b_after].add(a_before)
         reasons.setdefault((a_before, b_after), why)
 
-    uid_list = list(units)
     # path-based precedence: v needs a free direction; if a lone neighbour u kills them all, v must come before u
     for v in uid_list:
         dirs = _unit_dirs(units[v], sites)
-        near = [u for u in uid_list if u != v and _bb_overlap(_swept_bbox(units[v].bbox(), (0, 0, 0), 0), units[u].bbox(), PATH_LEN)]
+        near = [u for u in uid_list if u != v and _bb_overlap(units[v].bbox(), units[u].bbox(), PATH_LEN)]
         for u in near:
             if not free_directions(units[v], [units[u]], allowed, dirs):
                 add(v, u, f"{u} would block every insertion path of {v}")
     # fastener corridors: whatever blocks a corridor must come after the screw is installed (after both parts)
     unreachable = []
     for s in sites:
-        if s.kind != "screw" or not s.needs_access:
+        if s.kind != "screw" or not s.needs_access or s.part not in units:
             continue
         owner = s.part
         mate = s.mates if s.mates in units else None
-        blockers = [b for b in corridor_blockers(s, units, owner)]
-        for b in blockers:
+        for b in corridor_blockers(s, units, owner):
             if b == owner or b == mate:
                 unreachable.append({"site": s.id, "part": owner, "mate": mate, "blocked_by": b,
                                     "why": "the part itself / its mate covers the tool corridor"})
@@ -165,34 +180,26 @@ def analyse(asm: Assembly, q: dict[str, float] | None = None, *, by_link: bool =
             add(owner, b, f"{b} blocks the tool corridor of screw {s.id} on {owner}")
             if mate:
                 add(mate, b, f"{b} blocks the tool corridor of screw {s.id} (mate {mate})")
-
-    # ---- topological order (soft preference: keep each link's parts together, parents first)
-    link_rank = {ln: i for i, ln in enumerate(asm.links)}
+    # topological order (soft preference: keep each link's parts together, parents first)
     key = lambda u: (link_rank.get(units[u].link, 99), uid_list.index(u))  # noqa: E731
     order, done, remaining = [], set(), set(uid_list)
-    cyc = []
+    cyc: list[str] = []
     while remaining:
         ready = sorted([u for u in remaining if before[u] <= done], key=key)
         if not ready:
             cyc = sorted(remaining)
             break
-        # adjacency preference: pick a ready unit touching the assembled set if any
         pick = ready[0]
-        for u in ready:
+        for u in ready:           # adjacency preference: a ready unit touching the assembled set
             if not done or any(_bb_overlap(units[u].bbox(), units[d].bbox(), 0.6) for d in done):
                 pick = u
                 break
         order.append(pick)
         done.add(pick)
         remaining.discard(pick)
-
-    # ---- simulate the order against the real assembled set
-    steps, stuck = [], []
-    assembled: list[str] = []
-    site_by_part: dict[str, list[Site]] = {}
-    for s in sites:
-        site_by_part.setdefault(s.part, []).append(s)
-    installed_sites: set[str] = set()
+    # simulate the order against the real assembled set
+    steps, stuck, assembled = [], [], []
+    installed: set[str] = set()
     for uid in order:
         dirs = _unit_dirs(units[uid], sites)
         fd = free_directions(units[uid], [units[a] for a in assembled], allowed, dirs) if assembled else dirs
@@ -203,24 +210,36 @@ def analyse(asm: Assembly, q: dict[str, float] | None = None, *, by_link: bool =
         assembled.append(uid)
         cur = {a: units[a] for a in assembled}
         for s in sites:
-            if s.kind != "screw" or not s.needs_access or f"{s.part}:{s.id}" in installed_sites:
+            if s.kind != "screw" or not s.needs_access or s.part not in units or f"{s.part}:{s.id}" in installed:
                 continue
             mate = s.mates if s.mates in units else None
             if s.part in cur and (mate is None or mate in cur):
-                installed_sites.add(f"{s.part}:{s.id}")
+                installed.add(f"{s.part}:{s.id}")
                 bl = [b for b in corridor_blockers(s, cur, s.part) if b not in (s.part, mate)]
-                (st["blocked_screws"] if bl else st["screws"]).append(s.id if not bl else {"site": s.id, "blocked_by": bl})
+                (st["blocked_screws"] if bl else st["screws"]).append({"site": s.id, "blocked_by": bl} if bl else s.id)
         steps.append(st)
-    # screws whose mate never appears (mates not a part id): install at owner time was handled (mate None)
-    # ---- final-state serviceability
-    final = {a: units[a] for a in units}
+    return {"order": order, "steps": steps, "stuck": stuck, "cyc": cyc, "unreachable": unreachable, "reasons": reasons,
+            "ok": not stuck and not cyc and not unreachable}
+
+
+def analyse(asm: Assembly, q: dict[str, float] | None = None, *, by_link: bool = True) -> dict:
+    """Derive the assembly order and check every screw corridor and every insertion path at pose q.
+    Shaft pieces (the servo's rotating output) are integral with the servo and not planned as separate parts."""
+    pl = [p for p in asm.placed(q) if not p.part.hardware and not p.part.keepout and p.part.kind != "shaft"]
+    units = {p.part.id: Unit(p.part.id, [p.shape], [p.part.id], p.link) for p in pl}
+    sites = [s for _, s in asm.world_sites(q) if s.part in units]
+    allowed = set(asm.allowed_pairs)
+    link_rank = {ln: i for i, ln in enumerate(asm.links)}
+    uid_list = list(units)
+    res = _plan(units, sites, allowed, link_rank, uid_list)
+    order = res["order"]
+    # final-state serviceability
     serviceability = []
     for s in sites:
         if s.kind == "screw" and s.needs_access:
-            bl = [b for b in corridor_blockers(s, final, s.part) if b != s.part]
+            bl = [b for b in corridor_blockers(s, units, s.part) if b != s.part]
             serviceability.append({"site": f"{s.part}:{s.id}", "serviceable_assembled": not bl, "blocked_by": bl})
-
-    # ---- subassembly tree
+    # subassembly tree: each link also has to go together on the bench (its own parts only)
     sub = {}
     for ln in asm.links:
         ids = [p.part.id for p in pl if p.link == ln]
@@ -228,48 +247,18 @@ def analyse(asm: Assembly, q: dict[str, float] | None = None, *, by_link: bool =
             continue
         bench = {"parts": ids, "order": [u for u in order if u in ids]}
         if by_link:
-            bench["bench_assemblable"] = _bench_ok(ids, units, sites, allowed)
+            loc = {i: units[i] for i in ids}
+            r = _plan(loc, [s for s in sites if s.part in loc], allowed, link_rank, ids)
+            bench["bench_assemblable"] = r["ok"]
+            if not r["ok"]:
+                bench["bench_problems"] = {"stuck": [x["part"] for x in r["stuck"]], "cyclic": r["cyc"],
+                                           "unreachable": [f"{u['part']}:{u['site']}" for u in r["unreachable"]]}
         sub[ln] = bench
     tree = {ln: {"parent": L.parent, "parts": sub.get(ln, {}).get("order", [])} for ln, L in asm.links.items()}
-    ok = not unreachable and not stuck and not cyc
-    return {"ok": ok, "order": steps, "subassemblies": sub, "tree": tree, "stuck_parts": stuck, "cyclic_parts": cyc,
-            "unreachable_screws": unreachable, "serviceability": serviceability, "n_parts": len(units),
-            "precedence": [{"before": a, "after": b, "why": w} for (a, b), w in reasons.items()],
+    return {"ok": res["ok"], "order": res["steps"], "subassemblies": sub, "tree": tree, "stuck_parts": res["stuck"], "cyclic_parts": res["cyc"],
+            "unreachable_screws": res["unreachable"], "serviceability": serviceability, "n_parts": len(units),
+            "precedence": [{"before": a, "after": b, "why": w} for (a, b), w in res["reasons"].items()],
             "prep": [{"site": f"{s.part}:{s.id}", "kind": s.kind, "thread": s.thread} for s in sites if s.kind in ("insert", "magnet")]}
-
-
-def _bench_ok(ids: list[str], units: dict[str, Unit], sites: list[Site], allowed) -> bool:
-    """Can this link's parts be put together on the bench (no other links present) in some order? Greedy with pairwise blocking."""
-    local = {i: units[i] for i in ids}
-    dirs0 = {i: _unit_dirs(local[i], sites) for i in ids}
-    remaining = set(ids)
-    placed: list[str] = []
-    guard = 0
-    while remaining and guard < 200:
-        guard += 1
-        progress = False
-        for u in sorted(remaining):
-            fd = free_directions(local[u], [local[a] for a in placed], allowed, dirs0[u]) if placed else dirs0[u]
-            # u must also not trap a part that is still to come: require each remaining part to keep a path against placed+u
-            if not fd:
-                continue
-            trap = False
-            for v in remaining:
-                if v == u:
-                    continue
-                if not free_directions(local[v], [local[a] for a in placed + [u]], allowed, dirs0[v]) and \
-                        free_directions(local[v], [local[a] for a in placed], allowed, dirs0[v]):
-                    trap = True
-                    break
-            if trap:
-                continue
-            placed.append(u)
-            remaining.discard(u)
-            progress = True
-            break
-        if not progress:
-            return False
-    return not remaining
 
 
 def summarize(plan: dict) -> str:
@@ -280,7 +269,8 @@ def summarize(plan: dict) -> str:
         if s["link"] != cur:
             cur = s["link"]
             b = plan["subassemblies"].get(cur, {})
-            lines.append(f"   [{cur}]  bench-assemblable: {b.get('bench_assemblable', '?')}")
+            lines.append(f"   [{cur}]  bench-assemblable: {b.get('bench_assemblable', '?')}"
+                         + (f"  PROBLEMS {b['bench_problems']}" if b.get("bench_problems") else ""))
         mv = s["move"]
         extra = ""
         if s["screws"]:

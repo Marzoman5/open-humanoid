@@ -169,5 +169,5 @@ def thin_wall_report(shape, min_mm: float, pitch: float | None = None, max_voxel
     if thin.any():
         c = np.argwhere(thin).mean(axis=0)
         loc = [float(origin[i] + (c[i] + 0.5) * p) for i in range(3)]
-    return {"ok": thin_vol < max(0.002 * total, 2.0), "thin_volume_mm3": thin_vol,
+    return {"ok": thin_vol < max(0.0005 * total, 1.0), "thin_volume_mm3": thin_vol,
             "thin_fraction": thin_vol / total if total else 0.0, "pitch_mm": p, "worst_location": loc}

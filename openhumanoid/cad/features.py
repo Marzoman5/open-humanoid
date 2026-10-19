@@ -102,7 +102,8 @@ def screw_clearance(thread: str = "M3", *, through: float = 20.0, fit: str = "me
         f.cut.append(cyl_along(bd.Location(), cb_d, cb_h + 1.0, z0=-cb_h))
         f.notes.append(f"counterbore d{cb_d:.2f} x {cb_h:.2f}")
     f.sites.append(Site(id=tag, kind="screw", part=part, frame=bd.Location(), thread=thread, length_mm=float(length or 8), mates=mates,
-                        tool_d=p["tool_corridor_d"], tool_len=float(val(dfm.load_dfm()["access"]["default_corridor_len_mm"]))))
+                        tool_d=p["tool_corridor_d"],
+                        tool_len=float(dfm.load_dfm()["access"]["tool_len_mm"].get(thread, val(dfm.load_dfm()["access"]["default_corridor_len_mm"])))))
     return _at(f, at)
 
 
@@ -222,9 +223,10 @@ def horn_mount(actuator_id: str = "sts3215-12v", *, plate_t: float = 3.2, mode: 
     z_top = t_h + plate_t
     hs = get_component("screw:" + HP["screw"] + "x6L").params
     cs = get_component("screw:" + HP["center_screw"] + "x6L").params
-    min_t = max(hs["counterbore_depth"], cs["counterbore_depth"]) + dfm.min_wall("cosmetic")
+    gap = float(val(dfm.load_dfm()["screw"]["head_gap_mm"]))
+    min_t = max(hs["counterbore_depth"], cs["counterbore_depth"]) + gap + dfm.min_wall("structural")
     if plate_t < min_t - 1e-9:
-        raise CadOpError(f"horn_mount: plate_t {plate_t} < {min_t:.2f} needed for counterbored screws (depth + 0.8 mm skin)")
+        raise CadOpError(f"horn_mount: plate_t {plate_t} < {min_t:.2f} needed for counterbored screws (depth + head gap + 1.6 mm structural floor)")
     if mode == "recessed":
         f.cut.append(cyl_along(bd.Location(), HP["od"] + dfm.hole_comp(HP["od"]) + 2 * c, t_h + 0.3 + 0.0, z0=-0.01))
         f.cut.append(cyl_along(bd.Location(), servo.params["boss_d"] + 2 * dfm.clearance("rotating") + dfm.hole_comp(servo.params["boss_d"]),

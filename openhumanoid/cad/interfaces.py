@@ -177,7 +177,7 @@ def generate(spec: dict, layout: dict, sizing: dict | None = None) -> dict:
                 y_dir = [z_dir[1] * x_dir[2] - z_dir[2] * x_dir[1], z_dir[2] * x_dir[0] - z_dir[0] * x_dir[2],
                          z_dir[0] * x_dir[1] - z_dir[1] * x_dir[0]]
                 P = servo.params
-                horn_seat = [origin[i] + z_dir[i] * P["boss_h"] for i in range(3)]
+                horn_seat = [origin[i] + z_dir[i] * servo.frames["horn_seat"].position.Z for i in range(3)]      # boss height + horn float
                 back = [origin[i] - z_dir[i] * P["H"] for i in range(3)]
                 case_holes = []
                 for h in servo.holes:
