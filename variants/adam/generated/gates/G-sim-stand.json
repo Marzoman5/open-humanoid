@@ -19,9 +19,9 @@
     "min_pelvis_z_fraction": 0.7,
     "max_hold_torque_fraction": 1.0
   },
-  "sha": "6e18cac99e0f51429887773934d9a5e3480ecbde",
+  "sha": "962f29e93bb5e7458dfd966c8143a56bff76c631",
   "dirty": false,
-  "timestamp": "2026-10-19T03:22:21-04:00",
-  "seconds": 0.39,
+  "timestamp": "2026-10-19T03:23:44-04:00",
+  "seconds": 0.44,
   "written_by": "oh gate"
 }
