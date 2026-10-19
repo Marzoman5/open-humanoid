@@ -14,3 +14,6 @@
 
 ## Note (2026-10-19)
 The name "Adam" collides with an AI-for-CAD startup (adam.new / CADAM). The maintainer chose to keep it; revisit before public release.
+
+## Amendment (2026-10-19)
+Budget raised to **$550 all-in**. Capabilities expanded to walk, wave, dance, light table-height pickup, and interactive head/torso. Full list in `variants/adam/requirements.md`, which supersedes the budget and capability lines above. The joint layout is decided by the concept loop (ADR 0012), not by the quick sizing tool.

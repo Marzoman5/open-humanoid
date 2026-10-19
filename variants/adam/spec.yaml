@@ -9,10 +9,10 @@ version: 0.1.0
 status: concept            # concept | design | prototype | released
 
 goals:
-  priorities: [walking, motion, aesthetics, running, llm]   # ordered, most important first
+  priorities: [walking, aesthetics, motion, manipulation, running, llm]   # see requirements.md
   budget_usd:
-    target: 400
-    hard_cap: 400
+    target: 550
+    hard_cap: 550
     includes: [actuators, structure, fasteners, electronics, compute, battery, charger]
     excludes: [printer, tools]
 
