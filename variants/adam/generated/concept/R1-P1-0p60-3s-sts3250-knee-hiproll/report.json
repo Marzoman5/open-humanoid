@@ -60,7 +60,6 @@
    "shoulder_width: 180.0 mm -> 216.0 mm (T-0004 arm clearance)",
    "standing height kept at 600 mm: the other vertical proportions scaled x0.930 (thigh 126 mm, shank 126 mm)",
    "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
-   "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
    "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
   ],
   "ankle_pitch_range_deg": [
@@ -127,8 +126,8 @@
    {
     "stance_knee_flex_deg": 20,
     "step_time_s": 0.5,
-    "worst_margin": 1.148,
-    "worst_joint": "knee_l",
+    "worst_margin": 1.186,
+    "worst_joint": "knee_r",
     "passes": false,
     "invalid": {
      "walk_forward": "reference infeasible: COM tracking error after compensation 0.13 mm; leg IK unreachable at 75 of 590 samples",
@@ -235,7 +234,7 @@
      "pickup_0.45m": "reference infeasible: arm too short / table too low: no squa"
     },
     "failing": [
-     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
      "hip_pitch_l: rms",
      "hip_pitch_r: rms"
     ]
@@ -251,7 +250,7 @@
      "pickup_0.45m": "reference infeasible: arm too short / table too low: no squa"
     },
     "failing": [
-     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
      "knee_l: rms",
      "knee_r: rms"
     ]
@@ -267,7 +266,7 @@
      "pickup_0.45m": "reference infeasible: arm too short / table too low: no squa"
     },
     "failing": [
-     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
     ]
    }
   ]
@@ -397,10 +396,10 @@
    "tether_mean_pct_bw": 0.04,
    "notes": [
     "COM tracking error 0.00 mm",
-    "ROM CLAMP: the frozen squat is 120 deg of knee flexion but the knee range ends at 115 deg; run at 114.8 deg"
+    "ROM CLAMP: the frozen squat is 120 deg of knee flexion but the knee range ends at 110 deg; run at 109.8 deg"
    ],
    "meta": {
-    "depth_deg": 114.8,
+    "depth_deg": 109.8,
     "hold_s": 1.0,
     "down_s": 2.5,
     "rom_clamped_from_deg": 120
@@ -469,8 +468,8 @@
   },
   "pickup_0.45m": {
    "valid": false,
-   "invalid_reason": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
-   "tether_mean_pct_bw": 0.28,
+   "invalid_reason": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+   "tether_mean_pct_bw": 0.58,
    "notes": [
     "arm too short / table too low: no squat up to 120 deg brings the hand within reach",
     "grasp_ik_m = 11.3 mm (target not reached with the available arm joints)",
@@ -502,10 +501,10 @@
    "tether_mean_pct_bw": 0.03,
    "notes": [
     "COM tracking error 0.00 mm",
-    "ROM CLAMP: 130 deg requested, knee range ends at 115 deg; run at 114.8 deg"
+    "ROM CLAMP: 130 deg requested, knee range ends at 110 deg; run at 109.8 deg"
    ],
    "meta": {
-    "depth_deg": 114.8,
+    "depth_deg": 109.8,
     "hold_s": 0.5,
     "down_s": 3.0,
     "rom_clamped_from_deg": 130.0
@@ -598,48 +597,6 @@
    "worst_margin": 1.155
   },
   {
-   "joint": "knee_r",
-   "actuator": "sts3250-12v",
-   "peak_frac_of_stall": 0.606,
-   "peak_motion": "squat_120",
-   "rms_over_rated": 0.827,
-   "rms_motion": "squat_120",
-   "util_max": 0.606,
-   "util_motion": "squat_120",
-   "overload_run_ratio": 0.0,
-   "overload_motion": "stand",
-   "trips": 0,
-   "trip_motion": "",
-   "stall_nm": 4.535,
-   "margin_peak": 1.156,
-   "margin_rms": 1.209,
-   "margin_util": 1.486,
-   "margin_overload": 1000000000.0,
-   "fails": [],
-   "worst_margin": 1.156
-  },
-  {
-   "joint": "knee_l",
-   "actuator": "sts3250-12v",
-   "peak_frac_of_stall": 0.606,
-   "peak_motion": "squat_120",
-   "rms_over_rated": 0.827,
-   "rms_motion": "squat_120",
-   "util_max": 0.606,
-   "util_motion": "squat_120",
-   "overload_run_ratio": 0.0,
-   "overload_motion": "stand",
-   "trips": 0,
-   "trip_motion": "",
-   "stall_nm": 4.535,
-   "margin_peak": 1.156,
-   "margin_rms": 1.209,
-   "margin_util": 1.486,
-   "margin_overload": 1000000000.0,
-   "fails": [],
-   "worst_margin": 1.156
-  },
-  {
    "joint": "ankle_pitch_r",
    "actuator": "sts3215-12v",
    "peak_frac_of_stall": 0.585,
@@ -659,6 +616,48 @@
    "margin_overload": 1000000000.0,
    "fails": [],
    "worst_margin": 1.189
+  },
+  {
+   "joint": "knee_l",
+   "actuator": "sts3250-12v",
+   "peak_frac_of_stall": 0.587,
+   "peak_motion": "squat_120",
+   "rms_over_rated": 0.808,
+   "rms_motion": "squat_120",
+   "util_max": 0.587,
+   "util_motion": "squat_120",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 4.535,
+   "margin_peak": 1.193,
+   "margin_rms": 1.238,
+   "margin_util": 1.534,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.193
+  },
+  {
+   "joint": "knee_r",
+   "actuator": "sts3250-12v",
+   "peak_frac_of_stall": 0.587,
+   "peak_motion": "squat_120",
+   "rms_over_rated": 0.821,
+   "rms_motion": "walk_forward",
+   "util_max": 0.587,
+   "util_motion": "squat_120",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 4.535,
+   "margin_peak": 1.193,
+   "margin_rms": 1.218,
+   "margin_util": 1.534,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.193
   },
   {
    "joint": "hip_yaw_l",
@@ -1028,10 +1027,10 @@
   {
    "joint": "knee",
    "actuator": "sts3250-12v",
-   "utilisation": 0.865,
-   "peak_frac_of_stall": 0.606,
-   "rms_over_rated": 0.827,
-   "envelope_util": 0.606,
+   "utilisation": 0.838,
+   "peak_frac_of_stall": 0.587,
+   "rms_over_rated": 0.808,
+   "envelope_util": 0.587,
    "driving_motion": "squat_120"
   },
   {
@@ -1121,7 +1120,7 @@
   "worst_margin": 0.0,
   "worst_joint": "invalid motion: pickup_0.45m",
   "failing": [
-   "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+   "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
   ]
  },
  "power": {
@@ -1980,7 +1979,7 @@
    "worst_joint": "invalid motion: pickup_0.45m",
    "passes": false,
    "failing": [
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 26.9 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.066,-0.410] outside [-1.047,0.436]; ankle_pitch_r: [-1.066,-0.410] outside [-1.047,0.436]"
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 26.9 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.066,-0.410] outside [-1.047,0.436]; ankle_pitch_r: [-1.066,-0.410] outside [-1.047,0.436]"
    ],
    "hot_steady_max_c": 47.1,
    "rms_mixed_over_rated_max": 0.582,
@@ -1993,7 +1992,7 @@
    "worst_joint": "invalid motion: pickup_0.45m",
    "passes": false,
    "failing": [
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.1 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.056,-0.406] outside [-1.047,0.436]; ankle_pitch_r: [-1.056,-0.406] outside [-1.047,0.436]",
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.1 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.056,-0.406] outside [-1.047,0.436]; ankle_pitch_r: [-1.056,-0.406] outside [-1.047,0.436]",
     "hip_yaw_r: peak",
     "hip_roll_l: peak, rms",
     "hip_roll_r: peak, rms",
@@ -2011,7 +2010,7 @@
    "worst_joint": "invalid motion: pickup_0.45m",
    "passes": false,
    "failing": [
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.058,-0.407] outside [-1.047,0.436]; ankle_pitch_r: [-1.058,-0.407] outside [-1.047,0.436]"
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.058,-0.407] outside [-1.047,0.436]; ankle_pitch_r: [-1.058,-0.407] outside [-1.047,0.436]"
    ],
    "hot_steady_max_c": 49.6,
    "rms_mixed_over_rated_max": 0.694,
@@ -2024,7 +2023,7 @@
    "worst_joint": "invalid motion: pickup_0.45m",
    "passes": false,
    "failing": [
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 26.9 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.064,-0.410] outside [-1.047,0.436]; ankle_pitch_r: [-1.064,-0.410] outside [-1.047,0.436]",
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 26.9 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.064,-0.410] outside [-1.047,0.436]; ankle_pitch_r: [-1.064,-0.410] outside [-1.047,0.436]",
     "hip_roll_l: peak"
    ],
    "hot_steady_max_c": 50.3,
@@ -2038,7 +2037,7 @@
    "worst_joint": "invalid motion: pickup_0.45m",
    "passes": false,
    "failing": [
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
    ],
    "hot_steady_max_c": 49.8,
    "rms_mixed_over_rated_max": 0.702,
@@ -2051,7 +2050,7 @@
    "worst_joint": "invalid motion: pickup_0.45m",
    "passes": false,
    "failing": [
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
    ],
    "hot_steady_max_c": 48.4,
    "rms_mixed_over_rated_max": 0.646,
@@ -2065,7 +2064,7 @@
    "passes": false,
    "failing": [
     "INVALID walk_forward: tether supplied 1.0% of body weight on average (limit 1%)",
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
     "ankle_pitch_l: peak, rms",
     "ankle_pitch_r: peak, rms"
    ],
@@ -2080,7 +2079,7 @@
    "worst_joint": "invalid motion: pickup_0.45m",
    "passes": false,
    "failing": [
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
     "hip_yaw_l: peak",
     "hip_yaw_r: peak",
     "hip_roll_l: peak, envelope",
@@ -2098,7 +2097,7 @@
    "worst_joint": "invalid motion: pickup_0.45m",
    "passes": false,
    "failing": [
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
    ],
    "hot_steady_max_c": 46.7,
    "rms_mixed_over_rated_max": 0.702,
@@ -2111,7 +2110,7 @@
    "worst_joint": "invalid motion: pickup_0.45m",
    "passes": false,
    "failing": [
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
    ],
    "hot_steady_max_c": 54.7,
    "rms_mixed_over_rated_max": 0.702,
@@ -2124,7 +2123,7 @@
    "worst_joint": "invalid motion: pickup_0.45m",
    "passes": false,
    "failing": [
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
     "ankle_pitch_l: peak, rms",
     "ankle_pitch_r: peak"
    ],
@@ -2142,7 +2141,7 @@
     "INVALID walk_forward: tether supplied 1.1% of body weight on average (limit 1%)",
     "INVALID walk_backward: tether supplied 1.2% of body weight on average (limit 1%)",
     "INVALID turn: tether supplied 1.0% of body weight on average (limit 1%)",
-    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
    ],
    "hot_steady_max_c": 46.6,
    "rms_mixed_over_rated_max": 0.576,
@@ -2161,7 +2160,7 @@
     "worst_joint": "invalid motion: pickup_0.45m",
     "passes": false,
     "failing": [
-     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.1 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.056,-0.406] outside [-1.047,0.436]; ankle_pitch_r: [-1.056,-0.406] outside [-1.047,0.436]",
+     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.1 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.056,-0.406] outside [-1.047,0.436]; ankle_pitch_r: [-1.056,-0.406] outside [-1.047,0.436]",
      "hip_yaw_r: peak",
      "hip_roll_l: peak, rms",
      "hip_roll_r: peak, rms",
@@ -2176,12 +2175,12 @@
     "worst_joint": "invalid motion: pickup_0.45m",
     "passes": false,
     "failing": [
-     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.1 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.055,-0.406] outside [-1.047,0.436]; ankle_pitch_r: [-1.055,-0.406] outside [-1.047,0.436]",
+     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.1 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.055,-0.406] outside [-1.047,0.436]; ankle_pitch_r: [-1.055,-0.406] outside [-1.047,0.436]",
      "hip_yaw_r: peak",
      "hip_roll_l: peak, rms",
      "hip_roll_r: peak, rms",
-     "knee_l: peak, rms",
-     "knee_r: peak, rms"
+     "knee_l: peak",
+     "knee_r: peak"
     ]
    }
   },
@@ -2209,8 +2208,8 @@
    "hip_roll_r": 0.813,
    "hip_pitch_l": 0.739,
    "hip_pitch_r": 0.743,
-   "knee_l": 0.853,
-   "knee_r": 0.913,
+   "knee_l": 0.826,
+   "knee_r": 0.886,
    "ankle_pitch_l": 0.809,
    "ankle_pitch_r": 0.915,
    "ankle_roll_l": 0.489,
@@ -2877,7 +2876,7 @@
   "robust_to_all_bounds": false,
   "passes_at_benchmark_mass": false,
   "reasons": [
-   "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,2.007]; knee_r: [0.785,2.094] outside [0.000,2.007]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+   "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
    "Monte Carlo p95 peak above the gate at hip_roll_l (1.02 of stall)"
   ],
   "warnings": [
@@ -3660,5 +3659,5 @@
    "source": "https://www.skyrc.com/b6neo (manufacturer: DC in 10-28 V XT60, USB-C PD in 12-20 V, 200 W DC / 80 W PD, 0.2-10 A, 1-6S, 70x50x31 mm, 82 g); https://wrekd.com/products/skyrc-b6-neo-200w-10a-1-6s-dc-smart-charger-xt60-choose-color ($39.99, SOLD OUT); https://www.evike.com/products/112273/SkyRC-B6Neo-S"
   }
  ],
- "wall_seconds": 453.4
+ "wall_seconds": 367.6
 }
