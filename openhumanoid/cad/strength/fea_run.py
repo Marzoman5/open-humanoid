@@ -30,7 +30,7 @@ def mesh_size_for(volume_mm3: float, target_tets: int = 7000) -> float:
     return float((volume_mm3 / (0.118 * target_tets)) ** (1.0 / 3.0))
 
 
-def run_fea(model: Model, cfg: dict, res: dict, parts: list[str], out: Path | None = None, ratio: float = 1.5, target_tets: int = 12000,
+def run_fea(model: Model, cfg: dict, res: dict, parts: list[str], out: Path | None = None, ratio: float = 1.5, target_tets: int = 9000,
             verbose: bool = True, case: str | None = None) -> dict:
     excl = cfg.get("exclude_parts", [])
     topo = Topology(model, excl)

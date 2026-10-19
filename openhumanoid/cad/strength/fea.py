@@ -218,6 +218,8 @@ class FEAResult:
     peak_mises_mpa: float
     peak_delam_mpa: float
     peak_where: list
+    away_where: list
+    away_detail: dict
     equilibrium_n: float
     solve_s: float
     max_disp_mm: float
@@ -230,7 +232,7 @@ class FEAResult:
 
 
 def solve_part(part: PartRec, loads: PartLoads, case: str, h: float, sf: float = 1.0, fine: list | None = None, g_link: np.ndarray | None = None,
-               patch_r: float = 2.5, verbose: bool = False, keep_field: bool = True, probe: tuple | None = None, exclude_mm: float = 4.0) -> FEAResult:
+               patch_r: float = 2.5, verbose: bool = False, keep_field: bool = True, probe: tuple | None = None, exclude_mm: float = 8.0) -> FEAResult:
     import scipy.sparse as sp
     from scipy.sparse.linalg import spsolve
     from skfem import Basis, BilinearForm, ElementTetP2, ElementVector, LinearForm, MeshTet
@@ -357,7 +359,11 @@ def solve_part(part: PartRec, loads: PartLoads, case: str, h: float, sf: float =
         pc, pr = np.asarray(probe[0]), float(probe[1])
         sel = (np.linalg.norm(Xq - pc, axis=1) < pr).reshape(FI.shape)
         pm = float(FI[sel].mean()) if sel.any() else float("nan")
-    res = FEAResult(part.id, case, h, int(mesh.t.shape[1]), int(basis.N), float(FI.max()), top1, float(FIa.max()), top1_a, pm, float(vm.max()), float(np.maximum(sbb, 0).max()), where, eq,
+    ia_e, ia_q = np.unravel_index(int(np.argmax(FIa)), FIa.shape)
+    away_where = [float(Xq.reshape(FI.shape + (3,))[ia_e, ia_q, k]) for k in range(3)]
+    away_detail = {"sigma_build_dir_mpa": float(sbb[ia_e, ia_q]), "interlayer_shear_mpa": float(tau_b[ia_e, ia_q]), "inplane_principal_mpa": [float(s1[ia_e, ia_q]), float(s2[ia_e, ia_q])],
+                   "index_delamination": float(idx_d[ia_e, ia_q]), "index_inplane": float(idx_p[ia_e, ia_q]), "dist_to_load_nodes_mm": float(dist[ia_e, ia_q])}
+    res = FEAResult(part.id, case, h, int(mesh.t.shape[1]), int(basis.N), float(FI.max()), top1, float(FIa.max()), top1_a, pm, float(vm.max()), float(np.maximum(sbb, 0).max()), where, away_where, away_detail, eq,
                     time.time() - t0, float(np.linalg.norm(disp, axis=0).max()))
     res.info = {"fe_load_sum_n": tot_F.tolist(), "sf": sf}
     if keep_field:

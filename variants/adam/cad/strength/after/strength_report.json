@@ -1893,7 +1893,7 @@
   }
  },
  "n_rows": 457,
- "wall_s": 22.8,
+ "wall_s": 13.7,
  "rows_note": "only rows with margin < 1.5 (all classes) plus the worst row of every part x case x check are kept",
  "rows": [
   {
