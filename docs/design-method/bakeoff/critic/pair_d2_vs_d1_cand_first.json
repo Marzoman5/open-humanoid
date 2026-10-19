@@ -1,0 +1,22 @@
+{
+  "order": "cand_first",
+  "round": 2,
+  "candidate": "design-2",
+  "baseline": "design-1",
+  "reads_as": "unfinished",
+  "reads_as_reason": "Repeated lumps and pinches along the limb: a soft clay or bone-shaped form with no clear design intent, not a sculpted product shell.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Thigh and shank each swell, pinch and swell again like a stack of sausages; two or three bulges per segment with no functional reason; organic or toy-like."},
+    "G2": {"verdict": "FAIL", "evidence": "Not a continuous flow: waist then bulge above the knee; shank bulge below the knee, a pinch, another bulge at the ankle. The pinches look accidental, not deliberate recesses. Knee is a diagonal planar cut with a hairline gap. Zebra shows many small closed rings."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Single-tone clay; the pinches sit mid-segment away from the joint so are unlikely to read as recesses."},
+    "G4": {"verdict": "UNCERTAIN", "evidence": "Similar rounded-rectangle sections in the front view; the lump rhythm differs between thigh and shank."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No references. Optimus / Atlas legs have smooth monotonic tapers and an articulated knee; the undulating profile does not match."}
+  },
+  "pairwise": {"preferred": "baseline", "evidence": "The baseline (design-1) has clean, monotonic tapered shells and a single clear knee transition; its zebra is in larger calmer patches. The candidate shows silhouette wobble, extra lumps, and deviates from the red target at the ankle. The baseline is plain and a little pill-like but reads as a finished part."},
+  "top_changes": [
+    {"criterion": "G2", "change": "Remove the mid-thigh waist and the swelling above the knee; width falls steadily hip to knee.", "profile_param": "segments[thigh].stations[mid,distal].w/.d"},
+    {"criterion": "G2", "change": "Delete the ankle bulge and the pinch below the calf; one calf swell then a straight taper.", "profile_param": "segments[shank].stations[calf-to-ankle].w/.d"},
+    {"criterion": "G1", "change": "One squareness for all sections; fewer, longer-spanning stations.", "profile_param": "segments[*].stations[*].n"}
+  ],
+  "notes": "Round 2 (design-1 = M1 after the loft densify). Only the candidate's metrics were supplied."
+}

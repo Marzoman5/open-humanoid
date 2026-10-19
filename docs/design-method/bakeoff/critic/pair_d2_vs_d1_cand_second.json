@@ -1,0 +1,22 @@
+{
+  "order": "cand_second",
+  "round": 2,
+  "candidate": "design-2",
+  "baseline": "design-1",
+  "reads_as": "unfinished",
+  "reads_as_reason": "Wavy, lumpy sausages with bulges and pinches along each segment and no clear taper; melted or half-sculpted, not a deliberate shell.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Mid-length pinches and bulges, a bone-like profile; the 130 degree view shows the shank ending in a bulbous knob; organic and cartoonish. P8a/P8b fail."},
+    "G2": {"verdict": "FAIL", "evidence": "Front view: the thigh edge steps in and out a third of the way down and again above the knee; grey silhouette wobbles against the target at the lower shank (T1a 0.9356, T1b 0.9432 fail). Zebra shows ring islands and broken stripes. Knee gap is a plain diagonal cut."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "No colour; the knee gap is too shallow to judge as a recess."},
+    "G4": {"verdict": "FAIL", "evidence": "Section squareness and radii vary within each segment: squarish shoulders then round lobes; large soft lumps next to tight corners."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No references. Thigh top and knee block resemble the family; the wavy mid-thigh and lumpy shank do not."}
+  },
+  "pairwise": {"preferred": "baseline", "evidence": "The baseline (design-1, Image A) has a smooth continuous tapering thigh and calf, a clean knee bulge in the front silhouette and a near-exact match to the red target. It is plain and slightly pill-like but reads as a finished simple shell. The candidate adds lumpy articulation with no clear taper. Moderate confidence."},
+  "top_changes": [
+    {"criterion": "G2", "change": "Remove the mid-segment waviness; widths and depths decrease monotonically toward the knee (P8a 0.788).", "profile_param": "segments[thigh].stations[*].w/.d"},
+    {"criterion": "G1", "change": "Remove the lumpy swell at the shank end; single taper from the widest point to a narrower ankle (P8b 0.807).", "profile_param": "segments[shank].stations[lower].w/.d"},
+    {"criterion": "G4", "change": "One squareness and corner-radius family across all stations.", "profile_param": "segments[*].stations[*].n"}
+  ],
+  "notes": "Round 2. Baseline metrics not supplied; the call is visual only."
+}

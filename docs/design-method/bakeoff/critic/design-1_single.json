@@ -1,0 +1,19 @@
+{
+  "order": "single",
+  "round": 2,
+  "reads_as": "unfinished",
+  "reads_as_reason": "Two near-prismatic rounded slabs joined by a sheared planar cut with a flat back cap, and noisy zebra surfaces, read as a rough prototype and not a finished adult product.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Thigh is a near-constant-width pill/bollard and the shank top is a raw diagonal slice; a blank rounded block. P8a/P8b/S4a fails agree."},
+    "G2": {"verdict": "FAIL", "evidence": "Thigh and shank read as two separate slabs with an open wedge gap (side view); no flowing thigh-knee-shank form. Zebra 3/4 and side views show broken, noisy bands. The knee gap is not framed as a deliberate recess."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Colour not rendered. The knee gap could be a dark recess but is an open wedge at flex, not a bounded pocket. The centre seam line is an extra visual line."},
+    "G4": {"verdict": "FAIL", "evidence": "Thigh bottom has a generous full-round radius; the shank top is a hard planar cut with sharp edges and a flat cap (back view); thigh squarish, shank more oval at the calf."},
+    "G6": {"verdict": "FAIL", "evidence": "No references; from general knowledge Optimus / Atlas legs show a distinct knee volume, a tapering thigh and a calf that tapers to a slim ankle, with clean panel breaks. This matches only in smooth rounded light shells."}
+  },
+  "top_changes": [
+    {"criterion": "G2", "change": "Replace the planar diagonal cut at the shank top with a rounded knee-cap form mirroring the thigh bottom radius; remove the flat cap face seen in the back view.", "profile_param": "segments[shank].stations[top].z/.n/.d"},
+    {"criterion": "G1", "change": "Taper the thigh more (0.712 vs 0.65) and slim the ankle (0.724 vs 0.6); keep the servo envelope at the joint axes.", "profile_param": "segments[thigh].stations[distal].w/.d; segments[shank].stations[ankle].w/.d"},
+    {"criterion": "G4", "change": "One radius family and squareness across both segments; slight crown on broad faces (S4a 0.3033); smooth loft stations to remove zebra breakup.", "profile_param": "segments[*].stations[*].n"}
+  ],
+  "notes": "Round 2: design-1 after the loft densify fix. Colour not rendered. The critic suspects zebra and banding may partly be loft or tessellation artifacts of the render but counted it against the design as shown. The silhouette title text overlapped the red outline."
+}

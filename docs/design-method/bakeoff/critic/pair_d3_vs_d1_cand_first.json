@@ -1,0 +1,22 @@
+{
+  "order": "cand_first",
+  "round": 2,
+  "candidate": "design-3",
+  "baseline": "design-1",
+  "reads_as": "unfinished",
+  "reads_as_reason": "Smooth and clean, but the thigh is a near-parallel slab and the knee is a bare slit with a raw flat cut face on the shank: a molded blank, not a finished shell.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Thigh is an almost parallel-sided slab-like bar with small corner radii; nothing reads as designed product surface. P8a 0.708 and P8b 0.712 fail."},
+    "G2": {"verdict": "FAIL", "evidence": "Thigh-to-shank is a thin slit in the side view; the back view shows a flat D-shaped planar cut face; 65 and 130 degree views show a raw diagonal chop. Flow inside each segment is good (S3a 0)."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "No colour; only a hairline gap at the knee."},
+    "G4": {"verdict": "UNCERTAIN", "evidence": "Similar end radii and squareness; the sharp planar cut at the shank top breaks the radius family."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No references. Rounded-rectangle section and knee bulge loosely similar; no clear taper, calf swell or knee mass."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Both sheets share the same target silhouette and near-identical outlines, so the difference is surface quality. The candidate has smooth concentric contour lines and clean continuous zebra bands; the baseline has noisy blotchy zebra, facet-like contour kinks on the shank and a chamfered polygonal shank bottom. Modest preference: the main weaknesses are shared."},
+  "top_changes": [
+    {"criterion": "G1", "change": "Real thigh taper: narrow the distal section in width and depth (P8a).", "profile_param": "segments[thigh].stations[distal].w/.d"},
+    {"criterion": "G1", "change": "Crown flat faces (lower n at mid-thigh and calf) and deepen the calf-to-ankle taper (S4a, P8b).", "profile_param": "segments[thigh].stations[mid].n; segments[shank].stations[calf].n, [ankle].w/.d"},
+    {"criterion": "G2", "change": "Remove the raw planar cut at the shank top; soften the proximal edge, widen the knee gap slightly.", "profile_param": "segments[shank].stations[top].n/.z"}
+  ],
+  "notes": "Round 2. Chunkiness caused by the 35 mm servos was not counted against the design."
+}
