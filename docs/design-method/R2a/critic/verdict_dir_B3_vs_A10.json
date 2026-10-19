@@ -1,0 +1,90 @@
+{
+  "step": "D1-direction",
+  "round": 1,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Block head on a wide shoulder shelf; neck nearly invisible (P2a 0.1103); P3 0.418, arms read as wings; legs straight tubes (P8a 0.9375, P8b 0.9705).",
+        "Squared-off head, short neck (P2a 0.1103); heavy splayed arm slabs (P3 0.418); straight leg columns, long wedge foot (P10a 0.238)."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Chest slab with a ledge at the black waist band, pelvis a separate dished shape; thigh and shank parallel cylinders, no calf swell near the top (P9b 0.4467). Black bands read as deliberate recesses; the shapes between them do not flow.",
+        "Chest, waist band and pelvis bowl read as stacked pieces; thigh and shank near-parallel tubes (P8a 0.9375, P8b 0.9705). Dark bands deliberate, forms between them do not connect."
+      ]
+    },
+    "G3": {
+      "verdict": "PASS",
+      "per_report": [
+        "PASS",
+        "PASS"
+      ],
+      "evidence": [
+        "Matte warm-white shells, graphite bands, gloss black visor, no accent; bands uniform on arms and legs.",
+        "White shells, graphite bands at waist, elbow, knee, wrist, gloss visor, no accent; regular bands with none of the baseline's smears."
+      ]
+    },
+    "G4": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Arm, leg and head shells share one soft rounded-box language, but the backpack and black heel blocks are sharp boxes; chest and pelvis squareness differ from the soft limbs; S4b 0.5141.",
+        "Head and chest tight-radius boxes; arms and pelvis pillowy; domed shoulders; soft-rectangle legs; flat wedge foot."
+      ]
+    },
+    "G6": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "S2 IoU 0.5248 / 0.5566. Matches head, hip and knee heights and white-over-graphite. Not: shoulder width, wide A-pose, no neck, untapered legs, long foot (P10a 0.238).",
+        "Head height matches and the white-over-graphite layering follows the brief; shoulders far wider than both references, no hourglass, short neck, untapered legs, long foot. IoU 0.5248 / 0.5566."
+      ]
+    },
+    "G5": {
+      "verdict": "PASS",
+      "reason": "candidate preferred in both presentation orders"
+    }
+  },
+  "reads_as": "toy",
+  "numeric_hard_failures": [
+    "P3",
+    "P10a"
+  ],
+  "top_changes": [
+    {
+      "criterion": "G1",
+      "change": "Narrow the shoulders, slim the upper arm and bring the arms in.",
+      "profile_param": "segments[chest].stations[shoulder].w; segments[arm_upper].stations[*].w, cy"
+    },
+    {
+      "criterion": "G2",
+      "change": "Visible neck; chest tapering into the waist and a pelvis that is not a separate dish.",
+      "profile_param": "segments[neck].stations[*].z, w; segments[torso].stations[waist].w, d"
+    },
+    {
+      "criterion": "G6",
+      "change": "Taper thigh and shank; shorten the foot.",
+      "profile_param": "segments[thigh].stations[knee].w, d; segments[shank].stations[calf].z, w; segments[foot].stations[toe]"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}

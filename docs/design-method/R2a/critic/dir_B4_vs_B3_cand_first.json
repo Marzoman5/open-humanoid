@@ -1,0 +1,22 @@
+{
+  "order": "cand_first",
+  "candidate": "work/B4 (B + tapered leg covers + slim upper arm)",
+  "baseline": "work/B3",
+  "note": "Evidence abridged by the author from the critic's full report; verdicts and preference verbatim.",
+  "reads_as": "toy",
+  "reads_as_reason": "The head is a rounded block, the chest and shoulders are stacked boxes with horizontal ledges, and the arms and legs are near-constant-width columns.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Rounded-square head on a very short neck (P2a 0.1103); flat-topped chest box with shoulder boxes on a horizontal ledge; P3 0.397; back box and heavy block feet add bulk."},
+    "G2": {"verdict": "FAIL", "evidence": "Chest box, pinched dark waist band, pelvis tub do not flow; thigh and shank straight columns (P8a 0.8602, P8b 0.938). Dark bands at elbow, knee, waist are deliberate recesses."},
+    "G3": {"verdict": "PASS", "evidence": "Matte warm-white shells, graphite bands, graphite hands and ankles, gloss visor, no accent; black hands and back block are heavy."},
+    "G4": {"verdict": "UNCERTAIN", "evidence": "Similar corner radii on head, chest, arms, legs, but section squareness varies (chest, shoulder boxes, pack very square; thighs rounded-rectangular; feet flat wedges); S4b 0.5141."},
+    "G6": {"verdict": "FAIL", "evidence": "About twice the references' shoulder width with A-shape arms, no neck, boxy head, columnar legs, long feet. Matches head, hip and knee heights and white-over-graphite. IoU ~0.53-0.56."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Nearly indistinguishable; the candidate has slightly narrower shoulders (P3 0.397 vs 0.418), thigh and pelvis read a little more tapered, a slight knee swell, one fewer ledge, 13/19 vs 12/19 and P9b passes."},
+  "top_changes": [
+    {"criterion": "G1", "change": "Cut shoulder and upper-arm width, arms closer to the torso, a deltoid that flows into the arm.", "profile_param": "segments[chest].stations[shoulder].w; segments[arm_core].stations[*].w"},
+    {"criterion": "G2", "change": "Taper thigh to a narrower knee and shank to a narrow ankle with a high calf swell; visible neck; rounded-oval chest and pelvis sections.", "profile_param": "segments[leg_core].stations[knee/ankle].w, d; segments[neck].stations[*].z, w"},
+    {"criterion": "G6", "change": "Shorten the foot, shrink the back-pack and heel blocks, a narrower, more oval head.", "profile_param": "segments[foot].stations[toe]; segments[head].stations[*].w, n"}
+  ],
+  "notes": "B3 and B4 nearly identical; clay renders low-contrast."
+}

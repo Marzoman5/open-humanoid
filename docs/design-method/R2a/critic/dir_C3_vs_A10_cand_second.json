@@ -1,0 +1,22 @@
+{
+  "order": "cand_second",
+  "candidate": "work/C3 (direction C Apple-monolith)",
+  "baseline": "work/A10 (direction A Optimus-lean)",
+  "note": "Evidence abridged by the author from the critic's full report; verdicts and preference verbatim.",
+  "reads_as": "toy",
+  "reads_as_reason": "Stacked rounded blocks with a boxy head, very wide shoulders, straight tube limbs and a slab backpack; the candidate also removes most of the dark joint recesses, so it reads as white blocks, not a shell over a dark structure.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Squared-off head with a horizontal slit visor reads as goggles/helmet toy; huge shoulder boxes; A-pose; tub-shaped pelvis (P3 0.422, P2a 0.1324)."},
+    "G2": {"verdict": "FAIL", "evidence": "Chest, waist, pelvis are three blocks with a ledge at the pelvis tub; knee is a hairline seam, not a recess; joints are thin lines (P8a 0.9626, P8b 0.9242, S4b 0.6186)."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Palette correct, but the dark share is too small: the black waist band of the brief is missing and the joint recesses are hairlines."},
+    "G4": {"verdict": "FAIL", "evidence": "Head, shoulders and pelvis squarish with tight radii; forearms and thighs softer tubes; sharp backpack; dark gaps inconsistent (hairline arm bands, closed knee, chunky black hands and feet)."},
+    "G6": {"verdict": "FAIL", "evidence": "Shoulders and arms far wider than the references; legs straight columns; references have a narrow waist, tapered limbs and a capsule head. IoU 0.5266 / 0.5578."}
+  },
+  "pairwise": {"preferred": "baseline", "evidence": "Same massing; the baseline's full-face visor, thick waist, elbow and knee bands and Optimus-like black waist band get closer to white shells over a dark under-structure. The candidate's goggle slit and hairline joints make the legs look like stacked pipe and the head more toy-like, despite its higher numeric pass fraction (0.684 vs 0.632)."},
+  "top_changes": [
+    {"criterion": "G2", "change": "Restore deliberate dark recesses: deepen and widen the waist, knee and elbow gaps; bring back the black waist band.", "profile_param": "segments[torso].stations[waist].w, d; segments[thigh].stations[distal].z; segments[shank].stations[proximal].z"},
+    {"criterion": "G1", "change": "Cut the shoulder width and bring the arms down; replace the goggle slit with a full-face visor on a softer, rounder head with a longer neck.", "profile_param": "segments[chest].stations[shoulder].w; segments[head].stations[*].n; neck z"},
+    {"criterion": "G6", "change": "Taper thigh and shank; shorten the foot.", "profile_param": "segments[thigh].stations[distal].w, d; segments[shank].stations[ankle].w, d; segments[foot].stations[toe]"}
+  ],
+  "notes": "Preference rests mainly on the two-tone (visor and joint-band treatment); lineup crops the arms."
+}

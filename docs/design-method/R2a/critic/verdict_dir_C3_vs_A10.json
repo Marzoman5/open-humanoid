@@ -1,0 +1,90 @@
+{
+  "step": "D1-direction",
+  "round": 1,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Squared head with a flat top; stacked torso blocks; wide splayed arm slabs; untapered leg columns (P3 0.422, P2a 0.1324).",
+        "Squared-off head with a horizontal slit visor reads as goggles/helmet toy; huge shoulder boxes; A-pose; tub-shaped pelvis (P3 0.422, P2a 0.1324)."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Pelvis tub overhangs the thighs; shoulder box steps onto the chest; joint bands are thin lines only at shoulder, elbow, wrist; the knee reads as a seam in one white column (P8a 0.9626, P8b 0.9242).",
+        "Chest, waist, pelvis are three blocks with a ledge at the pelvis tub; knee is a hairline seam, not a recess; joints are thin lines (P8a 0.9626, P8b 0.9242, S4b 0.6186)."
+      ]
+    },
+    "G3": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "PASS",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "Warm-white shells, graphite only at joint lines, hands, feet and a thin visor slit; cleaner than the baseline's shoulder and forearm blotches.",
+        "Palette correct, but the dark share is too small: the black waist band of the brief is missing and the joint recesses are hairlines."
+      ]
+    },
+    "G4": {
+      "verdict": "FAIL",
+      "per_report": [
+        "UNCERTAIN",
+        "FAIL"
+      ],
+      "evidence": [
+        "Radii broadly uniform and all sections squarish: consistent, but the consistency of a block set; S4b 0.6186.",
+        "Head, shoulders and pelvis squarish with tight radii; forearms and thighs softer tubes; sharp backpack; dark gaps inconsistent (hairline arm bands, closed knee, chunky black hands and feet)."
+      ]
+    },
+    "G6": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Much wider than both references; square head vs ovoid references; long feet. Matches head, hip and knee heights and the white-over-black split. IoU 0.5266 / 0.5578.",
+        "Shoulders and arms far wider than the references; legs straight columns; references have a narrow waist, tapered limbs and a capsule head. IoU 0.5266 / 0.5578."
+      ]
+    },
+    "G5": {
+      "verdict": "UNCERTAIN",
+      "reason": "inconsistent or single-order preference ['candidate', 'baseline'] ['cand_first', 'cand_second']; counts as no-pass"
+    }
+  },
+  "reads_as": "toy",
+  "numeric_hard_failures": [
+    "P3",
+    "P10a"
+  ],
+  "top_changes": [
+    {
+      "criterion": "G1",
+      "change": "Narrow the shoulders, bring the arms in, make the upper arm a tapered capsule.",
+      "profile_param": "segments[chest].stations[shoulder].w; arm stations w, cy"
+    },
+    {
+      "criterion": "G2",
+      "change": "Taper the legs, reduce the pelvis overhang, add a visible dark knee recess (narrower than the baseline's).",
+      "profile_param": "segments[thigh].stations[distal].w, d; segments[shank].stations[ankle].w; segments[pelvis].stations[hip].w"
+    },
+    {
+      "criterion": "G1",
+      "change": "Lengthen the neck, soften the head toward an ovoid (lower n), shorten the foot.",
+      "profile_param": "segments[head].stations[*].n; segments[neck].stations[*].z; segments[foot].stations[toe]"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}

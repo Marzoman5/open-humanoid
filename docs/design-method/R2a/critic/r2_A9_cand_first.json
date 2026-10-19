@@ -1,0 +1,21 @@
+{
+  "order": "cand_first",
+  "candidate": "work/A9 (direction A, iteration 9)",
+  "baseline": "work/A5 (round-1 candidate)",
+  "reads_as": "toy",
+  "reads_as_reason": "Box head with no visible neck, slab chest stacked on a slab pelvis, untapered leg columns and wide splayed arms read as a blocky character figure, not a sleek adult product.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Rounded-box head with a slab visor sits on almost no neck (P2_neck_length_hu 0.1143, failed). Chest and pelvis are separate slabs with a horizontal step (front and side views). The glute blocks (back view) and battery box (side view) are sharp rectangles."},
+    "G2": {"verdict": "FAIL", "evidence": "Chest-waist-pelvis does not flow: chest slab, dark band, pelvis slab with a visible ledge. Thigh and shank are near-constant-width columns (P8a 0.8108 and P8b 0.8639, both failed). The elbow, knee and waist bands do read as deliberate dark recesses."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Palette follows the brief (matte white shell, graphite bands, black visor, no accent). The white/graphite boundaries are ragged and blotchy at the side of the knee, the back of the ankle and the near-side hip in the 3/4 and side two-tone views. Cannot tell whether this is a geometry split or a rendering artifact."},
+    "G4": {"verdict": "FAIL", "evidence": "Mixed radii and squareness: tight-radius boxes (head, chest, glutes, battery), softer tapered limb sections, pillow feet. S4_worst_part_flat_fraction is 0.6516 (failed), consistent with large flat patches."},
+    "G6": {"verdict": "FAIL", "evidence": "Equal-height lineup: S2 IoU front is 0.5332 (optimus_like) and 0.5657 (atlas_like). Matches: head height, hip and knee height, white shell over graphite bands. Mismatches: shoulder width (P3 0.418 vs 0.22-0.29), arms splayed in an A-pose and cropped by the frame, boxy torso with no shoulder blend or waist taper, untapered legs, long feet (P10a 0.238)."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "The forms are nearly identical. A9's two-tone is cleaner: arm shells are white with a short graphite elbow band and a graphite chest block, where A5 shows large dark slabs on the far-side arm in the 3/4 view and the whole upper arm in the side view, which reads as unfinished. A9's back is also a consistent white shell, where A5's is flat grey. The margin is small and neither reads as a finished product."},
+  "top_changes": [
+    {"criterion": "G6", "change": "Cut the outer shoulder width sharply (P3 0.418 vs 0.22-0.29), bring the arms in toward the torso, and blend the shoulder into the chest with a rounded cap. This is the biggest family mismatch in the front silhouette.", "profile_param": "segments[chest].stations[shoulder].w (and the arm root offset, segments[arm_core].stations[0].cy)"},
+    {"criterion": "G2", "change": "Taper the thigh and shank (distal/proximal area to about 0.65 and 0.60), and move the widest calf point up toward the top third of the shank. This turns the columns into flowing forms.", "profile_param": "segments[thigh].stations[distal].w / d and segments[shank].stations[ankle].w / d, segments[shank].stations[calf].z"},
+    {"criterion": "G1", "change": "Lengthen the visible neck (P2a) and round the head into a less boxy form, while keeping neck width at least 0.5 of head width. Add a waist taper so the chest, waist and pelvis flow without the stepped ledge.", "profile_param": "segments[neck].stations[*].z (length), segments[head].stations[*].n, segments[torso].stations[waist].w"}
+  ],
+  "notes": "Hard points all pass, so enclosure is not the issue. The lineup crops the A9 arm tips, so the actual shoulder-to-hand extent is not visible there. The G3 uncertainty is about ragged material boundaries, which could be a render artifact. Side and back views confirm the battery box and glute blocks are sharp, but I cannot judge how they would look under shells. G4 and G6 are visual and agree with the failed S4b and P3 numerics."
+}

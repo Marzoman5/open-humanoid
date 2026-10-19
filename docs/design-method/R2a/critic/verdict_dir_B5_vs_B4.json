@@ -1,0 +1,90 @@
+{
+  "step": "D1-direction",
+  "round": 3,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Rounded-box head with almost no neck (P2a 0.1029); shoulder blocks far wider than the references (P3 0.397); chest a flat-bottomed slab over the pelvis like a bib.",
+        "Flat-topped chest box with a hard shoulder ledge, cube head with almost no neck (P2a fails), shoulder span far wider than the references (P3 0.397)."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Stack of separate masses; side view ledges at shoulder and chest and a protruding rectangular back pack; straight leg columns (P8a 0.8763, P8b 0.938); dark bands deliberate but cut the limbs into segments.",
+        "Chest box, flat-bottomed lower-torso block and parallel leg tubes read as stacked parts; no thigh or calf taper (P8a 0.8763, P8b 0.938); graphite bands read as uniform cuffs."
+      ]
+    },
+    "G3": {
+      "verdict": "PASS",
+      "per_report": [
+        "PASS",
+        "PASS"
+      ],
+      "evidence": [
+        "Matte warm-white shells over graphite joint bands, gloss visor, no extra accent; black hands and heel consistent with the dark under-structure.",
+        "Matte white shells, graphite bands and heel blocks, gloss black visor, no second accent."
+      ]
+    },
+    "G4": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Head and chest near-square, legs and forearms softer tubes, shoulder blocks chamfered slabs, pack and heel sharp rectangles; S4b 0.5141.",
+        "Chest/shoulder block has large flat faces and tight corners (S4b 0.5141) while the limbs are soft; no single radius family."
+      ]
+    },
+    "G6": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Shoulder and arm mass about twice the references; no narrow neck or sloped shoulders; IoU 0.5261 / 0.559.",
+        "References have narrow shoulders, visible taper and slim legs; the design is much broader; IoU 0.526 / 0.559."
+      ]
+    },
+    "G5": {
+      "verdict": "UNCERTAIN",
+      "reason": "inconsistent or single-order preference ['tie', 'tie'] ['cand_first', 'cand_second']; counts as no-pass"
+    }
+  },
+  "reads_as": "unfinished",
+  "numeric_hard_failures": [
+    "P3",
+    "P10a"
+  ],
+  "top_changes": [
+    {
+      "criterion": "G1",
+      "change": "Cut shoulder width to ~0.25-0.29 H, slope the shoulder top, taper the chest to the waist, arms near-vertical.",
+      "profile_param": "segments[chest].stations[shoulder].w; arm cy"
+    },
+    {
+      "criterion": "G2",
+      "change": "Taper thigh and shank; visible neck; blend the chest-pelvis ledge.",
+      "profile_param": "segments[thigh|shank].stations[*].w/d; segments[neck].stations[*].z"
+    },
+    {
+      "criterion": "G4",
+      "change": "One radius family; round head and chest n; rounded flush pack and heel; shorter foot.",
+      "profile_param": "segments[head|chest].stations[*].n; segments[back].stations[*].d; segments[foot]"
+    }
+  ],
+  "next": "round cap reached: keep best-so-far and escalate to the human reviewer"
+}

@@ -1,0 +1,21 @@
+{
+  "order": "cand_second",
+  "candidate": "work/B4 (B + tapered leg covers + slim upper arm)",
+  "baseline": "work/B3",
+  "reads_as": "toy",
+  "reads_as_reason": "The head is a rounded box, the shoulders are oversized slabs, the torso is a squared block and the arms splay wide, so it reads as a stylised character rather than a calm adult product, even though B4 is slightly better than B3.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Equal-height silhouette lineup: arms flare far outside the red/blue reference outlines and run off the panel edge; head is a squarish box with almost no neck (metrics P2a FAIL 0.1103, P3 FAIL 0.397); torso reads as a stacked box and in the side view chest and pack sit as separate boxes."},
+    "G2": {"verdict": "FAIL", "evidence": "Front two-tone view: chest-to-pelvis is a hard horizontal ledge with the pelvis tub under the chest box; thigh and shank are near-straight columns (P8a 0.8602, P8b 0.938, both FAIL). Dark bands at elbow, knee and waist are deliberate recesses, which helps, but the side view is still stepped boxes (pack, chest, hip, heel)."},
+    "G3": {"verdict": "PASS", "evidence": "Two-tone view: warm-white shells, graphite bands at shoulder, elbow, waist and knee, black hands and heels, gloss visor, no extra accent colour. The black heel blocks in the back view are heavy but within the palette."},
+    "G4": {"verdict": "UNCERTAIN", "evidence": "Limbs share a rounded-rectangle section and similar edge radii, but head, chest box, pack and heel blocks are much squarer and the feet use a different language (long flat wedge plus black block). Clay renders are too faceted to confirm radii."},
+    "G6": {"verdict": "FAIL", "evidence": "Matches: head height and hip/knee landmarks line up with the references; white-shell and black-joint idea present. Does not match: shoulders and arms far wider than the reference outlines, neck nearly absent, legs straight columns where references taper, foot much longer (P10a FAIL 0.238). IoU vs references 0.526 (optimus_like) and 0.559 (atlas_like)."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Small margin. In the two-tone leg views the candidate's knee and calf panels give the leg some shape where the baseline's legs are plain tubes, and the shoulder-to-arm junction has a more defined dark recess. Metrics agree: P9b calf widest point goes from FAIL (0.4467) to PASS (0.1533), thigh and shank taper improve (P8a 0.9375 to 0.8602, P8b 0.9705 to 0.938), shoulder width drops 0.418 to 0.397 (still FAIL), P5 rises 0.6268 to 0.6751 (both PASS), and the pass count rises from 12 to 13 of 19."},
+  "top_changes": [
+    {"criterion": "G1", "change": "Cut the shoulder and arm span substantially: narrower, rounder shoulder boxes and upper arms hung closer to the body, targeting the P3 band 0.22-0.29.", "profile_param": "segments[arm_upper_l/r].stations[shoulder].w and cy (and chest shoulder-station w)"},
+    {"criterion": "G2", "change": "Taper thigh and shank so knee and ankle are clearly slimmer than hip and calf, and add a visible neck column so the head does not sit on the shoulders.", "profile_param": "segments[leg_core].stations[knee/ankle].w and d; segments[neck].z and stations[].w (P2a, P8a, P8b)"},
+    {"criterion": "G2", "change": "Blend chest into waist and pelvis with a continuous section instead of the horizontal ledge and tub: rounder, less square chest and pelvis sections with matched widths where they meet.", "profile_param": "segments[torso].stations[chest/waist/pelvis].w, d and n"}
+  ],
+  "notes": "Sheets are near-identical at first glance, so the pairwise call rests on small leg and shoulder-junction differences plus the metrics. Clay renders show faceting and contour banding that hide true radii (G4 UNCERTAIN)."
+}

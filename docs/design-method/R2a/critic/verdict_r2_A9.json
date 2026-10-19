@@ -1,0 +1,90 @@
+{
+  "step": "D1",
+  "round": 2,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Rounded-box head with a slab visor sits on almost no neck (P2_neck_length_hu 0.1143, failed). Chest and pelvis are separate slabs with a horizontal step (front and side views). The glute blocks (back view) and battery box (side view) are sharp rectangles.",
+        "Front silhouette: head is a rounded-square block sitting directly on a slab-like chest. Metrics list neck length as FAIL (P2a 0.1143 hu) and shoulder width as FAIL (P3 0.418 against a band of 0.22-0.29). The torso is a rounded box with a horizontal dark band across the waist. This reads as a character or toy proportion."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Chest-waist-pelvis does not flow: chest slab, dark band, pelvis slab with a visible ledge. Thigh and shank are near-constant-width columns (P8a 0.8108 and P8b 0.8639, both failed). The elbow, knee and waist bands do read as deliberate dark recesses.",
+        "Equal-height lineup: the chest-waist-pelvis flow is broken. The chest is a block, a dark waist band cuts it off, and the pelvis is a separate squat box. Arms and legs are near-constant-width tubes cut into stacked segments by dark bands. Metrics agree: thigh and shank taper fail (P8a 0.8108, P8b 0.8639), and calf widest point is too low (P9b 0.3933). The dark joint bands are deliberate recesses, but they mark off blocks instead of joining flowing forms."
+      ]
+    },
+    "G3": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "PASS"
+      ],
+      "evidence": [
+        "Palette follows the brief (matte white shell, graphite bands, black visor, no accent). The white/graphite boundaries are ragged and blotchy at the side of the knee, the back of the ankle and the near-side hip in the 3/4 and side two-tone views. Cannot tell whether this is a geometry split or a rendering artifact.",
+        "Two-tone view: matte white shells, graphite joint bands, hands and boots, and a gloss-black visor, with no second accent colour. The back view is fully shelled in white. The ragged black/white edge at the knee in the side view and at the lower torso in the three-quarter view looks like a material-assignment artefact, not a design choice."
+      ]
+    },
+    "G4": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "PASS"
+      ],
+      "evidence": [
+        "Mixed radii and squareness: tight-radius boxes (head, chest, glutes, battery), softer tapered limb sections, pillow feet. S4_worst_part_flat_fraction is 0.6516 (failed), consistent with large flat patches.",
+        "Head, chest, pelvis, arm and leg segments share the same squarish, small-radius rounded-box section, so the radii family is consistent. That consistency is what makes the figure look boxy. The thick arm tubes with 45-degree-looking ends are the one segment that departs from the rest."
+      ]
+    },
+    "G6": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Equal-height lineup: S2 IoU front is 0.5332 (optimus_like) and 0.5657 (atlas_like). Matches: head height, hip and knee height, white shell over graphite bands. Mismatches: shoulder width (P3 0.418 vs 0.22-0.29), arms splayed in an A-pose and cropped by the frame, boxy torso with no shoulder blend or waist taper, untapered legs, long feet (P10a 0.238).",
+        "At equal height the candidate does not read as family with optimus_like or atlas_like. Matching: head height and hip and knee heights (P1, P6, P7 pass), and a graphite visor and dark joints in the two-tone. Not matching: shoulders and arms are far wider and more splayed, the neck is almost absent, there is no waist or torso taper, the legs are fat and straight with no calf shaping, and the foot is long (P10a 0.238 against a band of 0.13-0.17). S2 IoU is 0.5332 against optimus_like and 0.5657 against atlas_like."
+      ]
+    },
+    "G5": {
+      "verdict": "PASS",
+      "reason": "candidate preferred in both presentation orders"
+    }
+  },
+  "reads_as": "toy",
+  "numeric_hard_failures": [
+    "P3",
+    "P10a"
+  ],
+  "top_changes": [
+    {
+      "criterion": "G6",
+      "change": "Cut the outer shoulder width sharply (P3 0.418 vs 0.22-0.29), bring the arms in toward the torso, and blend the shoulder into the chest with a rounded cap. This is the biggest family mismatch in the front silhouette.",
+      "profile_param": "segments[chest].stations[shoulder].w (and the arm root offset, segments[arm_core].stations[0].cy)"
+    },
+    {
+      "criterion": "G2",
+      "change": "Taper the thigh and shank (distal/proximal area to about 0.65 and 0.60), and move the widest calf point up toward the top third of the shank. This turns the columns into flowing forms.",
+      "profile_param": "segments[thigh].stations[distal].w / d and segments[shank].stations[ankle].w / d, segments[shank].stations[calf].z"
+    },
+    {
+      "criterion": "G1",
+      "change": "Lengthen the visible neck (P2a) and round the head into a less boxy form, while keeping neck width at least 0.5 of head width. Add a waist taper so the chest, waist and pelvis flow without the stepped ledge.",
+      "profile_param": "segments[neck].stations[*].z (length), segments[head].stations[*].n, segments[torso].stations[waist].w"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}
