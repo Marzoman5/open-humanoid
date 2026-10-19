@@ -4,7 +4,6 @@ from __future__ import annotations
 import csv
 import json
 from collections import Counter
-from datetime import date
 
 from . import catalog
 from .paths import generated_header
@@ -15,7 +14,7 @@ from .spec import generated_dir
 def sizing_to_dict(spec: dict, res: dict) -> dict:
     b = res["best"]
     d = {
-        "generated_by": "oh size", "date": date.today().isoformat(), "variant": spec["id"],
+        "generated_by": "oh size", "variant": spec["id"],
         "feasible": b.feasible, "reason": b.reason, "height_m": b.height, "height_mode": res["mode"],
         "limiting_factor": res["limiting"], "joints_base": b.base_joints,
         "optional_added": res["optional_added"], "optional_dropped": res["optional_dropped"],
