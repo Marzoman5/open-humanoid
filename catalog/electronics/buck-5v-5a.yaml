@@ -1,15 +1,37 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: buck-5v-5a
-name: 5 V 5 A buck converter
+name: '5 V buck converter, 4 A rated (5 A with heat dissipation), 7-24 V in: DFRobot DFR0831'
 category: electronics
 tier: hobby
 price_usd:
-  typical: 6
+  typical: 5.56
+  low: 4.5
+  high: 6.21
   unit: each
-  as_of: 2026-10 (est)
-  low: 4
-  high: 10
+  as_of: '2026-10-19'
+  basis: DFRobot $4.90 (4.50 at 10+), RobotShop $6.21
+verified: true
+source: https://www.dfrobot.com/product-2240.html (7-24 V in, 5 V out, 0-4 A, 5 A max with heat dissipation, 90% efficiency, $4.90); https://www.robotshop.com/products/dfrobot-dc-dc-buck-converter-7-24v-to-5v-4a
+  ($6.21, in stock 2026-10-14)
+vendors:
+- name: DFRobot
+  url: https://www.dfrobot.com/product-2240.html
+  price: 4.9
+  sku: DFR0831
+  shipping: not visible
+  checked: '2026-10-19'
+- name: RobotShop
+  url: https://www.robotshop.com/products/dfrobot-dc-dc-buck-converter-7-24v-to-5v-4a
+  price: 6.21
+  stock: in stock (2026-10-14)
+  checked: '2026-10-19'
 mass_kg: 0.015
-verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+specs:
+  input_v:
+  - 7
+  - 24
+  output_v: 5.0
+  max_current_a: 4.0
+notes: 'CORRECTION: the id says 5 A but the reference module is rated 4 A (5 A only with heat dissipation); specs.max_current_a=4.0 is now set (the concept engine defaulted to 5.0).
+  MINIMUM INPUT 7 V: a 2S pack sags to 6.0-6.4 V under load, so this module will drop out on candidates B and duck-like. Use buck-pololu-d24v22f5 (5.3 V min) for 2S. Not measured: whether
+  it holds 3 A from 8.4-12.6 V in.'

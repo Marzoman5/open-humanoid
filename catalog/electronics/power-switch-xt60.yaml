@@ -1,15 +1,16 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: power-switch-xt60
 name: XT60 pigtails + inline power switch
 category: electronics
 tier: hobby
 price_usd:
-  typical: 6
+  typical: 6.0
+  low: 4.0
+  high: 13.0
   unit: each
-  as_of: 2026-10 (est)
-  low: 4
-  high: 10
-mass_kg: 0.02
+  as_of: '2026-10-19'
+  basis: 'estimate. Evidence: RaceDayQuads XT60 female pigtail 14 AWG $2.49; REV switch cable (XT30, >20 A) $13.00'
 verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+source: 'estimate: pigtail https://www.racedayquads.com/products/xt60-pigtail-14awg-4 ($2.49, in stock); switch https://www.revrobotics.com/rev-31-1387/ ($13.00, XT30 not XT60). No US
+  XT60 inline switch found; a rocker switch rated >=20 A DC is still to be sourced.'
+mass_kg: 0.02

@@ -1,0 +1,17 @@
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
+id: cam-cable-zero-22pin
+name: Pi Zero camera cable (22-pin 0.5 mm to 15-pin 1 mm FFC, 150 mm)
+category: electronics
+tier: hobby
+price_usd:
+  typical: 5.95
+  low: 1.81
+  high: 5.95
+  unit: each
+  as_of: '2026-10-19'
+  basis: 'Adafruit #3157 $5.95 (Pi Zero v1.3 cable, 150 mm); Waveshare ~$1.81-2.49 (snippet)'
+verified: false
+source: 'https://www.adafruit.com/product/3157 ($5.95, in stock); https://www.adafruit.com/product/5819 (Pi 5 FPC 22->15 pin, 300 mm, $3.16; Zero fit not stated). verified false: one
+  vendor.'
+mass_kg: 0.002
+notes: The Pi Zero 2 W (and Pi 5) CSI connector is 22-pin 0.5 mm; Camera Module 3 is 15-pin 1 mm. The camera ships with a 15-15 cable that does not fit the Zero.

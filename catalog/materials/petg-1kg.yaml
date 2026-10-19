@@ -1,16 +1,16 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: petg-1kg
 name: PETG filament 1.75 mm
 category: material
 tier: hobby
 price_usd:
-  typical: 18
+  typical: 20.0
+  low: 15.19
+  high: 25.0
   unit: kg
-  as_of: 2026-10 (est)
-  low: 14
-  high: 25
+  as_of: '2026-10-19'
+  basis: estimate
+verified: false
+source: 'estimate: Sunlu PETG 1 kg $20.99 third-party new, 2026-08-04, low $15.19 (https://camelcamelcamel.com/product/B0F4L31P2K). One secondary source.'
 specs:
   density_g_cm3: 1.27
-verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'

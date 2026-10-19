@@ -1,15 +1,43 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: cam-rpi-v3
 name: Raspberry Pi Camera Module 3
 category: sensor
 tier: hobby
 price_usd:
-  typical: 25
+  typical: 29.25
+  low: 29.25
+  high: 32.95
   unit: each
-  as_of: 2026-10 (est)
-  low: 25
-  high: 35
+  as_of: '2026-10-19'
+  basis: Adafruit and PiShop $29.25; SparkFun $32.95
+verified: true
+source: https://www.raspberrypi.com/products/camera-module-3/ (IMX708, 11.9 MP, 25x24x11.5 mm; 15-pin cable); https://www.adafruit.com/product/5657 ($29.25, in stock, ships today); https://www.pishop.us/product/raspberry-pi-camera-module-3/
+  ($29.25); https://www.sparkfun.com/raspberry-pi-camera-module-3.html ($32.95)
+vendors:
+- name: Adafruit
+  url: https://www.adafruit.com/product/5657
+  price: 29.25
+  sku: '5657'
+  stock: in stock
+  ship_from: Brooklyn NY
+  shipping: UPS Ground/USPS 2-8 days; cost not visible
+  checked: '2026-10-19'
+- name: PiShop.us
+  url: https://www.pishop.us/product/raspberry-pi-camera-module-3/
+  price: 29.25
+  sku: 46-1
+  stock: in stock
+  checked: '2026-10-19'
+- name: SparkFun
+  url: https://www.sparkfun.com/raspberry-pi-camera-module-3.html
+  price: 32.95
+  sku: SEN-21331
+  stock: in stock
+  checked: '2026-10-19'
 mass_kg: 0.004
-verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+dimensions_mm:
+- 25
+- 24
+- 11.5
+notes: 'Catalog said $25 (''from $25'' on raspberrypi.com); US retail is $29.25. Mass 4 g is a retailer figure (Core Electronics, Besomi); the official page lists none. The Pi Zero 2
+  W needs a 22-pin-to-15-pin cable: see cam-cable-zero-22pin.'

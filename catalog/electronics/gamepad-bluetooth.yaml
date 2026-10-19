@@ -1,0 +1,17 @@
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
+id: gamepad-bluetooth
+name: Handheld gamepad for Pi (8BitDo SN30 Pro / Pro 2 Bluetooth, or Logitech F710 2.4 GHz dongle)
+category: electronics
+tier: hobby
+price_usd:
+  typical: 38.68
+  low: 29.99
+  high: 44.95
+  unit: each
+  as_of: '2026-10-19'
+  basis: Logitech F710 $38.68 at SHI (US); 8BitDo SN30 Pro EUR 39.90 Kubii / $44.95 SparkFun (retired); Best Buy $29.99 (Apr 2025, stale)
+verified: false
+source: 'estimate: https://texas.gs.shi.com/product/22038825/Logitech-Wireless-Gamepad-F710 ($38.68); https://www.8bitdo.com/pro2/ (Bluetooth 4.0, Pi listed as supported); Core Electronics
+  says SN30 Pro pairs on Pi 3 and above. No current US 8BitDo price found.'
+mass_kg: 0.23
+notes: R9 allows 'gamepad and/or phone'. The phone route costs $0 and removes this line. Linux/evdev support is believed standard for both but not verified here.

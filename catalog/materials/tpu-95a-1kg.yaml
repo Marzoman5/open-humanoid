@@ -1,17 +1,18 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: tpu-95a-1kg
 name: TPU 95A filament 1.75 mm
 category: material
 tier: hobby
 price_usd:
-  typical: 25
+  typical: 22.0
+  low: 18.0
+  high: 35.0
   unit: kg
-  as_of: 2026-10 (est)
-  low: 18
-  high: 35
+  as_of: '2026-10-19'
+  basis: estimate; Overture $20.69-22.99
+verified: false
+source: 'estimate: https://woodartsupply.com/products/overture-tpu-filament-1-75mm-flexible-tpu-roll-95a-soft-3d-printer-filament-1kg-spool-2-2-lbs-dimensional-accuracy-0-02-mm-tpu-black
+  (Overture TPU 95A 1 kg $20.69 sale / $22.99 regular, undated). One vendor.'
 specs:
   density_g_cm3: 1.21
 notes: Foot soles, bumpers.
-verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
