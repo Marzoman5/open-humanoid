@@ -92,6 +92,8 @@ def write_all(extra: list[dict] | None = None) -> list[Path]:
 if __name__ == "__main__":
     for p in write_all([combined("PK-C1-package", "Combined package C1: small arm + neck servos (6 V rail), no waist yaw, pack low, "
                                  "knee + ankle-pitch servos relocated through 1:1 parallelograms, 6-DOF legs."),
-                        combined("PK-C1-5dof", "Combined package C1 with 5-DOF legs (no ankle roll).", five_dof=True)]):
+                        combined("PK-C1-5dof", "Combined package C1 with 5-DOF legs (no ankle roll).", five_dof=True),
+                        dict(combined("PK-C1-arm2x", "C1 SENSITIVITY: rail-servo armature x2 (STS3045M 0.004 kg m^2 = the BAM "
+                                      "Waveshare ST3025 value)."), x_rail_armature_scale=2.0)]):
         print(p.relative_to(HERE.parents[3]))
     sys.exit(0)

@@ -115,9 +115,10 @@ def head_parts(c: Ctx, style: dict) -> list[dict]:
     if c.seg("neck"):            # neck-yaw servo standing in the neck: fit the neck round it
         xr = c.xr("neck_yaw_servo")
         ncx, nd = (xr[0] + xr[1]) / 2, style.get("neck_d", 38.0)
-        w0 = c.fw("neck", nb + 2, nd, 2.6, ncx, extra=0.5, floor=style["neck_w"][0])
-        w1 = c.fw("neck", ch - 2, nd, 2.6, ncx, extra=0.5, floor=style["neck_w"][1])
-        neck = [S(nb, w0, nd, 2.6, ncx), S(ch - 0.5, w1, nd - 2, 2.6, ncx)]
+        nb = min(nb, c.zr("neck_yaw_servo")[0] - 3.4)     # the neck root runs down into the chest far enough to hold the servo
+        w0 = c.fw("neck", nb + 2, nd, 2.6, ncx, extra=1.0, floor=style["neck_w"][0])
+        w1 = c.fw("neck", ch - 2, nd, 2.6, ncx, extra=1.0, floor=style["neck_w"][1])
+        neck = [S(nb, w0, nd, 2.6, ncx), S(max(ch - 0.5, c.zr("neck_yaw_servo")[1] + 4.0), w1, nd, 2.6, ncx)]   # top tucked into the head
     else:
         neck = [S(nb, style["neck_w"][0], style["neck_w"][0], 2.0, 2.0), S(ch - 0.5, style["neck_w"][1], style["neck_w"][1], 2.0, 3.0)]
     out.append({"id": "neck", "role": "dark", "k": 3.0, "stations": neck})
@@ -188,17 +189,19 @@ def leg_parts(c: Ctx) -> list[dict]:
         """cx and depth of the section that encloses every box spanning z (B4: depth 54 for the 30 mm-deep fork servos)."""
         act = active(z)
         x0, x1 = min(b["x"][0] for b in act), max(b["x"][1] for b in act)
-        return (x0 + x1) / 2, max(54.0, ((x1 - x0) + 6.7) * 1.25) + pad
+        if (x1 - x0) > 40.0:      # a servo laid fore-aft (relocated): squarer, deeper section so its corners do not widen the leg past the mid-plane
+            return (x0 + x1) / 2, ((x1 - x0) + 6.7) * 1.4 + pad, 3.6
+        return (x0 + x1) / 2, max(54.0, ((x1 - x0) + 6.7) * 1.25) + pad, n
     zs = sorted({round(z, 2) for b in bx for z in (b["z"][0] - 3.15, b["z"][1] + 3.05)})
     core = [S(a - 26, 50, 42, n, 0, cy)]
     prev = None
     for z in zs:
-        bcx, bd = xsec(z)
-        w = max(c.fw("leg_core_l", zz, bd, n, bcx, cy, extra=0.2) for zz in (z, min(max(z, active(z)[0]["z"][0]), active(z)[0]["z"][1])))
+        bcx, bd, nn = xsec(z)
+        w = max(c.fw("leg_core_l", zz, bd, nn, bcx, cy, extra=0.2) for zz in (z, min(max(z, active(z)[0]["z"][0]), active(z)[0]["z"][1])))
         if prev is not None and z - prev["z"] > 6 and not [b for b in bx if prev["z"] < b["z"][0] and b["z"][1] < z] \
                 and not active((prev["z"] + z) / 2):
             core.append(S((prev["z"] + z) / 2, min(prev["w"], w) - 7.4, min(prev["d"], bd) - 8, n, (prev["cx"] + bcx) / 2, cy))
-        q = S(z, w, bd, n, bcx, cy)
+        q = S(z, w, bd, nn, bcx, cy)
         core.append(q)
         prev = q
     core.append(S(prev["z"] + 8, 48, 40, n, 0, cy))
@@ -214,9 +217,12 @@ def leg_parts(c: Ctx) -> list[dict]:
             if b["z"][1] < z_lo or b["z"][0] > z_hi:
                 continue
             for z in (max(b["z"][0], z_lo + 4), min(b["z"][1], z_hi - 4)):
-                bcx, bd = xsec(z, 6.0)
-                w = c.fw("leg_core_l", z, bd, n, bcx, cy, extra=3.0, win=3.2)
-                sts.append(S(z, w, bd, n, bcx, inner(w)))
+                bcx, bd, nn = xsec(z, 6.0)
+                w = c.fw("leg_core_l", z, bd, nn, bcx, cy, extra=3.0, win=3.2)
+                while w > 100.0 and bd < 200.0:      # the fit has no solution at this depth (two boxes of different depth meet): deepen
+                    bd *= 1.1
+                    w = c.fw("leg_core_l", z, bd, nn, bcx, cy, extra=3.0, win=3.2)
+                sts.append(S(z, w, bd, nn, bcx, inner(w)))
         sts.sort(key=lambda q: q["z"])
         out = [sts[0]]
         for q in sts[1:]:                 # a station between two boxes: the mean of its neighbours (no waist between them)
@@ -333,7 +339,7 @@ HP_SEG = {"head": "head", "neck": "neck", "chest": "chest", "back": "back", "pel
 def style_for(lv) -> dict:
     """Head and neck styling: B4 (62 x 68 pill, 36/32 neck) unless the small neck servo frees the head (then a slimmer pill)."""
     if lv.neck != "sts3215-12v":
-        return dict(head_w=54.0, head_d=62.0, head_n=2.2, neck_w=(30.0, 26.0), neck_d=38.0)
+        return dict(head_w=54.0, head_d=62.0, head_n=2.2, neck_w=(30.0, 26.0), neck_d=42.0)
     return dict(head_w=62.0, head_d=68.0, head_n=2.2, neck_w=(36.0, 32.0))
 
 

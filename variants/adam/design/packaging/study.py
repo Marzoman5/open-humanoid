@@ -48,6 +48,12 @@ VARIANTS = {   # key: (levers, what it tests)
     "L7": (replace(B, legs="5dof"), "5-DOF legs (no ankle roll; heel and foot at 0.17 H)"),
     "L8": (replace(B, H=600.0), "height 0.60 m, R1 hardware"),
 }
+C1 = replace(B, arm=SM, pitch=SM, grip="scs0009", neck="scs0009", neck_yaw_at="neck", pack="lumbar_gnb", waist=False, knee_up=True, ankle_up=True)
+VARIANTS.update({
+    "C1": (C1, "combined package C1 (6-DOF): L1d + L6b + L3b(+L2) + L5c"),
+    "C1-5": (replace(C1, legs="5dof"), "C1 with 5-DOF legs (L7)"),
+    "C1-600": (replace(C1, H=600.0), "C1 at 0.60 m (L8)"),
+})
 KEYS = ["P1", "P2a", "P2b", "P3", "P4", "P5", "P6", "P7", "P8a", "P8b", "P9a", "P9b", "P10a", "P10b", "S3a", "S3b", "S4a", "S4b", "HP"]
 
 

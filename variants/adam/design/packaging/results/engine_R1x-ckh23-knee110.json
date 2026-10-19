@@ -1,0 +1,560 @@
+[
+ {
+  "candidate": "R1x-ckh23-knee110",
+  "height_m": 0.55,
+  "gait": {
+   "stance_knee_flex_deg": 40,
+   "step_time_s": 0.5,
+   "worst_margin": 1.247
+  },
+  "nominal": {
+   "label": "nominal",
+   "mass_kg": 4.005,
+   "strict_worst": 1.247,
+   "strict_worst_joint": "hip_roll_l",
+   "cal_worst": 1.891,
+   "cal_worst_joint": "hip_roll_l",
+   "strict_joint_gates_pass": true,
+   "cal_joint_gates_pass": true,
+   "half_worst": 1.571,
+   "half_worst_joint": "hip_roll_l",
+   "half_pass": true,
+   "r10_at_required": {
+    "stand_fwd": true,
+    "stand_lat": true,
+    "walk_fwd": true,
+    "walk_lat_out": true,
+    "walk_lat_in": true
+   },
+   "r10_pass": true,
+   "invalid": {
+    "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+   },
+   "strict_pass": true,
+   "cal_pass": true,
+   "cal_fails": {},
+   "strict_fails": {},
+   "rows": {
+    "hip_yaw_l": {
+     "strict_worst": 1.526,
+     "strict_fails": [],
+     "cal_peak": 2.32,
+     "cal_rms": 4.089,
+     "cal_env": 2.315,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.315,
+     "cal_fails": [],
+     "half_worst": 1.923,
+     "half_fails": [],
+     "peak_motion": "turn",
+     "rms_motion": "turn"
+    },
+    "hip_yaw_r": {
+     "strict_worst": 1.407,
+     "strict_fails": [],
+     "cal_peak": 2.138,
+     "cal_rms": 3.906,
+     "cal_env": 2.134,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.134,
+     "cal_fails": [],
+     "half_worst": 1.773,
+     "half_fails": [],
+     "peak_motion": "turn",
+     "rms_motion": "turn"
+    },
+    "hip_roll_l": {
+     "strict_worst": 1.247,
+     "strict_fails": [],
+     "cal_peak": 1.895,
+     "cal_rms": 2.509,
+     "cal_env": 1.891,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.891,
+     "cal_fails": [],
+     "half_worst": 1.571,
+     "half_fails": [],
+     "peak_motion": "walk_backward",
+     "rms_motion": "walk_forward"
+    },
+    "hip_roll_r": {
+     "strict_worst": 1.265,
+     "strict_fails": [],
+     "cal_peak": 1.923,
+     "cal_rms": 2.724,
+     "cal_env": 1.919,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.919,
+     "cal_fails": [],
+     "half_worst": 1.594,
+     "half_fails": [],
+     "peak_motion": "turn",
+     "rms_motion": "turn"
+    },
+    "hip_pitch_l": {
+     "strict_worst": 1.42,
+     "strict_fails": [],
+     "cal_peak": 2.158,
+     "cal_rms": 3.576,
+     "cal_env": 2.154,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.154,
+     "cal_fails": [],
+     "half_worst": 1.789,
+     "half_fails": [],
+     "peak_motion": "walk_forward",
+     "rms_motion": "walk_forward"
+    },
+    "hip_pitch_r": {
+     "strict_worst": 1.358,
+     "strict_fails": [],
+     "cal_peak": 2.064,
+     "cal_rms": 3.474,
+     "cal_env": 2.061,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.061,
+     "cal_fails": [],
+     "half_worst": 1.711,
+     "half_fails": [],
+     "peak_motion": "walk_forward",
+     "rms_motion": "walk_forward"
+    },
+    "knee_l": {
+     "strict_worst": 1.388,
+     "strict_fails": [],
+     "cal_peak": 2.25,
+     "cal_rms": 2.692,
+     "cal_env": 1.955,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.955,
+     "cal_fails": [],
+     "half_worst": 1.805,
+     "half_fails": [],
+     "peak_motion": "walk_forward",
+     "rms_motion": "walk_forward"
+    },
+    "knee_r": {
+     "strict_worst": 1.317,
+     "strict_fails": [],
+     "cal_peak": 2.236,
+     "cal_rms": 2.555,
+     "cal_env": 1.935,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.935,
+     "cal_fails": [],
+     "half_worst": 1.787,
+     "half_fails": [],
+     "peak_motion": "walk_forward",
+     "rms_motion": "walk_forward"
+    },
+    "ankle_pitch_l": {
+     "strict_worst": 1.342,
+     "strict_fails": [],
+     "cal_peak": 2.104,
+     "cal_rms": 2.604,
+     "cal_env": 2.1,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.1,
+     "cal_fails": [],
+     "half_worst": 1.744,
+     "half_fails": [],
+     "peak_motion": "walk_backward",
+     "rms_motion": "walk_backward"
+    },
+    "ankle_pitch_r": {
+     "strict_worst": 1.359,
+     "strict_fails": [],
+     "cal_peak": 2.103,
+     "cal_rms": 2.637,
+     "cal_env": 2.099,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.099,
+     "cal_fails": [],
+     "half_worst": 1.743,
+     "half_fails": [],
+     "peak_motion": "walk_backward",
+     "rms_motion": "walk_backward"
+    },
+    "ankle_roll_l": {
+     "strict_worst": 3.056,
+     "strict_fails": [],
+     "cal_peak": 4.645,
+     "cal_rms": 6.874,
+     "cal_env": 4.636,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.636,
+     "cal_fails": [],
+     "half_worst": 3.851,
+     "half_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "turn"
+    },
+    "ankle_roll_r": {
+     "strict_worst": 2.312,
+     "strict_fails": [],
+     "cal_peak": 3.515,
+     "cal_rms": 6.863,
+     "cal_env": 3.508,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.508,
+     "cal_fails": [],
+     "half_worst": 2.914,
+     "half_fails": [],
+     "peak_motion": "turn",
+     "rms_motion": "turn"
+    },
+    "waist_yaw": {
+     "strict_worst": 2.34,
+     "strict_fails": [],
+     "cal_peak": 3.556,
+     "cal_rms": 19.433,
+     "cal_env": 3.55,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.55,
+     "cal_fails": [],
+     "half_worst": 2.948,
+     "half_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_yaw": {
+     "strict_worst": 3.775,
+     "strict_fails": [],
+     "cal_peak": 5.738,
+     "cal_rms": 18.242,
+     "cal_env": 5.727,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.727,
+     "cal_fails": [],
+     "half_worst": 4.757,
+     "half_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_pitch": {
+     "strict_worst": 156.018,
+     "strict_fails": [],
+     "cal_peak": 288.836,
+     "cal_rms": 302.675,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 288.836,
+     "cal_fails": [],
+     "half_worst": 229.346,
+     "half_fails": [],
+     "peak_motion": "walk_forward",
+     "rms_motion": "walk_backward"
+    },
+    "shoulder_pitch_l": {
+     "strict_worst": 3.163,
+     "strict_fails": [],
+     "cal_peak": 4.808,
+     "cal_rms": 7.819,
+     "cal_env": 4.799,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.799,
+     "cal_fails": [],
+     "half_worst": 3.986,
+     "half_fails": [],
+     "peak_motion": "walk_backward",
+     "rms_motion": "walk_backward"
+    },
+    "shoulder_pitch_r": {
+     "strict_worst": 2.946,
+     "strict_fails": [],
+     "cal_peak": 4.806,
+     "cal_rms": 7.774,
+     "cal_env": 3.476,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.476,
+     "cal_fails": [],
+     "half_worst": 3.211,
+     "half_fails": [],
+     "peak_motion": "walk_backward",
+     "rms_motion": "walk_backward"
+    },
+    "shoulder_roll_l": {
+     "strict_worst": 3.645,
+     "strict_fails": [],
+     "cal_peak": 5.54,
+     "cal_rms": 8.089,
+     "cal_env": 5.53,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.53,
+     "cal_fails": [],
+     "half_worst": 4.592,
+     "half_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_r": {
+     "strict_worst": 3.645,
+     "strict_fails": [],
+     "cal_peak": 5.541,
+     "cal_rms": 7.915,
+     "cal_env": 5.53,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.53,
+     "cal_fails": [],
+     "half_worst": 4.593,
+     "half_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "elbow_l": {
+     "strict_worst": 7.132,
+     "strict_fails": [],
+     "cal_peak": 10.841,
+     "cal_rms": 21.096,
+     "cal_env": 10.821,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 10.821,
+     "cal_fails": [],
+     "half_worst": 8.987,
+     "half_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "elbow_r": {
+     "strict_worst": 2.239,
+     "strict_fails": [],
+     "cal_peak": 3.403,
+     "cal_rms": 4.797,
+     "cal_env": 3.397,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.397,
+     "cal_fails": [],
+     "half_worst": 2.821,
+     "half_fails": [],
+     "peak_motion": "wave",
+     "rms_motion": "wave"
+    },
+    "gripper_l": {
+     "strict_worst": 701.359,
+     "strict_fails": [],
+     "cal_peak": 1367.454,
+     "cal_rms": 1360.637,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1360.637,
+     "cal_fails": [],
+     "half_worst": 1030.998,
+     "half_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_r": {
+     "strict_worst": 2.493,
+     "strict_fails": [],
+     "cal_peak": 3.789,
+     "cal_rms": 5.887,
+     "cal_env": 3.301,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.301,
+     "cal_fails": [],
+     "half_worst": 3.049,
+     "half_fails": [],
+     "peak_motion": "pickup",
+     "rms_motion": "pickup"
+    }
+   }
+  },
+  "packaging_notes": [
+   "ankle_height: 24.8 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+   "foot_length: 93.5 mm -> 101.2 mm (T-0004 foot size)",
+   "foot_width: 41.2 mm -> 60.5 mm (T-0004 foot size)",
+   "shoulder_width: 165.0 mm -> 198.0 mm (T-0004 arm clearance)",
+   "standing height kept at 550 mm: the other vertical proportions scaled x0.920 (thigh 114 mm, shank 114 mm)",
+   "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+   "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+  ],
+  "rom_clamps": [
+   "squat_120",
+   "sit_to_stand_130"
+  ],
+  "should": {
+   "sit_to_stand_130": {
+    "valid": true,
+    "fails": []
+   }
+  },
+  "largest_recoverable_Ns": {
+   "stand_fwd": {
+    "Ns": 1.022,
+    "by": "ankle+1step@200ms",
+    "limited_by": "plan: reach / capture point"
+   },
+   "stand_lat": {
+    "Ns": 1.079,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_fwd": {
+    "Ns": 0.669,
+    "by": "ankle+1step@200ms",
+    "limited_by": "plan: reach / capture point"
+   },
+   "walk_lat_out": {
+    "Ns": 0.886,
+    "by": "ankle",
+    "limited_by": "plan: reach / capture point"
+   },
+   "walk_lat_in": {
+    "Ns": 0.696,
+    "by": "ankle+1step@200ms",
+    "limited_by": "actuators (torque / speed demand)"
+   }
+  },
+  "seconds": 279.7,
+  "joints": {
+   "hip_yaw_l": {
+    "strict": 1.526,
+    "half": 1.923,
+    "cal": 2.315,
+    "peak_motion": "turn"
+   },
+   "hip_yaw_r": {
+    "strict": 1.407,
+    "half": 1.773,
+    "cal": 2.134,
+    "peak_motion": "turn"
+   },
+   "hip_roll_l": {
+    "strict": 1.247,
+    "half": 1.571,
+    "cal": 1.891,
+    "peak_motion": "walk_backward"
+   },
+   "hip_roll_r": {
+    "strict": 1.265,
+    "half": 1.594,
+    "cal": 1.919,
+    "peak_motion": "turn"
+   },
+   "hip_pitch_l": {
+    "strict": 1.42,
+    "half": 1.789,
+    "cal": 2.154,
+    "peak_motion": "walk_forward"
+   },
+   "hip_pitch_r": {
+    "strict": 1.358,
+    "half": 1.711,
+    "cal": 2.061,
+    "peak_motion": "walk_forward"
+   },
+   "knee_l": {
+    "strict": 1.388,
+    "half": 1.805,
+    "cal": 1.955,
+    "peak_motion": "walk_forward"
+   },
+   "knee_r": {
+    "strict": 1.317,
+    "half": 1.787,
+    "cal": 1.935,
+    "peak_motion": "walk_forward"
+   },
+   "ankle_pitch_l": {
+    "strict": 1.342,
+    "half": 1.744,
+    "cal": 2.1,
+    "peak_motion": "walk_backward"
+   },
+   "ankle_pitch_r": {
+    "strict": 1.359,
+    "half": 1.743,
+    "cal": 2.099,
+    "peak_motion": "walk_backward"
+   },
+   "ankle_roll_l": {
+    "strict": 3.056,
+    "half": 3.851,
+    "cal": 4.636,
+    "peak_motion": "dance"
+   },
+   "ankle_roll_r": {
+    "strict": 2.312,
+    "half": 2.914,
+    "cal": 3.508,
+    "peak_motion": "turn"
+   },
+   "waist_yaw": {
+    "strict": 2.34,
+    "half": 2.948,
+    "cal": 3.55,
+    "peak_motion": "dance"
+   },
+   "neck_yaw": {
+    "strict": 3.775,
+    "half": 4.757,
+    "cal": 5.727,
+    "peak_motion": "dance"
+   },
+   "neck_pitch": {
+    "strict": 156.018,
+    "half": 229.346,
+    "cal": 288.836,
+    "peak_motion": "walk_forward"
+   },
+   "shoulder_pitch_l": {
+    "strict": 3.163,
+    "half": 3.986,
+    "cal": 4.799,
+    "peak_motion": "walk_backward"
+   },
+   "shoulder_pitch_r": {
+    "strict": 2.946,
+    "half": 3.211,
+    "cal": 3.476,
+    "peak_motion": "walk_backward"
+   },
+   "shoulder_roll_l": {
+    "strict": 3.645,
+    "half": 4.592,
+    "cal": 5.53,
+    "peak_motion": "dance"
+   },
+   "shoulder_roll_r": {
+    "strict": 3.645,
+    "half": 4.593,
+    "cal": 5.53,
+    "peak_motion": "dance"
+   },
+   "elbow_l": {
+    "strict": 7.132,
+    "half": 8.987,
+    "cal": 10.821,
+    "peak_motion": "dance"
+   },
+   "elbow_r": {
+    "strict": 2.239,
+    "half": 2.821,
+    "cal": 3.397,
+    "peak_motion": "wave"
+   },
+   "gripper_l": {
+    "strict": 701.359,
+    "half": 1030.998,
+    "cal": 1360.637,
+    "peak_motion": "dance"
+   },
+   "gripper_r": {
+    "strict": 2.493,
+    "half": 3.049,
+    "cal": 3.301,
+    "peak_motion": "pickup"
+   }
+  },
+  "options": {
+   "foot_frac": null,
+   "extra_latency_ms": 0.0,
+   "bounds": false,
+   "patches": {
+    "rail_servos": null,
+    "pack_host": null,
+    "rail_armature_scale": 1.0
+   }
+  }
+ }
+]
