@@ -1,0 +1,86 @@
+# Raw evidence for the three maintainer-supplied links + Noetix primary sources. Accessed 2026-10-19.
+# kind: primary = manufacturer site/repo; press = news repeating company claims; retail = reseller listing.
+# Unknown = null. Statements in "inference" are ours, not sourced.
+noetix_bumi:
+  maker: "Beijing Noetix Robotics Technology Group Co. (北京松延动力科技集团股份有限公司), founded 2023-09, Tsinghua/Zhejiang founders"
+  official_spec_site_bundle:   # noetixrobotics.com/en SPA bundle https://www.noetixrobotics.com/assets/index-C-mlUCVL.js (build 2026-10-16)
+    height_x_width_x_depth: "98 cm x 35 cm x 20 cm"
+    mass: "approx. 17 kg (all editions)"
+    dof: {total: 21, per_leg: 6, per_arm: 4, waist: 1, hands: "modeled (non-articulated) hand"}
+    knee_joint_max_torque_nm: 70
+    joint_module_max_torque_nm: 70            # "maximum torque of joint modules 70 N.m, max travel speed 0.5 m/s"
+    max_travel_speed_mps: 0.5
+    compute: {base: "6 TOPS", edu_pro: "6+67 TOPS", edu_max: "6+117 TOPS", camera_imu: true}
+    battery: "48 V 5.1 Ah quick-release (about 245 Wh, our arithmetic); runtime 2-3 h (spec table), 'up to 3 h' (marketing)"
+    versions: ["Lite", "Pro", "EDU-Air", "EDU-Pro", "EDU-Max"]
+    sdk: "Secondary development for upper-layer motion control: yes; lower-layer: no (spec table)"
+    prices_on_official_site: null
+    kind: primary
+    note: "Launch press said 94 cm / 12 kg; official site table says 98 cm / ~17 kg; CAD mass model sums to 9.8 kg. Treat mass as unresolved."
+  github_org: https://github.com/Noetix-Robotics   # noetix_sdk_bumi (DDS SDK), noetix_bumi_lab (Isaac Lab, BSD-3-Clause)
+  noetix_bumi_lab_robot_cfg:
+    url: https://github.com/Noetix-Robotics/noetix_bumi_lab/blob/main/source/NoetixBumi/NoetixBumi/assets/robots/bumi/bumi.py
+    license: BSD-3-Clause (code); CAD/URDF meshes licence not stated separately
+    sim_effort_limit_nm:   # simulation torque limits used for training (not datasheet peak)
+      hip_yaw: 27
+      hip_roll: 27
+      hip_pitch: 60
+      knee: 60
+      ankle_pitch: 13
+      ankle_roll: 13
+      waist_yaw: 27
+      arms_each_joint: 5.5
+    sim_velocity_limit_rad_s: {hip_yaw: 9, hip_roll: 12, hip_pitch: 12, knee: 12, ankle: 12, waist: 9, arms: 50}
+    sim_pd: {hip_pitch_kp: 60, knee_kp: 45, ankle_kp: 10, arm_kp: 12}
+    actuator_delay_model_steps: [0, 4]
+    armature_constants_named_in_file: [431025, 431536, 431040, DM4340, YKS4315, LZ00, LZ05]
+    inference_low_confidence: >
+      Arms use constant ARMATURE_LZ05 and waist/hips use 4310-series constants (431025/431536/431040).
+      "LZ" plausibly = Lingzu/RobStride (灵足) and "DM4340" = Damiao DM4340, i.e. Noetix prototyped with
+      off-the-shelf Chinese QDD motors; hip/knee used 4310-type outer-rotor motors with reduction.
+      NOT confirmed by any source. Do not treat as fact.
+  urdf_cad_mass_model:
+    url: https://github.com/Noetix-Robotics/noetix_bumi_lab/blob/main/source/NoetixBumi/NoetixBumi/assets/robots/bumi/urdf/BUMI_V3.0_260119.csv
+    total_link_mass_kg: 9.78
+    torso_waist_link_kg: 3.39
+    per_leg_link_kg: {hip_pitch: 0.31, hip_roll: 0.356, hip_yaw: 0.351, knee: 0.608, ankle_pitch: 0.087, ankle_roll_foot: 0.746}
+    per_arm_link_kg: {pitch: 0.097, roll: 0.136, yaw: 0.099, elbow_forearm: 0.273}
+    geometry_m: {hip_half_width: 0.10, hip_pitch_to_knee: ~0.265, knee_to_ankle_pitch: 0.202}
+    caveat: "Sums to 9.8 kg, less than the 12-17 kg claimed; battery and shell may be lumped or omitted. Link masses of 0.3-0.6 kg for 27-60 Nm joints look too small to include the actuator, so the model is incomplete."
+  press_and_price:
+    - {claim: "price CNY 9,998 (~USD 1,370-1,408)", status: "presale launched 2025-10-23 on JD.com; 100 units/1 h, 200/3 h, 500/2 days", urls: ["https://news.qq.com/rain/a/20251026A01W8S00", "https://wallstreetcn.com/articles/3757894", "https://interestingengineering.com/innovation/bumi-worlds-cheapest-humanoid-robot"], kind: press}
+    - {claim: "Deposit due by 2025-12-12, final payment mid-Jan 2026, first batch delivery March 2026, second April 2026", url: "https://www.humanoidsdaily.com/news/noetix-bumi-surpasses-500-pre-orders-jd-com", kind: press}
+    - {claim: "Founder handed a Bumi to a user at AWE 2026-03-12; CEO said next-gen prices will not fall much because of 20+ joints", url: "https://www.bjnews.com.cn/detail/1773394658129474.html", kind: press}
+    - {claim: "Founder: profit margins are 'indeed quite low'; nearly all components developed in-house", url: "https://www.qatar-tribune.com/article/202229/business/chinas-humanoid-robot-boom-sparks-price-war-fears-ipo-speculation", kind: press}
+    - {claim: "Pre-B round ~CNY 300 M (Oct 2025); Series B ~USD 145 M reported March 2026", urls: ["https://news.qq.com/rain/a/20251026A01W8S00", "https://autonews.gasgoo.com/articles/news/seeds-noetix-robotics-closes-series-b-funding-2028663311418028032"], kind: press}
+    - {claim: "Cost levers (founder): own control boards + motor drivers; composites with metal only where needed; ~100% domestic supply chain; line designed for untrained assembly. Wallstreetcn: 'Motors are not' in-house; structure, boards, domain controller are.", urls: ["https://technode.com/2025/10/27/after-new-funding-noetix-robotics-explains-how-it-built-a-humanoid-robot-cheaper-than-an-iphone", "https://wallstreetcn.com/articles/3757894"], kind: press}
+    - {claim: "Positioned 'quasi-consumer' (准消费级) by founder; admitted falls/faults at the 2025 half-marathon", url: "https://wallstreetcn.com/articles/3757894", kind: press}
+  outside_china:
+    - {claim: "CES 2026: plans first 1,000-unit overseas delivery in Q2 2026 (article is about the N2, not Bumi)", url: "https://autonews.gasgoo.com/articles/news/ces-2026-noetix-robotics-announces-timetable-for-the-first-batch-of-1000-overseas-deliveries-2009287583098310656", kind: press}
+    - {claim: "Reseller botinfo.ai: China price needs a Chinese delivery address; elsewhere 'price on request'; no official international channels; duty quoted in writing", url: "https://botinfo.ai/articles/noetix-bumi-humanoid-robot", date_verified_by_site: 2026-09-06, kind: retail_or_broker}
+    - {claim: "Reseller robotsinternational.com lists Bumi at USD 5,995 (quote-based, 'subject to availability'); 'BUMI EDU Air' at USD 9,995. Authorisation by Noetix not stated.", url: "https://www.robotsinternational.com/Noetix-BUMI-Humanoid-Robot.htm", kind: retail}
+    - {claim: "robozaps (Mar 2026): sold out, deliveries delayed to April 2026; not available in US/EU", url: "https://blog.robozaps.com/b/noetix-bumi-review", kind: press}
+  walking_evidence: "Demo video via RoboHub (press); Spring Festival Gala 2026 appearance (press); Isaac Lab AMP walk/run task and reference-motion data published by Noetix. No independent hands-on or teardown found. Official max travel speed 0.5 m/s."
+  unknown: [joint motor maker/model per joint, actuator gear ratio and backlash, actuator cost, BOM, gross margin, whether CNY 9,998 SKU includes the quick-release battery/charger, regulatory (FCC/CE) status]
+
+faraday_future_ff_nova:
+  maker: "FF EAI Robotics Ecosystem (FFR) with Faraday Future; FFAI discloses 'reliance on a single OEM' and 'Chinese OEMs for all robotics products' (OEM unnamed)"
+  height_m: 0.497   # secondary (Unite.AI / humanoid.guide quoting product page)
+  mass_kg: 2.8
+  dof: {total: 20, head: 2, arms: 6, legs: 12}
+  compute: "10 TOPS, 8 GB RAM, 32 GB storage"
+  walking_speed_mps: 0.1   # bipedal; detachable wheeled base 0.8 m/s
+  price_usd: {nova: 2490, developer_skills_package: 390, nova_mini: 299}
+  availability: "Phase 1 invitation-only, 100 units, 20 ready to ship (2026-10-15); phases 2-3 undated; channels FF.com, FF Mall, Amazon store"
+  openness: "ROS 2, SDK claimed; licences not found"
+  actuators: null
+  battery: null
+  walking_evidence: "company claim only (TNW states not verified)"
+  urls: ["https://thenextweb.com/news/faraday-future-nova-humanoid-robots", "https://humanoid.guide/?p=20523", "https://runtimewire.com/article/ff-robotics-nova-2490-developer-humanoid", "https://finviz.com/news/403448/ff-eai-robotics-ffr-and-ff-jointly-launch-ff-nova-first-embodied-ai-humanoid-robot-priced-below-2500-in-us-ff-nova-mini-physical-ai-spark-program-curriculum-nova-reinforcement-learning-developer-program-and-developer-community-recruitment"]
+  note: "The TechRepublic link returned HTTP 403; content taken from the four sources above. FF Nova is a 0.5 m desktop-class robot at 4x the price of Bumi per metre: it is not a '3 ft cheap humanoid'."
+
+zyrestore_intelligent_smart_robot:
+  url: https://zyrestore.com/products/intelligent-smart-robot
+  verdict: "Not a credible humanoid. USD 44.99 'RC Intelligent Smart Robot' on a generic Shopify dropship storefront (ECOMG LLC, Hartford CT); no height, mass, servo, battery or compute data; 'Sold out' beside an active Add-to-cart; footer order-tracking links to a different domain (obsetic.com). Spec lines (25 joints, 2 cameras, 4 microphones, sonar, touch on head/hands/feet, WiFi+Ethernet) read like the public NAO (SoftBank/Aldebaran) spec, which is a 57 cm, ~5 kg research robot (price not checked); a USD 45 toy cannot have that content, so treat the listing as misleading marketing. The actual product is unidentified."
+  evidence: {page_fetch: 2026-10-19, nao_spec_source: "https://en.wikipedia.org/wiki/Nao_(robot)"}
+  kind: retail
