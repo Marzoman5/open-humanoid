@@ -1,0 +1,146 @@
+{
+ "gate_ok": true,
+ "access": {
+  "ok": false,
+  "unreachable_screws": [],
+  "stuck_parts": [
+   {
+    "part": "servo_knee",
+    "why": "no straight insertion path against the assembled set",
+    "assembled_before": [
+     "horn_hip_pitch",
+     "thigh",
+     "cover_knee"
+    ]
+   },
+   {
+    "part": "bearing_knee_pin_in_1",
+    "why": "no straight insertion path against the assembled set",
+    "assembled_before": [
+     "horn_hip_pitch",
+     "thigh",
+     "cover_knee",
+     "servo_knee",
+     "horn_knee",
+     "crank_knee",
+     "bearing_knee_pin_in_0"
+    ]
+   },
+   {
+    "part": "servo_calf",
+    "why": "no straight insertion path against the assembled set",
+    "assembled_before": [
+     "horn_hip_pitch",
+     "thigh",
+     "cover_knee",
+     "servo_knee",
+     "horn_knee",
+     "crank_knee",
+     "bearing_knee_pin_in_0",
+     "bearing_knee_pin_in_1",
+     "coupler_knee",
+     "shank",
+     "cover_calf"
+    ]
+   },
+   {
+    "part": "bearing_knee_pin_out_0",
+    "why": "no straight insertion path against the assembled set",
+    "assembled_before": [
+     "horn_hip_pitch",
+     "thigh",
+     "cover_knee",
+     "servo_knee",
+     "horn_knee",
+     "crank_knee",
+     "bearing_knee_pin_in_0",
+     "bearing_knee_pin_in_1",
+     "coupler_knee",
+     "shank",
+     "cover_calf",
+     "servo_calf",
+     "bearing_knee_axle_0",
+     "bearing_knee_axle_1"
+    ]
+   },
+   {
+    "part": "bearing_knee_pin_out_1",
+    "why": "no straight insertion path against the assembled set",
+    "assembled_before": [
+     "horn_hip_pitch",
+     "thigh",
+     "cover_knee",
+     "servo_knee",
+     "horn_knee",
+     "crank_knee",
+     "bearing_knee_pin_in_0",
+     "bearing_knee_pin_in_1",
+     "coupler_knee",
+     "shank",
+     "cover_calf",
+     "servo_calf",
+     "bearing_knee_axle_0",
+     "bearing_knee_axle_1",
+     "bearing_knee_pin_out_0"
+    ]
+   },
+   {
+    "part": "bearing_calf_pin_in_1",
+    "why": "no straight insertion path against the assembled set",
+    "assembled_before": [
+     "horn_hip_pitch",
+     "thigh",
+     "cover_knee",
+     "servo_knee",
+     "horn_knee",
+     "crank_knee",
+     "bearing_knee_pin_in_0",
+     "bearing_knee_pin_in_1",
+     "coupler_knee",
+     "shank",
+     "cover_calf",
+     "servo_calf",
+     "bearing_knee_axle_0",
+     "bearing_knee_axle_1",
+     "bearing_knee_pin_out_0",
+     "bearing_knee_pin_out_1",
+     "horn_calf",
+     "crank_ankle",
+     "bearing_calf_pin_in_0"
+    ]
+   },
+   {
+    "part": "bearing_ankle_pin_out_0",
+    "why": "no straight insertion path against the assembled set",
+    "assembled_before": [
+     "horn_hip_pitch",
+     "thigh",
+     "cover_knee",
+     "servo_knee",
+     "horn_knee",
+     "crank_knee",
+     "bearing_knee_pin_in_0",
+     "bearing_knee_pin_in_1",
+     "coupler_knee",
+     "shank",
+     "cover_calf",
+     "servo_calf",
+     "bearing_knee_axle_0",
+     "bearing_knee_axle_1",
+     "bearing_knee_pin_out_0",
+     "bearing_knee_pin_out_1",
+     "horn_calf",
+     "crank_ankle",
+     "bearing_calf_pin_in_0",
+     "bearing_calf_pin_in_1",
+     "coupler_ankle",
+     "ankle_cradle",
+     "bearing_ankle_axle_0",
+     "bearing_ankle_axle_1"
+    ]
+   }
+  ],
+  "cyclic_parts": []
+ },
+ "seconds": 79.7
+}

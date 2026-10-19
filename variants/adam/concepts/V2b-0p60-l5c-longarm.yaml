@@ -1,0 +1,84 @@
+# Adam baseline v2 (T-20261019-4ab5), PROVISIONAL (bench pending). R1 Path 1 hardware (R1-P1r-0p55: 23 DOF, 3S single bus, STS3250 at hip roll + knees,
+# STS3215 12 V elsewhere, Pi 5, GNB 3S 1850 in the build / Tattu 1300 value in the engine, knee 0-110) + levers L5c (knee servo in the thigh, ankle-pitch servo in the calf, 1:1 parallelograms) + L9a (longer arms).
+# Evidence: variants/adam/reviews/R2a-v2-2026-10-19.md; engine wrapper variants/adam/design/v2/engine.py. Do not apply to spec.yaml before the maintainer's R2a-v2 decision.
+id: V2b-0p60-l5c-longarm
+description: "Adam v2 with L5c: R1 hardware at 0.60 m + knee/ankle servos moved up through 1:1 parallelograms + longer arms."
+base: adam
+height_m: 0.60
+template: humanoid_v2
+packaging:
+- t0004
+- cad_foundation
+proportions:
+  upper_arm: 0.20   # L9a (maintainer decision 2026-10-19): longer arms
+  forearm: 0.23
+joints:
+- hip_yaw
+- hip_roll
+- hip_pitch
+- {name: knee, range: [0, 110]}   # R1 knee-ROM decision: 110 deg (calf pocket 15.5% vs 23.7% at 130; engine margins identical to the CAD-limited 115)
+- name: ankle_pitch
+  range:
+  - -80
+  - 60
+- ankle_roll
+- waist_yaw
+- neck_yaw
+- neck_pitch
+- shoulder_pitch
+- shoulder_roll
+- elbow
+- gripper
+mass_model:
+  structure_kg_at_1m: 11.9
+actuator_default: sts3215-12v
+actuators:
+  knee: sts3250-12v
+  hip_roll: sts3250-12v
+locomotion:
+  walk:
+    stance_knee_flex_deg: 40
+power:
+  pack: lipo-3s-1300-tattu
+  charger: charger-skyrc-b6neo
+  regulator: buck-pololu-d36v50f5
+  compute: rpi-5-4gb
+parts:
+  onboard:
+  - part: rpi-5-4gb
+    qty: 1
+  - part: microsd-32gb
+    qty: 1
+  - part: waveshare-bus-servo-adapter
+    qty: 1
+  - part: imu-bno085
+    qty: 1
+  - part: cam-rpi-v3
+    qty: 1
+    power_w: 1.2
+  - part: lipo-3s-1300-tattu
+    qty: 1
+  - part: buck-pololu-d36v50f5
+    qty: 1
+  - part: power-switch-xt60
+    qty: 1
+  - part: fastener-kit-m2-m3
+    qty: 1
+  - part: bearing-kit-small
+    qty: 1
+  - part: wiring-kit-bus
+    qty: 1
+  offboard:
+  - part: charger-skyrc-b6neo
+    qty: 1
+transmissions:
+  knee:
+    ratio: 1.0
+    efficiency: 0.95
+    host: thigh
+    note: '1:1 parallelogram (variants/adam/cad/linkages/l5c.py): cranks r 22 mm, theta 35-145 deg, 2x 623ZZ per pin, 6061 3x10 coupler. Efficiency 0.95 is a conservative bound (ball-bearing pins compute to >= 0.99)'
+  ankle_pitch:
+    ratio: 1.0
+    efficiency: 0.95
+    host: shank
+    note: '1:1 parallelogram (l5c.py): cranks r 18 mm, theta 37.5-122.5 deg over [-60, 25]; servo in the calf (body forward)'

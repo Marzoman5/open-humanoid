@@ -1,0 +1,1664 @@
+{
+ "assembly": "adam_v2_l5c_leg_l",
+ "ok": true,
+ "parts": [
+  {
+   "part": "housing_hip_pitch",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 20263.2 mm3",
+     "volume": 20263.184183309444
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 3.6e-15, bbox drift 1.8e-14 mm",
+     "dv": 3.5907276706178046e-15,
+     "dbbox": 1.7763568394002505e-14
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 1736 faces, volume agrees to 4.0e-05",
+     "faces": 1736,
+     "dv": 4.020009322796193e-05
+    },
+    {
+     "check": "bed",
+     "ok": true,
+     "msg": "extents [57.6, 36.9, 29.8] vs usable [245.0, 210.0, 210.0]",
+     "extents": [
+      57.6,
+      36.9,
+      29.8
+     ],
+     "usable": [
+      210.0,
+      210.0,
+      245.0
+     ]
+    },
+    {
+     "check": "min_wall",
+     "ok": true,
+     "msg": "no material thinner than 1.6 mm (grid 0.25 mm)",
+     "thin_volume_mm3": 0.0,
+     "thin_fraction": 0.0,
+     "worst_location": null,
+     "pitch_mm": 0.25
+    }
+   ],
+   "volume_mm3": 20263.184183309444
+  },
+  {
+   "part": "cover_hip_pitch",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 6985.2 mm3",
+     "volume": 6985.182665254665
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-15, bbox drift 7.1e-15 mm",
+     "dv": 2.213458211629472e-15,
+     "dbbox": 7.105427357601002e-15
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 1540 faces, volume agrees to 9.8e-05",
+     "faces": 1540,
+     "dv": 9.791683104128999e-05
+    },
+    {
+     "check": "bed",
+     "ok": true,
+     "msg": "extents [57.6, 29.8, 4.4] vs usable [245.0, 210.0, 210.0]",
+     "extents": [
+      57.6,
+      29.8,
+      4.4
+     ],
+     "usable": [
+      210.0,
+      210.0,
+      245.0
+     ]
+    },
+    {
+     "check": "min_wall",
+     "ok": true,
+     "msg": "no material thinner than 1.6 mm (grid 0.25 mm)",
+     "thin_volume_mm3": 0.0,
+     "thin_fraction": 0.0,
+     "worst_location": null,
+     "pitch_mm": 0.25
+    }
+   ],
+   "volume_mm3": 6985.182665254665
+  },
+  {
+   "part": "servo_hip_pitch",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 39228.5 mm3",
+     "volume": 39228.49730538488
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.9e-15, bbox drift 0.0e+00 mm",
+     "dv": 1.85476327516238e-15,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 772 faces, volume agrees to 1.9e-05",
+     "faces": 772,
+     "dv": 1.944793380041399e-05
+    }
+   ],
+   "volume_mm3": 39228.49730538488
+  },
+  {
+   "part": "keepout_hip_roll_servo",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 54042.3 mm3",
+     "volume": 54042.3
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.3e-16, bbox drift 0.0e+00 mm",
+     "dv": 1.3463449213270763e-16,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 12 faces, volume agrees to 1.3e-16",
+     "faces": 12,
+     "dv": 1.3463449213270763e-16
+    }
+   ],
+   "volume_mm3": 54042.3
+  },
+  {
+   "part": "shaft_hip_pitch",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 68.3 mm3",
+     "volume": 68.34927516966295
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 0.0e+00, bbox drift 0.0e+00 mm",
+     "dv": 0.0,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 248 faces, volume agrees to 1.7e-03",
+     "faces": 248,
+     "dv": 0.0016569575993947943
+    }
+   ],
+   "volume_mm3": 68.34927516966295
+  },
+  {
+   "part": "shaftb_hip_pitch",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 54.7 mm3",
+     "volume": 54.67942013573035
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 0.0e+00, bbox drift 0.0e+00 mm",
+     "dv": 0.0,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 248 faces, volume agrees to 1.7e-03",
+     "faces": 248,
+     "dv": 0.0016569575993947165
+    }
+   ],
+   "volume_mm3": 54.67942013573035
+  },
+  {
+   "part": "horn_hip_pitch",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 814.8 mm3",
+     "volume": 814.8427405432185
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 4.0e-14, bbox drift 0.0e+00 mm",
+     "dv": 4.046079236993582e-14,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 1528 faces, volume agrees to 1.7e-03",
+     "faces": 1528,
+     "dv": 0.0016569575993946124
+    }
+   ],
+   "volume_mm3": 814.8427405432185
+  },
+  {
+   "part": "thigh",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 61452.6 mm3",
+     "volume": 61452.61294227142
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.9e-14, bbox drift 3.6e-15 mm",
+     "dv": 1.8825517830168347e-14,
+     "dbbox": 3.552713678800501e-15
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 5240 faces, volume agrees to 1.4e-04",
+     "faces": 5240,
+     "dv": 0.00013872246807821335
+    },
+    {
+     "check": "bed",
+     "ok": true,
+     "msg": "extents [149.5, 57.6, 56.2] vs usable [245.0, 210.0, 210.0]",
+     "extents": [
+      149.5,
+      57.6,
+      56.2
+     ],
+     "usable": [
+      210.0,
+      210.0,
+      245.0
+     ]
+    },
+    {
+     "check": "min_wall",
+     "ok": true,
+     "msg": "no material thinner than 1.6 mm (grid 0.28 mm)",
+     "thin_volume_mm3": 0.0,
+     "thin_fraction": 0.0,
+     "worst_location": null,
+     "pitch_mm": 0.2760605764927172
+    }
+   ],
+   "volume_mm3": 61452.61294227142
+  },
+  {
+   "part": "cover_knee",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 6985.2 mm3",
+     "volume": 6985.182665254669
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.6e-15, bbox drift 7.1e-15 mm",
+     "dv": 1.5624410905619794e-15,
+     "dbbox": 7.105427357601002e-15
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 1540 faces, volume agrees to 9.8e-05",
+     "faces": 1540,
+     "dv": 9.79168310399879e-05
+    },
+    {
+     "check": "bed",
+     "ok": true,
+     "msg": "extents [57.6, 29.8, 4.4] vs usable [245.0, 210.0, 210.0]",
+     "extents": [
+      57.6,
+      29.8,
+      4.4
+     ],
+     "usable": [
+      210.0,
+      210.0,
+      245.0
+     ]
+    },
+    {
+     "check": "min_wall",
+     "ok": true,
+     "msg": "no material thinner than 1.6 mm (grid 0.25 mm)",
+     "thin_volume_mm3": 0.0,
+     "thin_fraction": 0.0,
+     "worst_location": null,
+     "pitch_mm": 0.25
+    }
+   ],
+   "volume_mm3": 6985.182665254669
+  },
+  {
+   "part": "servo_knee",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 39228.5 mm3",
+     "volume": 39228.49730538489
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.9e-15, bbox drift 0.0e+00 mm",
+     "dv": 1.8547632751623795e-15,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 772 faces, volume agrees to 1.9e-05",
+     "faces": 772,
+     "dv": 1.944793380022851e-05
+    }
+   ],
+   "volume_mm3": 39228.49730538489
+  },
+  {
+   "part": "axle_knee",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 340.3 mm3",
+     "volume": 340.342030761097
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.7e-14, bbox drift 1.8e-15 mm",
+     "dv": 1.7369925037774015e-14,
+     "dbbox": 1.7763568394002505e-15
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 1004 faces, volume agrees to 1.7e-03",
+     "faces": 1004,
+     "dv": 0.0016569575993958363
+    }
+   ],
+   "volume_mm3": 340.342030761097
+  },
+  {
+   "part": "shaft_knee",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 68.3 mm3",
+     "volume": 68.34927516966295
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 0.0e+00, bbox drift 0.0e+00 mm",
+     "dv": 0.0,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 248 faces, volume agrees to 1.7e-03",
+     "faces": 248,
+     "dv": 0.0016569575993945864
+    }
+   ],
+   "volume_mm3": 68.34927516966295
+  },
+  {
+   "part": "shaftb_knee",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 54.7 mm3",
+     "volume": 54.67942013573035
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 0.0e+00, bbox drift 0.0e+00 mm",
+     "dv": 0.0,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 248 faces, volume agrees to 1.7e-03",
+     "faces": 248,
+     "dv": 0.0016569575993947165
+    }
+   ],
+   "volume_mm3": 54.67942013573035
+  },
+  {
+   "part": "horn_knee",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 814.8 mm3",
+     "volume": 814.8427405432185
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 4.0e-14, bbox drift 0.0e+00 mm",
+     "dv": 4.046079236993582e-14,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 1528 faces, volume agrees to 1.7e-03",
+     "faces": 1528,
+     "dv": 0.0016569575993947518
+    }
+   ],
+   "volume_mm3": 814.8427405432185
+  },
+  {
+   "part": "crank_knee",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 3011.9 mm3",
+     "volume": 3011.88854099561
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.5e-13, bbox drift 7.8e-12 mm",
+     "dv": 1.5355085341194506e-13,
+     "dbbox": 7.812417379682302e-12
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 3752 faces, volume agrees to 7.5e-04",
+     "faces": 3752,
+     "dv": 0.0007499999206288622
+    },
+    {
+     "check": "bed",
+     "ok": true,
+     "msg": "extents [37.4, 32.0, 9.6] vs usable [245.0, 210.0, 210.0]",
+     "extents": [
+      37.4,
+      32.0,
+      9.6
+     ],
+     "usable": [
+      210.0,
+      210.0,
+      245.0
+     ]
+    },
+    {
+     "check": "min_wall",
+     "ok": true,
+     "msg": "no material thinner than 1.6 mm (grid 0.25 mm)",
+     "thin_volume_mm3": 0.0,
+     "thin_fraction": 0.0,
+     "worst_location": null,
+     "pitch_mm": 0.25
+    }
+   ],
+   "volume_mm3": 3011.88854099561
+  },
+  {
+   "part": "bearing_knee_pin_in_0",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.88493147667117
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 1.8e-13 mm",
+     "dv": 2.2070486404998117e-14,
+     "dbbox": 1.8474111129762605e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.0016569575993948358
+    }
+   ],
+   "volume_mm3": 285.88493147667117
+  },
+  {
+   "part": "bearing_knee_pin_in_1",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.88493147667117
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 1.8e-13 mm",
+     "dv": 2.187165319414228e-14,
+     "dbbox": 1.8474111129762605e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.0016569575993950346
+    }
+   ],
+   "volume_mm3": 285.88493147667117
+  },
+  {
+   "part": "coupler_knee",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 2362.4 mm3",
+     "volume": 2362.3645858600958
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 3.3e-15, bbox drift 5.0e-11 mm",
+     "dv": 3.2724436403008788e-15,
+     "dbbox": 4.999378688808065e-11
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 772 faces, volume agrees to 1.3e-04",
+     "faces": 772,
+     "dv": 0.00012629547863017495
+    }
+   ],
+   "volume_mm3": 2362.3645858600958
+  },
+  {
+   "part": "pin_screw_coupler_knee_top",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 149.2 mm3",
+     "volume": 149.2366466198027
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.0e-14, bbox drift 5.0e-11 mm",
+     "dv": 1.0474598927799782e-14,
+     "dbbox": 4.999378688808065e-11
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 500 faces, volume agrees to 1.7e-03",
+     "faces": 500,
+     "dv": 0.0016569575993947237
+    }
+   ],
+   "volume_mm3": 149.2366466198027
+  },
+  {
+   "part": "pin_nut_coupler_knee_top",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 47.2 mm3",
+     "volume": 47.15508323606268
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.0e-13, bbox drift 2.6e-13 mm",
+     "dv": 1.0125837675663829e-13,
+     "dbbox": 2.646771690706373e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 20 faces, volume agrees to 3.0e-16",
+     "faces": 20,
+     "dv": 3.0136421653761396e-16
+    }
+   ],
+   "volume_mm3": 47.15508323606268
+  },
+  {
+   "part": "pin_screw_coupler_knee_bot",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 149.2 mm3",
+     "volume": 149.23664661980268
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.0e-14, bbox drift 5.0e-11 mm",
+     "dv": 1.028415167456706e-14,
+     "dbbox": 4.999378688808065e-11
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 500 faces, volume agrees to 1.7e-03",
+     "faces": 500,
+     "dv": 0.0016569575993954856
+    }
+   ],
+   "volume_mm3": 149.23664661980268
+  },
+  {
+   "part": "pin_nut_coupler_knee_bot",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 47.2 mm3",
+     "volume": 47.15508323606267
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.0e-13, bbox drift 2.6e-13 mm",
+     "dv": 1.011076946483695e-13,
+     "dbbox": 2.646771690706373e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 20 faces, volume agrees to 1.5e-16",
+     "faces": 20,
+     "dv": 1.50682108268807e-16
+    }
+   ],
+   "volume_mm3": 47.15508323606267
+  },
+  {
+   "part": "shank",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 43932.4 mm3",
+     "volume": 43932.39312408488
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 8.1e-15, bbox drift 7.8e-12 mm",
+     "dv": 8.115240207561861e-15,
+     "dbbox": 7.819522807039903e-12
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 4662 faces, volume agrees to 1.4e-04",
+     "faces": 4662,
+     "dv": 0.00014004753854728356
+    },
+    {
+     "check": "bed",
+     "ok": true,
+     "msg": "extents [116.9, 57.6, 50.0] vs usable [245.0, 210.0, 210.0]",
+     "extents": [
+      116.9,
+      57.6,
+      50.0
+     ],
+     "usable": [
+      210.0,
+      210.0,
+      245.0
+     ]
+    },
+    {
+     "check": "min_wall",
+     "ok": true,
+     "msg": "no material thinner than 1.6 mm (grid 0.25 mm)",
+     "thin_volume_mm3": 0.0,
+     "thin_fraction": 0.0,
+     "worst_location": null,
+     "pitch_mm": 0.25
+    }
+   ],
+   "volume_mm3": 43932.39312408488
+  },
+  {
+   "part": "cover_calf",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 6985.2 mm3",
+     "volume": 6985.18266525467
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.4e-15, bbox drift 7.1e-15 mm",
+     "dv": 1.432237666348481e-15,
+     "dbbox": 7.105427357601002e-15
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 1540 faces, volume agrees to 9.8e-05",
+     "faces": 1540,
+     "dv": 9.791683103985767e-05
+    },
+    {
+     "check": "bed",
+     "ok": true,
+     "msg": "extents [57.6, 29.8, 4.4] vs usable [245.0, 210.0, 210.0]",
+     "extents": [
+      57.6,
+      29.8,
+      4.4
+     ],
+     "usable": [
+      210.0,
+      210.0,
+      245.0
+     ]
+    },
+    {
+     "check": "min_wall",
+     "ok": true,
+     "msg": "no material thinner than 1.6 mm (grid 0.25 mm)",
+     "thin_volume_mm3": 0.0,
+     "thin_fraction": 0.0,
+     "worst_location": null,
+     "pitch_mm": 0.25
+    }
+   ],
+   "volume_mm3": 6985.18266525467
+  },
+  {
+   "part": "servo_calf",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 39228.5 mm3",
+     "volume": 39228.49730538489
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.9e-15, bbox drift 0.0e+00 mm",
+     "dv": 1.8547632751623795e-15,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 772 faces, volume agrees to 1.9e-05",
+     "faces": 772,
+     "dv": 1.9447933799857557e-05
+    }
+   ],
+   "volume_mm3": 39228.49730538489
+  },
+  {
+   "part": "bearing_knee_axle_0",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.8849314766712
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 8.9e-16 mm",
+     "dv": 2.1672819983286437e-14,
+     "dbbox": 8.881784197001252e-16
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.0016569575993950342
+    }
+   ],
+   "volume_mm3": 285.8849314766712
+  },
+  {
+   "part": "bearing_knee_axle_1",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.88493147667117
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 0.0e+00 mm",
+     "dv": 2.187165319414228e-14,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.001656957599394637
+    }
+   ],
+   "volume_mm3": 285.88493147667117
+  },
+  {
+   "part": "bearing_knee_pin_out_0",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.88493147667117
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 1.8e-13 mm",
+     "dv": 2.2070486404998117e-14,
+     "dbbox": 1.8474111129762605e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.0016569575993948358
+    }
+   ],
+   "volume_mm3": 285.88493147667117
+  },
+  {
+   "part": "bearing_knee_pin_out_1",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.88493147667117
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 1.8e-13 mm",
+     "dv": 2.187165319414228e-14,
+     "dbbox": 1.8474111129762605e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.0016569575993950346
+    }
+   ],
+   "volume_mm3": 285.88493147667117
+  },
+  {
+   "part": "axle_ankle",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 340.3 mm3",
+     "volume": 340.342030761097
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.8e-14, bbox drift 1.8e-15 mm",
+     "dv": 1.8205017587667e-14,
+     "dbbox": 1.7763568394002505e-15
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 1004 faces, volume agrees to 1.7e-03",
+     "faces": 1004,
+     "dv": 0.001656957599394166
+    }
+   ],
+   "volume_mm3": 340.342030761097
+  },
+  {
+   "part": "shaft_calf",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 68.3 mm3",
+     "volume": 68.34927516966295
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 0.0e+00, bbox drift 0.0e+00 mm",
+     "dv": 0.0,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 248 faces, volume agrees to 1.7e-03",
+     "faces": 248,
+     "dv": 0.0016569575993945864
+    }
+   ],
+   "volume_mm3": 68.34927516966295
+  },
+  {
+   "part": "shaftb_calf",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 54.7 mm3",
+     "volume": 54.67942013573035
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 0.0e+00, bbox drift 0.0e+00 mm",
+     "dv": 0.0,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 248 faces, volume agrees to 1.7e-03",
+     "faces": 248,
+     "dv": 0.0016569575993947165
+    }
+   ],
+   "volume_mm3": 54.67942013573035
+  },
+  {
+   "part": "horn_calf",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 814.8 mm3",
+     "volume": 814.8427405432185
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 4.0e-14, bbox drift 0.0e+00 mm",
+     "dv": 4.046079236993582e-14,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 1528 faces, volume agrees to 1.7e-03",
+     "faces": 1528,
+     "dv": 0.0016569575993947518
+    }
+   ],
+   "volume_mm3": 814.8427405432185
+  },
+  {
+   "part": "crank_ankle",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 2688.4 mm3",
+     "volume": 2688.41775116205
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 3.1e-14, bbox drift 4.1e-13 mm",
+     "dv": 3.0616250199535544e-14,
+     "dbbox": 4.121147867408581e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 3782 faces, volume agrees to 9.6e-04",
+     "faces": 3782,
+     "dv": 0.0009629347533017628
+    },
+    {
+     "check": "bed",
+     "ok": true,
+     "msg": "extents [37.2, 24.0, 9.6] vs usable [245.0, 210.0, 210.0]",
+     "extents": [
+      37.2,
+      24.0,
+      9.6
+     ],
+     "usable": [
+      210.0,
+      210.0,
+      245.0
+     ]
+    },
+    {
+     "check": "min_wall",
+     "ok": true,
+     "msg": "no material thinner than 1.6 mm (grid 0.25 mm)",
+     "thin_volume_mm3": 0.0,
+     "thin_fraction": 0.0,
+     "worst_location": null,
+     "pitch_mm": 0.25
+    }
+   ],
+   "volume_mm3": 2688.41775116205
+  },
+  {
+   "part": "bearing_calf_pin_in_0",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.88493147667117
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 4.1e-13 mm",
+     "dv": 2.2070486404998117e-14,
+     "dbbox": 4.121147867408581e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.0016569575993948358
+    }
+   ],
+   "volume_mm3": 285.88493147667117
+  },
+  {
+   "part": "bearing_calf_pin_in_1",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.88493147667117
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 4.1e-13 mm",
+     "dv": 2.187165319414228e-14,
+     "dbbox": 4.121147867408581e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.001656957599394637
+    }
+   ],
+   "volume_mm3": 285.88493147667117
+  },
+  {
+   "part": "coupler_ankle",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 1327.4 mm3",
+     "volume": 1327.3645858600955
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.0e-13, bbox drift 3.9e-11 mm",
+     "dv": 1.978481254769689e-13,
+     "dbbox": 3.90087961932295e-11
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 772 faces, volume agrees to 2.2e-04",
+     "faces": 772,
+     "dv": 0.00022477318533882282
+    }
+   ],
+   "volume_mm3": 1327.3645858600955
+  },
+  {
+   "part": "pin_screw_coupler_ankle_top",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 149.2 mm3",
+     "volume": 149.2366466198027
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.0e-14, bbox drift 3.0e-11 mm",
+     "dv": 1.0474598927799782e-14,
+     "dbbox": 2.999911430379143e-11
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 500 faces, volume agrees to 1.7e-03",
+     "faces": 500,
+     "dv": 0.001656957599394533
+    }
+   ],
+   "volume_mm3": 149.2366466198027
+  },
+  {
+   "part": "pin_nut_coupler_ankle_top",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 47.2 mm3",
+     "volume": 47.15508323606268
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.0e-13, bbox drift 2.6e-13 mm",
+     "dv": 1.0125837675663829e-13,
+     "dbbox": 2.646771690706373e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 20 faces, volume agrees to 3.0e-16",
+     "faces": 20,
+     "dv": 3.0136421653761396e-16
+    }
+   ],
+   "volume_mm3": 47.15508323606268
+  },
+  {
+   "part": "pin_screw_coupler_ankle_bot",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 149.2 mm3",
+     "volume": 149.2366466198027
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 9.5e-15, bbox drift 3.9e-11 mm",
+     "dv": 9.522362661636164e-15,
+     "dbbox": 3.90087961932295e-11
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 500 faces, volume agrees to 1.7e-03",
+     "faces": 500,
+     "dv": 0.0016569575993947237
+    }
+   ],
+   "volume_mm3": 149.2366466198027
+  },
+  {
+   "part": "pin_nut_coupler_ankle_bot",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 47.2 mm3",
+     "volume": 47.15508323606269
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 1.0e-13, bbox drift 2.6e-13 mm",
+     "dv": 1.0140905886490708e-13,
+     "dbbox": 2.646771690706373e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 20 faces, volume agrees to 4.5e-16",
+     "faces": 20,
+     "dv": 4.520463248064209e-16
+    }
+   ],
+   "volume_mm3": 47.15508323606269
+  },
+  {
+   "part": "ankle_cradle",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 29780.6 mm3",
+     "volume": 29780.64727816541
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 7.8e-15, bbox drift 4.1e-13 mm",
+     "dv": 7.818186135416087e-15,
+     "dbbox": 4.121147867408581e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 4352 faces, volume agrees to 8.9e-05",
+     "faces": 4352,
+     "dv": 8.913140253971831e-05
+    },
+    {
+     "check": "bed",
+     "ok": true,
+     "msg": "extents [86.9, 57.6, 42.8] vs usable [245.0, 210.0, 210.0]",
+     "extents": [
+      86.9,
+      57.6,
+      42.8
+     ],
+     "usable": [
+      210.0,
+      210.0,
+      245.0
+     ]
+    },
+    {
+     "check": "min_wall",
+     "ok": true,
+     "msg": "no material thinner than 1.6 mm (grid 0.25 mm)",
+     "thin_volume_mm3": 0.0,
+     "thin_fraction": 0.0,
+     "worst_location": null,
+     "pitch_mm": 0.25
+    }
+   ],
+   "volume_mm3": 29780.64727816541
+  },
+  {
+   "part": "cover_roll",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 6985.2 mm3",
+     "volume": 6985.182665254665
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.3e-15, bbox drift 1.4e-14 mm",
+     "dv": 2.3436616358429705e-15,
+     "dbbox": 1.4210854715202004e-14
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 1540 faces, volume agrees to 9.8e-05",
+     "faces": 1540,
+     "dv": 9.791683104545649e-05
+    },
+    {
+     "check": "bed",
+     "ok": true,
+     "msg": "extents [57.6, 29.8, 4.4] vs usable [245.0, 210.0, 210.0]",
+     "extents": [
+      57.6,
+      29.8,
+      4.4
+     ],
+     "usable": [
+      210.0,
+      210.0,
+      245.0
+     ]
+    },
+    {
+     "check": "min_wall",
+     "ok": true,
+     "msg": "no material thinner than 1.6 mm (grid 0.25 mm)",
+     "thin_volume_mm3": 0.0,
+     "thin_fraction": 0.0,
+     "worst_location": null,
+     "pitch_mm": 0.25
+    }
+   ],
+   "volume_mm3": 6985.182665254665
+  },
+  {
+   "part": "servo_ankle_roll",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 39228.5 mm3",
+     "volume": 39228.49730538488
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-15, bbox drift 0.0e+00 mm",
+     "dv": 2.225715930194856e-15,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 772 faces, volume agrees to 1.9e-05",
+     "faces": 772,
+     "dv": 1.944793379985756e-05
+    }
+   ],
+   "volume_mm3": 39228.49730538488
+  },
+  {
+   "part": "shaft_ankle_roll",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 68.3 mm3",
+     "volume": 68.34927516966295
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 0.0e+00, bbox drift 0.0e+00 mm",
+     "dv": 0.0,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 248 faces, volume agrees to 1.7e-03",
+     "faces": 248,
+     "dv": 0.0016569575993927153
+    }
+   ],
+   "volume_mm3": 68.34927516966295
+  },
+  {
+   "part": "shaftb_ankle_roll",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 54.7 mm3",
+     "volume": 54.67942013573035
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 0.0e+00, bbox drift 0.0e+00 mm",
+     "dv": 0.0,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 248 faces, volume agrees to 1.7e-03",
+     "faces": 248,
+     "dv": 0.0016569575993970556
+    }
+   ],
+   "volume_mm3": 54.67942013573035
+  },
+  {
+   "part": "horn_ankle_roll",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 814.8 mm3",
+     "volume": 814.8427405432186
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 4.0e-14, bbox drift 0.0e+00 mm",
+     "dv": 4.004223244886751e-14,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 1528 faces, volume agrees to 1.7e-03",
+     "faces": 1528,
+     "dv": 0.0016569575993951704
+    }
+   ],
+   "volume_mm3": 814.8427405432186
+  },
+  {
+   "part": "bearing_ankle_axle_0",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.8849314766712
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 8.9e-16 mm",
+     "dv": 2.1672819983286437e-14,
+     "dbbox": 8.881784197001252e-16
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.0016569575993950342
+    }
+   ],
+   "volume_mm3": 285.8849314766712
+  },
+  {
+   "part": "bearing_ankle_axle_1",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.88493147667117
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 0.0e+00 mm",
+     "dv": 2.187165319414228e-14,
+     "dbbox": 0.0
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.001656957599394637
+    }
+   ],
+   "volume_mm3": 285.88493147667117
+  },
+  {
+   "part": "bearing_ankle_pin_out_0",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.88493147667117
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 4.1e-13 mm",
+     "dv": 2.2070486404998117e-14,
+     "dbbox": 4.121147867408581e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.0016569575993948358
+    }
+   ],
+   "volume_mm3": 285.88493147667117
+  },
+  {
+   "part": "bearing_ankle_pin_out_1",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 285.9 mm3",
+     "volume": 285.88493147667117
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 2.2e-14, bbox drift 4.1e-13 mm",
+     "dv": 2.187165319414228e-14,
+     "dbbox": 4.121147867408581e-13
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 504 faces, volume agrees to 1.7e-03",
+     "faces": 504,
+     "dv": 0.001656957599394637
+    }
+   ],
+   "volume_mm3": 285.88493147667117
+  },
+  {
+   "part": "sole_keepout",
+   "ok": true,
+   "checks": [
+    {
+     "check": "solid",
+     "ok": true,
+     "msg": "valid single solid, 17952.0 mm3",
+     "volume": 17952.000000000007
+    },
+    {
+     "check": "step_roundtrip",
+     "ok": true,
+     "msg": "volume drift 8.1e-16, bbox drift 7.1e-15 mm",
+     "dv": 8.106013384785453e-16,
+     "dbbox": 7.105427357601002e-15
+    },
+    {
+     "check": "stl",
+     "ok": true,
+     "msg": "watertight, 12 faces, volume agrees to 4.1e-16",
+     "faces": 12,
+     "dv": 4.0530066923927266e-16
+    }
+   ],
+   "volume_mm3": 17952.000000000007
+  }
+ ],
+ "assembly_check": {
+  "ok": true,
+  "clashes": [],
+  "tight": [],
+  "keepout": [],
+  "unknown": [],
+  "checked_pairs": 137,
+  "pose": {},
+  "gap_limits_mm": {
+   "moving": 1.0,
+   "static": 0.3
+  }
+ },
+ "failed_parts": []
+}

@@ -1,0 +1,243 @@
+{
+ "constants": {
+  "stall_knee_nm": {
+   "value": 4.903,
+   "source": "catalog/actuators/sts3250-12v.yaml (50 kg.cm @ 12 V)"
+  },
+  "stall_ankle_nm": {
+   "value": 2.94,
+   "source": "catalog/actuators/sts3215-12v.yaml datasheet 12 V model (concept engine)"
+  },
+  "bearing_C0r_n": {
+   "value": 218.0,
+   "source": "NSK 623ZZ basic static load rating (vendor listings of the NSK datasheet, 2026-10-19; VXB 230, budget 180)"
+  },
+  "bearing_Cr_n": {
+   "value": 695.0,
+   "source": "NSK 623ZZ basic dynamic load rating (same)"
+  },
+  "bearing_radial_play_mm": {
+   "value": [
+    0.005,
+    0.01
+   ],
+   "source": "miniature ball bearing radial internal clearance, normal class MC3 5-10 um (miniature bearing catalogue class table; recalled, conf vendor)"
+  },
+  "al6061_sy_mpa": {
+   "value": 276.0,
+   "source": "6061-T6 yield, ASM / MatWeb standard value"
+  },
+  "al6061_E_mpa": {
+   "value": 68900.0,
+   "source": "6061-T6 modulus, ASM"
+  },
+  "screw_129_rm_mpa": {
+   "value": 1220.0,
+   "source": "ISO 898-1 class 12.9 tensile strength"
+  },
+  "screw_shear_ratio": {
+   "value": 0.6,
+   "source": "shear ~0.6 Rm (common design rule)"
+  },
+  "m3_minor_d_mm": {
+   "value": 2.387,
+   "source": "ISO 724 M3 minor diameter d3"
+  },
+  "m3_major_mm": {
+   "value": [
+    2.874,
+    2.98
+   ],
+   "source": "ISO 965 6g M3 major diameter range"
+  },
+  "bore_623_mm": {
+   "value": [
+    2.992,
+    3.0
+   ],
+   "source": "ISO 492 normal tolerance, bore 3 mm: 0/-8 um"
+  },
+  "mu_clamp": {
+   "value": 0.15,
+   "source": "steel-on-steel dry friction, conservative"
+  },
+  "preload_n": {
+   "value": 1200.0,
+   "source": "M3 at ~0.9 N.m (K 0.2 -> 1.5 kN), derated for the DIN 439 thin nut (04 class); ESTIMATE, set the torque on the bench"
+  },
+  "fall_drop_m": {
+   "value": 0.1,
+   "source": "fall case F1: step-down / stumble drop onto the feet (research/methods/d sec 3, h = 0.10 m)"
+  },
+  "fall_stop_mm": {
+   "value": 5.0,
+   "source": "stopping distance (TPU sole + compliance) -> n = h/d (research/methods/d sec 3)"
+  },
+  "mass_kg": {
+   "value": 4.0,
+   "source": "R1 / v2 nominal mass at 0.55 m (engine report)"
+  },
+  "sf_static": {
+   "value": 3.0,
+   "source": "dfm.yaml orientation.safety_factor_on_z (applied to printed parts in the weakest direction)"
+  },
+  "cyclic_frac": {
+   "value": 0.1,
+   "source": "dfm.yaml orientation.cyclic_stress_fraction_of_uts"
+  }
+ },
+ "knee": {
+  "joint": "knee",
+  "r_mm": 22.0,
+  "theta_window_deg": [
+   35.0,
+   145.0
+  ],
+  "min_sin_theta": 0.574,
+  "coupler_len_mm": 72.5,
+  "cases": {
+   "stall at the window end": {
+    "F_coupler_n": 388.6,
+    "coupler_net_tension_mpa": 19.0,
+    "coupler_SF_yield_net": 14.49,
+    "coupler_bearing_mpa": 43.2,
+    "coupler_SF_bearing (1.5 Sy)": 9.59,
+    "coupler_euler_n (pinned, out of plane)": 2911.0,
+    "coupler_SF_buckling": 7.49,
+    "pin_shear_mpa (single shear, minor d)": 86.8,
+    "pin_SF_shear": 8.43,
+    "bearing_load_each_n (2 per pin)": 194.3,
+    "bearing_load_over_C0r": 0.89,
+    "seat_pressure_mpa (F/2 over OD x w)": 4.86,
+    "seat_SF_vs_PETG_xy/3": 2.6,
+    "clamp_slip": true,
+    "crank_bending_mpa (tapered arm, plate 4.3)": 14.5,
+    "crank_SF_vs_PETG_xy": 2.61
+   },
+   "fall F1 (0.10 m drop, n = 20), stance theta": {
+    "F_coupler_n": 521.0,
+    "coupler_net_tension_mpa": 25.5,
+    "coupler_SF_yield_net": 10.81,
+    "coupler_bearing_mpa": 57.9,
+    "coupler_SF_bearing (1.5 Sy)": 7.15,
+    "coupler_euler_n (pinned, out of plane)": 2911.0,
+    "coupler_SF_buckling": 5.59,
+    "pin_shear_mpa (single shear, minor d)": 116.4,
+    "pin_SF_shear": 6.29,
+    "bearing_load_each_n (2 per pin)": 260.5,
+    "bearing_load_over_C0r": 1.2,
+    "seat_pressure_mpa (F/2 over OD x w)": 6.51,
+    "seat_SF_vs_PETG_xy/3": 1.94,
+    "clamp_slip": true,
+    "crank_bending_mpa (tapered arm, plate 4.3)": 32.8,
+    "crank_SF_vs_PETG_xy": 1.16
+   }
+  },
+  "play": {
+   "best (clamped, tuned seats)": {
+    "lost_motion_mm": 0.015,
+    "deg_mid (sin 1)": 0.039,
+    "deg_window_end": 0.068
+   },
+   "nominal (clamped, bearing play mid, seat compliance at the engine peak)": {
+    "lost_motion_mm": 0.0802,
+    "deg_mid (sin 1)": 0.209,
+    "deg_window_end": 0.364
+   },
+   "worst (clamp slips: screw in bore, seat one press step loose)": {
+    "lost_motion_mm": 0.708,
+    "deg_mid (sin 1)": 1.844,
+    "deg_window_end": 3.215
+   }
+  },
+  "play_inputs": {
+   "bearing_radial_play_mm": [
+    0.005,
+    0.01
+   ],
+   "screw_in_bore_diametral_mm": [
+    0.012,
+    0.126
+   ],
+   "seat_loose_mm": 0.1,
+   "seat_stiffness_n_per_mm (ESTIMATE)": 13472.0
+  }
+ },
+ "ankle": {
+  "joint": "ankle",
+  "r_mm": 18.0,
+  "theta_window_deg": [
+   37.5,
+   122.5
+  ],
+  "min_sin_theta": 0.609,
+  "coupler_len_mm": 38.0,
+  "cases": {
+   "stall at the window end": {
+    "F_coupler_n": 268.3,
+    "coupler_net_tension_mpa": 13.2,
+    "coupler_SF_yield_net": 20.99,
+    "coupler_bearing_mpa": 29.8,
+    "coupler_SF_bearing (1.5 Sy)": 13.89,
+    "coupler_euler_n (pinned, out of plane)": 10596.0,
+    "coupler_SF_buckling": 39.49,
+    "pin_shear_mpa (single shear, minor d)": 60.0,
+    "pin_SF_shear": 12.21,
+    "bearing_load_each_n (2 per pin)": 134.2,
+    "bearing_load_over_C0r": 0.62,
+    "seat_pressure_mpa (F/2 over OD x w)": 3.35,
+    "seat_SF_vs_PETG_xy/3": 3.77,
+    "clamp_slip": false,
+    "crank_bending_mpa (tapered arm, plate 4.3)": 7.6,
+    "crank_SF_vs_PETG_xy": 4.97
+   },
+   "fall F1 (0.10 m drop, n = 20), stance theta": {
+    "F_coupler_n": 439.8,
+    "coupler_net_tension_mpa": 21.6,
+    "coupler_SF_yield_net": 12.8,
+    "coupler_bearing_mpa": 48.9,
+    "coupler_SF_bearing (1.5 Sy)": 8.47,
+    "coupler_euler_n (pinned, out of plane)": 10596.0,
+    "coupler_SF_buckling": 24.09,
+    "pin_shear_mpa (single shear, minor d)": 98.3,
+    "pin_SF_shear": 7.45,
+    "bearing_load_each_n (2 per pin)": 219.9,
+    "bearing_load_over_C0r": 1.01,
+    "seat_pressure_mpa (F/2 over OD x w)": 5.5,
+    "seat_SF_vs_PETG_xy/3": 2.3,
+    "clamp_slip": true,
+    "crank_bending_mpa (tapered arm, plate 4.3)": 20.4,
+    "crank_SF_vs_PETG_xy": 1.86
+   }
+  },
+  "play": {
+   "best (clamped, tuned seats)": {
+    "lost_motion_mm": 0.015,
+    "deg_mid (sin 1)": 0.048,
+    "deg_window_end": 0.078
+   },
+   "nominal (clamped, bearing play mid, seat compliance at the engine peak)": {
+    "lost_motion_mm": 0.0623,
+    "deg_mid (sin 1)": 0.198,
+    "deg_window_end": 0.326
+   },
+   "worst (clamp slips: screw in bore, seat one press step loose)": {
+    "lost_motion_mm": 0.708,
+    "deg_mid (sin 1)": 2.254,
+    "deg_window_end": 3.702
+   }
+  },
+  "play_inputs": {
+   "bearing_radial_play_mm": [
+    0.005,
+    0.01
+   ],
+   "screw_in_bore_diametral_mm": [
+    0.012,
+    0.126
+   ],
+   "seat_loose_mm": 0.1,
+   "seat_stiffness_n_per_mm (ESTIMATE)": 13472.0
+  }
+ }
+}

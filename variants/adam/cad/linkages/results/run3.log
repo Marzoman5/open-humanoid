@@ -1,0 +1,83 @@
+built 52 parts in 6.6 s; notes: ['closed chains as tree links: knee_drv_l = knee_l, knee_cpl_l = -knee_l; ankle_drv_l = ankle_pitch_l, ankle_cpl_l = -ankle_pitch_l (check.py drives them together)', 'stack (y, mm): servo face 13.0; crank plate (18.3, 22.6); pin boss (18.3, 27.9); coupler (28.4, 31.4); pin nut (16.0, 17.8)', 'pins (x, z): knee in (12.618681599723013, 239.02134497435782), knee out (12.618681599723013, 166.52134497435782), ankle in (17.846007504728586, 101.65052854003908), ankle out (17.846007504728586, 63.65052854003907)']
+{
+ "knee_joint (z knee +-10)": {
+  "width_mm": 39.5,
+  "y": [
+   -13.1,
+   26.4
+  ],
+  "depth_mm": 20.0
+ },
+ "ankle_joint (z ankle +-10)": {
+  "width_mm": 48.3,
+  "y": [
+   -14.9,
+   33.4
+  ],
+  "depth_mm": 91.28
+ },
+ "knee_servo_level (thigh)": {
+  "width_mm": 58.55,
+  "y": [
+   -27.15,
+   31.4
+  ],
+  "depth_mm": 57.6
+ },
+ "calf_servo_level": {
+  "width_mm": 59.95,
+  "y": [
+   -26.55,
+   33.4
+  ],
+  "depth_mm": 57.6
+ },
+ "thigh_mid (between knee servo and knee)": {
+  "width_mm": 36.4,
+  "y": [
+   -3.0,
+   33.4
+  ],
+  "depth_mm": 23.99
+ },
+ "d_knee_mm": 72.5,
+ "d_ankle_mm": 38.0,
+ "R1_leg_v2": {
+  "z_hip": 336.0,
+  "z_knee": 201.0,
+  "z_ankle": 66.0,
+  "note": "R1 CAD-foundation leg (layout_v2 stand-in at its own landmarks; forks at the joints); widths are absolute mm",
+  "knee_joint (z knee +-10)": {
+   "width_mm": 57.45,
+   "y": [
+    14.65,
+    72.1
+   ],
+   "depth_mm": 30.0
+  },
+  "ankle_joint (z ankle +-10)": {
+   "width_mm": 57.45,
+   "y": [
+    14.65,
+    72.1
+   ],
+   "depth_mm": 81.95
+  },
+  "thigh_mid": {
+   "width_mm": 48.0,
+   "y": [
+    14.65,
+    64.25
+   ],
+   "depth_mm": 30.0
+  },
+  "shank_mid": {
+   "width_mm": 57.45,
+   "y": [
+    14.65,
+    72.1
+   ],
+   "depth_mm": 30.0
+  }
+ }
+}

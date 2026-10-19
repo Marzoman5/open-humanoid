@@ -1,0 +1,56 @@
+{
+ "concept": "V2b-0p55-l5c-longarm",
+ "gait": {
+  "stance_knee_flex_deg": 40,
+  "step_time_s": 0.5
+ },
+ "label": "SENSITIVITY: open-loop servo-in-the-loop replay with frozen feedforward (needs closed loop, P5); not a gate",
+ "cases": {
+  "servo_only": {
+   "backlash_deg": {
+    "knee": 0.5,
+    "ankle_pitch": 0.5,
+    "others": 0.5
+   },
+   "rms_err_deg": 0.367,
+   "max_err_deg": 3.451,
+   "rms_err_deg_by_joint": {
+    "hip_pitch_l": 0.36,
+    "hip_pitch_r": 0.33,
+    "knee_l": 0.88,
+    "knee_r": 0.85,
+    "ankle_pitch_l": 0.35,
+    "ankle_pitch_r": 0.37
+   },
+   "fell": false,
+   "tether_mean_pct_bw": 1.378
+  },
+  "servo+linkage_nominal": {
+   "backlash_deg": {
+    "knee": 0.864,
+    "ankle_pitch": 0.826,
+    "others": 0.5
+   },
+   "rms_err_deg": 0.396,
+   "max_err_deg": 3.712,
+   "rms_err_deg_by_joint": {
+    "hip_pitch_l": 0.37,
+    "hip_pitch_r": 0.34,
+    "knee_l": 0.98,
+    "knee_r": 0.93,
+    "ankle_pitch_l": 0.44,
+    "ankle_pitch_r": 0.43
+   },
+   "fell": false,
+   "tether_mean_pct_bw": 1.479
+  },
+  "servo+linkage_worst": {
+   "backlash_deg": {
+    "knee": 3.715,
+    "ankle_pitch": 4.202
+   },
+   "fell": true,
+   "note": "replay diverged / fell while learning the feed-forward offsets (operands could not be broadcast together with shapes (344,23) (590,23) )"
+  }
+ }
+}

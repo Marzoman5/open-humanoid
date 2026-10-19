@@ -1,0 +1,4 @@
+V2b-0p55-l5c-longarm: FAIL | worst joint invalid motion: pickup_0.45m margin 0.0 | robust=False benchmark-mass=False | 3852.2 s
+  - INVALID pickup_0.45m: reference infeasible: pickup at 0.45 m: the arm covers this height but in every whole-body posture tried the forearm, hand or body would meet the table edge (object 50 mm behind the front edge) (table clearance -x mm (forearm_r) at the grasp (x5970); the body or arm meets the table at the grasp (x3467); legs/waist out of range once the arm is out (x150)); COM tracking error 0.00 mm
+  - Monte Carlo p95 peak above the gate at hip_pitch_l (0.87 of stall)
+  -> C:\Users\aemar\Documents\Easy Humanoid\.claude\worktrees\agent-a1f3d10c477d2a293\variants\adam\generated\concept\V2b-0p55-l5c-longarm

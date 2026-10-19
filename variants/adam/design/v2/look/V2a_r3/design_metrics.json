@@ -1,0 +1,946 @@
+{
+  "generated_by": "oh design metrics (openhumanoid/design/metrics.py)",
+  "subject": "V2a_r3",
+  "source": "profiles:C:\\Users\\aemar\\Documents\\Easy Humanoid\\.claude\\worktrees\\agent-a1f3d10c477d2a293\\variants\\adam\\design\\v2\\look\\V2a_r3\\profiles.yaml",
+  "measured": {
+    "P1_head_height_f": 0.135,
+    "P2_neck_length_hu": 0.1185,
+    "P2_neck_width_ratio": 0.5439,
+    "P3_shoulder_width_f": 0.396,
+    "P4_waist_over_shoulder": 0.5505,
+    "P5_pelvis_over_shoulder": 0.6288,
+    "P6_hip_height_f": 0.5,
+    "P6_source": "joint",
+    "P7_source": "joint",
+    "P7_knee_height_f": 0.27,
+    "P10_foot_length_f": 0.238,
+    "P10_foot_height_f": 0.032,
+    "P8_thigh_taper_area": 0.9557,
+    "P8_shank_taper_area": 0.9918,
+    "P9_thigh_widest_from_top": 0.0863,
+    "P9_calf_widest_from_top": 0.16,
+    "S3_ledge_count": 3,
+    "S3_ledge_total_f": 0.7622,
+    "S3_leg_bumps": 2,
+    "S4_flat_area_fraction": 0.1624,
+    "S4_worst_part_flat_fraction": 0.5664,
+    "M1_watertight_parts": "1/1",
+    "M1_manifold3d_valid": "1/1",
+    "M1_parts_over_bed": [],
+    "M1_not_computed": [
+      "wall_thickness",
+      "step_roundtrip",
+      "frame_clearance",
+      "rom_sweep"
+    ],
+    "M1_not_computed_reason": "needs the frame/servo model and the CAD geometry gate (T-0004 / cad check); not derivable from an outer mesh",
+    "S2_iou_front_vs_refs": {
+      "optimus_like": 0.5207,
+      "atlas_like": 0.5545
+    },
+    "HP_hard_points": [
+      {
+        "id": "shoulder_pitch_servos",
+        "segment": "chest",
+        "margin_m": 0.0037,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "neck_yaw_servo",
+        "segment": "chest",
+        "margin_m": 0.0056,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "pack_gnb3s1850",
+        "segment": "back",
+        "margin_m": 0.0035,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "hip_yaw_servo_l",
+        "segment": "pelvis",
+        "margin_m": 0.0052,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "hip_yaw_servo_r",
+        "segment": "pelvis",
+        "margin_m": 0.0052,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "hip_yaw_servo_r",
+        "segment": "pelvis",
+        "margin_m": 0.0052,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "waist_yaw_servo",
+        "segment": "pelvis",
+        "margin_m": 0.0089,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "pi5_adapter_buck_imu_bay",
+        "segment": "pelvis",
+        "margin_m": 0.0035,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "hip_pitch_servo_l",
+        "segment": "leg_core_l",
+        "margin_m": 0.0034,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "hip_pitch_servo_r",
+        "segment": "leg_core_r",
+        "margin_m": 0.0034,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "hip_roll_servo_l",
+        "segment": "glute_l",
+        "margin_m": 0.0038,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "hip_roll_servo_r",
+        "segment": "glute_r",
+        "margin_m": 0.0038,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "knee_servo_l",
+        "segment": "leg_core_l",
+        "margin_m": 0.0034,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "knee_servo_r",
+        "segment": "leg_core_r",
+        "margin_m": 0.0034,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "ankle_pitch_servo_l",
+        "segment": "leg_core_l",
+        "margin_m": 0.0034,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "ankle_pitch_servo_r",
+        "segment": "leg_core_r",
+        "margin_m": 0.0034,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "ankle_roll_servo_l",
+        "segment": "heel_l",
+        "margin_m": 0.0034,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "ankle_roll_servo_r",
+        "segment": "heel_r",
+        "margin_m": 0.0034,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s1_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s1_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s2_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s2_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s3_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s3_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s4_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0047,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s4_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0047,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s5_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0049,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s5_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0049,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s6_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0047,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s6_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0047,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s7_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0047,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s7_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0047,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s8_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0049,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s8_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0049,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s9_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0047,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s9_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0047,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s10_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s10_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s11_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s11_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s12_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "shoulder_roll_servo_s12_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s1_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0051,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s1_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0051,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s2_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0051,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s2_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0051,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s3_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0052,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s3_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0052,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s4_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0051,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s4_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0051,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s5_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0052,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s5_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0052,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s6_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0052,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s6_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0052,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s7_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0053,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s7_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0053,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s8_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0049,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s8_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0049,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s9_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0046,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s9_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0046,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s10_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0045,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s10_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0045,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s11_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0045,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s11_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0045,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s12_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0044,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "elbow_servo_s12_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0044,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s1_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0043,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s1_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0043,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s2_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s2_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s3_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s3_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s4_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s4_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s5_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s5_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0041,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s6_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s6_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s7_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s7_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0042,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s8_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0043,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s8_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0043,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s9_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0046,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s9_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0046,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s10_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0063,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s10_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0063,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s11_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0068,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s11_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0068,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s12_l",
+        "segment": "arm_core_l",
+        "margin_m": 0.0068,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "gripper_servo_s12_r",
+        "segment": "arm_core_r",
+        "margin_m": 0.0068,
+        "required_m": 0.0031,
+        "pass": true
+      },
+      {
+        "id": "neck_pitch_servo",
+        "segment": "head",
+        "margin_m": 0.0018,
+        "required_m": 0.0031,
+        "pass": false
+      },
+      {
+        "id": "camera",
+        "segment": "head",
+        "margin_m": 0.0075,
+        "required_m": 0.0031,
+        "pass": true
+      }
+    ],
+    "HP_all_enclosed_with_margin": false,
+    "height_m": 0.55,
+    "head_unit_m": 0.0743,
+    "landmarks_f": {
+      "crotch": 0.525,
+      "knee": 0.27,
+      "hip": 0.5,
+      "neck_bottom": 0.849,
+      "head_bottom": 0.865
+    }
+  },
+  "evaluation": {
+    "criteria": {
+      "P1": {
+        "key": "P1_head_height_f",
+        "value": 0.135,
+        "band": [
+          0.11,
+          0.15
+        ],
+        "verdict": "PASS",
+        "name": "Head height / H"
+      },
+      "P2a": {
+        "key": "P2_neck_length_hu",
+        "value": 0.1185,
+        "band": [
+          0.18,
+          0.55
+        ],
+        "verdict": "FAIL",
+        "name": "Visible neck length / head height"
+      },
+      "P2b": {
+        "key": "P2_neck_width_ratio",
+        "value": 0.5439,
+        "band": [
+          0.5,
+          null
+        ],
+        "verdict": "PASS",
+        "name": "Neck width / head width (no stick)"
+      },
+      "P3": {
+        "key": "P3_shoulder_width_f",
+        "value": 0.396,
+        "band": [
+          0.22,
+          0.29
+        ],
+        "verdict": "FAIL",
+        "name": "Outer shoulder width / H"
+      },
+      "P4": {
+        "key": "P4_waist_over_shoulder",
+        "value": 0.5505,
+        "band": [
+          0.5,
+          0.75
+        ],
+        "verdict": "PASS",
+        "name": "Waist width / shoulder width"
+      },
+      "P5": {
+        "key": "P5_pelvis_over_shoulder",
+        "value": 0.6288,
+        "band": [
+          0.62,
+          0.9
+        ],
+        "verdict": "PASS",
+        "name": "Pelvis width / shoulder width"
+      },
+      "P6": {
+        "key": "P6_hip_height_f",
+        "value": 0.5,
+        "band": [
+          0.46,
+          0.53
+        ],
+        "verdict": "PASS",
+        "name": "Hip-joint height / H"
+      },
+      "P7": {
+        "key": "P7_knee_height_f",
+        "value": 0.27,
+        "band": [
+          0.25,
+          0.3
+        ],
+        "verdict": "PASS",
+        "name": "Knee height / H"
+      },
+      "P8a": {
+        "key": "P8_thigh_taper_area",
+        "value": 0.9557,
+        "band": [
+          null,
+          0.65
+        ],
+        "verdict": "FAIL",
+        "name": "Thigh taper: distal / proximal section area"
+      },
+      "P8b": {
+        "key": "P8_shank_taper_area",
+        "value": 0.9918,
+        "band": [
+          null,
+          0.6
+        ],
+        "verdict": "FAIL",
+        "name": "Shank taper: ankle / calf section area"
+      },
+      "P9a": {
+        "key": "P9_thigh_widest_from_top",
+        "value": 0.0863,
+        "band": [
+          null,
+          0.33
+        ],
+        "verdict": "PASS",
+        "name": "Thigh widest point, fraction of length from the top"
+      },
+      "P9b": {
+        "key": "P9_calf_widest_from_top",
+        "value": 0.16,
+        "band": [
+          null,
+          0.33
+        ],
+        "verdict": "PASS",
+        "name": "Calf widest point, fraction of shank from the top"
+      },
+      "P10a": {
+        "key": "P10_foot_length_f",
+        "value": 0.238,
+        "band": [
+          0.13,
+          0.17
+        ],
+        "verdict": "FAIL",
+        "name": "Foot length / H"
+      },
+      "P10b": {
+        "key": "P10_foot_height_f",
+        "value": 0.032,
+        "band": [
+          null,
+          0.05
+        ],
+        "verdict": "PASS",
+        "name": "Foot height / H"
+      },
+      "S1a": {
+        "key": "S1_iou_front",
+        "value": null,
+        "band": [
+          0.95,
+          null
+        ],
+        "verdict": "NA",
+        "name": "Front silhouette IoU vs approved D1"
+      },
+      "S1b": {
+        "key": "S1_iou_side",
+        "value": null,
+        "band": [
+          0.95,
+          null
+        ],
+        "verdict": "NA",
+        "name": "Side silhouette IoU vs approved D1"
+      },
+      "S3a": {
+        "key": "S3_ledge_count",
+        "value": 3,
+        "band": [
+          null,
+          6
+        ],
+        "verdict": "PASS",
+        "name": "Silhouette ledges (horizontal steps in the outer edge)"
+      },
+      "S3b": {
+        "key": "S3_leg_bumps",
+        "value": 2,
+        "band": [
+          null,
+          3
+        ],
+        "verdict": "PASS",
+        "name": "Unintended bumps in the leg width profile"
+      },
+      "S4a": {
+        "key": "S4_flat_area_fraction",
+        "value": 0.1624,
+        "band": [
+          null,
+          0.3
+        ],
+        "verdict": "PASS",
+        "name": "Share of surface in flat patches >= 0.002 H^2"
+      },
+      "S4b": {
+        "key": "S4_worst_part_flat_fraction",
+        "value": 0.5664,
+        "band": [
+          null,
+          0.3
+        ],
+        "verdict": "FAIL",
+        "name": "Largest flat patch / its part's area"
+      },
+      "S5a": {
+        "key": "S5_hardware_visible_fraction_front",
+        "value": null,
+        "band": [
+          null,
+          0.005
+        ],
+        "verdict": "NA",
+        "name": "Servo/frame/horn pixels visible, front"
+      },
+      "S5b": {
+        "key": "S5_hardware_visible_fraction_side",
+        "value": null,
+        "band": [
+          null,
+          0.005
+        ],
+        "verdict": "NA",
+        "name": "Servo/frame/horn pixels visible, side"
+      },
+      "HP": {
+        "key": "HP_all_enclosed_with_margin",
+        "value": false,
+        "band": [
+          1,
+          1
+        ],
+        "verdict": "FAIL",
+        "name": "Every hard point enclosed with wall + gap"
+      }
+    },
+    "n_pass": 12,
+    "n_scored": 19,
+    "pass_fraction": 0.632,
+    "failed": [
+      "P2a",
+      "P3",
+      "P8a",
+      "P8b",
+      "P10a",
+      "S4b",
+      "HP"
+    ]
+  },
+  "rubric": "rubric.yaml",
+  "note": "bands are calibration-pending starting values; see docs/design-method.md#calibration"
+}

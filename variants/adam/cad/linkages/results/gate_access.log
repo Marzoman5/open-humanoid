@@ -1,0 +1,98 @@
+built 52 parts in 12.7 s; notes: ['closed chains as tree links: knee_drv_l = knee_l, knee_cpl_l = -knee_l; ankle_drv_l = ankle_pitch_l, ankle_cpl_l = -ankle_pitch_l (check.py drives them together)', 'stack (y, mm): servo face 13.0; crank plate (18.3, 22.6); pin boss (18.3, 27.9); coupler (28.4, 31.4); pin nut (16.0, 17.8)', 'pins (x, z): knee in (12.618681599723013, 239.02134497435782), knee out (12.618681599723013, 166.52134497435782), ankle in (17.846007504728586, 101.65052854003908), ankle out (17.846007504728586, 63.65052854003907)']
+geometry gate: adam_v2_l5c_leg_l  ->  PASS
+  ok   housing_hip_pitch
+  ok   cover_hip_pitch
+  ok   servo_hip_pitch
+  ok   keepout_hip_roll_servo
+  ok   shaft_hip_pitch
+  ok   shaftb_hip_pitch
+  ok   horn_hip_pitch
+  ok   thigh
+  ok   cover_knee
+  ok   servo_knee
+  ok   axle_knee
+  ok   shaft_knee
+  ok   shaftb_knee
+  ok   horn_knee
+  ok   crank_knee
+  ok   bearing_knee_pin_in_0
+  ok   bearing_knee_pin_in_1
+  ok   coupler_knee
+  ok   pin_screw_coupler_knee_top
+  ok   pin_nut_coupler_knee_top
+  ok   pin_screw_coupler_knee_bot
+  ok   pin_nut_coupler_knee_bot
+  ok   shank
+  ok   cover_calf
+  ok   servo_calf
+  ok   bearing_knee_axle_0
+  ok   bearing_knee_axle_1
+  ok   bearing_knee_pin_out_0
+  ok   bearing_knee_pin_out_1
+  ok   axle_ankle
+  ok   shaft_calf
+  ok   shaftb_calf
+  ok   horn_calf
+  ok   crank_ankle
+  ok   bearing_calf_pin_in_0
+  ok   bearing_calf_pin_in_1
+  ok   coupler_ankle
+  ok   pin_screw_coupler_ankle_top
+  ok   pin_nut_coupler_ankle_top
+  ok   pin_screw_coupler_ankle_bot
+  ok   pin_nut_coupler_ankle_bot
+  ok   ankle_cradle
+  ok   cover_roll
+  ok   servo_ankle_roll
+  ok   shaft_ankle_roll
+  ok   shaftb_ankle_roll
+  ok   horn_ankle_roll
+  ok   bearing_ankle_axle_0
+  ok   bearing_ankle_axle_1
+  ok   bearing_ankle_pin_out_0
+  ok   bearing_ankle_pin_out_1
+  ok   sole_keepout
+  assembly: 0 clashes, 0 tight gaps, 0 keep-out hits (137 candidate pairs)
+assembly access: FAIL (26 parts)
+  assembly order (subassembly = link):
+   [thigh]  bench-assemblable: False  PROBLEMS {'stuck': ['servo_knee'], 'cyclic': [], 'unreachable': []}
+      1. horn_hip_pitch                     move [0, 0, 1]
+      2. thigh                              move [0, 0, -1]  screws: horn_center, horn_0, horn_1, horn_2, horn_3
+      3. cover_knee                         move [0, 0, -1]  screws: cover_screw_0, cover_screw_1
+      4. servo_knee                         move None
+   [crank_k]  bench-assemblable: True
+      5. horn_knee                          move [0, 0, -1]
+      6. crank_knee                         move [0, 0, -1]  screws: horn_center, horn_0, horn_1, horn_2, horn_3
+      7. bearing_knee_pin_in_0              move [0, 1, 0]
+      8. bearing_knee_pin_in_1              move None
+   [coupler_k]  bench-assemblable: True
+      9. coupler_knee                       move [0, 0, 1]  screws: pin_knee_in, pin_knee_out
+   [shank]  bench-assemblable: False  PROBLEMS {'stuck': ['servo_calf'], 'cyclic': [], 'unreachable': []}
+     10. shank                              move [0, 0, -1]
+     11. cover_calf                         move [0, 0, -1]  screws: cover_screw_0, cover_screw_1
+     12. servo_calf                         move None
+     13. bearing_knee_axle_0                move [0, -1, 0]
+     14. bearing_knee_axle_1                move [0, 1, 0]
+     15. bearing_knee_pin_out_0             move None
+     16. bearing_knee_pin_out_1             move None
+   [crank_a]  bench-assemblable: True
+     17. horn_calf                          move [0, 0, -1]
+     18. crank_ankle                        move [0, 0, -1]  screws: horn_center, horn_0, horn_1, horn_2, horn_3
+     19. bearing_calf_pin_in_0              move [0, 1, 0]
+     20. bearing_calf_pin_in_1              move None
+   [coupler_a]  bench-assemblable: True
+     21. coupler_ankle                      move [0, 0, -1]  screws: pin_ankle_in, pin_ankle_out
+   [foot]  bench-assemblable: True
+     22. ankle_cradle                       move [0, 0, -1]
+     23. bearing_ankle_axle_0               move [0, -1, 0]
+     24. bearing_ankle_axle_1               move [0, 1, 0]
+     25. bearing_ankle_pin_out_0            move None
+     26. bearing_ankle_pin_out_1            move [0, -1, 0]
+  STUCK servo_knee: no straight insertion path against the assembled set
+  STUCK bearing_knee_pin_in_1: no straight insertion path against the assembled set
+  STUCK servo_calf: no straight insertion path against the assembled set
+  STUCK bearing_knee_pin_out_0: no straight insertion path against the assembled set
+  STUCK bearing_knee_pin_out_1: no straight insertion path against the assembled set
+  STUCK bearing_calf_pin_in_1: no straight insertion path against the assembled set
+  STUCK bearing_ankle_pin_out_0: no straight insertion path against the assembled set
+  serviceability: 2 of 23 screws are not reachable once fully assembled

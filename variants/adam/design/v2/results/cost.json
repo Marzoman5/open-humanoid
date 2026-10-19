@@ -1,0 +1,56 @@
+[
+ {
+  "name": "R1 Path 1 (0.55 m), engine accounting",
+  "sticker": 1108.23,
+  "r1_total": 1513.8,
+  "with_catalog_additions": 1538.8,
+  "estimate_lines": 189.18,
+  "delta_vs_R1": 0.0,
+  "under_1600": true
+ },
+ {
+  "name": "V2a: R1 + longer arms + 2nd bus adapter",
+  "sticker": 1113.22,
+  "r1_total": 1519.71,
+  "with_catalog_additions": 1544.71,
+  "estimate_lines": 189.18,
+  "delta_vs_R1": 5.91,
+  "under_1600": true
+ },
+ {
+  "name": "V2b: V2a + L5c, budget 623ZZ",
+  "sticker": 1148.77,
+  "r1_total": 1561.76,
+  "with_catalog_additions": 1586.76,
+  "estimate_lines": 224.73,
+  "delta_vs_R1": 47.96,
+  "under_1600": true
+ },
+ {
+  "name": "V2b: V2a + L5c, quality 623ZZ (VXB)",
+  "sticker": 1223.5,
+  "r1_total": 1650.15,
+  "with_catalog_additions": 1675.15,
+  "estimate_lines": 299.46,
+  "delta_vs_R1": 136.35,
+  "under_1600": false
+ },
+ {
+  "name": "V2a at 0.60 m (bench-conditional)",
+  "sticker": 1128.17,
+  "r1_total": 1537.39,
+  "with_catalog_additions": 1562.39,
+  "estimate_lines": 204.13,
+  "delta_vs_R1": 23.59,
+  "under_1600": true
+ },
+ {
+  "name": "V2a lean (STS3215 knees, after the bench + Q3)",
+  "sticker": 1007.04,
+  "r1_total": 1394.11,
+  "with_catalog_additions": 1419.11,
+  "estimate_lines": 189.18,
+  "delta_vs_R1": -119.69,
+  "under_1600": true
+ }
+]

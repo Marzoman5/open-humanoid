@@ -207,24 +207,31 @@ def leg_parts(c: Ctx) -> list[dict]:
         if (x1 - x0) > 40.0:      # a servo laid fore-aft (relocated): squarer, deeper section so its corners do not widen the leg past the mid-plane
             return (x0 + x1) / 2, ((x1 - x0) + 6.7) * 1.4 + pad, 3.6
         return (x0 + x1) / 2, max(54.0, ((x1 - x0) + 6.7) * 1.25) + pad, n
+    def ycen(z):
+        """Section centre in y. Default: the leg plane (B4 rule). REFINE leg_cy_follow (v2, T-20261019-4ab5): the centre of the boxes active
+        at z, so a laterally offset stack (the L5c crank/coupler planes) gets a hugging, off-centre cover instead of a wide symmetric one."""
+        act = active(z) if REFINE.get("leg_cy_follow") else []
+        return (min(b["y"][0] for b in act) + max(b["y"][1] for b in act)) / 2 if act else cy
+
     zs = sorted({round(z, 2) for b in bx for z in (b["z"][0] - 3.15, b["z"][1] + 3.05)})
     core = [S(a - 26, 50, 42, n, 0, cy)]
     prev = None
     for z in zs:
         bcx, bd, nn = xsec(z)
-        w = max(c.fw("leg_core_l", zz, bd, nn, bcx, cy, extra=0.2) for zz in (z, min(max(z, active(z)[0]["z"][0]), active(z)[0]["z"][1])))
+        ycz = ycen(z) if REFINE.get("leg_cy_follow") else cy
+        w = max(c.fw("leg_core_l", zz, bd, nn, bcx, ycz, extra=0.2) for zz in (z, min(max(z, active(z)[0]["z"][0]), active(z)[0]["z"][1])))
         if prev is not None and z - prev["z"] > 6 and not [b for b in bx if prev["z"] < b["z"][0] and b["z"][1] < z] \
                 and not active((prev["z"] + z) / 2):
             core.append(S((prev["z"] + z) / 2, min(prev["w"], w) - 7.4, min(prev["d"], bd) - 8, n, (prev["cx"] + bcx) / 2, cy))
-        q = S(z, w, bd, nn, bcx, cy)
+        q = S(z, w, bd, nn, bcx, max(ycz, 2.0 + w / 2) if REFINE.get("leg_cy_follow") else cy)
         core.append(q)
         prev = q
     core.append(S(prev["z"] + 8, 48, 40, n, 0, cy))
     core.sort(key=lambda q: q["z"])
     segs = [{"id": "leg_core", "role": "dark", "mirror": True, "k": 3.0, "stations": core}]
 
-    def inner(w):
-        return max(cy, 2.0 + w / 2)
+    def inner(w, c0=None):
+        return max(cy if c0 is None else c0, 2.0 + w / 2)
 
     def cover(z_lo, z_hi, flare_z=None):
         sts = []
@@ -233,11 +240,12 @@ def leg_parts(c: Ctx) -> list[dict]:
                 continue
             for z in (max(b["z"][0], z_lo + 4), min(b["z"][1], z_hi - 4)):
                 bcx, bd, nn = xsec(z, 6.0)
-                w = c.fw("leg_core_l", z, bd, nn, bcx, cy, extra=3.0, win=3.2)
+                yc = ycen(z)
+                w = c.fw("leg_core_l", z, bd, nn, bcx, yc, extra=3.0, win=3.2)
                 while w > 100.0 and bd < 200.0:      # the fit has no solution at this depth (two boxes of different depth meet): deepen
                     bd *= 1.1
-                    w = c.fw("leg_core_l", z, bd, nn, bcx, cy, extra=3.0, win=3.2)
-                sts.append(S(z, w, bd, nn, bcx, inner(w)))
+                    w = c.fw("leg_core_l", z, bd, nn, bcx, yc, extra=3.0, win=3.2)
+                sts.append(S(z, w, bd, nn, bcx, inner(w, yc)))
         sts.sort(key=lambda q: q["z"])
         out = [sts[0]]
         for q in sts[1:]:                 # a station between two boxes: the mean of its neighbours (no waist between them)

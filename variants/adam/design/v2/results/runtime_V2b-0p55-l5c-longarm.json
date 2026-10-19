@@ -1,0 +1,97 @@
+{
+ "concept": "variants/adam/concepts/V2b-0p55-l5c-longarm.yaml",
+ "n": 18,
+ "failing": 0,
+ "rows": [
+  {
+   "name": "stand",
+   "passed": true,
+   "row": "PASS  stand                              60 s, max tilt 1.3 deg, COM dev 5 mm"
+  },
+  {
+   "name": "walk 2 m + turn 90 deg",
+   "passed": true,
+   "row": "PASS  walk 2 m + turn 90 deg             walked 1.95 m (lat +0.14), turned 89.6 deg, max tilt 2.1"
+  },
+  {
+   "name": "push stand fwd 0.45 N s",
+   "passed": true,
+   "row": "PASS  push stand fwd 0.45 N s            max tilt 1.3, steps 0"
+  },
+  {
+   "name": "push stand back 0.45 N s",
+   "passed": true,
+   "row": "PASS  push stand back 0.45 N s           max tilt 2.2, steps 0"
+  },
+  {
+   "name": "push stand left 0.45 N s",
+   "passed": true,
+   "row": "PASS  push stand left 0.45 N s           max tilt 1.3, steps 0"
+  },
+  {
+   "name": "push stand right 0.45 N s",
+   "passed": true,
+   "row": "PASS  push stand right 0.45 N s          max tilt 1.3, steps 0"
+  },
+  {
+   "name": "push walk fwd 0.45 N s",
+   "passed": true,
+   "row": "PASS  push walk fwd 0.45 N s             max tilt 1.8"
+  },
+  {
+   "name": "push walk back 0.45 N s",
+   "passed": true,
+   "row": "PASS  push walk back 0.45 N s            max tilt 2.7"
+  },
+  {
+   "name": "push walk left 0.45 N s",
+   "passed": true,
+   "row": "PASS  push walk left 0.45 N s            max tilt 1.9"
+  },
+  {
+   "name": "push walk right 0.45 N s",
+   "passed": true,
+   "row": "PASS  push walk right 0.45 N s           max tilt 2.7"
+  },
+  {
+   "name": "wave",
+   "passed": true,
+   "row": "PASS  wave                               abduction 73 deg, elbow swing 66 deg, tilt 1.3"
+  },
+  {
+   "name": "dance 30 s",
+   "passed": true,
+   "row": "PASS  dance 30 s                         39.1 s, max tilt 1.4, trips 0"
+  },
+  {
+   "name": "pickup",
+   "passed": true,
+   "row": "PASS  pickup                             table 0.30 m, lifted 38 mm, held 19 mm"
+  },
+  {
+   "name": "look at a person",
+   "passed": true,
+   "row": "PASS  look at a person                   pointing error 0.8 deg"
+  },
+  {
+   "name": "e-stop",
+   "passed": true,
+   "row": "PASS  e-stop                             torque off after 1 cycles"
+  },
+  {
+   "name": "overheat cutoff",
+   "passed": true,
+   "row": "PASS  overheat cutoff                    detected after 0.0 s, ended limp, tilt 2.5"
+  },
+  {
+   "name": "low-battery cutoff",
+   "passed": true,
+   "row": "PASS  low-battery cutoff                 warned 1.37, refused walking True, ended limp"
+  },
+  {
+   "name": "fall -> safe-fall pose",
+   "passed": true,
+   "row": "PASS  fall -> safe-fall pose             detected 0.18, pose error 0.0, torque limited True, ended limp"
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "task": "T-20261019-4ab5 (Adam baseline v2), blind design-critic (Sonnet), advisor only",
+ "note": "Verdicts, reads_as and pairwise verbatim from the critic reports; evidence abridged by the author. Sheets: docs/design-method/R2a-v2/<tag>/sheet.jpg.",
+ "rounds": [
+  {"question": "L5c look: V2b-est (L5c at the packaging study's slim-joint ESTIMATE, the optimistic case) vs V2a (R1 legs), both + longer arms, same B4 parametric rules",
+   "candidate": "V2b-est_none", "baseline": "V2a_none",
+   "reports": [
+    {"order": "cand_first", "reads_as": "toy", "G1": "FAIL", "G2": "FAIL", "G3": "UNCERTAIN", "G4": "FAIL", "G6": "FAIL", "pairwise": "candidate",
+     "evidence": "identical above the hips; the candidate adds a knee break and a narrower shank so it reads a little more like a legged machine; margin small because the stepped shank adds a stacked-box look (S3b 5 bumps, P8b 0.603)"},
+    {"order": "cand_second", "reads_as": "toy", "G1": "FAIL", "G2": "FAIL", "G3": "UNCERTAIN", "G4": "FAIL", "G6": "FAIL", "pairwise": "candidate",
+     "evidence": "only the legs differ; the baseline legs read as a trouser slab, the candidate has a visible knee; cost is a lumpier outline in 3/4; a modest preference, neither is close to a finished product"}],
+   "G5": "PASS (candidate preferred in both orders), margin modest; both read toy"},
+  {"question": "v2 (B4 hand styling + longer arms, L9a) vs R2a B4",
+   "candidate": "v2_B4_longarm", "baseline": "B4_ref (docs/design-method/R2a-packaging/B4_ref)",
+   "reports": [
+    {"order": "cand_first", "reads_as": "toy", "G1": "FAIL", "G2": "FAIL", "G3": "UNCERTAIN", "G4": "FAIL", "G6": "FAIL", "pairwise": "baseline",
+     "evidence": "low confidence: the longer, wider arms drop the hands past the reference hand line and add to the gorilla / toy-mech look; otherwise identical"},
+    {"order": "cand_second", "reads_as": "toy", "G1": "FAIL", "G2": "FAIL", "G3": "UNCERTAIN", "G4": "UNCERTAIN", "G6": "FAIL", "pairwise": "candidate",
+     "evidence": "only the arms differ; longer, more tapered arms end near the references' mid-thigh; the baseline's short arms make the torso top-heavy; a small improvement"}],
+   "G5": "not established (split by order, position-dependent): the longer arms are look-neutral"}],
+ "top_changes_all_reports": [
+  "narrow the shoulder / arm mass (P3 0.39 vs 0.22-0.29) and hang the arms closer: hardware-bound at this scale (R2a section 9.2)",
+  "visible neck (P2a 0.110 vs >= 0.18): chest-top roll / small neck servo (packaging L6b)",
+  "one continuous leg taper, dark knee/ankle recesses, shorter foot (P10a is set by the heel servo and the engine-validated toe reach)"]
+}
