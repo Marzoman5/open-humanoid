@@ -9,7 +9,10 @@ def repo_root() -> Path:
     env = os.environ.get("OPENHUMANOID_ROOT")
     if env:
         return Path(env).resolve()
-    for start in (Path.cwd(), Path(__file__).resolve().parent):
+    # The package's own checkout wins (an editable install in worktree A must not silently read
+    # worktree B's files because cwd happens to be there). cwd is the fallback for a toolkit
+    # installed into site-packages and run inside someone's clone.
+    for start in (Path(__file__).resolve().parent, Path.cwd()):
         for p in (start, *start.parents):
             if (p / "AGENTS.md").exists() and (p / "schemas").is_dir():
                 return p

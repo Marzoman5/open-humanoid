@@ -81,6 +81,10 @@ def cmd_sim(a):
 def cmd_render(a):
     from .render import render
     spec = _spec(a.variant)
+    if getattr(a, "studio", False):
+        files = render(spec, studio=True, refs=a.ref, zebra=a.zebra)
+        print(f"{spec['name']}: studio rig ({len(files)} files) -> {files[0].parent}")
+        return 0
     files = render(spec)
     print(f"{spec['name']}: {len(files)} images -> {files[-1]} (contact sheet)")
     return 0
@@ -231,8 +235,12 @@ def main(argv=None) -> int:
     s = sub.add_parser("sim", help="MuJoCo: build | test | view")
     s.add_argument("action", choices=["build", "test", "view"]); s.add_argument("variant")
     s.add_argument("--seconds", type=float, default=3.0); s.add_argument("--json", action="store_true"); s.set_defaults(f=cmd_sim)
-    s = sub.add_parser("render", help="review images (front/side/3-4/back + sheet) of the current model")
-    s.add_argument("variant"); s.set_defaults(f=cmd_render)
+    s = sub.add_parser("render", help="review images: MuJoCo sim sheet, or --studio design rig (ADR 0010)")
+    s.add_argument("variant"); s.add_argument("--studio", action="store_true", help="pyvista clay/silhouette/reference rig")
+    s.add_argument("--ref", action="append", help="reference overlay (name=path.yaml), repeatable")
+    s.add_argument("--zebra", action="store_true"); s.set_defaults(f=cmd_render)
+    from .design.cli import register as register_design
+    register_design(sub)
     s = sub.add_parser("cad", help="spec-driven CAD (build123d): build | check")
     s.add_argument("action", choices=["build", "check"]); s.add_argument("variant")
     s.add_argument("--min-mm3", type=float, default=20.0, help="ignore overlaps smaller than this"); s.set_defaults(f=cmd_cad)
