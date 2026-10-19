@@ -16,6 +16,7 @@ and the [challenge-2 table](#challenge-2-how-each-row-was-handled).
 .venv/Scripts/python -m openhumanoid.concept evaluate <concept.yaml> --quick                                   # nominal gates + R10 at the required impulse, ~9 s (no gait sweep)
 .venv/Scripts/python -m openhumanoid.concept evaluate <concept.yaml> --samples 64 --table-height 0.30          # bigger Monte Carlo, ONE other table height (replaces 0.25 / 0.45)
 .venv/Scripts/python -m openhumanoid.concept sweep <concept.yaml> --heights 0.40 0.45 0.50 0.55 0.60 0.65     # height sweep: gait sweep + R10 + T-0004 AND CAD-foundation floors, ~3 min per height
+.venv/Scripts/python -m openhumanoid.concept.motions.pickup <concept.yaml> --scan 0.15 0.52 0.025 --servo   # whole-body pickup: reachable table range + demand per joint (writes pickup_range.{json,md})
 .venv/Scripts/python -m openhumanoid.concept calibrate-odm --odm-dir <scratch clone of Open_Duck_Playground>   # Open Duck Mini calibration (read-only, ~3 min)
 .venv/Scripts/python -m openhumanoid.concept compare variants/adam/generated/concept/*/report.json
 .venv/Scripts/python -m openhumanoid.concept validate-thermal                                                  # replay the Robonine runs
@@ -82,11 +83,81 @@ Defined once in `thresholds.yaml` under `motions` (absolute SI units; **not** tu
 | Squat | knee flexion 90 and 120 deg, 2.5 s down, 1 s hold |
 | Wave | right arm abducted, elbow +-22 deg at 1.25 Hz, 7 s |
 | Dance | 80 BPM, 6 phrases of 8 beats (36 s), one joint-speed limit of 3 rad/s for all joints; the QP smoother may deviate **at most 8 deg** from the choreography or the dance is invalid |
-| Pickup | 150 g, 40 mm cylinder, table at **0.25 m AND 0.45 m** (row 16; R5 "table height" is undefined: maintainer question Q1; `--table-height` replaces the list; the second is `pickup_0.45m`), right hand, 58 mm jaw opening, squat just deep enough that IK reaches (checked), raise-then-reach approach that clears the table edge, straight-line approach along the fingers, 3 s to close the jaw (servo speed), arm joint speed <= 3 rad/s |
+| Pickup | 150 g, 40 mm cylinder, table at **0.25 m AND 0.45 m** (row 16; R5 "table height" is undefined: maintainer question Q1; `--table-height` replaces the list; the second is `pickup_0.45m`), right hand, 58 mm jaw opening, **whole-body collision-checked planner** (knee, hip hinge, waist, step-in, then the arm; Cartesian approach over the table edge, straight along the fingers, 30-40 mm lift; see [Whole-body pickup planner](#whole-body-pickup-planner-t-20261019-a536)), 3 s to close the jaw (servo speed), arm joint speed <= 3 rad/s |
 | Sit-to-stand | quasi-static, 130 deg knee (proxy for get-up); **a SHOULD** (R10): failures are warnings, not blockers |
 | Stress walks | step length x1.5; step time x0.8; landing 10 ms early / late; one 30 mm lateral capture step |
 
 `getup` is a stub (listed as infeasible). A reference that violates a joint range is infeasible (so a squat to 130 deg needs the ankle-pitch range the candidates declare, about -75 deg).
+
+## Whole-body pickup planner (T-20261019-a536)
+
+Why: the R1 package (`variants/adam/reviews/R1-concept-2026-10-19.md` section 1, challenge-3 row 5) found the arm-only planner reporting "arm too short" for every candidate at a 0.45 m table, a 131x-stall
+spike at 0.40 m (the planned hand path went through the table top: with the table contact off the same pickup peaked at 0.22 of stall) and nothing reachable above 0.35 m at 0.55 m. The planner
+(`openhumanoid/concept/motions/pickup.py`) now does the following; every number it uses is an assumption of the scenario, listed in `PLAN` at the top of the file.
+
+1. **Whole-body posture search.** The grasp posture is knee flexion (5 deg up to the concept's own knee limit: 110 deg for R1, never beyond), hip hinge (pelvis pitch 0-40 deg), waist yaw (0-30 deg, towards the working side,
+   only if the template has the joint; `humanoid_v2` has yaw only) and the COM position in the foot polygon, plus the arm. Postures are ordered by a body-effort cost and the first one that passes every check wins, so the
+   hinge, waist and a deep knee are used only when the table height needs them (see the table below: 0.15 m uses knee 65 deg + hinge 40 deg; 0.25-0.38 m use the walking stance or less). The standing distance (a
+   step-in) is an output: `standing_gap_m` is the gap between the toe line and the table edge, required >= 0.
+2. **Arm: closed-form IK, finger tilt as a result.** For a finger tilt tau the planar two-link geometry fixes the reach from the grip height above the shoulder; the 3-D closed-form solve (shoulder pitch, roll, elbow) confirms
+   it to < 0.1 mm. With no wrist the finger direction is what the arm gives: tilt limits [-70, +45] deg, jaw axis within 25 deg of horizontal, the arm kept >= 4 mm short of straight (a straight arm is singular and cannot lift).
+3. **Collision-aware approach.** The hand goes rest -> an arc about the shoulder (a straight line would cut through the part of the arm's annulus it cannot reach) to a waiting point in front of the table edge (up to 5 cm above the approach line when
+   the arm can) -> a pre-grasp point 5 cm back -> a straight approach along the fingers -> a 30-40 mm lift on the circle about the shoulder (a straight arm lifts by swinging up, not by stretching). The path is sampled and solved
+   by IK sample by sample, so the planned path is the executed path. The finished reference is then re-measured against the table: **every robot geom** (arm links, hand, fingers, torso, pelvis, thighs, feet), every frame, after the
+   velocity smoothing, must stay >= 3 mm from the table top (`meta["table_min_clearance_m"]`), the COM must stay inside the foot polygon with >= 0.2 foot lengths of margin in every frame (`balance_margin_min_m`), and the
+   carried object must stay > 15 mm above the table through the stand-up.
+4. **What limits it is named** (`meta["limit"]`, and in the invalid-motion reason of a report): `arm reach` (no whole-body posture puts the grip point where the arm can hold it), `table collision` (the arm covers the height but the
+   forearm, hand or body meets the table edge in every posture tried), `balance` (the arm could reach with a posture whose COM leaves the foot-polygon margin: balance, not reach, limits it), `leg joint range` (reachable only with knee / hip /
+   ankle / waist outside their ranges) and `path/IK`.
+
+**Scenario** (assumptions, not measurements): the table is a slab 0.30 m deep, 0.40 m wide, 20 mm thick, its legs outside the model; the 40 mm x 50 mm, 150 g cylinder stands with its centre **50 mm behind the front edge** (`edge_to_object_m`; the
+dominant assumption, see the sensitivity table); the arm links are capsules (re-check in CAD with real servo housings); the gripper opens 58 mm and closes in 3 s. Table height is a parameter everywhere: `pickup(kin, table_height_m=...)`,
+`evaluate --table-height`, and the scan below.
+
+```bash
+.venv/Scripts/python -m openhumanoid.concept.motions.pickup <concept.yaml> [...] [--tables 0.30 0.35 0.40 0.45] [--scan 0.15 0.52 0.025] [--servo] [--edge-to-object 0.035 --suffix _edge035]
+```
+
+writes `variants/<base>/generated/concept/<candidate>/pickup_range{,_suffix}.{json,md}`: the reachable table-height range (a scan, then each boundary bisected to 5 mm; every height is a full collision-checked reference), the
+posture, finger tilt, clearance and balance margin at every height, and the grasp-and-lift demand per joint through the engine's own ideal playback and `joint_metrics` (strict = the datasheet gate, peak <= 0.70 of stall;
+calibrated = the same peak against 1.52x the stall, the ADR 0014 factor measured on the 7.4 V part and assumed for the 12 V parts); `--servo` adds the servo-in-the-loop grasp test.
+
+**Result for the R1 concepts** (right hand, object 50 mm behind the edge, scan floor 0.15 m; tool outputs: `variants/adam/generated/concept/R1-P1*/pickup_range.md`):
+
+| concept | reachable table tops | not reachable: why |
+|---|---|---|
+| R1-P1r 0.55 m (default height) | 0.150-0.159 m and **0.206-0.384 m** | 0.163-0.203 m: the table edge meets the thighs/knees or lies behind the toes (the reasons tallied by the planner); **0.388 m up to 0.50 m: table collision** (the arm still has grasp solutions, the forearm meets the edge); 0.525 m and up: arm reach |
+| R1-P1 0.60 m | 0.150-0.163 m and **0.191-0.422 m** | 0.166-0.188 m: thighs/knees (same reasons); **0.425 m up to 0.55 m: table collision**; 0.575 m and up: arm reach |
+
+Grasp-and-lift demand, ideal playback, 100 ms peak as a fraction of stall (STS3215 12 V, 2.72 N.m stall on the arm and waist; strict gate 0.70):
+
+| concept, table | shoulder pitch strict / cal | elbow strict / cal | waist yaw strict / cal | gripper strict / cal | tether | servo grasp |
+|---|---|---|---|---|---|---|
+| P1r, 0.35 m | 0.334 / 0.220 | 0.398 / 0.262 | 0.124 / 0.082 | 0.281 / 0.185 | 0.02 % BW | lifts 29 mm |
+| P1r, 0.384 m (its maximum) | 0.344 / 0.227 | 0.396 / 0.261 | 0.137 / 0.090 | 0.281 / 0.185 | 0.02 % BW | lifts 26 mm |
+| P1, 0.40 m | 0.399 / 0.263 | 0.388 / 0.255 | 0.151 / 0.099 | 0.281 / 0.185 | 0.02 % BW | lifts 32 mm |
+| P1, 0.422 m (its maximum) | 0.401 / 0.264 | 0.386 / 0.254 | 0.150 / 0.099 | 0.281 / 0.185 | 0.02 % BW | lifts 27 mm |
+
+Every arm and waist joint has a strict margin >= 1.7 (0.70 / 0.40) and a calibrated margin >= 2.6 at the heights run; the elbow and shoulder pitch are the worst, the waist yaw the lightest. **The 131x-stall spike is gone**:
+the hand path is collision-free by an independent distance check over all frames (a test), and no joint exceeds 0.41 of stall at the heights run (0.30-0.42 m). The 0.45 m result of the old planner at 0.60 m (0.77 of stall) was the same defect: the hand was inside the table.
+
+**Is R5 at a 0.40-0.45 m table established? No.** Reach is limited by the arm geometry, not by balance or the legs (the COM margin is >= 25 mm = a quarter of the foot length at every reachable height and 50 mm above 0.25 m; the knee needs 40 deg or less above 0.25 m, 65-105 deg only at the low tables): a 0.55-0.60 m
+robot has its shoulder at 0.42-0.46 m, so a 0.40-0.45 m table top is at shoulder height, where the hand sits at the end of a nearly straight 0.20 m arm with the forearm sloping up into the object, and the forearm meets the table edge. Sensitivity to where the
+object stands (reach range, tool outputs `pickup_range_edge*.md`):
+
+| object centre behind the front edge | R1-P1r 0.55 m | R1-P1 0.60 m |
+|---|---|---|
+| 70 mm | 0.272-0.306 m (scan from 0.25) | 0.25-0.263 and 0.288-0.328 m |
+| **50 mm (default)** | **<= 0.384 m** | **<= 0.422 m** |
+| 35 mm (rim 15 mm from the edge) | <= 0.431 m | <= 0.469 m |
+| 20 mm (rim at the edge) | 0.38-0.47 m (scan 0.38-0.52) | 0.40-0.51 m (scan 0.40-0.54) |
+
+So: at 0.55 m the 0.40 m table needs the object within about 35 mm of the edge and 0.45 m needs it at the very edge; at 0.60 m 0.40-0.42 m works with the default placement and 0.45 m needs the object within about 35 mm of the edge.
+Levers the planner did not use or cannot model: a wrist (finger tilt would be free), standing on tiptoe (a few cm of shoulder height, a smaller support polygon), the left hand, sliding the object towards the robot, longer arms
+(the untested alternative at 0.55 m: `proportions: {upper_arm, forearm}`), and the step-in itself (only its end point is planned). The waist yaw and the hip hinge are in the search but the cheapest feasible posture never needed them above 0.2 m (the hinge is used at 0.15 m); forcing them still gives collision-free, valid plans (`plan={"waist_deg": (30.0,), "hinge_deg": (0.0,)}` at 0.35 m: waist 30 deg, elbow 0.398 of stall; hinge 20 deg: hip pitch 0.495 of stall), so the waist demand in the table is the holding reaction torque, not a twist. The scan treats heights below 0.15 m as out of scope.
+
+Tests: `tests/test_concept.py` `test_pickup_*` (closed-form IK vs MuJoCo forward kinematics; the finished path re-measured against the table in every frame at 0.15 / 0.30 / 0.35 m; table height as a parameter and the posture changing with it;
+knee range honoured; out-of-reach reported with its limit; balance named when it binds; the reach-range output; the left hand; and, marked slow, the ideal-playback demand and servo grasp).
 
 ## Push recovery (R10: balance recovery / fall prevention is a MUST), redefined after challenge #2
 
@@ -194,7 +265,7 @@ Every constant used in a report is listed in its `provenance` table with a class
 4. Printed structure + shell mass is a pre-CAD guess; the model has no shells, brackets or fasteners beyond the catalog kit masses. Nothing is checked for packaging fit.
 5. The thermal model fails the Robonine replay (under-predicts the oscillation run by ~19 K); RMS vs rated continuous is the only thermal gate. The vendor "rated torque" is not a measured limit.
 6. Overload Protection_Time is unit-unconfirmed; standby current, camera power, wire resistance and the usage mix are assumptions.
-7. Table height (R5, now 0.25 and 0.45 m), get-up (maintainer Q3) and the min walk speed are placeholders / stubs; the quasi-static sit-to-stand at 130 deg only proxies get-up. The 0.45 m pickup is unsolved by the planner at most heights.
+7. Table height (R5, now 0.25 and 0.45 m), get-up (maintainer Q3) and the min walk speed are placeholders / stubs; the quasi-static sit-to-stand at 130 deg only proxies get-up. The 0.45 m pickup is out of reach of the 0.55-0.60 m R1 concepts (planner revised: see the pickup section, which reports the reachable table range).
 8. No-wrist 3-DOF arm: the pickup reports the jaw-axis angle; the gripper holds with a reduced torque limit (15%), a firmware setting the HAL must reproduce.
 9. The tether is a very soft pelvis pull (6% cap, mean must be < 1%); a gait that cannot stand without it is invalid, but passing says nothing about push recovery.
 10. R10 is provisional (0.45 N.s) and modelled with LIPM plans (see Push recovery); the walking pushes use one phase of one gait; the answer moves with the maintainer's number.
@@ -304,7 +375,7 @@ Nominal gates only, so each answer is a ceiling. **No architecture is feasible a
 | C 3S / 12 V + STS3250 knees | **0.50-0.55 m** | 0.50: hip-roll peak x1.05, RMS x1.01 (R10 min 0.48 ok); 0.55: hip-roll peak x1.25 (R10 0.60 ok) | the hip roll is still an STS3215: upgrading only the knees does not move the ceiling past ~0.55 m |
 
 Across all three the **hip-roll servo (STS3215)** is the binding joint above 0.5 m, then the walking-push cases below it. The 0.45 m-table pickup (R5 provisional) is invalid at most heights (A: all but 0.60 m; B and C: up to 0.60 m): the planner finds no squat that reaches it (a 0.45 m table is
-shoulder height on a 0.5-0.6 m robot; this may be the planner, not the physics) and it is reported separately as "binding without the 0.45 m-table pickup"; the 0.25 m pickup falls over at 0.40 m (all three) and at 0.65 m (A, C). `squat_120` and the 130 deg sit-to-stand are run at the CAD knee limit (114.8 deg) and flagged `rom_clamped_from_deg`
+shoulder height on a 0.5-0.6 m robot; re-checked with the whole-body, collision-checked planner of T-20261019-a536: it is the physics, see the pickup section) and it is reported separately as "binding without the 0.45 m-table pickup"; the 0.25 m pickup falls over at 0.40 m (all three) and at 0.65 m (A, C). `squat_120` and the 130 deg sit-to-stand are run at the CAD knee limit (114.8 deg) and flagged `rom_clamped_from_deg`
 (at the unclamped 120 deg they would be infeasible at every height: the 115 deg CAD knee costs a MUST motion, challenge-2 row 17).
 INDICATIVE only, never applied: if the joint gates were looser by the factors the frozen gait needs on ODM's own mechanism (peak x1.52, RMS x2.5, envelope x1.18; `sweep.relaxed_feasibility`) the feasible heights would be **A 0.55-0.60 m, C 0.50-0.60 m, B 0.45 m**.
 
@@ -323,6 +394,6 @@ INDICATIVE only, never applied: if the joint gates were looser by the factors th
 | 12-13 stance flexion, step time | gait sweep, same set for every candidate, best feasible per candidate |
 | 14 budget | the sourcing task (T-0002); catalog prices now verified, costs reported |
 | 15 fuse vs R10 | bus and fuse sized from the R10 transient and the all-leg stall |
-| 16 pickup height | both 0.25 m and 0.45 m run |
+| 16 pickup height | both 0.25 m and 0.45 m run; table height is a parameter of the whole-body planner and the reachable range is reported per concept (T-20261019-a536) |
 | 17 knee ROM trade | CAD-limited ranges in the sweep; squat 120 / sit-to-stand 130 run at the limit and flagged |
 | 18 stale text | docstrings, LIMITATIONS, this document; the research verification row is the commander's |

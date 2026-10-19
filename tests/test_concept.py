@@ -712,3 +712,25 @@ def test_pickup_replay_has_no_table_spike_and_the_servo_grasp_lifts(kin_r1):
     assert d["worst_peak_frac"] < config.gate("peak_torque_fraction_of_stall") and d["tether_pct_bw"] < 1.0
     assert {"shoulder_pitch_r", "elbow_r", "waist_yaw"} <= set(d["arm_waist_gripper"])
     assert d["servo"]["grasp_ok"] and d["servo"]["overload_trips"] == 0 and not d["servo"]["fell"]
+
+
+def test_pickup_works_with_the_left_hand_too(kin_r1):
+    from openhumanoid.concept.motions import pickup as P
+    ref = P.pickup(kin_r1, table_height_m=0.30, side="l")
+    assert ref.feasible and ref.meta["reachable"], ref.notes
+    assert _table_distances(kin_r1.robot, ref).min() > 0.0
+    assert ref.q[:, kin_r1.index["gripper_l"]].max() > 0.05 and ref.q[:, kin_r1.index["gripper_r"]].max() < 0.01     # only the working hand opens
+
+
+def test_pickup_uses_the_waist_and_the_hip_hinge_when_asked(kin_r1):
+    """Both torso levers are in the planner and produce collision-free, in-range references (the cheapest posture does not need them at 0.35 m)."""
+    from openhumanoid.concept.motions import pickup as P
+    from openhumanoid.concept.motions.common import check_ranges
+    twist = P.pickup(kin_r1, table_height_m=0.35, plan={"waist_deg": (30.0,), "hinge_deg": (0.0,)})
+    assert twist.feasible and twist.meta["waist_yaw_deg"] == pytest.approx(30.0)
+    assert np.degrees(twist.q[:, kin_r1.index["waist_yaw"]]).max() == pytest.approx(30.0, abs=0.5)
+    hinge = P.pickup(kin_r1, table_height_m=0.35, plan={"waist_deg": (0.0,), "hinge_deg": (20.0,)})
+    assert hinge.feasible and hinge.meta["hip_hinge_deg"] == pytest.approx(20.0)
+    for ref in (twist, hinge):
+        assert _table_distances(kin_r1.robot, ref).min() > 0.0 and not check_ranges(kin_r1, ref.q)
+        assert ref.meta["balance_margin_min_m"] >= P.PLAN["balance_margin_foot_lengths"] * kin_r1.lg.foot_len - 1e-4

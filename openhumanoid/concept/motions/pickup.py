@@ -215,7 +215,7 @@ class _Ctx:
 # ------------------------------------------------------------------------------------------------ body posture
 def _pose(ctx: _Ctx, K: float, hinge: float, waist: float, cfrac: float) -> dict:
     """Static double-support posture (arm at rest): pelvis pose, joints, leg/waist range flags, COM margin to the foot polygon."""
-    key = (round(K, 5), round(hinge, 5), round(waist, 5), round(cfrac, 4))
+    key = (ctx.side, round(K, 5), round(hinge, 5), round(waist, 5), round(cfrac, 4))
     cache = ctx.kin.__dict__.setdefault("_pickup_pose_cache", {})
     if key in cache:
         return cache[key]
@@ -798,7 +798,7 @@ def _limit_note(limit: str, z_t: float, ctx: _Ctx, info: dict) -> str:
     base = {"arm reach": "arm too short for this table height with the whole-body options tried (knee, hip hinge, waist, step-in)",
             "balance": "the arm could reach with a posture whose COM leaves the foot polygon margin: balance, not reach, limits it",
             "leg joint range": "the arm could reach only with leg/waist joints outside their ranges (knee CAD limit, hip pitch, ankle pitch): joint range, not arm reach, limits it",
-            "table collision": "every reachable posture put the hand or body into the table",
+            "table collision": "the arm covers this height but in every whole-body posture tried the forearm, hand or body would meet the table edge (object %.0f mm behind the front edge)" % (1000 * ctx.plan["edge_to_object_m"]),
             "path/IK": "the collision-free approach path is not reachable by IK"}.get(limit, limit)
     return f"pickup at {z_t:.2f} m: {base}" + (f" ({info.get('reason')})" if info.get("reason") else "")
 

@@ -1,0 +1,162 @@
+{
+ "candidate": "R1-P1-0p60-3s-sts3250-knee-hiproll",
+ "robot_height_m": 0.6,
+ "generated_by": "python -m openhumanoid.concept.motions.pickup",
+ "peak_factor": 1.52,
+ "reach": {
+  "side": "r",
+  "robot_height_m": 0.6,
+  "scan_m": [
+   0.4,
+   0.54,
+   0.02
+  ],
+  "resolution_m": 0.005,
+  "segments": [
+   {
+    "from_m": 0.4,
+    "to_m": 0.51
+   }
+  ],
+  "min_reachable_m": 0.4,
+  "max_reachable_m": 0.51,
+  "limits_outside": {
+   "0.4-0.51": {
+    "just_below": null,
+    "just_above": "table collision",
+    "just_above_m": 0.515,
+    "just_below_m": null
+   }
+  },
+  "object": {
+   "mass_kg": 0.15,
+   "radius_m": 0.02,
+   "half_height_m": 0.025,
+   "friction": 1.0
+  },
+  "edge_to_object_m": 0.02,
+  "tilt_limits_deg": [
+   -70.0,
+   45.0
+  ],
+  "rows": [
+   {
+    "table_m": 0.4,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 40.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 30.2,
+    "arm_reach_fraction": 0.803,
+    "table_clearance_mm": 5.1,
+    "standing_gap_mm": 87.8,
+    "balance_margin_mm": 55.2,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.42,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 40.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 8.2,
+    "arm_reach_fraction": 0.975,
+    "table_clearance_mm": 6.4,
+    "standing_gap_mm": 123.8,
+    "balance_margin_mm": 55.2,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.44,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 40.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 13.6,
+    "arm_reach_fraction": 0.978,
+    "table_clearance_mm": 3.6,
+    "standing_gap_mm": 124.2,
+    "balance_margin_mm": 55.2,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.46,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 40.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 20.8,
+    "arm_reach_fraction": 0.968,
+    "table_clearance_mm": 5.3,
+    "standing_gap_mm": 121.9,
+    "balance_margin_mm": 55.2,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.48,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 40.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 27.9,
+    "arm_reach_fraction": 0.943,
+    "table_clearance_mm": 6.0,
+    "standing_gap_mm": 116.6,
+    "balance_margin_mm": 55.2,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.5,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 25.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 30.9,
+    "arm_reach_fraction": 0.928,
+    "table_clearance_mm": 4.0,
+    "standing_gap_mm": 116.0,
+    "balance_margin_mm": 55.2,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.51,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 5.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": 32.2,
+    "arm_reach_fraction": 0.921,
+    "table_clearance_mm": 3.2,
+    "standing_gap_mm": 118.0,
+    "balance_margin_mm": 55.2,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.515,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x3206); table clearance x mm (forearm_r) at the grasp (x236); legs/waist out of range once the arm is out (x89)"
+   },
+   {
+    "table_m": 0.52,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x2651); table clearance x mm (forearm_r) at the grasp (x143); legs/waist out of range once the arm is out (x74)"
+   },
+   {
+    "table_m": 0.54,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x817); legs/waist out of range once the arm is out (x27)"
+   }
+  ]
+ },
+ "seconds": 21.9
+}
