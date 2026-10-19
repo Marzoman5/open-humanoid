@@ -3,7 +3,7 @@
   "criteria": {
    "T1a": {
     "name": "Front silhouette IoU vs target",
-    "value": 0.9355,
+    "value": 0.9356,
     "band": [
      0.95,
      null
@@ -12,7 +12,7 @@
    },
    "T1b": {
     "name": "Side silhouette IoU vs target",
-    "value": 0.943,
+    "value": 0.9432,
     "band": [
      0.95,
      null
@@ -48,7 +48,7 @@
    },
    "P9b": {
     "name": "Calf widest point, fraction from the top",
-    "value": 0.272,
+    "value": 0.268,
     "band": [
      null,
      0.33
@@ -66,7 +66,7 @@
    },
    "S4a": {
     "name": "Share of surface in flat patches",
-    "value": 0.2167,
+    "value": 0.2179,
     "band": [
      null,
      0.3
