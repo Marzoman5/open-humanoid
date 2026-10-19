@@ -1,0 +1,46 @@
+{
+ "method": "M2_sdf",
+ "spec": "L1.00_W1.00",
+ "seconds": 9.72,
+ "parts": [
+  "shank_front",
+  "shank_rear",
+  "thigh_front",
+  "thigh_rear"
+ ],
+ "step": null,
+ "notes": {
+  "calibration_max_error_mm_per_pass": [
+   {
+    "thigh": [
+     5.248,
+     3.248,
+     2.398,
+     1.998,
+     1.798,
+     1.698,
+     1.648,
+     1.598,
+     1.598,
+     1.548
+    ]
+   },
+   {
+    "shank": [
+     6.552,
+     4.852,
+     3.952,
+     3.402,
+     3.052,
+     2.802,
+     2.652,
+     2.502,
+     2.452,
+     2.402
+    ]
+   }
+  ],
+  "keepout_cut_volume_mm3": 10.5,
+  "voxel_mm": 0.5
+ }
+}

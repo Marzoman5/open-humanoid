@@ -1,0 +1,89 @@
+{
+  "step": "bakeoff-d3_vs_d1",
+  "round": 1,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Thigh is an almost parallel-sided slab-like bar with small corner radii; nothing reads as designed product surface. P8a 0.708 and P8b 0.712 fail.",
+        "Thigh is a rounded-rectangle slab with near-parallel sides and a blunt distal cap; nothing marks the knee; a placeholder block. P8a 0.708 and P8b 0.712 fail."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Thigh-to-shank is a thin slit in the side view; the back view shows a flat D-shaped planar cut face; 65 and 130 degree views show a raw diagonal chop. Flow inside each segment is good (S3a 0).",
+        "Thigh ends in a rounded cap and the shank begins with a flat diagonal slice: a half-disc face with a hard line in the back view, a knife edge in the side view. The front outline is a continuous curve (S3a 0)."
+      ]
+    },
+    "G3": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "No colour; only a hairline gap at the knee.",
+        "No colour; no secondary feature that a dark/light split could attach to apart from the parting line and the knee gap."
+      ]
+    },
+    "G4": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "PASS"
+      ],
+      "evidence": [
+        "Similar end radii and squareness; the sharp planar cut at the shank top breaks the radius family.",
+        "Same squarish section and corner-radius family, matching end caps and rounded edges; the exception is the sharp shank-top cut, covered under G2."
+      ]
+    },
+    "G6": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "No references. Rounded-rectangle section and knee bulge loosely similar; no clear taper, calf swell or knee mass.",
+        "No references. Optimus / Atlas show a knee actuator mass, clear taper and panel breaks; here near-constant-width slabs, so a weak match."
+      ]
+    },
+    "G5": {
+      "verdict": "PASS",
+      "reason": "candidate preferred in both presentation orders"
+    }
+  },
+  "reads_as": "unfinished",
+  "numeric_hard_failures": [
+    "S4a"
+  ],
+  "top_changes": [
+    {
+      "criterion": "G1",
+      "change": "Real thigh taper: narrow the distal section in width and depth (P8a).",
+      "profile_param": "segments[thigh].stations[distal].w/.d"
+    },
+    {
+      "criterion": "G1",
+      "change": "Crown flat faces (lower n at mid-thigh and calf) and deepen the calf-to-ankle taper (S4a, P8b).",
+      "profile_param": "segments[thigh].stations[mid].n; segments[shank].stations[calf].n, [ankle].w/.d"
+    },
+    {
+      "criterion": "G2",
+      "change": "Remove the raw planar cut at the shank top; soften the proximal edge, widen the knee gap slightly.",
+      "profile_param": "segments[shank].stations[top].n/.z"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}

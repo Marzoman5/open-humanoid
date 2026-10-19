@@ -1,0 +1,18 @@
+{
+  "order": "single",
+  "reads_as": "unfinished",
+  "reads_as_reason": "Near-untapered pill-shaped columns with a flat diagonal chop at the knee and rippled, noisy zebra reflections read as a rough loft prototype, not a finished product shell.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Front view shows thigh and shank as uniform rounded-rectangle bars with only a faint knee bulge. P8a 0.788 and P8b 0.807 (both failed) agree. No calf or thigh muscle-line taper, so it reads as a pill or bone, not an adult limb."},
+    "G2": {"verdict": "FAIL", "evidence": "Thigh-to-shank transition is a flat diagonal planar cut (side and back views), not a designed recess or flowing joint. The zebra views are broken and rippled with pinches at the knee and ankle, so the form does not flow."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Colour is not rendered. The geometry has no distinct recessed band or step at the knee where a dark joint would sit, only a gap and a chamfer."},
+    "G4": {"verdict": "UNCERTAIN", "evidence": "Thigh and shank ends share similar rounded-rectangle sections and corner radii. The sharp planar wedge on the shank top and the uneven bulges break that family of soft radii. Not enough to call it either way."},
+    "G6": {"verdict": "FAIL", "evidence": "No references supplied; judged from general knowledge of Optimus and electric Atlas legs. Those have a clear taper and a defined knee housing. Here the column has near-constant width and an undefined knee. Only the soft rounded-rectangle sections loosely match."}
+  },
+  "top_changes": [
+    {"criterion": "G1", "change": "Make the thigh and shank taper clearly: cut the distal thigh and ankle sections, mostly in depth, so area ratios move toward 0.65 and 0.6; keep the widest point near the top.", "profile_param": "segments[thigh].stations[distal].w / d and segments[shank].stations[ankle].w / d"},
+    {"criterion": "G2", "change": "Replace the flat diagonal chop at the shank top with a rounded knee cap or a clear recess; stagger the thigh distal and shank proximal stations so the gap reads as a deliberate joint groove.", "profile_param": "segments[shank].stations[top].z / n and segments[thigh].stations[distal].z"},
+    {"criterion": "G2", "change": "Remove ripples and pinches that break the zebra bands: fewer stations, monotone w and d, same n across neighbours; keep the grey inside the red target outline.", "profile_param": "segments[thigh].stations[*].n and segments[shank].stations[*].n"}
+  ],
+  "notes": "No baseline and no reference images, so no pairwise verdict. Dark joint colour not rendered. The silhouette panel's title text overlaps the shapes. (The critic read the W1 value 0 in the metrics as 'wall 0': it is a FAIL flag, not a thickness.)"
+}

@@ -1,0 +1,21 @@
+{
+  "order": "cand_first",
+  "candidate": "design-3",
+  "baseline": "design-2",
+  "reads_as": "unfinished",
+  "reads_as_reason": "Silhouette and proportions are adult and clean, but the thigh is a plain rounded slab and the knee has no deliberate joint form, with a hard planar cut on the shank top: a clean placeholder.",
+  "criteria": {
+    "G1": {"verdict": "UNCERTAIN", "evidence": "Adult proportions, calf high, shank tapers; thigh is a near-constant-width slab edging toward a box/pill. Failed P8a/P8b agree. One segment is too little for a whole-robot gestalt."},
+    "G2": {"verdict": "FAIL", "evidence": "Bodies flow smoothly (S3a = 0) but the knee does not: flat slanted cut (side view), flat elliptical cap with a hard seam in the back view, hairline gap, no deliberate recess or shoulder."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Clay only; no obvious recess volume to colour dark."},
+    "G4": {"verdict": "PASS", "evidence": "Same rounded-rectangle section squareness and end radii; the one outlier is the hard planar cut at the shank top."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No references. Soft section matches the family; near-parallel thigh and featureless knee do not."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Design-3 has a calm continuous surface and matches the target outline (T1 0.9887 / 0.9862). Design-2 is wavy and lumpy with chaotic zebra and reads as melted. Same knee cut in both; design-3 is cleaner everywhere else."},
+  "top_changes": [
+    {"criterion": "G2", "change": "Replace the hard planar cut at the shank top with a rounded shoulder and open a clear recess band between thigh end and shank top.", "profile_param": "segments[shank].stations[top].n/.z/.d; segments[thigh].stations[distal].z"},
+    {"criterion": "G1", "change": "Taper the thigh more strongly from hip to knee (P8a).", "profile_param": "segments[thigh].stations[distal].w/.d"},
+    {"criterion": "G1", "change": "Slimmer ankle (P8b) and crown flat faces by lowering squareness (S4a).", "profile_param": "segments[shank].stations[ankle].w/.d; stations[mid].n"}
+  ],
+  "notes": "One leg segment only; recess colour not rendered. No metric contradicts the images."
+}

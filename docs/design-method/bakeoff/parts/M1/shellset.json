@@ -1,0 +1,26 @@
+{
+ "method": "M1_build123d",
+ "spec": "L1.00_W1.00",
+ "seconds": 18.63,
+ "parts": [
+  "shank_front",
+  "shank_rear",
+  "thigh_front",
+  "thigh_rear"
+ ],
+ "step": "C:\\Users\\aemar\\Documents\\Easy Humanoid\\.claude\\worktrees\\agent-aa33ca0b1aaa78ae2\\docs\\design-method\\bakeoff\\parts\\M1\\shells.step",
+ "notes": {
+  "brep_valid": {
+   "shank_front": true,
+   "shank_rear": true,
+   "thigh_front": true,
+   "thigh_rear": true
+  },
+  "brep_volume_mm3": {
+   "shank_front": 17426.0,
+   "shank_rear": 14420.2,
+   "thigh_front": 22610.2,
+   "thigh_rear": 22287.5
+  }
+ }
+}

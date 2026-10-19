@@ -1,0 +1,18 @@
+{
+ "method": "M3_bpy",
+ "spec": "L1.00_W1.00",
+ "seconds": 3.77,
+ "parts": [
+  "shank_front",
+  "shank_rear",
+  "thigh_front",
+  "thigh_rear"
+ ],
+ "step": null,
+ "notes": {
+  "calibration_max_error_mm_per_pass": [
+   3.504,
+   0.817
+  ]
+ }
+}

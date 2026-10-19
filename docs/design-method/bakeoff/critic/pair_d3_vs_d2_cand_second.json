@@ -1,0 +1,21 @@
+{
+  "order": "cand_second",
+  "candidate": "design-3",
+  "baseline": "design-2",
+  "reads_as": "unfinished",
+  "reads_as_reason": "A clean, smooth, quiet shell, but still a near-straight rounded-rectangle column with large flat faces and a sawn-off knee cut: a good blank, not a finished product.",
+  "criteria": {
+    "G1": {"verdict": "UNCERTAIN", "evidence": "No toy cues, but the thigh is a slab with near-parallel sides and squared-off top; zebra 3/4 shows big flat bands (S4a FAIL 0.4341)."},
+    "G2": {"verdict": "UNCERTAIN", "evidence": "Each segment is one continuous form, silhouettes follow the target with no ledges (S3a 0). The knee is weak: hard planar diagonal cut, flat elliptical cap in the back view, plain rounded thigh end."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Clay only; recess not rendered. The seam line and the knee gap are the only separation cues."},
+    "G4": {"verdict": "PASS", "evidence": "Similar rounded-rectangle sections and corner radii; same smooth contour flow in the front view."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No references. Matches Optimus / Atlas on smooth simple shells, wider thigh and a knee-cap bulge; not on taper (P8a 0.708, P8b 0.712 fail) or sculpted knee and ankle transitions."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Baseline (design-2) has a wavy, lumpy outline (pinched mid-thigh, bulge above the knee, swollen shank), visible contour rings and chaotic zebra; hand-sculpted and unfinished. The candidate has smooth monotonic forms, calm zebra bands and no ledges. Its remaining weakness is blockiness, not lumpiness."},
+  "top_changes": [
+    {"criterion": "G1", "change": "More thigh taper so sides stop looking parallel (P8a).", "profile_param": "segments[thigh].stations[distal].w/d"},
+    {"criterion": "G1", "change": "Stronger calf-to-ankle taper (P8b).", "profile_param": "segments[shank].stations[ankle].w/d"},
+    {"criterion": "G2", "change": "Lower n toward 3-3.5 at mid stations to cut flat share; round the shank top edge so the cut is a recess lip.", "profile_param": "segments[thigh].stations[mid].n; segments[shank].stations[top].n/.z"}
+  ],
+  "notes": "Viewed baseline first (Image A) and candidate second (Image B). Colour not rendered; no references."
+}

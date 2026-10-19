@@ -1,0 +1,89 @@
+{
+  "step": "bakeoff-d3_vs_d2",
+  "round": 1,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "Adult proportions, calf high, shank tapers; thigh is a near-constant-width slab edging toward a box/pill. Failed P8a/P8b agree. One segment is too little for a whole-robot gestalt.",
+        "No toy cues, but the thigh is a slab with near-parallel sides and squared-off top; zebra 3/4 shows big flat bands (S4a FAIL 0.4341)."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "Bodies flow smoothly (S3a = 0) but the knee does not: flat slanted cut (side view), flat elliptical cap with a hard seam in the back view, hairline gap, no deliberate recess or shoulder.",
+        "Each segment is one continuous form, silhouettes follow the target with no ledges (S3a 0). The knee is weak: hard planar diagonal cut, flat elliptical cap in the back view, plain rounded thigh end."
+      ]
+    },
+    "G3": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "Clay only; no obvious recess volume to colour dark.",
+        "Clay only; recess not rendered. The seam line and the knee gap are the only separation cues."
+      ]
+    },
+    "G4": {
+      "verdict": "PASS",
+      "per_report": [
+        "PASS",
+        "PASS"
+      ],
+      "evidence": [
+        "Same rounded-rectangle section squareness and end radii; the one outlier is the hard planar cut at the shank top.",
+        "Similar rounded-rectangle sections and corner radii; same smooth contour flow in the front view."
+      ]
+    },
+    "G6": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "No references. Soft section matches the family; near-parallel thigh and featureless knee do not.",
+        "No references. Matches Optimus / Atlas on smooth simple shells, wider thigh and a knee-cap bulge; not on taper (P8a 0.708, P8b 0.712 fail) or sculpted knee and ankle transitions."
+      ]
+    },
+    "G5": {
+      "verdict": "PASS",
+      "reason": "candidate preferred in both presentation orders"
+    }
+  },
+  "reads_as": "unfinished",
+  "numeric_hard_failures": [
+    "S4a"
+  ],
+  "top_changes": [
+    {
+      "criterion": "G2",
+      "change": "Replace the hard planar cut at the shank top with a rounded shoulder and open a clear recess band between thigh end and shank top.",
+      "profile_param": "segments[shank].stations[top].n/.z/.d; segments[thigh].stations[distal].z"
+    },
+    {
+      "criterion": "G1",
+      "change": "Taper the thigh more strongly from hip to knee (P8a).",
+      "profile_param": "segments[thigh].stations[distal].w/.d"
+    },
+    {
+      "criterion": "G1",
+      "change": "Slimmer ankle (P8b) and crown flat faces by lowering squareness (S4a).",
+      "profile_param": "segments[shank].stations[ankle].w/.d; stations[mid].n"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}

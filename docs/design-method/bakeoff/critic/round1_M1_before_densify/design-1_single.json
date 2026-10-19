@@ -1,0 +1,18 @@
+{
+  "order": "single",
+  "reads_as": "unfinished",
+  "reads_as_reason": "A parallel-sided pill thigh, a lumpy wavy shank and a raw planar cut at the knee make it read as a soft clay prototype, not a sleek shelled limb.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Thigh is a near-constant-width rounded slab with one big uniform radius (front and side views), toy-like and pill-like. P8a taper 0.711 fails its <= 0.65 band, consistent with this. The shank has no clear taper character."},
+    "G2": {"verdict": "FAIL", "evidence": "The shank contour wobbles (calf bulge, pinched waist, ankle flare) instead of flowing. The knee is a bare bevel cut with a flat elliptical cap visible in the back view, not a deliberate recess. Zebra 3/4 and side views fragment into noisy patches, so curvature is not continuous. Thigh and shank do not flow into each other."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "The clay sheet has no colour or recess rendering. Geometry suggests no clear dark-recess zone: the knee gap is a small waist plus a bevel, not a defined groove. Cannot judge two-tone discipline."},
+    "G4": {"verdict": "FAIL", "evidence": "Thigh is straight and boxy with large, uniform corner radii. Shank is wavy, with varying section roundness and a different edge treatment. They look like two different design languages. Thigh bottom is a smooth rounded end, while shank top is a sharp planar bevel."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No reference images were supplied. From general knowledge of Optimus and electric Atlas legs, those have a tapered thigh, a distinct knee cap or housing, and a crisp shank shell with panel breaks. This piece shares the broad column proportions (T1 passes) but lacks the taper, knee housing and panel logic."}
+  },
+  "top_changes": [
+    {"criterion": "G2", "change": "Replace the single planar bevel at the shank top with a defined knee interface, matching rounded shoulders with a narrow waisted neck (the dark recess).", "profile_param": "segments[shank].stations[top].z / w / d and segments[thigh].stations[distal].w / d"},
+    {"criterion": "G1", "change": "Taper the thigh (widest about 20% from the top, area ratio under 0.65) and the shank (monotonic calf-to-ankle taper, no pinched waist, under 0.60).", "profile_param": "segments[thigh].stations[distal].w and .d; segments[shank].stations[mid/ankle].w and .d"},
+    {"criterion": "G4", "change": "Unify section squareness and corner radius family across thigh and shank; reduce station-to-station wobble so zebra stripes run continuously.", "profile_param": "segments[thigh].stations[*].n and segments[shank].stations[*].n"}
+  ],
+  "notes": "The sheet has no whole-robot context, no reference images, and the dark recess colour is not rendered, so G3 and G6 are limited. The contour rings and zebra noise may partly come from mesh tessellation or low station count and not from the intended design. The sheet's own labels overlap the silhouette panels, so those panels are slightly hard to read."
+}

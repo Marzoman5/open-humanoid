@@ -1,0 +1,87 @@
+{
+  "step": "bakeoff-d2_vs_d1",
+  "round": 1,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "UNCERTAIN",
+        "FAIL"
+      ],
+      "evidence": [
+        "No chibi proportion or box block; flat rounded-rectangle sections suit an adult product. The wavy outline (thigh narrows mid-length then swells above the knee; shank bulges at the calf then pinches above the ankle) looks organic and cartoon-like.",
+        "Near-constant-section sausage volumes; thigh pinches mid-length and re-flares above the knee; wobbly 3/4 outline and a lower-thigh dimple; P8a 0.788 and P8b 0.807 fail."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Front and 3/4 views: hourglass pinch about 40% down the thigh, knee end swells back out; shank repeats with a calf lump and ankle waist. 4 to 5 alternating bumps, not a flowing taper. The knee is a hairline gap with no deliberate recess; the shank's diagonal cut face is a bare flat plane. Agrees with failed P8a (0.788) and P8b (0.807).",
+        "Thigh ends in a round nose against a diagonal flat cut on the shank; bare flat disc with a seam line in the back view; knee reads as two stacked parts. Front silhouette more continuous than the baseline's."
+      ]
+    },
+    "G3": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "Single-tone clay; dark recess colour not rendered. Geometry offers no clear recess band at the knee to carry a dark tone.",
+        "Colour not rendered; no clear groove at the knee to carry a dark tone."
+      ]
+    },
+    "G4": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "PASS",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "Thigh and shank share the same rounded-rectangle section family and similar corner radii; zebra shows continuous nested contour bands with no creases (S4a 0.2179), unlike the baseline's patchy zebra.",
+        "Similar front sections, but undulations (waist, dimple, calf bulge, ankle neck) read as separate lumps; end radii differ in side view."
+      ]
+    },
+    "G6": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "No references supplied. Matches Optimus/Atlas on flat-sided section and large radii; does not match on the mid-thigh pinch, lumpy calf, and missing distinct knee joint.",
+        "No references. Slab-like limbs and upper-third calf match; weak taper, wavy outline and missing knee cap do not."
+      ]
+    },
+    "G5": {
+      "verdict": "PASS",
+      "reason": "candidate preferred in both presentation orders"
+    }
+  },
+  "reads_as": "unfinished",
+  "numeric_hard_failures": [],
+  "top_changes": [
+    {
+      "criterion": "G2",
+      "change": "Remove the mid-thigh hourglass; make width and depth fall monotonically hip to knee.",
+      "profile_param": "segments[thigh].stations[mid].w/.d; stations[distal].w"
+    },
+    {
+      "criterion": "G2",
+      "change": "Merge calf bulge and ankle waist into one smooth taper.",
+      "profile_param": "segments[shank].stations[calf].w; stations[ankle].w/.d"
+    },
+    {
+      "criterion": "G2",
+      "change": "Make the knee a deliberate joint: a waist at the joint so the gap reads as a dark recess band, not a hairline seam.",
+      "profile_param": "segments[thigh].stations[distal].d; segments[shank].stations[proximal].w"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}

@@ -1,0 +1,22 @@
+{
+  "order": "cand_second",
+  "round": 2,
+  "candidate": "design-3",
+  "baseline": "design-1",
+  "reads_as": "unfinished",
+  "reads_as_reason": "Two plain near-parallel rounded slabs with a hard angled cut at the shank top and no knee form; a blank shell, though the surface finish is clean.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Thigh is a rounded-rectangle slab with near-parallel sides and a blunt distal cap; nothing marks the knee; a placeholder block. P8a 0.708 and P8b 0.712 fail."},
+    "G2": {"verdict": "FAIL", "evidence": "Thigh ends in a rounded cap and the shank begins with a flat diagonal slice: a half-disc face with a hard line in the back view, a knife edge in the side view. The front outline is a continuous curve (S3a 0)."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "No colour; no secondary feature that a dark/light split could attach to apart from the parting line and the knee gap."},
+    "G4": {"verdict": "PASS", "evidence": "Same squarish section and corner-radius family, matching end caps and rounded edges; the exception is the sharp shank-top cut, covered under G2."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No references. Optimus / Atlas show a knee actuator mass, clear taper and panel breaks; here near-constant-width slabs, so a weak match."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Silhouettes and knee cut are visually identical in both sheets, so the preference rests on surface quality. The candidate's zebra stripes are smooth continuous bands wrapping the end caps; the baseline's zebra is fragmented noisy blobs with blotchy contour islands. Its large white zebra fields match the failed S4a (0.4341). Moderate preference."},
+  "top_changes": [
+    {"criterion": "G2", "change": "Remove the knife edge and flat half-disc at the shank top; fillet the proximal edge so the gap reads as a deliberate recess.", "profile_param": "segments[shank].stations[top].d/.n"},
+    {"criterion": "G1", "change": "Increase thigh taper (P8a 0.708).", "profile_param": "segments[thigh].stations[distal].w/.d"},
+    {"criterion": "G1", "change": "More shank taper (P8b 0.712) and lower mid-section squareness to cut flat share (S4a 0.4341).", "profile_param": "segments[shank].stations[ankle].w/.d; segments[*].stations[mid].n"}
+  ],
+  "notes": "Round 2. The zebra views were the only strong differentiator; the target matches almost perfectly (T1 0.9887 / 0.9862), which says the design matches its target, not that the target looks finished."
+}

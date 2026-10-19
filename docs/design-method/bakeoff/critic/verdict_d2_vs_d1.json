@@ -1,0 +1,87 @@
+{
+  "step": "bakeoff-d2_vs_d1",
+  "round": 1,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Thigh and shank each swell, pinch and swell again like a stack of sausages; two or three bulges per segment with no functional reason; organic or toy-like.",
+        "Mid-length pinches and bulges, a bone-like profile; the 130 degree view shows the shank ending in a bulbous knob; organic and cartoonish. P8a/P8b fail."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Not a continuous flow: waist then bulge above the knee; shank bulge below the knee, a pinch, another bulge at the ankle. The pinches look accidental, not deliberate recesses. Knee is a diagonal planar cut with a hairline gap. Zebra shows many small closed rings.",
+        "Front view: the thigh edge steps in and out a third of the way down and again above the knee; grey silhouette wobbles against the target at the lower shank (T1a 0.9356, T1b 0.9432 fail). Zebra shows ring islands and broken stripes. Knee gap is a plain diagonal cut."
+      ]
+    },
+    "G3": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "Single-tone clay; the pinches sit mid-segment away from the joint so are unlikely to read as recesses.",
+        "No colour; the knee gap is too shallow to judge as a recess."
+      ]
+    },
+    "G4": {
+      "verdict": "FAIL",
+      "per_report": [
+        "UNCERTAIN",
+        "FAIL"
+      ],
+      "evidence": [
+        "Similar rounded-rectangle sections in the front view; the lump rhythm differs between thigh and shank.",
+        "Section squareness and radii vary within each segment: squarish shoulders then round lobes; large soft lumps next to tight corners."
+      ]
+    },
+    "G6": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "No references. Optimus / Atlas legs have smooth monotonic tapers and an articulated knee; the undulating profile does not match.",
+        "No references. Thigh top and knee block resemble the family; the wavy mid-thigh and lumpy shank do not."
+      ]
+    },
+    "G5": {
+      "verdict": "FAIL",
+      "reason": "baseline preferred"
+    }
+  },
+  "reads_as": "unfinished",
+  "numeric_hard_failures": [],
+  "top_changes": [
+    {
+      "criterion": "G2",
+      "change": "Remove the mid-thigh waist and the swelling above the knee; width falls steadily hip to knee.",
+      "profile_param": "segments[thigh].stations[mid,distal].w/.d"
+    },
+    {
+      "criterion": "G2",
+      "change": "Delete the ankle bulge and the pinch below the calf; one calf swell then a straight taper.",
+      "profile_param": "segments[shank].stations[calf-to-ankle].w/.d"
+    },
+    {
+      "criterion": "G1",
+      "change": "One squareness for all sections; fewer, longer-spanning stations.",
+      "profile_param": "segments[*].stations[*].n"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}

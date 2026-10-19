@@ -1,0 +1,21 @@
+{
+  "order": "cand_second",
+  "candidate": "design-2",
+  "baseline": "design-1",
+  "reads_as": "unfinished",
+  "reads_as_reason": "A lumpy, bone-like clay form with a weak taper, no deliberate knee recess and a raw flat cut face at the shank top, though its surface is better than the baseline's.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Near-constant-section sausage volumes; thigh pinches mid-length and re-flares above the knee; wobbly 3/4 outline and a lower-thigh dimple; P8a 0.788 and P8b 0.807 fail."},
+    "G2": {"verdict": "FAIL", "evidence": "Thigh ends in a round nose against a diagonal flat cut on the shank; bare flat disc with a seam line in the back view; knee reads as two stacked parts. Front silhouette more continuous than the baseline's."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Colour not rendered; no clear groove at the knee to carry a dark tone."},
+    "G4": {"verdict": "UNCERTAIN", "evidence": "Similar front sections, but undulations (waist, dimple, calf bulge, ankle neck) read as separate lumps; end radii differ in side view."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No references. Slab-like limbs and upper-third calf match; weak taper, wavy outline and missing knee cap do not."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Baseline is a plain peg with a pinched waist and ledges at the knee, a bulbous shank and blotchy chaotic zebra. Candidate has a more continuous front outline, orderly concentric zebra bands and some intentional shaping; wobble and dimples keep it from sleek, so confidence is moderate."},
+  "top_changes": [
+    {"criterion": "G1", "change": "Increase taper; remove the mid-thigh pinch and lower-thigh re-flare: one monotone taper per segment.", "profile_param": "segments[thigh].stations[distal].w/d; segments[shank].stations[ankle].w/d"},
+    {"criterion": "G2", "change": "Shaped shank-top cap instead of a raw flat cut; shared radius family at the knee so a dark recess can sit between.", "profile_param": "segments[shank].stations[top].n/.z; segments[thigh].stations[distal].d/.n"},
+    {"criterion": "G4", "change": "Unify section squareness and radii; one calf swell, smooth stations elsewhere.", "profile_param": "segments[*].stations[*].n"}
+  ],
+  "notes": "Candidate = design-2 (Image B), baseline = design-1 (Image A). Contour lines in clay views may exaggerate lumpiness; zebra is the better surface test."
+}

@@ -1,0 +1,618 @@
+{
+ "method": "M2",
+ "loc": {
+  "method_files": 155,
+  "shared_spec_meshutil": 335
+ },
+ "build_seconds": 9.72,
+ "notes": {
+  "calibration_max_error_mm_per_pass": [
+   {
+    "thigh": [
+     5.248,
+     3.248,
+     2.398,
+     1.998,
+     1.798,
+     1.698,
+     1.648,
+     1.598,
+     1.598,
+     1.548
+    ]
+   },
+   {
+    "shank": [
+     6.552,
+     4.852,
+     3.952,
+     3.402,
+     3.052,
+     2.802,
+     2.652,
+     2.502,
+     2.452,
+     2.402
+    ]
+   }
+  ],
+  "keepout_cut_volume_mm3": 10.5,
+  "voxel_mm": 0.5
+ },
+ "step_exported": false,
+ "eval": {
+  "look": {
+   "T1_iou_front": 0.9356,
+   "T1_iou_side": 0.9432,
+   "P9a_thigh_widest_from_top": 0.124,
+   "P9b_calf_widest_from_top": 0.268,
+   "P8a_thigh_taper_area": 0.788,
+   "P8b_shank_taper_area": 0.807,
+   "S3_ledges_front": 0,
+   "S3_ledges_side": 1,
+   "S4_flat_area_fraction": 0.2179,
+   "S4_worst_part_flat_fraction": 0.0653
+  },
+  "fit": {
+   "keepouts": {
+    "servo_knee": {
+     "min_clearance_mm": 4.138,
+     "enclosed": true,
+     "worst_point_rays_hit": 14,
+     "ok": true
+    },
+    "servo_hip_pitch": {
+     "min_clearance_mm": 4.322,
+     "enclosed": true,
+     "worst_point_rays_hit": 14,
+     "ok": true
+    },
+    "servo_ankle_pitch": {
+     "min_clearance_mm": 1.5,
+     "enclosed": true,
+     "worst_point_rays_hit": 14,
+     "ok": true
+    },
+    "cable_thigh": {
+     "min_clearance_mm": 2.548,
+     "enclosed": true,
+     "worst_point_rays_hit": 14,
+     "ok": true
+    },
+    "cable_shank": {
+     "min_clearance_mm": 2.59,
+     "enclosed": true,
+     "worst_point_rays_hit": 14,
+     "ok": true
+    },
+    "all_ok": true
+   },
+   "rom": {
+    "collision_free": true,
+    "colliding_thetas": [],
+    "min_gap_mm": 1.927,
+    "min_gap_at_deg": 130.0,
+    "gap_at_0deg_mm": 2.587,
+    "steps": [
+     {
+      "theta": 0.0,
+      "approx_min_gap_mm": 2.587,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 5.0,
+      "approx_min_gap_mm": 2.589,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 10.0,
+      "approx_min_gap_mm": 2.592,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 15.0,
+      "approx_min_gap_mm": 2.569,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 20.0,
+      "approx_min_gap_mm": 2.576,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 25.0,
+      "approx_min_gap_mm": 2.574,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 30.0,
+      "approx_min_gap_mm": 2.577,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 35.0,
+      "approx_min_gap_mm": 2.58,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 40.0,
+      "approx_min_gap_mm": 2.601,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 45.0,
+      "approx_min_gap_mm": 2.574,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 50.0,
+      "approx_min_gap_mm": 2.569,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 55.0,
+      "approx_min_gap_mm": 2.611,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 60.0,
+      "approx_min_gap_mm": 2.59,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 65.0,
+      "approx_min_gap_mm": 2.576,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 70.0,
+      "approx_min_gap_mm": 2.569,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 75.0,
+      "approx_min_gap_mm": 2.59,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 80.0,
+      "approx_min_gap_mm": 2.565,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 85.0,
+      "approx_min_gap_mm": 2.603,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 90.0,
+      "approx_min_gap_mm": 2.593,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 95.0,
+      "approx_min_gap_mm": 2.597,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 100.0,
+      "approx_min_gap_mm": 2.581,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 105.0,
+      "approx_min_gap_mm": 2.585,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 110.0,
+      "approx_min_gap_mm": 2.597,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 115.0,
+      "approx_min_gap_mm": 2.566,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 120.0,
+      "approx_min_gap_mm": 2.548,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 125.0,
+      "approx_min_gap_mm": 2.404,
+      "collision_mm3": 0.0
+     },
+     {
+      "theta": 130.0,
+      "approx_min_gap_mm": 1.927,
+      "collision_mm3": 0.0
+     }
+    ]
+   }
+  },
+  "print": {
+   "parts": {
+    "shank_front": {
+     "faces": 33790,
+     "watertight": true,
+     "winding_ok": true,
+     "volume_mm3": 18286.2,
+     "euler": 2,
+     "extents_mm": [
+      25.1,
+      64.4,
+      121.1
+     ],
+     "manifold3d_valid": true,
+     "wall": {
+      "min_mm": 0.268,
+      "interior_min_mm": 0.73,
+      "interior_p1_mm": 1.446,
+      "p1_mm": 1.023,
+      "p5_mm": 1.551,
+      "median_mm": 1.602,
+      "frac_below_1.2mm": 0.014,
+      "frac_below_tol": 0.027,
+      "n": 5000
+     },
+     "orientations": {
+      "+z": {
+       "overhang_mm2": 1877.9,
+       "overhang_frac": 0.0797,
+       "bed_contact_mm2": 35.3,
+       "height_mm": 121.1,
+       "fits_bed": true
+      },
+      "-z": {
+       "overhang_mm2": 1851.4,
+       "overhang_frac": 0.0786,
+       "bed_contact_mm2": 0.0,
+       "height_mm": 121.1,
+       "fits_bed": true
+      },
+      "+x": {
+       "overhang_mm2": 5906.8,
+       "overhang_frac": 0.2506,
+       "bed_contact_mm2": 346.5,
+       "height_mm": 25.1,
+       "fits_bed": true
+      },
+      "-x": {
+       "overhang_mm2": 5331.2,
+       "overhang_frac": 0.2262,
+       "bed_contact_mm2": 776.3,
+       "height_mm": 25.1,
+       "fits_bed": true
+      },
+      "+y": {
+       "overhang_mm2": 3344.2,
+       "overhang_frac": 0.1419,
+       "bed_contact_mm2": 95.0,
+       "height_mm": 64.4,
+       "fits_bed": true
+      },
+      "-y": {
+       "overhang_mm2": 3345.3,
+       "overhang_frac": 0.1419,
+       "bed_contact_mm2": 94.4,
+       "height_mm": 64.4,
+       "fits_bed": true
+      }
+     },
+     "best_orientation": "-z",
+     "best_overhang_mm2": 1851.4,
+     "best_overhang_frac": 0.0786,
+     "best_bed_contact_mm2": 0.0,
+     "fits_bed": true
+    },
+    "shank_rear": {
+     "faces": 28360,
+     "watertight": true,
+     "winding_ok": true,
+     "volume_mm3": 15025.3,
+     "euler": 2,
+     "extents_mm": [
+      27.7,
+      64.4,
+      100.6
+     ],
+     "manifold3d_valid": true,
+     "wall": {
+      "min_mm": 0.081,
+      "interior_min_mm": 0.846,
+      "interior_p1_mm": 1.324,
+      "p1_mm": 1.026,
+      "p5_mm": 1.502,
+      "median_mm": 1.601,
+      "frac_below_1.2mm": 0.0202,
+      "frac_below_tol": 0.0368,
+      "n": 5000
+     },
+     "orientations": {
+      "+z": {
+       "overhang_mm2": 2555.9,
+       "overhang_frac": 0.1306,
+       "bed_contact_mm2": 66.3,
+       "height_mm": 100.6,
+       "fits_bed": true
+      },
+      "-z": {
+       "overhang_mm2": 2832.2,
+       "overhang_frac": 0.1447,
+       "bed_contact_mm2": 0.0,
+       "height_mm": 100.6,
+       "fits_bed": true
+      },
+      "+x": {
+       "overhang_mm2": 3492.4,
+       "overhang_frac": 0.1784,
+       "bed_contact_mm2": 3.1,
+       "height_mm": 27.7,
+       "fits_bed": true
+      },
+      "-x": {
+       "overhang_mm2": 3448.7,
+       "overhang_frac": 0.1762,
+       "bed_contact_mm2": 344.7,
+       "height_mm": 27.7,
+       "fits_bed": true
+      },
+      "+y": {
+       "overhang_mm2": 2997.1,
+       "overhang_frac": 0.1531,
+       "bed_contact_mm2": 152.5,
+       "height_mm": 64.4,
+       "fits_bed": true
+      },
+      "-y": {
+       "overhang_mm2": 2993.7,
+       "overhang_frac": 0.153,
+       "bed_contact_mm2": 151.5,
+       "height_mm": 64.4,
+       "fits_bed": true
+      }
+     },
+     "best_orientation": "+z",
+     "best_overhang_mm2": 2555.9,
+     "best_overhang_frac": 0.1306,
+     "best_bed_contact_mm2": 66.3,
+     "fits_bed": true
+    },
+    "thigh_front": {
+     "faces": 38924,
+     "watertight": true,
+     "winding_ok": true,
+     "volume_mm3": 24905.0,
+     "euler": 2,
+     "extents_mm": [
+      29.3,
+      63.7,
+      156.0
+     ],
+     "manifold3d_valid": true,
+     "wall": {
+      "min_mm": 1.516,
+      "interior_min_mm": 1.556,
+      "interior_p1_mm": 1.574,
+      "p1_mm": 1.573,
+      "p5_mm": 1.583,
+      "median_mm": 1.598,
+      "frac_below_1.2mm": 0.0,
+      "frac_below_tol": 0.0,
+      "n": 5000
+     },
+     "orientations": {
+      "+z": {
+       "overhang_mm2": 1935.4,
+       "overhang_frac": 0.0609,
+       "bed_contact_mm2": 126.6,
+       "height_mm": 156.0,
+       "fits_bed": true
+      },
+      "-z": {
+       "overhang_mm2": 1730.9,
+       "overhang_frac": 0.0545,
+       "bed_contact_mm2": 306.5,
+       "height_mm": 156.0,
+       "fits_bed": true
+      },
+      "+x": {
+       "overhang_mm2": 7236.2,
+       "overhang_frac": 0.2277,
+       "bed_contact_mm2": 427.2,
+       "height_mm": 29.3,
+       "fits_bed": true
+      },
+      "-x": {
+       "overhang_mm2": 7172.0,
+       "overhang_frac": 0.2257,
+       "bed_contact_mm2": 333.3,
+       "height_mm": 29.3,
+       "fits_bed": true
+      },
+      "+y": {
+       "overhang_mm2": 5973.4,
+       "overhang_frac": 0.188,
+       "bed_contact_mm2": 105.9,
+       "height_mm": 63.7,
+       "fits_bed": true
+      },
+      "-y": {
+       "overhang_mm2": 5980.3,
+       "overhang_frac": 0.1882,
+       "bed_contact_mm2": 105.8,
+       "height_mm": 63.7,
+       "fits_bed": true
+      }
+     },
+     "best_orientation": "-z",
+     "best_overhang_mm2": 1730.9,
+     "best_overhang_frac": 0.0545,
+     "best_bed_contact_mm2": 306.5,
+     "fits_bed": true
+    },
+    "thigh_rear": {
+     "faces": 39188,
+     "watertight": true,
+     "winding_ok": true,
+     "volume_mm3": 24276.3,
+     "euler": 2,
+     "extents_mm": [
+      27.4,
+      63.7,
+      156.0
+     ],
+     "manifold3d_valid": true,
+     "wall": {
+      "min_mm": 1.417,
+      "interior_min_mm": 1.554,
+      "interior_p1_mm": 1.574,
+      "p1_mm": 1.572,
+      "p5_mm": 1.582,
+      "median_mm": 1.598,
+      "frac_below_1.2mm": 0.0,
+      "frac_below_tol": 0.0002,
+      "n": 5000
+     },
+     "orientations": {
+      "+z": {
+       "overhang_mm2": 1829.1,
+       "overhang_frac": 0.059,
+       "bed_contact_mm2": 126.2,
+       "height_mm": 156.0,
+       "fits_bed": true
+      },
+      "-z": {
+       "overhang_mm2": 1704.9,
+       "overhang_frac": 0.055,
+       "bed_contact_mm2": 247.7,
+       "height_mm": 156.0,
+       "fits_bed": true
+      },
+      "+x": {
+       "overhang_mm2": 7192.5,
+       "overhang_frac": 0.2322,
+       "bed_contact_mm2": 332.2,
+       "height_mm": 27.4,
+       "fits_bed": true
+      },
+      "-x": {
+       "overhang_mm2": 7240.4,
+       "overhang_frac": 0.2337,
+       "bed_contact_mm2": 427.9,
+       "height_mm": 27.4,
+       "fits_bed": true
+      },
+      "+y": {
+       "overhang_mm2": 5671.5,
+       "overhang_frac": 0.1831,
+       "bed_contact_mm2": 94.6,
+       "height_mm": 63.7,
+       "fits_bed": true
+      },
+      "-y": {
+       "overhang_mm2": 5673.7,
+       "overhang_frac": 0.1831,
+       "bed_contact_mm2": 97.8,
+       "height_mm": 63.7,
+       "fits_bed": true
+      }
+     },
+     "best_orientation": "-z",
+     "best_overhang_mm2": 1704.9,
+     "best_overhang_frac": 0.055,
+     "best_bed_contact_mm2": 247.7,
+     "fits_bed": true
+    }
+   },
+   "part_count": 4,
+   "all_watertight": true,
+   "all_fit_bed": true,
+   "min_wall_mm": 0.081,
+   "interior_min_wall_mm": 0.73,
+   "interior_p1_wall_mm": 1.324,
+   "wall_ok": false,
+   "p1_wall_mm": 1.023,
+   "total_overhang_mm2": 7843.1,
+   "seams": [
+    {
+     "segment": "thigh",
+     "plane": "x = +0.0 mm (coronal, on the side planes)",
+     "reveal_gap_mm": 0.8
+    },
+    {
+     "segment": "shank",
+     "plane": "x = +0.0 mm (coronal, on the side planes)",
+     "reveal_gap_mm": 0.8
+    }
+   ]
+  }
+ },
+ "determinism": {
+  "hash_run1": "bfefe52894c9377f",
+  "hash_run2": "bfefe52894c9377f",
+  "identical": true,
+  "seconds_run2": 9.7
+ },
+ "variants": {
+  "L0.90_W1.00": {
+   "iou_front": 0.9408,
+   "iou_side": 0.9489,
+   "keepouts_ok": true,
+   "keepouts_failed": [],
+   "rom_collision_free": true,
+   "rom_min_gap_mm": 1.822,
+   "watertight": true,
+   "fits_bed": true,
+   "parts": 4,
+   "build_seconds": 9.11,
+   "status": "built"
+  },
+  "L1.10_W1.00": {
+   "iou_front": 0.9338,
+   "iou_side": 0.9374,
+   "keepouts_ok": false,
+   "keepouts_failed": [
+    "servo_ankle_pitch"
+   ],
+   "rom_collision_free": true,
+   "rom_min_gap_mm": 2.027,
+   "watertight": true,
+   "fits_bed": true,
+   "parts": 4,
+   "build_seconds": 10.14,
+   "status": "built"
+  },
+  "L1.00_W0.90": {
+   "iou_front": 0.9302,
+   "iou_side": 0.9272,
+   "keepouts_ok": false,
+   "keepouts_failed": [
+    "servo_ankle_pitch",
+    "cable_shank"
+   ],
+   "rom_collision_free": true,
+   "rom_min_gap_mm": 1.49,
+   "watertight": true,
+   "fits_bed": true,
+   "parts": 4,
+   "build_seconds": 9.11,
+   "status": "built"
+  },
+  "L1.00_W1.10": {
+   "iou_front": 0.9362,
+   "iou_side": 0.9301,
+   "keepouts_ok": true,
+   "keepouts_failed": [],
+   "rom_collision_free": true,
+   "rom_min_gap_mm": 1.868,
+   "watertight": true,
+   "fits_bed": true,
+   "parts": 4,
+   "build_seconds": 10.82,
+   "status": "built"
+  }
+ }
+}
