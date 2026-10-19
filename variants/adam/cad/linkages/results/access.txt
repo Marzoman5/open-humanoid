@@ -1,0 +1,43 @@
+assembly access: FAIL (26 parts)
+  assembly order (subassembly = link):
+   [thigh]  bench-assemblable: False  PROBLEMS {'stuck': ['servo_knee'], 'cyclic': [], 'unreachable': []}
+      1. horn_hip_pitch                     move [0, 0, 1]
+      2. thigh                              move [0, 0, -1]  screws: horn_center, horn_0, horn_1, horn_2, horn_3
+      3. cover_knee                         move [0, 0, -1]  screws: cover_screw_0, cover_screw_1
+      4. servo_knee                         move None
+   [crank_k]  bench-assemblable: True
+      5. horn_knee                          move [0, 0, -1]
+      6. crank_knee                         move [0, 0, -1]  screws: horn_center, horn_0, horn_1, horn_2, horn_3
+      7. bearing_knee_pin_in_0              move [0, 1, 0]
+      8. bearing_knee_pin_in_1              move None
+   [coupler_k]  bench-assemblable: True
+      9. coupler_knee                       move [0, 0, 1]  screws: pin_knee_in, pin_knee_out
+   [shank]  bench-assemblable: False  PROBLEMS {'stuck': ['servo_calf'], 'cyclic': [], 'unreachable': []}
+     10. shank                              move [0, 0, -1]
+     11. cover_calf                         move [0, 0, -1]  screws: cover_screw_0, cover_screw_1
+     12. servo_calf                         move None
+     13. bearing_knee_axle_0                move [0, -1, 0]
+     14. bearing_knee_axle_1                move [0, 1, 0]
+     15. bearing_knee_pin_out_0             move None
+     16. bearing_knee_pin_out_1             move None
+   [crank_a]  bench-assemblable: True
+     17. horn_calf                          move [0, 0, -1]
+     18. crank_ankle                        move [0, 0, -1]  screws: horn_center, horn_0, horn_1, horn_2, horn_3
+     19. bearing_calf_pin_in_0              move [0, 1, 0]
+     20. bearing_calf_pin_in_1              move None
+   [coupler_a]  bench-assemblable: True
+     21. coupler_ankle                      move [0, 0, -1]  screws: pin_ankle_in, pin_ankle_out
+   [foot]  bench-assemblable: True
+     22. ankle_cradle                       move [0, 0, -1]
+     23. bearing_ankle_axle_0               move [0, -1, 0]
+     24. bearing_ankle_axle_1               move [0, 1, 0]
+     25. bearing_ankle_pin_out_0            move None
+     26. bearing_ankle_pin_out_1            move [0, -1, 0]
+  STUCK servo_knee: no straight insertion path against the assembled set
+  STUCK bearing_knee_pin_in_1: no straight insertion path against the assembled set
+  STUCK servo_calf: no straight insertion path against the assembled set
+  STUCK bearing_knee_pin_out_0: no straight insertion path against the assembled set
+  STUCK bearing_knee_pin_out_1: no straight insertion path against the assembled set
+  STUCK bearing_calf_pin_in_1: no straight insertion path against the assembled set
+  STUCK bearing_ankle_pin_out_0: no straight insertion path against the assembled set
+  serviceability: 2 of 23 screws are not reachable once fully assembled

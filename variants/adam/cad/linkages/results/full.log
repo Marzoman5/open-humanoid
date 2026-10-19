@@ -1,4 +1,4 @@
-built 52 parts in 14.4 s; notes: ['closed chains as tree links: knee_drv_l = knee_l, knee_cpl_l = -knee_l; ankle_drv_l = ankle_pitch_l, ankle_cpl_l = -ankle_pitch_l (check.py drives them together)', 'stack (y, mm): servo face 13.0; crank plate (18.3, 22.6); pin boss (18.3, 27.9); coupler (28.4, 31.4); pin nut (16.0, 17.8)', 'pins (x, z): knee in (12.618681599723013, 239.02134497435782), knee out (12.618681599723013, 166.52134497435782), ankle in (17.846007504728586, 101.65052854003908), ankle out (17.846007504728586, 63.65052854003907)']
+built 52 parts in 15.3 s; notes: ['closed chains as tree links: knee_drv_l = knee_l, knee_cpl_l = -knee_l; ankle_drv_l = ankle_pitch_l, ankle_cpl_l = -ankle_pitch_l (check.py drives them together)', 'stack (y, mm): servo face 13.0; crank plate (18.3, 22.6); pin boss (18.3, 27.9); coupler (28.4, 31.4); pin nut (16.0, 17.8)', 'pins (x, z): knee in (12.618681599723013, 239.02134497435782), knee out (12.618681599723013, 166.52134497435782), ankle in (17.846007504728586, 101.65052854003908), ankle out (17.846007504728586, 63.65052854003907)']
 {
  "knee_joint (z knee +-10)": {
   "width_mm": 39.5,
@@ -6,7 +6,7 @@ built 52 parts in 14.4 s; notes: ['closed chains as tree links: knee_drv_l = kne
    -13.1,
    26.4
   ],
-  "depth_mm": 20.0
+  "depth_mm": 20.78
  },
  "ankle_joint (z ankle +-10)": {
   "width_mm": 48.3,
@@ -38,7 +38,7 @@ built 52 parts in 14.4 s; notes: ['closed chains as tree links: knee_drv_l = kne
    -3.0,
    33.4
   ],
-  "depth_mm": 23.99
+  "depth_mm": 24.0
  },
  "d_knee_mm": 72.5,
  "d_ankle_mm": 38.0,
@@ -81,3 +81,190 @@ built 52 parts in 14.4 s; notes: ['closed chains as tree links: knee_drv_l = kne
   }
  }
 }
+{
+ "zero_pose": [],
+ "hip_pitch_l": {
+  "joint": "hip_pitch_l",
+  "range_deg": [
+   -110.0,
+   40.0
+  ],
+  "limit_pos": null,
+  "limit_neg": null,
+  "within_spec": true,
+  "first": []
+ },
+ "knee_l": {
+  "joint": "knee_l",
+  "range_deg": [
+   0.0,
+   110.0
+  ],
+  "limit_pos": null,
+  "limit_neg": null,
+  "within_spec": true,
+  "first": []
+ },
+ "ankle_pitch_l": {
+  "joint": "ankle_pitch_l",
+  "range_deg": [
+   -60.0,
+   25.0
+  ],
+  "limit_pos": null,
+  "limit_neg": null,
+  "within_spec": true,
+  "first": []
+ },
+ "ankle_at_knee_90": {
+  "joint": "ankle_pitch_l",
+  "range_deg": [
+   -60.0,
+   25.0
+  ],
+  "limit_pos": null,
+  "limit_neg": null,
+  "within_spec": true,
+  "first": []
+ },
+ "ok": true,
+ "poses": {
+  "squat": {
+   "ok": true,
+   "q": {
+    "hip_pitch_l": -88.0,
+    "knee_l": 99.0,
+    "ankle_pitch_l": -11.0
+   },
+   "pairs": []
+  },
+  "deep_squat": {
+   "ok": true,
+   "q": {
+    "hip_pitch_l": -110.0,
+    "knee_l": 110.0,
+    "ankle_pitch_l": -0.0
+   },
+   "pairs": []
+  },
+  "step_forward": {
+   "ok": true,
+   "q": {
+    "hip_pitch_l": -44.0,
+    "knee_l": 55.0,
+    "ankle_pitch_l": -11.0
+   },
+   "pairs": []
+  },
+  "pickup": {
+   "ok": true,
+   "q": {
+    "hip_pitch_l": -66.0,
+    "knee_l": 77.0,
+    "ankle_pitch_l": -11.0
+   },
+   "pairs": []
+  }
+ }
+}
+geometry gate: adam_v2_l5c_leg_l  ->  FAIL
+  ok   housing_hip_pitch
+  ok   cover_hip_pitch
+  ok   servo_hip_pitch
+  ok   keepout_hip_roll_servo
+  ok   shaft_hip_pitch
+  ok   shaftb_hip_pitch
+  ok   horn_hip_pitch
+  ok   thigh
+  ok   cover_knee
+  ok   servo_knee
+  ok   axle_knee
+  ok   shaft_knee
+  ok   shaftb_knee
+  ok   horn_knee
+  ok   crank_knee
+  ok   bearing_knee_pin_in_0
+  ok   bearing_knee_pin_in_1
+  ok   coupler_knee
+  ok   pin_screw_coupler_knee_top
+  ok   pin_nut_coupler_knee_top
+  ok   pin_screw_coupler_knee_bot
+  ok   pin_nut_coupler_knee_bot
+  ok   shank
+  ok   cover_calf
+  ok   servo_calf
+  ok   bearing_knee_axle_0
+  ok   bearing_knee_axle_1
+  ok   bearing_knee_pin_out_0
+  ok   bearing_knee_pin_out_1
+  ok   axle_ankle
+  ok   shaft_calf
+  ok   shaftb_calf
+  ok   horn_calf
+  ok   crank_ankle
+  ok   bearing_calf_pin_in_0
+  ok   bearing_calf_pin_in_1
+  ok   coupler_ankle
+  ok   pin_screw_coupler_ankle_top
+  ok   pin_nut_coupler_ankle_top
+  ok   pin_screw_coupler_ankle_bot
+  ok   pin_nut_coupler_ankle_bot
+  ok   ankle_cradle
+  ok   cover_roll
+  ok   servo_ankle_roll
+  ok   shaft_ankle_roll
+  ok   shaftb_ankle_roll
+  ok   horn_ankle_roll
+  ok   bearing_ankle_axle_0
+  ok   bearing_ankle_axle_1
+  ok   bearing_ankle_pin_out_0
+  ok   bearing_ankle_pin_out_1
+  ok   sole_keepout
+  assembly: 1 clashes, 0 tight gaps, 0 keep-out hits (137 candidate pairs)
+    CLASH thigh x cover_knee: 119.2 mm3
+assembly access: FAIL (42 parts)
+  assembly order (subassembly = link):
+   [hip]  bench-assemblable: False  PROBLEMS {'stuck': ['servo_hip_pitch'], 'cyclic': [], 'unreachable': []}
+      1. housing_hip_pitch                  move [0, 0, 1]
+      2. cover_hip_pitch                    move [0, 0, 1]  screws: cover_screw_0, cover_screw_1
+      3. servo_hip_pitch                    move None
+   [thigh]  bench-assemblable: False  PROBLEMS {'stuck': [], 'cyclic': ['axle_knee', 'thigh'], 'unreachable': []}
+      4. horn_hip_pitch                     move [0, 0, 1]
+      5. cover_knee                         move [0, 0, 1]
+      6. servo_knee                         move [0, 1, 0]
+   [crank_k]  bench-assemblable: True
+      7. horn_knee                          move [0, 0, -1]
+      8. crank_knee                         move [0, 0, -1]  screws: horn_center, horn_0, horn_1, horn_2, horn_3
+      9. bearing_knee_pin_in_0              move [0, 1, 0]
+     10. bearing_knee_pin_in_1              move None
+   [coupler_k]  bench-assemblable: True
+     11. coupler_knee                       move [0, 0, 1]  screws: pin_knee_in, pin_knee_out
+     12. pin_screw_coupler_knee_top         move [0, 1, 0]
+     13. pin_nut_coupler_knee_top           move [0, 0, -1]
+     14. pin_screw_coupler_knee_bot         move [0, 1, 0]
+     15. pin_nut_coupler_knee_bot           move [0, 0, -1]
+   [shank]  bench-assemblable: False  PROBLEMS {'stuck': [], 'cyclic': ['axle_ankle', 'shank'], 'unreachable': []}
+     16. bearing_knee_pin_out_0             move None
+     17. bearing_knee_pin_out_1             move None
+     18. cover_calf                         move [0, 0, -1]
+     19. servo_calf                         move [0, 1, 0]
+   [crank_a]  bench-assemblable: True
+     20. horn_calf                          move [0, 0, 1]
+     21. crank_ankle                        move [0, 0, -1]  screws: horn_center, horn_0, horn_1, horn_2, horn_3
+     22. bearing_calf_pin_in_0              move [0, 1, 0]
+     23. bearing_calf_pin_in_1              move None
+   [coupler_a]  bench-assemblable: True
+     24. coupler_ankle                      move [0, 0, -1]  screws: pin_ankle_in, pin_ankle_out
+     25. pin_screw_coupler_ankle_top        move [0, 1, 0]
+     26. pin_nut_coupler_ankle_top          move [0, 0, 1]
+     27. pin_screw_coupler_ankle_bot        move [0, 1, 0]
+     28. pin_nut_coupler_ankle_bot          move [0, 0, -1]
+   [foot]  bench-assemblable: False  PROBLEMS {'stuck': ['servo_ankle_roll'], 'cyclic': [], 'unreachable': []}
+     29. ankle_cradle                       move [0, -1, 0]
+     30. cover_roll                         move [0, 0, 1]  screws: cover_screw_0, cover_screw_1
+     31. servo_ankle_roll                   move None
+     32. horn_ankle_roll                    move [0, 0, -1]
+     33. bearing_ankle_pin_out_0            move None
+     34. bearing_ankle_pin_out_1            move None
+  STUCK servo_hip_pitch: no straight insertion path against the assembled set
+  STUCK bearing

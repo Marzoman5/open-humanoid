@@ -1,0 +1,834 @@
+{
+ "ok": false,
+ "order": [
+  {
+   "step": 1,
+   "part": "horn_hip_pitch",
+   "link": "thigh",
+   "move": [
+    0,
+    0,
+    1
+   ],
+   "free_dirs": 6,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 2,
+   "part": "thigh",
+   "link": "thigh",
+   "move": [
+    0,
+    0,
+    -1
+   ],
+   "free_dirs": 3,
+   "screws": [
+    "horn_center",
+    "horn_0",
+    "horn_1",
+    "horn_2",
+    "horn_3"
+   ],
+   "blocked_screws": []
+  },
+  {
+   "step": 3,
+   "part": "cover_knee",
+   "link": "thigh",
+   "move": [
+    0,
+    0,
+    -1
+   ],
+   "free_dirs": 4,
+   "screws": [
+    "cover_screw_0",
+    "cover_screw_1"
+   ],
+   "blocked_screws": []
+  },
+  {
+   "step": 4,
+   "part": "servo_knee",
+   "link": "thigh",
+   "move": null,
+   "free_dirs": 0,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 5,
+   "part": "horn_knee",
+   "link": "crank_k",
+   "move": [
+    0,
+    0,
+    -1
+   ],
+   "free_dirs": 4,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 6,
+   "part": "crank_knee",
+   "link": "crank_k",
+   "move": [
+    0,
+    0,
+    -1
+   ],
+   "free_dirs": 4,
+   "screws": [
+    "horn_center",
+    "horn_0",
+    "horn_1",
+    "horn_2",
+    "horn_3"
+   ],
+   "blocked_screws": []
+  },
+  {
+   "step": 7,
+   "part": "bearing_knee_pin_in_0",
+   "link": "crank_k",
+   "move": [
+    0,
+    1,
+    0
+   ],
+   "free_dirs": 1,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 8,
+   "part": "bearing_knee_pin_in_1",
+   "link": "crank_k",
+   "move": null,
+   "free_dirs": 0,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 9,
+   "part": "coupler_knee",
+   "link": "coupler_k",
+   "move": [
+    0,
+    0,
+    1
+   ],
+   "free_dirs": 5,
+   "screws": [
+    "pin_knee_in",
+    "pin_knee_out"
+   ],
+   "blocked_screws": []
+  },
+  {
+   "step": 10,
+   "part": "shank",
+   "link": "shank",
+   "move": [
+    0,
+    0,
+    -1
+   ],
+   "free_dirs": 3,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 11,
+   "part": "cover_calf",
+   "link": "shank",
+   "move": [
+    0,
+    0,
+    -1
+   ],
+   "free_dirs": 4,
+   "screws": [
+    "cover_screw_0",
+    "cover_screw_1"
+   ],
+   "blocked_screws": []
+  },
+  {
+   "step": 12,
+   "part": "servo_calf",
+   "link": "shank",
+   "move": null,
+   "free_dirs": 0,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 13,
+   "part": "bearing_knee_axle_0",
+   "link": "shank",
+   "move": [
+    0,
+    -1,
+    0
+   ],
+   "free_dirs": 1,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 14,
+   "part": "bearing_knee_axle_1",
+   "link": "shank",
+   "move": [
+    0,
+    1,
+    0
+   ],
+   "free_dirs": 1,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 15,
+   "part": "bearing_knee_pin_out_0",
+   "link": "shank",
+   "move": null,
+   "free_dirs": 0,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 16,
+   "part": "bearing_knee_pin_out_1",
+   "link": "shank",
+   "move": null,
+   "free_dirs": 0,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 17,
+   "part": "horn_calf",
+   "link": "crank_a",
+   "move": [
+    0,
+    0,
+    -1
+   ],
+   "free_dirs": 4,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 18,
+   "part": "crank_ankle",
+   "link": "crank_a",
+   "move": [
+    0,
+    0,
+    -1
+   ],
+   "free_dirs": 4,
+   "screws": [
+    "horn_center",
+    "horn_0",
+    "horn_1",
+    "horn_2",
+    "horn_3"
+   ],
+   "blocked_screws": []
+  },
+  {
+   "step": 19,
+   "part": "bearing_calf_pin_in_0",
+   "link": "crank_a",
+   "move": [
+    0,
+    1,
+    0
+   ],
+   "free_dirs": 1,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 20,
+   "part": "bearing_calf_pin_in_1",
+   "link": "crank_a",
+   "move": null,
+   "free_dirs": 0,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 21,
+   "part": "coupler_ankle",
+   "link": "coupler_a",
+   "move": [
+    0,
+    0,
+    -1
+   ],
+   "free_dirs": 4,
+   "screws": [
+    "pin_ankle_in",
+    "pin_ankle_out"
+   ],
+   "blocked_screws": []
+  },
+  {
+   "step": 22,
+   "part": "ankle_cradle",
+   "link": "foot",
+   "move": [
+    0,
+    0,
+    -1
+   ],
+   "free_dirs": 2,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 23,
+   "part": "bearing_ankle_axle_0",
+   "link": "foot",
+   "move": [
+    0,
+    -1,
+    0
+   ],
+   "free_dirs": 1,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 24,
+   "part": "bearing_ankle_axle_1",
+   "link": "foot",
+   "move": [
+    0,
+    1,
+    0
+   ],
+   "free_dirs": 1,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 25,
+   "part": "bearing_ankle_pin_out_0",
+   "link": "foot",
+   "move": null,
+   "free_dirs": 0,
+   "screws": [],
+   "blocked_screws": []
+  },
+  {
+   "step": 26,
+   "part": "bearing_ankle_pin_out_1",
+   "link": "foot",
+   "move": [
+    0,
+    -1,
+    0
+   ],
+   "free_dirs": 1,
+   "screws": [],
+   "blocked_screws": []
+  }
+ ],
+ "subassemblies": {
+  "thigh": {
+   "parts": [
+    "horn_hip_pitch",
+    "thigh",
+    "cover_knee",
+    "servo_knee"
+   ],
+   "order": [
+    "horn_hip_pitch",
+    "thigh",
+    "cover_knee",
+    "servo_knee"
+   ],
+   "bench_assemblable": false,
+   "bench_problems": {
+    "stuck": [
+     "servo_knee"
+    ],
+    "cyclic": [],
+    "unreachable": []
+   }
+  },
+  "crank_k": {
+   "parts": [
+    "horn_knee",
+    "crank_knee",
+    "bearing_knee_pin_in_0",
+    "bearing_knee_pin_in_1"
+   ],
+   "order": [
+    "horn_knee",
+    "crank_knee",
+    "bearing_knee_pin_in_0",
+    "bearing_knee_pin_in_1"
+   ],
+   "bench_assemblable": true
+  },
+  "coupler_k": {
+   "parts": [
+    "coupler_knee"
+   ],
+   "order": [
+    "coupler_knee"
+   ],
+   "bench_assemblable": true
+  },
+  "shank": {
+   "parts": [
+    "shank",
+    "cover_calf",
+    "servo_calf",
+    "bearing_knee_axle_0",
+    "bearing_knee_axle_1",
+    "bearing_knee_pin_out_0",
+    "bearing_knee_pin_out_1"
+   ],
+   "order": [
+    "shank",
+    "cover_calf",
+    "servo_calf",
+    "bearing_knee_axle_0",
+    "bearing_knee_axle_1",
+    "bearing_knee_pin_out_0",
+    "bearing_knee_pin_out_1"
+   ],
+   "bench_assemblable": false,
+   "bench_problems": {
+    "stuck": [
+     "servo_calf"
+    ],
+    "cyclic": [],
+    "unreachable": []
+   }
+  },
+  "crank_a": {
+   "parts": [
+    "horn_calf",
+    "crank_ankle",
+    "bearing_calf_pin_in_0",
+    "bearing_calf_pin_in_1"
+   ],
+   "order": [
+    "horn_calf",
+    "crank_ankle",
+    "bearing_calf_pin_in_0",
+    "bearing_calf_pin_in_1"
+   ],
+   "bench_assemblable": true
+  },
+  "coupler_a": {
+   "parts": [
+    "coupler_ankle"
+   ],
+   "order": [
+    "coupler_ankle"
+   ],
+   "bench_assemblable": true
+  },
+  "foot": {
+   "parts": [
+    "ankle_cradle",
+    "bearing_ankle_axle_0",
+    "bearing_ankle_axle_1",
+    "bearing_ankle_pin_out_0",
+    "bearing_ankle_pin_out_1"
+   ],
+   "order": [
+    "ankle_cradle",
+    "bearing_ankle_axle_0",
+    "bearing_ankle_axle_1",
+    "bearing_ankle_pin_out_0",
+    "bearing_ankle_pin_out_1"
+   ],
+   "bench_assemblable": true
+  }
+ },
+ "tree": {
+  "hip": {
+   "parent": null,
+   "parts": []
+  },
+  "thigh": {
+   "parent": "hip",
+   "parts": [
+    "horn_hip_pitch",
+    "thigh",
+    "cover_knee",
+    "servo_knee"
+   ]
+  },
+  "crank_k": {
+   "parent": "thigh",
+   "parts": [
+    "horn_knee",
+    "crank_knee",
+    "bearing_knee_pin_in_0",
+    "bearing_knee_pin_in_1"
+   ]
+  },
+  "coupler_k": {
+   "parent": "crank_k",
+   "parts": [
+    "coupler_knee"
+   ]
+  },
+  "shank": {
+   "parent": "thigh",
+   "parts": [
+    "shank",
+    "cover_calf",
+    "servo_calf",
+    "bearing_knee_axle_0",
+    "bearing_knee_axle_1",
+    "bearing_knee_pin_out_0",
+    "bearing_knee_pin_out_1"
+   ]
+  },
+  "crank_a": {
+   "parent": "shank",
+   "parts": [
+    "horn_calf",
+    "crank_ankle",
+    "bearing_calf_pin_in_0",
+    "bearing_calf_pin_in_1"
+   ]
+  },
+  "coupler_a": {
+   "parent": "crank_a",
+   "parts": [
+    "coupler_ankle"
+   ]
+  },
+  "foot": {
+   "parent": "shank",
+   "parts": [
+    "ankle_cradle",
+    "bearing_ankle_axle_0",
+    "bearing_ankle_axle_1",
+    "bearing_ankle_pin_out_0",
+    "bearing_ankle_pin_out_1"
+   ]
+  }
+ },
+ "stuck_parts": [
+  {
+   "part": "servo_knee",
+   "why": "no straight insertion path against the assembled set",
+   "assembled_before": [
+    "horn_hip_pitch",
+    "thigh",
+    "cover_knee"
+   ]
+  },
+  {
+   "part": "bearing_knee_pin_in_1",
+   "why": "no straight insertion path against the assembled set",
+   "assembled_before": [
+    "horn_hip_pitch",
+    "thigh",
+    "cover_knee",
+    "servo_knee",
+    "horn_knee",
+    "crank_knee",
+    "bearing_knee_pin_in_0"
+   ]
+  },
+  {
+   "part": "servo_calf",
+   "why": "no straight insertion path against the assembled set",
+   "assembled_before": [
+    "horn_hip_pitch",
+    "thigh",
+    "cover_knee",
+    "servo_knee",
+    "horn_knee",
+    "crank_knee",
+    "bearing_knee_pin_in_0",
+    "bearing_knee_pin_in_1",
+    "coupler_knee",
+    "shank",
+    "cover_calf"
+   ]
+  },
+  {
+   "part": "bearing_knee_pin_out_0",
+   "why": "no straight insertion path against the assembled set",
+   "assembled_before": [
+    "horn_hip_pitch",
+    "thigh",
+    "cover_knee",
+    "servo_knee",
+    "horn_knee",
+    "crank_knee",
+    "bearing_knee_pin_in_0",
+    "bearing_knee_pin_in_1",
+    "coupler_knee",
+    "shank",
+    "cover_calf",
+    "servo_calf",
+    "bearing_knee_axle_0",
+    "bearing_knee_axle_1"
+   ]
+  },
+  {
+   "part": "bearing_knee_pin_out_1",
+   "why": "no straight insertion path against the assembled set",
+   "assembled_before": [
+    "horn_hip_pitch",
+    "thigh",
+    "cover_knee",
+    "servo_knee",
+    "horn_knee",
+    "crank_knee",
+    "bearing_knee_pin_in_0",
+    "bearing_knee_pin_in_1",
+    "coupler_knee",
+    "shank",
+    "cover_calf",
+    "servo_calf",
+    "bearing_knee_axle_0",
+    "bearing_knee_axle_1",
+    "bearing_knee_pin_out_0"
+   ]
+  },
+  {
+   "part": "bearing_calf_pin_in_1",
+   "why": "no straight insertion path against the assembled set",
+   "assembled_before": [
+    "horn_hip_pitch",
+    "thigh",
+    "cover_knee",
+    "servo_knee",
+    "horn_knee",
+    "crank_knee",
+    "bearing_knee_pin_in_0",
+    "bearing_knee_pin_in_1",
+    "coupler_knee",
+    "shank",
+    "cover_calf",
+    "servo_calf",
+    "bearing_knee_axle_0",
+    "bearing_knee_axle_1",
+    "bearing_knee_pin_out_0",
+    "bearing_knee_pin_out_1",
+    "horn_calf",
+    "crank_ankle",
+    "bearing_calf_pin_in_0"
+   ]
+  },
+  {
+   "part": "bearing_ankle_pin_out_0",
+   "why": "no straight insertion path against the assembled set",
+   "assembled_before": [
+    "horn_hip_pitch",
+    "thigh",
+    "cover_knee",
+    "servo_knee",
+    "horn_knee",
+    "crank_knee",
+    "bearing_knee_pin_in_0",
+    "bearing_knee_pin_in_1",
+    "coupler_knee",
+    "shank",
+    "cover_calf",
+    "servo_calf",
+    "bearing_knee_axle_0",
+    "bearing_knee_axle_1",
+    "bearing_knee_pin_out_0",
+    "bearing_knee_pin_out_1",
+    "horn_calf",
+    "crank_ankle",
+    "bearing_calf_pin_in_0",
+    "bearing_calf_pin_in_1",
+    "coupler_ankle",
+    "ankle_cradle",
+    "bearing_ankle_axle_0",
+    "bearing_ankle_axle_1"
+   ]
+  }
+ ],
+ "cyclic_parts": [],
+ "unreachable_screws": [],
+ "serviceability": [
+  {
+   "site": "thigh:horn_center",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "thigh:horn_0",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "thigh:horn_1",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "thigh:horn_2",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "thigh:horn_3",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "cover_knee:cover_screw_0",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "cover_knee:cover_screw_1",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "crank_knee:horn_center",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "crank_knee:horn_0",
+   "serviceable_assembled": false,
+   "blocked_by": [
+    "coupler_knee"
+   ]
+  },
+  {
+   "site": "crank_knee:horn_1",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "crank_knee:horn_2",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "crank_knee:horn_3",
+   "serviceable_assembled": false,
+   "blocked_by": [
+    "coupler_knee"
+   ]
+  },
+  {
+   "site": "coupler_knee:pin_knee_in",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "coupler_knee:pin_knee_out",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "cover_calf:cover_screw_0",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "cover_calf:cover_screw_1",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "crank_ankle:horn_center",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "crank_ankle:horn_0",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "crank_ankle:horn_1",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "crank_ankle:horn_2",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "crank_ankle:horn_3",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "coupler_ankle:pin_ankle_in",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  },
+  {
+   "site": "coupler_ankle:pin_ankle_out",
+   "serviceable_assembled": true,
+   "blocked_by": []
+  }
+ ],
+ "n_parts": 26,
+ "precedence": [
+  {
+   "before": "crank_knee",
+   "after": "coupler_knee",
+   "why": "coupler_knee blocks the tool corridor of screw horn_0 on crank_knee"
+  },
+  {
+   "before": "servo_knee",
+   "after": "coupler_knee",
+   "why": "coupler_knee blocks the tool corridor of screw horn_0 (mate servo_knee)"
+  }
+ ],
+ "prep": [
+  {
+   "site": "thigh:cover_insert_0",
+   "kind": "insert",
+   "thread": "M3"
+  },
+  {
+   "site": "thigh:cover_insert_1",
+   "kind": "insert",
+   "thread": "M3"
+  },
+  {
+   "site": "shank:cover_insert_0",
+   "kind": "insert",
+   "thread": "M3"
+  },
+  {
+   "site": "shank:cover_insert_1",
+   "kind": "insert",
+   "thread": "M3"
+  },
+  {
+   "site": "ankle_cradle:cover_insert_0",
+   "kind": "insert",
+   "thread": "M3"
+  },
+  {
+   "site": "ankle_cradle:cover_insert_1",
+   "kind": "insert",
+   "thread": "M3"
+  }
+ ]
+}

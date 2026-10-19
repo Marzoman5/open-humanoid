@@ -142,6 +142,24 @@ def r1_widths() -> dict:
             "thigh_mid": band_max(sec, zk + 30, zh - 40), "shank_mid": band_max(sec, za + 30, zk - 30)}
 
 
+def access_view(asm):
+    """The assembly the access check sees. (1) Fasteners follow the foundation's convention (docs/cad-foundation.md section 7: hardware is
+    sites, not solids): the axle and pin screws and the nuts, modelled as solids for the ROM sweep and the gate, become hardware=True here;
+    their screw sites stay. (2) Out of scope: the R1 hip-pitch cradle stand-in (link `hip`) and the R1 heel block (ankle-roll servo, horn,
+    cover), whose assembly the CAD-foundation leg already validated (separate idler plate / roll cradle); the ankle cradle stays."""
+    import copy
+    from openhumanoid.cad.assembly import Assembly
+    links = copy.deepcopy(asm.links)
+    links["hip"].parts = []
+    links["foot"].parts = [p for p in links["foot"].parts if not p.id.endswith("ankle_roll") and p.id != "cover_roll"]
+    for L in links.values():
+        for p in L.parts:
+            if p.id.startswith(("axle_", "pin_screw_", "pin_nut_")):
+                p.hardware = True
+    v = Assembly(asm.name + "_access_view", links, bed_mm=asm.bed_mm, allowed_pairs=set(asm.allowed_pairs), fits=dict(asm.fits))
+    return v
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true", help="10 deg steps, 1 deg refine")
@@ -199,7 +217,7 @@ def main(argv=None) -> int:
         summary["gate_ok"] = g.get("ok")
         print(txt[:3000], flush=True)
     if "access" in only:
-        pl = access.analyse(asm)
+        pl = access.analyse(access_view(asm))
         (OUT / "access.json").write_text(json.dumps(pl, indent=1, default=str), encoding="utf-8")
         txt = access.summarize(pl)
         (OUT / "access.txt").write_text(txt, encoding="utf-8")

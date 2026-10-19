@@ -1,0 +1,7 @@
+V2a-0p60-longarm: reachable [(0.15, 0.1937), (0.2188, 0.4219)]
+  0.30 m: valid=True worst=elbow_r 0.357 
+  0.35 m: valid=True worst=elbow_r 0.394 
+  0.40 m: valid=True worst=shoulder_pitch_r 0.427 
+  0.42 m: valid=True worst=shoulder_pitch_r 0.429 
+  0.45 m: valid=False worst=None None 
+  -> C:\Users\aemar\Documents\Easy Humanoid\.claude\worktrees\agent-a1f3d10c477d2a293\variants\adam\generated\concept\V2a-0p60-longarm\pickup_range.md

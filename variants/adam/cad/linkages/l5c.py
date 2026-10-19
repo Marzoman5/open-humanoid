@@ -236,7 +236,7 @@ def build(ctx=None) -> Assembly:
     Hk = servo_housing(KNEE_SERVO, part="thigh", cover_part="cover_knee", cover_t=4.4)
     hk = Hk.params
     z_hk_top = zks + hk["outer_y"][1]
-    col = ybox(-14.0, 14.0, hip_idl_y[0] + 2.0, F + hk["z_top"], z_hk_top - 1.0, Z_HIP - rw - tw + 0.5)       # web -> knee housing
+    col = ybox(-14.0, 14.0, F + hk["z_bot"], F + hk["z_top"], z_hk_top - 1.0, Z_HIP - rw - tw + 0.5)       # web -> knee housing (housing y span: clear of the cover)
     ty = P["tongue_y"]
     z_hk_bot = zks + hk["outer_y"][0]
     beam = ybox(-4.0, 10.0, ty[0], ty[1], Z_KNEE, z_hk_bot + 1.0)
@@ -256,6 +256,8 @@ def build(ctx=None) -> Assembly:
     ax_nut = ycyl(0.0, Z_KNEE, cm[0] - P["washer_t"] - P["nut_t"], cm[0] - P["washer_t"], P["nut_af"] * 1.1547)
     ax_shank = ycyl(0.0, Z_KNEE, cm[0] - P["washer_t"] - P["nut_t"] - 1.0, y_ax_lat[1] + P["washer_t"], 2.9)
     purchased("axle_knee", safe_union(safe_union(ax_head, ax_shank, "axle"), ax_nut, "axle+nut"), "thigh", "screw:M3x45L", 0.004)
+    links["thigh"].parts[-1].sites.append(site_to_link(Site(id="axle_knee", kind="screw", part="axle_knee", thread="M3", length_mm=45, mates="thigh",
+                                                            frame=loc_from((0.0, y_ax_lat[1] + P["washer_t"] + 2.0, Z_KNEE), (0, 1, 0), (1, 0, 0)), tool_d=8.0, tool_len=30.0), "thigh", "axle_knee"))
 
     # ======================================================================== knee input crank (on the knee servo horn) + coupler
     def crank(pid, S, aid, pin, axis_xz, r_axis, link, tag):
@@ -310,6 +312,8 @@ def build(ctx=None) -> Assembly:
     a_nut = ycyl(0.0, Z_ANK, cm[0] - P["washer_t"] - P["nut_t"], cm[0] - P["washer_t"], P["nut_af"] * 1.1547)
     a_shank = ycyl(0.0, Z_ANK, cm[0] - P["washer_t"] - P["nut_t"] - 1.0, y_ax_lat[1] + P["washer_t"], 2.9)
     purchased("axle_ankle", safe_union(safe_union(a_head, a_shank, "axle"), a_nut, "axle+nut"), "shank", "screw:M3x45L", 0.004)
+    links["shank"].parts[-1].sites.append(site_to_link(Site(id="axle_ankle", kind="screw", part="axle_ankle", thread="M3", length_mm=45, mates="shank",
+                                                            frame=loc_from((0.0, y_ax_lat[1] + P["washer_t"] + 2.0, Z_ANK), (0, 1, 0), (1, 0, 0)), tool_d=8.0, tool_len=30.0), "shank", "axle_ankle"))
 
     # ======================================================================== ankle input crank (calf servo horn) + coupler
     crank("crank_ankle", Sc, CALF_SERVO, pin_a_in, (0.0, zcs), 12.0, "crank_a", "calf")
