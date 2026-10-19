@@ -35,28 +35,44 @@ def build_motions(kin: RobotKin, *, table_height_m: float | None = None, stress:
     m = config.motions()
     refs: dict[str, Reference] = {}
     refs["stand"] = posture.stand(kin, 4.0)
-    g0 = walk_mod.frozen_gait()
+    g0 = walk_mod.frozen_gait(walk_mod.chosen_step_time(kin))
     ov = {"step_len": g0["step_len"] * walk_speed_factor} if walk_speed_factor != 1.0 else {}
     refs["walk_forward"] = walk_mod.walk(kin, "forward", **ov)
     refs["walk_backward"] = walk_mod.walk(kin, "backward", **ov)
     refs["turn"] = walk_mod.walk(kin, "turn")
+    kmax = min([j["range"][1] for j in kin.robot.joints if j["base"] == "knee"] or [130.0])      # CAD-limited in the height sweep
+
+    def clamp(depth):
+        """A frozen depth beyond the knee range is run at the range limit and REPORTED (never silently weakened)."""
+        return (depth, None) if depth <= kmax - 0.2 else (kmax - 0.2, depth)
+
     for d in m["squat"]["depths_deg"]:
-        refs[f"squat_{int(d)}"] = posture.squat(kin, d, down_s=m["squat"]["down_s"], hold_s=m["squat"]["hold_s"])
+        eff, was = clamp(d)
+        refs[f"squat_{int(d)}"] = posture.squat(kin, eff, down_s=m["squat"]["down_s"], hold_s=m["squat"]["hold_s"])
+        refs[f"squat_{int(d)}"].name = f"squat_{int(d)}"
+        if was:
+            refs[f"squat_{int(d)}"].meta["rom_clamped_from_deg"] = was
+            refs[f"squat_{int(d)}"].notes.append(f"ROM CLAMP: the frozen squat is {was:.0f} deg of knee flexion but the knee range ends at {kmax:.0f} deg; run at {eff:.1f} deg")
     refs["wave"] = posture.wave(kin, "r", duration=m["wave"]["duration_s"], freq_hz=m["wave"]["freq_hz"], amp_deg=m["wave"]["amp_deg"])
     dn = m["dance"]
     refs["dance"] = dance_mod.dance(kin, bpm=dn["bpm"], n_phrases=dn["phrases"], v_limit=dn["v_limit_rad_s"],
                                     max_dev_deg=dn["smoother_max_deviation_deg"])
     pk = m["pickup"]
-    refs["pickup"] = pickup_mod.pickup(kin, table_height_m=table_height_m or pk["table_height_m"])
+    heights = [table_height_m] if table_height_m else list(pk.get("table_heights_m", [pk["table_height_m"]]))
+    for i, th_ in enumerate(heights):
+        nm = "pickup" if i == 0 else f"pickup_{th_:.2f}m"
+        refs[nm] = pickup_mod.pickup(kin, table_height_m=th_)
+        refs[nm].name = nm
     sts = m["sit_to_stand"]
-    refs["sit_to_stand_130"] = posture.squat(kin, sts["knee_deg"], down_s=sts["down_s"], hold_s=sts["hold_s"])
+    eff, was = clamp(sts["knee_deg"])
+    refs["sit_to_stand_130"] = posture.squat(kin, eff, down_s=sts["down_s"], hold_s=sts["hold_s"])
     refs["sit_to_stand_130"].name = "sit_to_stand_130"
-    from .motions import push as push_mod
-    for kind in push_mod.KINDS:
-        refs[f"push_{kind}"] = push_mod.push_case(kin, kind)
+    if was:
+        refs["sit_to_stand_130"].meta["rom_clamped_from_deg"] = was
+        refs["sit_to_stand_130"].notes.append(f"ROM CLAMP: {was:.0f} deg requested, knee range ends at {kmax:.0f} deg; run at {eff:.1f} deg")
     if stress:
         s = m["stress"]
-        g = walk_mod.frozen_gait()
+        g = g0
         refs["stress_walk_speed_x1.5"] = walk_mod.walk(kin, "forward", step_len=g["step_len"] * s["walk_speed_factor"])
         refs["stress_walk_step_time_x0.8"] = walk_mod.walk(kin, "forward", step_time=g["step_time"] * s["walk_step_time_factor"])
         for sign, tag in ((1, "late"), (-1, "early")):
@@ -88,19 +104,20 @@ class Demand:
     log: Log | None = None
 
 
-PUSH_NAMES = ["push_ankle_fwd", "push_hip_fwd", "push_capture_fwd", "push_capture_lat"]
+PUSH_NAMES = ["push_stand_fwd", "push_stand_lat", "push_walk_fwd", "push_walk_lat_out", "push_walk_lat_in"]   # R10 scenarios (motions/push.py SCENARIOS)
 
 
 def push_gate(robot: Robot, dem: Demand, vin: float) -> dict:
     """Push-recovery check (R10): an emergency transient may use the whole stall torque and the whole torque-speed envelope
     (not the 0.70 sustained gate), the trunk pitch speed of the hip strategy must be within the hip servos' speed, and the plan
-    itself must be feasible. Uses a 40 ms moving average."""
+    itself must be feasible. Same 100 ms moving average as the sustained gates (a 40 ms window made a push-free control pass
+    through the walk's own swing-knee transient fail the emergency limit); the metric window starts at the push."""
     cfgp = config.motions()["push"]["deliver"]
     out = {"valid": dem.valid, "reason": dem.invalid_reason}
     if not dem.valid:
         out["ok"] = False
         return out
-    m = joint_metrics(robot, dem, np.full(len(robot.names), vin), window_s=0.04)
+    m = joint_metrics(robot, dem, np.full(len(robot.names), vin))
     j = int(np.argmax(m["peak_frac_stall"]))
     ju = int(np.argmax(m["util_max"]))
     out.update({"peak_frac_of_stall": float(m["peak_frac_stall"][j]), "peak_joint": robot.names[j], "peak_nm": float(m["peak_nm"][j]),

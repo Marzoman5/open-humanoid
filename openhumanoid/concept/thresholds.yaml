@@ -137,25 +137,35 @@ motions:
   squat: {depths_deg: [90, 120], down_s: 2.5, hold_s: 1.0}
   wave: {freq_hz: 1.25, amp_deg: 22.0, duration_s: 7.0}
   dance: {bpm: 80.0, phrases: 6, v_limit_rad_s: 3.0, smoother_max_deviation_deg: 8.0}
-  pickup: {object_mass_kg: 0.150, table_height_m: 0.25, table_height_note: "R5 'table height' is undefined (maintainer question Q1). 0.25 m is a placeholder; run --table-height to sweep it."}
+  pickup: {object_mass_kg: 0.150, table_height_m: 0.25, table_heights_m: [0.25, 0.45], table_height_note: "R5 'table height' is undefined (maintainer question Q1): the provisional answer is a coffee-table height of 0.40-0.50 m while the engine started at 0.25 m. BOTH are run (challenge-2 row 16): the first is the motion named `pickup`, the others `pickup_<h>m`; a joint is judged on the worst of them. --table-height replaces the list."}
   sit_to_stand: {knee_deg: 130.0, down_s: 3.0, hold_s: 0.5}
   push:
-    # R10 (balance recovery is a MUST). The push is a velocity change of the whole body (impulse J = M * dv), expressed in
-    # capture-point units so the same non-dimensional push applies at any height: dv = k * margin * sqrt(g / z_com).
+    # R10 (balance recovery is a MUST), REDEFINED after challenge #2 (rows 5-8): an ABSOLUTE impulse, the same for every candidate,
+    # recovered by ANY combination of strategies (ankle, hip, up to two steps), standing AND at mid single support of walk_forward.
+    # One gate: the largest recoverable impulse must be >= required_impulse_Ns. The engine reports the largest recoverable push in N.s
+    # and m/s so the maintainer can choose the requirement with numbers.
     class: assumption
-    source: "Magnitudes are requirement-level placeholders in the range of the precedent in research/methods/domain_randomization_ranges.yaml: Open Duck Mini adds 0.1-1.0 m/s to the base velocity every 5-10 s, MuJoCo Playground (Berkeley Humanoid, G1, T1) 0.1-2.0 m/s, ToddlerBot 1-3 N for 0.2 s (0.06-0.18 m/s on 3.4 kg). The k values below are set once, for every candidate."
-    ankle_k: 0.5            # capture-point offset = 0.5 x foot half-length: absorbed by shifting the COP inside the foot
-    hip_k: 1.15             # just beyond the toe edge: needs the trunk (hip strategy)
-    capture_fwd_k: 1.3      # 1.3 x the foot half-length: beyond what the trunk can absorb at this delay, needs a capture step (0.35 m/s at 0.45 m)
-    capture_lat_k: 0.75     # x (foot half-width + half the hip half-spacing): lateral capture step (0.2 m/s at 0.45 m)
-    dcm_gain: 2.0           # COP = xi + K (xi - xi_ref)  (decay rate K*w0)
-    cop_margin_frac: 0.75   # the planned COP never goes beyond 75% of the way to the foot edge (slack for the unmodelled)
+    source: "PROVISIONAL, pending maintainer Q1. 0.45 N.s is the top of the ToddlerBot push randomization range (1-3 N for 0.2 s = 0.06-0.18 m/s on 3.4 kg; 0.18 m/s on a 2.5 kg robot is 0.45 N.s); the Open Duck Mini Playground adds 0.1-1.0 m/s to the base velocity every 5-10 s and MuJoCo Playground (Berkeley Humanoid, G1, T1) 0.1-2.0 m/s (research/methods/domain_randomization_ranges.yaml). Challenge-2 commander response, rows 5-8."
+    required_impulse_Ns: 0.45
+    push_time_s: 1.0            # standing: the push lands 1 s into the reference
+    horizon_s: 4.0              # simulated time after the push
+    swing_times_s: [0.15, 0.20, 0.25, 0.30, 0.35]   # capture-step swing time sweep (challenge-2 row 7)
+    max_steps: 2                # up to two capture steps
+    walk_push_step_index: 2     # walk_forward step during which the push lands (0-based; the third footfall, mid single support)
+    walk_steps_built: 5
+    second_step_trigger_shrink: 0.6    # a second step is taken when the capture point at touchdown is outside the double-support polygon shrunk to 60%
+    settle_tol_frac: 0.3        # recovered = the capture point ends within 30% of the smallest COP half-extent of the final double-support centre
+    settle_speed_mps: 0.03
+    max_com_excursion_m: 0.6
+    reach_frac: 0.985           # swing-leg reach as a fraction of thigh + shank (ankle target vs hip)
+    crouch_knee_max_deg: 120.0  # stance-leg knee flexion allowed when a stepping leg needs to reach further; also capped at the knee range limit minus 5 deg, and the actuator demand decides whether it is affordable
+    dcm_gain: 2.0               # COP = xi + K (xi - xi_ref)  (decay rate K*w0)
+    cop_margin_frac: 0.75       # the planned COP never goes beyond 75% of the way to the foot edge (slack for the unmodelled)
     trunk_pitch_max_deg: 35.0
     trunk_alpha_max_rad_s2: 150.0
-    control_period_s: 0.010 # one 100 Hz policy / control tick
+    control_period_s: 0.010     # one 100 Hz policy / control tick
     sensing_latency_s: 0.010
     sensing_latency_class: assumption
-    capture_swing_s: 0.15   # swing time of the capture step: a human 0.3 s Froude-scaled to 0.45 m (x sqrt(0.45/1.75)); a normal walking swing here is 0.4 s
     capture_clearance_m: 0.015
     land_margin_m: 0.010
     deliver:
@@ -168,6 +178,26 @@ motions:
     walk_step_time_factor: 0.8    # step time -20% at the same step length
     landing_timing_error_s: 0.010 # swing foot lands 10 ms early / late relative to the ZMP plan
     capture_step_lateral_m: 0.030 # one wide lateral step after a push
+
+gait_sweep:
+  # Challenge-2 rows 12-13: the stance knee flexion and the step time are controller choices, not requirements. The SAME set is tried for
+  # every candidate and the gates use the best feasible one (largest worst-joint margin among combinations whose motions are all valid).
+  # The requirement-level walk (0.10 m/s, 15 mm clearance, 20% double support) stays frozen; only how the legs are folded and how fast they step varies.
+  class: assumption
+  source: "challenge-2 commander response rows 12-13: stance knee flex 20-45 deg, step time {0.25, 0.35, 0.5} s"
+  stance_knee_flex_deg: [20, 30, 40, 45]
+  step_time_s: [0.25, 0.35, 0.50]
+
+packaging_cad_foundation:
+  # Facts the CAD foundation (T-20261019-2426, docs/cad-foundation.md) established on a real 6-DOF leg of STS3215 servos. Applied only when a
+  # concept lists `packaging: [t0004, cad_foundation]` (the height sweep does); the T-0004 floors above stay the default for A-D.
+  class: sourced_estimate
+  source: "docs/cad-foundation.md 'Design facts the leg established'; coordination/commander-log.md CAD foundation entry. Servo feature dimensions behind them are ESTIMATES until the fit gauge is printed"
+  ankle_height_m_min: 0.066          # absolute: fixed by 35 mm servos on intersecting axes (a roll servo behind a pitch fork), does not scale with height
+  rom_deg: {knee: [0, 115], hip_pitch: [-110, 40], ankle_pitch: [-60, 25]}     # CAD-limited ranges; the spec values are kept in rom_spec_deg
+  keep_total_height: true            # the height a floor adds is taken pro rata from the other vertical proportions, so `height_m` stays the standing height
+  hip_stack_above_m: 0.106           # NOT applied: the yaw servo stack above the hip axis would move the pelvis / trunk COM (reported as a limitation)
+  hip_stack_behind_m: 0.084          # NOT applied
 
 assist:
   mean_fraction_of_weight_max: {value: 0.01, class: gate, source: "challenge-1 row 7: the playback tether may not carry the motion; mean assist above 1% of body weight invalidates the motion"}

@@ -157,6 +157,7 @@ class Reference:
     meta: dict = field(default_factory=dict)
     scene: dict | None = None      # extra world (table/object) description for the pickup
     stance: np.ndarray | None = None   # (T,2) foot-in-contact flags L,R
+    aux: dict | None = None            # generator internals (footstep plan, ZMP, COM) for scenarios built on top of this reference
 
     @property
     def t(self) -> np.ndarray:
