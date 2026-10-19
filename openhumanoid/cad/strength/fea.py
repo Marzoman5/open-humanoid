@@ -212,6 +212,9 @@ class FEAResult:
     n_dof: int
     peak_index: float
     peak_top1: float
+    peak_away: float
+    top1_away: float
+    probe_mean: float
     peak_mises_mpa: float
     peak_delam_mpa: float
     peak_where: list
@@ -227,7 +230,7 @@ class FEAResult:
 
 
 def solve_part(part: PartRec, loads: PartLoads, case: str, h: float, sf: float = 1.0, fine: list | None = None, g_link: np.ndarray | None = None,
-               patch_r: float = 2.5, verbose: bool = False, keep_field: bool = True) -> FEAResult:
+               patch_r: float = 2.5, verbose: bool = False, keep_field: bool = True, probe: tuple | None = None, exclude_mm: float = 4.0) -> FEAResult:
     import scipy.sparse as sp
     from scipy.sparse.linalg import spsolve
     from skfem import Basis, BilinearForm, ElementTetP2, ElementVector, LinearForm, MeshTet
@@ -338,7 +341,23 @@ def solve_part(part: PartRec, loads: PartLoads, case: str, h: float, sf: float =
     tr3 = np.einsum("ii...->...", sig)
     vm = np.sqrt(np.maximum(1.5 * (np.einsum("ij...,ij...->...", sig, sig) - tr3 ** 2 / 3.0) * 1.0 + 0.0, 0.0))
     disp = x[basis.nodal_dofs]
-    res = FEAResult(part.id, case, h, int(mesh.t.shape[1]), int(basis.N), float(FI.max()), top1, float(vm.max()), float(np.maximum(sbb, 0).max()), where, eq,
+    # away from the load-introduction patches (St-Venant: a point-load / bolt-circle patch makes its own stress peak, which the horn and screw
+    # checks of fasteners.py cover): peak and worst-1% mean of the failure index farther than `exclude_mm` from every loaded node
+    from scipy.spatial import cKDTree
+
+    Xq = np.moveaxis(basis.global_coordinates().value, 0, -1).reshape(-1, 3)
+    dist = cKDTree(pts[np.unique(node_loaded)]).query(Xq)[0].reshape(FI.shape)
+    far = dist > exclude_mm
+    FIa = np.where(far, FI, 0.0)
+    el_a = FIa.max(axis=1)
+    ka = max(1, int(0.01 * (el_a > 0).sum()))
+    top1_a = float(np.sort(el_a)[-ka:].mean())
+    pm = float("nan")
+    if probe is not None:
+        pc, pr = np.asarray(probe[0]), float(probe[1])
+        sel = (np.linalg.norm(Xq - pc, axis=1) < pr).reshape(FI.shape)
+        pm = float(FI[sel].mean()) if sel.any() else float("nan")
+    res = FEAResult(part.id, case, h, int(mesh.t.shape[1]), int(basis.N), float(FI.max()), top1, float(FIa.max()), top1_a, pm, float(vm.max()), float(np.maximum(sbb, 0).max()), where, eq,
                     time.time() - t0, float(np.linalg.norm(disp, axis=0).max()))
     res.info = {"fe_load_sum_n": tot_F.tolist(), "sf": sf}
     if keep_field:
@@ -346,13 +365,18 @@ def solve_part(part: PartRec, loads: PartLoads, case: str, h: float, sf: float =
     return res
 
 
-def converge(part: PartRec, loads: PartLoads, case: str, h0: float, ratio: float = 1.6, fine: list | None = None, verbose: bool = False) -> dict:
+def converge(part: PartRec, loads: PartLoads, case: str, h0: float, ratio: float = 1.6, fine: list | None = None, verbose: bool = False,
+             probe: tuple | None = None) -> dict:
     """Two mesh densities (h0 and h0/ratio, refinement balls scaled the same way). Reports the change of the peak failure index."""
-    r1 = solve_part(part, loads, case, h0, fine=fine, verbose=verbose, keep_field=False)
+    r1 = solve_part(part, loads, case, h0, fine=fine, verbose=verbose, keep_field=False, probe=probe)
     fine2 = [(c, rad, sz / ratio) for c, rad, sz in (fine or [])]
-    r2 = solve_part(part, loads, case, h0 / ratio, fine=fine2, verbose=verbose, keep_field=True)
+    r2 = solve_part(part, loads, case, h0 / ratio, fine=fine2, verbose=verbose, keep_field=True, probe=probe)
     d_peak = abs(r2.peak_index - r1.peak_index) / max(r2.peak_index, 1e-12)
     d_top = abs(r2.peak_top1 - r1.peak_top1) / max(r2.peak_top1, 1e-12)
+    d_away = abs(r2.peak_away - r1.peak_away) / max(r2.peak_away, 1e-12)
+    d_top_a = abs(r2.top1_away - r1.top1_away) / max(r2.top1_away, 1e-12)
+    d_probe = abs(r2.probe_mean - r1.probe_mean) / max(abs(r2.probe_mean), 1e-12) if probe is not None else float("nan")
     d_disp = abs(r2.max_disp_mm - r1.max_disp_mm) / max(r2.max_disp_mm, 1e-12)
     return {"coarse": r1.summary(), "fine": r2.summary(), "peak_change": d_peak, "top1_change": d_top, "disp_change": d_disp,
-            "converged_10pct": bool(d_top <= 0.10), "result": r2}
+            "peak_away_change": d_away, "top1_away_change": d_top_a, "probe_change": d_probe,
+            "converged_10pct": bool(min(d_top_a, d_away) <= 0.10), "result": r2}

@@ -8,6 +8,7 @@ Units: forces N, lengths mm, moments N.mm, masses kg, field m/s2 (force on a mas
 """
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -108,6 +109,51 @@ def scale_to_cap(model: Model, sc: Scenario, stall: dict[str, float], mass_overr
         sols = [x for x in sols if 0.0 <= x < s]
         if sols:
             s = min(sols)
+    # single-sided joints (no idler bearing): the non-axial moment goes through the servo's output shaft; it cannot exceed what the servo
+    # transmits either (policy joint_torque.side_moment_over_stall x stall; ASSUMPTION, bench test in docs/strength.md)
+    from .policy import policy, pv
+
+    fperp = float(pv(policy(), "joint_torque", "side_force_n", default=0.0))
+    if fperp > 0 and sc.cap_factor is not None:
+        for jn, d in w1.items():
+            if model.joints[jn].idler_bearing:
+                continue
+            a = d["axis"]
+            f1 = d["F"] - a * float(d["F"] @ a)
+            f0 = w0[jn]["F"] - a * float(w0[jn]["F"] @ a)
+            if np.linalg.norm(f1) <= fperp:
+                continue
+            dm = f1 - f0
+            A_, B_, C_ = float(dm @ dm), 2.0 * float(f0 @ dm), float(f0 @ f0) - fperp * fperp
+            if A_ < 1e-12:
+                continue
+            disc = B_ * B_ - 4 * A_ * C_
+            if disc < 0:
+                continue
+            root = (-B_ + math.sqrt(disc)) / (2 * A_)
+            if 0.0 <= root < s:
+                s = root
+    kperp = float(pv(policy(), "joint_torque", "side_moment_over_stall", default=0.0))
+    if kperp > 0 and sc.cap_factor is not None:
+        for jn, d in w1.items():
+            if model.joints[jn].idler_bearing:
+                continue
+            cap = kperp * stall.get(jn, 0.0) * 1000.0
+            a = d["axis"]
+            m1 = d["M"] - a * float(d["M"] @ a)
+            m0 = w0[jn]["M"] - a * float(w0[jn]["M"] @ a)
+            if cap <= 0 or np.linalg.norm(m1) <= cap:
+                continue
+            dm = m1 - m0
+            A_, B_, C_ = float(dm @ dm), 2.0 * float(m0 @ dm), float(m0 @ m0) - cap * cap
+            if A_ < 1e-12:
+                continue
+            disc = B_ * B_ - 4 * A_ * C_
+            if disc < 0:
+                continue
+            root = (-B_ + math.sqrt(disc)) / (2 * A_)
+            if 0.0 <= root < s:
+                s = root
     return max(0.0, min(1.0, s))
 
 

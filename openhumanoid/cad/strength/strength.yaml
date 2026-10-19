@@ -111,6 +111,8 @@ handling:
 # ---- joint torque bounds -----------------------------------------------------------------------------------------------------
 joint_torque:
   stall_bound_factor: {v: 1.0, kind: policy, src: "a servo cannot push more than stall (catalog stall_torque_nm at the model voltage)"}
+  side_force_n: {v: 150.0, kind: assumption, src: "radial force a single-sided hobby servo output (bearing + 25T spline) carries before the servo, not the printed part, is the first thing to fail; hobby 30 kg.cm servos are usually good for 5-10 kgf radial (the STS3215 datasheet gives no value)", test: "hang a weight from a horn lever on a clamped servo"}
+  side_moment_over_stall: {v: 1.0, kind: assumption, src: "the non-axial moment a single-sided servo (no idler bearing) can carry through its output shaft and horn is taken as 1 x its stall torque (a 3 N.m servo carrying 3 N.m of side moment = 300 N at a 10 mm horn offset); beyond it the servo, not the printed part, fails first", test: "clamp a servo, hang a weight from a horn lever, measure shaft play vs side moment"}
   back_drive_over_stall: {v: 2.0, kind: assumption, src: "a joint loaded from outside (fall, hard landing) slips or back-drives at about 2 x stall before the gear train fails; the printed structure only ever sees what the servo transmits", test: "back-drive one servo with a torque wrench until it slips; strip test"}
 
 # ---- section analysis settings -----------------------------------------------------------------------------------------------

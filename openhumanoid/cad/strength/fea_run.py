@@ -56,7 +56,7 @@ def run_fea(model: Model, cfg: dict, res: dict, parts: list[str], out: Path | No
         sf, _f, _g = sf_of(row["cls"])
         if verbose:
             print(f"FEA {pid}: case {row['case']} (margin {row['margin']:.3f}), h={h:.1f} mm, {len(balls)} refinement zones", flush=True)
-        cv = fea.converge(part, pl, row["case"], h, ratio, balls)
+        cv = fea.converge(part, pl, row["case"], h, ratio, balls, probe=(fib, 3.0))
         fine: fea.FEAResult = cv.pop("result")
         # nominal comparison at the analytic section
         n = np.asarray(row["info"]["normal"])
@@ -72,6 +72,8 @@ def run_fea(model: Model, cfg: dict, res: dict, parts: list[str], out: Path | No
         cv.update({"part": pid, "case": row["case"], "class": row["cls"], "sf": sf, "analytic_margin": row["margin"],
                    "fea_margin": 1.0 / (sf * fine.peak_index) if fine.peak_index > 0 else 1e9,
                    "fea_margin_top1": 1.0 / (sf * fine.peak_top1) if fine.peak_top1 > 0 else 1e9,
+                   "fea_margin_away": 1.0 / (sf * fine.peak_away) if fine.peak_away > 0 else 1e9,
+                   "fea_margin_top1_away": 1.0 / (sf * fine.top1_away) if fine.top1_away > 0 else 1e9,
                    "analytic_sigma_mpa": an_nom, "analytic_kt": row["info"].get("kt"), "fea_sigma_nn_at_fibre_mpa": fe_nom,
                    "fea_over_analytic_nominal": fe_nom / an_nom if an_nom > 0 else float("nan"), "wall_s": time.time() - t0})
         out_all[pid] = cv
@@ -83,6 +85,8 @@ def run_fea(model: Model, cfg: dict, res: dict, parts: list[str], out: Path | No
             except Exception as exc:  # noqa: BLE001
                 cv["plot_error"] = str(exc)
         if verbose:
-            print(f"  coarse peak {cv['coarse']['peak_index']:.2f} top1 {cv['coarse']['peak_top1']:.2f} ({cv['coarse']['n_tets']} tets) | fine peak {cv['fine']['peak_index']:.2f} top1 {cv['fine']['peak_top1']:.2f} ({cv['fine']['n_tets']} tets) | "
-                  f"top1 change {cv['top1_change'] * 100:.1f}% | FEA margin {cv['fea_margin']:.3f} vs analytic {row['margin']:.3f} | sigma_nn FE {fe_nom:.1f} vs analytic {an_nom:.1f} MPa", flush=True)
+            c, f_ = cv["coarse"], cv["fine"]
+            print(f"  coarse: {c['n_tets']} tets peak {c['peak_index']:.2f} away {c['peak_away']:.2f} top1-away {c['top1_away']:.2f} probe {c['probe_mean']:.2f} | fine: {f_['n_tets']} tets peak {f_['peak_index']:.2f} "
+                  f"away {f_['peak_away']:.2f} top1-away {f_['top1_away']:.2f} probe {f_['probe_mean']:.2f} | change: peak-away {cv['peak_away_change'] * 100:.1f}% top1-away {cv['top1_away_change'] * 100:.1f}% probe {cv['probe_change'] * 100:.1f}% | "
+                  f"FEA margin(away) {cv['fea_margin_away']:.3f} vs analytic {row['margin']:.3f} | sigma_nn FE {fe_nom:.1f} vs analytic {an_nom:.1f} MPa", flush=True)
     return out_all
