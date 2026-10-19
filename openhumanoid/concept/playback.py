@@ -85,6 +85,7 @@ class PlayConfig:
     push: tuple | None = None          # (t_seconds_into_reference, dv[3]): velocity impulse applied to the free base; default: ref.meta['push']
     model_hook: object = None          # callable(MjModel) applied after the model is built (COM shift, floor friction)
     cmd_offset: tuple | None = None   # (t_log, offsets[T, n]) learned by `learn_offsets` (stand-in for policy feedforward)
+    init_vel: bool = False             # start with the reference velocities (a periodic gait replayed from mid-cycle, no lead-in): base v_ref and joint dq_ref
 
 
 @dataclass
@@ -182,6 +183,9 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
     data.qpos[:3] = p_ref[0] + np.array([0, 0, 0.001])
     data.qpos[3:7] = qu_ref[0]
     data.qpos[qadr] = q_ref[0]
+    if cfg.init_vel:
+        data.qvel[:3] = v_ref[warm]
+        data.qvel[dadr] = dq_ref[warm]
     mujoco.mj_forward(model, data)
     bank.reset(q_ref[0] / ratio)
 
