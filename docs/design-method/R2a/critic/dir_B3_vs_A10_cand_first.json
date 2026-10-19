@@ -1,0 +1,22 @@
+{
+  "order": "cand_first",
+  "candidate": "work/B3 (direction B Atlas-capsule)",
+  "baseline": "work/A10 (direction A Optimus-lean, best after 3 rounds)",
+  "note": "Evidence abridged by the author from the critic's full report; verdicts and preference verbatim.",
+  "reads_as": "toy",
+  "reads_as_reason": "The head is a rounded block on almost no neck, the shoulders are huge and the arms flare, the torso is a slab with a dished pelvis, and the legs are untapered tubes.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Block head on a wide shoulder shelf; neck nearly invisible (P2a 0.1103); P3 0.418, arms read as wings; legs straight tubes (P8a 0.9375, P8b 0.9705)."},
+    "G2": {"verdict": "FAIL", "evidence": "Chest slab with a ledge at the black waist band, pelvis a separate dished shape; thigh and shank parallel cylinders, no calf swell near the top (P9b 0.4467). Black bands read as deliberate recesses; the shapes between them do not flow."},
+    "G3": {"verdict": "PASS", "evidence": "Matte warm-white shells, graphite bands, gloss black visor, no accent; bands uniform on arms and legs."},
+    "G4": {"verdict": "FAIL", "evidence": "Arm, leg and head shells share one soft rounded-box language, but the backpack and black heel blocks are sharp boxes; chest and pelvis squareness differ from the soft limbs; S4b 0.5141."},
+    "G6": {"verdict": "FAIL", "evidence": "S2 IoU 0.5248 / 0.5566. Matches head, hip and knee heights and white-over-graphite. Not: shoulder width, wide A-pose, no neck, untapered legs, long foot (P10a 0.238)."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Silhouettes near-identical; B3's bands are uniform and complete, chest and back clean. A10 has irregular black blotches on the shoulder and forearm in the 3/4 view and a black slab on the shoulder in the side view that look like unfinished masking. A10's leg taper (P8a) and P5 are slightly better."},
+  "top_changes": [
+    {"criterion": "G1", "change": "Narrow the shoulders, slim the upper arm and bring the arms in.", "profile_param": "segments[chest].stations[shoulder].w; segments[arm_upper].stations[*].w, cy"},
+    {"criterion": "G2", "change": "Visible neck; chest tapering into the waist and a pelvis that is not a separate dish.", "profile_param": "segments[neck].stations[*].z, w; segments[torso].stations[waist].w, d"},
+    {"criterion": "G6", "change": "Taper thigh and shank; shorten the foot.", "profile_param": "segments[thigh].stations[knee].w, d; segments[shank].stations[calf].z, w; segments[foot].stations[toe]"}
+  ],
+  "notes": "Facet banding in the clay render hides surface continuity; A-pose arms inflate the front silhouette."
+}

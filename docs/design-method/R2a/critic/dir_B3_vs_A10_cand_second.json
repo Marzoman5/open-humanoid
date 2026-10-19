@@ -1,0 +1,22 @@
+{
+  "order": "cand_second",
+  "candidate": "work/B3 (direction B Atlas-capsule)",
+  "baseline": "work/A10 (direction A Optimus-lean)",
+  "note": "Evidence abridged by the author from the critic's full report; verdicts and preference verbatim.",
+  "reads_as": "toy",
+  "reads_as_reason": "Boxy head, very wide splayed shoulders and arms, a visibly short neck and tube-like legs read as a stout character figure.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Squared-off head, short neck (P2a 0.1103); heavy splayed arm slabs (P3 0.418); straight leg columns, long wedge foot (P10a 0.238)."},
+    "G2": {"verdict": "FAIL", "evidence": "Chest, waist band and pelvis bowl read as stacked pieces; thigh and shank near-parallel tubes (P8a 0.9375, P8b 0.9705). Dark bands deliberate, forms between them do not connect."},
+    "G3": {"verdict": "PASS", "evidence": "White shells, graphite bands at waist, elbow, knee, wrist, gloss visor, no accent; regular bands with none of the baseline's smears."},
+    "G4": {"verdict": "FAIL", "evidence": "Head and chest tight-radius boxes; arms and pelvis pillowy; domed shoulders; soft-rectangle legs; flat wedge foot."},
+    "G6": {"verdict": "FAIL", "evidence": "Head height matches and the white-over-graphite layering follows the brief; shoulders far wider than both references, no hourglass, short neck, untapered legs, long foot. IoU 0.5248 / 0.5566."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Both toy-like; the candidate is cleaner: integrated domed shoulders, regular dark bands, torso and pelvis read as one body, no ragged black patches (baseline shoulder panel and forearm smear); S4b 0.5141 vs 0.6473. Baseline has slightly better leg taper (P8a 0.8648 vs 0.9375)."},
+  "top_changes": [
+    {"criterion": "G1", "change": "Narrow the shoulders and arm slabs so the arms hang inside the leg width; shrink the shoulder dome, then the upper-arm section.", "profile_param": "segments[chest].stations[shoulder].w; segments[arm_core].stations[*].w"},
+    {"criterion": "G2", "change": "Taper thigh and shank (thigh wide at the hip, ~65 % area at the knee; shank widest just below the knee).", "profile_param": "segments[leg_core].stations[knee].w, d; stations[ankle].w, d"},
+    {"criterion": "G1", "change": "Lengthen the visible neck and soften the head corners.", "profile_param": "segments[head].stations[*].n; segments[neck].stations[*].z"}
+  ],
+  "notes": "Two-tone render is flat; no true back or top view; the pairwise rests on finish and flow since numeric pass counts are equal (12 of 19)."
+}

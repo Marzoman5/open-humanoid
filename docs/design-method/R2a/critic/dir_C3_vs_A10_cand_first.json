@@ -1,0 +1,22 @@
+{
+  "order": "cand_first",
+  "candidate": "work/C3 (direction C Apple-monolith)",
+  "baseline": "work/A10 (direction A Optimus-lean)",
+  "note": "Evidence abridged by the author from the critic's full report; verdicts and preference verbatim.",
+  "reads_as": "toy",
+  "reads_as_reason": "Cuboid rounded-box head, stacked rounded-block segments with no taper, and oversized shoulders and arms read as a blocky character figure.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Squared head with a flat top; stacked torso blocks; wide splayed arm slabs; untapered leg columns (P3 0.422, P2a 0.1324)."},
+    "G2": {"verdict": "FAIL", "evidence": "Pelvis tub overhangs the thighs; shoulder box steps onto the chest; joint bands are thin lines only at shoulder, elbow, wrist; the knee reads as a seam in one white column (P8a 0.9626, P8b 0.9242)."},
+    "G3": {"verdict": "PASS", "evidence": "Warm-white shells, graphite only at joint lines, hands, feet and a thin visor slit; cleaner than the baseline's shoulder and forearm blotches."},
+    "G4": {"verdict": "UNCERTAIN", "evidence": "Radii broadly uniform and all sections squarish: consistent, but the consistency of a block set; S4b 0.6186."},
+    "G6": {"verdict": "FAIL", "evidence": "Much wider than both references; square head vs ovoid references; long feet. Matches head, hip and knee heights and the white-over-black split. IoU 0.5266 / 0.5578."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Silhouettes practically identical; the candidate's two-tone is calmer (thin visor slit, thin bands) against the baseline's large visor block and blotches; 13/19 vs 12/19 and P9b passes. The baseline has the more convincing knee recess and the more Optimus-like full visor; small margin."},
+  "top_changes": [
+    {"criterion": "G1", "change": "Narrow the shoulders, bring the arms in, make the upper arm a tapered capsule.", "profile_param": "segments[chest].stations[shoulder].w; arm stations w, cy"},
+    {"criterion": "G2", "change": "Taper the legs, reduce the pelvis overhang, add a visible dark knee recess (narrower than the baseline's).", "profile_param": "segments[thigh].stations[distal].w, d; segments[shank].stations[ankle].w; segments[pelvis].stations[hip].w"},
+    {"criterion": "G1", "change": "Lengthen the neck, soften the head toward an ovoid (lower n), shorten the foot.", "profile_param": "segments[head].stations[*].n; segments[neck].stations[*].z; segments[foot].stations[toe]"}
+  ],
+  "notes": "Clay views flat-shaded; rear pack and heel block not evaluated."
+}

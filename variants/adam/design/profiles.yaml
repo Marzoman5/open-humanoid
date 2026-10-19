@@ -1,18 +1,18 @@
-# R2a silhouette, direction A 'Optimus-lean' (T-20261019-d955). Written by variants/adam/design/silhouette/directions.py from its station tables; edit the tables and re-run.
+# R2a silhouette, direction B 'Atlas-capsule' (T-20261019-d955). Written by variants/adam/design/silhouette/directions.py from its station tables; edit the tables and re-run.
 # Hard points: variants/adam/design/silhouette/hardpoints.py (R1 0.55 m boxes, GNB 1850 pack, arm servos rotated by the cant).
 schema: design-profiles/0.1
-name: adam-r2a-A
+name: adam-r2a-B
 kind: design
 confidence: approximate
 height_m: 0.55
 head_unit_m: 0.084
 sources:
-- 'variants/adam/design/silhouette/build.py (T-20261019-d955): R2a silhouette direction ''Optimus-lean'' around the R1 0.55 m hard points (variants/adam/design/silhouette/hardpoints.py)'
+- 'variants/adam/design/silhouette/build.py (T-20261019-d955): R2a silhouette direction ''Atlas-capsule'' around the R1 0.55 m hard points (variants/adam/design/silhouette/hardpoints.py)'
 blend:
-  k_m: 0.008
+  k_m: 0.009
   voxel_m: 0.0015
-notes: 'R2a direction Optimus-lean: white chest and limb shells, a graphite waist-and-pelvis band, dark recessed joint bands, tapered limb capsules with a calf swell,
-  pill head with a full-face visor, dark shoulder side panels. Role dark = graphite under-structure; role shell = matte warm white covers. Arm display cant 21.0 deg
+notes: 'R2a direction Atlas-capsule: near-elliptical sections (n 2.5) blended with large radii, white chest and pelvis capsules, dark only at the joints and waist,
+  round shoulder capsules, cylinder limbs, round face disc. Role dark = graphite under-structure; role shell = matte warm white covers. Arm display cant 21.0 deg
   (R1 minimum 13.83 deg).'
 segments:
 - id: head
@@ -37,17 +37,17 @@ segments:
   - z: 0.492
     w: 0.062
     d: 0.068
-    n: 2.4
+    n: 2.2
     cx: 0.005
   - z: 0.53
     w: 0.062
     d: 0.068
-    n: 2.4
+    n: 2.2
     cx: 0.005
   - z: 0.539
     w: 0.05766
     d: 0.06324
-    n: 2.4
+    n: 2.2
     cx: 0.005
   - z: 0.5455
     w: 0.04588
@@ -63,26 +63,51 @@ segments:
   role: dark
   k_m: 0.001
   stations:
-  - z: 0.487
-    w: 0.0558
-    d: 0.06528
-    n: 2.4
-    cx: 0.007
-  - z: 0.492
+  - z: 0.48722
     w: 0.062
     d: 0.068
-    n: 2.4
-    cx: 0.007
-  - z: 0.526
+    n: 2.2
+    cx: 0.00565
+  - z: 0.4903
     w: 0.062
     d: 0.068
-    n: 2.4
-    cx: 0.007
-  - z: 0.531
-    w: 0.0558
-    d: 0.06528
-    n: 2.4
-    cx: 0.007
+    n: 2.2
+    cx: 0.00662
+  - z: 0.4958
+    w: 0.062
+    d: 0.068
+    n: 2.2
+    cx: 0.0073
+  - z: 0.5024
+    w: 0.062
+    d: 0.068
+    n: 2.2
+    cx: 0.00768
+  - z: 0.509
+    w: 0.062
+    d: 0.068
+    n: 2.2
+    cx: 0.0078
+  - z: 0.5156
+    w: 0.062
+    d: 0.068
+    n: 2.2
+    cx: 0.00768
+  - z: 0.5222
+    w: 0.062
+    d: 0.068
+    n: 2.2
+    cx: 0.0073
+  - z: 0.5277
+    w: 0.062
+    d: 0.068
+    n: 2.2
+    cx: 0.00662
+  - z: 0.53078
+    w: 0.062
+    d: 0.068
+    n: 2.2
+    cx: 0.00565
 - id: neck
   role: dark
   k_m: 0.003
@@ -99,42 +124,37 @@ segments:
     cx: 0.003
 - id: chest
   role: shell
-  k_m: 0.012
+  k_m: 0.013
   stations:
-  - z: 0.378
-    w: 0.06
-    d: 0.054
-    n: 3.0
-    cx: 0.004
-  - z: 0.388
-    w: 0.078
-    d: 0.076
-    n: 3.0
-    cx: 0.007
-  - z: 0.395
-    w: 0.09
-    d: 0.088
-    n: 3.0
+  - z: 0.394
+    w: 0.074
+    d: 0.07
+    n: 2.5
+    cx: 0.006
+  - z: 0.398
+    w: 0.086
+    d: 0.084
+    n: 2.5
     cx: 0.009
   - z: 0.4004
-    w: 0.08964
+    w: 0.0933
     d: 0.096
-    n: 3.0
+    n: 2.5
     cx: 0.01
   - z: 0.43
-    w: 0.08981
+    w: 0.09327
     d: 0.098
-    n: 3.0
+    n: 2.5
     cx: 0.01
   - z: 0.4571
-    w: 0.08964
+    w: 0.0933
     d: 0.096
-    n: 3.0
+    n: 2.5
     cx: 0.01
   - z: 0.4593
     w: 0.072
     d: 0.072
-    n: 2.8
+    n: 2.3
     cx: 0.006
   - z: 0.4618
     w: 0.038
@@ -143,37 +163,32 @@ segments:
     cx: 0.003
 - id: back
   role: shell
-  k_m: 0.012
+  k_m: 0.013
   stations:
-  - z: 0.376
-    w: 0.056
-    d: 0.036
-    n: 3.0
-    cx: -0.008
-  - z: 0.39
+  - z: 0.396
     w: 0.076
-    d: 0.052
-    n: 3.0
+    d: 0.05
+    n: 2.5
     cx: -0.014
-  - z: 0.402
+  - z: 0.404
     w: 0.088
     d: 0.066
-    n: 3.0
+    n: 2.5
     cx: -0.02
   - z: 0.4116
-    w: 0.10103
+    w: 0.10922
     d: 0.076
-    n: 3.0
+    n: 2.5
     cx: -0.024
   - z: 0.4571
-    w: 0.10103
+    w: 0.10922
     d: 0.076
-    n: 3.0
+    n: 2.5
     cx: -0.024
   - z: 0.4605
     w: 0.07
     d: 0.058
-    n: 2.8
+    n: 2.3
     cx: -0.019
   - z: 0.463
     w: 0.04
@@ -181,77 +196,57 @@ segments:
     n: 2.6
     cx: -0.01
 - id: pelvis
-  role: dark
-  k_m: 0.008
+  role: shell
+  k_m: 0.013
   stations:
-  - z: 0.294
-    w: 0.084
-    d: 0.066
-    n: 4.5
+  - z: 0.29
+    w: 0.08
+    d: 0.062
+    n: 2.5
     cx: -0.002
+  - z: 0.298
+    w: 0.1
+    d: 0.08
+    n: 2.5
+    cx: -0.001
   - z: 0.3098
-    w: 0.10698
+    w: 0.11568
     d: 0.094
-    n: 4.5
+    n: 3.5
     cx: -0.001
   - z: 0.3353
-    w: 0.11145
+    w: 0.12069
     d: 0.1
-    n: 4.5
+    n: 3.5
     cx: 0.003
   - z: 0.3817
-    w: 0.11145
+    w: 0.12069
     d: 0.1
-    n: 4.5
+    n: 3.5
     cx: 0.003
-  - z: 0.387
-    w: 0.086
-    d: 0.074
-    n: 3.0
+  - z: 0.3845
+    w: 0.096
+    d: 0.08
+    n: 2.5
     cx: 0.003
-  - z: 0.397
+  - z: 0.3875
     w: 0.078
-    d: 0.066
-    n: 3.0
-    cx: 0.004
-- id: hips
-  role: shell
-  k_m: 0.012
+    d: 0.062
+    n: 2.5
+    cx: 0.003
+- id: waist
+  role: dark
+  k_m: 0.003
   stations:
-  - z: 0.289
-    w: 0.08
-    d: 0.066
-    n: 3.4
-    cx: -0.002
-  - z: 0.296
-    w: 0.098
-    d: 0.092
-    n: 3.4
-    cx: -0.002
-  - z: 0.303
-    w: 0.11026
-    d: 0.106
-    n: 3.4
-    cx: -0.001
-  - z: 0.318
-    w: 0.10947
-    d: 0.118
-    n: 3.4
-    cx: 0.001
-  - z: 0.364
-    w: 0.11581
-    d: 0.12
-    n: 3.4
-    cx: 0.003
-  - z: 0.371
-    w: 0.11481
-    d: 0.108
-    n: 3.4
-    cx: 0.003
   - z: 0.376
-    w: 0.12689
-    d: 0.096
-    n: 3.4
+    w: 0.088
+    d: 0.07
+    n: 2.6
+    cx: 0.002
+  - z: 0.402
+    w: 0.086
+    d: 0.07
+    n: 2.6
     cx: 0.003
 - id: glute
   role: shell
@@ -387,25 +382,25 @@ segments:
   - x: -0.04
     w: 0.0516
     d: 0.0198
-    n: 3.0
+    n: 2.5
     cy: 0.035
     cz: 0.01144
   - x: -0.0299
     w: 0.057
     d: 0.022
-    n: 3.0
+    n: 2.5
     cy: 0.035
     cz: 0.0121
   - x: 0.0004
     w: 0.06
     d: 0.022
-    n: 3.0
+    n: 2.5
     cy: 0.035
     cz: 0.0121
   - x: 0.03878
     w: 0.0552
     d: 0.01452
-    n: 3.0
+    n: 2.5
     cy: 0.035
     cz: 0.0088
   - x: 0.061
@@ -423,19 +418,19 @@ segments:
   - x: -0.068
     w: 0.042
     d: 0.005
-    n: 3.0
+    n: 2.5
     cy: 0.035
     cz: 0.003
   - x: -0.06
     w: 0.0531
     d: 0.006
-    n: 3.0
+    n: 2.5
     cy: 0.035
     cz: 0.003
   - x: 0.03878
     w: 0.0567
     d: 0.006
-    n: 3.0
+    n: 2.5
     cy: 0.035
     cz: 0.003
   - x: 0.06
@@ -447,7 +442,7 @@ segments:
 - id: thigh
   role: shell
   mirror: true
-  k_m: 0.004
+  k_m: 0.0045
   stations:
   - z: 0.16
     w: 0.0572
@@ -500,7 +495,7 @@ segments:
 - id: shank
   role: shell
   mirror: true
-  k_m: 0.004
+  k_m: 0.0045
   stations:
   - z: 0.056
     w: 0.05723
@@ -565,109 +560,109 @@ segments:
     n: 3.0
     cy: 0.13864
   - z: 0.25985
-    w: 0.04984
+    w: 0.05338
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.13403
   - z: 0.26983
-    w: 0.04955
+    w: 0.05307
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.1302
   - z: 0.27982
-    w: 0.04926
+    w: 0.05275
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.12637
   - z: 0.2898
-    w: 0.04952
+    w: 0.05303
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.12254
   - z: 0.29978
-    w: 0.04981
+    w: 0.05335
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.1187
   - z: 0.30977
-    w: 0.06153
+    w: 0.06346
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.11487
   - z: 0.31975
-    w: 0.06251
+    w: 0.06493
     d: 0.056
-    n: 3.4
+    n: 2.8
     cy: 0.11104
   - z: 0.32974
-    w: 0.06283
+    w: 0.06527
     d: 0.056
-    n: 3.4
+    n: 2.8
     cy: 0.10721
   - z: 0.33972
-    w: 0.06316
+    w: 0.06561
     d: 0.056
-    n: 3.4
+    n: 2.8
     cy: 0.10338
   - z: 0.3497
-    w: 0.06348
+    w: 0.06595
     d: 0.056
-    n: 3.4
+    n: 2.8
     cy: 0.09954
   - z: 0.35969
-    w: 0.06172
+    w: 0.06411
     d: 0.056
-    n: 3.4
+    n: 2.8
     cy: 0.09571
   - z: 0.36967
-    w: 0.0614
+    w: 0.06377
     d: 0.056
-    n: 3.4
+    n: 2.8
     cy: 0.09188
   - z: 0.37965
-    w: 0.06107
+    w: 0.06343
     d: 0.056
-    n: 3.4
+    n: 2.8
     cy: 0.08805
   - z: 0.38815
     w: 0.042
     d: 0.042
-    n: 3.4
+    n: 2.8
     cy: 0.08478
   - z: 0.39665
-    w: 0.04984
+    w: 0.05338
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.08152
   - z: 0.40733
-    w: 0.04894
+    w: 0.05241
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.07742
   - z: 0.41802
-    w: 0.05225
+    w: 0.05598
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.07332
   - z: 0.4287
-    w: 0.05135
+    w: 0.05501
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.06922
   - z: 0.43938
-    w: 0.05225
+    w: 0.05598
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.06512
   - z: 0.45007
-    w: 0.04894
+    w: 0.05241
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.06102
   - z: 0.46075
-    w: 0.04984
+    w: 0.05338
     d: 0.06
-    n: 3.4
+    n: 2.8
     cy: 0.05692
   - z: 0.46675
     w: 0.034
@@ -677,132 +672,132 @@ segments:
 - id: deltoid
   role: shell
   mirror: true
-  k_m: 0.004
+  k_m: 0.0045
   stations:
   - z: 0.39565
-    w: 0.02978
+    w: 0.03993
     d: 0.0462
-    n: 3.4
+    n: 2.8
     cy: 0.08191
   - z: 0.40065
-    w: 0.04254
+    w: 0.05705
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.07999
   - z: 0.41207
-    w: 0.04107
+    w: 0.05549
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.0756
   - z: 0.42349
-    w: 0.04361
+    w: 0.05818
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.07122
   - z: 0.43491
-    w: 0.04445
+    w: 0.05906
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.06684
   - z: 0.44633
-    w: 0.0419
+    w: 0.05637
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.06245
   - z: 0.45775
-    w: 0.04338
+    w: 0.05793
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.05807
   - z: 0.46475
-    w: 0.03036
+    w: 0.04055
     d: 0.0462
-    n: 3.4
+    n: 2.8
     cy: 0.05538
 - id: upper_arm
   role: shell
   mirror: true
-  k_m: 0.004
+  k_m: 0.0045
   stations:
   - z: 0.33715
-    w: 0.0497
+    w: 0.05346
     d: 0.0496
-    n: 3.4
+    n: 2.8
     cy: 0.10436
   - z: 0.34215
-    w: 0.06212
+    w: 0.06683
     d: 0.062
-    n: 3.4
+    n: 2.8
     cy: 0.10244
   - z: 0.35102
-    w: 0.064
+    w: 0.06877
     d: 0.062
-    n: 3.4
+    n: 2.8
     cy: 0.09904
   - z: 0.3599
-    w: 0.0628
+    w: 0.06754
     d: 0.062
-    n: 3.4
+    n: 2.8
     cy: 0.09563
   - z: 0.36878
-    w: 0.06161
+    w: 0.0663
     d: 0.062
-    n: 3.4
+    n: 2.8
     cy: 0.09222
   - z: 0.37765
-    w: 0.06453
+    w: 0.06932
     d: 0.062
-    n: 3.4
+    n: 2.8
     cy: 0.08881
-  - z: 0.39465
-    w: 0.05163
+  - z: 0.38465
+    w: 0.05546
     d: 0.0496
-    n: 3.4
-    cy: 0.08229
+    n: 2.8
+    cy: 0.08613
 - id: forearm
   role: shell
   mirror: true
-  k_m: 0.004
+  k_m: 0.0045
   stations:
   - z: 0.25385
-    w: 0.04044
+    w: 0.04484
     d: 0.0528
-    n: 3.4
+    n: 2.8
     cy: 0.13634
   - z: 0.26385
-    w: 0.05055
+    w: 0.05605
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.1325
   - z: 0.27547
-    w: 0.0489
+    w: 0.05431
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.12804
   - z: 0.28709
-    w: 0.05131
+    w: 0.05685
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.12358
   - z: 0.29871
-    w: 0.04964
+    w: 0.05509
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.11912
   - z: 0.31033
-    w: 0.06228
+    w: 0.06672
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.11466
   - z: 0.32195
-    w: 0.06131
+    w: 0.06572
     d: 0.066
-    n: 3.4
+    n: 2.8
     cy: 0.1102
   - z: 0.32515
-    w: 0.04905
+    w: 0.05257
     d: 0.0528
-    n: 3.4
+    n: 2.8
     cy: 0.10897
 joints:
 - id: hip_l

@@ -1,6 +1,7 @@
-"""R2a silhouette builder for Adam (task T-20261019-d955, ADR 0010 step D1).
+"""R2a silhouette builder (library) for Adam (task T-20261019-d955, ADR 0010 step D1). The station tables live in
+directions.py, which imports this module.
 
-Each *direction* is a list of segments whose stations are written here in millimetres. A station width or depth may be
+Each *direction* is a list of segments whose stations are written in millimetres. A station width or depth may be
 `fit(extra)`: the smallest value that encloses every hard point of that segment spanning the station height with its
 margin (3.1 mm wall + gap), plus `extra`. Everything else is a styling number chosen by the author. The result is a
 `profiles.yaml` (the source of truth for the outer shape, schema design-profiles/0.1), checked with the framework's own
@@ -11,14 +12,12 @@ Two segment families (frame + shell, design-language rule 5):
   role "shell" - the matte warm-white covers
 Union = outer shape, so a dark core shows only where no shell covers it: those are the recessed joint bands.
 
-Run:
-  .venv/Scripts/python variants/adam/design/silhouette/build.py            # write all directions + the recommended profiles.yaml
-  .venv/Scripts/python variants/adam/design/silhouette/build.py --only A   # one direction
+Run (via the tables):
+  .venv/Scripts/python variants/adam/design/silhouette/directions.py            # all directions + the recommended profiles.yaml
+  .venv/Scripts/python variants/adam/design/silhouette/directions.py --only B   # one direction
 """
 from __future__ import annotations
 
-import argparse
-import math
 import sys
 from pathlib import Path
 
@@ -35,7 +34,6 @@ from openhumanoid.design.massing import superellipse_sd, hard_point_margins  # n
 from openhumanoid.design.profiles import expand, validate  # noqa: E402
 
 H = 550.0
-RECOMMENDED = "A"
 
 
 class fit:  # noqa: N801  (reads like a keyword in the station tables)

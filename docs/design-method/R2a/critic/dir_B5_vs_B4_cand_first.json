@@ -1,0 +1,22 @@
+{
+  "order": "cand_first",
+  "candidate": "work/B5 (B4 + rounder head n 2.1, narrower neck, tapered pelvis bottom)",
+  "baseline": "work/B4",
+  "note": "Evidence abridged by the author from the critic's full report; verdicts and preference verbatim.",
+  "reads_as": "toy",
+  "reads_as_reason": "Block head, oversized shoulder boxes, a hard-edged chest slab and untapered column legs read as a stylised character figure, not an adult industrial product.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Rounded-box head with almost no neck (P2a 0.1029); shoulder blocks far wider than the references (P3 0.397); chest a flat-bottomed slab over the pelvis like a bib."},
+    "G2": {"verdict": "FAIL", "evidence": "Stack of separate masses; side view ledges at shoulder and chest and a protruding rectangular back pack; straight leg columns (P8a 0.8763, P8b 0.938); dark bands deliberate but cut the limbs into segments."},
+    "G3": {"verdict": "PASS", "evidence": "Matte warm-white shells over graphite joint bands, gloss visor, no extra accent; black hands and heel consistent with the dark under-structure."},
+    "G4": {"verdict": "FAIL", "evidence": "Head and chest near-square, legs and forearms softer tubes, shoulder blocks chamfered slabs, pack and heel sharp rectangles; S4b 0.5141."},
+    "G6": {"verdict": "FAIL", "evidence": "Shoulder and arm mass about twice the references; no narrow neck or sloped shoulders; IoU 0.5261 / 0.559."}
+  },
+  "pairwise": {"preferred": "tie", "evidence": "Silhouettes, clay and two-tone views are visually the same; metric differences tiny and mixed."},
+  "top_changes": [
+    {"criterion": "G1", "change": "Cut shoulder width to ~0.25-0.29 H, slope the shoulder top, taper the chest to the waist, arms near-vertical.", "profile_param": "segments[chest].stations[shoulder].w; arm cy"},
+    {"criterion": "G2", "change": "Taper thigh and shank; visible neck; blend the chest-pelvis ledge.", "profile_param": "segments[thigh|shank].stations[*].w/d; segments[neck].stations[*].z"},
+    {"criterion": "G4", "change": "One radius family; round head and chest n; rounded flush pack and heel; shorter foot.", "profile_param": "segments[head|chest].stations[*].n; segments[back].stations[*].d; segments[foot]"}
+  ],
+  "notes": "Tie on look only."
+}

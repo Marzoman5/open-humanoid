@@ -1,0 +1,22 @@
+{
+  "order": "cand_second",
+  "candidate": "work/B5 (B4 + rounder head n 2.1, narrower neck, tapered pelvis bottom)",
+  "baseline": "work/B4",
+  "note": "Evidence abridged by the author from the critic's full report; verdicts and preference verbatim.",
+  "reads_as": "unfinished",
+  "reads_as_reason": "Boxy chest on a flat-bottomed pelvis block, oversized shoulders, cube head and untapered columnar legs read as a rough prototype leaning toward toy; the candidate is visually indistinguishable from the baseline.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Flat-topped chest box with a hard shoulder ledge, cube head with almost no neck (P2a fails), shoulder span far wider than the references (P3 0.397)."},
+    "G2": {"verdict": "FAIL", "evidence": "Chest box, flat-bottomed lower-torso block and parallel leg tubes read as stacked parts; no thigh or calf taper (P8a 0.8763, P8b 0.938); graphite bands read as uniform cuffs."},
+    "G3": {"verdict": "PASS", "evidence": "Matte white shells, graphite bands and heel blocks, gloss black visor, no second accent."},
+    "G4": {"verdict": "FAIL", "evidence": "Chest/shoulder block has large flat faces and tight corners (S4b 0.5141) while the limbs are soft; no single radius family."},
+    "G6": {"verdict": "FAIL", "evidence": "References have narrow shoulders, visible taper and slim legs; the design is much broader; IoU 0.526 / 0.559."}
+  },
+  "pairwise": {"preferred": "tie", "evidence": "Visually identical; metric deltas mixed (neck 0.1029 vs 0.1103 worse, thigh taper 0.8763 vs 0.8602 worse, crotch closer to the hip). No gestalt difference."},
+  "top_changes": [
+    {"criterion": "G1", "change": "Cut the shoulder span drastically, round the shoulder-top edge into a slope, slim the arm sleeves.", "profile_param": "segments[chest].stations[shoulder].w; segments[arm_core].stations[*].w"},
+    {"criterion": "G2", "change": "Taper the leg; calf bulge near the top of the shank; blend the lower torso into the thighs.", "profile_param": "segments[leg_core].stations[knee|ankle].w, d; pelvis lower station w"},
+    {"criterion": "G1", "change": "Lengthen the visible neck; soften the head toward a capsule.", "profile_param": "segments[head].stations[base].z, n; segments[chest].stations[neck].z"}
+  ],
+  "notes": "B4 vs B5 is a visual tie; perspective in the 3/4 clay views exaggerates shoulder bulk."
+}

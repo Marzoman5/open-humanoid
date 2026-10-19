@@ -16,7 +16,7 @@ sys.path.insert(0, str(HERE))
 
 from build import REPO, F, S, check, fit, to_profile  # noqa: E402
 
-RECOMMENDED = "A"
+RECOMMENDED = "B"
 CY = 35.0          # hip / leg centre line (R1 hip spacing 70 mm)
 SEG_MAP = {"neck_pitch_servo": "head", "camera": "head", "shoulder_pitch_servos": "chest", "neck_yaw_servo": "chest",
            "pack_3s1300": "back", "hip_yaw_servo_l": "pelvis", "hip_yaw_servo_r": "pelvis", "waist_yaw_servo": "pelvis",
@@ -39,19 +39,20 @@ def head_parts(st: dict) -> list[dict]:
     sh = st.get("visor_shift", 2.0)
     if st.get("visor_shape") == "disc":     # Atlas-like round face: the visor width follows a circle in z
         zc, r = (vz0 + vz1) / 2, (vz1 - vz0) / 2
-        vst = [S(zc + r * t, vw * max(0.35, (1 - t * t) ** 0.5), d * (0.97 + 0.03 * (1 - t * t) ** 0.5), n, cx + sh)
-               for t in (-0.98, -0.8, -0.5, 0.0, 0.5, 0.8, 0.98)]
+        # same section as the head, pushed forward by a protrusion that follows a circle: the visible patch is a round disc
+        vst = [S(zc + r * t, vw, d, n, cx + 0.3 + sh * (1 - t * t) ** 0.5) for t in (-0.99, -0.85, -0.6, -0.3, 0.0, 0.3, 0.6, 0.85, 0.99)]
     else:
         vst = [S(vz0, vw * 0.90, d * 0.96, n, cx + sh), S(vz0 + 5, vw, d, n, cx + sh), S(vz1 - 5, vw, d, n, cx + sh),
                S(vz1, vw * 0.90, d * 0.96, n, cx + sh)]
     visor = {"id": "visor", "role": "dark", "k": 1.0, "stations": vst}
-    neck = {"id": "neck", "role": "dark", "k": 3.0, "stations": [S(452.0, 36, 36, 2.0, 2.0), S(478.0, 32, 32, 2.0, 3.0)]}
+    nw0, nw1 = st.get("neck_w", (36.0, 32.0))
+    neck = {"id": "neck", "role": "dark", "k": 3.0, "stations": [S(452.0, nw0, nw0, 2.0, 2.0), S(478.0, nw1, nw1, 2.0, 3.0)]}
     return [head, visor, neck]
 
 
-def leg_core():
+def leg_core(n_shell: float = 3.0):
     """Dark leg structure: encloses the hip-pitch, knee and ankle-pitch servo housings (52 mm forks)."""
-    d, n = 54.0, 3.0
+    d, n = 54.0, min(3.0, n_shell)   # never squarer than the covers, or its corners poke through them
     return {"id": "leg_core", "role": "dark", "mirror": True, "cy": CY, "k": 3.0, "stations": [
         S(40.0, 50, 42, n), S(48.2, fit(0.2), d, n), S(104.9, fit(0.2), d, n), S(118, 56, 46, n), S(130.7, fit(0.2), d, n),
         S(187.4, fit(0.2), d, n), S(222, 54, 46, n), S(257.3, fit(0.2), d, n), S(314.0, fit(0.2), d, n), S(322, 48, 40, n)]}
@@ -129,17 +130,20 @@ def arm_shells(st: dict, n: float, k: float) -> list[dict]:
     Otherwise every cover is 2 mm proud all round."""
     (g0, g1), (e0, e1), (c0, c1) = _zones(st["cant"])
     panel = st["shoulder"] == "side_panel"
+    an = st.get("arm_n", ARM_N)
     dd = 6.0
 
     def sh(zs, d, ex):
-        return [S(z, fit(ex, of="arm_core", win=ARM_WIN), d + dd, ARM_N) for z in zs]
-    cap = sh(_dense(c0 + 4, c1 - 3, 12), 60.0, -6.0 if panel else 4.0)
-    limb_ex = 2.0 if panel else 4.0
+        return [S(z, fit(ex, of="arm_core", win=ARM_WIN), d + dd, an) for z in zs]
+    cap = sh(_dense(c0 + 4, c1 - 3, 12), 60.0, -6.0 if panel else 6.0)
+    limb_ex = 2.0 if panel else 5.0
     upper = sh(_dense(e0 + 31, e1 - 2, 10), 56.0, limb_ex)  # elbow axis 334.8 mm: the upper-arm cover starts just above it
     fore = sh(_dense(g0 + 4, g1 - 2, 12), 60.0, limb_ex)
+    gap = st.get("elbow_gap", 12.0)      # height of the dark elbow band (C: a hairline reveal)
+    ua0, fa1 = e0 + 20 + gap / 2, e0 + 20 - gap / 2
     return [{"id": "deltoid", "role": "shell", "mirror": True, "arm": True, "k": k, "stations": _ends(cap, c0 - 1, c1 + 4, 0.70)},
-            {"id": "upper_arm", "role": "shell", "mirror": True, "arm": True, "k": k, "stations": _ends(upper, e0 + 26, c0 - 2, 0.80)},
-            {"id": "forearm", "role": "shell", "mirror": True, "arm": True, "k": k, "stations": _ends(fore, g0 - 6, e0 + 14, 0.80)}]
+            {"id": "upper_arm", "role": "shell", "mirror": True, "arm": True, "k": k, "stations": _ends(upper, ua0, (e1 + 5) if st.get("slim_upper_arm") else (c0 - 2), 0.80)},
+            {"id": "forearm", "role": "shell", "mirror": True, "arm": True, "k": k, "stations": _ends(fore, g0 - 6, fa1, 0.80)}]
 
 
 def _ends(stations, z0, z1, frac=0.78):
@@ -159,16 +163,17 @@ def _ends(stations, z0, z1, frac=0.78):
 
 # --------------------------------------------------------------------------------------------------------- directions
 STYLES = {
-    "A": dict(key="A", title="Optimus-lean", cant=21.0, n=3.0, k=8.0, head_w=62.0, head_d=68.0, head_n=2.4,
+    "A": dict(key="A", title="Optimus-lean", cant=21.0, n=3.0, k=8.0, slim_upper_arm=True, head_w=62.0, head_d=68.0, head_n=2.4,
               visor_w=62.0, visor_z=(487.0, 531.0), torso="band", shoulder="side_panel", limbs="tapered",
               notes="Optimus-lean: white chest and limb shells, a graphite waist-and-pelvis band, dark recessed joint bands, "
                     "tapered limb capsules with a calf swell, pill head with a full-face visor, dark shoulder side panels."),
-    "B": dict(key="B", title="Atlas-capsule", cant=20.0, n=2.5, k=9.0, head_w=62.0, head_d=68.0, head_n=2.3,
-              visor_w=50.0, visor_z=(494.0, 526.0), torso="capsule", shoulder="capsule", limbs="capsule",
+    "B": dict(key="B", title="Atlas-capsule", cant=21.0, n=2.5, k=9.0, head_w=62.0, head_d=68.0, head_n=2.2, arm_n=2.8,   # B4 = best-so-far (B5 rounder head / thinner neck / pelvis taper tied, reverted)
+              visor_w=62.0, visor_z=(487.0, 531.0), visor_shape="disc", visor_shift=2.5, torso="capsule", shoulder="capsule", slim_upper_arm=True,
+              limbs="tapered",   # round 2 of the direction step: tapered covers (critic G6/G2), was "capsule" in B3
               notes="Atlas-capsule: near-elliptical sections (n 2.5) blended with large radii, white chest and pelvis capsules, "
                     "dark only at the joints and waist, round shoulder capsules, cylinder limbs, round face disc."),
-    "C": dict(key="C", title="Apple-monolith", cant=20.0, n=3.2, k=10.0, head_w=62.0, head_d=68.0, head_n=2.8,
-              visor_w=60.0, visor_z=(489.0, 529.0), torso="monolith", shoulder="integrated", limbs="continuous",
+    "C": dict(key="C", title="Apple-monolith", cant=21.0, n=3.2, k=10.0, head_w=62.0, head_d=68.0, head_n=2.8, arm_n=3.2,
+              visor_w=62.0, visor_z=(498.0, 522.0), elbow_gap=4.0, torso="monolith", shoulder="integrated", limbs="continuous",
               notes="Apple-monolith: one unibody torso shell from shoulder to hip with a single thin dark waist line, shoulder caps "
                     "merged into the chest, thigh and shank as one continuous capsule over the knee, soft squircles (n 3.2)."),
 }
@@ -184,7 +189,7 @@ def build_direction(st: dict) -> dict:
     back = [S(411.6, fit(1.0), 76, n, -24.0), S(457.1, fit(1.0), 76, n, -24.0), S(460.5, 70, 58, n - 0.2, -19.0),
             S(463.0, 40, 36, 2.6, -10.0)]
     tk = k + 4.0     # torso blends: chest, back, waist and hips read as one form
-    pn = n + 1.5     # the pelvis holds three servos side by side: squarer section, else it grows 10 mm wider
+    pn = n + {"band": 1.5, "capsule": 1.0}.get(st["torso"], 0.6)   # pelvis: three servos side by side -> squarer section (a hidden core in A)
     pel = [S(309.8, fit(0.5), 94, pn, -1.0), S(335.3, fit(0.5), 100, pn, 3.0), S(381.7, fit(0.5), 100, pn, 3.0)]
     T = st["torso"]
     if T == "band":       # graphite waist band over a dark pelvis core; white hip shell covers the pelvis below the band
@@ -201,17 +206,19 @@ def build_direction(st: dict) -> dict:
                      S(318.0, fit(4.5, of="pelvis"), 118, hn, 1.0), S(364.0, fit(4.5, of="pelvis"), 120, hn, 3.0),
                      S(371.0, fit(1.0, of="pelvis"), 108, hn, 3.0), S(376.0, fit(-4.0, of="pelvis"), 96, hn, 3.0)]}]
     elif T == "capsule":  # white chest capsule and white pelvis capsule; the waist-yaw gap is the only dark torso band
-        segs += [{"id": "chest", "role": "shell", "k": tk, "stations": [S(393.0, 78, 74, n, 6.0), S(397.0, 88, 88, n, 9.0)] + chest},
-                 {"id": "back", "role": "shell", "k": tk, "stations": [S(396.0, 82, 56, n, -14.0)] + back},
+        # a visible graphite waist ring (386-396 mm) between two white capsules
+        segs += [{"id": "chest", "role": "shell", "k": tk, "stations": [S(394.0, 74, 70, n, 6.0), S(398.0, 86, 84, n, 9.0)] + chest},
+                 {"id": "back", "role": "shell", "k": tk, "stations": [S(396.0, 76, 50, n, -14.0), S(404.0, 88, 66, n, -20.0)] + back},
                  {"id": "pelvis", "role": "shell", "k": tk, "stations": [S(290.0, 80, 62, n, -2.0), S(298.0, 100, 80, n, -1.0)] + pel +
-                  [S(386.0, 102, 84, n, 3.0), S(390.0, 88, 70, n, 3.0)]},
-                 {"id": "waist", "role": "dark", "k": 3.0, "stations": [S(376.0, 92, 70, n, 2.0), S(402.0, 88, 70, n, 3.0)]}]
+                  [S(384.5, 96, 80, n, 3.0), S(387.5, 78, 62, n, 3.0)]},
+                 {"id": "waist", "role": "dark", "k": 3.0, "stations": [S(376.0, 88, 70, 2.6, 2.0), S(402.0, 86, 70, 2.6, 3.0)]}]
     else:                 # monolith: one white unibody from shoulder to hip; a thin dark waist reveal
-        segs += [{"id": "chest", "role": "shell", "k": tk, "stations": [S(384.0, 96, 84, n, 4.0), S(394.0, 98, 92, n, 8.0)] + chest},
-                 {"id": "back", "role": "shell", "k": tk, "stations": [S(390.0, 88, 64, n, -16.0)] + back},
-                 {"id": "pelvis", "role": "shell", "k": tk, "stations": [S(288.0, 80, 62, n, -2.0), S(298.0, 104, 84, n, -1.0)] + pel +
-                  [S(388.0, 104, 86, n, 3.0)]},
-                 {"id": "waist", "role": "dark", "k": 1.5, "stations": [S(384.0, 100, 82, n, 3.0), S(392.0, 98, 82, n, 4.0)]}]
+        # chest and pelvis are one continuous white volume, interrupted only by a ~3 mm graphite hairline at the waist yaw
+        segs += [{"id": "chest", "role": "shell", "k": 4.0, "stations": [S(386.0, 98, 86, n, 4.0), S(394.0, 98, 92, n, 8.0)] + chest},
+                 {"id": "back", "role": "shell", "k": tk, "stations": [S(388.0, 86, 62, n, -14.0), S(400.0, 90, 70, n, -20.0)] + back},
+                 {"id": "pelvis", "role": "shell", "k": 4.0, "stations": [S(288.0, 80, 62, n, -2.0), S(298.0, 104, 84, n, -1.0)] + pel +
+                  [S(383.0, 104, 86, n, 3.0)]},
+                 {"id": "waist", "role": "dark", "k": 1.0, "stations": [S(381.0, 100, 82, n, 3.0), S(388.0, 96, 82, n, 4.0)]}]
     # seat: both hip-roll servos sit 84 mm behind the hip axis; one white seat shell across both, blended up into the
     # lower back (two separate pads read as boxes on the back)
     # (a single seat across both servos was tried in iteration A7/A8 and read as a bustle; two rounded glutes read better)
@@ -219,8 +226,10 @@ def build_direction(st: dict) -> dict:
         S(238.0, 26, 26, 2.3, -48.0), S(249.0, 46, 50, 2.4, -58.0), S(257.3, fit(1.5), 62, 2.4, -61.0), S(314.0, fit(1.5), 62, 2.4, -61.0),
         S(332.0, 46, 48, 2.4, -52.0), S(352.0, 30, 30, 2.3, -40.0)]})
     # ---- legs: dark core + white shells; knee band ~14 mm, ankle band between the shank shell and the foot
-    segs += [leg_core(), heel_core(), *foot(n=n)]
+    segs += [leg_core(max(n, 3.0) if st["limbs"] == "tapered" else n), heel_core(), *foot(n=n)]
     L = st["limbs"]
+    if L == "tapered":
+        n = max(n, 3.0)      # tapered leg covers keep n 3 (the fork-width core at n 3 would poke through rounder covers)
 
     def inner(w, gap=2.0):    # shell centre so the inner (crotch) edge stays `gap` mm off the mid-plane
         return gap + w / 2
@@ -247,7 +256,7 @@ def build_direction(st: dict) -> dict:
         segs += [{"id": "shank", "role": "shell", "mirror": True, "k": 1.0, "stations": _ends(leg, 52.0, 147.0, 0.93)},
                  {"id": "thigh", "role": "shell", "mirror": True, "k": 1.0, "stations": _ends(leg2, 149.5, 305.0, 0.84)}]
     # ---- arms
-    segs.append(arm_core(st["cant"]))
+    segs.append(arm_core(st["cant"], n=st.get("arm_n", ARM_N)))
     segs += arm_shells(st, n, kl)
     return {"key": st["key"], "name": f"adam-r2a-{st['key']}", "title": st["title"], "cant_deg": st["cant"], "head_unit": 84.0,
             "k_default": k, "seg_map": SEG_MAP, "notes": "R2a direction " + st["notes"] +

@@ -754,11 +754,11 @@ segments:
     d: 0.062
     n: 3.4
     cy: 0.08881
-  - z: 0.39465
+  - z: 0.38465
     w: 0.05163
     d: 0.0496
     n: 3.4
-    cy: 0.08229
+    cy: 0.08613
 - id: forearm
   role: shell
   mirror: true
