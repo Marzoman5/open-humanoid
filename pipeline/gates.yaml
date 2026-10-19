@@ -1,0 +1,89 @@
+# Gate definitions (ADR 0011). THRESHOLDS LIVE HERE AND NOWHERE ELSE.
+#
+# Only `oh gate <id> [variant]` writes pass/fail records (variants/<id>/generated/gates/<id>.json, with git SHA).
+# A phase is done only when its gates have a PASS record at HEAD (`oh gate --status`).
+# This file is hook-protected: an agent can't loosen a threshold to make its own work pass.
+# Changing it needs an ADR task whose `paths` name this file (a human can also edit it directly).
+#
+# status: implemented -> `oh gate` runs a check and writes a record.
+#         placeholder -> declared so the pipeline and prompts can name it; `oh gate` refuses to run it
+#                        (exit 3) and writes no record, so it can never show PASS.
+# phase:  which pipeline phase (docs/pipeline.md) this gate closes, or a task `phase:` value / task `gates:` list.
+
+schema_version: 1
+default_variant: adam                 # used when `oh gate <id>` is given no variant
+smoke: [G-validate, G-size, G-sim-stand]
+smoke_sim_seconds: 1.0                # smoke runs the stand test shorter than the full G-sim-stand
+
+gates:
+  G-validate:
+    status: implemented
+    phase: [P0, W1]
+    description: Spec validates against the schema and the whole catalog validates.
+    command: oh validate {variant}
+    thresholds: { max_spec_errors: 0, max_catalog_errors: 0 }
+
+  G-size:
+    status: implemented
+    phase: [P0]
+    description: First-estimate sizing says the robot is feasible, within budget, and the walk gait has torque margin. A first estimate only (ADR 0012 supersedes it as the go/no-go).
+    command: oh size {variant}
+    thresholds: { max_cost_fraction_of_cap: 1.0, min_gait_margin: 0.99 }
+
+  G-sim-stand:
+    status: implemented
+    phase: [P0]
+    description: The generated MuJoCo model holds the stand pose without falling or exceeding actuator stall.
+    command: oh sim test {variant}
+    thresholds: { seconds: 3.0, max_tilt_deg: 35, min_pelvis_z_fraction: 0.7, max_hold_torque_fraction: 1.0 }
+
+  G-tests:
+    status: implemented
+    phase: [W1]
+    description: The repo test suite passes.
+    command: python -m pytest -q
+    thresholds: { timeout_s: 900 }
+
+  G-provenance:
+    status: implemented
+    phase: [W1]
+    description: Every catalog part cites a source (an estimate must say so and stay unverified), and every tuned spec constant cites a file, URL or measurement.
+    command: oh check provenance {variant}
+    # Warn-first rollout: catalog structure is enforced now; spec constants and estimates are only counted.
+    # Tighten these numbers (an ADR task) as T-0002 verifies prices and P2 adds measurements.
+    thresholds:
+      max_catalog_missing: 0
+      max_catalog_bad: 0
+      max_catalog_estimates: 1000000
+      max_spec_missing: 1000000
+      max_spec_bad: 1000000
+      max_spec_estimates: 1000000
+
+  # ---- placeholders: defined by ADRs 0010/0012 and docs/pipeline.md, implemented by later tasks ----
+  G-envelopes:
+    status: placeholder
+    phase: [P2]
+    description: Per-joint torque/speed envelopes from the motion library. p95 Monte Carlo peak torque <= 70% of measured stall, RMS torque <= continuous rating, 10-minute thermal walk stays under the winding limit.
+    command: oh gate G-envelopes {variant}
+    thresholds: { p95_peak_max_fraction_of_stall: 0.70, rms_max_fraction_of_continuous: 1.0, thermal_walk_minutes: 10 }
+
+  G-silhouette-R2a:
+    status: placeholder
+    phase: [P2]
+    description: Silhouette sheet (design/profiles.yaml + overlay renders) has numeric metrics inside the requirements, ready for the R2a human review stop.
+    command: oh gate G-silhouette-R2a {variant}
+    thresholds: {}
+
+  G-geometry:
+    status: placeholder
+    phase: [P3]
+    description: Per-part geometry checks. STEP round-trip, watertight solids, no interference at the zero pose or inside the range of motion.
+    command: oh gate G-geometry {variant}
+    thresholds: { max_interference_mm3: 20 }
+
+  G-cad-sim:
+    status: placeholder
+    phase: [P4]
+    description: The sim built from the CAD exports stands, walks the reference gait and passes range-of-motion checks.
+    command: oh gate G-cad-sim {variant}
+    thresholds: {}

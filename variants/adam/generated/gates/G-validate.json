@@ -1,0 +1,20 @@
+{
+  "gate": "G-validate",
+  "variant": "adam",
+  "status": "pass",
+  "summary": "spec 0 / catalog 0 error(s)",
+  "metrics": {
+    "spec_errors": 0,
+    "catalog_errors": 0,
+    "first_errors": []
+  },
+  "thresholds": {
+    "max_spec_errors": 0,
+    "max_catalog_errors": 0
+  },
+  "sha": "dc1e14335db57c36c912d8766288e04ba3024587",
+  "dirty": false,
+  "timestamp": "2026-10-19T03:58:52-04:00",
+  "seconds": 0.21,
+  "written_by": "oh gate"
+}
