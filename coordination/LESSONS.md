@@ -1,0 +1,18 @@
+# Lessons ledger
+
+When a mistake is caught (by a human, a challenger, a gate, or a crash), add a row **and enforce it somewhere real**: a hook, a gate, a test, a skill, or a prompt line. Prose rules alone don't hold (research/ai-engineering/03). The challenger agent reads this file so the same mistake isn't repeated.
+
+| Date | Lesson (what went wrong → rule) | Caught by | Enforced in | Status |
+|---|---|---|---|---|
+| 2026-10-19 | Agent went from text rules straight to CAD and self-graded → the "Roblox" robot. **Rule: engineering (concept loop) and silhouette come before detailed CAD; looks are judged by a separate critic.** | maintainer | ADR 0010, ADR 0012, docs/pipeline.md, design-critic agent | enforced (method); gate G-silhouette-R2a still a placeholder |
+| 2026-10-19 | The commander acted ahead of research and verification (accepted ADRs, tried to start sessions, asked for installs). **Rule: research → verification → challenge → proposal → maintainer → execute.** | maintainer | commander memory `feedback-evidence-before-action`; challenger agent | enforced by process |
+| 2026-10-19 | Research briefs named the commander's own diagnosis and tools, anchoring the researchers. **Rule: briefs pose open questions; anything the commander names is a hypothesis to test.** | maintainer | commander memory; challenger Q3 | process |
+| 2026-10-19 | Task IDs numbered max+1 per checkout collided across parallel branches (three T-0011s). **Rule: collision-proof IDs.** | commander at merge | `oh coord new` (T-yyyymmdd-hex), tests | enforced |
+| 2026-10-19 | Desktop worktree sessions load hooks from the main checkout's root, so hooks on an unmerged branch don't run. **Rule: test hooks in a standalone clone; they go live at merge.** | live demo | docs/harness.md | documented |
+| 2026-10-19 | The SessionStart smoke ran under system Python (no toolkit deps) and showed a false FAIL. **Rule: subprocesses use the repo venv interpreter.** | live hook test | tools/hooks, regression test | enforced |
+| 2026-10-19 | Tests run from one worktree silently used another checkout's files (repo root from cwd). **Rule: the package's own checkout wins.** | commander review | openhumanoid/paths.py | enforced (test pending) |
+| 2026-10-19 | The commander reviewed and approved its own plans: self-grading at the command level. **Rule: a standing challenger at every wave boundary, before review stops, and before irreversible decisions; the commander answers every row in writing.** | maintainer | `.claude/agents/challenger.md`, docs/pipeline.md | enforced by process |
+| 2026-10-19 | Mass uncertainty (±15%) was set too narrow before any CAD exists, and benchmark masses were mistaken for Adam's. **Rule: uncertainty bands match the evidence level (pre-CAD structure mass is a guess); benchmarks are sanity bounds, not estimates.** | maintainer | challenger Q2; concept-engine brief | pending: first challenge |
+| 2026-10-19 | The harness grew far beyond the research's "small, unblock-everything" scope, and tools were built ahead of an Adam run. **Rule: every new tool must be consumed by an Adam deliverable in the same wave; nothing generic is built ahead of need (ADR 0009).** | maintainer | challenger Q1 | process |
+| 2026-10-19 | The research's shell-method bake-off was dropped instead of adapted when the maintainer ruled out human CAD. **Rule: when a recommendation's premise changes, adapt it (compare code methods), don't drop it.** | maintainer | challenger Q3/Q5 | pending: shell-method comparison before R2a |
+| 2026-10-19 | Bash heredocs containing apostrophes break the Bash tool here. **Rule: write scripts with the Write tool.** | design-tooling agent | (this ledger) | documented |

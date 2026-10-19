@@ -21,6 +21,8 @@ The rest are enforced by hooks and gates ([docs/harness.md](docs/harness.md)). R
 6. **Numbers carry provenance** (`oh check provenance`): every catalog part has `verified:` and `source:`, every tuned spec constant has a `provenance:` entry. Never present an estimate as verified; if sizing says "infeasible", report it, don't tune assumptions until it passes.
 7. **Done means a PASS gate record at HEAD** (`oh gate --status`; the Stop hook blocks "done" without it). Checkpoint at every phase gate with a real handoff (`oh coord handoff`); hooks only re-inject state and write a stub. A fresh session must be able to resume from the repo alone.
 
+**Self-correction:** when a mistake is caught, add a row to [`coordination/LESSONS.md`](coordination/LESSONS.md) and enforce it in a hook, gate, test, skill, or prompt. Plans and results are challenged by the read-only `challenger` agent at wave boundaries and before review stops ([docs/pipeline.md](docs/pipeline.md)). Answer its rows in writing.
+
 ## Where things go
 
 | You are making… | Put it in |

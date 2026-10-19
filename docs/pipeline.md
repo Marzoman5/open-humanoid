@@ -13,6 +13,18 @@ How a robot goes from "what I want" to "it works the first time it's assembled".
 5. **Measured beats guessed.** Every tuned constant cites a source or a measurement (provenance check).
 6. **Reuse proven, licensed work.** Every reuse is recorded in `THIRD_PARTY.md` after the actual LICENSE file has been re-read.
 
+## Self-correction: challenger and lessons
+
+- **Challenger** (`.claude/agents/challenger.md`, Opus, read-only). It runs at **every wave boundary, before every review stop, and before any decision that's expensive to undo** (purchasing, freezing interfaces, starting detailed CAD). It answers five fixed questions:
+  - Is this the right problem?
+  - What's assumed and what's known?
+  - Is there a better or simpler method?
+  - What are the physical failure modes?
+  - Was the research applied?
+
+  Its report goes to `variants/<id>/reviews/challenge-<n>-<subject>.md`. The commander **answers every row in writing** (accept + action, or reject + reason) before proceeding. Nobody grades their own plan, including the commander.
+- **Lessons ledger** (`coordination/LESSONS.md`). Every caught mistake gets a row and is enforced somewhere real (hook, gate, test, skill, or prompt). The challenger reads it, so mistakes don't repeat.
+
 ## Phases
 
 | Phase | What happens | Gate (machine) | Review stop (human) |
