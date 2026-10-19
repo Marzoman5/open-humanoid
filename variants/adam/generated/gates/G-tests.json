@@ -2,18 +2,18 @@
   "gate": "G-tests",
   "variant": "adam",
   "status": "pass",
-  "summary": "103 passed in 89.94s (0:01:29)",
+  "summary": "103 passed in 85.73s (0:01:25)",
   "metrics": {
     "returncode": 0,
-    "summary": "103 passed in 89.94s (0:01:29)",
-    "seconds": 91.1
+    "summary": "103 passed in 85.73s (0:01:25)",
+    "seconds": 86.8
   },
   "thresholds": {
     "timeout_s": 900
   },
-  "sha": "fb6110a5c1c8f142153a858eb58c327c5f7648af",
-  "dirty": true,
-  "timestamp": "2026-10-19T04:06:00-04:00",
-  "seconds": 91.14,
+  "sha": "3b3cda8c7c58d8bd31112ba61eba7b210f28ce95",
+  "dirty": false,
+  "timestamp": "2026-10-19T04:07:42-04:00",
+  "seconds": 86.86,
   "written_by": "oh gate"
 }
