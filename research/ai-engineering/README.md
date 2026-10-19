@@ -13,6 +13,7 @@ This question is about methods, not data: how are people actually using AI agent
 | [05-open-source-robot-practice.md](05-open-source-robot-practice.md) | SO-100/LeRobot, Open Duck Mini, ToddlerBot, BHL, ODRI, InMoov, Prusa, K-Scale: what made them reproducible |
 | [06-industrial-design-and-visual-review.md](06-industrial-design-and-visual-review.md) | **The "Roblox" fix:** silhouette-first design, code surfacing options, render rig, separate critic, acceptance rubric, installs |
 | [07-challenging-our-assumptions.md](07-challenging-our-assumptions.md) | **Unanchored review:** toolkit vs robot-first, pipeline shape, the one-shot framing, four routes to sleek shells (code / human Onshape / gen-3D / concept images), a blind-critic experiment, what to drop |
+| [VERIFICATION.md](VERIFICATION.md) | Primary-source re-check of 41 claims (33 verified, 7 corrected, 1 removed) and pip-install feasibility on the maintainer's Windows + RTX 4060 machine |
 | [prototypes/](prototypes/README.md) | Local tests: build123d loft shells (and a false-valid `offset()`), Gordon surfaces, SDF shells via manifold3d, pyvista clay and silhouette renders |
 
 Evidence conventions: every claim carries a URL and date. **[UNVERIFIED]** / **[SECONDARY]** mark claims that rest on snippets or secondary sources. Many 2026 benchmark papers are preprints.

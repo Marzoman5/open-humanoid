@@ -37,7 +37,7 @@
 - **[Hooks](https://code.claude.com/docs/en/hooks)** ([guide](https://code.claude.com/docs/en/hooks-guide)):
   - Events: SessionStart (`startup|resume|clear|compact`), PreToolUse (can block), PostToolUse, Stop and SubagentStop (can block, i.e. keep working), TaskCompleted (can block), and PreCompact.
   - Exit code 2 blocks the action. The guide ships examples for **"Block edits to protected files"** and **"Re-inject context after compaction"**.
-  - A Stop hook must honour `stop_hook_active`, and Claude Code overrides it after 8 consecutive blocks.
+  - A Stop hook must honour `stop_hook_active`, and Claude Code overrides it after 8 consecutive blocks with no tool call in between (the cap is set by `CLAUDE_CODE_STOP_HOOK_BLOCK_CAP`). SessionStart matchers are `startup`, `resume`, `clear`, `compact` and `fork`.
 - **[Skills](https://code.claude.com/docs/en/skills):**
   - Frontmatter fields: `description`, `disable-model-invocation`, `allowed-tools`, `context: fork` + `agent`, `model`, `effort`, `paths`, `hooks`.
   - Keep SKILL.md under 500 lines. `scripts/` are executed rather than loaded. `!`cmd`` injects live shell output.
