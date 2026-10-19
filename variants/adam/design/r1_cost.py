@@ -116,7 +116,9 @@ CONFIGS = [
            servo="servo12", n_servo=19, n_sts3250=4, compute="pi5_1gb", pla_kg=PLA_060, spares_mix={"servo12": 2, "sts3250": 1}, note="path 1"),
     config("P1 rec. with a phone instead of the gamepad (R9 allows it)", servo="servo12", n_servo=19, n_sts3250=4, compute="pi5_1gb", pla_kg=PLA_060, gamepad=False,
            spares_mix={"servo12": 2, "sts3250": 1}),
-    config("P1 runner-up: 23 DOF, 21 STS3215-12V + 2 STS3250 (knees), 0.55 m, Pi 5 1 GB", servo="servo12", n_servo=21, n_sts3250=2, compute="pi5_1gb", pla_kg=PLA_055,
+    config("P1 RUNNER-UP: the recommended parts at 0.55 m (19 STS3215-12V + 4 STS3250), Pi 5 1 GB + D36V50F5, gamepad", servo="servo12", n_servo=19, n_sts3250=4,
+           compute="pi5_1gb", pla_kg=PLA_055, spares_mix={"servo12": 2, "sts3250": 1}),
+    config("P1 alternative: 23 DOF, 21 STS3215-12V + 2 STS3250 (knees only), 0.55 m, Pi 5 1 GB", servo="servo12", n_servo=21, n_sts3250=2, compute="pi5_1gb", pla_kg=PLA_055,
            spares_mix={"servo12": 2, "sts3250": 1}),
     config("P1 if the bench is favourable: 23 DOF, 23 STS3215-12V, 0.55 m, Pi 5 1 GB", servo="servo12", n_servo=23, compute="pi5_1gb", pla_kg=PLA_055),
     # ---------------- path 2: the $550 cap

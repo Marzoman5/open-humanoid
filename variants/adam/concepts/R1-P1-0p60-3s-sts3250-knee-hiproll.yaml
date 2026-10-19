@@ -19,7 +19,7 @@ joints:
 - hip_yaw
 - hip_roll
 - hip_pitch
-- knee
+- {name: knee, range: [0, 110]}   # R1 knee-ROM decision: 110 deg (calf pocket 15.5% vs 23.7% at 130; engine margins identical to the CAD-limited 115)
 - name: ankle_pitch
   range:
   - -80

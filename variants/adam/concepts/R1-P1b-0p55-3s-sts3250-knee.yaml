@@ -1,5 +1,5 @@
 # R1 CONCEPT (T-20261019-36f9), PROVISIONAL pending the bench identification of one 12 V and one 7.4 V STS3215 (ADR 0014).
-# Path 1 runner-up.
+# Path 1 alternative (cheaper, evaluated for the ranking; NOT the runner-up): STS3250 at the knees only.
 # Evidence: variants/adam/reviews/R1-concept-2026-10-19.md, variants/adam/design/r1_results/R1x-ck23.md (strict vs ODM-calibrated gates, tornado),
 # variants/adam/generated/concept/R1-P1b-0p55-3s-sts3250-knee/report.md (full engine report). Do not apply to spec.yaml before the challenger review of R1.
 # Compute: the build uses a Raspberry Pi 5 **1 GB** (Adafruit #6447, $49.50, in stock 2026-10-19); the catalog only has the 4 GB board, which

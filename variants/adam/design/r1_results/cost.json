@@ -110,7 +110,62 @@
    }
   },
   {
-   "name": "P1 runner-up: 23 DOF, 21 STS3215-12V + 2 STS3250 (knees), 0.55 m, Pi 5 1 GB",
+   "name": "P1 RUNNER-UP: the recommended parts at 0.55 m (19 STS3215-12V + 4 STS3250), Pi 5 1 GB + D36V50F5, gamepad",
+   "servos": 23,
+   "lines": {
+    "sd": 1,
+    "adapter": 1,
+    "cam": 1,
+    "camcable": 1,
+    "switch": 1,
+    "fasteners": 1,
+    "bearings": 1,
+    "wiring": 1,
+    "psu": 1,
+    "fuse": 1,
+    "servo12": 19,
+    "sts3250": 4,
+    "pi5_1gb": 1,
+    "buck_d36": 1,
+    "lipo3s_1300": 1,
+    "imu": 1,
+    "charger": 1,
+    "gamepad": 1,
+    "pla_kg": 2.28
+   },
+   "spares_lines": {
+    "servo12": 2,
+    "sts3250": 1
+   },
+   "cheap": {
+    "scenario": "CHEAP",
+    "parts_sticker": 1088.32,
+    "estimate_lines": 180.08,
+    "spares": 115.79,
+    "tax": 90.67,
+    "ship": 60.0,
+    "delivered": 1354.78,
+    "r1_total": 1490.26,
+    "fits_550": false,
+    "tariff_worst": 1673.36,
+    "servo_share": 0.672
+   },
+   "fast": {
+    "scenario": "FAST",
+    "parts_sticker": 1256.42,
+    "estimate_lines": 203.51,
+    "spares": 129.97,
+    "tax": 104.39,
+    "ship": 45.0,
+    "delivered": 1535.78,
+    "r1_total": 1689.36,
+    "fits_550": false,
+    "tariff_worst": 1689.36,
+    "servo_share": 0.691
+   }
+  },
+  {
+   "name": "P1 alternative: 23 DOF, 21 STS3215-12V + 2 STS3250 (knees only), 0.55 m, Pi 5 1 GB",
    "servos": 23,
    "lines": {
     "sd": 1,

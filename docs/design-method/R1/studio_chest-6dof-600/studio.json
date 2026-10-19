@@ -1,0 +1,25 @@
+{
+  "subject": "R1 chest-6dof-600",
+  "source": "profiles:C:\\Users\\aemar\\Documents\\Easy Humanoid\\.claude\\worktrees\\agent-a5946ef98d7f82ed0\\variants\\adam\\design\\r1_packaging\\chest-6dof-600\\profiles.yaml",
+  "height_m": 0.6,
+  "head_unit_m": 0.078,
+  "rig_version": 1,
+  "refs": [
+    "optimus_like",
+    "human_canon"
+  ],
+  "zebra": false,
+  "files": {
+    "silhouette_front": "silhouette_front.png",
+    "overlay_front": "overlay_front.png",
+    "silhouette_side": "silhouette_side.png",
+    "overlay_side": "overlay_side.png",
+    "lineup_front": "lineup_front.png",
+    "lineup_side": "lineup_side.png",
+    "clay_front": "clay_front.png",
+    "clay_three_quarter": "clay_three_quarter.png",
+    "clay_side": "clay_side.png",
+    "clay_back": "clay_back.png",
+    "sheet": "sheet.png"
+  }
+}

@@ -57,6 +57,8 @@ PI5 = (17.0, 85.0, 56.0)             # Raspberry Pi 5 85 x 56 x 17 (catalog rpi-
 CAM = (11.5, 25.0, 24.0)             # Camera Module 3 25 x 24 x 11.5 (catalog cam-rpi-v3, verified)
 WAIST_RING = 10.0                    # waist-yaw output bearing ring between pelvis top and torso floor (ASSUMPTION)
 N = 3.5                              # section squareness for every segment (design language: soft squircle; >6 reads boxy)
+FA_WIDTH = 1.12                      # section width = 1.12 x the box half-width (+margin); depth solved so the box corner sits on the superellipse.
+                                     # 1.12 balances front width (the gated view) against side depth (1.04 made the side view ~1.7x deeper than the box)
 
 CANON = {"head": 0.13, "neck_hu": 0.30, "hip": 0.50, "knee": 0.27, "upper_arm": 0.19, "forearm": 0.21, "foot": 0.155, "foot_h": 20.0}
 
@@ -272,7 +274,7 @@ def profiles(L: dict, hps: list[dict], name: str) -> dict:
             return (L["fore_half"] * (0.5 if z < L["hand_end"] + 10 else 0.9), 14.0)
         return (L["fore_half"], 18.0)
     zs = _box_ends(hps, "arm_l") + [s + AX + HOUS + SHELL + 2, L["hand_end"] + 25, L["hand_end"] + 2]
-    ar = _stations(hps, "arm_l", zs, cy_fn=ay, cx0=0.0, floor=afloor, fa=1.05)
+    ar = _stations(hps, "arm_l", zs, cy_fn=ay, cx0=0.0, floor=afloor, fa=FA_WIDTH)
     band_bot = L["neck_base"] - 0.14 * H
     arm_outer = max(1000 * (st.get("cy", 0) + st["w"] / 2) for st in ar if band_bot / 1000 <= st["z"] <= L["neck_base"] / 1000 + 0.01)
     L["shoulder_outer_sections"] = 2 * arm_outer
@@ -286,7 +288,7 @@ def profiles(L: dict, hps: list[dict], name: str) -> dict:
         return (L["Tf"] / 2 + SHELL, 30.0)
     zs = _box_ends(hps, "torso") + [h - 15, waist_z, L["neck_base"] - 2]
     zs = [z for z in zs if z <= L["neck_base"] + 2]
-    t = _stations(hps, "torso", zs, floor=tfloor, fa=1.04)
+    t = _stations(hps, "torso", zs, floor=tfloor, fa=FA_WIDTH)
     t.append(_st(L["neck_base"] + 9, 26.0, 22.0, n=2.4))
     segs.append({"id": "torso", "role": "torso", "stations": t})
     # neck + head
@@ -307,12 +309,12 @@ def profiles(L: dict, hps: list[dict], name: str) -> dict:
     # legs (mirrored, cy = hip_y)
     beam = (FORK / 2 * 0.85 + SHELL, S_W / 2 + SHELL)
     zs = _box_ends(hps, "leg_l") + [(L["a"] + L["k"]) / 2 + 8, (L["k"] + L["h"]) / 2, L["h"] + 40]
-    lg = _stations(hps, "leg_l", [z for z in zs if z > 10], cy_fn=lambda z: HIP_Y, cx0=0.0, floor=lambda z: beam, fa=1.04)
+    lg = _stations(hps, "leg_l", [z for z in zs if z > 10], cy_fn=lambda z: HIP_Y, cx0=0.0, floor=lambda z: beam, fa=FA_WIDTH)
     segs.append({"id": "leg", "role": "leg", "mirror": True, "k_m": 0.003, "stations": lg})
-    gl = _stations(hps, "glute_l", _box_ends(hps, "glute_l"), cy_fn=lambda z: HIP_Y, fa=1.05)
+    gl = _stations(hps, "glute_l", _box_ends(hps, "glute_l"), cy_fn=lambda z: HIP_Y, fa=FA_WIDTH)
     segs.append({"id": "glute", "role": "torso", "mirror": True, "k_m": 0.004, "stations": gl})
     if L["legs"] == "6dof":
-        he = _stations(hps, "heel_l", _box_ends(hps, "heel_l"), cy_fn=lambda z: HIP_Y, fa=1.05)
+        he = _stations(hps, "heel_l", _box_ends(hps, "heel_l"), cy_fn=lambda z: HIP_Y, fa=FA_WIDTH)
         segs.append({"id": "heel", "role": "leg", "mirror": True, "k_m": 0.003, "stations": he})
     # foot (axis x)
     Lf, fh = CANON["foot"] * H, CANON["foot_h"]

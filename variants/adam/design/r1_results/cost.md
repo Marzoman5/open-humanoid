@@ -2,7 +2,8 @@
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | P1 RECOMMENDED: 23 DOF, 19 STS3215-12V + 4 STS3250 (knees, hip roll), 0.60 m, Pi 5 1 GB + D36V50F5, 3S 1300, BNO085, B6neo, gamepad | 23 | $1101 | $116 | $92 | $60 | $1368 | **$1505** | NO | $1707 | $1688 | $192 |
 | P1 rec. with a phone instead of the gamepad (R9 allows it) | 23 | $1062 | $116 | $89 | $60 | $1326 | **$1459** | NO | $1661 | $1642 | $154 |
-| P1 runner-up: 23 DOF, 21 STS3215-12V + 2 STS3250 (knees), 0.55 m, Pi 5 1 GB | 23 | $982 | $116 | $83 | $60 | $1241 | **$1365** | NO | $1581 | $1565 | $180 |
+| P1 RUNNER-UP: the recommended parts at 0.55 m (19 STS3215-12V + 4 STS3250), Pi 5 1 GB + D36V50F5, gamepad | 23 | $1088 | $116 | $91 | $60 | $1355 | **$1490** | NO | $1689 | $1673 | $180 |
+| P1 alternative: 23 DOF, 21 STS3215-12V + 2 STS3250 (knees only), 0.55 m, Pi 5 1 GB | 23 | $982 | $116 | $83 | $60 | $1241 | **$1365** | NO | $1581 | $1565 | $180 |
 | P1 if the bench is favourable: 23 DOF, 23 STS3215-12V, 0.55 m, Pi 5 1 GB | 23 | $876 | $63 | $71 | $60 | $1069 | **$1176** | NO | $1417 | $1402 | $180 |
 | P2 RECOMMENDED (cheapest that keeps every engine-checked MUST): 21 servos, 6-DOF legs, no waist, neck 2, 3-DOF arms, 1 gripper, 0.55 m, lean | 21 | $678 | $63 | $56 | $60 | $856 | **$942** | NO | $1156 | $1151 | $128 |
 | P2 rec. with no spares | 21 | $678 | $0 | $51 | $60 | $789 | **$868** | NO | $1057 | $1051 | $128 |
