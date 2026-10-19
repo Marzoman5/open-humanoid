@@ -1,0 +1,6 @@
+# Vendor files carry no licence grant (Feetech wiki page states none; footer "Copyright FEETECH").
+# Redistribution is not allowed: keep them local. Only the derived dimensions (README.md, derived_dims.yaml) are committed.
+*
+!.gitignore
+!README.md
+!derived_dims.yaml
