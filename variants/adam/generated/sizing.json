@@ -5,7 +5,7 @@
   "reason": "ok",
   "height_m": 0.53,
   "height_mode": "maximize",
-  "limiting_factor": "over budget: $661 > $550",
+  "limiting_factor": "over budget: $1356 > $550",
   "joints_base": [
     "hip_yaw",
     "hip_roll",
@@ -28,151 +28,151 @@
       "height_m": 0.4,
       "feasible": true,
       "reason": "ok",
-      "cost": 390.59
+      "cost": 492.47
     },
     {
       "height_m": 0.41,
       "feasible": true,
       "reason": "ok",
-      "cost": 391.32
+      "cost": 493.2
     },
     {
       "height_m": 0.42,
       "feasible": true,
       "reason": "ok",
-      "cost": 392.09
+      "cost": 493.97
     },
     {
       "height_m": 0.43,
       "feasible": true,
       "reason": "ok",
-      "cost": 392.91
+      "cost": 494.79
     },
     {
       "height_m": 0.44,
       "feasible": true,
       "reason": "ok",
-      "cost": 393.75
+      "cost": 495.63
     },
     {
       "height_m": 0.45,
       "feasible": true,
       "reason": "ok",
-      "cost": 394.64
+      "cost": 496.52
     },
     {
       "height_m": 0.46,
       "feasible": true,
       "reason": "ok",
-      "cost": 395.58
+      "cost": 497.46
     },
     {
       "height_m": 0.47,
       "feasible": true,
       "reason": "ok",
-      "cost": 396.54
+      "cost": 498.42
     },
     {
       "height_m": 0.48,
       "feasible": true,
       "reason": "ok",
-      "cost": 397.57
+      "cost": 499.45
     },
     {
       "height_m": 0.49,
       "feasible": true,
       "reason": "ok",
-      "cost": 398.62
+      "cost": 500.5
     },
     {
       "height_m": 0.5,
       "feasible": true,
       "reason": "ok",
-      "cost": 399.72
+      "cost": 501.6
     },
     {
       "height_m": 0.51,
       "feasible": true,
       "reason": "ok",
-      "cost": 400.87
+      "cost": 502.75
     },
     {
       "height_m": 0.52,
       "feasible": true,
       "reason": "ok",
-      "cost": 402.06
+      "cost": 503.94
     },
     {
       "height_m": 0.53,
       "feasible": true,
       "reason": "ok",
-      "cost": 403.3
+      "cost": 505.18
     },
     {
       "height_m": 0.54,
       "feasible": false,
-      "reason": "over budget: $661 > $550",
-      "cost": 660.59
+      "reason": "over budget: $1356 > $550",
+      "cost": 1355.91
     },
     {
       "height_m": 0.55,
       "feasible": false,
-      "reason": "over budget: $662 > $550",
-      "cost": 661.92
+      "reason": "over budget: $1357 > $550",
+      "cost": 1357.24
     },
     {
       "height_m": 0.56,
       "feasible": false,
-      "reason": "over budget: $663 > $550",
-      "cost": 663.3
+      "reason": "over budget: $1359 > $550",
+      "cost": 1358.62
     },
     {
       "height_m": 0.57,
       "feasible": false,
-      "reason": "over budget: $665 > $550",
-      "cost": 664.73
+      "reason": "over budget: $1360 > $550",
+      "cost": 1360.05
     },
     {
       "height_m": 0.58,
       "feasible": false,
-      "reason": "over budget: $666 > $550",
-      "cost": 666.23
+      "reason": "over budget: $1362 > $550",
+      "cost": 1361.55
     },
     {
       "height_m": 0.59,
       "feasible": false,
-      "reason": "over budget: $668 > $550",
-      "cost": 667.75
+      "reason": "over budget: $1363 > $550",
+      "cost": 1363.07
     },
     {
       "height_m": 0.6,
       "feasible": false,
-      "reason": "over budget: $669 > $550",
-      "cost": 669.34
+      "reason": "over budget: $1365 > $550",
+      "cost": 1364.66
     },
     {
       "height_m": 0.61,
       "feasible": false,
-      "reason": "over budget: $671 > $550",
-      "cost": 671.0
+      "reason": "over budget: $1366 > $550",
+      "cost": 1366.32
     },
     {
       "height_m": 0.62,
       "feasible": false,
-      "reason": "over budget: $673 > $550",
-      "cost": 672.68
+      "reason": "over budget: $1368 > $550",
+      "cost": 1368.0
     },
     {
       "height_m": 0.63,
       "feasible": false,
-      "reason": "over budget: $674 > $550",
-      "cost": 674.44
+      "reason": "over budget: $1370 > $550",
+      "cost": 1369.76
     },
     {
       "height_m": 0.64,
       "feasible": false,
-      "reason": "over budget: $676 > $550",
-      "cost": 676.27
+      "reason": "over budget: $1372 > $550",
+      "cost": 1371.59
     },
     {
       "height_m": 0.65,
@@ -293,11 +293,11 @@
     "neck_yaw": "sts3215-12v"
   },
   "cost_usd": {
-    "actuators": 272.0,
-    "fixed_parts": 125.0,
+    "actuators": 355.3,
+    "fixed_parts": 148.48,
     "material": 22.3,
     "material_kg": 1.239,
-    "total": 419.3
+    "total": 526.08
   },
   "gaits": {
     "walk": {
