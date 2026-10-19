@@ -1,0 +1,539 @@
+# Raw actuator research for low-cost humanoid question (maintainer question re Noetix Bumi / low-cost actuator class).
+# Access date for everything below: 2026-10-19. Read-only web research (WebSearch/WebFetch). Nothing purchased, no accounts.
+# kind: vendor = manufacturer/retailer claim; independent = third-party measurement; derived = computed by the researcher from cited numbers.
+# Unknown = null. Torque in N.m, speed in rpm unless stated, mass in g, size in mm, price in USD single-unit unless stated.
+# Retailer prices FLUCTUATE (several pages show "From $X", "backordered", sale prices); treat price as a snapshot.
+# NO independent (measured) data was found for any commercial actuator below. Every spec is vendor-claimed unless marked otherwise.
+
+meta:
+  builder_context: "0.9 m, 20-23 DOF humanoid. hip/knee ~10-60 Nm peak, ankle 10-30, shoulder/elbow 5-20, wrist/neck 1-5"
+  accessed: 2026-10-19
+  prior_repo_notes: "research/actuators/robstride-02|03|04 and feetech-sts3250 datasheet.yaml (re-verified here; see per-item notes)"
+  not_reached_or_not_done:
+    - "Damiao official site/store (damiao.com): not fetched; only the official 2025 selection catalog PDF (worldrobotconference.com mirror) was read"
+    - "RobStride manuals themselves (PDFs in GitHub repo) not opened; only repo listing + retailer pages"
+    - "CubeMars official PDFs for AK45/AK70 not opened; official category page + product pages read"
+    - "rcdrone.top collection pages: HTTP 403 (unreachable); individual rcdrone prices only via search snippets"
+    - "myactuator.com: 404 on guessed URL; no US USD price found for RMD-X series (only yen/EU listings)"
+    - "Unitree official store: no listing found; A1/B1 actuators not researched (null)"
+    - "Berkeley Humanoid Lite arXiv PDF >10 MB (WebFetch limit); used arxiv HTML v1 + gitbook docs + public BOM Google Sheet export"
+    - "Hiwonder US store pages not opened (prices via RobotShop/OzRobotics/OpenELab snippets)"
+
+# ---------------------------------------------------------------------------------------------------------
+# Vendors / where to buy (US hobbyist angle)
+# ---------------------------------------------------------------------------------------------------------
+retailers:
+  aifitlab:
+    url: "https://aifitlab.com"
+    ship_from: "China (SF Express, 7-12 business days to US; handling 1-5 business days); no US warehouse named"
+    duties: "Product-page shipping is an estimate; final checkout 'includes applicable duties/taxes'; customer liable for unpaid customs duties; Alaska/Hawaii excluded"
+    source: "https://aifitlab.com/policies/shipping-policy"
+    kind: vendor
+    note: "Cheapest listed prices for Damiao/RobStride/CyberGear/Unitree; almost every 'Only Motor' variant shows BACKORDERED on 2026-10-19 (collection page says 'In stock' though). Bulk price tier at 5+ units (RS00 $117, RS02 $136, RS05 $103, RS06 $198)."
+  openelab_com:
+    url: "https://openelab.com (also openelab.io, EUR display)"
+    ship_from: "Warehouses named: Somerset NJ (US) / Arlington (US, per .io page) / Munich / Shenzhen. Out-of-stock SKUs 'must be prepared in China': direct from China 10-20 days or replenish US warehouse first 10-20 days. Global Warehouse (YunExpress) 8-15 business days; US warehouse USPS 3-7 business days."
+    duties: "openelab.com USD pages state 'Duties & Customs Fees Included' in price (RS02/03/06/10P pages). openelab.io EUR pages say duties are recipient's responsibility for non-EU - conflicting; the .com USD store is the one that claims DDP."
+    free_shipping_threshold_usd: 55   # contiguous US; 70 non-contiguous
+    kind: vendor
+  roboticscenter_ai:
+    url: "https://www.roboticscenter.ai/store/brand/robstride/"
+    ship_from: "Says it 'stocks select units in San Francisco, California' (per-SKU stock not stated); RS03 page: Backorder, 4-6 weeks, US shipping estimate $66.84 added"
+    prices_usd: {RS00: 185, RS01: 185, RS02: 195, RS03: 245, RS04: 295, RS05: 155, RS06: 255}
+    kind: vendor
+    note: "Highest-priced RobStride reseller seen (US-facing, support claim). Its pages show conflicting weights (e.g. RS03 880 g and 1.5 kg 'net')."
+  mjbots:
+    url: "https://mjbots.com"
+    ship_from: "null (US company; stock counts shown but 'Sold out' labels also shown - unclear)"
+    kind: vendor
+  cubemars_store:
+    url: "https://www.cubemars.com"
+    ship_from: "null (no warehouse statement). Free international express shipping over USD 200. No tariff/duty text on product pages."
+    note: "Prices on site shown with '$' and no currency code (assumed USD). US retail: RobotShop AK70-10 $563.76 'in stock' (data 2026-10-14) vs CubeMars site $398.9-$498.9."
+  robotis_us:
+    url: "https://www.robotis.us"
+    ship_from: "Corona CA address; ships to the Americas only; XM540 and XH540 both SOLD OUT with 'extended lead time'"
+
+# ---------------------------------------------------------------------------------------------------------
+# Commercial integrated actuators
+# ---------------------------------------------------------------------------------------------------------
+actuators:
+
+  # ---------------- RobStride (Beijing Lingzu / RobStride Dynamics) ----------------
+  - id: robstride-rs00
+    peak_nm: {v: 14, kind: vendor}
+    rated_nm: {v: 5, kind: vendor}
+    no_load_rpm: {v: 315, tol_pct: 10, kind: vendor}
+    rated_rpm: 260
+    mass_g: {v: 310, tol: 3}
+    size_mm: [57, 57, 51]
+    voltage_v: {rated: 48, range: [24, 60]}
+    bus: "CAN 1 Mbps (CANFD variant offered)"
+    encoder: "dual magnetic, 14-bit single-turn absolute (2 encoders: motor + output)"
+    gear: {ratio: 10, type: "planetary QDD (type per vendor listings; not read from manual)"}
+    backlash_deg: null
+    price_usd: {aifitlab: 125, aifitlab_5plus: 117, roboticscenter: 185}
+    vendor_urls: ["https://aifitlab.com/products/robstride-00-motor", "https://www.roboticscenter.ai/store/brand/robstride/"]
+    us_availability: "aifitlab: ships from China, 'Only Motor' backordered 2026-10-19. See retailers."
+    brake: "none listed"
+
+  - id: robstride-rs01
+    peak_nm: {v: 17, kind: vendor}
+    rated_nm: {v: 6, at: "100 rpm, needs heat sink", kind: vendor}
+    mass_g: {v: 380, tol: 3, note: "roboticscenter page shows 1.5 kg 'net' - conflict"}
+    voltage_v: {rated: 36, range: [24, 48]}
+    gear: {ratio: 7.75}
+    encoder: "SINGLE magnetic 14-bit (openelab: encoder count 1) - unlike RS00/02-06 which are dual"
+    bus: CAN
+    price_usd: {openelab_com_sale: 157.99, openelab_com_regular: 169, roboticscenter: 185}
+    vendor_urls: ["https://openelab.com/products/robstride01-joint-bldc-gear-motor", "https://www.pakronics.com.au/products/robstride-01-qdd-17n-m-integrated-actuator-module-ss100029452"]
+    us_availability: "openelab: warehouse China (Shenzhen), 8-15 business days; 'Variant sold out' label"
+    notes: "Aifitlab did not appear to list RS01 in the visible collection page."
+
+  - id: robstride-rs02
+    peak_nm: {v: 17, kind: vendor}
+    rated_nm: {v: 6, kind: vendor}
+    no_load_rpm: {v: 410, kind: vendor}
+    mass_g: {v: 405, tol: 5}
+    size_mm: [78.5, 78.5, 45.5]
+    voltage_v: {rated: 48, range: [24, 60]}
+    bus: "CAN 1 Mbps; CANFD and IP67 variants offered"
+    encoder: "dual magnetic, 14-bit"
+    gear: {ratio: 7.75, type: planetary QDD}
+    backlash_deg: null
+    price_usd: {aifitlab: 145, aifitlab_5plus: 136, openelab_com: 174.99, roboticscenter: 195}
+    vendor_urls: ["https://aifitlab.com/products/robstride-02-motor", "https://openelab.com/products/robstride02-qdd-joint-motor-module"]
+    us_availability: "aifitlab China-origin backorder; openelab.com China warehouse, duties included"
+    verification: "Re-verified 2026-10-19 vs aifitlab: 6/17 Nm, 405 g, 7.75:1, $145 - matches prior repo note. Variants: motor only / +USB-CAN / CANFD / IP67."
+
+  - id: robstride-rs03
+    peak_nm: {v: 60, kind: vendor}
+    rated_nm: {v: 20, kind: vendor, note: "openelab guide: 20 Nm rated at 100 rpm w/ heat sinking; another page 21; openelab suggests 21 Nm as continuous design start"}
+    no_load_rpm: {v: 195, kind: vendor}
+    mass_g: {v: 880, tol: 20, note: "roboticscenter also lists 1.5 kg net - conflict"}
+    size_mm: [106, 106, 56]
+    voltage_v: {rated: 48, range: [15, 60]}
+    bus: "CAN 1 Mbps"
+    encoder: "dual magnetic, 14-bit single-turn absolute"
+    gear: {ratio: 9, type: "machined steel reducer, QDD (openelab)"}
+    ip: "IP52"
+    backlash_deg: null
+    price_usd: {aifitlab: 225, openelab_com_sale: 249.99, openelab_com_regular: 293, roboticscenter: 245, roboticscenter_us_ship_est: 66.84}
+    vendor_urls: ["https://aifitlab.com/products/robstride-03-motor", "https://openelab.com/products/robstride03-integrated-joint-motor-module", "https://www.roboticscenter.ai/store/product/robstride-03"]
+    us_availability: "openelab.com: China warehouse, 'available again in 4 weeks' pre-sale, duties included; roboticscenter: backorder 4-6 weeks"
+    verification: "Matches prior repo note ($225, 20/60, 880 g)."
+
+  - id: robstride-rs04
+    peak_nm: {v: 120, kind: vendor}
+    rated_nm: {v: 40, kind: vendor}
+    no_load_rpm: {v: 200}
+    mass_g: {v: 1420, tol: 20}
+    size_mm: [120, 120, 56]
+    voltage_v: {rated: 48, range: [15, 60]}
+    bus: "CAN 1 Mbps"
+    encoder: "dual magnetic 14-bit"
+    gear: {ratio: 9}
+    price_usd: {aifitlab: 255, roboticscenter: 295}
+    vendor_urls: ["https://aifitlab.com/products/robstride-04-motor"]
+    verification: "Matches prior repo note ($255)."
+
+  - id: robstride-rs05
+    peak_nm: {v: 5.5, kind: vendor}
+    rated_nm: {v: 1.6, kind: vendor}
+    no_load_rpm: {v: 480}
+    mass_g: {v: 191, tol: 10}
+    size_mm: [46, 46, 44]
+    voltage_v: {rated: 48, range: [15, 60]}
+    bus: "CAN 1 Mbps"
+    encoder: "dual magnetic 14-bit"
+    gear: {ratio: 7.75}
+    price_usd: {aifitlab: 110, aifitlab_5plus: 103, roboticscenter: 155}
+    vendor_urls: ["https://aifitlab.com/products/robstride-05-motor"]
+    note: "Wrist/neck class. aifitlab collection also lists 'EduLite 05' from $80 (openelab: EduLite 05 Youth Edition QDD 6 N.m) - not detailed."
+
+  - id: robstride-rs06
+    peak_nm: {v: 36, kind: vendor}
+    rated_nm: {v: 11, at: "100 rpm, needs heat sink", kind: vendor}
+    no_load_rpm: {v: 480, tol_pct: 10}
+    mass_g: {v: 621, tol: 10}
+    size_mm: [88, 88, 49]
+    voltage_v: {rated: 48, range: [15, 60]}
+    bus: "CAN 1 Mbps"
+    encoder: "dual magnetic 14-bit single-turn absolute"
+    gear: {ratio: 9, type: "machined steel"}
+    backlash_deg: null
+    price_usd: {aifitlab: 210, aifitlab_5plus: 198, openelab_com_sale: 221.99, openelab_com_regular: 244.99, roboticscenter: 255}
+    vendor_urls: ["https://aifitlab.com/products/robstride-06-motor", "https://openelab.com/products/robstride06-qdd-36n-m-drive-module-joint"]
+    us_availability: "openelab.com: product page warehouse China; checkout notice says out of stock in US warehouse; pre-order 10-20 working days; duties included."
+    notes: "Best $/Nm-peak and Nm/kg in the 20-40 Nm class; NEW since prior repo notes (not covered in research/actuators)."
+
+  - id: robstride-rs10p
+    peak_nm: {v: 42, kind: vendor, note: "transient"}
+    rated_nm: {v: 14, at: "50 rpm w/ heat sink; stall rated 10", kind: vendor}
+    mass_g: {v: 460, tol: 3}
+    size_mm: {diameter: 57, body_length: 59.1}
+    voltage_v: {rated: 48, range: [15, 60]}
+    gear: {ratio: 25}
+    encoder: "dual magnetic 14-bit single-turn absolute"
+    price_usd: {openelab_com: 233.99}
+    vendor_urls: ["https://openelab.com/products/robstride-10p-qdd-joint-actuator"]
+    us_availability: "Pre-order, no restock date on page; US warehouse (Somerset NJ) or Shenzhen depending on stock; duties included"
+    notes: "Only page read is a retailer's; ratio 25:1 means less backdrivable. Seen via search; not cross-checked against RobStride repo."
+
+  - id: robstride_common
+    official_docs: "https://github.com/RobStride/Product_Information (repo listing fetched: user manuals CN+EN dated 260713 for RS00-RS06 incl RS02-IP67, STEP 3D models, OTA tool, CANopen, canhub, powerBoard, spec-sheet PDFs). SDK and license not stated in listing; manuals not opened."
+    protocol: "Private 29-bit extended CAN protocol (also CANopen, and an 11-bit MIT-style protocol per community ROS2 package)"
+    open_source_driver: "unofficial ros2_control package https://github.com/s2015-turtle/robstride_ros2 (RS00-RS06, EL05; license not stated on page read)"
+    mujoco_isaac_actuator_model: null   # none found
+    brake: "none listed on any RobStride page read"
+    reliability: "No independent failure reports found (searches returned only vendor guides). Vendor guide warns static holds are thermal-limited and recommends rated (not peak) torque for continuous design."
+
+  # ---------------- Damiao (DM-J series) ----------------
+  - id: damiao-dm-j3507-2ec
+    peak_nm: {v: 3, kind: vendor, source: "Damiao 2025 selection catalog"}
+    rated_nm: {v: 0.8}
+    no_load_rpm: {v: 460, at: "24V; 900 at 48V variant"}
+    mass_g: 150
+    size_mm: {diameter: 46, height: 37.9}
+    gear: {ratio: 7}
+    price_usd: {aifitlab_from: 120}
+    note: "wrist/neck class"
+
+  - id: damiao-dm-j4310-2ec
+    peak_nm: {v: 7, kind: vendor, source: "Damiao 2025 catalog (V1.1)", note: "aifitlab V4-drive spec table says 12.5 Nm peak / 3.5 rated / 325 g; the official June-2025 catalog says 7 / 3 / ~300 g -> revision conflict, UNRESOLVED"}
+    rated_nm: {v: 3}
+    no_load_rpm: {v: 200, at: "24V; 400 at 48V variant"}
+    rated_rpm: 120
+    mass_g: 300
+    size_mm: {diameter: 57, height: 46}
+    voltage_v: {rated: 24, range: [24, 48]}
+    bus: "CAN 1 Mbps / CAN-FD; UART 921600 bps config"
+    encoder: "dual 16-bit (V4 per aifitlab) / dual 14-bit (older) single-turn magnetic"
+    gear: {ratio: 10, type: planetary}
+    price_usd: {aifitlab_from: 125, openelab_sale: 166.99, openelab_regular: 185.99, rcdrone_via_search: 124.99}
+    vendor_urls: ["https://aifitlab.com/products/damiao-dm-j4310-2ec-v1-1-servo-motor", "https://openelab.com/products/damiao-brushless-servo-dm-j4310"]
+    us_availability: "aifitlab China-origin, backordered"
+    note: "Most-used hobby arm motor (OpenArm, LeRobot Damiao bus). Variants: V3/V4 drive, 24V/48V, with/without USB-CAN."
+
+  - id: damiao-dm-j4340-2ec
+    peak_nm: {v: 27, kind: vendor, source: "Damiao 2025 catalog; reseller also 27"}
+    rated_nm: {v: 9}
+    no_load_rpm: {v: 52.5, at: "24V; 100 at 48V"}
+    rated_rpm: 36
+    mass_g: 362
+    size_mm: {diameter: 57, height: 53.3}
+    gear: {ratio: 40}
+    price_usd: {aifitlab_from: 155, 'J4340P_from': 175}
+    note: "40:1 ratio: strong but slow (<=100 rpm no-load at 48V) and not very backdrivable; fine for shoulders/elbows, poor for dynamic legs."
+
+  - id: damiao-dm-j6006-2ec
+    peak_nm: {v: 11, kind: vendor, source: "catalog says 11; aifitlab page says 12"}
+    rated_nm: {v: 4}
+    no_load_rpm: {v: 226, at: "24V; 408 at 48V"}
+    mass_g: 335
+    size_mm: {diameter: 76, height: 36.5}
+    gear: {ratio: 6}
+    encoder: "dual 14-bit single-turn magnetic"
+    price_usd: {aifitlab_from: 150}
+    note: "Flat pancake, 6:1 - good backdrivability."
+
+  - id: damiao-dm-j6248p-2ec
+    peak_nm: {v: 97, kind: vendor, source: "Damiao 2025 catalog"}
+    rated_nm: {v: 30}
+    no_load_rpm: 60
+    mass_g: 628
+    size_mm: {diameter: 76, height: 62.5}
+    gear: {ratio: 48}
+    price_usd: {aifitlab_from: 265}
+    note: "97 Nm peak at 628 g and $265 is surprising on paper but 48:1 ratio, 60 rpm no-load - slow, high reflected inertia; NOT a QDD. Hip/knee suitability for walking is doubtful (speed). null for backlash."
+
+  - id: damiao-dm-j8006-2ec
+    peak_nm: {v: 20, kind: vendor}
+    rated_nm: {v: 8}
+    no_load_rpm: {v: 194.2, at: "24V; 392.8 at 48V"}
+    mass_g: 559
+    size_mm: {diameter: 96, height: 40}
+    gear: {ratio: 6}
+    price_usd: {aifitlab: 210, rcdrone_via_search: 230}
+    note: "6:1 QDD-like. Compare RS06 ($210, 36 Nm peak, 621 g): RS06 gives ~1.8x peak torque at similar price/mass."
+
+  - id: damiao-dm-j8009p-2ec
+    peak_nm: {v: 40, kind: vendor}
+    rated_nm: {v: 20}
+    no_load_rpm: {v: 168, at: "24V; 335 at 48V"}
+    mass_g: 921
+    size_mm: {diameter: 98, height: 61.7}
+    gear: {ratio: 9}
+    price_usd: {aifitlab_from: 395}
+
+  - id: damiao-dm-j10010l-2ec
+    peak_nm: {v: 120, kind: vendor}
+    rated_nm: {v: 40}
+    no_load_rpm: {v: 100, at: "24V; 200 at 48V"}
+    mass_g: {v: 1375, aifitlab_page: 1372}
+    size_mm: {diameter: 120, height: 53}
+    gear: {ratio: 10}
+    encoder: "dual 14-bit single-turn magnetic"
+    price_usd: {aifitlab: 265, via_search_earlier: "225-230"}
+    note: "Plain DM-J10010 (peak 150 Nm, 112x62, 1485 g) listed in catalog; no price captured."
+
+  - id: damiao_common
+    official_doc: "Damiao 2025 product selection catalog PDF (30 pp, Chinese) https://www.worldrobotconference.com/profile/robot/download/2025/06/30/ (file: DAMIAO 2025 product selection manual 20250630192546A441.pdf); rendered table page read."
+    control_modes: "MIT mode (P_MAX,V_MAX,T_MAX scaling), position-velocity, velocity, force-position hybrid (catalog p.4); auto pole-pair, phase-sequence and motor-parameter ID; dual temperature protection (motor + driver)."
+    open_source_libs: ["damiao-motor (PyPI, Python CAN driver, CLI+GUI)", "cmjang/DM_Control_Python (GitHub)", "LeRobot Damiao motor bus (huggingface/lerobot)", "OpenArm C++ lib"]
+    mujoco_isaac_actuator_model: null
+    brake: "none listed"
+    reliability: "No independent failure data found. A blog notes backlash-wear data over impact cycles is missing from the literature."
+    note: "catalog table (vendor) lists 'rated power' W, drive built in for all joint motors."
+
+  # ---------------- Xiaomi CyberGear ----------------
+  - id: xiaomi-cybergear
+    peak_nm: {v: 12, kind: vendor}
+    rated_nm: {v: 4, kind: vendor}
+    no_load_rpm: {v: 296}
+    rated_rpm: 240
+    mass_g: {v: 317, tol: 3}
+    size_mm: {diameter: 80.5, height: 36.5}
+    voltage_v: {rated: 24}
+    bus: "CAN 1 Mbps"
+    encoder: "SINGLE 14-bit single-turn absolute magnetic"
+    gear: {ratio: 7.75}
+    backlash_deg: null
+    price_usd: {aifitlab_from: 179}
+    price_launch_cny: 499
+    vendor_urls: ["https://aifitlab.com/products/xiaomi-cybergear-micromotor", "https://news.metal.com/newscontent/102352716 (launch price CNY 499 Aug 2023)"]
+    us_availability: "aifitlab China-origin, backordered. Unchanged class since 2023: more expensive than RS02 ($145, 17 Nm) now."
+
+  # ---------------- Unitree ----------------
+  - id: unitree-go-m8010-6
+    peak_nm: {v: 23.7, kind: vendor, note: "'maximum torque'; rated torque not listed"}
+    mass_g: 530
+    size_mm: [96.5, 92.5, 42.3]
+    voltage_v: {range: [12, 30], recommended: 24}
+    no_load_speed_rad_s: 30
+    gear: {ratio: 6.33}
+    bus: "RS-485 4 Mbps (needs CAN/UART-to-RS485 adapter, sold as option)"
+    encoder: "15-bit"
+    price_usd: {aifitlab: 280, 4gltemall: 359, reach_dog: 369}
+    vendor_urls: ["https://aifitlab.com/products/unitree-go-m8010-6-motor", "https://www.4gltemall.com/unitree-go-m8010-6-motor.html"]
+    us_availability: "aifitlab backordered; 4gltemall lists 'in stock'. Not looked at Unitree official store (none found)."
+    note: "Dominated on price and torque/kg by RS06 ($210, 36 Nm, 621 g, dual encoders, 48 V). The collection page's 'From $20' is an accessory variant, not the motor price."
+    open_sdk: "Unitree publishes GO-M8010-6 SDK (not verified here) - null"
+
+  # ---------------- CubeMars AK ----------------
+  - id: cubemars-ak45-10-v3
+    peak_nm: {v: 7, kind: vendor}
+    mass_g: 262
+    price_usd: {cubemars_site: 155.9}
+    note: "wrist/neck class; V3.0 dual 16-bit MT6835 encoders (family trait)"
+  - id: cubemars-ak45-36-v3
+    peak_nm: {v: 24, kind: vendor}
+    rated_nm: {v: 8, at: "40 rpm, 24V", kind: vendor}
+    mass_g: 349
+    size_mm: {diameter: 55, height: 56.5}
+    gear: {ratio: 36}
+    backlash_arcmin: 12
+    voltage_v: {rated: 24}
+    encoder: "dual 16-bit MT6835 magnetic, single-turn absolute retained at power loss (retailer listing)"
+    bus: "CAN, UART service, SERVO and MIT modes"
+    price_usd: {cubemars_site: 185.9, openelab_io_eur_incl_vat: 202.60}
+    note: "Cheapest credible 24 Nm-peak actuator on paper at 349 g, but 36:1 means poor backdrivability; shoulder/elbow, not walking legs."
+  - id: cubemars-ak60-6-v3
+    peak_nm: {v: 9, kind: vendor}
+    rated_nm: {v: 3, note: "V1.1 page"}
+    mass_g: {v: 368, v3: 380}
+    gear: {ratio: 6}
+    backlash_deg: {v: 0.55, note: "V1.1 page"}
+    encoder: "V1.1 single 14-bit inner only; V3 dual"
+    price_usd: {cubemars_site: "229.9-298.9"}
+  - id: cubemars-ak70-10
+    peak_nm: {v: 24.8, kind: vendor}
+    rated_nm: {v: 8.3}
+    no_load_rpm: 480
+    rated_rpm: 310
+    mass_g: {v: 521, note: "reseller roboticscenter 621 g - conflict"}
+    gear: {ratio: 10}
+    encoder: "14-bit magnetic"
+    voltage_v: {rated: 48}
+    backlash_deg: {v: 0.12, kind: "reseller claim (roboticscenter), not on CubeMars page"}
+    price_usd: {cubemars_site: "398.9-498.9", robotshop_us: 563.76}
+    us_availability: "RobotShop listing 'In stock' (data 2026-10-14)"
+  - id: cubemars-ak80-9-v3
+    peak_nm: {v: 22, kind: vendor, note: "older pages say 18"}
+    mass_g: 490
+    price_usd: {cubemars_site: "479.9-579.9"}
+  - id: cubemars-ak10-9-v3
+    peak_nm: {v: 53, kind: vendor}
+    rated_nm: 18
+    mass_g: 940
+    price_usd: {cubemars_site: "698.9-798.9"}
+    notes: "V2.0 page: 48 Nm peak, 18 rated, 960 g, 9:1, dual encoders 14/15-bit, backlash 0.33 deg, back-drive torque 0.8 Nm (vendor), $698.9."
+  - id: cubemars_common
+    official_docs: "https://www.cubemars.com/categorys/ak-series-robotic-actuator (per-product pages with manuals)"
+    protocol: "MIT mode CAN + Servo mode; widely reimplemented (mini-cheetah protocol)"
+    mujoco_isaac_actuator_model: null
+    brake: "none listed"
+    reliability: "No independent failure data found. CubeMars itself says early single-encoder units lost absolute output angle after power cycle (fixed by V3 dual encoder)."
+    note: "Price premium vs RobStride/Damiao: AK70-10 ($399-564, 24.8 Nm) vs RS06 ($210, 36 Nm)."
+
+  # ---------------- MyActuator / SteadyWin ----------------
+  - id: myactuator-rmd-x-series
+    price_usd: {rcdrone_via_search_X8_60_36to1_25Nm: 715, aifitlab_X4_10_from: 345}
+    switch_science_jpy: {X8_P20_120_E: 116380, X6_P20_60_E: 88440, status: "sold out"}
+    note: "Two to four times the price per Nm of RobStride; no clean US-store USD price found. Out of budget class."
+    peak_nm: null
+  - id: steadywin-gim6010-8
+    price_usd: {aifitlab_from: 70, note: "'From' price may be a variant/option; page 404 on direct fetch, not verified"}
+    peak_nm: null
+    note: "Listed on aifitlab with GIM4305-10; specs not read - treat as unverified."
+
+  # ---------------- Bus servos ----------------
+  - id: feetech-sts3250
+    peak_nm: {v: 4.9, derived_from: "50 kg.cm stall at 12V", kind: vendor}
+    rated_nm: {v: 1.57, derived_from: "16 kg.cm", kind: vendor}
+    no_load_rpm: 75
+    mass_g: 74.5
+    voltage_v: {range: [6, 12]}
+    bus: "TTL half-duplex serial, 38.4k-1 Mbps"
+    encoder: "magnetic 12-bit (4096)"
+    gear: {ratio: 345, type: "steel"}
+    backlash_deg: null
+    price_usd: {openelab_com: 73.99, aifitlab: 97, rcdrone: 125}
+    note: "Prior repo note re-confirmed. Peak 4.9 Nm < 5 Nm target: wrists/neck/fingers only."
+  - id: hiwonder-35kg-class
+    peak_nm: {v: 3.4, derived_from: "35 kg.cm @ 11.1V static ('reference value, not continuous')"}
+    price_usd: {HX_35H_robotshop: 27.99, HTD_35H_robotshop: 38.99, HX_35HM_ozrobotics: 43.99, HX_35HM_openelab_eur: 46.15}
+    encoder: "HX-35HM 12-bit magnetic; others potentiometer/unknown"
+    note: "No Hiwonder/Feetech bus servo >8 Nm found in this pass. Weak for the target classes."
+  - id: dynamixel-xm540-w270-r
+    peak_nm: {v: 10.6, kind: "vendor (stall)"}
+    mass_g: 165
+    voltage_v: 12
+    price_usd: {robotis_us: 494.39}
+    availability: "SOLD OUT, extended lead time (2026-10-19)"
+    sibling: {XH540-W270-R: {stall_nm: 9.9, price_usd: 632.39, availability: "sold out"}}
+    note: "Reference only; ~$47/Nm vs RS06 ~$6/Nm peak."
+
+# ---------------------------------------------------------------------------------------------------------
+# DIY: drivers, motors, Berkeley Humanoid Lite
+# ---------------------------------------------------------------------------------------------------------
+diy_components:
+  moteus_r4_11:
+    price_usd: {v: 94, volume_10: 86, volume_100: 78}
+    voltage_v: [10, 44]
+    current_a: {peak_phase: 100, continuous: "12 (no thermal mgmt), 32 (with)"}
+    bus: "5 Mbps CAN-FD"
+    encoder: "built-in absolute magnetic"
+    license: "firmware Apache 2.0 (github.com/mjbots/moteus)"
+    url: "https://mjbots.com/products/moteus-r4-11"
+    stock: "page shows '208 in stock' and 'Sold out' (ambiguous)"
+    adapter_note: "needs CAN-FD adapter (not included)"
+  mj5208:
+    price_usd: {v: 74, volume_10: 69}
+    peak_torque_nm: 1.7
+    kv: 330
+    mass_g: 193
+    size_mm: {diameter: 63, length: 25}
+    url: "https://mjbots.com/products/mj5208"
+    note: "Motor only; no reducer; no encoder (moteus has onboard one)."
+  mjbots_qdd100_beta3:
+    price_usd: 879
+    peak_nm: {v: 16, note: "<1 s at 24V, zero speed (vendor)"}
+    continuous_nm: 3.3
+    mass_g: 507
+    size_mm: {diameter: 100, thickness: 44}
+    backlash_deg: 0.25
+    stock: "NOT CURRENTLY STOCKED, MOQ 50"
+    note: "Expensive: $55/Nm peak. Shows why DIY."
+  odrive_s1:
+    price_usd: {v: 149, volume_10: 147}
+    voltage_v: [12, 48]
+    current_a: {continuous: 40}
+    encoder: "onboard MA702 magnetic"
+    bus: "CAN 2.0B 1 Mbps; USB; UART"
+    stock: "Sold out on page"
+    url: "https://shop.odriverobotics.com/products/odrive-s1"
+    open_source: null
+  gimbal_motors_gm5208_gbm: "null - not researched (time-box). Berkeley used drone motors M6C12 150KV and 5010 instead."
+  b_g431b_esc1:
+    price_usd: 18.97
+    source: "Berkeley Humanoid Lite BOM sheet"
+
+berkeley_humanoid_lite:
+  sources:
+    - "https://arxiv.org/abs/2504.17249 (arXiv HTML v1 read: https://arxiv.org/html/2504.17249v1)"
+    - "https://github.com/HybridRobotics/Berkeley-Humanoid-Lite (code MIT; other assets CC BY-SA 4.0; motor_configuration.json at root; assets and lowlevel are git submodules inside repo)"
+    - "https://berkeley-humanoid-lite.gitbook.io/docs (BOM page links public Google Sheet 1AQEHcH_nPkXYfor2-h7bwNIUMmsePtAm53epnsWgZXc)"
+    - "https://berkeley-humanoid-lite.gitbook.io/docs/in-depth-contents/motor-characterization.md"
+  robot: {mass_kg: 16, height_m: 0.8, actuators_total: 22, count_6512: 10, count_5010: 12, paper_note: "joint-to-actuator mapping not stated in text; secondary source humanoid.guide says 6512 on 10 leg joints, 5010 on arms/grippers"}
+  actuator_6512:
+    motor: "MAD Components M6C12 150KV drone motor"
+    driver: "ST B-G431B-ESC1"
+    encoder: "AS5600 magnetic (hand-modified)"
+    reducer: "3D-printed (PLA) cycloidal; ratio 15 (from motor_configuration.json gear_ratio -15 and motor-characterization page inertia calc; not stated in the paper text)"
+    cost_usd_us: 188
+    cost_usd_china: 157
+    bom_us_vs_china: {motor: [129, 124], driver: [19, 23], encoder: [3, 1], bearings: [23, 4], fasteners: [5, 1], printed_parts: [4, 1], misc_cables: [5, 3]}
+    bom_sheet_exact_actuator_6512: "USD 188.69 / CNY 1122.76 (Google Sheet; includes bearings MR106-2RS x13, 6701-2RS x2, 6811ZZ x2 (the 6811 bearing sets actuator size), PLA 0.12 kg)"
+    peak_torque_nm: {v: "~20", kind: "secondary source (humanoid.guide citing paper Fig. 3); not in paper text"}
+    derived_check_nm: {v: 27.6, kind: derived, formula: "Kt 0.0919 Nm/A x ratio 15 x 20 A current limit in motor_configuration.json; ignores efficiency (~90%)"}
+    measured_independent: {backlash_rad_max: 0.0229, backlash_rad_std: 0.0042, units: 6, note: "paper's own measurement = authors, not third party (~1.3 deg max)", transmission_stiffness_nm_per_rad: 319.49, efficiency_pct: "~90, drops at high torque+speed", torque_tracking_error_nm: 0.5}
+    durability: "60 h pendulum test (0.5 kg at 0.5 m, -45 to +90 deg, 0.5 Hz): efficiency dipped then recovered, backlash rose slightly; thermal effects on printed parts NOT studied"
+    mass_g: null
+    size_mm: null
+  actuator_5010:
+    motor: "5010 BLDC drone motor (110KV Kt 0.1176; 140KV and 310KV variants characterised)"
+    driver: "B-G431B-ESC1"
+    encoder: "AS5600"
+    reducer: "printed cycloidal, ratio 15 implied"
+    cost_usd_us: 136
+    cost_usd_china: 94
+    bom_us_vs_china: {motor: [84, 62], driver: [19, 23], encoder: [3, 1], bearings: [18, 3], fasteners: [4, 1], printed_parts: [3, 1], misc_cables: [5, 3]}
+    peak_torque_nm: {v: "~12", kind: "secondary source (humanoid.guide)"}
+  robot_bom_total_usd: {us: 4312, china: 3236, abstract_claim: "under $5,000 (US prices); RSS version says under $6,000 per one summary"}
+  robot_bom_lines_us: {mini_pc: 129, usb_can_x4: 68, usb_hubs_x2: 36, imu_bno085: 13, lipo_6s: 70, actuators_6512_x10: 1880, actuators_5010_x12: 1632, grippers_x2: 72, extrusions: 39, printed_parts: 200, misc_structural: 50, misc_electronic: 123}
+  actuator_share_of_total_pct_us: {v: 81.4, kind: derived, formula: "(1880+1632)/4312"}
+  vs_commercial: "BHL 6512 ($188, ~20-27 Nm peak est., printed, backlash ~1.3 deg, 6S/24V-class, no dual encoder) versus RS06 ($210-222, 36 Nm peak, 621 g, steel gear, dual encoders): commercial dual-encoder QDD now costs about the same as the DIY BOM at US prices, before labour/print time."
+  reliability_criticism: "Secondary review (remio.ai, not primary) argues printed cycloidal stiffness/fatigue/heat limit performance; nobody found documenting many replications."
+
+# ---------------------------------------------------------------------------------------------------------
+# Comparison by torque class (peak Nm, price snapshot, cheapest credible single-unit US-accessible listing)
+# ---------------------------------------------------------------------------------------------------------
+cheapest_by_class:
+  wrist_neck_1_5nm:
+    - {id: robstride-rs05, peak_nm: 5.5, mass_g: 191, price_usd: 110, note: "dual encoder, 48 V; EduLite 05 from $80 per aifitlab (unverified specs)"}
+    - {id: damiao-dm-j3507, peak_nm: 3, mass_g: 150, price_usd: 120}
+    - {id: feetech-sts3250, peak_nm: 4.9, mass_g: 74.5, price_usd: 74, note: "12 V TTL bus, 345:1, much cheaper but poor backdrivability"}
+  shoulder_elbow_5_20nm:
+    - {id: robstride-rs00, peak_nm: 14, mass_g: 310, price_usd: 125}
+    - {id: robstride-rs02, peak_nm: 17, mass_g: 405, price_usd: 145}
+    - {id: damiao-dm-j4310, peak_nm: "7-12.5 (revision conflict)", mass_g: 300, price_usd: 125}
+  ankle_hipyaw_10_30nm:
+    - {id: robstride-rs02, peak_nm: 17, price_usd: 145}
+    - {id: robstride-rs06, peak_nm: 36, mass_g: 621, price_usd: 210}
+    - {id: cubemars-ak45-36, peak_nm: 24, mass_g: 349, price_usd: 186, note: "36:1 not very backdrivable"}
+  hip_knee_30_60nm:
+    - {id: robstride-rs06, peak_nm: 36, mass_g: 621, price_usd: 210}
+    - {id: robstride-rs10p, peak_nm: 42, mass_g: 460, price_usd: 234, note: "25:1"}
+    - {id: robstride-rs03, peak_nm: 60, mass_g: 880, price_usd: 225}
+  heavy_100_plus_nm:
+    - {id: robstride-rs04, peak_nm: 120, mass_g: 1420, price_usd: 255}
+    - {id: damiao-dm-j10010l, peak_nm: 120, mass_g: 1375, price_usd: 265}
+
+# ---------------------------------------------------------------------------------------------------------
+notes_caveats:
+  - "All commercial numbers are vendor or retailer claims. No independent bench measurements, dyno data, backlash measurements or failure reports found for RobStride, Damiao, CubeMars, CyberGear or Unitree in this pass. Treat peak torque as transient (RobStride/openelab guides advise designing to rated torque with heat sinking)."
+  - "Retailers disagree: aifitlab $145 RS02 (China-ship, backordered) vs openelab.com $174.99 (DDP, China warehouse) vs roboticscenter.ai $195 (+$67 shipping, 4-6 wk). Real delivered US prices are ~20-60% above the headline aifitlab numbers."
+  - "Tariffs: no authoritative 2026 tariff rate found. openelab.com says duties are included; aifitlab says duties 'finalized at checkout'. Budget unknown duty risk; check CBP/USITC for HTS rate on Chinese electric motors."
+  - "Almost everything is backordered or pre-order with 10-20 working days on a China restock; expect 3-8 weeks for the first order. Damiao/RobStride 'Only Motor' needs a USB-CAN adapter (extra variant)."
+  - "Voltage: RobStride RS00-06 are 48 V (15/24-60 V); Damiao J4310/J6006/J8006 default 24 V variants; CyberGear 24 V; Unitree 12-30 V. Mixed packs need separate buses/converters."
+  - "Dual encoder (motor+output) on RobStride (except RS01), Damiao, CubeMars V3. CyberGear and RS01 are single. No brakes listed on any of these; holding a pose costs continuous current (thermal limit)."
+  - "Higher ratios (CubeMars AK45-36 36:1, Damiao J4340 40:1, J6248P 48:1, RS10P 25:1) trade backdrivability and speed for torque; 6-10:1 QDD (RS03/04/06, J8006, J10010, AK70-10) is the walking-leg class."
+  - "Damiao J4310 spec conflict: official 2025 catalog 3/7 Nm 300 g vs aifitlab V4 table 3.5/12.5 Nm 325 g. J6006 catalog 4/11 vs aifitlab 12 Nm peak. Resolve by reading the Damiao manual for the exact drive revision before relying on peak."
+  - "RobStride weights/dims conflict between retailers (roboticscenter lists 1.5 kg 'net' for several); aifitlab/pakronics values (e.g. RS03 880 g) agree with each other and with openelab."
+  - "Berkeley Humanoid Lite per-joint torque is NOT in the paper text; ~20 Nm (6512) and ~12 Nm (5010) come from a secondary source reading Fig. 3. Gear ratio 15 is inferred from repo config. Derived 27.6 Nm for 6512 is an upper bound at the config's 20 A limit."
+  - "BHL total BOM: $4,312 US / $3,236 China; actuators are 81% of cost. BHL's 22 actuators cost less per unit ($136-188) than most commercial ones but are weaker, heavier plastic QDD at ~20 Nm class, and lack dual encoders."
+  - "No MuJoCo/Isaac actuator models found for RobStride/Damiao/CubeMars (only generic Isaac Lab actuator configs and generic armature/friction identification papers). Will need own sys-id."
+  - "Open-source tooling found: moteus (Apache-2.0 firmware), damiao-motor / DM_Control_Python / LeRobot Damiao bus, community robstride_ros2. RobStride official GitHub has manuals + STEP + OTA, license/SDK not stated."
+  - "Noetix Bumi (the maintainer's reference): ~US$1,400 (CNY 9,988), 94 cm, 12 kg; joint motors/BOM not disclosed in any source found. It cannot be explained from this actuator class: 20+ RS00-class actuators alone would be ~$2.5-3k at retail."
+  - "Not covered: gimbal motors GM5208/GBM, Unitree A1/B1, MyActuator US price, HighTorque, Hiwonder US store, Dynamixel XL/XM430 (existing repo notes), brakes, tests of printed reducers by third parties."
