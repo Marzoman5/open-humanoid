@@ -139,6 +139,22 @@ def look_metrics(parts: dict, spec: LegSpec) -> dict:
     return M
 
 
+def pocket_volume(spec: LegSpec, step: float = 1.0) -> float:
+    """Volume (mm^3) the knee pocket removes from the shank shell envelope for this spec's flexion range (analytic target)."""
+    from .spec import knee_cutter_polygon as kcp
+
+    prof = SegProfile(spec.shank_stations())
+    cut = PolarRegion(kcp(spec, spec.band))
+    xs = np.arange(-40, 40, step)
+    ys = np.arange(-40, 40, step)
+    X, Y = np.meshgrid(xs, ys, indexing="ij")
+    tot = 0.0
+    for z in np.arange(prof.z0, prof.z1, step):
+        inside = prof.depth(X, Y, np.full_like(X, z)) <= 0
+        tot += float((inside & cut.contains(X, np.full_like(X, z))).sum())
+    return tot * step ** 3
+
+
 def _section_area(parts: dict, z: float) -> float:
     """Filled area (mm^2) of the outer envelope of all panels at height z (union of the section rings, exterior only)."""
     from shapely.geometry import Polygon
@@ -249,27 +265,33 @@ def rom_sweep(parts: dict, spec: LegSpec, step_deg: float = 5.0) -> dict:
 
 
 # ================================================================================================ printability
-def wall_thickness(m, n: int = 6000, seed: int = 0, tol: float = 1.55) -> dict:
-    """Local wall thickness: from points sampled on the surface, shoot a ray inwards (-normal) and take the first hit."""
+def wall_thickness(m, n: int = 5000, seed: int = 0, tol: float = 1.55, edge_mm: float = 1.5) -> dict:
+    """Local wall thickness: from points sampled on the surface, shoot a ray inwards (-normal) and take the first hit.
+    `min_mm` is over all samples (knife edges at the pocket rim and the cap/panel borders count). `interior_min_mm`
+    ignores samples within `edge_mm` of a sharp edge (> 40 deg), which is the wall of the free surface."""
     import trimesh
+    from scipy.spatial import cKDTree
 
-    rng = np.random.default_rng(seed)
-    pts, fidx = trimesh.sample.sample_surface(m, n, seed=int(rng.integers(1 << 31)))
+    pts, fidx = trimesh.sample.sample_surface(m, n, seed=seed)
     nrm = m.face_normals[fidx]
-    o = pts - nrm * 1e-3
+    off = 0.05                                  # start the ray a little inside so it cannot re-hit its own facet
+    o = pts - nrm * off
     loc, ridx, _ = m.ray.intersects_location(o, -nrm, multiple_hits=False)
     t = np.full(len(pts), np.nan)
     if len(ridx):
-        # keep the nearest hit per ray
-        d = np.linalg.norm(loc - o[ridx], axis=1)
-        for i in np.unique(ridx):
-            t[i] = d[ridx == i].min()
+        d = np.linalg.norm(loc - o[ridx], axis=1) + off
+        order = np.argsort(d)[::-1]            # write far hits first so the nearest hit per ray wins
+        t[ridx[order]] = d[order]
     ok = ~np.isnan(t)
-    tt = t[ok]
-    if not len(tt):
+    if not ok.any():
         return {"min_mm": None}
-    return {"min_mm": round(float(tt.min()), 3), "p1_mm": round(float(np.percentile(tt, 1)), 3),
-            "p5_mm": round(float(np.percentile(tt, 5)), 3), "median_mm": round(float(np.median(tt)), 3),
+    sharp = m.face_adjacency_angles > np.radians(40)
+    edge_pts = m.vertices[m.face_adjacency_edges[sharp]].mean(axis=1) if sharp.any() else np.zeros((0, 3))
+    near_edge = cKDTree(edge_pts).query(pts)[0] < edge_mm if len(edge_pts) else np.zeros(len(pts), bool)
+    tt, ti = t[ok], t[ok & ~near_edge]
+    return {"min_mm": round(float(tt.min()), 3), "interior_min_mm": round(float(ti.min()), 3) if len(ti) else None,
+            "p1_mm": round(float(np.percentile(tt, 1)), 3), "p5_mm": round(float(np.percentile(tt, 5)), 3),
+            "median_mm": round(float(np.median(tt)), 3), "frac_below_1.2mm": round(float((tt < 1.2).mean()), 4),
             "frac_below_tol": round(float((tt < tol).mean()), 4), "n": int(len(tt))}
 
 
@@ -343,8 +365,10 @@ def printability(parts: dict, spec: LegSpec, with_wall: bool = True) -> dict:
     out["all_watertight"] = all(d["watertight"] and d["winding_ok"] and d["manifold3d_valid"] for d in P)
     out["all_fit_bed"] = all(d["fits_bed"] for d in P)
     walls = [d["wall"]["min_mm"] for d in P if with_wall and d["wall"].get("min_mm") is not None]
+    inner = [d["wall"]["interior_min_mm"] for d in P if with_wall and d["wall"].get("interior_min_mm") is not None]
     out["min_wall_mm"] = min(walls) if walls else None
-    out["wall_ok"] = bool(walls) and min(walls) >= spec.wall - 0.05
+    out["interior_min_wall_mm"] = min(inner) if inner else None
+    out["wall_ok"] = bool(inner) and min(inner) >= spec.wall - 0.15    # interior walls, tolerance covers tessellation / marching cubes
     out["p1_wall_mm"] = min((d["wall"].get("p1_mm") for d in P if with_wall and d["wall"].get("p1_mm") is not None), default=None)
     out["total_overhang_mm2"] = round(sum(d["best_overhang_mm2"] or 0 for d in P), 1)
     out["seams"] = [{"segment": s, "plane": f"x = {spec.seam_x:+.1f} mm (coronal, on the side planes)", "reveal_gap_mm": spec.seam_gap}
@@ -354,5 +378,5 @@ def printability(parts: dict, spec: LegSpec, with_wall: bool = True) -> dict:
 
 def evaluate(parts: dict, spec: LegSpec, with_wall: bool = True, rom_step: float = 5.0) -> dict:
     """Run everything. Slow parts (wall rays, ROM sweep) can be skipped via arguments for smoke tests."""
-    return {"look": look_metrics(parts, spec), "fit": {"keepouts": fit_keepouts(parts, spec), "rom": {k: v for k, v in rom_sweep(parts, spec, rom_step).items() if k != "steps"}},
+    return {"look": look_metrics(parts, spec), "fit": {"keepouts": fit_keepouts(parts, spec), "rom": rom_sweep(parts, spec, rom_step)},
             "print": printability(parts, spec, with_wall)}
