@@ -1,0 +1,154 @@
+# Domain randomization ranges per project. Access date for all sources: 2026-10-19.
+# Ranges are [lo, hi]. op: scale = multiply nominal, add = add offset, set = replace value.
+# null = not randomised / not stated in the source. Units in "units". See b-domain-randomization.md.
+schema_version: 1
+accessed: "2026-10-19"
+verification: "Re-verified 2026-10-19 against main/master HEAD (no SHAs). source_lines are approximate (+-2); Playground/ToddlerBot/ksim lines are block-level from fetch summaries. See research/verification-parts/methods-abc.md."
+projects:
+  open_duck_mini:
+    source: https://github.com/apirrone/Open_Duck_Playground/blob/main/playground/common/randomize.py
+    env_source: https://github.com/apirrone/Open_Duck_Playground/blob/main/playground/open_duck_mini_v2/joystick.py
+    servo: Feetech STS3215
+    ctrl_dt_s: 0.02
+    sim_dt_s: 0.002
+    floor_friction: {op: set, range: [0.5, 1.0], source_lines: "randomize.py#L43-L45"}
+    joint_frictionloss: {op: scale, range: [0.9, 1.1], source_lines: "randomize.py#L47-L52"}
+    armature: {op: scale, range: [1.0, 1.05], source_lines: "randomize.py#L54-L59"}
+    joint_damping: null
+    link_mass: {op: scale, range: [0.9, 1.1], source_lines: "randomize.py#L68-L71"}
+    torso_mass: {op: add, range: [-0.1, 0.1], units: kg, source_lines: "randomize.py#L73-L76"}
+    torso_com: {op: add, range: [-0.05, 0.05], units: m, per_axis: true, source_lines: "randomize.py#L61-L66"}
+    default_joint_pos: {op: add, range: [-0.03, 0.03], units: rad, source_lines: "randomize.py#L78-L86"}
+    kp: {op: scale, range: [0.9, 1.1], source_lines: "randomize.py#L88-L95"}
+    kd: null
+    motor_strength: null
+    backlash: {fixed: 0.5, units: deg, note: "separate backlash joint, not randomised", source: "https://github.com/apirrone/Open_Duck_Playground/blob/main/playground/open_duck_mini_v2/xmls/joints_properties.xml#L7-L11"}
+    action_delay: {config_range_steps: [0, 3], effective_range_steps: [0, 2], note: "jax.random.randint maxval exclusive", units: ctrl_steps, equivalent_ms_max: 40, source_lines: "joystick.py#L62-L63"}
+    imu_delay: {config_range_steps: [0, 3], effective_range_steps: [0, 2], units: ctrl_steps, source_lines: "joystick.py#L64-L65"}
+    push: {range: [0.1, 1.0], units: "m/s added to base xy velocity", interval_s: [5.0, 10.0], source_lines: "joystick.py#L89-L92"}
+    obs_noise_uniform_halfwidth:
+      hip_pos_rad: 0.03
+      knee_pos_rad: 0.05
+      ankle_pos_rad: 0.08
+      joint_vel_rad_s: 2.5
+      gravity: 0.1
+      linvel: 0.1  # config value; noise commented out in _get_obs (not applied)
+      gyro_rad_s: 0.1
+      accelerometer: 0.05
+      source_lines: "joystick.py#L66-L75"
+  toddlerbot:
+    source: https://github.com/hshi74/toddlerbot/blob/main/toddlerbot/locomotion/mjx_config.py
+    note: dataclass defaults only; walk.gin checked (add_head_pose=True, add_push off, no range overrides); other 14 gin task configs not checked
+    servo: Dynamixel (XC330 etc.)
+    floor_friction: {op: set, range: [0.4, 1.0], source_lines: "mjx_config.py#L221"}
+    joint_frictionloss: {op: scale, range: [0.8, 1.2], source_lines: "L224"}
+    armature: {op: scale, range: [0.8, 1.2], source_lines: "L223"}
+    joint_damping: {op: scale, range: [0.8, 1.2], source_lines: "L222"}
+    link_mass: null
+    torso_mass: {op: add, range: [-0.2, 0.2], units: null, source_lines: "L225"}
+    hand_mass: {op: add, range: [0.0, 0.1], units: null, source_lines: "L226"}
+    default_joint_pos: {arm_joint_pos_range: [-0.1, 0.1], units: rad, torso_roll_pitch_range: [-0.1, 0.1], source_lines: "L211-L220"}
+    kp: {op: scale, range: [0.9, 1.1], source_lines: "L228"}
+    kd: {op: scale, range: [0.9, 1.1], source_lines: "L229"}
+    motor_strength:
+      tau_max: {op: scale, range: [0.9, 1.1]}
+      q_dot_tau_max: {op: scale, range: [0.9, 1.1]}
+      q_dot_max: {op: scale, range: [0.9, 1.1]}
+      kd_min: {op: scale, range: [0.9, 1.1]}
+      tau_brake_max: {op: scale, range: [0.9, 1.1]}
+      tau_q_dot_max: {op: scale, range: [0.9, 1.1]}
+      passive_active_ratio: {op: scale, range: [0.5, 1.5]}
+      source_lines: "L230-L238"
+    backlash: {activation: 0.1, range: [0.02, 0.1], units: null, source_lines: "L209-L210"}
+    action_delay: {fixed_steps: 1, source_lines: "L105"}
+    push: {enabled_by_default: false, force_range: [1.0, 3.0], units: null, duration_s: 0.2, interval_s: 2.0, source_lines: "L240-L243"}
+    obs_noise: {level: 0.05, dof_pos: 1.0, dof_vel: 2.0, gyro_std_rad_s: 0.25, gyro_bias_walk_std: 0.0002, quat_rotvec_std_rad: 0.10, source_lines: "L251-L275"}
+  mujoco_playground_berkeley_humanoid:
+    source: https://github.com/google-deepmind/mujoco_playground/blob/main/mujoco_playground/_src/locomotion/berkeley_humanoid/randomize.py
+    env_source: https://github.com/google-deepmind/mujoco_playground/blob/main/mujoco_playground/_src/locomotion/berkeley_humanoid/joystick.py
+    ctrl_dt_s: 0.02
+    sim_dt_s: 0.002
+    floor_friction: {op: set, range: [0.4, 1.0], source_lines: "randomize.py#L28-L30"}
+    joint_frictionloss: {op: scale, range: [0.9, 1.1], source_lines: "L34-L36"}
+    armature: {op: scale, range: [1.0, 1.05], source_lines: "L41-L43"}
+    link_mass: {op: scale, range: [0.9, 1.1], source_lines: "L48-L50"}
+    torso_mass: {op: add, range: [-1.0, 1.0], units: kg, source_lines: "L55-L56"}
+    default_joint_pos: {op: add, range: [-0.05, 0.05], units: rad, source_lines: "L62-L66"}
+    kp: null
+    kd: null
+    motor_strength: null
+    action_delay: null
+    push: {range: [0.1, 2.0], units: "m/s added to base xy velocity", interval_s: [5.0, 10.0], source_lines: "joystick.py#L88-L91"}
+    obs_noise_uniform_halfwidth: {hip_pos: 0.03, kfe_pos: 0.05, ffe_pos: 0.08, faa_pos: 0.03, joint_vel: 1.5, gravity: 0.05, linvel: 0.1, gyro: 0.2, source_lines: "joystick.py#L41-L50"}
+  mujoco_playground_g1:
+    source: https://github.com/google-deepmind/mujoco_playground/blob/main/mujoco_playground/_src/locomotion/g1/randomize.py
+    env_source: https://github.com/google-deepmind/mujoco_playground/blob/main/mujoco_playground/_src/locomotion/g1/joystick.py
+    floor_friction: {op: set, range: [0.4, 1.0], source_lines: "randomize.py#L27-L28"}
+    joint_frictionloss: {op: scale, range: [0.5, 2.0], source_lines: "L33-L34"}
+    armature: {op: scale, range: [1.0, 1.05], source_lines: "L40-L41"}
+    link_mass: {op: scale, range: [0.9, 1.1], source_lines: "L47-L48"}
+    torso_mass: {op: add, range: [-1.0, 1.0], units: kg, source_lines: "L54"}
+    default_joint_pos: {op: add, range: [-0.05, 0.05], units: rad, source_lines: "L60-L64"}
+    kp: null
+    kd: null
+    motor_strength: null
+    action_delay: null
+    push: {range: [0.1, 2.0], units: "m/s added to base xy velocity", interval_s: [5.0, 10.0], source_lines: "joystick.py#L92-L93"}
+    obs_noise_uniform_halfwidth: {joint_pos: 0.03, joint_vel: 1.5, gravity: 0.05, linvel: 0.1, gyro: 0.2, source_lines: "joystick.py#L43-L49"}
+  mujoco_playground_booster_t1:
+    source: https://github.com/google-deepmind/mujoco_playground/blob/main/mujoco_playground/_src/locomotion/t1/randomize.py
+    env_source: https://github.com/google-deepmind/mujoco_playground/blob/main/mujoco_playground/_src/locomotion/t1/joystick.py
+    floor_friction: {op: set, range: [0.2, 0.6], source_lines: "randomize.py#L30-L32"}
+    joint_frictionloss: {op: scale, range: [0.9, 1.1], source_lines: "L36-L37"}
+    armature: {op: scale, range: [1.0, 1.05], source_lines: "L43-L44"}
+    link_mass: {op: scale, range: [0.98, 1.02], source_lines: "L50-L51"}
+    torso_mass: {op: add, range: [-1.0, 1.0], units: kg, source_lines: "L57"}
+    default_joint_pos: {op: add, range: [-0.05, 0.05], units: rad, source_lines: "L63-L67"}
+    kp: {op: scale, range: [0.9, 1.1], source_lines: "L72-L73"}
+    kd: null
+    joint_damping: {op: scale, range: [0.5, 2.0], scope: "dof_damping on 4 ankle DOFs (21,22,27,28)", source_lines: "L78-L83"}
+    motor_strength: null
+    action_delay: null
+    push: {range: [0.1, 1.0], units: "m/s added to base xy velocity", interval_s: [5.0, 10.0], source_lines: "joystick.py#L91-L92"}
+    obs_noise_uniform_halfwidth: {joint_pos: 0.03, joint_vel: 1.5, gravity: 0.05, linvel: 0.1, gyro: 0.2, source_lines: "joystick.py#L42-L48"}
+  berkeley_humanoid_paper:
+    source: https://arxiv.org/html/2407.21781
+    floor_friction: {op: set, range: [0.2, 1.25]}
+    restitution: {range: [0.0, 0.1]}
+    link_mass: {op: scale, range: [0.9, 1.1]}
+    base_mass: {op: add, range: [-1.0, 1.0], units: null}
+    latency: "negligible 0.5-2 ms, not randomised"
+    joint_friction: {op: scale, range: [0.9, 1.1]}
+    armature: {op: scale, range: [1.0, 1.05]}
+    default_joint_pos: {op: add, range: [-0.05, 0.05]}
+    kp: null
+    kd: null
+    action_delay: null
+    push: null
+    obs_noise: {linvel: 0.1, angvel: 0.2, imu: 0.05, hip_pos: 0.03, kfe_pos: 0.05, ffe_pos: 0.08, faa_pos: 0.03, joint_vel: 1.5}
+  berkeley_humanoid_lite:
+    source: https://github.com/HybridRobotics/Berkeley-Humanoid-Lite/blob/HEAD/source/berkeley_humanoid_lite/berkeley_humanoid_lite/tasks/locomotion/velocity/config/biped/env_cfg.py
+    paper_dr_table: null
+    floor_friction: {static: [0.4, 1.2], dynamic: [0.4, 1.2], source_lines: "L225-L233"}
+    base_mass: {op: add, range: [-1.0, 2.0], units: kg, source_lines: "L236-L244"}
+    default_joint_pos: {op: add, range: [-0.05, 0.05], units: rad, source_lines: "L245-L252"}
+    kp: {op: scale, range: [0.8, 1.2], source_lines: "L254-L263"}
+    kd: {op: scale, range: [0.8, 1.2], source_lines: "L254-L263"}
+    motor_strength: null
+    action_delay: null
+    push: {reset_external_force_torque: [-2.0, 2.0], interval_push: "commented out (interval 10-15 s; magnitude not checked)", source_lines: "L291-L309"}
+    obs_noise_uniform: {base_ang_vel: [-0.3, 0.3], projected_gravity: [-0.05, 0.05], joint_pos: [-0.05, 0.05], joint_vel: [-2.0, 2.0], source_lines: "L55-L71"}
+  kscale_zbot:
+    source: https://github.com/kscalelabs/ksim-zbot/blob/master/ksim_zbot/zbot2/walking/walking.py
+    servo: null
+    floor_friction: {op: scale, range: [0.1, 2.0], source_lines: null}
+    joint_frictionloss: {op: scale, range: [0.5, 1.5], source_lines: null}
+    armature: {op: scale, range: [0.95, 1.05], note: "ksim ArmatureRandomizer default, no args", source_lines: null}
+    joint_damping: {op: scale, range: [0.95, 1.05], source_lines: null}
+    torso_mass: {op: add, range: [-0.5, 0.5], units: kg, body: Top_Brace, source_lines: null}
+    default_joint_pos: {op: add, range: [-0.05, 0.05], units: rad, source_lines: null}
+    kp: null
+    kd: null
+    action_delay: null
+    push: {xy_force_range: [0.0, 0.5], angular_range: [0.0, 0.5], interval_s: [2.0, 4.0], units: null, source_lines: null}
+    obs_noise_gaussian_std: {joint_pos: 0.1, joint_vel: 2.5, imu_acc: 0.5, imu_gyro: 0.5, gravity_vec: 0.08, source_lines: null}

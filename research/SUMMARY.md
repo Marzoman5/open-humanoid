@@ -1,0 +1,18 @@
+# Research summary for Adam (≤ $400, ~0.5 m, 16× STS3215, walking first)
+
+Accessed 2026-10-19; **verified in a second pass** (`VERIFICATION.md`). ⚠ = contradicts a current assumption.
+
+1. ⚠ **Vendor-rated torque is 26–33% of stall; 40% continuous is above it.** Rated/stall: 10/30 kg·cm (12 V part), 6.5 (or 5)/19.5 (7.4 V part). One independent bench (Robonine, 12 V part, 1 unit) held 15 kg·cm (50%) ~1–2 h, reaching 71 °C and flagging overheat; 20 kg·cm tripped overload. Thermal limit of the 7.4 V part is unmeasured. Keep 40% only if duty cycle is low; otherwise 25–33%.
+2. ⚠ **Mass target looks too low.** 0.5 m robots weigh 3.4–3.5 kg (ToddlerBot 0.56 m, OP3 0.51 m). Fit over 9 robots: mass ≈ 18.5·h^2.28 kg (R² 0.93), ~3.8 kg at 0.5 m (2.3 kg if forced to h³). `6.4·h³` is structure only (0.8 kg); an all-up ~1.7 kg has no comparable.
+3. **Knee need ≈ 2.4–4 N·m; margin is thin.** Fit (N=5, R² 0.85, ToddlerBot-driven) gives ~3.9 N·m at 0.5 m. STS3215 stall: 1.91 N·m (19.5 kg·cm, **7.4 V**; 1.62 at 6 V) and 2.94 N·m (30 kg·cm, **12 V**). Both are 1:345.
+4. **Voltage decides the part.** A 3S pack (12.6 V full) is within the 12 V part's rating but above the 7.4 V part's (4/6–7.4 V). No damage reports found, but buy the 12 V SKU (C018/C047) or use a 2S pack or regulator.
+5. **Zero-shot sim-to-real needs an identified actuator model.** ToddlerBot used chirp system ID. Rhoban BAM ships STS3215 models, **7.4 V only** (m4: kt 1.265, R 2.47 Ω, armature 0.0234, delay ~4.9 ms, vmax 5.07 rad/s; load friction ~4× base). No 12 V STS3215 fit exists (BAM has a 12 V Waveshare ST3025). Adam on 3S needs its own identification. Open Duck Mini's use of BAM is unverified, and its walking transfer is only partial.
+6. **Stock sim gains are wrong.** Menagerie kp 998 saturates; a (non-peer-reviewed) blog fit on SO-ARM100 STS3215s gave kp ~108, forcerange ±3.48, val MAE 1.76° vs 3.31°. Open Duck Mini's active scene uses kp 13.37, ±3.23 N·m, damping 0.56, frictionloss 0.068, armature 0.027 (older values kp 17.8 / ±3.35 are commented out).
+7. **Randomization precedents:** Open Duck Mini kp ±10%, action delay 0–2 steps (≤40 ms; `randint` max exclusive). ToddlerBot alone randomizes motor strength and backlash (ranges in `methods/domain_randomization_ranges.yaml`).
+8. **Firmware facts for the HAL:** factory P=32, I=0, D=32 (LeRobot uses 16/0/32); P=128 gives ~3.5× stiffness but shakes at ~15 Hz. Max_Temperature_Limit default 70 °C; Overload_Torque default 80% with protection time 200 (unit unconfirmed). Backlash 0.87° measured (one 12 V unit; datasheet ≤0.5°).
+9. **Reliability anecdotes (2 posts, no SKU/voltage):** gears stripping on stalls, MOSFETs dying first. Treat as risk; plan current limiting and spares.
+10. **Printed parts: design for Z delamination.** Z/XY strength: PLA/PETG 0.78, PLA Pro/ASA 0.73, PA12-CF 0.60–0.67 (ABS 0.89 low confidence); Prusament PETG shows vertical ≥ horizontal, so vendors disagree. No published FEA knockdown or small-humanoid fall-load method; the fall estimate in `methods/d` is derived. Verify with drop-test coupons. PLA endurance ≈10% of UTS (screening value).
+
+**Reference motions:** fastest path is a placo/ZMP gait generator plus MuJoCo Playground/MJX RL; Open Duck Mini's generator and Playground have no LICENSE file (per-file Apache headers only).
+
+**Unknown, measure on a bench:** STS3215 continuous/thermal limit at 3S voltage, holding current, 12 V identification, protection-time unit, bus capacity and voltage sag, STS3250 and RobStride measured data, Zeroth servo count (16 unconfirmed), Bez/HR-OS (not identifiable), AiNex height, PAHT-CF data.

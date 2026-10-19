@@ -1,0 +1,34 @@
+# Dynamixel XL430-W250-T/R. Source: ROBOTIS e-Manual (primary, vendor-claimed). kind: vendor
+id: dynamixel-xl430
+weight_g: {v: 57.2, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+gear_ratio: {v: 258.5, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+motor: {v: cored, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+stall_torque_nm:
+  - {v: 1.0, at: "9.0V", current_a: 1.0, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+  - {v: 1.4, at: "11.1V", current_a: 1.3, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+  - {v: 1.5, at: "12.0V", current_a: 1.4, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+no_load_speed_rpm:
+  - {v: 47, at: "9.0V", source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+  - {v: 57, at: "11.1V", source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+  - {v: 61, at: "12.0V", source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+resolution_counts_per_rev: {v: 4096, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+encoder: {v: "contactless absolute 12-bit, ams AS5601", source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+gear_material: {v: "engineering plastic", source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+standby_current_ma: {v: 52, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+verified: "2026-10-19 adversarial pass: all stall/speed/voltage/weight/ratio/defaults match e-Manual. Manual is internally inconsistent on min voltage limit (table default 60 = 6.0 V; description range 6.5-14.0 V)"
+backlash: null   # not on page (confirmed)
+input_voltage_v: {v: [6.5, 12.0], recommended: 11.1, source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+operating_temp_c: {v: [-5, 72], source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+baud_rate_bps: {v: "9600 to 4500000 (default reg value 1 = 57600)", source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/", accessed: 2026-10-19, kind: vendor}
+control_table_defaults:
+  source: "https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/"
+  accessed: 2026-10-19
+  position_p: {addr: 84, default: 640}
+  position_i: {addr: 82, default: 0}
+  position_d: {addr: 80, default: 4000}
+  velocity_p: {addr: 78, default: 100}
+  velocity_i: {addr: 76, default: 1000}
+  temperature_limit_c: {addr: 31, default: 72}
+  pwm_limit: {addr: 36, default: 885}
+  voltage_limits_0p1v: {max_addr: 32, max_default: 140, min_addr: 34, min_default: 60}
+  current_limit: null   # XL430 manual page read shows PWM limit only

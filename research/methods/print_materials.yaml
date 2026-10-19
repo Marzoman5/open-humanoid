@@ -1,0 +1,162 @@
+# Open Humanoid - FDM material properties (machine-readable). Access date for all URLs: 2026-10-19.
+# Rules: null = not found in a primary/manufacturer source (never guessed).
+# CAVEAT (all vendors): datasheets say values are "for reference and comparison only, not for design".
+# Specimens are 100% infill, 2 walls; real parts at 15-40% infill are weaker. Use for relative ranking and FEA seeds.
+# VERIFIED 2026-10-19 (adversarial pass): Polymaker PLA/PLA Pro/PETG/ASA/ABS rows re-read from wiki pages; Prusament PETG re-read from TDS PDF v1.1.
+# Polymaker specimens: ISO 527 (tensile), ISO 178 (bend), ISO 179 (notched Charpy). "Z" = layers perpendicular to load.
+# z_over_xy_* fields are DERIVED here (Z / XY from the same datasheet), not published by vendors.
+units: {density: g/cm3, strength: MPa, modulus: MPa, elongation: percent, charpy: kJ/m2}
+materials:
+  PLA:
+    product: Polymaker PolyMax PLA (tough PLA)
+    density: 1.2            # range 1.17-1.24, ISO 1183
+    tensile_xy: 41.3
+    tensile_z: 32.4
+    modulus_xy: 2150.8
+    modulus_z: 1983.6
+    elongation_break_xy: 5.7
+    elongation_break_z: 4.7
+    z_over_xy_strength: 0.78
+    z_over_xy_elongation: 0.82
+    impact: {notched_charpy_xy: 38.9, notched_charpy_z: null, note: "PolyMax is impact-modified; standard PLA (PolyLite) is 3.3 kJ/m2 XY notched - brittle"}
+    other_vendor_points:
+      - {product: Bambu PLA Basic, density: 1.24, tensile: "35 +/- 4", elongation_break: "12.2 +/- 1.8", xy_z_split: null, std: ISO 527/1183, url: "https://filament2print.com/en/bio-sustainable/3506-pla-basic-bambu-lab.html"}
+      - {product: Polymaker PolyLite PLA, density: 1.17, tensile_xy: 52.3, notched_charpy_xy: 3.3, url: "https://wiki.polymaker.com/polymaker-products/polymaker-filaments/technical-data-at-a-glance"}
+    print_settings: {nozzle_c: 230, bed_c: 50, walls: 2, top_bottom_layers: 3, infill_pct: 100, fan: on}
+    std: ISO 527 / ISO 178 / ISO 179
+    tg_or_hdt_c: null
+    sources: ["https://wiki.polymaker.com/polymaker-products/more-about-our-products/documents/technical-data-sheets/pla/polymax-tm-pla"]
+    verified: "all tensile/modulus/elongation/Charpy/density/specimen settings match wiki page; recommended print range 190-230 C, bed 25-60"
+  PLA_plus:
+    product: Polymaker PolyLite PLA Pro (nearest "PLA+" with XY/Z data)
+    density: 1.22
+    tensile_xy: 49.8
+    tensile_z: 36.5
+    modulus_xy: 2932.2
+    modulus_z: 2633.0
+    elongation_break_xy: 6.3
+    elongation_break_z: 2.4
+    z_over_xy_strength: 0.73
+    z_over_xy_elongation: 0.38
+    impact: {charpy_xy: 17.1, charpy_z: null, note: "vendor does not state notched/unnotched on the wiki page"}
+    print_settings: {nozzle_c: 210, bed_c: 25, walls: 2, top_bottom_layers: 4, infill_pct: 100, fan: on}
+    std: ISO 527 / ISO 178 / ISO 179
+    note: "'PLA+' is not a standard; every brand differs. Brittle in Z (2.4% elongation)."
+    sources: ["https://wiki.polymaker.com/polymaker-products/more-about-our-products/documents/technical-data-sheets/pla/polylite-tm-pla-pro"]
+  PETG:
+    product: Polymaker PolyMax PETG
+    density: 1.24
+    tensile_xy: 37.9
+    tensile_z: 29.4
+    modulus_xy: 1684
+    modulus_z: 1603
+    elongation_break_xy: 5.22
+    elongation_break_z: 3.10
+    z_over_xy_strength: 0.78
+    z_over_xy_elongation: 0.59
+    impact: {notched_charpy_xy: 11.6, notched_charpy_z: 2.4, note: "Z impact is ~80% lower than XY - layer-line delamination dominates drops"}
+    other_vendor_points:
+      - {product: Prusament PETG, density: 1.27, tensile_filament: 46, tensile_printed_horizontal: 47, tensile_printed_vertical: 50, notched_charpy_horizontal: 6, notched_charpy_vertical: 3, std: "ISO 527 / ISO 1183 / ISO 179", url: "https://www.3dprintergear.com.au/assets/files/technical-data-sheet%20(1).pdf", note: "Prusa 'vertical (xz)' value is higher than horizontal, unlike Polymaker; vendors disagree, test your own coupons. TDS v1.1 (2022-02-16), MK3, 0.20 mm, 100% rectilinear, 250 C nozzle, 80 C bed, 2 perimeters. Newer 2023 TDS PDF (prusament-petg_n) is image-only, not read. Filament tensile yield 46+/-1 MPa; interlayer adhesion 18+/-4 MPa (Prusa method)"}
+    print_settings: {nozzle_c: 240, bed_c: 80, walls: 2, top_bottom_layers: 3, infill_pct: 100, fan: off}
+    std: ISO 527 / ISO 178 / ISO 179
+    tg_or_hdt_c: 68   # Prusament PETG HDT, TDS lists 68 at both 0.45 and 1.8 MPa (ISO 75) - verified
+    sources: ["https://wiki.polymaker.com/polymaker-products/more-about-our-products/documents/technical-data-sheets/petg-pet/polymax-tm-petg", "https://www.3dprintergear.com.au/assets/files/technical-data-sheet%20(1).pdf"]
+  ABS_ASA:
+    ABS:
+      product: "Polymaker PolyLite ABS (V5.6; density differs between revisions: 1.12 older, 1.04 newer)"
+      density: 1.04   # wiki page 1.12; at-a-glance 1.04
+      tensile_xy: 33.4
+      tensile_z: 29.7
+      modulus_xy: 2246.6
+      modulus_z: 2080.9
+      elongation_break_xy: 17.9
+      elongation_break_z: 3.1
+      z_over_xy_strength: 0.89
+      z_over_xy_elongation: 0.17
+      impact: {notched_charpy_xy: 18, notched_charpy_z: null}
+      tg_or_hdt_c: {tg: 101, vicat: 104}
+      sources: ["https://wiki.polymaker.com/polymaker-products/more-about-our-products/documents/technical-data-sheets/abs-asa/polylite-tm-abs", "https://wiki.polymaker.com/polymaker-products/polymaker-filaments/technical-data-at-a-glance"]
+      note: "VERIFIED on wiki page: tensile row appears twice, both labelled X-Y (33.4 and 29.7). At-a-glance page confirms XY = 33.4, so 29.7 is read as Z (not stated by vendor) - z_over_xy 0.89 is LOW confidence. Wiki page density is 1.12, at-a-glance page 1.04; revision claim is unsupported, treat density as 1.04-1.12. Modulus, elongation, Charpy 18.0, Tg 101, Vicat 104 match."
+    ASA:
+      product: Polymaker PolyLite ASA
+      density: 1.13
+      tensile_xy: 43.8
+      tensile_z: 32.0
+      modulus_xy: 2379
+      modulus_z: 1965
+      elongation_break_xy: 6.7
+      elongation_break_z: 1.65
+      z_over_xy_strength: 0.73
+      z_over_xy_elongation: 0.25
+      impact: {notched_charpy_xy: 10.3, notched_charpy_z: 6.7}
+      print_settings: {nozzle_c: 260, bed_c: 90, chamber_c: 90, walls: 2, top_bottom_layers: 3, infill_pct: 100, fan: off}
+      std: ISO 527 / ISO 179
+      sources: ["https://wiki.polymaker.com/polymaker-wiki-pt/produtos-polymaker/mais-sobre-nossos-produtos/documentos/fichas-tecnicas/abs-asa/polymaker-tm-asa"]
+    note: "Needs enclosure and ~90 C chamber for spec values; poor fit for open-frame printers."
+  CF_nylon:
+    product: Polymaker Fiberon PA12-CF10 (annealed specimens)
+    density: 1.06
+    tensile_xy: 71.6          # product page (read via search extract, page itself 403); TDS V1.1 (dry, annealed 100C/16h) gives 77.4 XY / 52.2 Z (ratio 0.67); see tds_v1_1 below
+    tensile_z: 43.3
+    modulus_xy: 3304
+    modulus_z: 1801
+    elongation_break_xy: null   # product-page 3.5 not re-verified (403); TDS V1.1 says 4.2 (see tds_v1_1)
+    elongation_break_z: null    # product-page 3.3 not re-verified; TDS V1.1 says 5.0
+    z_over_xy_strength: 0.60
+    z_over_xy_elongation: null
+    impact: {notched_charpy_xy: 9.9, notched_charpy_z: null, unnotched_charpy_xy: 33.7, unnotched_charpy_z: 27.6, note: "TDS V1.1 dry; verified"}
+    tds_v1_1:
+      url: "https://fiberon.polymaker.com/wp-content/uploads/TDS_FIBERON-PA12-CF10_V1.1_EN.pdf"
+      std: "ISO 527 / ISO 178 / ISO 179; all specimens annealed 100 C 16 h"
+      dry: {tensile_xy: 77.4, tensile_z: 52.2, modulus_xy: 3311.2, modulus_z: 1806.6, elongation_xy: 4.2, elongation_z: 5.0, bend_strength_xy: 112.4, bend_strength_z: 69.8, z_over_xy_strength: 0.67}
+      wet_60C_48h: {tensile_xy: 71.7, tensile_z: 42.1, modulus_xy: 3131.7, modulus_z: 1622.0, elongation_xy: 5.3, elongation_z: 5.3, z_over_xy_strength: 0.59}
+      density: 1.06
+      print: {bed_c: "40-50", drying: "100 C/10 h", annealing: "100 C/16 h"}
+    annealing: "80 C 6 h (product page, search extract) vs 100 C 16 h (TDS V1.1) - vendor conflict; TDS confirmed 100 C/16 h"
+    drying: "100 C 8-10 h if wet; dry-state values only. Nylon absorbs water -> lower stiffness (wet values not captured)."
+    std: ISO 527
+    print_settings: null
+    note: "Requires hardened nozzle; PA12-CF is the stiffest option but strongly anisotropic (Z 60% of XY on product page, 67% dry-annealed per TDS V1.1, 59% wet)."
+    sources: ["https://polymaker.com/product/polymide-pa12-cf/", "https://wiki.polymaker.com/polymaker-products/polymaker-filaments/technical-data-at-a-glance"]
+    PA_CF_other:
+      bambu_paht_cf:   # SECONDARY (retailer reproduction of Bambu spec table), no XY/Z split, orientation and annealing not stated
+        tensile: 92        # retailer filament2print; another retailer lists 88+/-7 / 10.4 % - conflict
+        tensile_modulus: 3860
+        elongation_break_pct: 8.4
+        flexural_strength: 125
+        flexural_modulus: 4230
+        charpy: 22.8       # kJ/m2, notch state not stated
+        density: 1.06
+        std: "ISO 527 / ISO 178 / ISO 179 per retailer"
+        z_bending_strength: 61   # search-result extract only (vs 48 for standard PA-CF)
+        url: "https://filament2print.com/en/reinforced/3605-paht-cf-bambu-lab.html"
+        note: "bambulab.com 403 / store 402; official TDS not read. Do not use for Z design."
+      bambu_pet_cf: null   # unreachable (store 402)
+  TPU:
+    product: Polymaker PolyFlex TPU95 (Shore 95A)
+    density: 1.22          # range 1.20-1.24
+    tensile_xy: null       # current V5.4 TDS reports stress at strain, not break strength
+    stress_at_100pct_strain_xy: 11.1
+    stress_at_200pct_strain_xy: 15.0
+    stress_at_300pct_strain_xy: 21.0
+    stress_at_400pct_strain_xy: 25.8
+    tensile_z: null
+    modulus_xy: 33.6       # tensile modulus per ISO 37 (very low vs rigid plastics)
+    modulus_z: null
+    elongation_break_xy: 551.2
+    elongation_break_z: null
+    z_over_xy_strength: null
+    hardness: "95A (ISO 7619-1)"
+    legacy_v4_sheet: {tensile: 29.0, elongation_break: 330.1, std: "ASTM D638", url: "https://cdn.shopify.com/s/files/1/1339/4265/files/Polymaker_PolyFlex_TPU95_TDS_V4.pdf", note: "older revision, differs from V5.4"}
+    impact: {note: "does not fracture in Charpy-type tests in practice; not reported by vendor", value: null}
+    print_settings: {nozzle_c: 230, bed_c: 50, walls: 2, top_bottom_layers: 3, infill_pct: 100, fan: on}
+    std: ISO 37 (V5.4)
+    sources: ["https://wiki.polymaker.com/polymaker-products/more-about-our-products/documents/technical-data-sheets/tpu/polyflex-tm-tpu95"]
+anisotropy_literature:
+  - {claim: "ASTM D638 Type I: X-build tensile higher than Z-build by 24.63% (PLA), 42% (ABS), 127.9% (PETG); Z specimens brittle", url: "https://scholars.csus.edu/esploro/outputs/graduate/Mechanical-and-FEA-comparison-of-FDM/99258311232901671", confidence: "abstract page read; thesis not read in full"}
+  - {claim: "Robot-builder guide: Z tensile ~30-50% below XY for PLA", url: "https://zbotic.in/3d-printed-robot-parts-structural-design-considerations-for-strength-and-durability/", confidence: "secondary source"}
+fatigue_reference:
+  - {material: PLA, rule: "S-N slope k=5.5 (inverse), endurance limit at 2e6 cycles = 10% of UTS, Pf>95%", url: "https://eprints.whiterose.ac.uk/id/eprint/133457/", verified: "abstract (Ezeh & Susmel 2018); reference curve when no test data; mean stress via max stress; print direction little effect"}
+  - {material: ASA, fatigue_limit_fraction_of_UTS: 0.25, fatigue_limit_mpa: 8, R: 0.05, url: "https://api.crossref.org/works/10.3390/polym18020302", note: "Rodrigues et al. 2026 Polymers 18(2):302 (PMC12845617), abstract read; earlier URL eprints 150845 was wrong"}
+  - {material: Nylon12, fatigue_limit_fraction_of_UTS: 0.17, fatigue_limit_mpa: 7.4, R: 0.05, url: "https://api.crossref.org/works/10.3390/polym18020302", note: "neat Nylon 12 (key renamed from PA12); same paper"}
+  - {material: PETG, fatigue_limit_fraction_of_UTS: null, url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11243948/", note: "Martins et al. 2024 (PLA and PETG), R=0.2, 45 deg raster; fractions not extracted (PMC blocked by captcha); earlier crossref URL pointed to the ASA/Nylon paper"}

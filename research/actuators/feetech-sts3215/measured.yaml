@@ -1,0 +1,47 @@
+# PUBLISHED identification/measurement of STS3215. Independent of vendor claims. Re-verified accessed: 2026-10-19
+robonine_bench_12v:
+  what: "Independent bench test of Feetech STS3215-C018 (12 V, 1:345): backlash, repeatability, static/dynamic torque, thermal, no-load speed. Single unit, hobby-grade (dial indicator, lever + weights)."
+  source: "https://robonine.com/testing-of-feetech-sts3215-servomotor-backlash-repeatability-and-torque/"
+  accessed: 2026-10-19
+  voltage: 12
+  backlash_deg: {v: 0.87, method: "dial indicator 1.3 mm at 86 mm lever, ~30 g rubber-band tension", datasheet_claim_deg: 0.5, note: "a commenter cites ~0.57 deg for another unit"}
+  repeatability_deg: {v: 0.17, note: "+-0.3 mm at 10 cm lever, ~2 encoder counts"}
+  static_stall_torque_kgcm: {v: 35, note: "~3.5 kg at 10 cm lever, 45 deg; above 30 kg.cm datasheet. Under prolonged load overload protection cut torque to ~20% of nominal."}
+  dynamic_torque: {stable: "1.5 kg at 10 cm (15 kg.cm): +15 C after 10 min continuous movement", overload_trip: "2 kg at 10 cm (20 kg.cm): overload protection after several cycles"}
+  thermal: {static_15kgcm: "48 C after 10 min, stable >1 h (1 kg on 15 cm lever, arm sideways)", oscillation_pm90deg_15kgcm: "60 C after 50 min starting from 48 C; 71 C after ~110 min total; overheat flag at 70 C but no active shutdown observed", acceleration_note: "accel 5 reached 60 C; accel 2 heated faster and overheated"}
+  no_load_speed_rpm: {v: 45.6, setting: "100%", sd: 0.48}
+  position_error_under_load: "~2 deg (22.5 steps) at 10 kg.cm dynamic; ~2.6 deg (30 steps) at 15 kg.cm"
+  current: "below 1 A at 10 kg.cm (no exact mA given)"
+  caveat: "Ambient temperature, supply impedance and duty cycle not given; one unit. 15 kg.cm = 50% of 30 kg.cm stall was thermally tolerable for ~1-2 h in these tests, which does NOT support 'continuous ~33%' as a hard limit nor 'cannot do 40%'; it is one data point."
+bam_rhoban:
+  what: "BAM (Better Actuator Models) pendulum-bench identification, STS3215 params directory feetech_sts3215_7_4V; models m1..m6 (m1 Coulomb+viscous; m4 and m6 add Stribeck + load-dependent friction)"
+  paper: "https://arxiv.org/abs/2410.08650"
+  repo: "https://github.com/Rhoban/bam"
+  params_url: "https://raw.githubusercontent.com/Rhoban/bam/main/bam/params/feetech_sts3215_7_4V/m6.json"
+  accessed: 2026-10-19
+  voltage: "7.4 V is ONLY the params directory name; arXiv abstract and GitHub README do not state test supply voltage or gear ratio (not verified in paper body)"
+  gear_ratio_tested: null
+  test_conditions: "pendulum test bench, recorded trajectories under varying load, fit by optimisation (abstract); exact loads/trajectories not read"
+  simulators: [MuJoCo CPU, MuJoCo Warp (mjlab)]
+  m1_fit: {kt: 1.1776, R_ohm: 2.4787, armature: 0.026083, friction_base: 0.05152, friction_viscous: 0.05989, max_velocity_rad_s: 5.288, command_delay_s: 0.00105, q_offset_rad: -0.0506, error_gain_ratio: 1.0049}
+  m4_fit: {kt: 1.2653, R_ohm: 2.4724, armature: 0.023358, friction_base: 0.051855, friction_viscous: 0.03383, load_friction_base: 0.20787, max_velocity_rad_s: 5.0711, command_delay_s: 0.004945, q_offset_rad: -0.06595, error_gain_ratio: 1.1799}
+  m6_fit: {kt: 1.2753, R_ohm: 2.7534, armature: 0.021564, friction_base: 0.053313, friction_viscous: 0.028161, friction_stribeck: 4.2573e-05, load_friction_motor: 0.044912, load_friction_external: 0.243555, load_friction_motor_stribeck: 0.00012449, load_friction_external_stribeck: 0.14229, load_friction_motor_quad: 0.0075949, load_friction_external_quad: 0.0034041, dtheta_stribeck: 0.37114, alpha: 9.9309, max_velocity_rad_s: 5.0958, command_delay_s: 0.004981, q_offset_rad: -0.06827, error_gain_ratio: 1.1617}
+  units_note: "Units follow BAM conventions (not read). max_velocity 5.07-5.10 rad/s = 48.4-48.7 rpm, near the 52 rpm vendor 7.4V no-load claim. m4 load_friction_base 0.208 is 4.0x friction_base 0.052; m6 external 0.24 is 4.6x base."
+  voltage_dependence: "none modeled explicitly; no 12V STS3215 set in BAM (README lists Feetech STS3215 once, among MX-64/106, XL-320, XL330, eRob80)"
+mcobzarenco_sysid:
+  what: "MuJoCo position-actuator fit (kp, kv, forcerange, damping, frictionloss, armature): one shared parameter set fit on six servos, pinned to twelve STS3215 on an SO-ARM100 pair; open-loop replay at 30 Hz"
+  source: "https://mcobzarenco-fontaine-blog.static.hf.space/posts/2026-08-11-sim-servo-sysid.html"
+  accessed: 2026-10-19
+  voltage: null   # page does not mention voltage
+  fitted: {kp: 108.18, kv: 13.377, forcerange_nm: 3.478, damping: 0.722, frictionloss: 0.0183, armature: 0.2045}
+  baselines: {menagerie: {kp: 998.22, kv: 2.731, forcerange: 2.94, val_mae_deg: 3.31}, upstream_TheRobotStudio: {kp: 17.8, kv: 0, forcerange: 3.35, val_mae_deg: 2.8}, fitted_val_mae_deg: 1.76}
+  mean_lag_deg: 2.19
+  caveats: "effective values absorbing timebase mismatch; no payload; shared across joints; blog not peer reviewed"
+  note_forcerange: "fit saturation +/-3.478 N.m = 35.5 kg.cm (arithmetic) - above 30 kg.cm datasheet 12V and 19.5 kg.cm 7.4V stall; an effective sim parameter, not a torque measurement. Interpret with caution (voltage unknown)."
+tomwhipple_biped_issue_73:
+  what: "Community bench notes: stock P32/D32 stiffness vs P/D on a 100 mm lever; 2 deg step settle 0.13-0.17 s; ~15 Hz shaking at high P. Voltage/thermal not given."
+  source: "https://github.com/tomwhipple/biped-robot/issues/73"
+  accessed: 2026-10-19
+open_duck_mini: {status: "none found: no published STS3215 identification located (not verified)", source: null}
+lerobot_so100_community_torque_curves: {status: "none found", source: null}
+independent_thermal_limit_measurement: {status: "partial: Robonine (12V C018, single unit) above; none for 7.4V C001", source: null}

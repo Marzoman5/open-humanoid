@@ -1,0 +1,18 @@
+# Feetech STS3250 (ST-3250-C001 / C002). Re-verified 2026-10-19: Feetech's own product list and a Feetech spec page match rcdrone figures. No datasheet PDF parsed.
+id: feetech-sts3250
+voltage_range_v: {v: [6, 12], source: "https://www.feetechrc.com/en/562636", accessed: 2026-10-19, kind: vendor, note: "Feetech page 'Operating range 6-12V'; rcdrone same"}
+stall_torque_kgcm: {v: 50, at: "12V", source: "https://www.feetechrc.com/en/562636", accessed: 2026-10-19, kind: vendor, note: "Feetech listing + rcdrone + openelab C002 agree"}
+rated_torque_kgcm: {v: 16, at: "12V", source: "https://www.feetechrc.com/en/562636", accessed: 2026-10-19, kind: vendor, note: "32% of stall"}
+no_load_speed_rpm: {v: 75, at: "12V (0.133 s/60deg; rpm calculated = 60/0.133/6)", source: "https://www.feetechrc.com/en/562636", accessed: 2026-10-19, kind: vendor}
+stall_current_a: {v: 4.2, at: "12V", source: "https://www.feetechrc.com/en/562636", accessed: 2026-10-19, kind: vendor}
+no_load_current_ma: {v: 280, at: "12V", source: "https://www.feetechrc.com/en/562636", accessed: 2026-10-19, kind: vendor}
+gear_ratio: {v: 345, note: "C002 listing only (openelab); Feetech and rcdrone C001 pages give none", source: "https://openelab.io/products/feetech-sts3250-c002-servo-12v", accessed: 2026-10-19, kind: vendor}
+weight_g: {v: 74.5, tol: 1, source: "https://www.feetechrc.com/en/562636", accessed: 2026-10-19, kind: vendor}
+size_mm: {v: [45.22, 24.72, 35], source: "https://rcdrone.top/ja/products/feetech-sts3250-servo-motor", accessed: 2026-10-19, kind: vendor}
+construction: {v: "steel gears, aluminium case, coreless motor, ball bearings", source: "https://rcdrone.top/ja/products/feetech-sts3250-servo-motor", accessed: 2026-10-19, kind: vendor}
+encoder: {v: "magnetic, 0-4096 over 360 deg (neutral 2048)", source: "https://rcdrone.top/ja/products/feetech-sts3250-servo-motor", accessed: 2026-10-19, kind: vendor}
+backlash_deg: null   # Feetech page shows only an output-horn "rocker phantom" 0 - not backlash
+baud_rate_bps: {v: "38400 to 1000000", source: "https://rcdrone.top/ja/products/feetech-sts3250-servo-motor", accessed: 2026-10-19, kind: vendor}
+operating_temp_c: {v: [-20, 60], source: "https://www.feetechrc.com/en/562636", accessed: 2026-10-19, kind: vendor}
+registers: "STS-series memory map ASSUMED same as STS3215 (see feetech-sts3215/datasheet.yaml); NOT verified for STS3250"
+pid_defaults: null

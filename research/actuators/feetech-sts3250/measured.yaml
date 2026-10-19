@@ -1,0 +1,5 @@
+# No published identification or independent measurement of STS3250 found (searched 2026-10-19).
+status: none_found
+bam_rhoban: "BAM README (https://github.com/Rhoban/bam) lists Dynamixel MX-64/MX-106/XL-320/XL330, eRob80, Feetech STS3215 only; no STS3250. (Earlier claim of a 'waveshare_st3025' param set was not re-found and is dropped.)"
+tomwhipple_biped_issue_73: "two STS3250 ordered 2026-10-02 for hip rolls; no measurements recorded yet (https://github.com/tomwhipple/biped-robot/issues/73)"
+accessed: 2026-10-19

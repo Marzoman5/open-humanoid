@@ -1,0 +1,21 @@
+# RobStride 03 (RS03). Retailer reproductions; vendor-claimed.
+id: robstride-03
+voltage: {rated_v: 48, range_v: [15, 60], source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+rated_torque_nm: {v: 20, at: "48V", source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor, note: "openelab guide says 21 N.m @100 rpm, 900 g - conflict"}
+peak_torque_nm: {v: 60, at: "48V", source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+speed_rpm: {no_load: 195, at_rated_torque: 180, tol_pct: 10, at: "48V", source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+current_a: {no_load_arms: 0.6, rated_peak_phase: 12, max_phase: 43, source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+torque_constant_nm_per_arms: {v: 2.36, source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+terminal_resistance_ohm: {v: 0.39, source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+inductance_mh: {v: 0.275, source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+gear_ratio: {v: 9, source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+rated_output_power_w: {v: 380, source: "https://www.pakronics.com.au/products/robstride-03-qdd-60n-m-integrated-actuator-module-ss100081690", accessed: 2026-10-19, kind: vendor}
+weight_g: {v: 880, tol: 20, source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+size_mm: {v: [106, 106, 56], source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+encoder: {v: "dual magnetic", poles: 42, source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+comm: {v: CAN, rate_note: "1 Mbps for RS02/RS04 pages; RS03 page does not state", rate_bps: null}
+operating_temp_c: {v: [-20, 50], source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}
+protection: {v: "IP52 (IP67 customization)", source: "https://www.pakronics.com.au/products/robstride-03-qdd-60n-m-integrated-actuator-module-ss100081690", accessed: 2026-10-19, kind: vendor}
+# VERIFIED 2026-10-19 vs aifitlab: 20/60 N.m, 48 V (15-60), 195/180 rpm, 0.6 A no-load, 12/43 A pk, Kt 2.36, 0.39 ohm, 0.275 mH, 9:1, 880 g, 106x106x56, -20..50 C, $225; pakronics: 380 W, IP52. openelab 21 N.m/900 g conflict not re-fetched
+backlash_deg: null
+price_usd: {v: 225, source: "https://aifitlab.com/products/robstride-03-motor", accessed: 2026-10-19, kind: vendor}

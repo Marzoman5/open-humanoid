@@ -1,0 +1,17 @@
+# Published identification touching XL430 family. accessed: 2026-10-19
+toddlerbot:
+  what: "ToddlerBot motor test-bed + chirp-fit system ID; table lists XC430, 2XC430, 2XL430, XC330, XM430-W210 (NOT plain XL430-W250). Closest siblings: 2XL430 (same XL430 motor/gearing family) and XC430."
+  paper: "https://arxiv.org/abs/2502.00893"
+  source: "https://arxiv.org/html/2502.00893"
+  accessed: 2026-10-19
+  model: "tau_m = kp(q_cmd-q) - (kd_min+kd)*qdot; torque limit falls linearly with speed to 0 at qdot_max; constant braking torque; passive/active ratio 3 (~58% gearbox efficiency); MuJoCo passive damping/armature/frictionloss"
+  voltage: null   # not stated in extracted text
+  dynamixel_to_sim_kp_factor: 150
+  tracking_error_deg: 1.3
+  simulator: MuJoCo
+  params:
+    2XL430: {damping_nms_rad: 0.0010, armature_kgm2: 0.0083, friction_loss_nm: 0.078, tau_max_nm: 0.94, qdot_taumax_rad_s: 2.00, qdot_max_rad_s: 5.97, tau_at_qdot_max_nm: 0.10, kd_min: 0.161, tau_brake_nm: 1.40}
+    XC430:  {damping_nms_rad: 0.0066, armature_kgm2: 0.0042, friction_loss_nm: 0.024, tau_max_nm: 1.32, qdot_taumax_rad_s: 1.60, qdot_max_rad_s: 7.00, tau_at_qdot_max_nm: 0.21, kd_min: 0.170, tau_brake_nm: 3.00}
+  note: "Identified tau_max for 2XL430 (0.94 N.m) is below vendor XL430 stall 1.4 N.m @11.1V; 2XC430 1.09. Treat as dual-axis sibling, not XL430 itself."
+bam_rhoban: "BAM library has xl320, xl330, mx64, mx106 - no xl430 (https://github.com/Rhoban/bam)"
+xl430_w250_direct: null
