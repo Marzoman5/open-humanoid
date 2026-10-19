@@ -1,0 +1,46 @@
+# Concept candidate A-3s-12v-sts3215. A candidate is DATA for `python -m openhumanoid.concept evaluate <file>`; it does not pick Adam's design.
+# Same height, proportions overrides, joint set, neck pitch + camera and frozen motions as the other examples: only the power
+# architecture / actuators differ, so the comparison is about volts and servos, not about different robots.
+id: A-3s-12v-sts3215
+description: "3S LiPo (one 11.1 V bus), STS3215 12 V on every joint, 23 DOF incl. neck pitch, 1-DOF gripper per hand, camera."
+base: adam
+height_m: 0.45
+template: humanoid_v2
+proportions: {upper_arm: 0.19, forearm: 0.21}     # longer arms than the spec default so a 150 g table pickup is reachable
+joints:
+  - hip_yaw
+  - hip_roll
+  - hip_pitch
+  - knee
+  - {name: ankle_pitch, range: [-80, 60]}      # a 130 deg sit-to-stand with flat feet needs about -75 deg (checked by the evaluator)
+  - ankle_roll
+  - waist_yaw
+  - neck_yaw
+  - neck_pitch
+  - shoulder_pitch
+  - shoulder_roll
+  - elbow
+  - gripper
+actuator_default: sts3215-12v
+locomotion:
+  walk: {stance_knee_flex_deg: 40}
+power:
+  pack: lipo-3s-2300-tattu
+  charger: charger-skyrc-b6neo
+  regulator: buck-5v-5a
+  compute: rpi-zero-2w
+parts:
+  onboard:
+    - {part: rpi-zero-2w, qty: 1}
+    - {part: microsd-32gb, qty: 1}
+    - {part: waveshare-bus-servo-adapter, qty: 1}
+    - {part: imu-bno085, qty: 1}
+    - {part: cam-rpi-v3, qty: 1, power_w: 1.2}     # R7: head orients towards a person; camera power is an assumption
+    - {part: lipo-3s-2300-tattu, qty: 1}
+    - {part: buck-5v-5a, qty: 1}
+    - {part: power-switch-xt60, qty: 1}
+    - {part: fastener-kit-m2-m3, qty: 1}
+    - {part: bearing-kit-small, qty: 1}
+    - {part: wiring-kit-bus, qty: 1}
+  offboard:
+    - {part: charger-skyrc-b6neo, qty: 1}

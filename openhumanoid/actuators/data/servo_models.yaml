@@ -1,0 +1,87 @@
+# Servo model constants for the concept engine, one entry per catalog actuator id. EVERY number carries a source.
+# Kinds: measured = published identification (BAM) | datasheet = vendor listing (retailer figures, not measured)
+#        independent = third-party bench test | assumed = our documented assumption (no data found).
+# Re-verified against research/actuators/* on 2026-10-19. See docs/concept-engine.md section "Constants".
+#
+# Model structure (see openhumanoid/actuators/servo.py):
+#   duty  = clip(kp_fw * error_gain * error_gain_ratio * (q_target_rate_limited - q), +-pwm_max)     [BAM feetech/actuator.py]
+#   tau_m = clip( kt * (vin*duty - kt*w) / R_dc , +-stall_cap(vin) )                                  [BAM DC law + a stall cap]
+#   friction: BAM model m4 (Stribeck + load-dependent), applied as MuJoCo frictionloss/damping each step.
+#   current (for heating/battery): I = tau_m / kt_current ; kt_current = datasheet stall torque / stall current.
+#
+# 'bam_file' names a file next to this one (Apache-2.0, Rhoban/bam, see BAM_SOURCE below). Entries WITHOUT bam_file use
+# the BAM 7.4 V file named in 'dynamics_from' for the parts BAM does not cover (armature, friction, delay), scaled as stated.
+
+BAM_SOURCE:
+  repo: https://github.com/Rhoban/bam
+  params_dir: bam/params/feetech_sts3215_7_4V/
+  commit: e9a619d56da5236206f4de6ceec2c1ee1b497b5c      # main HEAD read 2026-10-19 (committed 2026-09-13)
+  license: Apache-2.0 (LICENSE at that commit, 11357 bytes, stock text; sources carry "Copyright 2025 Marc Duclusaud & Gregoire Passault"; no NOTICE file at that commit)
+  paper: https://arxiv.org/abs/2410.08650
+  default_model: m4          # Stribeck + load-dependent friction; research/methods/a recommends m4, m6 only if validation justifies it
+  firmware: {kp_fw: 32, error_gain: 0.166, pwm_max: 0.97, source: "bam/feetech/actuator.py (error_gain 'determined using an oscilloscope', max_pwm 'also determined with oscilloscope')"}
+
+protection:
+  # Feetech firmware overload protection: when torque exceeds Overload_Torque for Protection_Time, torque drops to Protective_Torque.
+  overload_fraction: {v: 0.80, kind: sourced_estimate, source: "Overload_Torque register (36) default 80 % (research/actuators/feetech-sts3215/notes.md, commanderfun register reference)"}
+  protective_fraction: {v: 0.20, kind: sourced_estimate, source: "Protective_Torque register (34) default 20 %; Robonine observed torque cut to ~20 % under prolonged load"}
+  protection_time_s: {v: 2.0, kind: assumption, source: "Protection_Time register (35) default 200; the UNIT IS UNCONFIRMED. 200 x 10 ms = 2 s is assumed (rcdrone quotes a 2 s hold)"}
+  release_time_s: {v: 1.0, kind: assumption, source: "how long torque must stay below Overload_Torque before the servo recovers; 'clears on new command' is unsupported in the research notes, so this is a guess"}
+
+models:
+  sts3215-7v4:
+    label: Feetech STS3215 7.4 V (19.5 kg.cm), BAM-identified
+    quality: measured_7v4           # best available: published pendulum-bench identification, vendor voltage 7.4 V
+    quality_score: 0.8
+    bam_file: bam_feetech_sts3215_7_4V_m4.json
+    vin_ref: 7.4
+    voltage_rating_v: [4.0, 7.4]    # Waveshare 7.4 V SKU 4-7.4 V; Evelta/rcdrone 6-7.4 V. Catalog says 6-8.4 (estimate)
+    stall_nm: {v: 1.912, at_v: 7.4, kind: datasheet, source: "https://www.feetechrc.com/en/2020-05-13_56655.html  'Stall Torque 19.5kg.cm@7.4V' = 1.912 N.m"}
+    stall_current_a: {v: 2.5, at_v: 7.4, kind: datasheet, source: "https://www.waveshare.com/st3215-servo.htm (7.4 V SKU)"}
+    rated_continuous_nm: {v: 0.490, kind: datasheet, source: "Seeed C001 lists rated 5 kg.cm @7.4V = 0.490 N.m (26% of stall); Evelta says 6.5 (labelled 6 V). Vendor rating, not a measured thermal limit (research/actuators/feetech-sts3215/notes.md)"}
+    noload_rad_s: {v: 5.67, kind: derived, source: "= vin_ref*pwm_max/kt from BAM m4 kt=1.2653 (5.67 rad/s = 54 rpm); vendor 52 rpm @7.4V = 5.45 rad/s"}
+    dc: {mode: bam}                 # kt, R from the BAM file
+    mass_kg: {v: 0.055, kind: datasheet, source: "Evelta, tolerance 1 g"}
+    thermal: {rth_k_per_w: 3.2, tau_s: 300.0, kind: assumed,
+              source: "Same body as the 12 V part: Rth derived from Robonine bench of the 12 V part (static 15 kg.cm hold, ~8.1 W by our current model, 48 C after 10 min, stable >1 h; AMBIENT NOT GIVEN, 22 C assumed => dT 26 K => 3.2 K/W). tau 300 s assumed (10 min to a stable 48 C). No 7.4 V thermal measurement exists."}
+    uncertainty: {stall: 0.10, speed: 0.06, friction: 0.25, kt: 0.10, rth: 0.35, armature: 0.20}
+
+  sts3215-12v:
+    label: Feetech STS3215 12 V (30 kg.cm), datasheet-anchored, dynamics extrapolated from the BAM 7.4 V fit
+    quality: extrapolated_12v       # NO 12 V STS3215 identification exists (BAM has 7.4 V only)
+    quality_score: 0.4
+    dynamics_from: bam_feetech_sts3215_7_4V_m4.json      # armature, friction, error_gain_ratio, delay: assumed same gearbox (both 1:345)
+    vin_ref: 12.0
+    voltage_rating_v: [6.0, 12.6]   # Waveshare 6-12.6 V; Evelta/RobotShop say 4-14 V. 3S full charge (12.6 V) is inside the rating
+    stall_nm: {v: 2.942, at_v: 12.0, kind: datasheet, source: "https://evelta.com/sts3215-c018-12v-30kg-cm-dual-shaft-ttl-serial-servo-metal-gears-magnetic-encoder/ 30 kg.cm; Waveshare/Seeed agree. Robonine measured ~35 kg.cm (3.43 N.m) static on one unit"}
+    stall_current_a: {v: 2.7, at_v: 12.0, kind: datasheet, source: "https://www.waveshare.com/wiki/ST3215_Servo"}
+    rated_continuous_nm: {v: 0.981, kind: datasheet, source: "Evelta/Seeed C047 rated 10 kg.cm @12V = 0.981 N.m (33% of stall)"}
+    noload_rad_s: {v: 4.78, kind: independent, source: "Robonine measured 45.6 rpm at 100% setting on a 12 V C018 (https://robonine.com/testing-of-feetech-sts3215-servomotor-backlash-repeatability-and-torque/); vendor 45 rpm. This CONTRADICTS 'kt same as 7.4 V' (that would give 9.2 rad/s): the 12 V part has a different winding (vendor kt 11 vs 7.8 kg.cm/A)."}
+    dc: {mode: anchored, note: "kt = vin_ref*pwm_max/noload ; R = vin_ref/stall_current (datasheet). Reproduces the vendor/Robonine no-load speed and stall current."}
+    mass_kg: {v: 0.055, kind: datasheet, source: "Evelta"}
+    thermal: {rth_k_per_w: 3.2, tau_s: 300.0, kind: derived,
+              source: "Robonine 12 V bench: 48 C after 10 min at 15 kg.cm static (stable >1 h); our current model gives ~8.1 W there; ambient assumed 22 C => 3.2 K/W. tau 300 s assumed. One unit, ambient unknown."}
+    uncertainty: {stall: 0.25, speed: 0.25, friction: 0.30, kt: 0.20, rth: 0.40, armature: 0.50}
+    alt_model:                      # lead's physical scaling 'kt same, R same, V scales' (optimistic bound; see docs)
+      name: bam_scaled
+      dc: {mode: bam, vin: 12.0}
+      stall_nm: {v: 3.10, kind: extrapolated, source: "1.912 N.m * 12/7.4"}
+      note: "Speed 9.2 rad/s, electrical stall 5.96 N.m before the cap. Contradicted by the 45 rpm datasheet/Robonine figure; kept only as an optimistic bound."
+
+  sts3250-12v:
+    label: Feetech STS3250 12 V (50 kg.cm), datasheet only
+    quality: datasheet_only         # no identification or independent measurement found
+    quality_score: 0.25
+    dynamics_from: bam_feetech_sts3215_7_4V_m4.json
+    dynamics_scale: {torque: 1.67, armature: 1.5}        # friction/viscous x stall ratio 4.903/2.942; armature x catalog ratio 0.03/0.02
+    vin_ref: 12.0
+    voltage_rating_v: [6.0, 12.0]   # Feetech page 'Operating range 6-12V'. A fully charged 3S pack (12.6 V) is ABOVE this rating
+    stall_nm: {v: 4.903, at_v: 12.0, kind: datasheet, source: "https://www.feetechrc.com/en/562636  50 kg.cm"}
+    stall_current_a: {v: 4.2, at_v: 12.0, kind: datasheet, source: "https://www.feetechrc.com/en/562636"}
+    rated_continuous_nm: {v: 1.569, kind: datasheet, source: "Feetech rated 16 kg.cm (32% of stall)"}
+    noload_rad_s: {v: 7.854, kind: datasheet, source: "75 rpm @12V, 0.133 s/60 deg (Feetech)"}
+    dc: {mode: anchored}
+    mass_kg: {v: 0.0745, kind: datasheet, source: "Feetech, tolerance 1 g"}
+    thermal: {rth_k_per_w: 2.4, tau_s: 360.0, kind: assumed,
+              source: "No data. Rth = STS3215 value x 55/74.5 g (larger aluminium case); tau scaled up by 20%. Heat is higher at the same torque fraction (4.2 A x 12 V = 50 W stall vs 32 W)."}
+    uncertainty: {stall: 0.25, speed: 0.30, friction: 0.40, kt: 0.30, rth: 0.50, armature: 0.50}

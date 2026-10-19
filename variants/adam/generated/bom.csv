@@ -1,5 +1,5 @@
 part,name,category,qty,unit,unit_usd,low_usd,high_usd,ext_usd,verified,note
-sts3215-12v,"Feetech STS3215 (12 V, 30 kg·cm)",actuator,16,each,16.0,13.0,22.0,256.0,False,"actuators: ankle_pitch_l, ankle_pitch_r, ankle_roll_l, ankle_roll_r, elbow_l, elbow_r, hip_pitch_l, hip_pitch_r, hip_roll_l, hip_roll_r, hip_yaw_l, hip_yaw_r, knee_l, knee_r, shoulder_pitch_l, shoulder_pitch_r"
+sts3215-12v,"Feetech STS3215 (12 V, 30 kg·cm)",actuator,17,each,16.0,13.0,22.0,272.0,False,"actuators: ankle_pitch_l, ankle_pitch_r, ankle_roll_l, ankle_roll_r, elbow_l, elbow_r, hip_pitch_l, hip_pitch_r, hip_roll_l, hip_roll_r, hip_yaw_l, hip_yaw_r, knee_l, knee_r, neck_yaw, shoulder_pitch_l, shoulder_pitch_r"
 rpi-zero-2w,Raspberry Pi Zero 2 W,compute,1,each,15.0,15.0,20.0,15.0,False,
 microsd-32gb,microSD 32 GB (A1),compute,1,each,7.0,5.0,10.0,7.0,False,
 waveshare-bus-servo-adapter,Waveshare Bus Servo Adapter (A),electronics,1,each,8.0,6.0,12.0,8.0,False,
@@ -11,4 +11,4 @@ power-switch-xt60,XT60 pigtails + inline power switch,electronics,1,each,6.0,4.0
 fastener-kit-m2-m3,M2/M3 socket-head screw + heat-set insert kit,hardware,1,each,15.0,10.0,22.0,15.0,False,
 bearing-kit-small,"Small flanged ball bearings (assorted, e.g. F688/MR85)",hardware,1,each,12.0,8.0,18.0,12.0,False,
 wiring-kit-bus,3-pin servo bus extension cables + JST kit,electronics,1,each,10.0,6.0,15.0,10.0,False,
-pla-plus-1kg,PLA+ filament 1.75 mm,material,1.31,kg,18.0,13.0,25.0,23.58,False,printed frame + shell incl. waste
+pla-plus-1kg,PLA+ filament 1.75 mm,material,1.24,kg,18.0,13.0,25.0,22.32,False,printed frame + shell incl. waste

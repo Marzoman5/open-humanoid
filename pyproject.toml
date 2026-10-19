@@ -16,6 +16,8 @@ sim = ["mujoco>=3.1"]
 cad = ["build123d>=0.7"]
 dev = ["pytest>=7"]
 design = ["manifold3d>=3.0", "trimesh>=4", "pyvista>=0.43", "scikit-image>=0.22", "matplotlib>=3.7", "pillow>=10", "rtree>=1.0", "shapely>=2.0"]
+# P2 concept loop (python -m openhumanoid.concept): casadi for the velocity-limited QP smoother, scipy reserved for solvers
+concept = ["casadi>=3.6", "mujoco>=3.1"]
 
 [project.scripts]
 oh = "openhumanoid.cli:main"
@@ -25,6 +27,10 @@ include = ["openhumanoid*"]
 
 [tool.setuptools.package-data]
 "openhumanoid.design" = ["*.yaml", "references/*.yaml", "sample/*.yaml"]
+"openhumanoid.templates" = ["*.yaml"]
+"openhumanoid.actuators" = ["data/*"]
+"openhumanoid.concept" = ["*.yaml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["slow: multi-minute concept-engine runs (deselect with -m 'not slow')"]

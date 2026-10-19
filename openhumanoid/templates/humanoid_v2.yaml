@@ -1,0 +1,120 @@
+# Kinematic template humanoid_v2: 6-DOF legs, waist yaw, neck yaw (+ optional pitch), shoulder pitch/roll + elbow
+# (+ optional wrist pitch), and a 1-DOF parallel-jaw gripper per hand. Data, not code (see biped_v1.yaml).
+# Spec usage:  kinematics.template: humanoid_v2 ; each spec joint names a joint listed under `joints:` below.
+#
+# Hand/gripper geometry: the spec's `forearm` proportion INCLUDES the hand. The hand is `hand` long
+# (default max(45 mm, 9% of height): a parallel-jaw gripper has to open around a ~40 mm object whatever the
+# robot's size, so this term is deliberately not purely proportional).
+# Gripper: fixed finger inboard of the hand centre line, one moving jaw on a slide joint (`gripper`, positive = open).
+# Right-side bodies mirror every y component (positions, from-to, slide axis).
+id: humanoid_v2
+version: 1
+description: legs 6, waist_yaw, neck_yaw(+pitch), shoulder_pitch/roll, elbow, optional wrist, 1-DOF parallel-jaw gripper.
+derived:
+  r_leg: "0.045*h"
+  r_arm: "0.035*h"
+  head_w: "head*0.62"
+  hand: "max(0.045, 0.09*h)"
+  forearm_link: "max(0.02, forearm-hand)"
+  jaw_t: "0.006"
+bodies:
+  - name: pelvis
+    parent: world
+    root: true
+    mass: {key: pelvis}
+    geoms:
+      - {type: box, size: ["hip_width*0.75", "hip_width*0.9", "pelvis/2"]}
+    sites: [{name: imu, pos: [0, 0, 0]}]
+  - name: torso
+    parent: pelvis
+    pos: [0, 0, "pelvis/2"]
+    joints: [waist_yaw]
+    mass: {key: torso}
+    geoms:
+      - {type: box, pos: [0, 0, "torso/2"], size: ["shoulder_width*0.22", "shoulder_width*0.38", "torso/2"]}
+  - name: head
+    parent: torso
+    pos: [0, 0, "torso+neck"]
+    joints: [neck_yaw, neck_pitch]
+    mass: {key: head}
+    geoms:
+      - {type: ellipsoid, pos: [0, 0, "head/2"], size: ["head_w*0.62", "head_w/2", "head/2"]}
+  - name: upper_arm
+    side: true
+    parent: torso
+    pos: [0, "shoulder_width/2", "torso*0.9"]
+    joints: [shoulder_pitch, shoulder_roll]
+    mass: {key: upper_arm}
+    geoms:
+      - {type: capsule, fromto: [0, 0, 0, 0, 0, "-upper_arm"], size: ["r_arm"]}
+  - name: forearm
+    side: true
+    parent: upper_arm
+    pos: [0, 0, "-upper_arm"]
+    joints: [elbow]
+    mass: {key: forearm, fraction: 0.62}
+    geoms:
+      - {type: capsule, fromto: [0, 0, 0, 0, 0, "-forearm_link"], size: ["r_arm*0.85"]}
+  - name: hand
+    optional: true
+    side: true
+    parent: forearm
+    pos: [0, 0, "-forearm_link"]
+    joints: [wrist]
+    mass: {key: forearm, fraction: 0.25}
+    geoms:
+      - {type: box, pos: [0, 0, "-hand*0.12"], size: ["0.010", "0.014", "hand*0.12"], class: visual}
+      - {type: box, name: finger_fixed, class: contact, pos: [0, "-jaw_t/2", "-hand*0.62"], size: ["0.009", "jaw_t/2", "hand*0.38"]}
+    sites: [{name: grip, pos: [0, 0, "-hand*0.62"]}]
+  - name: jaw
+    optional: true
+    side: true
+    parent: hand
+    pos: [0, "jaw_t/2", 0]
+    joints: [gripper]
+    mass: {key: forearm, fraction: 0.13}
+    geoms:
+      - {type: box, name: finger_moving, class: contact, pos: [0, 0, "-hand*0.62"], size: ["0.009", "jaw_t/2", "hand*0.38"]}
+  - name: thigh
+    side: true
+    parent: pelvis
+    pos: [0, "hip_width/2", "-pelvis/2"]
+    joints: [hip_yaw, hip_roll, hip_pitch]
+    mass: {key: thigh}
+    geoms:
+      - {type: capsule, fromto: [0, 0, 0, 0, 0, "-thigh"], size: ["r_leg"]}
+  - name: shank
+    side: true
+    parent: thigh
+    pos: [0, 0, "-thigh"]
+    joints: [knee]
+    mass: {key: shank}
+    geoms:
+      - {type: capsule, fromto: [0, 0, 0, 0, 0, "-shank"], size: ["r_leg*0.9"]}
+  - name: foot
+    side: true
+    parent: shank
+    pos: [0, 0, "-shank"]
+    joints: [ankle_pitch, ankle_roll]
+    mass: {key: foot}
+    geoms:
+      - {type: box, name: foot, class: contact, pos: ["foot_length*0.15", 0, "-ankle_height/2"], size: ["foot_length/2", "foot_width/2", "ankle_height/2"]}
+    sites: [{name: foot, pos: ["foot_length*0.15", 0, "-ankle_height"]}]
+joints:
+  hip_yaw: {axis: z}
+  hip_roll: {axis: x}
+  hip_pitch: {axis: y}
+  knee: {axis: y}
+  ankle_pitch: {axis: y}
+  ankle_roll: {axis: x}
+  waist_yaw: {axis: z}
+  neck_yaw: {axis: z}
+  neck_pitch: {axis: y}
+  shoulder_pitch: {axis: y}
+  shoulder_roll: {axis: x}
+  elbow: {axis: y}
+  wrist: {axis: y}
+  # Slide joint along the hand's y axis (positive = open). `ratio_m_per_rad` is the rack-and-pinion transmission
+  # (slide travel in m per servo radian); the actuator model works in servo radians. Spec range is in mm for this joint
+  # because the spec schema's ranges are degrees: the builder reads `range` as the opening in mm when type=slide.
+  gripper: {axis: y, type: slide, ratio_m_per_rad: 0.012}

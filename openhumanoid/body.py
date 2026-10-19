@@ -17,6 +17,7 @@ ACTUATOR_HOST = {
     "ankle_pitch": "shank", "ankle_roll": "shank",
     "shoulder_pitch": "torso", "shoulder_roll": "upper_arm", "elbow": "upper_arm",
     "neck_yaw": "torso", "neck_pitch": "head",
+    "waist_yaw": "pelvis", "wrist": "forearm", "gripper": "forearm",
 }
 LIMB_DEFAULT_HOST = {"leg": "thigh", "arm": "upper_arm", "head": "torso", "torso": "torso", "hand": "forearm", "attachment": "torso"}
 
@@ -54,7 +55,7 @@ def build_body(spec: dict, height: float, joints: list[dict], actuator_mass: dic
     seg = {s: struct * share for s, share in STRUCT_SHARE.items()}
     act_total = 0.0
     for j in joints:
-        host = ACTUATOR_HOST.get(j["base"], LIMB_DEFAULT_HOST.get(j["limb"], "torso"))
+        host = j.get("host") or ACTUATOR_HOST.get(j["base"], LIMB_DEFAULT_HOST.get(j["limb"], "torso"))
         m = actuator_mass.get(j["name"], 0.0)
         act_total += m
         # Paired segments store mass per side (the model is symmetric), so the l and r

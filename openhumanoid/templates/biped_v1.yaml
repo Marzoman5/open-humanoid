@@ -1,0 +1,88 @@
+# Kinematic template biped_v1: the original Open Humanoid biped (6-DOF legs, 3-DOF arms, 2-DOF neck).
+# Data, not code: simgen builds the MJCF from this tree plus the spec's chosen joints (ADR 0009: Adam-first,
+# parameterised where a second robot obviously differs). Kept so existing specs and tests behave as before.
+# Conventions: x forward, y left, z up. Lengths are expressions over the geometry names (ankle_height, shank,
+# thigh, pelvis, torso, neck, head, hip_width, shoulder_width, upper_arm, forearm, foot_length, foot_width, h),
+# i.e. the spec's proportions already multiplied by height. Sided bodies are mirrored in y (left = +y).
+id: biped_v1
+version: 1
+description: 6-DOF legs, shoulder pitch/roll + elbow arms, neck yaw/pitch. No waist, wrist or gripper.
+derived:
+  r_leg: "0.045*h"
+  r_arm: "0.035*h"
+  head_w: "head*0.62"
+bodies:
+  - name: pelvis
+    parent: world
+    root: true
+    mass: {key: pelvis}
+    geoms:
+      - {type: box, size: ["hip_width*0.75", "hip_width*0.9", "pelvis/2"]}
+    sites: [{name: imu, pos: [0, 0, 0]}]
+  - name: torso
+    parent: pelvis
+    pos: [0, 0, "pelvis/2"]
+    mass: {key: torso}
+    geoms:
+      - {type: box, pos: [0, 0, "torso/2"], size: ["shoulder_width*0.22", "shoulder_width*0.38", "torso/2"]}
+  - name: head
+    parent: torso
+    pos: [0, 0, "torso+neck"]
+    joints: [neck_yaw, neck_pitch]
+    mass: {key: head}
+    geoms:
+      - {type: ellipsoid, pos: [0, 0, "head/2"], size: ["head_w*0.62", "head_w/2", "head/2"]}
+  - name: upper_arm
+    side: true
+    parent: torso
+    pos: [0, "shoulder_width/2", "torso*0.9"]
+    joints: [shoulder_pitch, shoulder_roll]
+    mass: {key: upper_arm}
+    geoms:
+      - {type: capsule, fromto: [0, 0, 0, 0, 0, "-upper_arm"], size: ["r_arm"]}
+  - name: forearm
+    side: true
+    parent: upper_arm
+    pos: [0, 0, "-upper_arm"]
+    joints: [elbow]
+    mass: {key: forearm}
+    geoms:
+      - {type: capsule, fromto: [0, 0, 0, 0, 0, "-forearm"], size: ["r_arm*0.85"]}
+  - name: thigh
+    side: true
+    parent: pelvis
+    pos: [0, "hip_width/2", "-pelvis/2"]
+    joints: [hip_yaw, hip_roll, hip_pitch]
+    mass: {key: thigh}
+    geoms:
+      - {type: capsule, fromto: [0, 0, 0, 0, 0, "-thigh"], size: ["r_leg"]}
+  - name: shank
+    side: true
+    parent: thigh
+    pos: [0, 0, "-thigh"]
+    joints: [knee]
+    mass: {key: shank}
+    geoms:
+      - {type: capsule, fromto: [0, 0, 0, 0, 0, "-shank"], size: ["r_leg*0.9"]}
+  - name: foot
+    side: true
+    parent: shank
+    pos: [0, 0, "-shank"]
+    joints: [ankle_pitch, ankle_roll]
+    mass: {key: foot}
+    geoms:
+      - {type: box, name: foot, class: contact, pos: ["foot_length*0.15", 0, "-ankle_height/2"], size: ["foot_length/2", "foot_width/2", "ankle_height/2"]}
+    sites: [{name: foot, pos: ["foot_length*0.15", 0, "-ankle_height"]}]
+joints:
+  # name: default axis (the spec's axis wins). Anything not listed here is rejected by the sim builder.
+  hip_yaw: {axis: z}
+  hip_roll: {axis: x}
+  hip_pitch: {axis: y}
+  knee: {axis: y}
+  ankle_pitch: {axis: y}
+  ankle_roll: {axis: x}
+  shoulder_pitch: {axis: y}
+  shoulder_roll: {axis: x}
+  elbow: {axis: y}
+  neck_yaw: {axis: z}
+  neck_pitch: {axis: y}
