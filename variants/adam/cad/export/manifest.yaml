@@ -1,0 +1,533 @@
+contract_version: '0.1'
+source:
+  backend: build123d
+  location: variants/adam/cad/
+  template: biped_v1
+  version: 8271887+dirty
+units:
+  step: mm
+  mesh: mm
+exported: '2026-10-19'
+height_m: 0.5
+totals:
+  printed_kg: 0.5907
+  purchased_kg: 1.51
+  total_kg: 2.1007
+notes:
+- foot grows to 92 x 55 mm (spec 85 x 38) to house the ankle-roll servo
+parts:
+- id: pelvis_frame
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: pelvis
+  mass_kg: 0.0167
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: pelvis_shell
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: pelvis
+  mass_kg: 0.0341
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: hip_roll_cradle_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: hip_yaw_link_l
+  mass_kg: 0.004
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: hip_yaw_bracket_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: hip_yaw_link_l
+  mass_kg: 0.0019
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: hip_cap_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: hip_yaw_link_l
+  mass_kg: 0.011
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: hip_yoke_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: hip_roll_link_l
+  mass_kg: 0.0053
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: thigh_frame_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: thigh_l
+  mass_kg: 0.0156
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: thigh_shell_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: thigh_l
+  mass_kg: 0.0214
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: shank_frame_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: shank_l
+  mass_kg: 0.0143
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: shank_shell_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: shank_l
+  mass_kg: 0.0244
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: ankle_yoke_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: ankle_pitch_link_l
+  mass_kg: 0.0053
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: foot_frame_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: foot_l
+  mass_kg: 0.0124
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: sole_l
+  qty: 1
+  process: fdm
+  material: tpu
+  link: foot_l
+  mass_kg: 0.0181
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 40
+    walls: 3
+- id: foot_shell_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: foot_l
+  mass_kg: 0.0094
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: torso_frame
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: torso
+  mass_kg: 0.0242
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: torso_shell
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: torso
+  mass_kg: 0.0718
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: upper_arm_frame_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: upper_arm_l
+  mass_kg: 0.0098
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: upper_arm_shell_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: upper_arm_l
+  mass_kg: 0.0223
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: shoulder_spacer_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: upper_arm_l
+  mass_kg: 0.0032
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: forearm_frame_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: forearm_l
+  mass_kg: 0.0116
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: forearm_shell_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: forearm_l
+  mass_kg: 0.0087
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: hand_l
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: forearm_l
+  mass_kg: 0.007
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 20
+    walls: 3
+- id: hip_roll_cradle_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: hip_yaw_link_r
+  mass_kg: 0.004
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: hip_yaw_bracket_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: hip_yaw_link_r
+  mass_kg: 0.0019
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: hip_cap_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: hip_yaw_link_r
+  mass_kg: 0.011
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: hip_yoke_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: hip_roll_link_r
+  mass_kg: 0.0053
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: thigh_frame_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: thigh_r
+  mass_kg: 0.0156
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: thigh_shell_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: thigh_r
+  mass_kg: 0.0214
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: shank_frame_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: shank_r
+  mass_kg: 0.0143
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: shank_shell_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: shank_r
+  mass_kg: 0.0244
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: ankle_yoke_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: ankle_pitch_link_r
+  mass_kg: 0.0053
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: foot_frame_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: foot_r
+  mass_kg: 0.0124
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: sole_r
+  qty: 1
+  process: fdm
+  material: tpu
+  link: foot_r
+  mass_kg: 0.0181
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 40
+    walls: 3
+- id: foot_shell_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: foot_r
+  mass_kg: 0.0094
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: upper_arm_frame_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: upper_arm_r
+  mass_kg: 0.0098
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: upper_arm_shell_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: upper_arm_r
+  mass_kg: 0.0223
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: shoulder_spacer_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: upper_arm_r
+  mass_kg: 0.0032
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: forearm_frame_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: forearm_r
+  mass_kg: 0.0116
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: forearm_shell_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: forearm_r
+  mass_kg: 0.0087
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: hand_r
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: forearm_r
+  mass_kg: 0.007
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 20
+    walls: 3
+- id: neck_post
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: head
+  mass_kg: 0.0059
+  print:
+    orientation: as_exported
+    supports: false
+    infill_pct: 30
+    walls: 4
+- id: head_shell
+  qty: 1
+  process: fdm
+  material: pla-plus
+  link: head
+  mass_kg: 0.0186
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+- id: visor
+  qty: 1
+  process: fdm
+  material: petg
+  link: head
+  mass_kg: 0.0081
+  print:
+    orientation: as_exported
+    supports: true
+    infill_pct: 100
+    walls: 2
+    layer_mm: 0.12
+    finish: polish
+- id: sts3215-12v
+  qty: 16
+  process: purchased
+  material: purchased
+  catalog: sts3215-12v
+- id: lipo-3s-2200
+  qty: 1
+  process: purchased
+  material: purchased
+  catalog: lipo-3s-2200
+- id: rpi-zero-2w
+  qty: 1
+  process: purchased
+  material: purchased
+  catalog: rpi-zero-2w
+- id: waveshare-bus-servo-adapter
+  qty: 1
+  process: purchased
+  material: purchased
+  catalog: waveshare-bus-servo-adapter
+- id: buck-5v-5a
+  qty: 1
+  process: purchased
+  material: purchased
+  catalog: buck-5v-5a

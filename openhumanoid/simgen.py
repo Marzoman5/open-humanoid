@@ -42,6 +42,36 @@ def stand_pose(spec: dict, joints: list[dict]) -> dict[str, float]:
     return pose
 
 
+def actuator_lines(joints: list[dict], acts: dict[str, str]) -> list[str]:
+    """Position actuators (servo-like) for every sim-supported joint. Shared by primitive and CAD models."""
+    out = []
+    for j in joints:
+        if JOINT_BODY.get(j["base"]) is None:
+            continue
+        a = catalog.get(acts[j["name"]])["actuator"]
+        kp = a["stall_torque_nm"] / 0.3
+        out.append(f'    <position name="{j["name"]}" joint="{j["name"]}" kp="{kp:.3f}" forcerange="{-a["stall_torque_nm"]:.3f} {a["stall_torque_nm"]:.3f}" '
+                   f'ctrlrange="{math.radians(j["range"][0]):.4f} {math.radians(j["range"][1]):.4f}"/>')
+    return out
+
+
+def sensor_lines(joints: list[dict]) -> str:
+    return "\n".join(f'    <jointpos name="q_{j["name"]}" joint="{j["name"]}"/>' for j in joints if JOINT_BODY.get(j["base"]))
+
+
+def joint_xml(j: dict, act_id: str, ind: str) -> str:
+    a = catalog.get(act_id)["actuator"]
+    return (f'{ind}<joint name="{j["name"]}" axis="{AXIS[j["axis"]]}" range="{j["range"][0]} {j["range"][1]}" '
+            f'armature="{a.get("armature_kg_m2", 0.01)}" damping="{0.02 * a["stall_torque_nm"]:.4f}" frictionloss="{0.01 * a["stall_torque_nm"]:.4f}"/>')
+
+
+def stand_height(sizing: dict, spec: dict) -> float:
+    """Pelvis origin height (m) for the stand pose."""
+    g = sizing["geometry_m"]
+    flex = math.radians(spec["locomotion"].get("walk", {}).get("stance_knee_flex_deg", 30))
+    return g["ankle_height"] + (g["thigh"] + g["shank"]) * math.cos(flex / 2) + g["pelvis"] / 2 + 0.003
+
+
 def build_mjcf(spec: dict, sizing: dict) -> str:
     g, m = sizing["geometry_m"], sizing["segment_mass_kg"]
     h = sizing["height_m"]
@@ -56,15 +86,10 @@ def build_mjcf(spec: dict, sizing: dict) -> str:
         by_body.setdefault((body, j["side"]), []).append(j)
     flex = math.radians(spec["locomotion"].get("walk", {}).get("stance_knee_flex_deg", 30))
     r_leg, r_arm = 0.045 * h, 0.035 * h
-    z0 = g["ankle_height"] + (g["thigh"] + g["shank"]) * math.cos(flex / 2) + g["pelvis"] / 2 + 0.003
+    z0 = stand_height(sizing, spec)
 
     def jxml(body, side, ind):
-        out = []
-        for j in by_body.get((body, side), []):
-            a = catalog.get(acts[j["name"]])["actuator"]
-            out.append(f'{ind}<joint name="{j["name"]}" axis="{AXIS[j["axis"]]}" range="{j["range"][0]} {j["range"][1]}" '
-                       f'armature="{a.get("armature_kg_m2", 0.01)}" damping="{0.02 * a["stall_torque_nm"]:.4f}" frictionloss="{0.01 * a["stall_torque_nm"]:.4f}"/>')
-        return "\n".join(out)
+        return "\n".join(joint_xml(j, acts[j["name"]], ind) for j in by_body.get((body, side), []))
 
     def leg(side):
         y = (1 if side == "l" else -1) * g["hip_width"] / 2
@@ -96,15 +121,8 @@ def build_mjcf(spec: dict, sizing: dict) -> str:
           </body>
         </body>"""
 
-    actuators = []
-    for j in joints:
-        if JOINT_BODY.get(j["base"]) is None:
-            continue
-        a = catalog.get(acts[j["name"]])["actuator"]
-        kp = a["stall_torque_nm"] / 0.3
-        actuators.append(f'    <position name="{j["name"]}" joint="{j["name"]}" kp="{kp:.3f}" forcerange="{-a["stall_torque_nm"]:.3f} {a["stall_torque_nm"]:.3f}" '
-                         f'ctrlrange="{math.radians(j["range"][0]):.4f} {math.radians(j["range"][1]):.4f}"/>')
-    sensors = "\n".join(f'    <jointpos name="q_{j["name"]}" joint="{j["name"]}"/>' for j in joints if JOINT_BODY.get(j["base"]))
+    actuators = actuator_lines(joints, acts)
+    sensors = sensor_lines(joints)
     head_w = g["head"] * 0.62
     xml = f"""{generated_header('sim build', '<!--').rstrip()} -->
 <!-- {spec['name']}: primitive (pre-CAD) model. h={h:.3f} m, mass≈{sizing['mass']['total_kg']:.2f} kg. Replaced by CAD export in P4. -->

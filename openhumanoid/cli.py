@@ -85,6 +85,30 @@ def cmd_render(a):
     return 0
 
 
+def cmd_cad(a):
+    from . import cad
+    spec = _spec(a.variant)
+    if a.action == "build":
+        r = cad.build_variant(spec)
+        t = r["totals"]
+        print(f"{spec['name']} CAD: {r['printed_parts']} printed parts -> {r['dir']}")
+        print(f"  mass {t['total_kg']} kg (printed {t['printed_kg']} kg, purchased {t['purchased_kg']} kg)")
+        for n in r["notes"]:
+            print("  note:", n)
+    else:
+        r = cad.check_variant(spec, a.min_mm3)
+        print(f"{spec['name']} CAD check ({r['pose']} pose): {len(r['clashes'])} clashes, {len(r['oversize'])} parts too big for the bed, "
+              f"{len(r['unknown'])} pairs not checkable (boolean failed)")
+        for x in r["clashes"]:
+            print(f"  clash {x[0]} x {x[1]}: {x[2]} mm3")
+        for x in r["oversize"]:
+            print(f"  oversize {x[0]}: {x[1]} mm")
+        for n in r["notes"]:
+            print("  note:", n)
+        return 0 if not r["clashes"] and not r["oversize"] else 2
+    return 0
+
+
 def cmd_catalog(a):
     from . import catalog
     parts = catalog.load_catalog().values()
@@ -158,6 +182,9 @@ def main(argv=None) -> int:
     s.add_argument("--seconds", type=float, default=3.0); s.add_argument("--json", action="store_true"); s.set_defaults(f=cmd_sim)
     s = sub.add_parser("render", help="review images (front/side/3-4/back + sheet) of the current model")
     s.add_argument("variant"); s.set_defaults(f=cmd_render)
+    s = sub.add_parser("cad", help="spec-driven CAD (build123d): build | check")
+    s.add_argument("action", choices=["build", "check"]); s.add_argument("variant")
+    s.add_argument("--min-mm3", type=float, default=20.0, help="ignore overlaps smaller than this"); s.set_defaults(f=cmd_cad)
     s = sub.add_parser("catalog", help="list catalog parts"); s.add_argument("--category"); s.set_defaults(f=cmd_catalog)
     s = sub.add_parser("new", help="create a variant from variants/_template")
     s.add_argument("id"); s.add_argument("--name"); s.add_argument("--extends"); s.set_defaults(f=cmd_new)

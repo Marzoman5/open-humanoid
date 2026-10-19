@@ -1,0 +1,25 @@
+# Generated geometry: openhumanoid/cad/biped.py Builder.trunk (template biped_v1)
+id: biped-box-s
+kind: torso
+name: Pelvis cradle (two hip-yaw servos) + chest box (two shoulder servos, payload bay), size class S
+version: 0.1.0
+status: concept
+authors: [claude-p3]
+license: CERN-OHL-S-2.0
+valid:
+  height_m: [0.40, 0.65]
+  actuator_family: [feetech_sts]
+  interface_class: S
+provides:
+  joints: []
+requires:
+  actuators: { hip_yaw: box servo, shoulder_pitch: box servo }
+  hal: feetech_sts
+interfaces:
+  proximal: { class: S, type: root }
+  distal: { class: S, type: neck_post }
+parameters:
+  waist_frame_frac: { default: 0.75, min: 0.5, max: 1.0 }
+cad:
+  backend: build123d
+  export: built per variant by `oh cad build <id>`

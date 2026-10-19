@@ -1,0 +1,26 @@
+# Generated geometry: openhumanoid/cad/geom.py servo_shapes + biped.Builder.yoke (template biped_v1)
+id: box-servo-yoke-s
+kind: joint
+name: Box-servo joint with U-yoke, size class S
+version: 0.1.0
+status: concept
+authors: [claude-p3]
+license: CERN-OHL-S-2.0
+valid:
+  height_m: [0.35, 0.65]          # below: segments shorter than two servo bodies; above: sizing finds no box servo
+  actuator_family: [feetech_sts, feetech_scs, dynamixel]
+  interface_class: S
+provides:
+  joints: []                      # any revolute joint (pitch/roll/yaw); the yoke wraps the horn + idler side
+requires:
+  actuators: { any: box servo with dimensions_mm in the catalog }
+  hal: any
+interfaces:
+  proximal: { class: S, type: servo_body }
+  distal: { class: S, type: horn_yoke }
+parameters:
+  frame_wall_mm: { default: 2.5, min: 2.0, max: 4.0 }
+  clearance_mm: { default: 1.5, min: 0.8, max: 3.0 }
+cad:
+  backend: build123d
+  export: built per variant by `oh cad build <id>` (variants/<id>/cad/export/)

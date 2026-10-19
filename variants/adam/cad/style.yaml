@@ -1,0 +1,22 @@
+# Adam look-and-feel for the biped_v1 CAD template (openhumanoid/cad/biped.py, STYLE has every knob).
+# Source of truth for numbers is still spec.yaml + generated/sizing.json; this file only shapes the shells.
+# See variants/adam/design-language.md.
+shell_wall_mm: 1.6        # design-language: 1.6 mm shell walls
+shell_gap_mm: 1.5         # frame-to-shell gap
+section_exponent: 3.0     # squircle sections (Apple/Optimus), not toy-round ellipses
+accent_links: [pelvis, hip_yaw_link]   # black waist band + dark hip caps (Optimus reference)
+colors:
+  shell: [0.94, 0.93, 0.91, 1]         # matte warm white
+  accent_shell: [0.13, 0.13, 0.145, 1] # graphite
+  frame: [0.20, 0.20, 0.22, 1]
+  servo: [0.05, 0.05, 0.06, 1]
+  visor: [0.01, 0.01, 0.015, 1]        # glossy black visor
+  sole: [0.04, 0.04, 0.04, 1]
+# Packaging envelopes. ESTIMATED dimensions (not in the catalog yet; T-0002 should add dimensions_mm).
+payload:
+  - { part: lipo-3s-2200, dims_mm: [24, 105, 34], at_mm: [-35, 0, 100] }  # lying across the upper back, under the back panel
+  - { part: rpi-zero-2w, dims_mm: [10, 65, 30], at_mm: [0, 0, 48] }
+  - { part: waveshare-bus-servo-adapter, dims_mm: [18, 38, 13], at_mm: [0, 21, 71] }
+  - { part: buck-5v-5a, dims_mm: [18, 38, 13], at_mm: [0, -21, 71] }
+arm_cant_deg: 10          # A-pose: upper arm leans out 8 deg below the shoulder horn so hands clear the hips (R2 question)
+shoulder_spacer_mm: 7.5     # shoulder servos sit deeper in the chest so the torso shell clears the arms

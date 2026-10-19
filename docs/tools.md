@@ -10,6 +10,8 @@ All tools are subcommands of `oh` (or `python -m openhumanoid`). Each prints a s
 | `oh sim build <id>` | spec, sizing.json | `generated/sim/<id>.xml` | primitive MJCF, joint names follow the spec |
 | `oh sim test <id> [--json]` | sim model | — | stand-hold smoke test, torque usage per actuator |
 | `oh sim view <id>` | sim model | — | interactive MuJoCo viewer |
+| `oh cad build <id>` | spec, sizing.json, catalog, `cad/style.yaml` | `cad/export/` (contract) | build123d template (`kinematics.template`), frame + shell, MJCF from the CAD |
+| `oh cad check <id> [--min-mm3 20]` | same | `generated/cad_check.json` | part interference at the stand pose + printer-bed fit; exit 2 on problems |
 | `oh render <id>` | sim or CAD model | `generated/renders/*.png` | front/side/¾/back + contact sheet for review gates |
 | `oh catalog [--category actuator]` | catalog | — | `✓` verified, `~` estimate |
 | `oh new <id> [--extends adam]` | `variants/_template` | `variants/<id>/` | |
@@ -29,3 +31,19 @@ All tools are subcommands of `oh` (or `python -m openhumanoid`). Each prints a s
 6. **Height search** (`mode: maximize`): sweep min→max with required joints, keep the tallest that fits the cap, report what blocks the next step up, then add optional joints by order while they still fit.
 
 Known limitations: there's no thermal model, no inertial/acceleration terms beyond the dynamic factor, no linkage/transmission ratios, and the arm speed requirement is a constant. Improve these with evidence (`prompts/analysis/validate-sizing.md`).
+
+## CAD pipeline (build123d, v0.1)
+
+`oh cad build <id>` turns the spec into frame + shell CAD and writes everything `cad/EXPORT_CONTRACT.md` asks for. Code: `openhumanoid/cad/`.
+
+| Module | What it does |
+|---|---|
+| `geom.py` | Generic helpers: servo envelope + horn from catalog `dimensions_mm` (shaft offset defaults to 25 % of the length; override with `actuator.shaft_offset_mm`), rounded plates, lofted **superellipse shells** fitted to real cross-sections of what they wrap, mass properties (OCC, per material density × fill), interference volume, bed fit. |
+| `biped.py` | Template `biped_v1` for box servos. Every joint is a servo whose horn drives a U-yoke. Compound joints (hip yaw/roll/pitch, ankle pitch/roll) are gimbals with intersecting axes, so the CAD matches the sim's coincident joints. Intermediate gimbal stages become their own links (`hip_yaw_link_l`, …). Refuses non-box actuators with a clear error. |
+| `export.py` | Link tree → `parts/*.step|stl`, `meshes/<link>.stl` (+ `<link>__<colour>.stl` for rendering), `mass_properties.yaml`, `robot.xml` (MJCF with the spec's joint names, CAD inertias, sole contact boxes), `manifest.yaml`. |
+
+**Style.** Look-and-feel lives in `variants/<id>/cad/style.yaml`, merged over `biped.STYLE`: shell wall/gap, section exponent (2 = ellipse, ~3 = squircle), segment profiles (taper and swell along each limb), palette, which links get the dark accent, visor window, payload envelopes (battery, boards) and `arm_cant_deg` (fixed A-pose cant below the shoulder horn). Numbers that change kinematics should graduate to the spec via an ADR.
+
+**How a shell is fitted.** At each station along a segment the template slices the parts the shell wraps, finds the superellipse that clears every cross-section corner, then takes the larger of that and the style profile (median scale). A shrink limit between stations keeps tapers smooth. Shell ends stop at joint **sweep radii** so moving yokes never hit a shell. This leaves the dark joint bands from the design language.
+
+**Not yet:** shell split lines and snap/magnet mounts for printing, horn bolt patterns, joint-range sweep checks (stand pose only), and print-bed layout. Those land with R3 (T-0004) and its follow-ups.
