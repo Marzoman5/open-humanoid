@@ -4,7 +4,7 @@ Each robot proves the toolkit at a larger scale. Each one's lessons (measured da
 
 | Robot | Budget | Purpose | Status |
 |---|---|---|---|
-| **Adam** | $550 | **Proof we can make a humanoid** with this toolkit: walks, waves, dances, light table-height pickup, standalone, not a toy | concept (P2 next) |
+| **Adam** | ≤ $1,600 delivered (locked) | **Proof we can make a humanoid** with this toolkit: walks, waves, dances, light table-height pickup, push recovery, standalone; best look achievable at ~0.55 m | concept signed provisionally (R1); bench pending |
 | **Eve** | ~$3k (to be re-verified at 2026 prices) | **Testbench for real applications.** Target: before Christmas 2026. Mostly well-sourced off-the-shelf parts, little CNC (no 20 custom actuators). A possible basis for funding or crowdfunding. | idea |
 | **Cain** | ~$10k | A humanoid the maintainer would actually use in real life (e.g. workshop helper, companion) | idea |
 
