@@ -21,8 +21,8 @@ from .loadpath import Topology
 from .model import Model
 
 
-def _pick_row(res: dict, part: str) -> dict | None:
-    rows = [r for r in res["rows"] if r["part"] == part and r["gate"] and r["check"] == "section"]
+def _pick_row(res: dict, part: str, case: str | None = None) -> dict | None:
+    rows = [r for r in res["rows"] if r["part"] == part and r["gate"] and r["check"] == "section" and (case is None or r["case"] == case)]
     return min(rows, key=lambda r: r["margin"]) if rows else None
 
 
@@ -30,8 +30,8 @@ def mesh_size_for(volume_mm3: float, target_tets: int = 7000) -> float:
     return float((volume_mm3 / (0.118 * target_tets)) ** (1.0 / 3.0))
 
 
-def run_fea(model: Model, cfg: dict, res: dict, parts: list[str], out: Path | None = None, ratio: float = 1.6, target_tets: int = 7000,
-            verbose: bool = True) -> dict:
+def run_fea(model: Model, cfg: dict, res: dict, parts: list[str], out: Path | None = None, ratio: float = 1.5, target_tets: int = 12000,
+            verbose: bool = True, case: str | None = None) -> dict:
     excl = cfg.get("exclude_parts", [])
     topo = Topology(model, excl)
     mo = loadcases.actuator_masses(model, cfg)
@@ -39,7 +39,7 @@ def run_fea(model: Model, cfg: dict, res: dict, parts: list[str], out: Path | No
     for pid in parts:
         t0 = time.time()
         part = model.parts[pid]
-        row = _pick_row(res, pid)
+        row = _pick_row(res, pid, case) or _pick_row(res, pid)
         if row is None:
             continue
         scs, _ = loadcases.build(model, cfg, [row["case"]])
@@ -52,7 +52,10 @@ def run_fea(model: Model, cfg: dict, res: dict, parts: list[str], out: Path | No
         for c in part.corners:
             if c["length"] >= 3.0:
                 balls.append((np.asarray(c["mid"]), 5.0, h / 3.0))
-        balls = balls[:12]
+        for ld in pl.loads:                                   # resolve every load introduction: a coarse patch makes a spurious peak
+            if float(np.linalg.norm(ld.F)) > 5.0 or float(np.linalg.norm(ld.M)) > 200.0:
+                balls.append((np.asarray(ld.point), 10.0, h / 3.5))
+        balls = balls[:14]
         sf, _f, _g = sf_of(row["cls"])
         if verbose:
             print(f"FEA {pid}: case {row['case']} (margin {row['margin']:.3f}), h={h:.1f} mm, {len(balls)} refinement zones", flush=True)

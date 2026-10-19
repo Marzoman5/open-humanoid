@@ -34,12 +34,15 @@ from openhumanoid.cad.housing import servo_housing
 # ---- design parameters of this leg (everything dimensional that is not a catalog/DFM/interface number)
 P = {
     "plate_t": 8.0,            # horn plate: low-head counterbore 1.8-2.3 + floor; was 4.3 (thin plates were the first strength failures)
+    "plate_t_hip_roll": 6.5,   # the hip roll plate stays at 6.5: 8 mm cost 6.6 deg of hip extension (ROM sweep) and the walk margins do not need it
     "idler_plate_t": 7.5,      # bearing seat 4 mm + shoulder; was 5.6
     "cover_t": 6.5,            # was 4.4: the rear covers are the first thing a backward fall touches (floor 4.2 mm under the low-head counterbore)
     "cover_t_idler": 6.5,      # blind relief for the servo's back stub (3.4) + the printed idler pin + >= 1.6 mm behind them; was 5.6
+    "housing_wall_ankle_pitch": 2.4,   # the shank's lower housing wall sets the 1 mm gap to the foot plate top: unchanged
     "housing_wall": 3.2,       # servo pocket walls, was 2.4 (load-path minimum): the yaw column and housings carry torque as thin-walled sections
     "web_radius": {"hip_pitch": 24.0, "knee": 30.0},   # fork web distance from the pitch axis: knee needs >= 30 for 115+ deg of flexion
-    "web_t": 10.0,             # was 3.2 (torsion of the web carries the pitch torque from the horn plate to the beam): the web carries the whole leg load from the beam to the plates (bending of a 3.2 mm web failed first)
+    "web_t": {"hip_pitch": 10.0, "knee": 10.0},   # was 3.2 (torsion of the web carries the pitch torque from the horn plate to the beam); hip: 10 mm cost 1.2 deg of flexion
+    "web_t_old": 10.0,         # (kept for reference) was 3.2 (torsion of the web carries the pitch torque from the horn plate to the beam): the web carries the whole leg load from the beam to the plates (bending of a 3.2 mm web failed first)
     "fork_w": 36.0,            # plate width (fore-aft); was 28
     "idler_w": 36.0,           # idler plate/tongue width: screws at +-10 need 3.25 (counterbore) + 1.6 (wall) to the edge
     "corner_r": 9.0,           # rounded plate corners shrink the swept radius
@@ -47,11 +50,15 @@ P = {
     "bridge_above_axis": 24.0, # roll bracket bridge starts this far above the hip axis (outside the fork sweep)
     "sole_t": 6.5,             # was 3.2 (the heel and sole behind the plate are the next weakest section)
     "foot_plate_t": 8.0,       # horn plate of the foot; was 4.3 (the thin 90 deg cantilever)
-    "foot_plate_w": 44.0,      # was 28
+    "foot_plate_t_top": 5.3,   # thickness at the horn screws (limited by the S5 housing: 21.2 - 15.9)
+    "foot_plate_step_above_axis": 0.0,   # the thick part ends at the roll axis height (its corners would sweep into the S5 housing at +-30 deg roll)
+    "foot_plate_w": 40.0,
+    "foot_plate_w_top": 30.0,  # the thin upper part (horn screws, washers: 2 x 11.5 wide) is narrower: its corners sweep the +-30 deg roll arc under the shank      # was 28
     "foot_rib_t": 4.0,         # three ribs along the sole from the plate to the toe
     "foot_rib_h": 22.0,        # rib height at the plate (above the sole top), tapering to rib_h_end at the tip
     "foot_rib_h_end": 8.0,
     "foot_rib_len": 62.0,
+    "foot_corner_r": 8.0,      # top corners of the foot plate (sweep radius around the roll axis)
     "foot_fillet": 4.0,        # cantilever root radius (dfm fillet.cantilever_root_mm)
     "horn_washer_od": 5.0,     # ISO 7089 M2 washers under the horn screw heads (bearing area under a low-head M2 is only 6.8 mm2)
     "join_washer_od": 7.0,     # ISO 7089 M3 washers under the roll-cradle screws (the low head alone bears on 14.7 mm2)
@@ -72,10 +79,28 @@ def tup(v) -> tuple[float, float, float]:
     return (v.X, v.Y, v.Z)
 
 
+
+def _interfaces_v3(ctx):
+    """Interfaces for THIS design: layout_v3.yaml differs from layout_v2.yaml only in the CAD-limited hip pitch range (the thicker web and plate
+    cost 4 deg of extension and 1.3 deg of flexion, see range_note). Generated in memory so the shared generated/interfaces.yaml (read by the
+    concept loop and by leg_v2) is not touched; every number except that range equals the file's."""
+    from pathlib import Path
+
+    from openhumanoid.cad import interfaces
+
+    spec = ctx.spec
+    layout = interfaces.load_layout(spec, Path(ctx.variant_dir) / "cad" / "layout_v3.yaml")
+    try:
+        from openhumanoid.simgen import load_sizing
+
+        sizing = load_sizing(spec)
+    except Exception:  # noqa: BLE001
+        sizing = None
+    return interfaces.Interfaces(interfaces.generate(spec, layout, sizing))
+
+
 def build(ctx) -> Assembly:
-    ifs = ctx.interfaces
-    if ifs is None:
-        raise RuntimeError("generate interfaces first: python -m openhumanoid.cad interfaces adam")
+    ifs = _interfaces_v3(ctx)
     side = "l"
     J = {n: f"{n}_{side}" for n in LEG}
     link_of = {n: f"{n}_{side}_link" for n in LEG}
@@ -128,7 +153,7 @@ def build(ctx) -> Assembly:
     H = {}
     for n in LEG:
         has_idler = idl[n] is not None
-        H[n] = servo_housing(A[n], part=f"housing_{J[n]}", cover_part=f"cover_{J[n]}", wall=P["housing_wall"],
+        H[n] = servo_housing(A[n], part=f"housing_{J[n]}", cover_part=f"cover_{J[n]}", wall=(P["housing_wall_ankle_pitch"] if n == "ankle_pitch" else P["housing_wall"]),
                              cover_t=P["cover_t_idler"] if has_idler else P["cover_t"],
                              idler={"bearing": idl[n]["bearing"], "gap_mm": idl[n]["gap_mm"]} if has_idler else None)
 
@@ -196,8 +221,8 @@ def build(ctx) -> Assembly:
         c_shape, c_sites = H[n].placed_cover(S[n])
         printed(f"cover_{J[n]}", c_shape, host_link[n], c_sites, rename={"housing": f"housing_{J[n]}"}, up=(0, 0, 1), material="petg")
 
-    def horn_plate_feat(n, mate):
-        return horn_mount(A[n], plate_t=hp, mode="flat", part="", mates=mate, washer_od=P["horn_washer_od"]).placed(S[n] * get_component(A[n]).frames["horn_seat"])
+    def horn_plate_feat(n, mate, t=None):
+        return horn_mount(A[n], plate_t=t or hp, mode="flat", part="", mates=mate, washer_od=P["horn_washer_od"]).placed(S[n] * get_component(A[n]).frames["horn_seat"])
 
     # ---- pelvis mount: the yaw servo's housing alone (pelvis design is out of scope)
     pid = f"housing_{J['hip_yaw']}"
@@ -231,7 +256,8 @@ def build(ctx) -> Assembly:
     x_plate0 = wp(S["hip_roll"], 0, 0, zp0["hip_roll"]).X
     z_ax_hip = ifs.axis_origin(J["hip_pitch"])[2]
     z_bridge0 = z_ax_hip + P["bridge_above_axis"]
-    plate2 = box_at(bd.Location(), (hp, y_hi - y_lo, z_hi - (z_ax_hip - 12.0)), (x_plate0 + hp / 2, (y_lo + y_hi) / 2, (z_hi + z_ax_hip - 12.0) / 2))
+    hpr = P["plate_t_hip_roll"]
+    plate2 = box_at(bd.Location(), (hpr, y_hi - y_lo, z_hi - (z_ax_hip - 12.0)), (x_plate0 + hpr / 2, (y_lo + y_hi) / 2, (z_hi + z_ax_hip - 12.0) / 2))
     bridge = box_at(bd.Location(), (wall_x - x_plate0, y_hi - y_lo, z_hi - z_bridge0), ((x_plate0 + wall_x) / 2, (y_lo + y_hi) / 2, (z_hi + z_bridge0) / 2))
     plate2 = safe_union(plate2, bridge, "roll plate+bridge")
     from openhumanoid.cad.fillets import fillet_internal
@@ -243,7 +269,7 @@ def build(ctx) -> Assembly:
     join_pts = [(z_ax_hip + p3["x_ins"] + 0.0, yaxis + zz) for zz in (-7.0, -17.0, -27.0)]            # (world z, world y)
     join_feats_plate = [insert_boss("M3", part="roll_plate", mates="roll_cradle", tag=f"join_insert_{i}",
                                     at=loc_from((wall_x, y, z), (1, 0, 0), (0, 1, 0))) for i, (z, y) in enumerate(join_pts)]
-    hm2 = horn_plate_feat("hip_roll", mate=f"servo_{J['hip_roll']}")
+    hm2 = horn_plate_feat("hip_roll", mate=f"servo_{J['hip_roll']}", t=hpr)
     plate_pid, cradle_pid = f"roll_plate_{side}", f"roll_cradle_{side}"
     plate_shape, plate_sites = apply(plate2, hm2, *join_feats_plate, name=plate_pid)
     printed(plate_pid, plate_shape, child_link["hip_roll"], plate_sites, rename={"roll_cradle": cradle_pid},
@@ -258,7 +284,7 @@ def build(ctx) -> Assembly:
 
     # ---- pitch forks: thigh (S3 fork + S4 housing), shank (S4 fork + S5 housing). Main part + removable idler plate.
     def fork(n, nxt, pid, idler_pid):
-        rho, tw, fw = P["web_radius"][n], P["web_t"], P["fork_w"]
+        rho, tw, fw = P["web_radius"][n], P["web_t"][n], P["fork_w"]
         z_in = idler_zin(n)
         x_far = rho + tw
         tp = P["idler_plate_t"]
@@ -335,7 +361,14 @@ def build(ctx) -> Assembly:
     ax = ifs.axis_origin(J[n])
     x_plate0 = wp(S[n], 0, 0, zp0[n]).X
     hpf, wf, st = P["foot_plate_t"], min(P["foot_plate_w"], fwid - 4.0), P["sole_t"]
-    plate = box_at(bd.Location(), (hpf, wf, ax[2] + 14.0), (x_plate0 + hpf / 2, ax[1], (ax[2] + 14.0) / 2))
+    hpt = P["foot_plate_t_top"]                      # the plate is STEPPED: thick below the S5 housing, thin where the horn screws are (the housing's front face is 15.9 mm from the plate)
+    z_step = ax[2] + P["foot_plate_step_above_axis"]
+    z_top = ax[2] + 11.5                             # 11.5 mm above the axis: covers the washer counterbores (7 + 3.2 + 1.3 wall); keeps the 1 mm gap to the shank
+    plate = box_at(bd.Location(), (hpf, wf, z_step), (x_plate0 + hpf / 2, ax[1], z_step / 2))
+    plate = bd.fillet(plate.edges().filter_by(bd.Axis.X).filter_by_position(bd.Axis.Z, z_step - 0.01, z_step + 0.01), 5.0)
+    top = box_at(bd.Location(), (hpt, P["foot_plate_w_top"], z_top - z_step + 1.0), (x_plate0 + hpt / 2, ax[1], (z_top + z_step - 1.0) / 2))
+    top = bd.fillet(top.edges().filter_by(bd.Axis.X).filter_by_position(bd.Axis.Z, z_top - 0.01, z_top + 0.01), P["foot_corner_r"])      # round the top corners: they sweep the roll arc under the shank
+    plate = safe_union(plate, top, "foot plate step")
     sole = box_at(bd.Location(), (fl, fwid, st), (ax[0] - 0.33 * fl + fl / 2, ax[1], st / 2))
     body = safe_union(plate, sole, "foot")
     xr0 = x_plate0 + hpf - 0.5
@@ -346,9 +379,9 @@ def build(ctx) -> Assembly:
         body = safe_union(body, rib, "foot ribs")
     from openhumanoid.cad.fillets import fillet_internal
 
-    body, frep = fillet_internal(body, P["foot_fillet"], min_len=6.0, name="foot")
+    body, frep = fillet_internal(body, P["foot_fillet"], min_len=6.0, name="foot", region=((-1e4, -1e4, -1e4), (1e4, 1e4, st + 1.0)))   # sole-level edges only
     asm.notes.append(f"foot: {frep['filleted']}/{frep['candidates']} internal edges filleted r={frep['radius_mm']:.1f}")
-    hmf = horn_mount("sts3215-12v", plate_t=hpf, mode="flat", part="", mates=f"servo_{J[n]}", washer_od=P["horn_washer_od"]).placed(S[n] * get_component(A[n]).frames["horn_seat"])
+    hmf = horn_mount("sts3215-12v", plate_t=hpt, mode="flat", part="", mates=f"servo_{J[n]}", washer_od=P["horn_washer_od"]).placed(S[n] * get_component(A[n]).frames["horn_seat"])
     shp, st_ = apply(body, hmf, name="foot")
     printed(f"foot_{side}", shp, child_link[n], st_, expect=horn_expect(n, child_link[n]), up=(0, 1, 0))
 

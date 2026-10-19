@@ -88,7 +88,7 @@ def run_cli(a) -> int:
     if a.fea:
         from .fea_run import run_fea
 
-        fr = run_fea(model, cfg, res, a.fea.split(","), Path(a.out) if a.out else None)
+        fr = run_fea(model, cfg, res, a.fea.split(","), Path(a.out) if a.out else None, case=a.fea_case)
         if a.out:
             (Path(a.out) / "fea_report.json").write_text(json.dumps(fr, indent=1, default=str), encoding="utf-8")
     return 0 if res["ok"] else 1
@@ -103,6 +103,7 @@ def add_parser(sp) -> None:
     s.add_argument("--part", help="comma list: only these parts")
     s.add_argument("--case", help="comma list of substrings: only matching load cases")
     s.add_argument("--fea", help="comma list of parts to run through FEA (worst analytic case, mesh convergence)")
+    s.add_argument("--fea-case", help="load case name for the FEA (default: the worst gated analytic section case of each part)")
     s.add_argument("--cache", help="pickle of the strength model (skips the CAD build when it exists)")
     s.add_argument("--verbose", action="store_true")
     s.set_defaults(fn=run_cli)
