@@ -1,0 +1,21 @@
+{
+  "order": "cand_second",
+  "candidate": "design-3",
+  "baseline": "design-1",
+  "reads_as": "unfinished",
+  "reads_as_reason": "Surfaces are clean and coherent, but the thigh is a near-constant-width rounded slab and the shank top is a flat slanted chop with no designed knee: a blank test piece.",
+  "criteria": {
+    "G1": {"verdict": "UNCERTAIN", "evidence": "Calm adult tube, no chibi proportions; thigh is a slab-like rounded rectangle with a nearly parallel outline (agrees with failed S4a 0.4341 and P8a 0.708). One leg segment is too little to call product or toy."},
+    "G2": {"verdict": "FAIL", "evidence": "Each segment flows cleanly and the zebra is coherent, but the knee is not a designed joint: slanted cut with a flat elliptical shelf in the back view; thigh bottom is a simple rounded end; the gap reads as a seam, not a recess."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Dark recess colour not rendered; the slanted cut and open gap behind the thigh could take a dark fill but are not shaped like a recess."},
+    "G4": {"verdict": "PASS", "evidence": "Same rounded-rectangle section, similar corner radii and soft end caps on thigh and shank; zebra bands run parallel with no wobble."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No references. Smooth rounded-rectangle shells and shank taper resemble Optimus / Atlas leg covers; thigh too parallel and knee has no cap or recess."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "The baseline shank is lumpy with a waisted S-curve and bulges at calf and ankle, zebra breaks into noisy patches. The candidate has a clean tapered shank, smooth parallel zebra and a more convincing calf swell. Both share the flat slanted knee cut and slab thigh."},
+  "top_changes": [
+    {"criterion": "G2", "change": "Design the knee: round the shank top into a convex front cap and recessed back; add a visible joint gap or neck.", "profile_param": "segments[shank].stations[top].z / d"},
+    {"criterion": "G1", "change": "Taper the thigh further toward the knee (P8a 0.708 vs 0.65) and the shank toward the ankle (P8b 0.712 vs 0.6).", "profile_param": "segments[thigh].stations[distal].w/d; segments[shank].stations[ankle].w/d"},
+    {"criterion": "G1", "change": "Reduce flat panels (S4a 0.4341 vs 0.3): lower the superellipse exponent for more crown.", "profile_param": "segments[thigh].stations[*].n; segments[shank].stations[*].n"}
+  ],
+  "notes": "One leg segment only; recess colour not rendered. Back view shows a flat horizontal shelf at the shank top (cutter floor)."
+}

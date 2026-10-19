@@ -1,0 +1,21 @@
+{
+  "order": "cand_first",
+  "candidate": "design-2",
+  "baseline": "design-1",
+  "reads_as": "unfinished",
+  "reads_as_reason": "The surface is smooth, but the thigh and shank are beaded with several bulges and pinches, so they read as a sculpted bone or sausage-link form rather than one tapering shell.",
+  "criteria": {
+    "G1": {"verdict": "UNCERTAIN", "evidence": "No chibi proportion or box block; flat rounded-rectangle sections suit an adult product. The wavy outline (thigh narrows mid-length then swells above the knee; shank bulges at the calf then pinches above the ankle) looks organic and cartoon-like."},
+    "G2": {"verdict": "FAIL", "evidence": "Front and 3/4 views: hourglass pinch about 40% down the thigh, knee end swells back out; shank repeats with a calf lump and ankle waist. 4 to 5 alternating bumps, not a flowing taper. The knee is a hairline gap with no deliberate recess; the shank's diagonal cut face is a bare flat plane. Agrees with failed P8a (0.788) and P8b (0.807)."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Single-tone clay; dark recess colour not rendered. Geometry offers no clear recess band at the knee to carry a dark tone."},
+    "G4": {"verdict": "PASS", "evidence": "Thigh and shank share the same rounded-rectangle section family and similar corner radii; zebra shows continuous nested contour bands with no creases (S4a 0.2179), unlike the baseline's patchy zebra."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No references supplied. Matches Optimus/Atlas on flat-sided section and large radii; does not match on the mid-thigh pinch, lumpy calf, and missing distinct knee joint."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Moderate preference. The baseline thigh is a straight, nearly untapered slab sitting on a knee ball, with a chaotic blotchy zebra on thigh and shank; it reads as a toy exclamation mark. The candidate has more deliberate form and a cleaner, continuous surface; its weakness is that the wobble looks undesigned. Neither is a finished product."},
+  "top_changes": [
+    {"criterion": "G2", "change": "Remove the mid-thigh hourglass; make width and depth fall monotonically hip to knee.", "profile_param": "segments[thigh].stations[mid].w/.d; stations[distal].w"},
+    {"criterion": "G2", "change": "Merge calf bulge and ankle waist into one smooth taper.", "profile_param": "segments[shank].stations[calf].w; stations[ankle].w/.d"},
+    {"criterion": "G2", "change": "Make the knee a deliberate joint: a waist at the joint so the gap reads as a dark recess band, not a hairline seam.", "profile_param": "segments[thigh].stations[distal].d; segments[shank].stations[proximal].w"}
+  ],
+  "notes": "G3 not judgeable; no references, so G6 UNCERTAIN. Only the candidate's metrics were available."
+}

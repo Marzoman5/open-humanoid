@@ -13,6 +13,9 @@ from .meshutil import ShellSet, Timer, name_panels
 from .spec import LegSpec, SegProfile, knee_cutter_polygon
 
 
+DENSIFY = 2     # extra sections between neighbouring stations (found necessary: 0 gave a wavy calf)
+
+
 def _bd():
     import build123d as bd
     return bd
@@ -30,6 +33,8 @@ def loft(stations: list[tuple], shrink: float = 0.0, end_shift: float = 0.0):
     bd = _bd()
     prof = SegProfile(stations)
     zs = [s[0] for s in prof.stations]
+    if DENSIFY:       # OCC's loft is a global B-spline through the sections and rings between sparse ones; extra sections taken from the PCHIP profile pin it
+        zs = sorted(set(zs) | {round(a + (b - a) * t / (DENSIFY + 1), 3) for a, b in zip(zs, zs[1:]) for t in range(1, DENSIFY + 1)})
     wires = []
     for i, z in enumerate(zs):
         dz = end_shift if i == 0 else (-end_shift if i == len(zs) - 1 else 0.0)

@@ -1,0 +1,21 @@
+{
+  "order": "cand_first",
+  "candidate": "design-3",
+  "baseline": "design-1",
+  "reads_as": "unfinished",
+  "reads_as_reason": "Smooth, well-faired blanks, but a slab-like constant-width thigh with soap-bar end radii and a bare cut knee make it a clean prototype rather than a shaped product.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "Thigh reads as a tombstone/bar-of-soap slab; sides near-parallel, same large radius at both ends. Agrees with failed P8a 0.708 and S4a 0.4341. The shank's calf bulge and ankle narrowing are closer to adult proportions."},
+    "G2": {"verdict": "UNCERTAIN", "evidence": "Flow inside each segment is good (long continuous zebra bands). The knee is an abrupt horizontal gap with an angled cut (flat elliptical disc in the back view, knife-point at the rear in the side view); recess colour not rendered."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Single-tone clay; the knee gap is the only place a dark recess could go and it is a plain flat gap with no pocket geometry."},
+    "G4": {"verdict": "PASS", "evidence": "Similar rounded-rectangle section and edge radii on both segments, seam lines on the same plane, silhouette follows the target."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No references. Calf swell and rear-biased shank match that family; slab thigh with no distal narrowing or knee-cap form does not. Leaning no-match."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Candidate has fair, continuous zebra bands and a silhouette on the target outline. Baseline has blotchy zebra, dents and a wobbly waisted shank, and bulges outside the red target at knee and calf. Both share the same cut knee interface."},
+  "top_changes": [
+    {"criterion": "G1", "change": "Taper the thigh visibly from hip to knee; narrow the distal end so it stops reading as a parallel-sided bar.", "profile_param": "segments[thigh].stations[distal].w/.d"},
+    {"criterion": "G1", "change": "Break up the broad flat faces by lowering section squareness mid-segment (S4a).", "profile_param": "segments[thigh].stations[mid].n; segments[shank].stations[calf].n"},
+    {"criterion": "G2", "change": "Stronger calf-to-ankle taper; soften the knife-edge rear tip of the shank top and shape the knee as a deliberate recess or cap.", "profile_param": "segments[shank].stations[ankle].w/.d; stations[top].z/.d"}
+  ],
+  "notes": "Station names are the critic's guesses. 65 and 130 degree views show no visible collision."
+}

@@ -1,0 +1,89 @@
+{
+  "step": "bakeoff-d3_vs_d1",
+  "round": 1,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "Thigh reads as a tombstone/bar-of-soap slab; sides near-parallel, same large radius at both ends. Agrees with failed P8a 0.708 and S4a 0.4341. The shank's calf bulge and ankle narrowing are closer to adult proportions.",
+        "Calm adult tube, no chibi proportions; thigh is a slab-like rounded rectangle with a nearly parallel outline (agrees with failed S4a 0.4341 and P8a 0.708). One leg segment is too little to call product or toy."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "UNCERTAIN",
+        "FAIL"
+      ],
+      "evidence": [
+        "Flow inside each segment is good (long continuous zebra bands). The knee is an abrupt horizontal gap with an angled cut (flat elliptical disc in the back view, knife-point at the rear in the side view); recess colour not rendered.",
+        "Each segment flows cleanly and the zebra is coherent, but the knee is not a designed joint: slanted cut with a flat elliptical shelf in the back view; thigh bottom is a simple rounded end; the gap reads as a seam, not a recess."
+      ]
+    },
+    "G3": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "Single-tone clay; the knee gap is the only place a dark recess could go and it is a plain flat gap with no pocket geometry.",
+        "Dark recess colour not rendered; the slanted cut and open gap behind the thigh could take a dark fill but are not shaped like a recess."
+      ]
+    },
+    "G4": {
+      "verdict": "PASS",
+      "per_report": [
+        "PASS",
+        "PASS"
+      ],
+      "evidence": [
+        "Similar rounded-rectangle section and edge radii on both segments, seam lines on the same plane, silhouette follows the target.",
+        "Same rounded-rectangle section, similar corner radii and soft end caps on thigh and shank; zebra bands run parallel with no wobble."
+      ]
+    },
+    "G6": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "No references. Calf swell and rear-biased shank match that family; slab thigh with no distal narrowing or knee-cap form does not. Leaning no-match.",
+        "No references. Smooth rounded-rectangle shells and shank taper resemble Optimus / Atlas leg covers; thigh too parallel and knee has no cap or recess."
+      ]
+    },
+    "G5": {
+      "verdict": "PASS",
+      "reason": "candidate preferred in both presentation orders"
+    }
+  },
+  "reads_as": "unfinished",
+  "numeric_hard_failures": [
+    "S4a"
+  ],
+  "top_changes": [
+    {
+      "criterion": "G1",
+      "change": "Taper the thigh visibly from hip to knee; narrow the distal end so it stops reading as a parallel-sided bar.",
+      "profile_param": "segments[thigh].stations[distal].w/.d"
+    },
+    {
+      "criterion": "G1",
+      "change": "Break up the broad flat faces by lowering section squareness mid-segment (S4a).",
+      "profile_param": "segments[thigh].stations[mid].n; segments[shank].stations[calf].n"
+    },
+    {
+      "criterion": "G2",
+      "change": "Stronger calf-to-ankle taper; soften the knife-edge rear tip of the shank top and shape the knee as a deliberate recess or cap.",
+      "profile_param": "segments[shank].stations[ankle].w/.d; stations[top].z/.d"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}
