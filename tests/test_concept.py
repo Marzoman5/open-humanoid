@@ -397,3 +397,43 @@ def test_known_robot_check_runs_legs_only(tmp_path):
     from openhumanoid.concept.evaluate import evaluate
     rep = evaluate(CONCEPTS / "duck-like-0p42-2s-sts3215.yaml", out_root=tmp_path, quick=True)
     assert set(rep["motions"]) == {"stand", "walk_forward", "walk_backward", "turn", "squat_90"}
+
+
+# ----------------------------------------------------------------------------------------------- push recovery (R10)
+def test_push_is_defined_in_capture_point_units_and_scaled_to_mass(robot_a, kin_a):
+    from openhumanoid.concept.motions import push as PU
+    ref = PU.push_case(kin_a, "ankle_fwd")
+    m = ref.meta
+    cfg = config.motions()["push"]
+    assert m["dv_mps"] == pytest.approx(cfg["ankle_k"] * (kin_a.lg.foot_len / 2) * math.sqrt(9.81 / m["zc_m"]), rel=1e-6)
+    assert m["impulse_Ns"] == pytest.approx(m["mass_kg"] * m["dv_mps"], rel=1e-6)           # J = M dv
+    assert m["mass_kg"] == pytest.approx(robot_a.total_mass, rel=1e-3)
+    servo_delay = max(s.delay_s for s in robot_a.servo.values())
+    assert m["reaction_delay_s"] == pytest.approx(servo_delay + cfg["control_period_s"] + cfg["sensing_latency_s"])
+    assert ref.feasible and m["recovered_plan"] and m["cop_peak_offset_m"] <= kin_a.lg.foot_len / 2
+
+
+def test_ankle_push_is_cheap(robot_a, kin_a):
+    from openhumanoid.concept.motions import push as PU
+    ank = E.push_gate(robot_a, E.ideal_demand(robot_a, PU.push_case(kin_a, "ankle_fwd")), 11.1)
+    assert ank["valid"] and ank["ok"] and ank["peak_frac_of_stall"] < 0.5
+    assert ank["peak_joint"].startswith("ankle")
+
+
+def test_latency_makes_the_capture_point_grow_before_the_controller_acts(kin_a):
+    from openhumanoid.concept.motions import push as PU
+    base = PU.push_case(kin_a, "capture_fwd")
+    node = config._load()["motions"]["push"]
+    old = node["sensing_latency_s"]
+    try:
+        node["sensing_latency_s"] = old + 0.040             # 40 ms more latency
+        slow = PU.push_case(kin_a, "capture_fwd")
+    finally:
+        node["sensing_latency_s"] = old
+    assert slow.meta["capture_point_xy"][0] > base.meta["capture_point_xy"][0]          # the capture point runs further away
+
+
+def test_largest_recoverable_push_is_reported(kin_a):
+    from openhumanoid.concept.motions import push as PU
+    r = PU.max_recoverable_scale(kin_a, "ankle_fwd", iters=4)
+    assert r["scale"] > 1.0 and r["impulse_Ns"] > 0

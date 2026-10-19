@@ -81,7 +81,8 @@ class PlayConfig:
     lead_s: float = 0.0             # command lead (q_ref + lead*dq_ref): firmware-lag compensation
     servo_scale: dict | None = None  # Monte Carlo: per-joint arrays {"stall":..,"speed":..,"friction":..,"rth":..}
     hold_end_s: float = 0.0
-    fall_tilt_deg: float = 45.0
+    fall_tilt_deg: float = 30.0
+    push: tuple | None = None          # (t_seconds_into_reference, dv[3]): velocity impulse applied to the free base; default: ref.meta['push']
     model_hook: object = None          # callable(MjModel) applied after the model is built (COM shift, floor friction)
     cmd_offset: tuple | None = None   # (t_log, offsets[T, n]) learned by `learn_offsets` (stand-in for policy feedforward)
 
@@ -168,6 +169,9 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
     v_ref[:warm] = 0
     dq_ref[:warm] = 0
     N = len(q_ref)
+    mp = ref.meta.get("push")
+    push = cfg.push or ((mp["t"], np.array(mp["dv"])) if mp else None)
+    k_push = warm + int(round(push[0] / dt)) if push else -1
     off_sim = np.zeros_like(q_ref)
     if cfg.cmd_offset is not None:
         t_off, off = cfg.cmd_offset
@@ -193,7 +197,7 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
     vin = pack.voltage(0.0) if pack else float(np.mean([s.vin_ref for s in specs]))
     ce = compute_power_w_total = cfg.compute_w / max(cfg.regulator_eff, 0.5)
 
-    L = {k: [] for k in ("t", "q", "dq", "q_ref", "tau", "omega", "cur", "pb", "ph", "T", "vin", "it", "as", "bz", "tilt")}
+    L = {k: [] for k in ("t", "q", "dq", "q_ref", "tau", "omega", "cur", "pb", "ph", "T", "vin", "it", "as", "bz", "tilt", "fl")}
     fell = False
     log_every = cfg.log_every
     tau_prev = np.zeros(n)
@@ -220,8 +224,10 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
             model.dof_frictionloss[dadr] = fl / ratio
             model.dof_damping[dadr] = dmp / ratio ** 2
             fp = np.abs(fl * omega) + dmp * omega ** 2
+            fl_log = fl.copy()
         else:
             fp = np.zeros(n)
+            fl_log = np.zeros(n)
         # assist wrench on the pelvis
         if not cfg.assist_free:
             pos, vel = data.qpos[:3], data.qvel[:3]
@@ -242,6 +248,8 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
             a_use = min(fn, f_max) / (mass * G)
         else:
             a_use = 0.0
+        if k == k_push:
+            data.qvel[:3] += np.asarray(push[1], float)[:3]
         mujoco.mj_step(model, data)
         if not np.all(np.isfinite(data.qpos)):
             fell = True
@@ -265,13 +273,16 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
             L["q"].append(q.copy()); L["dq"].append(dq.copy()); L["q_ref"].append(q_ref[k].copy())
             L["tau"].append(tau.copy()); L["omega"].append(omega.copy()); L["cur"].append(cur_servo)
             L["pb"].append(pb); L["ph"].append(ph); L["T"].append(T.copy()); L["vin"].append(vin); L["it"].append(i_tot)
-            L["as"].append(a_use); L["bz"].append(float(data.qpos[2])); L["tilt"].append(tilt)
-            if tilt > cfg.fall_tilt_deg or data.qpos[2] < 0.5 * float(p_ref[:, 2].min()):
+            L["fl"].append(fl_log); L["as"].append(a_use); L["bz"].append(float(data.qpos[2])); L["tilt"].append(tilt)
+            zr = qu_ref[k]                                   # fall = deviation from the PLANNED orientation (a hip-strategy trunk pitch is planned)
+            upz_ref = 1 - 2 * (zr[1] ** 2 + zr[2] ** 2)
+            dev = float(np.degrees(np.arccos(np.clip(upz * upz_ref + 2 * (zq[1] * zq[3] + zq[0] * zq[2]) * 2 * (zr[1] * zr[3] + zr[0] * zr[2]) + 2 * (zq[2] * zq[3] - zq[0] * zq[1]) * 2 * (zr[2] * zr[3] - zr[0] * zr[1]), -1, 1))))
+            if dev > cfg.fall_tilt_deg or data.qpos[2] < 0.5 * float(p_ref[:, 2].min()):
                 fell = True
                 break
     A = {k: np.array(v) for k, v in L.items()}
     wn_log = int(round(warm / log_every))
-    extras = {"mass_kg": mass, "pack_soc_end": pack.soc if pack else None,
+    extras = {"friction_budget": A["fl"], "mass_kg": mass, "pack_soc_end": pack.soc if pack else None,
               "sat_frac": (getattr(bank, "sat_steps", np.zeros(n)) / max(getattr(bank, "steps", 1), 1)).tolist(),
               "protection_trips": getattr(bank, "trips", np.zeros(n, int)).tolist(),
               "assist_mean_bw": float(np.mean(A["as"][wn_log:])) if len(A["as"]) > wn_log else 0.0,
@@ -309,5 +320,8 @@ def learn_offsets(robot: Robot, ref: Reference, cfg: PlayConfig, iters: int = 3,
         e_shift = np.stack([np.interp(t + lag_s, t, e[:, j]) for j in range(n)], 1)
         new = (off[1] if off is not None else 0.0) + gain * e_shift
         new = np.clip(new, -limit, limit)
+        for j, nm in enumerate(robot.names):
+            if nm.startswith("gripper"):          # a contact-limited jaw would just wind up: its feed-forward stays zero
+                new[:, j] = 0.0
         off = (t, new)
     return off, lg

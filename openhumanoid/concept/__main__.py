@@ -55,14 +55,17 @@ def cmd_sweep(a) -> int:
     c0 = load_concept(a.concept)
     heights = a.heights or [0.40, 0.45, 0.50, 0.55, 0.60, 0.65]
     out = []
-    print(f"{'h (m)':>6} {'mass kg':>8} {'verdict':>8} {'worst margin':>13}  worst joint / first failures")
+    print(f"{'h (m)':>6} {'mass kg':>8} {'joint gates':>11} {'worst margin':>13} {'push A/H/Cf/Cl':>15}  worst joint / first failures")
     for h in heights:
         c = dict(c0)
         c["height_m"] = h
         b = run_bundle(c, Mods(), table_height=a.table_height, thermal=False)
         w, j = b.worst
-        out.append({"height_m": h, "mass_kg": round(b.robot.total_mass, 3), "passes": b.passes, "worst_margin": round(w, 3), "worst_joint": j, "failing": b.failing()[:4]})
-        print(f"{h:>6.2f} {b.robot.total_mass:>8.2f} {'PASS' if b.passes else 'FAIL':>8} {w:>13.2f}  {j} | {'; '.join(b.failing()[:2])}")
+        pr = {k: bool(v["valid"] and v.get("ok")) for k, v in b.push_rows.items()}
+        flags = "/".join("Y" if pr.get(k) else "n" for k in ("push_ankle_fwd", "push_hip_fwd", "push_capture_fwd", "push_capture_lat"))
+        out.append({"height_m": h, "mass_kg": round(b.robot.total_mass, 3), "passes": b.passes, "worst_margin": round(w, 3), "worst_joint": j, "failing": b.failing()[:4],
+                    "push_demand_ok": pr})
+        print(f"{h:>6.2f} {b.robot.total_mass:>8.2f} {'PASS' if b.passes else 'FAIL':>11} {w:>13.2f} {flags:>15}  {j} | {'; '.join(b.failing()[:2])}")
     if a.out:
         Path(a.out).parent.mkdir(parents=True, exist_ok=True)
         Path(a.out).write_text(json.dumps(out, indent=1), encoding="utf-8")

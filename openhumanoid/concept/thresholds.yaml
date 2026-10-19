@@ -139,6 +139,30 @@ motions:
   dance: {bpm: 80.0, phrases: 6, v_limit_rad_s: 3.0, smoother_max_deviation_deg: 8.0}
   pickup: {object_mass_kg: 0.150, table_height_m: 0.25, table_height_note: "R5 'table height' is undefined (maintainer question Q1). 0.25 m is a placeholder; run --table-height to sweep it."}
   sit_to_stand: {knee_deg: 130.0, down_s: 3.0, hold_s: 0.5}
+  push:
+    # R10 (balance recovery is a MUST). The push is a velocity change of the whole body (impulse J = M * dv), expressed in
+    # capture-point units so the same non-dimensional push applies at any height: dv = k * margin * sqrt(g / z_com).
+    class: assumption
+    source: "Magnitudes are requirement-level placeholders in the range of the precedent in research/methods/domain_randomization_ranges.yaml: Open Duck Mini adds 0.1-1.0 m/s to the base velocity every 5-10 s, MuJoCo Playground (Berkeley Humanoid, G1, T1) 0.1-2.0 m/s, ToddlerBot 1-3 N for 0.2 s (0.06-0.18 m/s on 3.4 kg). The k values below are set once, for every candidate."
+    ankle_k: 0.5            # capture-point offset = 0.5 x foot half-length: absorbed by shifting the COP inside the foot
+    hip_k: 1.15             # just beyond the toe edge: needs the trunk (hip strategy)
+    capture_fwd_k: 1.3      # 1.3 x the foot half-length: beyond what the trunk can absorb at this delay, needs a capture step (0.35 m/s at 0.45 m)
+    capture_lat_k: 0.75     # x (foot half-width + half the hip half-spacing): lateral capture step (0.2 m/s at 0.45 m)
+    dcm_gain: 2.0           # COP = xi + K (xi - xi_ref)  (decay rate K*w0)
+    cop_margin_frac: 0.75   # the planned COP never goes beyond 75% of the way to the foot edge (slack for the unmodelled)
+    trunk_pitch_max_deg: 35.0
+    trunk_alpha_max_rad_s2: 150.0
+    control_period_s: 0.010 # one 100 Hz policy / control tick
+    sensing_latency_s: 0.010
+    sensing_latency_class: assumption
+    capture_swing_s: 0.15   # swing time of the capture step: a human 0.3 s Froude-scaled to 0.45 m (x sqrt(0.45/1.75)); a normal walking swing here is 0.4 s
+    capture_clearance_m: 0.015
+    land_margin_m: 0.010
+    deliver:
+      peak_fraction_of_stall_max: 1.0     # a one-off emergency transient may use the whole stall torque (not the 0.70 sustained gate)
+      envelope_utilisation_max: 1.0
+      leg_tracking_error_deg_max: 8.0     # servo-in-the-loop, with the actuator delay
+      class: assumption
   stress:
     walk_speed_factor: 1.5        # step length x1.5 at the same step time
     walk_step_time_factor: 0.8    # step time -20% at the same step length

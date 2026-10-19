@@ -29,7 +29,7 @@ parts. Nothing in `openhumanoid/` assumes Adam: `base:` names any variant, `temp
 ## What runs, in order
 
 1. **Robot.** Candidate -> spec (height, proportions, **packaging floors**) -> component-sum mass -> MJCF built from the template -> servo model per joint.
-2. **Frozen motions** (the same for every candidate): stand, walk forward / backward, turn in place, squat 90 and 120, wave, dance, table pickup of 150 g, sit-to-stand at 130 deg knee, get-up (stub). Stress walks: 1.5x speed, -20% step time, +-10 ms landing error, one lateral capture step.
+2. **Frozen motions** (the same for every candidate): stand, walk forward / backward, turn in place, squat 90 and 120, wave, dance, table pickup of 150 g, and **four push-recovery cases (R10, a MUST)**. Sit-to-stand at 130 deg knee is a SHOULD (warning only). Stress walks: 1.5x speed, -20% step time, +-10 ms landing error, one lateral capture step. Getting up after a face-plant is not required yet (stub).
 3. **Demand.** Each motion is played in MuJoCo (contacts, free base) with a stiff *ideal* torque-source PD. The joint torque it reports is what the motion needs, including the servo's reflected rotor inertia. BAM friction is added for moving joints. A motion that needed more than 1% of body weight of tether force is **invalid**.
 4. **Gates** per joint over all motions (below), at the pack's nominal voltage.
 5. **Servo in the loop** (tracking, saturation, overload trips, grasp success; *not* envelopes).
@@ -78,11 +78,30 @@ Defined once in `thresholds.yaml` under `motions` (absolute SI units; **not** tu
 | Squat | knee flexion 90 and 120 deg, 2.5 s down, 1 s hold |
 | Wave | right arm abducted, elbow +-22 deg at 1.25 Hz, 7 s |
 | Dance | 80 BPM, 6 phrases of 8 beats (36 s), one joint-speed limit of 3 rad/s for all joints; the QP smoother may deviate **at most 8 deg** from the choreography or the dance is invalid |
-| Pickup | 150 g, 40 mm cylinder, table at **0.25 m** (R5 "table height" is undefined: maintainer question Q1; use `--table-height`), right hand, squat just deep enough |
-| Sit-to-stand | quasi-static, 130 deg knee (proxy for get-up) |
+| Pickup | 150 g, 40 mm cylinder, table at **0.25 m** (R5 "table height" is undefined: maintainer question Q1; use `--table-height`), right hand, 58 mm jaw opening, squat just deep enough that IK reaches (checked), raise-then-reach approach that clears the table edge, straight-line approach along the fingers, 3 s to close the jaw (servo speed), arm joint speed <= 3 rad/s |
+| Sit-to-stand | quasi-static, 130 deg knee (proxy for get-up); **a SHOULD** (R10): failures are warnings, not blockers |
 | Stress walks | step length x1.5; step time x0.8; landing 10 ms early / late; one 30 mm lateral capture step |
 
 `getup` is a stub (listed as infeasible). A reference that violates a joint range is infeasible (so a squat to 130 deg needs the ankle-pitch range the candidates declare, about -75 deg).
+
+## Push recovery (R10: balance recovery / fall prevention is a MUST)
+
+Required cases, in `openhumanoid/concept/motions/push.py`, all with the same defined push for every candidate:
+
+| Case | Strategy | Defined push (capture-point offset / foot half-length, or lateral margin) |
+|---|---|---|
+| `push_ankle_fwd` | **ankle strategy**: the COP shifts inside the foot (to 75% of the way to the toe edge) | 0.5 (about 0.13 m/s at 0.45 m) |
+| `push_hip_fwd` | **hip strategy**: COP saturated at the toe edge, the trunk pitches about the hips (LIPM + flywheel: `I theta_ddot / (M g)` on the effective COP, trunk pitch <= 35 deg) | 1.15 (about 0.30 m/s) |
+| `push_capture_fwd` | **forward capture step** with a 0.15 s swing to the capture point | 1.3 (about 0.34 m/s) |
+| `push_capture_lat` | **lateral capture step** with the foot on the pushed side | 0.75 of (foot half-width + half the hip half-spacing) (about 0.20 m/s) |
+
+**The push is a velocity impulse of the whole body, `dv`, so the impulse is `J = M_total * dv`** (about 0.3-0.9 N.s for a 2.5 kg robot), applied to the free base in MuJoCo at t = 1 s. It is expressed in capture-point units, `dv = k * margin * sqrt(g / z_com)`, so the same non-dimensional push applies at any height and mass. **Choice and precedent:** the magnitudes are requirement-level placeholders inside the range of the precedent in `research/methods/domain_randomization_ranges.yaml`: Open Duck Mini adds 0.1-1.0 m/s to the base velocity every 5-10 s, MuJoCo Playground (Berkeley Humanoid, G1, T1) 0.1-2.0 m/s, ToddlerBot pushes 1-3 N for 0.2 s (0.06-0.18 m/s on 3.4 kg). The `k` values are set once in `thresholds.yaml` `motions.push` and are the maintainer's/commander's to change.
+
+**Latency.** The controller reacts `d_r` = servo command delay (BAM, 4.9 ms) + one 10 ms control period + 10 ms sensing (assumed) = about 25 ms after the push; until then the COM falls freely with the COP at its nominal point. The capture-step landing point is computed from the capture point at touchdown, so every millisecond of latency moves the landing point further away (`test_latency_makes_the_capture_point_grow...`). The servo-in-the-loop runs add the actuator delay again through the servo model.
+
+**What is reported per case** (`push_recovery` in the report): the defined push (dv, J, capture offset vs foot half-length, free-fall time to the foot edge), whether a recovery plan exists (COM recovered, leg IK reachable, joint ranges), the actuator **demand** (peak torque as a share of stall, torque-speed utilisation, peak speed; an emergency transient may use the whole stall, not the 0.70 sustained gate), for the hip strategy the required trunk pitch speed against the hip servos' speed, **whether the servo model delivers it in time** (servo in the loop with latency: no fall, leg tracking error <= 8 deg), and the **largest recoverable push** (bisection on the plan, a multiple of the defined push with its dv and J).
+
+**What it says today (Candidate A geometry, 0.45 m; the other candidates share the geometry):** the ankle strategy works (about 25% of stall at the ankle). The hip strategy needs a trunk pitch speed of about 11 rad/s against 4.8 rad/s from a 12 V STS3215, so it is not deliverable; at most about 0.5x of the defined push is recoverable with the trunk speed capped. The capture steps are kinematically unreachable at 0.45 m (the capture point lands 12-25 cm ahead, beyond the 0.2 m leg), feasible only from about 0.55 m (forward) and 0.65 m (lateral) at the defined push, and even then the swing needs a knee torque of about 2x stall. **So R10 is a blocker for every example candidate at 0.45 m, and it moves the height decision upward.** The commander should decide whether the defined pushes are the right requirement; the report gives the largest recoverable push so the answer is a number, not a verdict. Plan-level caveats: LIPM with a perfect state estimate, no foot rotation, the lateral step assumes the pushed-side foot can be unloaded instantly (optimistic), and the plan closes with feet apart (no recovery step).
 
 ## Gates (starting thresholds; `gates:` in thresholds.yaml)
 
@@ -96,6 +115,7 @@ Per joint, worst case over all valid motions, at the pack nominal voltage (cells
 | time above 70% of stall | < 0.5 x Protection_Time; no overload trips | replay of the firmware state machine |
 | tether | mean <= 1% of body weight | otherwise the **motion is invalid** (counts as a FAIL) |
 | MC p95 peak | <= 0.70 | quasi-static dimensions only |
+| push recovery (R10) | every case valid, demand <= 1.0 of stall and <= 1.0 of the envelope, delivered in time | emergency transient; see Push recovery |
 | tracking error | 2 deg, *noted only* | P-servo with learned feed-forward |
 | runtime | >= 15 min | a Should: reported, not gating |
 
@@ -171,7 +191,7 @@ Every constant used in a report is listed in its `provenance` table with a class
 | 8 motions tuned per candidate | frozen motion specs; dance deviation > 8 deg is a FAIL |
 | 9 false-precision Monte Carlo | bounds sweep headline; MC quasi-static only; latency/backlash labelled closed loop |
 | 10 thermal | RMS <= rated primary; hot case; minutes to 70 C; Robonine replay marks the model unusable |
-| 11 stress walks, get-up | four stress walks + sit-to-stand 130 (get-up still a stub) |
+| 11 stress walks, get-up | four stress walks + push-recovery cases (R10, required: ankle, hip, forward and lateral capture step) + sit-to-stand 130 as a SHOULD (get-up still a stub) |
 | 12 known robot | duck-like concept through the gates |
 | 13 neck pitch, camera, compute | in every example BOM / mass / power; regulator check |
 | 14 height / anchoring | `sweep` command (0.40-0.65 m); per-joint utilisation ranking; candidates share everything but power / actuators |

@@ -51,6 +51,9 @@ def build_motions(kin: RobotKin, *, table_height_m: float | None = None, stress:
     sts = m["sit_to_stand"]
     refs["sit_to_stand_130"] = posture.squat(kin, sts["knee_deg"], down_s=sts["down_s"], hold_s=sts["hold_s"])
     refs["sit_to_stand_130"].name = "sit_to_stand_130"
+    from .motions import push as push_mod
+    for kind in push_mod.KINDS:
+        refs[f"push_{kind}"] = push_mod.push_case(kin, kind)
     if stress:
         s = m["stress"]
         g = walk_mod.frozen_gait()
@@ -83,6 +86,32 @@ class Demand:
     fell: bool
     notes: list = field(default_factory=list)
     log: Log | None = None
+
+
+PUSH_NAMES = ["push_ankle_fwd", "push_hip_fwd", "push_capture_fwd", "push_capture_lat"]
+
+
+def push_gate(robot: Robot, dem: Demand, vin: float) -> dict:
+    """Push-recovery check (R10): an emergency transient may use the whole stall torque and the whole torque-speed envelope
+    (not the 0.70 sustained gate), the trunk pitch speed of the hip strategy must be within the hip servos' speed, and the plan
+    itself must be feasible. Uses a 40 ms moving average."""
+    cfgp = config.motions()["push"]["deliver"]
+    out = {"valid": dem.valid, "reason": dem.invalid_reason}
+    if not dem.valid:
+        out["ok"] = False
+        return out
+    m = joint_metrics(robot, dem, np.full(len(robot.names), vin), window_s=0.04)
+    j = int(np.argmax(m["peak_frac_stall"]))
+    ju = int(np.argmax(m["util_max"]))
+    out.update({"peak_frac_of_stall": float(m["peak_frac_stall"][j]), "peak_joint": robot.names[j], "peak_nm": float(m["peak_nm"][j]),
+                "util_max": float(m["util_max"][ju]), "util_joint": robot.names[ju], "omega_peak": float(m["omega_peak"].max()),
+                "omega_peak_joint": robot.names[int(np.argmax(m["omega_peak"]))]})
+    ok = out["peak_frac_of_stall"] <= cfgp["peak_fraction_of_stall_max"] and out["util_max"] <= cfgp["envelope_utilisation_max"]
+    out["ok"] = bool(ok)
+    out["why"] = [] if ok else [f"{out['peak_joint']} needs {out['peak_frac_of_stall']:.2f} of stall (limit {cfgp['peak_fraction_of_stall_max']})" if out["peak_frac_of_stall"] > cfgp["peak_fraction_of_stall_max"] else "",
+                                f"{out['util_joint']} operating point {out['util_max']:.2f}x the torque-speed envelope" if out["util_max"] > cfgp["envelope_utilisation_max"] else ""]
+    out["why"] = [w for w in out["why"] if w]
+    return out
 
 
 def ideal_demand(robot: Robot, ref: Reference, cfg: PlayConfig | None = None) -> Demand:
@@ -148,13 +177,13 @@ def _protection_trips(over: np.ndarray, dt: float, prot: np.ndarray, rel: np.nda
     return trips
 
 
-def joint_metrics(robot: Robot, dem: Demand, vin_op: np.ndarray, *, torque_model: str | None = None) -> dict:
+def joint_metrics(robot: Robot, dem: Demand, vin_op: np.ndarray, *, torque_model: str | None = None, window_s: float | None = None) -> dict:
     """Per-joint numbers for one motion. vin_op: operating bus voltage per joint (the pack's nominal voltage)."""
     sl = dem.window
     tau, om = dem.tau[sl], dem.omega[sl]
     dt = float(dem.t[1] - dem.t[0]) if len(dem.t) > 1 else 0.01
     specs = [robot.servo[n] for n in robot.names]
-    k = max(1, int(round(config.gate("peak_window_s") / dt)))
+    k = max(1, int(round((window_s or config.gate("peak_window_s")) / dt)))
     ker = np.ones(k) / k
     ma = lambda x: np.stack([np.convolve(np.pad(x[:, j], (k // 2, k - 1 - k // 2), mode="edge"), ker, mode="valid") for j in range(x.shape[1])], 1)  # noqa: E731
     tau_ma, om_ma = np.abs(ma(tau)), np.abs(ma(om))

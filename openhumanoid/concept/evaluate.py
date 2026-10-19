@@ -26,6 +26,7 @@ from .power import Pack
 from .robot import Robot, benchmark_mass_kg, build_robot, load_concept, mass_sanity
 from .thermal_validation import replay as thermal_replay
 
+SHOULD_MOTIONS = {"sit_to_stand_130"}
 CORE_MOTIONS = ["stand", "walk_forward", "walk_backward", "turn", "squat_90", "squat_120", "wave", "dance", "pickup", "sit_to_stand_130"]
 
 
@@ -87,6 +88,9 @@ class Bundle:
     thermal: dict | None
     stress_rows: dict = field(default_factory=dict)
     mods: Mods = field(default_factory=Mods)
+    push_rows: dict = field(default_factory=dict)
+    push_dem: dict = field(default_factory=dict)
+    should: dict = field(default_factory=dict)      # SHOULD-level motions (sit-to-stand proxy): warnings, never blockers
 
     @property
     def worst(self) -> tuple[float, str]:
@@ -117,8 +121,15 @@ def run_bundle(concept: dict, mods: Mods | None = None, *, table_height: float |
     vin_arr = np.full(len(robot.names), vin)
     hook = _hook(robot, mods)
     cfg = PlayConfig(mode="ideal", model_hook=hook)
-    dem, metrics, invalid, stress_rows = {}, {}, {}, {}
+    dem, metrics, invalid, stress_rows, push_rows, push_dem, should = {}, {}, {}, {}, {}, {}, {}
     for name, ref in refs.items():
+        if name in E.PUSH_NAMES:
+            d = E.ideal_demand(robot, ref, cfg)
+            push_dem[name] = d
+            push_rows[name] = E.push_gate(robot, d, vin)
+            push_rows[name]["meta"] = {k: v for k, v in ref.meta.items() if isinstance(v, (int, float, str, bool, list, dict))}
+            push_rows[name]["notes"] = ref.notes[:3]
+            continue
         if name.startswith("stress_"):
             d = E.ideal_demand(robot, ref, cfg)
             stress_rows[name] = {"valid": d.valid, "reason": d.invalid_reason,
@@ -128,6 +139,13 @@ def run_bundle(concept: dict, mods: Mods | None = None, *, table_height: float |
             continue
         d = E.ideal_demand(robot, ref, cfg)
         dem[name] = d
+        if name in SHOULD_MOTIONS:                       # R10: sit-to-stand is a SHOULD
+            if d.valid:
+                tab = E.gate_joint_table(robot, {name: E.joint_metrics(robot, d, vin_arr)})
+                should[name] = {"valid": True, "fails": [f"{r['joint']}: {', '.join(r['fails'])}" for r in tab.values() if r["fails"]]}
+            else:
+                should[name] = {"valid": False, "fails": [d.invalid_reason]}
+            continue
         if d.valid:
             metrics[name] = E.joint_metrics(robot, d, vin_arr)
         else:
@@ -139,7 +157,7 @@ def run_bundle(concept: dict, mods: Mods | None = None, *, table_height: float |
         ms = E.mixed_schedule(sched, robot, vin)
         amb = mods.ambient_c if mods.ambient_c is not None else config.value("thermal.ambient_c")
         th = E.thermal_report(robot, ms, ambient_c=amb, hot_ambient_c=40.0)
-    return Bundle(robot, kin, refs, dem, metrics, rows, invalid, vin, pack, ms, th, stress_rows, mods)
+    return Bundle(robot, kin, refs, dem, metrics, rows, invalid, vin, pack, ms, th, stress_rows, mods, push_rows, push_dem, should)
 
 
 # ------------------------------------------------------------------------------------------------ pieces of the report
@@ -197,6 +215,25 @@ def _servo_runs(b: Bundle, pack_soc: float = 1.0) -> dict:
             rec["object_lift_m"] = round(float(lg.extras["object_pos"][2] - z0), 4)
             rec["grasp_ok"] = bool(lg.extras["object_pos"][2] - z0 > 0.02)
         out[nm] = rec
+    # push recovery: servo in the loop WITH the actuator delay; legs only (the gripper/arm are at rest)
+    leg = [i for i, n in enumerate(robot.names) if n.split("_")[0] in ("hip", "knee", "ankle")]
+    deliver = config.motions()["push"]["deliver"]
+    for nm in E.PUSH_NAMES:
+        d = b.push_dem.get(nm)
+        if d is None or not d.valid:
+            continue
+        ref = b.refs[nm]
+        pk = TS.pack_of(robot, soc=pack_soc)
+        cfg = PlayConfig(mode="servo", pack=pk, compute_w=load["total_w"], regulator_eff=reg["efficiency"])
+        off, lg = learn_offsets(robot, ref, cfg, iters=2)
+        sl = lg.sl()
+        err = np.degrees(np.abs(lg.q - lg.q_ref)[sl][:, leg])
+        sat = np.array(lg.extras["sat_frac"])[leg]
+        out[nm] = {"fell": bool(lg.fell), "leg_max_err_deg": round(float(err.max()), 2), "leg_rms_err_deg": round(float(np.sqrt((err ** 2).mean())), 2),
+                   "saturation_fraction_max": round(float(sat.max()), 3), "saturated_joint": robot.names[leg[int(np.argmax(sat))]],
+                   "overload_trips": int(sum(lg.extras["protection_trips"])), "min_bus_voltage_v": round(float(lg.vin[sl].min()), 2),
+                   "delivered_in_time": bool((not lg.fell) and err.max() <= deliver["leg_tracking_error_deg_max"]),
+                   "servo_delay_ms": round(1000 * max(s_.delay_s for s_ in robot.servo.values()), 1)}
     return out
 
 
@@ -386,6 +423,37 @@ def _stress_block(b: Bundle) -> dict:
     return out
 
 
+def _push_block(b: Bundle, sim: dict, quick: bool) -> dict:
+    """R10 push recovery: defined pushes, strategy plans, actuator demand, delivery with latency, largest recoverable push."""
+    from .motions import push as PU
+    out = {"requirement": "R10: balance recovery / fall prevention is a MUST (getting up after a face-plant is not required yet)",
+           "definition": config.motions()["push"]["source"], "cases": {}}
+    robot = b.robot
+    hip_pitch_speed = min([float(robot.servo[n].noload(TS.v_nominal(b.pack))) for n in robot.names if n.startswith("hip_pitch")] or [5.0])
+    for nm, row in b.push_rows.items():
+        kind = nm[len("push_"):]
+        m = row.get("meta", {})
+        case = {"valid": row["valid"], "reason": row["reason"], "demand_ok": row.get("ok"), "notes": row.get("notes", [])}
+        case.update({k: row[k] for k in ("peak_frac_of_stall", "peak_joint", "peak_nm", "util_max", "util_joint", "omega_peak", "omega_peak_joint", "why") if k in row})
+        case["push"] = {"dv_mps": m.get("dv_mps"), "impulse_Ns": m.get("impulse_Ns"), "capture_offset_mm": round(1000 * m.get("capture_offset_m", 0), 1),
+                        "foot_half_length_mm": round(1000 * m.get("foot_margin_m", 0), 1), "reaction_delay_ms": round(1000 * m.get("reaction_delay_s", 0), 1),
+                        "free_fall_time_to_edge_s": round(m.get("free_fall_time_to_edge_s", 0), 3)}
+        case["strategy"] = {"cop_peak_offset_mm": round(1000 * m.get("cop_peak_offset_m", 0), 1), "trunk_pitch_peak_deg": round(m.get("trunk_pitch_peak_deg", 0), 1),
+                            "trunk_speed_peak_rad_s": round(m.get("trunk_speed_peak_rad_s", 0), 2), "hip_pitch_servo_noload_rad_s": round(hip_pitch_speed, 2),
+                            "capture_point_xy": m.get("capture_point_xy"), "landing_ankle_xy": m.get("landing_ankle_xy")}
+        if kind == "hip_fwd" and m.get("trunk_speed_peak_rad_s", 0) > hip_pitch_speed:
+            case["demand_ok"] = False
+            case.setdefault("why", []).append(f"hip strategy needs a trunk pitch speed of {m['trunk_speed_peak_rad_s']:.1f} rad/s; the hip servos give {hip_pitch_speed:.1f} rad/s at most")
+        if nm in sim:
+            case["servo_in_the_loop"] = sim[nm]
+        if not quick:
+            speed_cap = 0.9 * hip_pitch_speed if kind == "hip_fwd" else None
+            case["largest_recoverable_push"] = PU.max_recoverable_scale(b.kin, kind, speed_cap=speed_cap)
+        out["cases"][nm] = case
+    out["all_ok"] = all(c["valid"] and c["demand_ok"] and (c.get("servo_in_the_loop", {}).get("delivered_in_time", True)) for c in out["cases"].values())
+    return out
+
+
 def _height_floor_note(robot: Robot) -> list[str]:
     return list(robot.spec.get("_floor_notes", []))
 
@@ -431,9 +499,21 @@ def evaluate(path_or_concept, *, out_root: Path | None = None, samples: int | No
         rep["mass_cases"] = _mass_cases(concept, table_height, nominal)
         n = samples or config.thresholds()["uncertainty"]["monte_carlo"]["n_samples"]["value"]
         rep["monte_carlo"] = _monte_carlo(concept, table_height, int(n), config.thresholds()["uncertainty"]["monte_carlo"]["seed"])
+    rep["push_recovery"] = _push_block(nominal, rep.get("servo_in_the_loop", {}), quick)
     # ---- verdict: blockers fail the candidate, warnings do not
     blockers = list(nominal.failing())
+    for nm, c in rep["push_recovery"]["cases"].items():
+        if not c["valid"]:
+            blockers.append(f"R10 {nm}: no valid recovery ({c['reason'][:120]})")
+        elif not c["demand_ok"]:
+            blockers.append(f"R10 {nm}: actuators cannot deliver ({'; '.join(c.get('why', []))})")
+        elif c.get("servo_in_the_loop") and not c["servo_in_the_loop"]["delivered_in_time"]:
+            blockers.append(f"R10 {nm}: servo in the loop with latency did not deliver (fell={c['servo_in_the_loop']['fell']}, leg error {c['servo_in_the_loop']['leg_max_err_deg']} deg)")
     warnings = []
+    for nm, sh in nominal.should.items():
+        if sh["fails"]:
+            warnings.append(f"SHOULD {nm} (proxy for getting up, not required yet): " + "; ".join(sh["fails"][:3]))
+    rep["should_checks"] = nominal.should
     p = rep.get("power", {})
     mc = rep.get("monte_carlo")
     if mc and not mc["p95_peak_gate_ok"]:
@@ -552,6 +632,20 @@ def to_markdown(r: dict) -> str:
               f"- model validation: {t['thermal_model_validation']}"]
     c = r["cost"]
     L += ["", "## Cost", f"- typical ${c['total_usd']['typical']}, low ${c['total_usd']['low']}, high ${c['total_usd']['high']} (cap ${c['budget_cap_usd']}; within cap at high price: {c['within_cap_at_high']}); {c['unverified_lines']} unverified lines"]
+    pr = r.get("push_recovery")
+    if pr:
+        L += ["", "## Push recovery (R10, a MUST)", "Push = velocity impulse of the whole body, J = M dv, in capture-point units (see docs/concept-engine.md). Demand may use the whole stall torque (emergency transient).",
+              "| case | dv m/s | J N.s | capture offset / foot half-length mm | valid | peak/stall | envelope | delivered in time | largest recoverable (x defined, dv) |", "|---|---|---|---|---|---|---|---|---|"]
+        for nm, c in pr["cases"].items():
+            sv = c.get("servo_in_the_loop", {})
+            lr = c.get("largest_recoverable_push", {})
+            L.append(f"| {nm} | {c['push']['dv_mps']:.2f} | {c['push']['impulse_Ns']:.2f} | {c['push']['capture_offset_mm']} / {c['push']['foot_half_length_mm']} | {c['valid']} | "
+                     f"{round(c['peak_frac_of_stall'], 2) if 'peak_frac_of_stall' in c else '-'} {c.get('peak_joint', '')} | {round(c['util_max'], 2) if 'util_max' in c else '-'} | "
+                     f"{sv.get('delivered_in_time', '-')} | {lr.get('scale', '-')}x ({lr.get('dv_mps', '-')} m/s) |")
+            if not c["valid"]:
+                L.append(f"|  | | | | reason: {c['reason'][:160]} | | | | |")
+            for w in c.get("why", []):
+                L.append(f"|  | | | | {w} | | | | |")
     if "bounds_sweep" in r:
         L += ["", "## Bounds sweep (tornado)", "| unknown | worst margin | delta | passes | failing |", "|---|---|---|---|---|"]
         for b in r["bounds_sweep"]:
