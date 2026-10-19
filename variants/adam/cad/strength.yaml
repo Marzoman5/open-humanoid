@@ -12,6 +12,10 @@ actuators:
   knee: sts3250-12v
 walking:
   stance_knee_flexion_deg: 45     # concept gait choice at 0.60 m (report: 45 deg, 0.5 s)
+fall:
+  # links the floor can touch directly in a fall. ASSUMPTION: the hip yaw and hip roll links sit inside the pelvis shell (R2a, not yet built);
+  # re-run when the shells exist. Forces on the thigh etc. still reach the hip chain through the structure.
+  exposed_links: [hip_pitch_l_link, knee_l_link, ankle_pitch_l_link, ankle_roll_l_link]
 leg:
   side: l
   foot: {link: ankle_roll_l_link, part: foot_l}

@@ -33,19 +33,19 @@ from openhumanoid.cad.housing import servo_housing
 
 # ---- design parameters of this leg (everything dimensional that is not a catalog/DFM/interface number)
 P = {
-    "plate_t": 6.5,            # horn plate: low-head counterbore 1.8-2.3 + floor; was 4.3 (thin plates were the first strength failures)
+    "plate_t": 8.0,            # horn plate: low-head counterbore 1.8-2.3 + floor; was 4.3 (thin plates were the first strength failures)
     "idler_plate_t": 7.5,      # bearing seat 4 mm + shoulder; was 5.6
     "cover_t": 6.5,            # was 4.4: the rear covers are the first thing a backward fall touches (floor 4.2 mm under the low-head counterbore)
     "cover_t_idler": 6.5,      # blind relief for the servo's back stub (3.4) + the printed idler pin + >= 1.6 mm behind them; was 5.6
     "housing_wall": 3.2,       # servo pocket walls, was 2.4 (load-path minimum): the yaw column and housings carry torque as thin-walled sections
     "web_radius": {"hip_pitch": 24.0, "knee": 30.0},   # fork web distance from the pitch axis: knee needs >= 30 for 115+ deg of flexion
-    "web_t": 8.0,              # was 3.2: the web carries the whole leg load from the beam to the plates (bending of a 3.2 mm web failed first)
+    "web_t": 10.0,             # was 3.2 (torsion of the web carries the pitch torque from the horn plate to the beam): the web carries the whole leg load from the beam to the plates (bending of a 3.2 mm web failed first)
     "fork_w": 36.0,            # plate width (fore-aft); was 28
     "idler_w": 36.0,           # idler plate/tongue width: screws at +-10 need 3.25 (counterbore) + 1.6 (wall) to the edge
     "corner_r": 9.0,           # rounded plate corners shrink the swept radius
     "corner_r_tongue": 3.0,    # idler tongue corners: small, the counterbores sit close to them
     "bridge_above_axis": 24.0, # roll bracket bridge starts this far above the hip axis (outside the fork sweep)
-    "sole_t": 5.0,             # was 3.2
+    "sole_t": 6.5,             # was 3.2 (the heel and sole behind the plate are the next weakest section)
     "foot_plate_t": 8.0,       # horn plate of the foot; was 4.3 (the thin 90 deg cantilever)
     "foot_plate_w": 44.0,      # was 28
     "foot_rib_t": 4.0,         # three ribs along the sole from the plate to the toe
@@ -54,6 +54,7 @@ P = {
     "foot_rib_len": 62.0,
     "foot_fillet": 4.0,        # cantilever root radius (dfm fillet.cantilever_root_mm)
     "horn_washer_od": 5.0,     # ISO 7089 M2 washers under the horn screw heads (bearing area under a low-head M2 is only 6.8 mm2)
+    "join_washer_od": 7.0,     # ISO 7089 M3 washers under the roll-cradle screws (the low head alone bears on 14.7 mm2)
     "join_screw": "M3x35L",    # roll cradle to roll plate (through the 29.8 mm cradle into inserts in the bridge)
     "bearing": "MR105ZZ",
     "idler_gap": 1.5,
@@ -119,7 +120,7 @@ def build(ctx) -> Assembly:
     def printed(pid, shape_w, link, sites_w, rename=None, wall_class="structural", up=(0, 1, 0), expect=None, meta=None, material=None):
         sites = [site_to_link(s, link, pid, rename) for s in sites_w]
         pt = Part(pid, to_link(shape_w, link), "frame", material or P["structure_material"], color="frame", sites=sites, print_up=up,
-                  meta={"wall_class": wall_class, "expect": expect or [], "horn_washer_od_mm": P["horn_washer_od"], **(meta or {})})
+                  meta={"wall_class": wall_class, "expect": expect or [], "horn_washer_od_mm": P["horn_washer_od"], "screw_washer_od_mm": {"M3": P["join_washer_od"]}, **(meta or {})})
         add_part(link, pt)
         return pt
 
@@ -233,6 +234,10 @@ def build(ctx) -> Assembly:
     plate2 = box_at(bd.Location(), (hp, y_hi - y_lo, z_hi - (z_ax_hip - 12.0)), (x_plate0 + hp / 2, (y_lo + y_hi) / 2, (z_hi + z_ax_hip - 12.0) / 2))
     bridge = box_at(bd.Location(), (wall_x - x_plate0, y_hi - y_lo, z_hi - z_bridge0), ((x_plate0 + wall_x) / 2, (y_lo + y_hi) / 2, (z_hi + z_bridge0) / 2))
     plate2 = safe_union(plate2, bridge, "roll plate+bridge")
+    from openhumanoid.cad.fillets import fillet_internal
+
+    plate2, rep_rp = fillet_internal(plate2, P["foot_fillet"], min_len=6.0, name="roll_plate")     # plate / bridge corner (4 mm: cantilever root)
+    asm.notes.append(f"roll plate: {rep_rp['filleted']}/{rep_rp['candidates']} internal edges filleted r={rep_rp['radius_mm']:.1f}")
     # joining screws: along world x from the cradle's front face, through the 29.8 mm cradle, into inserts in the bridge's front face
     yaxis = s3.position.Y
     join_pts = [(z_ax_hip + p3["x_ins"] + 0.0, yaxis + zz) for zz in (-7.0, -17.0, -27.0)]            # (world z, world y)
@@ -245,7 +250,7 @@ def build(ctx) -> Assembly:
             expect=horn_expect("hip_roll", child_link["hip_roll"]))
     front_x = wp(s3, 0, p3["outer_y"][1], 0).X
     cradle_feats = [screw_clearance("M3", through=front_x - wall_x + 0.4, counterbore=True, head="low", part=cradle_pid, mates=plate_pid,
-                                    length=35, tag=f"join_screw_{i}", at=loc_from((front_x, y, z), (1, 0, 0), (0, 1, 0)))
+                                    length=35, tag=f"join_screw_{i}", washer_od=P["join_washer_od"], at=loc_from((front_x, y, z), (1, 0, 0), (0, 1, 0)))
                     for i, (z, y) in enumerate(join_pts)]
     shp, st = H["hip_pitch"].build(S["hip_pitch"], extra=cradle_feats, name=cradle_pid)
     printed(cradle_pid, shp, child_link["hip_roll"], st, rename={"housing": cradle_pid, "cover": f"cover_{J['hip_pitch']}"},
@@ -300,7 +305,7 @@ def build(ctx) -> Assembly:
     fw, tp = P["fork_w"], P["idler_plate_t"]
     ax_n = ifs.axis_origin(J[n])
     y0p = x_back - ax_n[0]
-    horn_plate = box_s(n, -14, 14, y0p, fw / 2, zp0[n], zp0[n] + hp, P["corner_r"])
+    horn_plate = box_s(n, -fw / 2, fw / 2, y0p, fw / 2, zp0[n], zp0[n] + hp, P["corner_r"])       # as wide as the fork: this strip carries the roll servo's torque to the horn
     inner_horn = wp(S[n], 0, 0, zp0[n]).Y
     inner_idl = wp(S[n], 0, 0, z_in).Y
     cy = ifs.axis_origin("ankle_roll_l")[1]

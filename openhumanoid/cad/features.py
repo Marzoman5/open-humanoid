@@ -83,7 +83,7 @@ def insert_boss(thread: str = "M3", *, boss_h: float | None = None, boss_d: floa
 
 def screw_clearance(thread: str = "M3", *, through: float = 20.0, fit: str = "medium", counterbore: bool = False, part: str = "",
                     mates: str | None = None, length: float | None = None, tag: str = "screw", head: str = "std",
-                    at: bd.Location | None = None) -> FeatureResult:
+                    washer_od: float | None = None, at: bd.Location | None = None) -> FeatureResult:
     """Through (clearance) hole for a socket-head screw entering at the surface frame, with an optional counterbore for the head.
 
     Hole diameter = ISO 273 close/medium + DFM hole compensation; counterbore diameter/depth from DIN 974-1 plus dfm screw.head_gap.
@@ -99,6 +99,9 @@ def screw_clearance(thread: str = "M3", *, through: float = 20.0, fit: str = "me
         gap = float(val(dfm.load_dfm()["screw"]["head_gap_mm"]))
         cb_d = p["counterbore_d"] + gap + dfm.hole_comp(p["counterbore_d"])
         cb_h = p["counterbore_depth"] + gap
+        if washer_od:                      # ISO 7089 washer under the head: wider, 0.5 mm deeper counterbore (washer 0.5 for M3, 0.3 for M2)
+            cb_d = max(cb_d, washer_od + 0.2 + dfm.hole_comp(washer_od))
+            cb_h += 0.5 if thread in ("M3", "M2.5") else 0.3
         f.cut.append(cyl_along(bd.Location(), cb_d, cb_h + 1.0, z0=-cb_h))
         f.notes.append(f"counterbore d{cb_d:.2f} x {cb_h:.2f}")
     f.sites.append(Site(id=tag, kind="screw", part=part, frame=bd.Location(), thread=thread, length_mm=float(length or 8), mates=mates,

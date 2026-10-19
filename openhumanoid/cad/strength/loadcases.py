@@ -259,7 +259,10 @@ def build(model: Model, cfg: dict, only: list[str] | None = None) -> tuple[list[
     leg_links = [l for l in model.subtree(leg_root)]
     dirs = {"fwd": np.array([1.0, 0, 0]), "back": np.array([-1.0, 0, 0]), "side": np.array([0, sgn, 0])}
     for dtag, dvec in dirs.items():
+        exposed = cfg.get("fall", {}).get("exposed_links")
         for ln in leg_links:
+            if exposed is not None and ln not in exposed:
+                continue            # inside the pelvis / torso shell: the floor cannot touch it directly (forces still reach it through the chain)
             pts = []
             for p in model.parts_in(ln, True):
                 if p.id in cfg.get("exclude_parts", []):

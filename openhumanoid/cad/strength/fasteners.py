@@ -75,7 +75,20 @@ def horn_checks(model: Model, topo: Topology, j: JointRec, pl: PartLoads, part: 
     r = j.horn_bolt_circle_d / 2.0
     th = j.horn_screw
     V = abs(tau) / (n * r) + float(np.linalg.norm(Fperp)) / n
-    T = 2.0 * float(np.linalg.norm(Mperp)) / (n * r) + abs(Fax) / n
+    # tension of each horn screw from the non-axial moment: the bolts sit at their real positions (horn component: 45 deg off the servo x axis on the
+    # bolt circle), the neutral axis is the moment direction, lever_i = (a x r_i) . m_hat, T_i = |M| lever_i / sum lever_k^2
+    xs = j.servo_x / np.linalg.norm(j.servo_x)
+    ys = np.cross(a, xs)
+    ang0 = math.radians(float((part.meta or {}).get("horn_clock_deg", 0.0)) + 45.0)
+    pos = [r * (math.cos(ang0 + 2 * math.pi * k / n) * xs + math.sin(ang0 + 2 * math.pi * k / n) * ys) for k in range(n)]
+    Mn = float(np.linalg.norm(Mperp))
+    if Mn > 1e-9:
+        mh = Mperp / Mn
+        lev = np.array([float(np.cross(a, p_) @ mh) for p_ in pos])
+        T_m = float((Mn * lev / max((lev ** 2).sum(), 1e-9)).max())
+    else:
+        T_m = 0.0
+    T = max(T_m, 0.0) + abs(Fax) / n
     from .loadpath import horn_thickness
 
     hs = j.horn_seat - model.fk({})[j.child_link][1] - model.if_offset + horn_thickness(model, j) * a        # plate underside (on the horn top)
@@ -151,6 +164,9 @@ def connection_checks(model: Model, topo: Topology, con: Connection, pl_child: P
     cb = LOW_CB_DEPTH.get(th, 2.3)
     t_floor = max((t_s - cb) if np.isfinite(t_s) else 1.6, 0.8)
     D_h, d_h = HEAD_D.get(th, 5.5), HOLE_D.get(th, 3.4)
+    wsh = (scr.meta or {}).get("screw_washer_od_mm") or {}
+    if isinstance(wsh, dict) and th in wsh:
+        D_h = float(wsh[th])                                           # builder: screw_clearance(washer_od=...) recorded on the part
     punch = math.pi * D_h * t_floor * shear_allow(m_s, con.d, scr.print_up)
     head_area = math.pi / 4.0 * (D_h ** 2 - d_h ** 2)
     cap_h = min(m_s.tensile(90.0) * head_area, punch)
