@@ -38,16 +38,29 @@ class GaitConfig:
     lift_frac: float = 0.8            # swing foot reaches its landing point this fraction of the way through the swing time
     flex: float | None = None         # stance knee flexion [rad]; None: the concept's own
     w_foot: float | None = None       # nominal foot spacing (ankle to ankle); None: hip spacing
-    shift_time_max: float = 0.7
+    shift_time_max: float = 0.9
+    capture_step_time: float = 0.26    # faster step for reactive (capture) steps
+    step_cop_gain: float = 2.5
+    shift_gain: float = 2.5
+    shift_gain_capture: float = 2.0
     freeze_s: float = 0.045           # stop re-targeting the landing this long before touchdown
-    blend_c: float = 0.12             # per-tick pull of the virtual COM position toward the measurement
-    blend_v: float = 0.06
+    bias_tau: float = 0.6
+    lead_s: float = 0.03              # the pelvis command leads the planned COM by this (cancels the servo/leg lag so the real COM follows the plan)
+    track_lag_s: float = 0.02        # lag between the commanded COM and the measured one (servo + compliance + estimator)
+    touchdown_reseed: float = 0.3
+    kp_c: float = 0.0                 # COM position/velocity error (measured vs commanded, lag-aligned) fed back into the pelvis command
+    kd_c: float = 0.0
+    meas_gain: float = 0.0            # how much of the measured DCM error enters the foot placement
+    blend_c: float = 0.0             # per-tick pull of the virtual COM position toward the measurement
+    blend_v: float = 0.0
+    hold_k_shift: float = 1.5
     hold_k: float = 2.5               # DCM gain in hold (COP = xi + k (xi - xi_ref))
     cop_margin: float = 0.75          # COP kept inside this fraction of the foot rectangle
     vmax: tuple = (0.16, 0.08, 0.6)   # |vx|, |vy|, |wz|
     max_step: tuple = (0.07, 0.05)    # longest step (forward, sideways increment) [m]
     gap_min: float = 0.016            # min clear gap between the feet (lateral) [m]
-    capture_dcm: float = 0.030        # in hold: step when the DCM leaves the support by this much [m]
+    capture_x: float = 0.030          # in hold: step when the measured DCM is this far from the support centre (forward/back) [m]
+    capture_y: float = 0.045          # (sideways)
     capture_enable: bool = True
     arm_swing: float = 1.0
 
@@ -118,6 +131,14 @@ class Gait:
         self.ramp_from = "l"
         self.step_cmd = np.zeros(3)
         self.hold_target = None
+        self.bias = np.zeros(2)
+        self.hist = []
+        self.err_c = np.zeros(2)
+        self.err_v = np.zeros(2)
+        self.dcm_err = np.zeros(2)
+        self.capture_mode = False
+        self.meas_c = np.zeros(2)
+        self.meas_v = np.zeros(2)
 
     # ------------------------------------------------------------------ geometry helpers
     def centre_of(self, side: str) -> np.ndarray:
@@ -175,11 +196,15 @@ class Gait:
             c, v = est.c[:2], est.v[:2]
         return base + Rm @ c, Rm @ v
 
+    @property
+    def T_cur(self) -> float:
+        return self.cfg.capture_step_time if getattr(self, "capture_mode", False) else self.cfg.step_time
+
     def t_ss(self) -> float:
-        return self.cfg.step_time * (1 - self.cfg.ds_frac)
+        return self.T_cur * (1 - self.cfg.ds_frac)
 
     def t_ds(self) -> float:
-        return self.cfg.step_time * self.cfg.ds_frac
+        return self.T_cur * self.cfg.ds_frac
 
     def contact_hint(self) -> np.ndarray:
         return self.contact.copy()
@@ -189,10 +214,25 @@ class Gait:
         cfg = self.cfg
         w = self.omega
         c_meas, v_meas = self._measured_com(est)
-        # pull the virtual state toward the measurement
-        self.v_c = self.v_c + cfg.blend_c * (c_meas - self.v_c)
-        self.v_v = self.v_v + cfg.blend_v * (v_meas - self.v_v)
-        dcm = self.v_c + self.v_v / w
+        # slow plant-error estimate: where the real COM sits relative to what was commanded (servo sag, compliance). It is compensated in the
+        # pelvis command and removed from the state used for control, so sag does not read as a disturbance.
+        # the virtual (commanded) COM, delayed by the measured tracking lag, is what the measurement should equal; the difference is the disturbance
+        lag_n = max(int(round(cfg.track_lag_s / dt)), 0)
+        self.hist.append((self.v_c.copy(), self.v_v.copy()))
+        if len(self.hist) > lag_n + 1:
+            del self.hist[0]
+        c_lag, v_lag = self.hist[0]
+        a_b = dt / cfg.bias_tau
+        self.bias = np.clip(self.bias + a_b * ((c_meas - c_lag) - self.bias), -0.04, 0.04)
+        dcm_meas = (c_meas - self.bias) + v_meas / w
+        dcm_lagged = c_lag + v_lag / w
+        dcm_virt = self.v_c + self.v_v / w
+        err = dcm_meas - dcm_lagged                        # disturbance seen by the sensors
+        dcm = dcm_virt + cfg.meas_gain * err
+        self.dcm_meas = dcm_meas
+        self.dcm_err = err
+        self.err_c, self.err_v = (c_meas - self.bias) - c_lag, v_meas - v_lag
+        self.meas_c, self.meas_v = c_meas - self.bias, v_meas.copy()
         self.t_mode += dt
         info = {"dcm": dcm.copy(), "mode": self.mode}
 
@@ -221,21 +261,24 @@ class Gait:
         ref = self._support_centre({"l": 0.5, "r": 0.5})
         if self.hold_target is not None:
             ref = ref + self.hold_target
-        p = ref + (1 + cfg.hold_k) * (dcm - ref)
-        self.cop = self._cop_limit(p, both)
+        # the commanded COM glides to the reference (first-order, 0.15 s); the posture is stiff, the push is absorbed by the servos and the
+        # stabiliser, and the DCM monitor below decides when that is not enough
+        a = 1 - math.exp(-dt / 0.15)
+        self.v_c = self.v_c + a * (ref - self.v_c)
+        self.v_v = np.zeros(2)
+        self.cop = self.v_c.copy()
         self.contact = np.array([0.5, 0.5])
-        # which part of the DCM is outside the double-support hull (heading frame)?
         Rm = R2(self.pelvis_yaw)
-        out = Rm.T @ (dcm - ref)
+        out = Rm.T @ (self.dcm_meas - ref)
         hull_x = 0.5 * self.lg.foot_len * 0.5
         hull_y = self.lg.hip_y + 0.5 * self.lg.foot_w * 0.5
         info["dcm_out"] = float(max(abs(out[0]) - hull_x, abs(out[1]) - hull_y))
+        info["dcm_rel"] = out.copy()
         walk_cmd = np.linalg.norm(self.cmd[:2]) > 1e-3 or abs(self.cmd[2]) > 1e-3
         if walk_cmd:
-            self._start_walk(dcm)
-        elif allow_capture and cfg.capture_enable and (abs(out[0]) > hull_x + 0.0 or abs(out[1]) > hull_y * 0.9 or
-                                                       np.linalg.norm(out) > cfg.capture_dcm):
-            self._start_walk(dcm, capture=True)
+            self._start_walk(self.v_c + 0 * dcm)
+        elif allow_capture and cfg.capture_enable and (abs(out[0]) > cfg.capture_x or abs(out[1]) > cfg.capture_y):
+            self._start_walk(self.dcm_meas, capture=True)
 
     def _start_walk(self, dcm, capture: bool = False):
         # stance foot: the side the DCM is on laterally (the foot toward which the weight must go); for ties the left
@@ -257,6 +300,9 @@ class Gait:
         self.t_mode = 0.0
         self.capture_mode = capture
         self.shift_started = dcm.copy()
+        if capture:
+            self.v_c = self.v_c + self.err_c
+            self.v_v = self.v_v + self.err_v
 
     # ---------------- weight shift
     def _shift(self, dcm, dt, info):
@@ -267,7 +313,7 @@ class Gait:
         w = self.omega
         Rm = R2(self.pelvis_yaw)
         # target DCM: the periodic offset b over the stance foot (lateral part only; the forward part comes from the first step)
-        T = cfg.step_time
+        T = self.T_cur
         s_y = -1.0 if sd == "l" else 1.0           # the NEXT stance (swing foot) side relative to this stance foot: left stance -> next on the right
         b_lat = (1 + self._kappa()) * s_y * self.w0 / (math.exp(w * T) + 1)
         target = p_s + Rm @ np.array([0.0, b_lat])
@@ -276,15 +322,16 @@ class Gait:
         tleft = max(cfg.shift_time_max - self.t_mode, 0.05)
         err = u[1] - u_t[1]
         # constant COP that brings the lateral DCM to the target after 0.28 s (clamped to the double-support hull)
-        T_w = 0.28
-        e = math.exp(w * T_w)
-        p_lat = (u_t[1] - u[1] * e) / (1 - e)                   # COP (relative to the stance centre) that moves u -> u_t in T_w
-        p_loc = np.array([0.0, p_lat])
+        # DCM tracking: COP = xi_t + (1 + K)(xi - xi_t) makes the DCM error decay with rate K * omega (monotonic, no overshoot). The target
+        # is the periodic offset over the stance foot laterally and, forward, the stance centre line (a capture step wants the DCM slowed).
+        K = cfg.shift_gain_capture if self.capture_mode else cfg.shift_gain
+        u_ref = np.array([0.0, u_t[1]])
+        p_loc = u_ref + (1 + K) * (u - u_ref)
         p = p_s + Rm @ p_loc
         self.cop = self._cop_limit(p, ["l", "r"])
         self.contact = np.array([0.5, 0.5])
         info["shift_err"] = float(err)
-        done = abs(err) < 0.004 or self.t_mode > cfg.shift_time_max
+        done = abs(err) < 0.0015 or self.t_mode > cfg.shift_time_max
         if done and self.t_mode > 0.06:
             self._begin_step(dcm)
 
@@ -310,7 +357,7 @@ class Gait:
         w = self.omega
         sd = self.stance
         sw = "r" if sd == "l" else "l"
-        T, Tss, Tds = cfg.step_time, self.t_ss(), self.t_ds()
+        T, Tss, Tds = self.T_cur, self.t_ss(), self.t_ds()
         t = self.t_mode
         p_s = self.centre_of(sd)
         kap = self._kappa()
@@ -319,8 +366,12 @@ class Gait:
             self.stop_step = True                    # stop requested mid-swing: land square
             cmd = np.zeros(3)
         if t <= Tss:
-            # ---- single support: stance fixed, COP over the stance foot centre
-            self.cop = p_s.copy()
+            # ---- single support: stance fixed; COP over the stance foot centre, modulated inside the foot to hold the DCM on the nominal orbit
+            xi_ref = self._xi_ref(sd, cmd, t)
+            e = dcm - xi_ref
+            p = p_s + cfg.step_cop_gain * e
+            self.cop = self._cop_limit(p, [sd])
+            info["xi_err"] = e.copy()
             self.contact = np.array([1.0, 0.0]) if sd == "l" else np.array([0.0, 1.0])
             if t < Tss - cfg.freeze_s or self.sw_prog < 1e-9:
                 self.sw_target = self._landing(sd, cmd, dcm, Tss - t)
@@ -342,6 +393,8 @@ class Gait:
             if t - dt <= Tss:                          # touchdown
                 self.feet[sw] = self.sw_pos.copy()
                 self.sw_height = 0.0
+                self.v_c = self.v_c + cfg.touchdown_reseed * self.err_c
+                self.v_v = self.v_v + cfg.touchdown_reseed * self.err_v
             s = (t - Tss) / Tds
             p_n = self.centre_of(sw)
             self.cop = p_s + (p_n - p_s) * float(np.clip(s, 0, 1))
@@ -351,8 +404,24 @@ class Gait:
             if t >= T:
                 self._end_step(dcm)
 
+    def _xi_ref(self, sd: str, cmd: np.ndarray, t: float) -> np.ndarray:
+        """Nominal DCM at time t of a single-support phase (world frame): the periodic orbit, or the square-stop approach."""
+        w, T, kap = self.omega, self.T_cur, self._kappa()
+        sw = "r" if sd == "l" else "l"
+        f_s = self.feet[sd]
+        Rs = R2(f_s[2])
+        p_s = self.centre_of(sd)
+        s_y = 1.0 if sw == "l" else -1.0
+        if self.stop_step:
+            d_nom = np.array([0.0, s_y * self.w0])
+            return p_s + Rs @ (0.5 * d_nom * math.exp(w * (t - self.t_ss())))
+        e1 = math.exp(w * T)
+        Lx, Ly = cmd[0] * T, cmd[1] * T
+        b_S = (1 + kap) * np.array([Lx / (e1 - 1), Ly / (e1 - 1) + s_y * self.w0 / (e1 + 1)])
+        return p_s + Rs @ (b_S * math.exp(w * t))
+
     def _landing(self, sd: str, cmd: np.ndarray, dcm: np.ndarray, t_rem_ss: float) -> np.ndarray:
-        cfg, w, T = self.cfg, self.omega, self.cfg.step_time
+        cfg, w, T = self.cfg, self.omega, self.T_cur
         kap = self._kappa()
         sw = "r" if sd == "l" else "l"
         f_s = self.feet[sd]
@@ -402,6 +471,7 @@ class Gait:
         stop_now = self.stop_step
         walk_cmd = np.linalg.norm(self.cmd[:2]) > 1e-3 or abs(self.cmd[2]) > 1e-3
         if stop_now and not walk_cmd:
+            self.capture_mode = False
             self.mode = "hold"
             self.contact = np.array([0.5, 0.5])
             return
@@ -434,7 +504,7 @@ class Gait:
             z[sw] = self.sw_height
         ankle = {s: np.array([feet[s][0], feet[s][1], lg.ankle_h + z[s]]) for s in "lr"}
         Rm = R2(yaw_target)
-        pel_xy = self.v_c - Rm @ self.com_off
+        pel_xy = self.v_c + self.cfg.lead_s * self.v_v - Rm @ self.com_off - self.bias - self.cfg.kp_c * self.err_c - self.cfg.kd_c * self.err_v
         pelvis = np.array([pel_xy[0], pel_xy[1], self.pelvis_z])
         return LowerTarget(pelvis, yaw_target, 0.0, ankle, {s: feet[s][2] for s in "lr"}, self.contact.copy(), self.mode, info)
 
@@ -456,7 +526,25 @@ class Gait:
                 qu = quat_from_yaw_pitch(tgt.yaw, 0.0)[0]
                 com = kin.com(np.clip(q, m.lo, m.hi), np.zeros(3), qu)
                 self.com_off = R2(tgt.yaw).T @ com[:2]
-                pel[:2] = self.v_c - R2(tgt.yaw) @ self.com_off
+                pel[:2] = self.v_c + self.cfg.lead_s * self.v_v - R2(tgt.yaw) @ self.com_off - self.bias - self.cfg.kp_c * self.err_c - self.cfg.kd_c * self.err_v
         tgt.pelvis = pel
         self.ik_ok = bool(np.all(ok))
         return q
+
+    def hold_reseed(self, est: EstState) -> None:
+        """Back to hold with the feet where they are and the virtual COM re-seeded from the measurement (after a reference playback)."""
+        self.mode = "hold"
+        self.t_mode = 0.0
+        self.contact = np.array([0.5, 0.5])
+        self.stop_step = True
+        c, v = self._measured_com(est)
+        self.v_c, self.v_v = c, v
+
+    def initial_pose(self, q_rest: np.ndarray) -> tuple:
+        """(q, pelvis_xyz): the balanced standing pose of the planner's current feet with the COM over the support centre."""
+        mid = self._support_centre({"l": 0.5, "r": 0.5})
+        self.v_c, self.v_v = mid.copy(), np.zeros(2)
+        self.cop = mid.copy()
+        dummy = self._lower_target(None, {})
+        q = self.solve_legs(dummy, q_rest.copy())
+        return q, dummy.pelvis.copy()

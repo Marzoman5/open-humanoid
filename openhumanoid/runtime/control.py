@@ -33,10 +33,13 @@ LEG_BASES = ("hip_yaw", "hip_roll", "hip_pitch", "knee", "ankle_pitch", "ankle_r
 
 @dataclass
 class StabiliserConfig:
-    kp_pitch: float = 0.9
-    kd_pitch: float = 0.07
-    kp_roll: float = 0.9
-    kd_roll: float = 0.07
+    kp_pitch: float = 0.35
+    kd_pitch: float = 0.10
+    kp_roll: float = 0.35
+    kd_roll: float = 0.12
+    ki_pitch: float = 1.2             # 1/s integral on the lean (removes the load-proportional servo sag)
+    ki_roll: float = 1.2
+    int_limit: float = 0.25
     limit: float = 0.35               # max ankle correction [rad]
 
 
@@ -49,11 +52,16 @@ class Stabiliser:
         self.ip = {s: model.index.get(f"ankle_pitch_{s}", -1) for s in "lr"}
         self.ir = {s: model.index.get(f"ankle_roll_{s}", -1) for s in "lr"}
         self.last = np.zeros(2)
+        self.integ = np.zeros(2)
+        self.dt = 0.01
 
     def apply(self, q: np.ndarray, est: EstState, contact: np.ndarray, pitch_des: float = 0.0, roll_des: float = 0.0) -> np.ndarray:
         c = self.cfg
-        dp = c.kp_pitch * (est.pitch - pitch_des) + c.kd_pitch * est.gyro[1]
-        dr = c.kp_roll * (est.roll - roll_des) + c.kd_roll * est.gyro[0]
+        loaded = min(1.0, 2.0 * float(max(contact)))
+        self.integ[0] = np.clip(self.integ[0] + loaded * c.ki_pitch * (est.pitch - pitch_des) * self.dt, -c.int_limit, c.int_limit)
+        self.integ[1] = np.clip(self.integ[1] + loaded * c.ki_roll * (est.roll - roll_des) * self.dt, -c.int_limit, c.int_limit)
+        dp = c.kp_pitch * (est.pitch - pitch_des) + c.kd_pitch * est.gyro[1] + self.integ[0]
+        dr = c.kp_roll * (est.roll - roll_des) + c.kd_roll * est.gyro[0] + self.integ[1]
         dp = float(np.clip(dp, -c.limit, c.limit))
         dr = float(np.clip(dr, -c.limit, c.limit))
         self.last = np.array([dp, dr])
@@ -108,6 +116,7 @@ class BehaviourManager:
         self.dt = dt
         self.gait = Gait(model, gait_cfg)
         self.stab = Stabiliser(model, stab_cfg)
+        self.stab.dt = dt
         self.clips = clip_provider
         self.q_rest = model.stand_q(self.gait.flex)
         self.q_out = self.q_rest.copy()
@@ -131,6 +140,13 @@ class BehaviourManager:
         self.done_cb = None
         self.arm_swing_state = np.zeros(2)
         self.hold_after = None
+        self.trim = np.zeros(model.n)
+        self.damp_kd = 0.03
+        self.damp_mask = np.array([0.0 if n.startswith('gripper') else 1.0 for n in model.names])
+        self.trim_ki = 0.0                 # 1/s: removes the servo's load-proportional steady-state error (stand-in for the servo I-coefficient)
+        self.trim_leak = 0.15
+        self.trim_limit = 0.2
+        self.leg_mask = np.array([n.split("_")[0] in ("hip", "knee", "ankle") for n in model.names])
 
     # ------------------------------------------------------------------ poses
     def _build_fall_pose(self) -> np.ndarray:
@@ -267,13 +283,34 @@ class BehaviourManager:
             tgt = self.gait.update(est, dt, allow_capture=True)
             q = self.gait.solve_legs(tgt, self.q_rest.copy())
             q = self._upper_body(q, est, tgt)
+            q = self._trim(q, s, tgt.contact)
             q = self.stab.apply(q, est, tgt.contact)
             contact = tgt.contact
             tl = np.ones(m.n) * self.tl_grip
         q = self._overlays(q, est)
+        q = self._damp(q, s)
         self.q_out = q
         self.contact = contact
         return q, tl, contact
+
+    def _damp(self, q: np.ndarray, s: HalState) -> np.ndarray:
+        """Joint-level damping injection: q_cmd -= Kd * measured speed. The identified servo model (BAM) has no D term and a 6.5 Hz, zeta ~ 0.4
+        resonance (armature 0.0234 kg m^2); on hardware this is the Feetech D coefficient. The command is not fed back into the plan (q_out keeps it)."""
+        return q - self.damp_kd * s.dq * self.damp_mask
+
+    def _trim(self, q: np.ndarray, s: HalState, contact: np.ndarray) -> np.ndarray:
+        """Slow integrator on the load-bearing leg joints: trim += ki (cmd - measured) so gravity sag does not shift the COM plan."""
+        g = np.ones(self.m.n)
+        for i, side in enumerate("lr"):
+            w = min(1.0, 2.0 * float(contact[i]))
+            for base in ("hip_yaw", "hip_roll", "hip_pitch", "knee", "ankle_pitch", "ankle_roll"):
+                k = self.m.index.get(f"{base}_{side}")
+                if k is not None:
+                    g[k] = w
+        err = (self.q_out - s.q) * self.leg_mask * g          # last command vs where the joint actually is
+        self.trim += self.dt * (self.trim_ki * err - self.trim_leak * self.trim * (1 - g * self.leg_mask))
+        self.trim = np.clip(self.trim, -self.trim_limit, self.trim_limit)
+        return q + self.trim * self.leg_mask
 
     def _play_reference(self, est: EstState) -> np.ndarray:
         p = self.player

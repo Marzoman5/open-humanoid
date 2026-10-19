@@ -98,7 +98,9 @@ class StateEstimator:
         y = np.cross(z, x)
         self.R = np.stack([x, y, z], 1)           # world <- pelvis with world z = gravity up and yaw 0 along the body x projection
         if still_samples:
-            self.bias = np.mean([s.gyro for s in still_samples], 0)
+            g = np.array([s.gyro for s in still_samples])
+            # only trust the mean as a bias when the robot really was still (a settling robot rotates: that is not bias)
+            self.bias = g.mean(0) if float(np.abs(g.mean(0)).max()) < 0.03 and float(g.std(0).max()) < 0.02 else np.zeros(3)
         self.t = hal_state.t
         self.initialised = True
 
