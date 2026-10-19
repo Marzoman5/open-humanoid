@@ -17,4 +17,6 @@ New prices are vendor listings read 2026-10-19 (parts.yaml, verified: false): ST
 | C1 package (L1d + L6 + L2/L3b + L5, 6-DOF) | $1206 | $1688 | +174 $ |
 | C1 with 5-DOF legs | $1164 | $1638 | +124 $ |
 | C2 package (L1d + L6b + L5c, flat Tattu 1300, waist kept) | $1228 | $1714 | +200 $ |
+| C3 package (final): C2 + longer arms + wrist pitch + STS3045M gripper | $1370 | $1882 | +368 $ |
+| C3 without the wrist (C2 + longer arms; arm length costs nothing) | $1228 | $1714 | +200 $ |
 | C2 lean (C2 + STS3215 knees, after the bench + Q3) | $1122 | $1588 | +74 $ |

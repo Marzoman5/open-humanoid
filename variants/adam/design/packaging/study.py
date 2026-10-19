@@ -62,7 +62,8 @@ VARIANTS.update({"C2": (C2, "combined package C2: small arm + neck (6 V rail), f
 # Lever 9 (commander, after the pickup-planner fix showed R5 reach is limited by arm geometry): arm length and a wrist, on top of C2
 VARIANTS.update({"C2-L9a": (replace(C2, upper=0.20, fore=0.23), "C2 + longer arms (upper arm 0.20 H, forearm 0.23 H)"),
                  "C2-L9b": (replace(C2, wrist=SM), "C2 + wrist-pitch servo (STS3045M)"),
-                 "C2-L9ab": (replace(C2, upper=0.20, fore=0.23, wrist=SM), "C2 + longer arms + wrist pitch")})
+                 "C2-L9ab": (replace(C2, upper=0.20, fore=0.23, wrist=SM), "C2 + longer arms + wrist pitch"),
+                 "C3-lite": (replace(B, knee_up=True, ankle_up=True, upper=0.20, fore=0.23), "cheap package: R1 servos, legs relocated (L5c) + longer arms (L9a)")})
 KEYS = ["P1", "P2a", "P2b", "P3", "P4", "P5", "P6", "P7", "P8a", "P8b", "P9a", "P9b", "P10a", "P10b", "S3a", "S3b", "S4a", "S4b", "HP"]
 
 

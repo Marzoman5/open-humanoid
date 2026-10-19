@@ -224,3 +224,145 @@ Combined with `oh design verdict`: UNCERTAIN counts as a no-pass, a preference c
 ---
 ## Commander sign-off
 *(left for the commander: PROVISIONAL R2a under the overnight authority; maintainer to confirm direction and the hardware-limit questions in the morning.)*
+
+---
+## 9. Packaging-for-look study (T-20261019-c1aa, 2026-10-19) — PROVISIONAL
+
+**Answer first: no.** At 0.55–0.60 m with STS-class bus servos, no packaging combination got the blind critic off "toy". The best package (C3) was preferred over B4 in both orders in every round, and the critic still said "toy" (round 1, round 3) or "unfinished" (round 2) in all six reports. Every round's first change was the same: narrower shoulders and arms that hang closer to the body. That is set by hardware, not by styling. Section 9.6 says what scale and actuator class would be needed.
+
+Everything here is PROVISIONAL. The bench test is still pending, no gate threshold was changed, and no servo box was shrunk: a smaller box only ever comes from a smaller servo, with its datasheet in `variants/adam/design/packaging/parts.yaml`.
+
+### 9.1 Method
+
+- **Look.** `packaging/layout.py` applies the R1 packaging rules to each lever. With all levers at their defaults it reproduces the R2a hard points exactly (`layout.py --check`).
+  - `packaging/capsule.py` is the B4 styling written parametrically. Its baseline ("V0") matches B4 on P3, P2a and P10a. Its leg covers are a generic rule, so V0's P8a/P8b are worse than B4's hand-set ones.
+  - The display cant is not hand-picked. It is the smallest cant that keeps B4's 21° front-view arm-to-body gap (7.4 mm, elbow and below).
+  - Metrics come from the `oh design metrics` code.
+- **Engineering.** `packaging/engine.py` wraps `r1_calibrated.run`, giving the strict, half-calibrated and ODM-calibrated gate sets, R10 at 0.45 N·s and the largest recoverable push. Thresholds are unchanged. Two in-process patches are stated in every output:
+  - **Rail servos:** a 6 V servo on its own regulated rail is pinned to 6 V. The engine has a single bus voltage, so it would otherwise scale the servo to 11.1 V.
+  - **Pack in the pelvis:** this is the optimistic end of the lumbar-pack COM effect.
+  - The pickup reach uses the post-merge planner, `python -m openhumanoid.concept.motions.pickup` through `engine.py pickup`.
+- **Cost.** `packaging/cost.py` uses the `r1_cost.py` accounting: spares, tax, shipping and +10%.
+- **Parts.** New parts were researched on 2026-10-19 (vendor listings, `verified: false`):
+  - Feetech STS3045M: 36 × 15 × 29.2 mm, 0.588 N·m at 6 V, 12-bit magnetic encoder, $40, backordered at aifitlab, in stock at Core Electronics.
+  - Feetech SCS0009 / Waveshare SC09: 23 × 12 × 25 mm, 0.226 N·m at 6 V, 10-bit potentiometer, $8.99.
+  - Pololu D36V50F6 6 V 5.5 A regulator: $39.95.
+  - **No small Feetech servo runs on 12 V.** Every slim option needs a second rail.
+
+### 9.2 Lever table (each lever alone, on the R1 hardware at 0.55 m)
+
+Look values are code-measured. V0 is P3 0.397, P8a 0.956, P8b 1.000, P2a 0.110, P10a 0.238 (B4: 0.397 / 0.860 / 0.938 / 0.110 / 0.238). Engine values are worst margins strict / half / cal and R10 min (largest recoverable push over the five scenarios). R1 is 1.247 / 1.571 / 1.891 and 0.669 N·s. Cost is the change in the R1 total ($1,514).
+
+| # | Lever | Look gain | Engine | $ | Risk / complexity |
+|---|---|---|---|---|---|
+| L5c | Knee servo up into the thigh and ankle-pitch servo up into the calf, each laid fore-aft and driving a slim pin joint through a 1:1 parallelogram (speed kept) | **Largest.** P8a 0.956 → 0.623 PASS, P8b 1.0 → 0.567 PASS (L5a alone: P8a 0.524; L5b alone: P8b 0.362). Tapered thigh, calf swell, slim knee and ankle. | 1.246 / 1.571 / 1.854; R10 0.669. Unchanged (5% linkage loss assumed). | +14 (est.) | Medium-high. Ball-link play has no published figure, so measure it. The 0.55 m shank is 82.5 mm, which leaves 13 mm between the calf servo and the slim ankle joint. Slim-joint keep-outs (32 × 28 × 32 mm) are estimates. No small open-source humanoid does this (Duke Humanoid, ~1 m, is the closest). |
+| L1d | Whole arm on small servos (shoulder pitch, roll and elbow STS3045M; gripper SCS0009) on a 6 V rail | P3 0.397 → 0.358 (−0.039), P4 0.549 → 0.609, P2a 0.110 → 0.146 (the chest top drops). L1a (roll + elbow only) gives most of it: 0.362. | 1.198 (shoulder roll, dance) / 1.389 / 1.503; R10 0.631. Passes strict and calibrated, with wave and pickup valid. Mass −205 g. | +202 | Medium. Datasheet-only servos (the ODM calibration does not apply). Armature is an assumption; at ×2 the C1 package still passes (1.201 / 1.336 / 1.447). Second rail. STS3045M is backordered at one vendor. |
+| L6b | Neck yaw and pitch on SCS0009, with the yaw servo standing in the neck (frees the chest front slot) | Small. Head 62 → 54 mm wide, P2b 0.60; P2a needs the chest roll restyled (C3: 0.187 PASS). | 1.266 / 1.595 / 1.921; R10 0.655. | +30 | Low-medium. SC09 is rated 4–6 V and the 6 V rail is ±4%, so up to 0.24 V over. Potentiometer feedback over 300°. |
+| L9a/b | Arm length (upper arm 0.19 → 0.20 H, forearm 0.21 → 0.23 H) and a wrist-pitch joint (STS3045M) | Long arms: cant 21° → 19°, P3 0.358 → 0.350 (the elbow drops below the pelvis), more adult proportions. Wrist: S3b 7 → 3. | See 9.4 (reach) and C3. | +~45 (wrist) | Low (length) to medium (wrist). |
+| L8 | 0.60 m, R1 hardware | P3 0.356, P10a 0.227. P4 FAILS (0.411). | R1: 1.019 / 1.284 / 1.546 | +18 | Bench-gated (R1 §2.2). |
+| L4 | Chest emptied (small arm, no pack in the upper chest) | P3 0.373, **worse** than L1d. The arm root moves in, so the cant must rise to 24.5° to clear the hip forks. | — | — | This shows the hip width sets the cant (below). |
+| L3a | Flat Tattu 3S 1300 across the upper back (22 mm instead of 29 mm) | Chest 7 mm shallower; no metric moves. | = R1 (the engine already models the Tattu 1300); runtime ~28 min (≥ 15) | +1 | Low |
+| L3b | GNB 1850 low in the lumbar back (needs no waist yaw) | P2a 0.153. In the combined package it makes a wide **waist belt box** and raises the cant (C1: P3 0.370 vs C2 0.358). | 1.260 / 1.588 / 1.912; R10 0.659 (pack mass in the pelvis, optimistic) | −25 | Rejected for look |
+| L2 | No waist-yaw servo | **None.** The pelvis width is set by the hip-yaw servos at the 70 mm hip spacing, not by the waist servo between them, so the brief's premise does not hold. | 1.264 / 1.592 / 1.917; R10 0.658 | −25 | R7 by neck yaw plus turning in place; dance without a waist |
+| L7 | 5-DOF legs | P10a 0.238 → 0.171 (foot 0.17 H, still 0.001 over the band) | **Walks INVALID** in the engine: tether 1.4–1.6% of body weight against the 1% limit (as R1 §4.3). R2 fails, so it is excluded. | −49 | Our 5-DOF harness, not ODM's, fails. A policy-gait re-test is still open. |
+| — | Shoulder-roll servo moved into the chest | Not built. Putting a roll servo inside the chest needs a pitch-axis relocation (belt or gear 1:1) or a bevel differential, and saves ~7 mm per side against L1d's −10 mm. | — | — | High |
+
+**What sets the arm splay (the critic's #1 change every round).** The display cant is the smallest that keeps the hanging elbow and forearm visibly clear of the pelvis (yaw servos at ±50 mm) and of the thigh forks (52 mm wide at ±35 mm). Moving the arm root inward (L1d, L4) does not narrow the read 1:1, because the cant then has to rise. Narrower hips need narrower pitch forks, which means a smaller leg servo, which the legs' torque does not allow.
+
+### 9.3 Combined packages
+
+| | C1 | C2 | **C3 (final)** |
+|---|---|---|---|
+| Levers | L1d + L6b + L3b(+L2) + L5c | L1d + L6b + L5c, flat Tattu 1300 in the upper back, waist yaw kept | C2 + longer arms + wrist pitch (gripper on an STS3045M) |
+| Why not chosen | Lumbar pack: waist belt box, cant 24.5° | — | — |
+| Cant | 24.5° | 20.5° | 19.5–20.5° |
+| P3 / P2a / P8a / P8b / P10a | 0.370 / 0.206 / 0.485 / 0.602 / 0.238 | 0.358 / 0.154 / 0.485 / 0.602 / 0.238 | 0.365 / 0.187 PASS / 0.485 / 0.604 / 0.238 (C3_r3) |
+| Numerics passed | 14/19 | 13/19 | 15/19 (B4 13/19) |
+| Engine strict / half / cal (pre-merge planner) | 1.198 / 1.379 / 1.493 | 1.198 / 1.389 / 1.503 | PENDING: post-merge run still running at hand-off (`results/engine_PK-C3-package-post.json`) |
+| 13 bounds passed (strict / half / cal) | 7 / 11 / 11 | 7 / 11 / 11 | (same hardware class as C2) |
+| R10 min | 0.608 N·s | 0.617 N·s | pending (same run) |
+| Mass | 3.655 kg | 3.716 kg | ~3.75 kg (est.: C2 + 2 wrist servos) |
+| R5 reach (object 50 mm behind the edge) | — | ≤ 0.394 m (table collision) | pending: wrist scan running (`results/pickup/PK-C3-package/`) |
+| R1 total | $1,688 (+174) | $1,714 (+200) | $1,882 (+368); without the wrist $1,714 (+200) |
+
+**Engineering reading for C2/C3.**
+- The worst joint moves from the legs to the small shoulder-roll servo in the dance: strict 1.198 against R1's 1.247.
+- Three bounds that passed strict on R1 now fail strict: structure ×1.4, stall −25% and benchmark mass. The two calibrated failures are the same as R1's (armature high, walking speed ×1.5).
+- Leg margins improve slightly because of the 290 to 350 g lighter robot.
+- At 0.60 m, C2 fails strict at the shoulder roll (0.905) and passes calibrated (1.181). The small arm servos are the limit there.
+
+### 9.4 Arm length and wrist (commander input after the pickup-planner fix)
+
+This uses the post-merge pickup planner, with the object 50 mm behind the table edge. The provisional R5 table is 0.40–0.45 m.
+
+| Concept | Reachable table top | Limit above | Demand at the top of the range |
+|---|---|---|---|
+| R1 (commander's run, R1-P1r) | ≤ 0.384 m | arm geometry | ≤ 0.41 of stall |
+| C2 (small arm) | ≤ 0.394 m | **table collision** | shoulder pitch margin 1.27 |
+| C2 + longer arms (L9a) | ≤ 0.394 m | **table collision** | shoulder pitch margin 1.38 |
+| C2 + wrist / C3 | **PENDING**: wrist scans were still running at hand-off (`results/pickup/PK-C2-L9b-wrist`, `PK-C2-L9ab`, `PK-C3-package`, plus a reach-only `_quick` run) | | |
+
+**Findings.**
+- **Longer arms alone do not raise reach.** Above 0.394 m the hanging forearm and hand hit the table edge before the hand reaches the object. That is a hand-orientation problem, which is what a wrist addresses.
+- **Longer arms still help the look.** The cant drops 21° → 19° and P3 goes 0.358 → 0.350. They cost nothing.
+- **The SCS0009 gripper fails the new pickup motion.**
+  - In the post-merge engine run of C2 + longer arms, the gripper envelope failed in `pickup` at 0.09 strict. The micro servo cannot hold the planned grasp.
+  - Because every gait then fails, the gait sweep's choice is arbitrary. The run looks broken (knee and R10 lateral fails) for that reason alone.
+  - **C3 therefore puts the gripper on an STS3045M.**
+  - Caveat: the C1/C2 engine numbers above came from the pre-merge planner, so they need a post-merge re-run. That re-run (`results/engine_*-post.json` for R1, C2 and C3) was in progress at hand-off.
+
+### 9.5 Critic rounds (blind Sonnet `design-critic`, both orders; files in `docs/design-method/R2a-packaging/critic/`)
+
+| Round | Candidate vs baseline | cand_first | cand_second | G5 | G1 | G2 | G3 | G4 | G6 | reads_as |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | C2_r1 vs **B4** | cand | cand | **PASS** | F | F | PASS / F | F | F | toy / toy |
+| 2 | C3_r2 vs C2_r1 (adds longer arms and wrist; ovoid head, chest blend, joint-only arm bands, monotonic leg covers) | cand | cand | **PASS** | F | F | PASS | F | F | unfinished / unfinished |
+| 3 (cap) | C3_r3 vs **B4** (r2 plus a long chest-to-waist taper, rounder back pack, soft shank cuffs) | cand | cand | **PASS** | F | F | PASS | F | F | toy / toy |
+
+![C3 final, studio sheet](../../../docs/design-method/R2a-packaging/C3_r3/sheet.jpg)
+![C3 final, two-tone](../../../docs/design-method/R2a-packaging/C3_r3/twotone.jpg)
+
+**What moved:**
+- the neck (P2a passes);
+- the thigh and shank taper (P8a passes; P8b sits at 0.60);
+- the zebra arm bands are gone (G3 passes);
+- IoU against the references rose from 0.53/0.56 (B4) to 0.56/0.59 (C3).
+
+**What did not move:** the shoulder and arm mass and the splay (P3 0.365 against ≤ 0.29), the boxy chest and pelvis, and the long foot (P10a, set by the heel servo and the engine's validated toe reach).
+
+### 9.6 Scale at which a toy-free silhouette becomes feasible (input for Eve)
+
+`packaging/scale.py` compares each limb section's narrowest packaging with the reference robots' width/H. The floor is the servo dimension across the limb plus 11.5 mm of housing and shell. The references are low-confidence approximations.
+
+| Feature | Optimus / Atlas width / H | R1 layout: floor / H_min | All levers (relocated legs, small arm and neck): floor / H_min |
+|---|---|---|---|
+| Ankle | 0.046 / 0.049 | 58 mm / **1.18–1.25 m** | 38 mm / 0.77–0.82 m |
+| Elbow | 0.045 / 0.046 | 49 mm / 1.05–1.07 m | 43 mm / **0.92–0.94 m** |
+| Knee | 0.060 / 0.065 | 58 mm / 0.90–0.97 m | 38 mm / 0.59–0.64 m |
+| Calf | 0.066 / 0.070 | 58 mm / 0.83–0.89 m | 58 mm / 0.83–0.89 m |
+| Forearm / upper arm / head | ~0.045–0.09 | 0.53–0.81 m | 0.42–0.56 m |
+
+**What this means.**
+- With these actuator classes, a reference-slim silhouette needs **≥ ~0.9 m even with every lever, and ~1.2 m with the R1 layout.**
+- STS3215/STS3250 legs cannot carry that: the R1 sweep already fails at 0.65 m.
+- So "not a toy" needs a different actuator class at ~0.9–1.2 m. Joint torque grows about as h^3.3 (mass ~h^2.3 from the engine benchmark fit, times lever arm ~h), so at 0.9–1.2 m the legs need roughly 5–13× Adam's torque, in limbs only ~1.7–2.2× wider. That is a quasi-direct-drive or compact planetary class, not a hobby bus servo. This is Eve's problem, not Adam's.
+- A blind critic tolerates some excess width, so these heights are a floor for the answer, not a prediction that the critic will pass.
+
+### 9.7 Recommendation (for the maintainer; nothing ordered)
+
+1. **Accept that Adam at 0.55 m reads as a robot toy/prototype.** Relax the numeric P3/P10a for Adam (R1 Q2, R2a Q2). Judge it pairwise: C3 beat B4 in both orders, twice.
+2. **Worth taking even though they don't clear "toy":**
+   - **L5c leg relocation** (biggest look gain, engine-neutral, +$14). It needs a CAD feasibility check of the 13 mm calf gap and a bench measurement of linkage play.
+   - **Longer arms** (free, more adult, cant −2°).
+   - **The wrist pitch** if 9.4 shows it is needed for R5 at 0.40–0.45 m.
+3. **Optional, costly:** small arm and neck servos on a 6 V rail (+$230, strict robustness 10 → 7 of 13 bounds). Buy one STS3045M and one SC09 for the bench before deciding.
+4. **Reject:**
+   - lumbar pack (belt box, higher cant);
+   - waist removal for look (no gain);
+   - 5-DOF (walks invalid in the engine).
+
+**Files.**
+- Tools: `variants/adam/design/packaging/` (layout, capsule, study, engine, cost, scale, rounds, render_pack).
+- Results: `.../results/` (look.md, engine_*.md, cost.md, scale.md, pickup/).
+- Concepts: `variants/adam/concepts/PK-*.yaml`; the final package is `PK-C3-package.yaml`.
+- Images (JPEG ≤ 300 KB): `docs/design-method/R2a-packaging/`.

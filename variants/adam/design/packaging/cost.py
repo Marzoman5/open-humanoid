@@ -27,7 +27,8 @@ RC.EST = set(RC.EST) | {"linkage_kit"}
 RC.P["lipo3s_1300"] = (26.99, 26.99)
 
 
-def cfg(name, *, small_arm=False, small_neck=False, waist=True, links=False, five_dof=False, pack="lipo3s_1850", h=0.55, knees_3250=True):
+def cfg(name, *, small_arm=False, small_neck=False, waist=True, links=False, five_dof=False, pack="lipo3s_1850", h=0.55, knees_3250=True,
+        wrist=False, grip45=False):
     n12 = 19 if knees_3250 else 21
     n3250 = 4 if knees_3250 else 2
     kw = dict(RC.BASE_P1, n_servo=n12, n_sts3250=n3250, pack=pack, pla_kg=RC.PLA_060 if h > 0.57 else RC.PLA_055)
@@ -44,6 +45,12 @@ def cfg(name, *, small_arm=False, small_neck=False, waist=True, links=False, fiv
         sp["scs0009"] = 1
     if small_arm or small_neck:
         L["buck6"] = 1
+    if wrist:         # lever 9b: a wrist-pitch STS3045M per arm
+        L["sts3045m"] = L.get("sts3045m", 0) + 2
+        L["buck6"] = 1
+    if grip45:        # gripper on an STS3045M instead of the SCS0009 (C3)
+        L["scs0009"] = L.get("scs0009", 0) - 2
+        L["sts3045m"] = L.get("sts3045m", 0) + 2
     if not waist:
         L["servo12"] -= 1
     if five_dof:
@@ -67,6 +74,8 @@ ROWS = [
     ("C1 package (L1d + L6 + L2/L3b + L5, 6-DOF)", dict(small_arm=True, small_neck=True, waist=False, links=True)),
     ("C1 with 5-DOF legs", dict(small_arm=True, small_neck=True, waist=False, links=True, five_dof=True)),
     ("C2 package (L1d + L6b + L5c, flat Tattu 1300, waist kept)", dict(small_arm=True, small_neck=True, links=True, pack="lipo3s_1300")),
+    ("C3 package (final): C2 + longer arms + wrist pitch + STS3045M gripper", dict(small_arm=True, small_neck=True, links=True, pack="lipo3s_1300", wrist=True, grip45=True)),
+    ("C3 without the wrist (C2 + longer arms; arm length costs nothing)", dict(small_arm=True, small_neck=True, links=True, pack="lipo3s_1300")),
     ("C2 lean (C2 + STS3215 knees, after the bench + Q3)", dict(small_arm=True, small_neck=True, links=True, pack="lipo3s_1300", knees_3250=False)),
 ]
 
