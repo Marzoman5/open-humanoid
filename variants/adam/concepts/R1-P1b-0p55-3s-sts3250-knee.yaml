@@ -1,0 +1,75 @@
+# R1 CONCEPT (T-20261019-36f9), PROVISIONAL pending the bench identification of one 12 V and one 7.4 V STS3215 (ADR 0014).
+# Path 1 alternative (cheaper, evaluated for the ranking; NOT the runner-up): STS3250 at the knees only.
+# Evidence: variants/adam/reviews/R1-concept-2026-10-19.md, variants/adam/design/r1_results/R1x-ck23.md (strict vs ODM-calibrated gates, tornado),
+# variants/adam/generated/concept/R1-P1b-0p55-3s-sts3250-knee/report.md (full engine report). Do not apply to spec.yaml before the challenger review of R1.
+# Compute: the build uses a Raspberry Pi 5 **1 GB** (Adafruit #6447, $49.50, in stock 2026-10-19); the catalog only has the 4 GB board, which
+# stands in here for mass, size and power (same 85 x 56 mm board and SoC). Pack: 3S 1300 (72 x 36 x 22 mm) because it fits across the upper back.
+id: R1-P1b-0p55-3s-sts3250-knee
+description: 'R1 path 1 runner-up: 0.55 m, 3S, 23 DOF, STS3250 at the knees only, STS3215 12 V elsewhere, 3S 1300, Pi 5.'
+base: adam
+height_m: 0.55
+template: humanoid_v2
+packaging:
+- t0004
+- cad_foundation
+proportions:
+  upper_arm: 0.19
+  forearm: 0.21
+joints:
+- hip_yaw
+- hip_roll
+- hip_pitch
+- knee
+- name: ankle_pitch
+  range:
+  - -80
+  - 60
+- ankle_roll
+- waist_yaw
+- neck_yaw
+- neck_pitch
+- shoulder_pitch
+- shoulder_roll
+- elbow
+- gripper
+mass_model:
+  structure_kg_at_1m: 11.9
+actuator_default: sts3215-12v
+actuators:
+  knee: sts3250-12v
+locomotion:
+  walk:
+    stance_knee_flex_deg: 40
+power:
+  pack: lipo-3s-1300-tattu
+  charger: charger-skyrc-b6neo
+  regulator: buck-pololu-d36v50f5
+  compute: rpi-5-4gb
+parts:
+  onboard:
+  - part: rpi-5-4gb
+    qty: 1
+  - part: microsd-32gb
+    qty: 1
+  - part: waveshare-bus-servo-adapter
+    qty: 1
+  - part: imu-bno085
+    qty: 1
+  - part: cam-rpi-v3
+    qty: 1
+    power_w: 1.2
+  - part: lipo-3s-1300-tattu
+    qty: 1
+  - part: buck-pololu-d36v50f5
+    qty: 1
+  - part: power-switch-xt60
+    qty: 1
+  - part: fastener-kit-m2-m3
+    qty: 1
+  - part: bearing-kit-small
+    qty: 1
+  - part: wiring-kit-bus
+    qty: 1
+  offboard:
+  - part: charger-skyrc-b6neo
+    qty: 1

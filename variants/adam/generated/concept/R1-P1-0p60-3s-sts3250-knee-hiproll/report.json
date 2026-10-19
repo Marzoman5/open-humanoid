@@ -1,0 +1,3663 @@
+{
+ "generated_by": "python -m openhumanoid.concept evaluate",
+ "candidate": "R1-P1-0p60-3s-sts3250-knee-hiproll",
+ "description": "R1 path 1: 0.60 m, 3S (11.1 V bus), 23 DOF, STS3250 at the knees and hip roll, STS3215 12 V elsewhere, 3S 1300, Pi 5.",
+ "source_file": "variants\\adam\\concepts\\R1-P1-0p60-3s-sts3250-knee-hiproll.yaml",
+ "thresholds_file": "openhumanoid/concept/thresholds.yaml",
+ "design": {
+  "height_m": 0.6,
+  "template": "humanoid_v2",
+  "dof": 23,
+  "joints": [
+   "hip_yaw_l",
+   "hip_yaw_r",
+   "hip_roll_l",
+   "hip_roll_r",
+   "hip_pitch_l",
+   "hip_pitch_r",
+   "knee_l",
+   "knee_r",
+   "ankle_pitch_l",
+   "ankle_pitch_r",
+   "ankle_roll_l",
+   "ankle_roll_r",
+   "waist_yaw",
+   "neck_yaw",
+   "neck_pitch",
+   "shoulder_pitch_l",
+   "shoulder_pitch_r",
+   "shoulder_roll_l",
+   "shoulder_roll_r",
+   "elbow_l",
+   "elbow_r",
+   "gripper_l",
+   "gripper_r"
+  ],
+  "actuators": {
+   "sts3215-12v": 19,
+   "sts3250-12v": 4
+  },
+  "transmissions": {},
+  "proportions_m": {
+   "ankle_height": 0.066,
+   "shank": 0.1256,
+   "thigh": 0.1256,
+   "pelvis": 0.0335,
+   "torso": 0.1396,
+   "neck": 0.0195,
+   "head": 0.0782,
+   "hip_width": 0.09,
+   "shoulder_width": 0.216,
+   "upper_arm": 0.114,
+   "forearm": 0.126,
+   "foot_length": 0.1104,
+   "foot_width": 0.066
+  },
+  "packaging_floors_applied": [
+   "ankle_height: 27.0 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+   "foot_length: 102.0 mm -> 110.4 mm (T-0004 foot size)",
+   "foot_width: 45.0 mm -> 66.0 mm (T-0004 foot size)",
+   "shoulder_width: 180.0 mm -> 216.0 mm (T-0004 arm clearance)",
+   "standing height kept at 600 mm: the other vertical proportions scaled x0.930 (thigh 126 mm, shank 126 mm)",
+   "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+   "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+  ],
+  "ankle_pitch_range_deg": [
+   -60,
+   25
+  ]
+ },
+ "gait": {
+  "chosen": {
+   "stance_knee_flex_deg": 45,
+   "step_time_s": 0.5
+  },
+  "chosen_worst_margin": 1.019,
+  "at_the_old_default_40deg_0p5s": {
+   "stance_knee_flex_deg": 40,
+   "step_time_s": 0.5,
+   "worst_margin": 0.909,
+   "worst_joint": "shoulder_pitch_r",
+   "passes": false,
+   "invalid": {},
+   "other_invalid": {},
+   "failing": [
+    "shoulder_pitch_r: peak"
+   ]
+  },
+  "rule": "same set for every candidate; the gates use the combination with the largest worst-joint margin among those whose motions are all valid",
+  "sweep": [
+   {
+    "stance_knee_flex_deg": 20,
+    "step_time_s": 0.25,
+    "worst_margin": 0.453,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {
+     "walk_backward": "tether supplied 1.2% of body weight on average (limit 1%)"
+    },
+    "other_invalid": {
+     "pickup_0.45m": "ideal playback fell over"
+    },
+    "failing": [
+     "INVALID walk_backward: tether supplied 1.2% of body weight on average (limit 1%)",
+     "INVALID pickup_0.45m: ideal playback fell over",
+     "hip_pitch_l: peak, rms, envelope"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 20,
+    "step_time_s": 0.35,
+    "worst_margin": 0.527,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {
+     "walk_backward": "tether supplied 1.0% of body weight on average (limit 1%)"
+    },
+    "other_invalid": {
+     "pickup_0.45m": "ideal playback fell over"
+    },
+    "failing": [
+     "INVALID walk_backward: tether supplied 1.0% of body weight on average (limit 1%)",
+     "INVALID pickup_0.45m: ideal playback fell over",
+     "hip_pitch_l: peak, rms, envelope"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 20,
+    "step_time_s": 0.5,
+    "worst_margin": 1.186,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {
+     "walk_forward": "reference infeasible: COM tracking error after compensation 0.13 mm; leg IK unreachable at 75 of 590 samples",
+     "walk_backward": "reference infeasible: COM tracking error after compensation 0.07 mm; leg IK unreachable at 54 of 590 samples",
+     "turn": "reference infeasible: COM tracking error after compensation 0.17 mm; leg IK unreachable at 12 of 590 samples"
+    },
+    "other_invalid": {
+     "pickup_0.45m": "ideal playback fell over"
+    },
+    "failing": [
+     "INVALID walk_forward: reference infeasible: COM tracking error after compensation 0.13 mm; leg IK unreachable at 75 of 590 samples",
+     "INVALID walk_backward: reference infeasible: COM tracking error after compensation 0.07 mm; leg IK unreachable at 54 of 590 samples",
+     "INVALID turn: reference infeasible: COM tracking error after compensation 0.17 mm; leg IK unreachable at 12 of 590 samples"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 30,
+    "step_time_s": 0.25,
+    "worst_margin": 0.565,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_pitch_l: rms",
+     "hip_pitch_r: peak, rms",
+     "knee_l: peak, rms, envelope"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 30,
+    "step_time_s": 0.35,
+    "worst_margin": 0.863,
+    "worst_joint": "shoulder_pitch_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_pitch_r: rms",
+     "knee_l: rms",
+     "knee_r: rms"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 30,
+    "step_time_s": 0.5,
+    "worst_margin": 0.863,
+    "worst_joint": "shoulder_pitch_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "shoulder_pitch_r: peak"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 40,
+    "step_time_s": 0.25,
+    "worst_margin": 0.645,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_pitch_l: rms",
+     "hip_pitch_r: rms",
+     "knee_l: rms"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 40,
+    "step_time_s": 0.35,
+    "worst_margin": 0.909,
+    "worst_joint": "shoulder_pitch_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "knee_l: rms",
+     "knee_r: rms",
+     "shoulder_pitch_r: peak"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 40,
+    "step_time_s": 0.5,
+    "worst_margin": 0.909,
+    "worst_joint": "shoulder_pitch_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "shoulder_pitch_r: peak"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 45,
+    "step_time_s": 0.25,
+    "worst_margin": 0.665,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squa"
+    },
+    "failing": [
+     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+     "hip_pitch_l: rms",
+     "hip_pitch_r: rms"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 45,
+    "step_time_s": 0.35,
+    "worst_margin": 0.942,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squa"
+    },
+    "failing": [
+     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+     "knee_l: rms",
+     "knee_r: rms"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 45,
+    "step_time_s": 0.5,
+    "worst_margin": 1.019,
+    "worst_joint": "hip_roll_l",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squa"
+    },
+    "failing": [
+     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+    ]
+   }
+  ]
+ },
+ "mass": {
+  "breakdown_kg": {
+   "structure_kg": 2.57,
+   "actuators_kg": 1.343,
+   "onboard_parts_kg": 0.399,
+   "wiring_kg": 0.163,
+   "electronics_misc_kg": 0.12,
+   "total_kg": 4.5954
+  },
+  "total_kg": 4.595,
+  "sanity": {
+   "component_sum_kg": 4.595,
+   "benchmark_fit_kg": 5.772,
+   "ratio": 0.796,
+   "status": "within the sanity band (0.6x-1.6x of the fit)",
+   "note": "The fit 18.5*h^2.28 (N=9, R2 0.93, research/robots/benchmarks.md) and the ToddlerBot/OP3 masses are SANITY BOUNDS ONLY. The mass used everywhere in this report is the component sum (catalog masses as listed; printed structure x0.55-1.4 around the Open Duck Mini-recentred nominal and wiring/electronics x0.8-1.5 bands); the structure term is a pre-CAD guess."
+  },
+  "bands": {
+   "structure": [
+    0.55,
+    1.4
+   ],
+   "wiring_electronics": [
+    0.8,
+    1.5
+   ]
+  }
+ },
+ "motions": {
+  "stand": {
+   "valid": true,
+   "invalid_reason": "",
+   "tether_mean_pct_bw": 0.01,
+   "notes": [
+    "COM tracking error 0.00 mm"
+   ],
+   "meta": {
+    "duration_s": 4.0
+   }
+  },
+  "walk_forward": {
+   "valid": true,
+   "invalid_reason": "",
+   "tether_mean_pct_bw": 0.72,
+   "notes": [
+    "COM tracking error after compensation 0.01 mm"
+   ],
+   "meta": {
+    "mode": "forward",
+    "steps": 8,
+    "step_len_m": 0.05,
+    "step_time_s": 0.5,
+    "zc_m": 0.3193390610876137,
+    "speed_mps": 0.1,
+    "turn_rate_rad_s": 0.0,
+    "clearance_m": 0.015,
+    "walk_window": [
+     0.9,
+     4.9
+    ]
+   }
+  },
+  "walk_backward": {
+   "valid": true,
+   "invalid_reason": "",
+   "tether_mean_pct_bw": 0.7,
+   "notes": [
+    "COM tracking error after compensation 0.01 mm"
+   ],
+   "meta": {
+    "mode": "backward",
+    "steps": 8,
+    "step_len_m": -0.05,
+    "step_time_s": 0.5,
+    "zc_m": 0.3193390610876137,
+    "speed_mps": 0.1,
+    "turn_rate_rad_s": 0.0,
+    "clearance_m": 0.015,
+    "walk_window": [
+     0.9,
+     4.9
+    ]
+   }
+  },
+  "turn": {
+   "valid": true,
+   "invalid_reason": "",
+   "tether_mean_pct_bw": 0.71,
+   "notes": [
+    "COM tracking error after compensation 0.01 mm"
+   ],
+   "meta": {
+    "mode": "turn",
+    "steps": 8,
+    "step_len_m": 0.0,
+    "step_time_s": 0.5,
+    "zc_m": 0.3193390610876137,
+    "speed_mps": 0.0,
+    "turn_rate_rad_s": 0.5,
+    "clearance_m": 0.015,
+    "walk_window": [
+     0.9,
+     4.9
+    ]
+   }
+  },
+  "squat_90": {
+   "valid": true,
+   "invalid_reason": "",
+   "tether_mean_pct_bw": 0.03,
+   "notes": [
+    "COM tracking error 0.00 mm"
+   ],
+   "meta": {
+    "depth_deg": 90,
+    "hold_s": 1.0,
+    "down_s": 2.5
+   }
+  },
+  "squat_120": {
+   "valid": true,
+   "invalid_reason": "",
+   "tether_mean_pct_bw": 0.04,
+   "notes": [
+    "COM tracking error 0.00 mm",
+    "ROM CLAMP: the frozen squat is 120 deg of knee flexion but the knee range ends at 110 deg; run at 109.8 deg"
+   ],
+   "meta": {
+    "depth_deg": 109.8,
+    "hold_s": 1.0,
+    "down_s": 2.5,
+    "rom_clamped_from_deg": 120
+   }
+  },
+  "wave": {
+   "valid": true,
+   "invalid_reason": "",
+   "tether_mean_pct_bw": 0.03,
+   "notes": [
+    "COM tracking error 0.00 mm"
+   ],
+   "meta": {
+    "side": "r",
+    "freq_hz": 1.25,
+    "amp_deg": 22.0,
+    "pose_deg": [
+     -120.0,
+     -70.0,
+     -60.0
+    ]
+   }
+  },
+  "dance": {
+   "valid": true,
+   "invalid_reason": "",
+   "tether_mean_pct_bw": 0.12,
+   "notes": [
+    "COM tracking error 0.00 mm"
+   ],
+   "meta": {
+    "max_smoother_dev_deg": 0.6260195702609925,
+    "bpm": 80.0,
+    "beats": 48,
+    "duration_s": 38.51,
+    "phrases": 6,
+    "smoother": "casadi QP (osqp)"
+   }
+  },
+  "pickup": {
+   "valid": true,
+   "invalid_reason": "",
+   "tether_mean_pct_bw": 0.02,
+   "notes": [
+    "COM tracking error 0.00 mm"
+   ],
+   "meta": {
+    "squat_deg": 65.0,
+    "table_height_m": 0.25,
+    "object_m": 0.15,
+    "object_xyz": [
+     0.1183,
+     -0.137,
+     0.275
+    ],
+    "arm_reach_m": 0.2195,
+    "grasp_ik_m": 0.0003,
+    "pregrasp_ik_m": 0.0002,
+    "lift_ik_m": 0.0002,
+    "jaw_axis_off_horizontal_deg": 0.3723,
+    "lift_marks_s": [
+     11.4,
+     14.6
+    ]
+   }
+  },
+  "pickup_0.45m": {
+   "valid": false,
+   "invalid_reason": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+   "tether_mean_pct_bw": 0.58,
+   "notes": [
+    "arm too short / table too low: no squat up to 120 deg brings the hand within reach",
+    "grasp_ik_m = 11.3 mm (target not reached with the available arm joints)",
+    "lift_ik_m = 27.0 mm (target not reached with the available arm joints)"
+   ],
+   "meta": {
+    "squat_deg": 120.0,
+    "table_height_m": 0.45,
+    "object_m": 0.15,
+    "object_xyz": [
+     0.1644,
+     -0.137,
+     0.475
+    ],
+    "arm_reach_m": 0.2195,
+    "grasp_ik_m": 0.0113,
+    "pregrasp_ik_m": 0.0002,
+    "lift_ik_m": 0.027,
+    "jaw_axis_off_horizontal_deg": 20.0,
+    "lift_marks_s": [
+     11.4,
+     14.6
+    ]
+   }
+  },
+  "sit_to_stand_130": {
+   "valid": true,
+   "invalid_reason": "",
+   "tether_mean_pct_bw": 0.03,
+   "notes": [
+    "COM tracking error 0.00 mm",
+    "ROM CLAMP: 130 deg requested, knee range ends at 110 deg; run at 109.8 deg"
+   ],
+   "meta": {
+    "depth_deg": 109.8,
+    "hold_s": 0.5,
+    "down_s": 3.0,
+    "rom_clamped_from_deg": 130.0
+   }
+  }
+ },
+ "joints_ranked_by_margin": [
+  {
+   "joint": "hip_roll_l",
+   "actuator": "sts3250-12v",
+   "peak_frac_of_stall": 0.687,
+   "peak_motion": "walk_backward",
+   "rms_over_rated": 0.933,
+   "rms_motion": "walk_forward",
+   "util_max": 0.687,
+   "util_motion": "walk_backward",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 4.535,
+   "margin_peak": 1.019,
+   "margin_rms": 1.071,
+   "margin_util": 1.31,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.019
+  },
+  {
+   "joint": "hip_roll_r",
+   "actuator": "sts3250-12v",
+   "peak_frac_of_stall": 0.666,
+   "peak_motion": "turn",
+   "rms_over_rated": 0.85,
+   "rms_motion": "walk_forward",
+   "util_max": 0.666,
+   "util_motion": "turn",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 4.535,
+   "margin_peak": 1.05,
+   "margin_rms": 1.176,
+   "margin_util": 1.35,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.05
+  },
+  {
+   "joint": "hip_yaw_r",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.607,
+   "peak_motion": "turn",
+   "rms_over_rated": 0.603,
+   "rms_motion": "turn",
+   "util_max": 0.607,
+   "util_motion": "turn",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 1.154,
+   "margin_rms": 1.659,
+   "margin_util": 1.484,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.154
+  },
+  {
+   "joint": "ankle_pitch_l",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.584,
+   "peak_motion": "walk_backward",
+   "rms_over_rated": 0.866,
+   "rms_motion": "walk_backward",
+   "util_max": 0.584,
+   "util_motion": "walk_backward",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 1.198,
+   "margin_rms": 1.155,
+   "margin_util": 1.54,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.155
+  },
+  {
+   "joint": "ankle_pitch_r",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.585,
+   "peak_motion": "walk_backward",
+   "rms_over_rated": 0.841,
+   "rms_motion": "walk_backward",
+   "util_max": 0.585,
+   "util_motion": "walk_backward",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 1.197,
+   "margin_rms": 1.189,
+   "margin_util": 1.539,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.189
+  },
+  {
+   "joint": "knee_l",
+   "actuator": "sts3250-12v",
+   "peak_frac_of_stall": 0.587,
+   "peak_motion": "squat_120",
+   "rms_over_rated": 0.808,
+   "rms_motion": "squat_120",
+   "util_max": 0.587,
+   "util_motion": "squat_120",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 4.535,
+   "margin_peak": 1.193,
+   "margin_rms": 1.238,
+   "margin_util": 1.534,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.193
+  },
+  {
+   "joint": "knee_r",
+   "actuator": "sts3250-12v",
+   "peak_frac_of_stall": 0.587,
+   "peak_motion": "squat_120",
+   "rms_over_rated": 0.821,
+   "rms_motion": "walk_forward",
+   "util_max": 0.587,
+   "util_motion": "squat_120",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 4.535,
+   "margin_peak": 1.193,
+   "margin_rms": 1.218,
+   "margin_util": 1.534,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.193
+  },
+  {
+   "joint": "hip_yaw_l",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.559,
+   "peak_motion": "turn",
+   "rms_over_rated": 0.577,
+   "rms_motion": "turn",
+   "util_max": 0.559,
+   "util_motion": "turn",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 1.253,
+   "margin_rms": 1.733,
+   "margin_util": 1.611,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.253
+  },
+  {
+   "joint": "hip_pitch_r",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.486,
+   "peak_motion": "walk_forward",
+   "rms_over_rated": 0.562,
+   "rms_motion": "walk_forward",
+   "util_max": 0.486,
+   "util_motion": "walk_forward",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 1.441,
+   "margin_rms": 1.778,
+   "margin_util": 1.852,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.441
+  },
+  {
+   "joint": "hip_pitch_l",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.486,
+   "peak_motion": "walk_forward",
+   "rms_over_rated": 0.55,
+   "rms_motion": "walk_forward",
+   "util_max": 0.486,
+   "util_motion": "walk_forward",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 1.442,
+   "margin_rms": 1.819,
+   "margin_util": 1.854,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.442
+  },
+  {
+   "joint": "ankle_roll_r",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.445,
+   "peak_motion": "turn",
+   "rms_over_rated": 0.377,
+   "rms_motion": "turn",
+   "util_max": 0.445,
+   "util_motion": "turn",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 1.573,
+   "margin_rms": 2.654,
+   "margin_util": 2.022,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.573
+  },
+  {
+   "joint": "waist_yaw",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.362,
+   "peak_motion": "dance",
+   "rms_over_rated": 0.113,
+   "rms_motion": "dance",
+   "util_max": 0.362,
+   "util_motion": "dance",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 1.934,
+   "margin_rms": 8.883,
+   "margin_util": 2.486,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 1.934
+  },
+  {
+   "joint": "elbow_r",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.321,
+   "peak_motion": "wave",
+   "rms_over_rated": 0.412,
+   "rms_motion": "wave",
+   "util_max": 0.321,
+   "util_motion": "wave",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 2.183,
+   "margin_rms": 2.428,
+   "margin_util": 2.807,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 2.183
+  },
+  {
+   "joint": "ankle_roll_l",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.306,
+   "peak_motion": "walk_backward",
+   "rms_over_rated": 0.371,
+   "rms_motion": "turn",
+   "util_max": 0.306,
+   "util_motion": "walk_backward",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 2.289,
+   "margin_rms": 2.699,
+   "margin_util": 2.943,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 2.289
+  },
+  {
+   "joint": "gripper_r",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.281,
+   "peak_motion": "pickup",
+   "rms_over_rated": 0.33,
+   "rms_motion": "pickup",
+   "util_max": 0.322,
+   "util_motion": "pickup",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 2.493,
+   "margin_rms": 3.029,
+   "margin_util": 2.795,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 2.493
+  },
+  {
+   "joint": "shoulder_pitch_r",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.241,
+   "peak_motion": "wave",
+   "rms_over_rated": 0.259,
+   "rms_motion": "walk_backward",
+   "util_max": 0.347,
+   "util_motion": "wave",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 2.905,
+   "margin_rms": 3.868,
+   "margin_util": 2.593,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 2.593
+  },
+  {
+   "joint": "shoulder_roll_l",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.235,
+   "peak_motion": "dance",
+   "rms_over_rated": 0.295,
+   "rms_motion": "dance",
+   "util_max": 0.235,
+   "util_motion": "dance",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 2.981,
+   "margin_rms": 3.389,
+   "margin_util": 3.832,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 2.981
+  },
+  {
+   "joint": "shoulder_roll_r",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.235,
+   "peak_motion": "dance",
+   "rms_over_rated": 0.304,
+   "rms_motion": "dance",
+   "util_max": 0.235,
+   "util_motion": "dance",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 2.981,
+   "margin_rms": 3.294,
+   "margin_util": 3.833,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 2.981
+  },
+  {
+   "joint": "shoulder_pitch_l",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.234,
+   "peak_motion": "walk_backward",
+   "rms_over_rated": 0.256,
+   "rms_motion": "walk_backward",
+   "util_max": 0.234,
+   "util_motion": "walk_backward",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 2.987,
+   "margin_rms": 3.902,
+   "margin_util": 3.841,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 2.987
+  },
+  {
+   "joint": "neck_yaw",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.185,
+   "peak_motion": "dance",
+   "rms_over_rated": 0.106,
+   "rms_motion": "dance",
+   "util_max": 0.185,
+   "util_motion": "dance",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 3.774,
+   "margin_rms": 9.399,
+   "margin_util": 4.852,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 3.774
+  },
+  {
+   "joint": "elbow_l",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.108,
+   "peak_motion": "dance",
+   "rms_over_rated": 0.098,
+   "rms_motion": "dance",
+   "util_max": 0.108,
+   "util_motion": "dance",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 6.479,
+   "margin_rms": 10.198,
+   "margin_util": 8.33,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 6.479
+  },
+  {
+   "joint": "neck_pitch",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.005,
+   "peak_motion": "walk_forward",
+   "rms_over_rated": 0.009,
+   "rms_motion": "walk_backward",
+   "util_max": 0.0,
+   "util_motion": "stand",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 132.97,
+   "margin_rms": 108.751,
+   "margin_util": 900000000.0,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 108.751
+  },
+  {
+   "joint": "gripper_l",
+   "actuator": "sts3215-12v",
+   "peak_frac_of_stall": 0.001,
+   "peak_motion": "dance",
+   "rms_over_rated": 0.002,
+   "rms_motion": "dance",
+   "util_max": 0.0,
+   "util_motion": "stand",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 2.721,
+   "margin_peak": 762.112,
+   "margin_rms": 596.336,
+   "margin_util": 900000000.0,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 596.336
+  }
+ ],
+ "utilisation_ranking": [
+  {
+   "joint": "hip_roll",
+   "actuator": "sts3250-12v",
+   "utilisation": 0.981,
+   "peak_frac_of_stall": 0.687,
+   "rms_over_rated": 0.933,
+   "envelope_util": 0.687,
+   "driving_motion": "walk_backward"
+  },
+  {
+   "joint": "hip_yaw",
+   "actuator": "sts3215-12v",
+   "utilisation": 0.866,
+   "peak_frac_of_stall": 0.607,
+   "rms_over_rated": 0.603,
+   "envelope_util": 0.607,
+   "driving_motion": "turn"
+  },
+  {
+   "joint": "ankle_pitch",
+   "actuator": "sts3215-12v",
+   "utilisation": 0.866,
+   "peak_frac_of_stall": 0.584,
+   "rms_over_rated": 0.866,
+   "envelope_util": 0.584,
+   "driving_motion": "walk_backward"
+  },
+  {
+   "joint": "knee",
+   "actuator": "sts3250-12v",
+   "utilisation": 0.838,
+   "peak_frac_of_stall": 0.587,
+   "rms_over_rated": 0.808,
+   "envelope_util": 0.587,
+   "driving_motion": "squat_120"
+  },
+  {
+   "joint": "hip_pitch",
+   "actuator": "sts3215-12v",
+   "utilisation": 0.694,
+   "peak_frac_of_stall": 0.486,
+   "rms_over_rated": 0.562,
+   "envelope_util": 0.486,
+   "driving_motion": "walk_forward"
+  },
+  {
+   "joint": "ankle_roll",
+   "actuator": "sts3215-12v",
+   "utilisation": 0.636,
+   "peak_frac_of_stall": 0.445,
+   "rms_over_rated": 0.377,
+   "envelope_util": 0.445,
+   "driving_motion": "turn"
+  },
+  {
+   "joint": "waist_yaw",
+   "actuator": "sts3215-12v",
+   "utilisation": 0.517,
+   "peak_frac_of_stall": 0.362,
+   "rms_over_rated": 0.113,
+   "envelope_util": 0.362,
+   "driving_motion": "dance"
+  },
+  {
+   "joint": "elbow",
+   "actuator": "sts3215-12v",
+   "utilisation": 0.458,
+   "peak_frac_of_stall": 0.321,
+   "rms_over_rated": 0.412,
+   "envelope_util": 0.321,
+   "driving_motion": "wave"
+  },
+  {
+   "joint": "gripper",
+   "actuator": "sts3215-12v",
+   "utilisation": 0.401,
+   "peak_frac_of_stall": 0.281,
+   "rms_over_rated": 0.33,
+   "envelope_util": 0.322,
+   "driving_motion": "pickup"
+  },
+  {
+   "joint": "shoulder_pitch",
+   "actuator": "sts3215-12v",
+   "utilisation": 0.386,
+   "peak_frac_of_stall": 0.241,
+   "rms_over_rated": 0.259,
+   "envelope_util": 0.347,
+   "driving_motion": "wave"
+  },
+  {
+   "joint": "shoulder_roll",
+   "actuator": "sts3215-12v",
+   "utilisation": 0.335,
+   "peak_frac_of_stall": 0.235,
+   "rms_over_rated": 0.304,
+   "envelope_util": 0.235,
+   "driving_motion": "dance"
+  },
+  {
+   "joint": "neck_yaw",
+   "actuator": "sts3215-12v",
+   "utilisation": 0.265,
+   "peak_frac_of_stall": 0.185,
+   "rms_over_rated": 0.106,
+   "envelope_util": 0.185,
+   "driving_motion": "dance"
+  },
+  {
+   "joint": "neck_pitch",
+   "actuator": "sts3215-12v",
+   "utilisation": 0.009,
+   "peak_frac_of_stall": 0.005,
+   "rms_over_rated": 0.009,
+   "envelope_util": 0.0,
+   "driving_motion": "walk_backward"
+  }
+ ],
+ "nominal": {
+  "passes": false,
+  "worst_margin": 0.0,
+  "worst_joint": "invalid motion: pickup_0.45m",
+  "failing": [
+   "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+  ]
+ },
+ "power": {
+  "pack": {
+   "part": "lipo-3s-1300-tattu",
+   "cells": 3,
+   "capacity_ah": 1.3,
+   "energy_wh": 14.4,
+   "mass_kg": 0.122,
+   "nominal_v": 11.1,
+   "r_total_mohm": 42.6,
+   "c_rating_limit_a": 97.5
+  },
+  "onboard_load": {
+   "items": [
+    {
+     "part": "rpi-5-4gb",
+     "qty": 1,
+     "watts": 6.0
+    },
+    {
+     "part": "cam-rpi-v3",
+     "qty": 1,
+     "watts": 1.2
+    }
+   ],
+   "total_w": 7.2,
+   "no_power_data": [
+    "microsd-32gb",
+    "imu-bno085"
+   ]
+  },
+  "regulator": {
+   "regulator": "buck-pololu-d36v50f5",
+   "rail_current_typical_a": 1.44,
+   "rail_current_peak_a": 5.0,
+   "regulator_rating_a": 5.5,
+   "ok_at_typical": true,
+   "ok_at_peak": true
+  },
+  "average_power_w": 29.61,
+  "servo_average_w": 21.78,
+  "rail_w": 7.83,
+  "runtime_min": 24.9,
+  "runtime_requirement_min": 15.0,
+  "runtime_ok": true,
+  "activity_power_w": {
+   "stand": 18.6,
+   "walk_forward": 38.1,
+   "walk_backward": 39.8,
+   "turn": 38.9,
+   "squat_90": 23.2,
+   "wave": 20.2,
+   "dance": 23.1,
+   "pickup": 22.0
+  },
+  "bus": {
+   "pack_nominal_v": 11.1,
+   "peak_total_a": 9.35,
+   "peak_total_w": 100.2,
+   "peak_from_frozen_motions_a": 9.35,
+   "peak_from_r10_transient_a": 5.08,
+   "r10_transient_scenario": "push_walk_lat_out",
+   "sag_at_peak_v": 0.38,
+   "v_at_peak_v": 10.72,
+   "branches": {
+    "leg_l": {
+     "peak_w": 42.9,
+     "peak_a": 4.0,
+     "voltage_at_far_servo_v": 10.64
+    },
+    "leg_r": {
+     "peak_w": 42.8,
+     "peak_a": 3.99,
+     "voltage_at_far_servo_v": 10.64
+    },
+    "torso_head": {
+     "peak_w": 18.8,
+     "peak_a": 1.76,
+     "voltage_at_far_servo_v": 10.68
+    },
+    "arm_l": {
+     "peak_w": 3.9,
+     "peak_a": 0.36,
+     "voltage_at_far_servo_v": 10.71
+    },
+    "arm_r": {
+     "peak_w": 8.0,
+     "peak_a": 0.75,
+     "voltage_at_far_servo_v": 10.7
+    }
+   },
+   "min_voltage_at_far_servo_v": 10.64,
+   "servo_min_operating_v": 6.0,
+   "min_voltage_ok": true,
+   "fuse_a": 15,
+   "fuse_a_if_sized_from_motions_only": 15,
+   "fuse_blows_on_r10_if_sized_from_motions_only": false,
+   "fuse_rule": "1.25 x peak legitimate draw (larger of the frozen motions and the R10 push transient), next standard value",
+   "all_leg_servos_stalled_a": 35.5,
+   "fuse_a_to_ride_through_all_leg_stall": 50,
+   "all_servos_stalled_a": 68.1,
+   "pack_limit_a": 97.5,
+   "pack_c_ok": true,
+   "connector_rating_note": "STS3215 connector current rating is unknown (research/methods/e); the fuse must also stay below the wiring/connector limit"
+  },
+  "voltage_rating": {
+   "sts3215-12v": {
+    "rating_v": [
+     6.0,
+     12.6
+    ],
+    "pack_full_v": 12.6,
+    "over_rating_at_full_v": 0.0,
+    "soc_share_over": 0.0,
+    "mitigation": null
+   },
+   "sts3250-12v": {
+    "rating_v": [
+     6.0,
+     12.0
+    ],
+    "pack_full_v": 12.6,
+    "over_rating_at_full_v": 0.6,
+    "soc_share_over": 0.229,
+    "mitigation": {
+     "action": "charge only to 4.00 V/cell (12.0 V) -- most chargers allow it; costs about 23% of the capacity",
+     "cost_usd": 0.0,
+     "capacity_lost_fraction": 0.229,
+     "alternative": "a regulator rated for the full pack current (tens of amps) is not a hobby part; not costed"
+    }
+   }
+  }
+ },
+ "rms_denominators": null,
+ "thermal": {
+  "primary_gate": "RMS torque (mixed schedule) <= vendor-rated continuous torque",
+  "rms_gate_ok": true,
+  "thermal_model_usable": false,
+  "thermal_model_validation": "The first-order model does NOT reproduce both Robonine runs (run 1 ok=True, run 2 ok=False). Its thermal numbers are UNUSABLE as predictions; they are shown as indicative only. The primary thermal gate is RMS torque <= vendor-rated continuous torque.",
+  "limit_c": 70.0,
+  "ambient_c": 35.0,
+  "hot_case": "Rth x1.4 and 40 C in-shell ambient",
+  "T_10min_max_c": 40.6,
+  "steady_max_c": 42.0,
+  "hot_steady_max_c": 49.8,
+  "hottest_joint": "knee_r",
+  "per_joint": {
+   "hip_yaw_l": {
+    "rms_mixed_nm": 0.17,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.173,
+    "T_10min_c": 35.8,
+    "steady_c": 35.9,
+    "hot_steady_c": 41.3,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "hip_yaw_r": {
+    "rms_mixed_nm": 0.176,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.18,
+    "T_10min_c": 35.8,
+    "steady_c": 35.9,
+    "hot_steady_c": 41.3,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "hip_roll_l": {
+    "rms_mixed_nm": 1.014,
+    "rated_nm": 1.569,
+    "rms_mixed_over_rated": 0.646,
+    "T_10min_c": 39.5,
+    "steady_c": 40.9,
+    "hot_steady_c": 48.2,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "hip_roll_r": {
+    "rms_mixed_nm": 0.925,
+    "rated_nm": 1.569,
+    "rms_mixed_over_rated": 0.59,
+    "T_10min_c": 38.8,
+    "steady_c": 40.0,
+    "hot_steady_c": 47.0,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "hip_pitch_l": {
+    "rms_mixed_nm": 0.353,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.36,
+    "T_10min_c": 36.9,
+    "steady_c": 37.3,
+    "hot_steady_c": 43.2,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "hip_pitch_r": {
+    "rms_mixed_nm": 0.365,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.372,
+    "T_10min_c": 37.0,
+    "steady_c": 37.4,
+    "hot_steady_c": 43.4,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "knee_l": {
+    "rms_mixed_nm": 1.038,
+    "rated_nm": 1.569,
+    "rms_mixed_over_rated": 0.662,
+    "T_10min_c": 40.0,
+    "steady_c": 41.3,
+    "hot_steady_c": 48.8,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "knee_r": {
+    "rms_mixed_nm": 1.101,
+    "rated_nm": 1.569,
+    "rms_mixed_over_rated": 0.702,
+    "T_10min_c": 40.6,
+    "steady_c": 42.0,
+    "hot_steady_c": 49.8,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "ankle_pitch_l": {
+    "rms_mixed_nm": 0.494,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.504,
+    "T_10min_c": 38.2,
+    "steady_c": 38.7,
+    "hot_steady_c": 45.2,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "ankle_pitch_r": {
+    "rms_mixed_nm": 0.495,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.504,
+    "T_10min_c": 38.2,
+    "steady_c": 38.7,
+    "hot_steady_c": 45.2,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "ankle_roll_l": {
+    "rms_mixed_nm": 0.235,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.24,
+    "T_10min_c": 36.1,
+    "steady_c": 36.3,
+    "hot_steady_c": 41.9,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "ankle_roll_r": {
+    "rms_mixed_nm": 0.243,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.247,
+    "T_10min_c": 36.2,
+    "steady_c": 36.4,
+    "hot_steady_c": 41.9,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "waist_yaw": {
+    "rms_mixed_nm": 0.078,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.079,
+    "T_10min_c": 35.5,
+    "steady_c": 35.6,
+    "hot_steady_c": 40.9,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "neck_yaw": {
+    "rms_mixed_nm": 0.048,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.049,
+    "T_10min_c": 35.5,
+    "steady_c": 35.6,
+    "hot_steady_c": 40.8,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "neck_pitch": {
+    "rms_mixed_nm": 0.006,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.006,
+    "T_10min_c": 35.5,
+    "steady_c": 35.5,
+    "hot_steady_c": 40.7,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "shoulder_pitch_l": {
+    "rms_mixed_nm": 0.179,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.183,
+    "T_10min_c": 35.9,
+    "steady_c": 36.1,
+    "hot_steady_c": 41.6,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "shoulder_pitch_r": {
+    "rms_mixed_nm": 0.189,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.192,
+    "T_10min_c": 36.0,
+    "steady_c": 36.2,
+    "hot_steady_c": 41.7,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "shoulder_roll_l": {
+    "rms_mixed_nm": 0.141,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.144,
+    "T_10min_c": 35.7,
+    "steady_c": 35.8,
+    "hot_steady_c": 41.1,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "shoulder_roll_r": {
+    "rms_mixed_nm": 0.153,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.156,
+    "T_10min_c": 35.8,
+    "steady_c": 35.9,
+    "hot_steady_c": 41.2,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "elbow_l": {
+    "rms_mixed_nm": 0.052,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.053,
+    "T_10min_c": 35.5,
+    "steady_c": 35.6,
+    "hot_steady_c": 40.8,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "elbow_r": {
+    "rms_mixed_nm": 0.126,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.129,
+    "T_10min_c": 35.7,
+    "steady_c": 35.8,
+    "hot_steady_c": 41.2,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "gripper_l": {
+    "rms_mixed_nm": 0.001,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.001,
+    "T_10min_c": 35.5,
+    "steady_c": 35.5,
+    "hot_steady_c": 40.7,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "gripper_r": {
+    "rms_mixed_nm": 0.092,
+    "rated_nm": 0.981,
+    "rms_mixed_over_rated": 0.093,
+    "T_10min_c": 35.6,
+    "steady_c": 35.7,
+    "hot_steady_c": 40.9,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   }
+  }
+ },
+ "cost": {
+  "rows": [
+   {
+    "part": "sts3215-12v",
+    "qty": 19,
+    "label": "actuators",
+    "typical": 397.09999999999997,
+    "low": 265.81,
+    "high": 531.81,
+    "verified": true
+   },
+   {
+    "part": "sts3250-12v",
+    "qty": 4,
+    "label": "actuators",
+    "typical": 295.96,
+    "low": 172.0,
+    "high": 500.0,
+    "verified": false
+   },
+   {
+    "part": "rpi-5-4gb",
+    "qty": 1,
+    "label": "on-board",
+    "typical": 110.0,
+    "low": 110.0,
+    "high": 130.0,
+    "verified": true
+   },
+   {
+    "part": "microsd-32gb",
+    "qty": 1,
+    "label": "on-board",
+    "typical": 12.0,
+    "low": 9.97,
+    "high": 19.95,
+    "verified": false
+   },
+   {
+    "part": "waveshare-bus-servo-adapter",
+    "qty": 1,
+    "label": "on-board",
+    "typical": 4.99,
+    "low": 4.3,
+    "high": 11.3,
+    "verified": false
+   },
+   {
+    "part": "imu-bno085",
+    "qty": 1,
+    "label": "on-board",
+    "typical": 29.5,
+    "low": 27.15,
+    "high": 34.95,
+    "verified": false
+   },
+   {
+    "part": "cam-rpi-v3",
+    "qty": 1,
+    "label": "on-board",
+    "typical": 29.25,
+    "low": 29.25,
+    "high": 32.95,
+    "verified": true
+   },
+   {
+    "part": "lipo-3s-1300-tattu",
+    "qty": 1,
+    "label": "on-board",
+    "typical": 26.99,
+    "low": 17.0,
+    "high": 26.99,
+    "verified": true
+   },
+   {
+    "part": "buck-pololu-d36v50f5",
+    "qty": 1,
+    "label": "on-board",
+    "typical": 39.95,
+    "low": 36.75,
+    "high": 39.95,
+    "verified": true
+   },
+   {
+    "part": "power-switch-xt60",
+    "qty": 1,
+    "label": "on-board",
+    "typical": 6.0,
+    "low": 4.0,
+    "high": 13.0,
+    "verified": false
+   },
+   {
+    "part": "fastener-kit-m2-m3",
+    "qty": 1,
+    "label": "on-board",
+    "typical": 20.0,
+    "low": 10.0,
+    "high": 60.0,
+    "verified": false
+   },
+   {
+    "part": "bearing-kit-small",
+    "qty": 1,
+    "label": "on-board",
+    "typical": 12,
+    "low": 8,
+    "high": 18,
+    "verified": false
+   },
+   {
+    "part": "wiring-kit-bus",
+    "qty": 1,
+    "label": "on-board",
+    "typical": 10,
+    "low": 6,
+    "high": 15,
+    "verified": false
+   },
+   {
+    "part": "charger-skyrc-b6neo",
+    "qty": 1,
+    "label": "off-board (charger etc., counts toward the budget)",
+    "typical": 39.99,
+    "low": 32.69,
+    "high": 49.95,
+    "verified": true
+   },
+   {
+    "part": "pla-plus-1kg",
+    "qty": 3.341,
+    "label": "printed structure (kg incl. waste)",
+    "typical": 60.138,
+    "low": 32.307469999999995,
+    "high": 73.502,
+    "verified": false
+   }
+  ],
+  "total_usd": {
+   "low": 765.23,
+   "typical": 1093.87,
+   "high": 1557.35
+  },
+  "budget_cap_usd": 550,
+  "within_cap_typical": false,
+  "within_cap_at_high": false,
+  "unverified_lines": 8,
+  "note": "every price in the catalog is an estimate unless verified: true; the decision needs a pass at the high price"
+ },
+ "model_quality": {
+  "sts3215-12v": {
+   "quality": "extrapolated_12v",
+   "score": 0.4,
+   "vin_ref": 12.0,
+   "bus_v": 11.1,
+   "voltage_ratio": 0.93,
+   "voltage_note": "at the model voltage",
+   "uncertainty": {
+    "stall": 0.25,
+    "speed": 0.25,
+    "friction": 0.3,
+    "kt": 0.2,
+    "rth": 0.4,
+    "armature": 0.5
+   },
+   "notes": []
+  },
+  "sts3250-12v": {
+   "quality": "datasheet_only",
+   "score": 0.25,
+   "vin_ref": 12.0,
+   "bus_v": 11.1,
+   "voltage_ratio": 0.93,
+   "voltage_note": "at the model voltage",
+   "uncertainty": {
+    "stall": 0.25,
+    "speed": 0.3,
+    "friction": 0.4,
+    "kt": 0.3,
+    "rth": 0.5,
+    "armature": 0.5
+   },
+   "notes": []
+  }
+ },
+ "servo_in_the_loop": {
+  "walk_forward": {
+   "rms_err_deg": 0.41,
+   "max_err_deg": 3.18,
+   "worst_joint": "knee_r",
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "gripper_saturation_fraction(by design, torque-limited)": 0.0,
+   "overload_trips": 0,
+   "fell": false,
+   "min_bus_voltage_v": 12.16,
+   "peak_total_current_a": 10.13,
+   "tether_mean_pct_bw": 1.48
+  },
+  "turn": {
+   "rms_err_deg": 0.37,
+   "max_err_deg": 2.26,
+   "worst_joint": "hip_roll_r",
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "gripper_saturation_fraction(by design, torque-limited)": 0.0,
+   "overload_trips": 0,
+   "fell": false,
+   "min_bus_voltage_v": 12.25,
+   "peak_total_current_a": 8.2,
+   "tether_mean_pct_bw": 1.32
+  },
+  "squat_90": {
+   "rms_err_deg": 0.2,
+   "max_err_deg": 1.08,
+   "worst_joint": "knee_l",
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "gripper_saturation_fraction(by design, torque-limited)": 0.0,
+   "overload_trips": 0,
+   "fell": false,
+   "min_bus_voltage_v": 12.41,
+   "peak_total_current_a": 4.53,
+   "tether_mean_pct_bw": 0.09
+  },
+  "wave": {
+   "rms_err_deg": 0.24,
+   "max_err_deg": 1.08,
+   "worst_joint": "knee_l",
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "gripper_saturation_fraction(by design, torque-limited)": 0.0,
+   "overload_trips": 0,
+   "fell": false,
+   "min_bus_voltage_v": 12.41,
+   "peak_total_current_a": 4.51,
+   "tether_mean_pct_bw": 0.3
+  },
+  "pickup": {
+   "rms_err_deg": 0.27,
+   "max_err_deg": 1.08,
+   "worst_joint": "knee_l",
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "gripper_saturation_fraction(by design, torque-limited)": 0.385,
+   "overload_trips": 0,
+   "fell": false,
+   "min_bus_voltage_v": 12.41,
+   "peak_total_current_a": 4.53,
+   "tether_mean_pct_bw": 0.1,
+   "object_lift_m": 0.0465,
+   "grasp_ok": true
+  },
+  "push_stand_fwd": {
+   "fell": false,
+   "leg_max_err_deg": 1.13,
+   "leg_rms_err_deg": 0.27,
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "overload_trips": 0,
+   "min_bus_voltage_v": 12.45,
+   "delivered_in_time": true,
+   "servo_delay_ms": 4.9
+  },
+  "push_stand_lat": {
+   "fell": false,
+   "leg_max_err_deg": 1.08,
+   "leg_rms_err_deg": 0.3,
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "overload_trips": 0,
+   "min_bus_voltage_v": 12.46,
+   "delivered_in_time": true,
+   "servo_delay_ms": 4.9
+  },
+  "push_walk_fwd": {
+   "fell": false,
+   "leg_max_err_deg": 3.2,
+   "leg_rms_err_deg": 0.4,
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "overload_trips": 0,
+   "min_bus_voltage_v": 12.17,
+   "delivered_in_time": true,
+   "servo_delay_ms": 4.9
+  },
+  "push_walk_lat_out": {
+   "fell": false,
+   "leg_max_err_deg": 3.2,
+   "leg_rms_err_deg": 0.4,
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "overload_trips": 0,
+   "min_bus_voltage_v": 12.17,
+   "delivered_in_time": true,
+   "servo_delay_ms": 4.9
+  },
+  "push_walk_lat_in": {
+   "fell": false,
+   "leg_max_err_deg": 3.2,
+   "leg_rms_err_deg": 0.41,
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "overload_trips": 0,
+   "min_bus_voltage_v": 12.17,
+   "delivered_in_time": true,
+   "servo_delay_ms": 4.9
+  }
+ },
+ "closed_loop_sensitivity": {
+  "label": "needs closed loop (P5): open-loop replay with frozen feedforward; not a gate",
+  "latency_40ms": {
+   "rms_err_deg": 1.22,
+   "max_err_deg": 7.77,
+   "fell": false,
+   "tether_mean_pct_bw": 1.88
+  },
+  "backlash_1deg": {
+   "rms_err_deg": 0.47,
+   "max_err_deg": 3.3,
+   "fell": false,
+   "tether_mean_pct_bw": 1.41
+  },
+  "kp_-10%": {
+   "rms_err_deg": 0.4,
+   "max_err_deg": 2.71,
+   "fell": false,
+   "tether_mean_pct_bw": 1.45
+  },
+  "kp_+10%": {
+   "rms_err_deg": 0.44,
+   "max_err_deg": 3.8,
+   "fell": false,
+   "tether_mean_pct_bw": 1.52
+  }
+ },
+ "stress_walks": {
+  "stress_walk_speed_x1.5": {
+   "valid": true,
+   "worst_peak_frac_of_stall": 0.681,
+   "joint": "hip_roll_l",
+   "worst_rms_over_rated": 0.988,
+   "worst_util": 0.864,
+   "peak_within_gate": true
+  },
+  "stress_walk_step_time_x0.8": {
+   "valid": true,
+   "worst_peak_frac_of_stall": 0.667,
+   "joint": "hip_roll_l",
+   "worst_rms_over_rated": 0.952,
+   "worst_util": 0.667,
+   "peak_within_gate": true
+  },
+  "stress_landing_late_10ms": {
+   "valid": true,
+   "worst_peak_frac_of_stall": 0.681,
+   "joint": "hip_roll_l",
+   "worst_rms_over_rated": 0.945,
+   "worst_util": 0.681,
+   "peak_within_gate": true
+  },
+  "stress_landing_early_10ms": {
+   "valid": true,
+   "worst_peak_frac_of_stall": 0.684,
+   "joint": "hip_roll_l",
+   "worst_rms_over_rated": 0.924,
+   "worst_util": 0.684,
+   "peak_within_gate": true
+  },
+  "stress_capture_step": {
+   "valid": true,
+   "worst_peak_frac_of_stall": 0.683,
+   "joint": "hip_roll_l",
+   "worst_rms_over_rated": 0.934,
+   "worst_util": 0.683,
+   "peak_within_gate": true
+  }
+ },
+ "bounds_sweep": [
+  {
+   "label": "structure mass x0.55",
+   "kind": "bound",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 26.9 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.066,-0.410] outside [-1.047,0.436]; ankle_pitch_r: [-1.066,-0.410] outside [-1.047,0.436]"
+   ],
+   "hot_steady_max_c": 47.1,
+   "rms_mixed_over_rated_max": 0.582,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "structure mass x1.4",
+   "kind": "bound",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.1 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.056,-0.406] outside [-1.047,0.436]; ankle_pitch_r: [-1.056,-0.406] outside [-1.047,0.436]",
+    "hip_yaw_r: peak",
+    "hip_roll_l: peak, rms",
+    "hip_roll_r: peak, rms",
+    "knee_l: peak",
+    "knee_r: peak"
+   ],
+   "hot_steady_max_c": 52.8,
+   "rms_mixed_over_rated_max": 0.816,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "wiring/electronics x0.8",
+   "kind": "bound",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.058,-0.407] outside [-1.047,0.436]; ankle_pitch_r: [-1.058,-0.407] outside [-1.047,0.436]"
+   ],
+   "hot_steady_max_c": 49.6,
+   "rms_mixed_over_rated_max": 0.694,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "wiring/electronics x1.5",
+   "kind": "bound",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 26.9 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.064,-0.410] outside [-1.047,0.436]; ankle_pitch_r: [-1.064,-0.410] outside [-1.047,0.436]",
+    "hip_roll_l: peak"
+   ],
+   "hot_steady_max_c": 50.3,
+   "rms_mixed_over_rated_max": 0.722,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "pessimistic linear torque-speed",
+   "kind": "bound",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+   ],
+   "hot_steady_max_c": 49.8,
+   "rms_mixed_over_rated_max": 0.702,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "armature low",
+   "kind": "bound",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+   ],
+   "hot_steady_max_c": 48.4,
+   "rms_mixed_over_rated_max": 0.646,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "armature high",
+   "kind": "bound",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: walk_forward, pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID walk_forward: tether supplied 1.0% of body weight on average (limit 1%)",
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+    "ankle_pitch_l: peak, rms",
+    "ankle_pitch_r: peak, rms"
+   ],
+   "hot_steady_max_c": 48.7,
+   "rms_mixed_over_rated_max": 0.666,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "stall low",
+   "kind": "bound",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+    "hip_yaw_l: peak",
+    "hip_yaw_r: peak",
+    "hip_roll_l: peak, envelope",
+    "hip_roll_r: peak",
+    "knee_l: peak"
+   ],
+   "hot_steady_max_c": 56.4,
+   "rms_mixed_over_rated_max": 0.702,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "stall high",
+   "kind": "bound",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+   ],
+   "hot_steady_max_c": 46.7,
+   "rms_mixed_over_rated_max": 0.702,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "Rth high + 40 C ambient",
+   "kind": "bound",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+   ],
+   "hot_steady_max_c": 54.7,
+   "rms_mixed_over_rated_max": 0.702,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "walking speed x1.5",
+   "kind": "bound",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+    "ankle_pitch_l: peak, rms",
+    "ankle_pitch_r: peak"
+   ],
+   "hot_steady_max_c": 52.0,
+   "rms_mixed_over_rated_max": 0.774,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "SENSITIVITY armature = BAM ST3025 (0.00399), not a bound",
+   "kind": "sensitivity",
+   "worst_margin": 0.0,
+   "worst_joint": "invalid motion: walk_forward, walk_backward, turn, pickup_0.45m",
+   "passes": false,
+   "failing": [
+    "INVALID walk_forward: tether supplied 1.1% of body weight on average (limit 1%)",
+    "INVALID walk_backward: tether supplied 1.2% of body weight on average (limit 1%)",
+    "INVALID turn: tether supplied 1.0% of body weight on average (limit 1%)",
+    "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]"
+   ],
+   "hot_steady_max_c": 46.6,
+   "rms_mixed_over_rated_max": 0.576,
+   "delta_vs_nominal": 0.0
+  }
+ ],
+ "mass_cases": {
+  "nominal_kg": 4.595,
+  "benchmark_fit_kg": 5.772,
+  "structure_kg_nominal": 2.57,
+  "cases": {
+   "structure x1.4": {
+    "structure_scale": 1.4,
+    "total_kg": 5.624,
+    "worst_margin": 0.0,
+    "worst_joint": "invalid motion: pickup_0.45m",
+    "passes": false,
+    "failing": [
+     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.1 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.056,-0.406] outside [-1.047,0.436]; ankle_pitch_r: [-1.056,-0.406] outside [-1.047,0.436]",
+     "hip_yaw_r: peak",
+     "hip_roll_l: peak, rms",
+     "hip_roll_r: peak, rms",
+     "knee_l: peak",
+     "knee_r: peak"
+    ]
+   },
+   "benchmark-fit mass": {
+    "structure_scale": 1.46,
+    "total_kg": 5.773,
+    "worst_margin": 0.0,
+    "worst_joint": "invalid motion: pickup_0.45m",
+    "passes": false,
+    "failing": [
+     "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.4 mm (target not reached with the available arm joints); lift_ik_m = 27.1 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.055,-0.406] outside [-1.047,0.436]; ankle_pitch_r: [-1.055,-0.406] outside [-1.047,0.436]",
+     "hip_yaw_r: peak",
+     "hip_roll_l: peak, rms",
+     "hip_roll_r: peak, rms",
+     "knee_l: peak",
+     "knee_r: peak"
+    ]
+   }
+  },
+  "note": "benchmark fit is a SANITY BOUND and a stress case, not an estimate",
+  "mass_to_first_gate_failure_kg": "fails at the nominal mass (4.60 kg)",
+  "scan": [
+   {
+    "structure_scale": 1.0,
+    "total_kg": 4.595,
+    "worst_margin": 0.0,
+    "passes": false
+   }
+  ]
+ },
+ "monte_carlo": {
+  "quasi_static_only": true,
+  "samples": 16,
+  "seed": 1234,
+  "pass_rate": 0.0,
+  "pass_rate_required": null,
+  "p95_peak_frac_of_stall": {
+   "hip_yaw_l": 0.801,
+   "hip_yaw_r": 0.78,
+   "hip_roll_l": 1.023,
+   "hip_roll_r": 0.813,
+   "hip_pitch_l": 0.739,
+   "hip_pitch_r": 0.743,
+   "knee_l": 0.826,
+   "knee_r": 0.886,
+   "ankle_pitch_l": 0.809,
+   "ankle_pitch_r": 0.915,
+   "ankle_roll_l": 0.489,
+   "ankle_roll_r": 0.68,
+   "waist_yaw": 0.525,
+   "neck_yaw": 0.297,
+   "neck_pitch": 0.008,
+   "shoulder_pitch_l": 0.366,
+   "shoulder_pitch_r": 0.366,
+   "shoulder_roll_l": 0.322,
+   "shoulder_roll_r": 0.322,
+   "elbow_l": 0.152,
+   "elbow_r": 0.512,
+   "gripper_l": 0.001,
+   "gripper_r": 0.295
+  },
+  "p95_rms_over_rated": {
+   "hip_yaw_l": 0.678,
+   "hip_yaw_r": 0.695,
+   "hip_roll_l": 1.132,
+   "hip_roll_r": 0.98,
+   "hip_pitch_l": 0.79,
+   "hip_pitch_r": 0.791,
+   "knee_l": 0.963,
+   "knee_r": 1.044,
+   "ankle_pitch_l": 1.161,
+   "ankle_pitch_r": 1.184,
+   "ankle_roll_l": 0.531,
+   "ankle_roll_r": 0.599,
+   "waist_yaw": 0.135,
+   "neck_yaw": 0.129,
+   "neck_pitch": 0.013,
+   "shoulder_pitch_l": 0.343,
+   "shoulder_pitch_r": 0.344,
+   "shoulder_roll_l": 0.354,
+   "shoulder_roll_r": 0.366,
+   "elbow_l": 0.11,
+   "elbow_r": 0.556,
+   "gripper_l": 0.002,
+   "gripper_r": 0.397
+  },
+  "p95_peak_gate_ok": false,
+  "worst_joint_p95_peak": "hip_roll_l",
+  "worst_p95_peak": 1.023,
+  "note": "latency, backlash and kp are NOT sampled here: they need the closed loop (P5)"
+ },
+ "push_recovery": {
+  "requirement": "R10 (a MUST, PROVISIONAL value pending the maintainer): survive an absolute push, the same for every candidate, by any combination of strategies, standing and at mid single support of walk_forward. Getting up after a face-plant is not required yet.",
+  "required_impulse_Ns": 0.45,
+  "required_dv_mps": 0.098,
+  "mass_kg": 4.595,
+  "definition": "PROVISIONAL, pending maintainer Q1. 0.45 N.s is the top of the ToddlerBot push randomization range (1-3 N for 0.2 s = 0.06-0.18 m/s on 3.4 kg; 0.18 m/s on a 2.5 kg robot is 0.45 N.s); the Open Duck Mini Playground adds 0.1-1.0 m/s to the base velocity every 5-10 s and MuJoCo Playground (Berkeley Humanoid, G1, T1) 0.1-2.0 m/s (research/methods/domain_randomization_ranges.yaml). Challenge-2 commander response, rows 5-8.",
+  "hip_strategy": {
+   "trunk_speed_limit_rad_s": 3.98,
+   "note": "the hip strategy counts only up to 90% of the hip-pitch no-load speed; beyond it it is unavailable, and it is never a blocker by itself"
+  },
+  "cases": {
+   "push_stand_fwd": {
+    "valid": true,
+    "reason": "",
+    "demand_ok": true,
+    "strategy": "ankle",
+    "notes": [
+     "push 0.45 N.s = dv 0.098 m/s (stand_fwd), strategy ankle; reaction delay 25 ms; initial capture-point offset 18 mm",
+     "COM tracking error 0.00 mm"
+    ],
+    "peak_frac_of_stall": 0.4773685535460836,
+    "peak_joint": "ankle_pitch_r",
+    "peak_nm": 1.2990869131926348,
+    "util_max": 0.4773685535460836,
+    "util_joint": "ankle_pitch_r",
+    "omega_peak": 0.39418165682831097,
+    "omega_peak_joint": "hip_pitch_l",
+    "why": [],
+    "plan": {
+     "steps_taken": 0,
+     "landings": [],
+     "crouch_peak_mm": 0.0,
+     "reach_clipped": false,
+     "trunk_pitch_peak_deg": 0.0,
+     "trunk_speed_peak_rad_s": 0.0,
+     "capture_offset_mm": 17.7,
+     "reaction_delay_ms": 24.9,
+     "cop_peak_offset_mm": 41.4
+    },
+    "servo_in_the_loop": {
+     "fell": false,
+     "leg_max_err_deg": 1.13,
+     "leg_rms_err_deg": 0.27,
+     "saturation_fraction_max": 0.0,
+     "saturated_joint": "hip_yaw_l",
+     "overload_trips": 0,
+     "min_bus_voltage_v": 12.45,
+     "delivered_in_time": true,
+     "servo_delay_ms": 4.9
+    },
+    "recoverable_at_required": true,
+    "largest_recoverable": {
+     "scenario": "stand_fwd",
+     "largest_recoverable_Ns": 1.326,
+     "dv_mps": 0.289,
+     "mass_kg": 4.595,
+     "best_strategy": "ankle+2step@200ms",
+     "limited_by": "actuators (torque / speed demand)",
+     "at_search_ceiling": false,
+     "strategies": [
+      {
+       "option": "ankle+2step@150ms",
+       "plan_limit_Ns": 2.845
+      },
+      {
+       "option": "ankle+1step@150ms",
+       "plan_limit_Ns": 1.639
+      },
+      {
+       "option": "ankle+2step@250ms",
+       "plan_limit_Ns": 1.402
+      },
+      {
+       "option": "ankle+1step@200ms",
+       "plan_limit_Ns": 1.398
+      },
+      {
+       "option": "ankle+2step@200ms",
+       "plan_limit_Ns": 1.398
+      },
+      {
+       "option": "ankle+1step@250ms",
+       "plan_limit_Ns": 1.212
+      },
+      {
+       "option": "ankle+2step@300ms",
+       "plan_limit_Ns": 1.211
+      },
+      {
+       "option": "ankle+1step@300ms",
+       "plan_limit_Ns": 1.05
+      },
+      {
+       "option": "ankle",
+       "plan_limit_Ns": 0.892
+      },
+      {
+       "option": "ankle+hip",
+       "plan_limit_Ns": 0.844
+      },
+      {
+       "option": "ankle+1step@350ms",
+       "plan_limit_Ns": 0.812
+      },
+      {
+       "option": "ankle+2step@350ms",
+       "plan_limit_Ns": 0.0
+      }
+     ],
+     "at_largest": {
+      "peak_frac_of_stall": 0.9458218573149278,
+      "peak_joint": "hip_pitch_r",
+      "util_max": 0.9996275550674789,
+      "omega_peak": 3.517386279950331,
+      "ok": true
+     }
+    }
+   },
+   "push_stand_lat": {
+    "valid": true,
+    "reason": "",
+    "demand_ok": true,
+    "strategy": "ankle",
+    "notes": [
+     "push 0.45 N.s = dv 0.098 m/s (stand_lat), strategy ankle; reaction delay 25 ms; initial capture-point offset 18 mm",
+     "COM tracking error 0.00 mm"
+    ],
+    "peak_frac_of_stall": 0.2184862193762425,
+    "peak_joint": "knee_l",
+    "peak_nm": 0.9908950885815883,
+    "util_max": 0.2184862193762425,
+    "util_joint": "knee_l",
+    "omega_peak": 0.3136623489456146,
+    "omega_peak_joint": "ankle_roll_l",
+    "why": [],
+    "plan": {
+     "steps_taken": 0,
+     "landings": [],
+     "crouch_peak_mm": 0.0,
+     "reach_clipped": false,
+     "trunk_pitch_peak_deg": 0.0,
+     "trunk_speed_peak_rad_s": 0.0,
+     "capture_offset_mm": 17.7,
+     "reaction_delay_ms": 24.9,
+     "cop_peak_offset_mm": 62.6
+    },
+    "servo_in_the_loop": {
+     "fell": false,
+     "leg_max_err_deg": 1.08,
+     "leg_rms_err_deg": 0.3,
+     "saturation_fraction_max": 0.0,
+     "saturated_joint": "hip_yaw_l",
+     "overload_trips": 0,
+     "min_bus_voltage_v": 12.46,
+     "delivered_in_time": true,
+     "servo_delay_ms": 4.9
+    },
+    "recoverable_at_required": true,
+    "largest_recoverable": {
+     "scenario": "stand_lat",
+     "largest_recoverable_Ns": 1.503,
+     "dv_mps": 0.327,
+     "mass_kg": 4.595,
+     "best_strategy": "ankle",
+     "limited_by": "plan: reach / capture point",
+     "at_search_ceiling": false,
+     "strategies": [
+      {
+       "option": "ankle",
+       "plan_limit_Ns": 1.503
+      },
+      {
+       "option": "ankle+1step@150ms",
+       "plan_limit_Ns": 1.028
+      },
+      {
+       "option": "ankle+2step@150ms",
+       "plan_limit_Ns": 0.677
+      },
+      {
+       "option": "ankle+1step@200ms",
+       "plan_limit_Ns": 0.661
+      },
+      {
+       "option": "ankle+1step@250ms",
+       "plan_limit_Ns": 0.392
+      },
+      {
+       "option": "ankle+2step@200ms",
+       "plan_limit_Ns": 0.362
+      },
+      {
+       "option": "ankle+1step@300ms",
+       "plan_limit_Ns": 0.189
+      },
+      {
+       "option": "ankle+2step@250ms",
+       "plan_limit_Ns": 0.144
+      },
+      {
+       "option": "ankle+1step@350ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@300ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@350ms",
+       "plan_limit_Ns": 0.0
+      }
+     ],
+     "at_largest": {
+      "peak_frac_of_stall": 0.8252698472454656,
+      "peak_joint": "hip_roll_l",
+      "util_max": 0.8252698472454656,
+      "omega_peak": 1.3872910188397158,
+      "ok": true
+     }
+    }
+   },
+   "push_walk_fwd": {
+    "valid": true,
+    "reason": "",
+    "demand_ok": true,
+    "strategy": "ankle",
+    "notes": [
+     "push 0.45 N.s = dv 0.098 m/s (walk_fwd), strategy ankle; reaction delay 25 ms; initial capture-point offset 18 mm",
+     "COM tracking error 0.01 mm",
+     "steps: r at t=2.30 s ankle xy [0.125, -0.045] crouch 0 mm"
+    ],
+    "peak_frac_of_stall": 0.6146626748134199,
+    "peak_joint": "hip_roll_l",
+    "peak_nm": 2.787664262514433,
+    "util_max": 0.6146626748134199,
+    "util_joint": "hip_roll_l",
+    "omega_peak": 2.1043368236603754,
+    "omega_peak_joint": "hip_pitch_r",
+    "why": [],
+    "plan": {
+     "steps_taken": 0,
+     "landings": [
+      {
+       "t_s": 2.3000000000000003,
+       "ankle_xy": [
+        0.125,
+        -0.045
+       ],
+       "foot": "r",
+       "capture_point_xy": null,
+       "crouch_m": 0.0,
+       "clipped": false,
+       "nominal": true
+      }
+     ],
+     "crouch_peak_mm": 0.0,
+     "reach_clipped": false,
+     "trunk_pitch_peak_deg": 0.0,
+     "trunk_speed_peak_rad_s": 0.0,
+     "capture_offset_mm": 17.7,
+     "reaction_delay_ms": 24.9,
+     "cop_peak_offset_mm": 119.6
+    },
+    "servo_in_the_loop": {
+     "fell": false,
+     "leg_max_err_deg": 3.2,
+     "leg_rms_err_deg": 0.4,
+     "saturation_fraction_max": 0.0,
+     "saturated_joint": "hip_yaw_l",
+     "overload_trips": 0,
+     "min_bus_voltage_v": 12.17,
+     "delivered_in_time": true,
+     "servo_delay_ms": 4.9
+    },
+    "recoverable_at_required": true,
+    "largest_recoverable": {
+     "scenario": "walk_fwd",
+     "largest_recoverable_Ns": 0.946,
+     "dv_mps": 0.206,
+     "mass_kg": 4.595,
+     "best_strategy": "ankle+1step@200ms",
+     "limited_by": "plan: reach / capture point",
+     "at_search_ceiling": false,
+     "strategies": [
+      {
+       "option": "ankle+1step@150ms",
+       "plan_limit_Ns": 1.097
+      },
+      {
+       "option": "ankle+1step@200ms",
+       "plan_limit_Ns": 0.959
+      },
+      {
+       "option": "ankle+1step@250ms",
+       "plan_limit_Ns": 0.858
+      },
+      {
+       "option": "ankle",
+       "plan_limit_Ns": 0.784
+      },
+      {
+       "option": "ankle+1step@300ms",
+       "plan_limit_Ns": 0.781
+      },
+      {
+       "option": "ankle+2step@150ms",
+       "plan_limit_Ns": 0.781
+      },
+      {
+       "option": "ankle+1step@350ms",
+       "plan_limit_Ns": 0.725
+      },
+      {
+       "option": "ankle+2step@200ms",
+       "plan_limit_Ns": 0.68
+      },
+      {
+       "option": "ankle+2step@250ms",
+       "plan_limit_Ns": 0.647
+      },
+      {
+       "option": "ankle+2step@300ms",
+       "plan_limit_Ns": 0.636
+      },
+      {
+       "option": "ankle+2step@350ms",
+       "plan_limit_Ns": 0.63
+      }
+     ],
+     "at_largest": {
+      "peak_frac_of_stall": 0.9602979072483822,
+      "peak_joint": "ankle_pitch_l",
+      "util_max": 0.9602979072483822,
+      "omega_peak": 3.995823544660737,
+      "ok": true
+     }
+    }
+   },
+   "push_walk_lat_out": {
+    "valid": true,
+    "reason": "",
+    "demand_ok": true,
+    "strategy": "ankle",
+    "notes": [
+     "push 0.45 N.s = dv 0.098 m/s (walk_lat_out), strategy ankle; reaction delay 25 ms; initial capture-point offset 18 mm",
+     "COM tracking error 0.01 mm",
+     "steps: r at t=2.30 s ankle xy [0.125, -0.045] crouch 0 mm"
+    ],
+    "peak_frac_of_stall": 0.6751096556970262,
+    "peak_joint": "hip_roll_l",
+    "peak_nm": 3.061807943741331,
+    "util_max": 0.6751096556970262,
+    "util_joint": "hip_roll_l",
+    "omega_peak": 2.71863569027054,
+    "omega_peak_joint": "knee_r",
+    "why": [],
+    "plan": {
+     "steps_taken": 0,
+     "landings": [
+      {
+       "t_s": 2.3000000000000003,
+       "ankle_xy": [
+        0.125,
+        -0.045
+       ],
+       "foot": "r",
+       "capture_point_xy": null,
+       "crouch_m": 0.0,
+       "clipped": false,
+       "nominal": true
+      }
+     ],
+     "crouch_peak_mm": 0.0,
+     "reach_clipped": false,
+     "trunk_pitch_peak_deg": 0.0,
+     "trunk_speed_peak_rad_s": 0.0,
+     "capture_offset_mm": 17.7,
+     "reaction_delay_ms": 24.9,
+     "cop_peak_offset_mm": 116.4
+    },
+    "servo_in_the_loop": {
+     "fell": false,
+     "leg_max_err_deg": 3.2,
+     "leg_rms_err_deg": 0.4,
+     "saturation_fraction_max": 0.0,
+     "saturated_joint": "hip_yaw_l",
+     "overload_trips": 0,
+     "min_bus_voltage_v": 12.17,
+     "delivered_in_time": true,
+     "servo_delay_ms": 4.9
+    },
+    "recoverable_at_required": true,
+    "largest_recoverable": {
+     "scenario": "walk_lat_out",
+     "largest_recoverable_Ns": 1.037,
+     "dv_mps": 0.226,
+     "mass_kg": 4.595,
+     "best_strategy": "ankle",
+     "limited_by": "actuators (torque / speed demand)",
+     "at_search_ceiling": false,
+     "strategies": [
+      {
+       "option": "ankle",
+       "plan_limit_Ns": 1.106
+      },
+      {
+       "option": "ankle+1step@150ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+1step@200ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+1step@250ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+1step@300ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+1step@350ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@150ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@200ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@250ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@300ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@350ms",
+       "plan_limit_Ns": 0.0
+      }
+     ],
+     "at_largest": {
+      "peak_frac_of_stall": 0.7336912845626995,
+      "peak_joint": "hip_roll_l",
+      "util_max": 0.7336912845626995,
+      "omega_peak": 3.294389393267796,
+      "ok": true
+     }
+    }
+   },
+   "push_walk_lat_in": {
+    "valid": true,
+    "reason": "",
+    "demand_ok": true,
+    "strategy": "ankle",
+    "notes": [
+     "push 0.45 N.s = dv 0.098 m/s (walk_lat_in), strategy ankle; reaction delay 25 ms; initial capture-point offset 18 mm",
+     "COM tracking error 0.01 mm",
+     "steps: r at t=2.30 s ankle xy [0.125, -0.045] crouch 0 mm"
+    ],
+    "peak_frac_of_stall": 0.6297429587472261,
+    "peak_joint": "hip_roll_l",
+    "peak_nm": 2.856057497232326,
+    "util_max": 0.6297429587472261,
+    "util_joint": "hip_roll_l",
+    "omega_peak": 2.3656203315350353,
+    "omega_peak_joint": "ankle_pitch_r",
+    "why": [],
+    "plan": {
+     "steps_taken": 0,
+     "landings": [
+      {
+       "t_s": 2.3000000000000003,
+       "ankle_xy": [
+        0.125,
+        -0.045
+       ],
+       "foot": "r",
+       "capture_point_xy": null,
+       "crouch_m": 0.0,
+       "clipped": false,
+       "nominal": true
+      }
+     ],
+     "crouch_peak_mm": 0.0,
+     "reach_clipped": false,
+     "trunk_pitch_peak_deg": 0.0,
+     "trunk_speed_peak_rad_s": 0.0,
+     "capture_offset_mm": 17.7,
+     "reaction_delay_ms": 24.9,
+     "cop_peak_offset_mm": 116.4
+    },
+    "servo_in_the_loop": {
+     "fell": false,
+     "leg_max_err_deg": 3.2,
+     "leg_rms_err_deg": 0.41,
+     "saturation_fraction_max": 0.0,
+     "saturated_joint": "hip_yaw_l",
+     "overload_trips": 0,
+     "min_bus_voltage_v": 12.17,
+     "delivered_in_time": true,
+     "servo_delay_ms": 4.9
+    },
+    "recoverable_at_required": true,
+    "largest_recoverable": {
+     "scenario": "walk_lat_in",
+     "largest_recoverable_Ns": 1.191,
+     "dv_mps": 0.259,
+     "mass_kg": 4.595,
+     "best_strategy": "ankle+1step@150ms",
+     "limited_by": "actuators (torque / speed demand)",
+     "at_search_ceiling": false,
+     "strategies": [
+      {
+       "option": "ankle+1step@150ms",
+       "plan_limit_Ns": 1.466
+      },
+      {
+       "option": "ankle+1step@200ms",
+       "plan_limit_Ns": 1.083
+      },
+      {
+       "option": "ankle+1step@250ms",
+       "plan_limit_Ns": 0.803
+      },
+      {
+       "option": "ankle+2step@150ms",
+       "plan_limit_Ns": 0.802
+      },
+      {
+       "option": "ankle+2step@200ms",
+       "plan_limit_Ns": 0.775
+      },
+      {
+       "option": "ankle",
+       "plan_limit_Ns": 0.62
+      },
+      {
+       "option": "ankle+1step@300ms",
+       "plan_limit_Ns": 0.595
+      },
+      {
+       "option": "ankle+2step@250ms",
+       "plan_limit_Ns": 0.55
+      },
+      {
+       "option": "ankle+1step@350ms",
+       "plan_limit_Ns": 0.441
+      },
+      {
+       "option": "ankle+2step@300ms",
+       "plan_limit_Ns": 0.392
+      },
+      {
+       "option": "ankle+2step@350ms",
+       "plan_limit_Ns": 0.278
+      }
+     ],
+     "at_largest": {
+      "peak_frac_of_stall": 0.8087845043609097,
+      "peak_joint": "hip_roll_l",
+      "util_max": 0.9931986510945411,
+      "omega_peak": 4.033397806888994,
+      "ok": true
+     }
+    }
+   }
+  },
+  "all_ok": true,
+  "largest_recoverable_Ns": {
+   "push_stand_fwd": 1.326,
+   "push_stand_lat": 1.503,
+   "push_walk_fwd": 0.946,
+   "push_walk_lat_out": 1.037,
+   "push_walk_lat_in": 1.191
+  },
+  "largest_recoverable_min": {
+   "scenario": "push_walk_fwd",
+   "impulse_Ns": 0.946,
+   "dv_mps": 0.206
+  },
+  "gate": "largest recoverable impulse >= required in every scenario: MET"
+ },
+ "should_checks": {
+  "sit_to_stand_130": {
+   "valid": true,
+   "fails": []
+  }
+ },
+ "gate_results": {
+  "motions_valid": false,
+  "joint_gates_nominal": false,
+  "p95_peak_ok": false,
+  "rms_vs_rated_mixed_ok": true,
+  "thermal_10min_below_70c(info)": true,
+  "thermal_model_usable": false,
+  "runtime_ok(info)": true,
+  "bus_min_voltage_ok": true,
+  "pack_c_ok": true,
+  "grasp_ok": true,
+  "tracking_noted_rms_deg": {
+   "walk_forward": 0.41,
+   "turn": 0.37,
+   "squat_90": 0.2,
+   "wave": 0.24,
+   "pickup": 0.27
+  }
+ },
+ "robust_to_all_bounds": false,
+ "passes_at_benchmark_mass": false,
+ "verdict": {
+  "status": "FAIL",
+  "robust_to_all_bounds": false,
+  "passes_at_benchmark_mass": false,
+  "reasons": [
+   "INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]",
+   "Monte Carlo p95 peak above the gate at hip_roll_l (1.02 of stall)"
+  ],
+  "warnings": [
+   "cost $1093.87 typical is above the $550 cap (high band $1557.35); prices are unverified",
+   "sts3250-12v: full charge 12.6 V is 0.6 V over the rating for 23% of the discharge (charge only to 4.00 V/cell (12.0 V) -- most chargers allow it; costs about 23% of the capacity)",
+   "thermal model failed the Robonine replay: thermal temperatures are indicative only"
+  ],
+  "meaning": "PASS = no blocker: every frozen motion valid, nominal joint gates met, Monte Carlo p95 peak and mixed RMS within the gates, grasp, bus and regulator OK. Warnings (cost, voltage rating, runtime, unusable thermal model) do not flip it. 'robust' and 'benchmark mass' are the decision-rule checks (challenge-1): a PASS that is not robust is not a decision."
+ },
+ "limitations": [
+  "Open-loop reference replay: LIPM + analytic IK gait (no trajectory optimisation), so loads are a lower bound for a real balancing controller; stress walks bound some of the gap. A minimum-torque inverse-dynamics demand (no tether, no PD) agrees with the PD harness within about 4% on the sagittal leg joints.",
+  "Torque demand includes the servo's reflected rotor inertia (BAM armature 0.0234 kg m^2), which dominates dynamic loads; that value is a 7.4 V identification used for all servos. The only other armature in BAM's files that applies to a 12 V class servo (Waveshare ST3025, 0.00399) is reported as a SENSITIVITY row, not a bound.",
+  "12 V STS3215 and STS3250 are datasheet-anchored with dynamics borrowed from the 7.4 V fit; the mid-speed torque curve is unverified (anchored vs pessimistic linear shown). A bench test settles it.",
+  "Printed structure mass: the nominal (11.9 kg per m^3) was recentred on Open Duck Mini's back-out (its structure is 1.86x the old 6.4); shells and brackets of Adam are still not modelled. The benchmark fit is only a sanity bound / stress case.",
+  "Thermal: single lumped node, Rth/tau derived from one Robonine unit with assumed ambient; the model does not reproduce Robonine run 2, so thermal numbers are indicative and RMS <= rated is the thermal gate. The rated continuous torque of the 7.4 V part is contested (0.49 vs 0.637 N.m): the verdict is shown at both.",
+  "R10 (PROVISIONAL absolute impulse): LIPM plans with perfect state estimation, instant unloading of the stepping foot, no foot rotation, no foot/leg collision (cross-steps are placed a foot length away from the stance foot), backward pushes not run, lateral hip-roll (trunk roll) strategy not modelled, the hip strategy is forward only and counts only within the hip servos' speed. Walking pushes use the third step of the frozen gait.",
+  "Gait: stance knee flexion 20-45 deg and step time {0.25, 0.35, 0.5} s are swept identically for every candidate and the gates use the best feasible combination; Open Duck Mini itself walks at about 77 deg knee flexion and 0.27 s steps.",
+  "Latency, backlash and kp need the closed loop (P5); here they are sensitivities on one walk, never gates.",
+  "Leg-table / self-collision, cable routing and packaging are not checked (T-0004 floors, and in the height sweep the CAD-foundation ankle height and ranges, are applied only as proportion / range minimums; the 106 mm hip stack is not modelled).",
+  "Stand-up from a fall is not modelled; the quasi-static sit-to-stand at 130 deg knee is a proxy only."
+ ],
+ "provenance": [
+  {
+   "constant": "gates.peak_torque_fraction_of_stall",
+   "value": 0.7,
+   "class": "gate",
+   "source": "research/ai-engineering/RECOMMENDATIONS.md B4 (\"p95 Monte Carlo peak <= 70% of measured stall at operating voltage\")"
+  },
+  {
+   "constant": "gates.peak_window_s",
+   "value": 0.1,
+   "class": "assumption",
+   "source": "a torque pulse shorter than ~0.1 s is absorbed by gear/foot compliance and costs the servo only a momentary tracking deficit, so the peak gate looks at the 100 ms moving average. A stiff ideal-PD replay shows 20-50 ms touchdown spikes (18 N.m at 1.5x speed) that no real servo-foot system transmits. 0.04 s would make touchdown spikes decide the verdict."
+  },
+  {
+   "constant": "gates.rms_torque_vs_continuous",
+   "value": 1.0,
+   "class": "gate",
+   "source": "RECOMMENDATIONS.md B4 (\"RMS <= continuous rating\"); the rating is the vendor 'rated torque' (26-33% of stall), not a measured thermal limit"
+  },
+  {
+   "constant": "gates.thermal_limit_c",
+   "value": 70.0,
+   "class": "sourced_estimate",
+   "source": "STS3215 Max_Temperature_Limit register default 70 C (research/actuators/feetech-sts3215/datasheet.yaml); Robonine saw an overheat flag at 70 C without active shutdown"
+  },
+  {
+   "constant": "gates.thermal_horizon_s",
+   "value": 600,
+   "class": "gate",
+   "source": "RECOMMENDATIONS.md B4 (\"simulated 10-minute walk below thermal shutdown\"); we simulate the 10-minute MIXED activity schedule below"
+  },
+  {
+   "constant": "gates.envelope_utilisation_max",
+   "value": 0.9,
+   "class": "assumption",
+   "source": "operating points (|tau|, |w|) must sit inside 90% of the torque-speed envelope; stands in for a speed-margin gate (no source). RECOMMENDATIONS B4 names no speed criterion."
+  },
+  {
+   "constant": "gates.tracking_error_deg",
+   "value": 2.0,
+   "class": "gate",
+   "source": "RECOMMENDATIONS.md B4 (held-out actuator-model tracking <= ~2 deg). NOTED, not gating, in this tool: a P-servo following a reference with learned feedforward is not model-vs-real error."
+  },
+  {
+   "constant": "gates.runtime_min_min",
+   "value": 15.0,
+   "class": "gate",
+   "source": "variants/adam/requirements.md Should: run time >= 15 min of mixed activity per charge (a Should: reported, not gating)"
+  },
+  {
+   "constant": "gates.pack_peak_current_fraction_of_c",
+   "value": 0.8,
+   "class": "assumption",
+   "source": "peak battery draw must stay below 80% of C-rating x capacity (research/methods/e: peak < ~50% of C x capacity; judgement, not sourced)"
+  },
+  {
+   "constant": "gates.motion_pass_all_required",
+   "value": 1,
+   "class": "gate",
+   "source": "every frozen motion must be VALID (reference feasible, upright, tether <= 1% of weight) and pass the joint gates; an invalid motion is a FAIL, not a skip"
+  },
+  {
+   "constant": "thermal.ambient_c",
+   "value": 35.0,
+   "class": "assumption",
+   "source": "closed printed shell with 22 servos and a Pi; no measurement. 22 C room + 13 K enclosure rise (research/methods/e says \"derate for ambient inside a closed shell (null data)\")."
+  },
+  {
+   "constant": "thermal.start_c",
+   "value": 35.0,
+   "class": "assumption",
+   "source": "cold start inside the shell"
+  },
+  {
+   "constant": "mass.structure_factor",
+   "value": {
+    "low": 0.55,
+    "high": 1.4
+   },
+   "class": "assumption",
+   "source": "printed frame + shell mass before CAD/shells exist. RECENTRED by the Open Duck Mini calibration (challenge-2 row 11): the nominal structure coefficient is 11.9 kg per m^3 (ODM backs out at 0.88 kg of structure at 0.42 m, 1.86x the old 6.4), set per concept in mass_model. The band is relative to the new nominal: 0.55 is the old 6.4 nominal, 1.4 about the benchmark-fit mass. NOT recalibrated again until shelled CAD exists. The ToddlerBot/OP3 masses are sanity bounds only"
+  },
+  {
+   "constant": "mass.wiring_electronics_factor",
+   "value": {
+    "low": 0.8,
+    "high": 1.5
+   },
+   "class": "assumption",
+   "source": "wiring harness and electronics_kg: harnesses grow in practice"
+  },
+  {
+   "constant": "mass.servo_battery_board_factor",
+   "value": 1.0,
+   "class": "sourced_estimate",
+   "source": "catalog masses of servos, battery and boards are taken as listed (no band): vendor figures, +-1 g on a 55 g servo"
+  },
+  {
+   "constant": "mass.wiring_kg_per_servo",
+   "value": 0.006,
+   "class": "assumption",
+   "source": "cable + connector per servo"
+  },
+  {
+   "constant": "mass.wiring_kg_trunk",
+   "value": 0.025,
+   "class": "assumption",
+   "source": "bus trunk"
+  },
+  {
+   "constant": "uncertainty.tornado.mass_structure",
+   "value": {
+    "low": 0.55,
+    "high": 1.4
+   },
+   "class": "assumption",
+   "source": "same band as mass.structure_factor"
+  },
+  {
+   "constant": "uncertainty.tornado.mass_wiring_electronics",
+   "value": {
+    "low": 0.8,
+    "high": 1.5
+   },
+   "class": "assumption",
+   "source": "same band as mass.wiring_electronics_factor"
+  },
+  {
+   "constant": "uncertainty.tornado.torque_speed_model",
+   "value": {
+    "values": [
+     "anchored",
+     "linear"
+    ]
+   },
+   "class": "extrapolated",
+   "source": "anchored = DC law with datasheet cap; linear = pessimistic stall*(1 - w/w_noload). Nothing in the research verifies the 12 V mid-speed curve."
+  },
+  {
+   "constant": "uncertainty.tornado.armature",
+   "value": {},
+   "class": "extrapolated",
+   "source": "per-actuator spec.uncertainty.armature: +-20% at 7.4 V (BAM fit), +-50% for 12 V and STS3250 (borrowed from the 7.4 V fit)"
+  },
+  {
+   "constant": "uncertainty.tornado.stall",
+   "value": {},
+   "class": "extrapolated",
+   "source": "per-actuator spec.uncertainty.stall: 10% (7.4 V), 25% (12 V and STS3250)"
+  },
+  {
+   "constant": "uncertainty.tornado.rth",
+   "value": {},
+   "class": "assumption",
+   "source": "per-actuator spec.uncertainty.rth: 35-50%"
+  },
+  {
+   "constant": "uncertainty.tornado.ambient_c",
+   "value": {
+    "low": 35.0,
+    "high": 40.0
+   },
+   "class": "assumption",
+   "source": "in-shell ambient; 40 C is the hot case requested by the commander"
+  },
+  {
+   "constant": "uncertainty.tornado.pack_sag",
+   "value": {
+    "soc": 0.15,
+    "r_scale": 1.5
+   },
+   "class": "assumption",
+   "source": "nearly empty pack with 1.5x internal resistance"
+  },
+  {
+   "constant": "uncertainty.tornado.gait_speed",
+   "value": {
+    "values": [
+     1.0,
+     1.5
+    ]
+   },
+   "class": "assumption",
+   "source": "walking speed x1.5 (the stress walk variants are also run on their own)"
+  },
+  {
+   "constant": "uncertainty.monte_carlo.n_samples",
+   "value": 16,
+   "class": "assumption",
+   "source": "runtime budget; raise with --samples"
+  },
+  {
+   "constant": "uncertainty.monte_carlo.com_shift_frac_h",
+   "value": 0.03,
+   "class": "assumption",
+   "source": "torso COM shift +-3% of height per axis. Open Duck uses +-0.05 m on a 0.42 m robot (12%); no data for a printed torso"
+  },
+  {
+   "constant": "uncertainty.monte_carlo.floor_friction",
+   "value": {
+    "low": 0.5,
+    "high": 1.0
+   },
+   "class": "sourced_estimate",
+   "source": "Open Duck Mini randomize.py floor friction 0.5-1.0 (research/methods/domain_randomization_ranges.yaml)"
+  },
+  {
+   "constant": "uncertainty.closed_loop_only.latency_extra_ms",
+   "value": {
+    "low": 0.0,
+    "high": 40.0
+   },
+   "class": "sourced_estimate",
+   "source": "Open Duck Mini action delay 0-2 control steps = up to 40 ms (jax randint upper bound exclusive)"
+  },
+  {
+   "constant": "uncertainty.closed_loop_only.backlash_deg",
+   "value": {
+    "low": 0.2,
+    "high": 1.0
+   },
+   "class": "sourced_estimate",
+   "source": "datasheet <= 0.5 deg; Robonine measured 0.87 deg on one 12 V unit"
+  },
+  {
+   "constant": "uncertainty.closed_loop_only.kp_scale",
+   "value": {
+    "low": 0.9,
+    "high": 1.1
+   },
+   "class": "sourced_estimate",
+   "source": "Open Duck Mini and ToddlerBot kp +-10%"
+  },
+  {
+   "constant": "mixed_activity",
+   "value": {
+    "cycle_s": 100,
+    "schedule": {
+     "walk_forward": 32,
+     "stand": 14,
+     "walk_backward": 8,
+     "turn": 8,
+     "wave": 7,
+     "dance": 20,
+     "pickup": 8,
+     "squat_90": 3
+    }
+   },
+   "class": "assumption",
+   "source": "invented usage mix (walk + wave + dance + pickup) as requested; no usage data exists"
+  },
+  {
+   "constant": "power.usable_battery_fraction",
+   "value": 0.85,
+   "class": "assumption",
+   "source": "cutoff at 3.3 V/cell instead of 3.0 V (3.0 V is the damage limit, research/methods/e)"
+  },
+  {
+   "constant": "power.regulator_efficiency",
+   "value": 0.9,
+   "class": "assumption",
+   "source": "buck converter; catalog specs.efficiency overrides"
+  },
+  {
+   "constant": "power.compute_power_w_default",
+   "value": 3.0,
+   "class": "assumption",
+   "source": "used if the catalog part has no specs.power_w_typical"
+  },
+  {
+   "constant": "power.cell_nominal_v",
+   "value": 3.7,
+   "class": "sourced_estimate",
+   "source": "LiPo nominal voltage per cell; operating voltage for the stall reference = cells x 3.7"
+  },
+  {
+   "constant": "power.wire_resistance_ohm_per_branch",
+   "value": 0.02,
+   "class": "assumption",
+   "source": "bus wiring + connectors from the pack to a servo branch (for the minimum-voltage-at-the-farthest-servo check); no data"
+  },
+  {
+   "constant": "power.fuse_margin",
+   "value": 1.25,
+   "class": "assumption",
+   "source": "fuse rating = 1.25 x the peak legitimate draw, must stay below the wiring/connector limit (connector rating null in research)"
+  },
+  {
+   "constant": "motions",
+   "value": {
+    "walk": {
+     "step_time_s": 0.5,
+     "speed_mps": 0.1,
+     "turn_rate_rad_s": 0.5,
+     "clearance_m": 0.015,
+     "ds_fraction": 0.2,
+     "n_steps": 8,
+     "arm_swing": 0.5
+    },
+    "squat": {
+     "depths_deg": [
+      90,
+      120
+     ],
+     "down_s": 2.5,
+     "hold_s": 1.0
+    },
+    "wave": {
+     "freq_hz": 1.25,
+     "amp_deg": 22.0,
+     "duration_s": 7.0
+    },
+    "dance": {
+     "bpm": 80.0,
+     "phrases": 6,
+     "v_limit_rad_s": 3.0,
+     "smoother_max_deviation_deg": 8.0
+    },
+    "pickup": {
+     "object_mass_kg": 0.15,
+     "table_height_m": 0.25,
+     "table_heights_m": [
+      0.25,
+      0.45
+     ],
+     "table_height_note": "R5 'table height' is undefined (maintainer question Q1): the provisional answer is a coffee-table height of 0.40-0.50 m while the engine started at 0.25 m. BOTH are run (challenge-2 row 16): the first is the motion named `pickup`, the others `pickup_<h>m`; a joint is judged on the worst of them. --table-height replaces the list."
+    },
+    "sit_to_stand": {
+     "knee_deg": 130.0,
+     "down_s": 3.0,
+     "hold_s": 0.5
+    },
+    "push": {
+     "class": "assumption",
+     "source": "PROVISIONAL, pending maintainer Q1. 0.45 N.s is the top of the ToddlerBot push randomization range (1-3 N for 0.2 s = 0.06-0.18 m/s on 3.4 kg; 0.18 m/s on a 2.5 kg robot is 0.45 N.s); the Open Duck Mini Playground adds 0.1-1.0 m/s to the base velocity every 5-10 s and MuJoCo Playground (Berkeley Humanoid, G1, T1) 0.1-2.0 m/s (research/methods/domain_randomization_ranges.yaml). Challenge-2 commander response, rows 5-8.",
+     "required_impulse_Ns": 0.45,
+     "push_time_s": 1.0,
+     "horizon_s": 4.0,
+     "swing_times_s": [
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.35
+     ],
+     "max_steps": 2,
+     "walk_push_step_index": 2,
+     "walk_steps_built": 5,
+     "second_step_trigger_shrink": 0.6,
+     "settle_tol_frac": 0.3,
+     "settle_speed_mps": 0.03,
+     "max_com_excursion_m": 0.6,
+     "reach_frac": 0.985,
+     "crouch_knee_max_deg": 120.0,
+     "dcm_gain": 2.0,
+     "cop_margin_frac": 0.75,
+     "trunk_pitch_max_deg": 35.0,
+     "trunk_alpha_max_rad_s2": 150.0,
+     "control_period_s": 0.01,
+     "sensing_latency_s": 0.01,
+     "sensing_latency_class": "assumption",
+     "capture_clearance_m": 0.015,
+     "land_margin_m": 0.01,
+     "deliver": {
+      "peak_fraction_of_stall_max": 1.0,
+      "envelope_utilisation_max": 1.0,
+      "leg_tracking_error_deg_max": 8.0,
+      "class": "assumption"
+     }
+    },
+    "stress": {
+     "walk_speed_factor": 1.5,
+     "walk_step_time_factor": 0.8,
+     "landing_timing_error_s": 0.01,
+     "capture_step_lateral_m": 0.03
+    }
+   },
+   "class": "assumption",
+   "source": "requirements.md R2-R5 give no speeds, depths or tempos. These are requirement-level placeholders chosen once, not tuned per candidate."
+  },
+  {
+   "constant": "gait_sweep",
+   "value": {
+    "stance_knee_flex_deg": [
+     20,
+     30,
+     40,
+     45
+    ],
+    "step_time_s": [
+     0.25,
+     0.35,
+     0.5
+    ]
+   },
+   "class": "assumption",
+   "source": "challenge-2 commander response rows 12-13: stance knee flex 20-45 deg, step time {0.25, 0.35, 0.5} s"
+  },
+  {
+   "constant": "packaging_cad_foundation",
+   "value": {
+    "ankle_height_m_min": 0.066,
+    "rom_deg": {
+     "knee": [
+      0,
+      115
+     ],
+     "hip_pitch": [
+      -110,
+      40
+     ],
+     "ankle_pitch": [
+      -60,
+      25
+     ]
+    },
+    "keep_total_height": true,
+    "hip_stack_above_m": 0.106,
+    "hip_stack_behind_m": 0.084
+   },
+   "class": "sourced_estimate",
+   "source": "docs/cad-foundation.md 'Design facts the leg established'; coordination/commander-log.md CAD foundation entry. Servo feature dimensions behind them are ESTIMATES until the fit gauge is printed"
+  },
+  {
+   "constant": "assist.mean_fraction_of_weight_max",
+   "value": 0.01,
+   "class": "gate",
+   "source": "challenge-1 row 7: the playback tether may not carry the motion; mean assist above 1% of body weight invalidates the motion"
+  },
+  {
+   "constant": "overload_protection.gate_fraction_of_protection_time",
+   "value": 0.5,
+   "class": "gate",
+   "source": "challenge-1 row 6: time continuously above 70% of stall must stay below half the Feetech Protection_Time"
+  },
+  {
+   "constant": "packaging_floors.ankle_height_frac",
+   "value": 0.06,
+   "class": "sourced_estimate",
+   "source": "T-0004: ankle height 22.5 mm (0.045 h) leaves 4.6 mm under the ankle-roll servo; ~0.06 h fixes it. Below it ankle roll is limited to +-18 deg"
+  },
+  {
+   "constant": "packaging_floors.ankle_roll_limit_deg_if_low",
+   "value": 18.0,
+   "class": "sourced_estimate",
+   "source": "T-0004: yoke hits the sole at about +-18 deg"
+  },
+  {
+   "constant": "packaging_floors.foot_length_m_at_ref",
+   "value": 0.092,
+   "class": "sourced_estimate",
+   "source": "T-0004: the foot grows from 85x38 to 92x55 mm at 0.5 m; scaled linearly with height"
+  },
+  {
+   "constant": "packaging_floors.foot_width_m_at_ref",
+   "value": 0.055,
+   "class": "sourced_estimate",
+   "source": "T-0004, as above"
+  },
+  {
+   "constant": "packaging_floors.hip_width_m_min",
+   "value": 0.07,
+   "class": "sourced_estimate",
+   "source": "T-0004: 2*(L - offset) + 2 = 70 mm between hip centres, fixed by the servo size (does not scale with height)"
+  },
+  {
+   "constant": "packaging_floors.shoulder_width_frac",
+   "value": 0.36,
+   "class": "sourced_estimate",
+   "source": "T-0004: shoulder_width 0.30 makes straight arms hit the thighs; ~0.36 h (or a 10 deg A-pose cant) fixes it"
+  },
+  {
+   "constant": "packaging_floors.link_length_m_min",
+   "value": 0.06,
+   "class": "assumption",
+   "source": "a limb link must at least house the 45 mm servo plus stand-offs; below this a CAD layout cannot exist"
+  },
+  {
+   "constant": "BAM STS3215 7.4 V parameters (kt, R, armature, friction, delay)",
+   "value": "model m4",
+   "class": "measured",
+   "source": "https://github.com/Rhoban/bam @ e9a619d, Apache-2.0 (LICENSE at that commit, 11357 bytes, stock text; sources carry \"Copyright 2025 Marc Duclusaud & Gregoire Passault\"; no NOTICE file at that commit); identified on a pendulum bench at a 7.4 V parameter-folder voltage, one servo class"
+  },
+  {
+   "constant": "firmware kp / error_gain / pwm_max",
+   "value": {
+    "kp_fw": 32,
+    "error_gain": 0.166,
+    "pwm_max": 0.97,
+    "source": "bam/feetech/actuator.py (error_gain 'determined using an oscilloscope', max_pwm 'also determined with oscilloscope')"
+   },
+   "class": "measured",
+   "source": "bam/feetech/actuator.py (error_gain 'determined using an oscilloscope', max_pwm 'also determined with oscilloscope')"
+  },
+  {
+   "constant": "protection.overload_fraction",
+   "value": 0.8,
+   "class": "sourced_estimate",
+   "source": "Overload_Torque register (36) default 80 % (research/actuators/feetech-sts3215/notes.md, commanderfun register reference)"
+  },
+  {
+   "constant": "protection.protective_fraction",
+   "value": 0.2,
+   "class": "sourced_estimate",
+   "source": "Protective_Torque register (34) default 20 %; Robonine observed torque cut to ~20 % under prolonged load"
+  },
+  {
+   "constant": "protection.protection_time_s",
+   "value": 2.0,
+   "class": "assumption",
+   "source": "Protection_Time register (35) default 200; the UNIT IS UNCONFIRMED. 200 x 10 ms = 2 s is assumed (rcdrone quotes a 2 s hold)"
+  },
+  {
+   "constant": "protection.release_time_s",
+   "value": 1.0,
+   "class": "assumption",
+   "source": "how long torque must stay below Overload_Torque before the servo recovers; 'clears on new command' is unsupported in the research notes, so this is a guess"
+  },
+  {
+   "constant": "sts3215-12v.stall_nm",
+   "value": 2.942,
+   "class": "sourced_estimate",
+   "source": "https://evelta.com/sts3215-c018-12v-30kg-cm-dual-shaft-ttl-serial-servo-metal-gears-magnetic-encoder/ 30 kg.cm; Waveshare/Seeed agree. Robonine measured ~35 kg.cm (3.43 N.m) static on one unit"
+  },
+  {
+   "constant": "sts3215-12v.stall_current_a",
+   "value": 2.7,
+   "class": "sourced_estimate",
+   "source": "https://www.waveshare.com/wiki/ST3215_Servo"
+  },
+  {
+   "constant": "sts3215-12v.rated_continuous_nm",
+   "value": 0.981,
+   "class": "sourced_estimate",
+   "source": "Evelta/Seeed C047 rated 10 kg.cm @12V = 0.981 N.m (33% of stall)"
+  },
+  {
+   "constant": "sts3215-12v.noload_rad_s",
+   "value": 4.78,
+   "class": "measured (single unit, third party)",
+   "source": "Robonine measured 45.6 rpm at 100% setting on a 12 V C018 (https://robonine.com/testing-of-feetech-sts3215-servomotor-backlash-repeatability-and-torque/); vendor 45 rpm. This CONTRADICTS 'kt same as 7.4 V' (that would give 9.2 rad/s): the 12 V part has a different winding (vendor kt 11 vs 7.8 kg.cm/A)."
+  },
+  {
+   "constant": "sts3215-12v.mass_kg",
+   "value": 0.055,
+   "class": "sourced_estimate",
+   "source": "Evelta"
+  },
+  {
+   "constant": "sts3215-12v.thermal (Rth, tau)",
+   "value": [
+    3.2,
+    300.0
+   ],
+   "class": "extrapolated",
+   "source": "Robonine 12 V bench: 48 C after 10 min at 15 kg.cm static (stable >1 h); our current model gives ~8.1 W there; ambient assumed 22 C => 3.2 K/W. tau 300 s assumed. One unit, ambient unknown."
+  },
+  {
+   "constant": "sts3215-12v.dynamics (armature, friction, delay)",
+   "value": "from bam_feetech_sts3215_7_4V_m4.json",
+   "class": "extrapolated",
+   "source": "BAM 7.4 V fit borrowed for a different servo (same 1:345 gearbox assumed)"
+  },
+  {
+   "constant": "sts3215-12v.model quality",
+   "value": "extrapolated_12v",
+   "class": "extrapolated",
+   "source": "Feetech STS3215 12 V (30 kg.cm), datasheet-anchored, dynamics extrapolated from the BAM 7.4 V fit"
+  },
+  {
+   "constant": "sts3250-12v.stall_nm",
+   "value": 4.903,
+   "class": "sourced_estimate",
+   "source": "https://www.feetechrc.com/en/562636  50 kg.cm"
+  },
+  {
+   "constant": "sts3250-12v.stall_current_a",
+   "value": 4.2,
+   "class": "sourced_estimate",
+   "source": "https://www.feetechrc.com/en/562636"
+  },
+  {
+   "constant": "sts3250-12v.rated_continuous_nm",
+   "value": 1.569,
+   "class": "sourced_estimate",
+   "source": "Feetech rated 16 kg.cm (32% of stall)"
+  },
+  {
+   "constant": "sts3250-12v.noload_rad_s",
+   "value": 7.854,
+   "class": "sourced_estimate",
+   "source": "75 rpm @12V, 0.133 s/60 deg (Feetech)"
+  },
+  {
+   "constant": "sts3250-12v.mass_kg",
+   "value": 0.0745,
+   "class": "sourced_estimate",
+   "source": "Feetech, tolerance 1 g"
+  },
+  {
+   "constant": "sts3250-12v.thermal (Rth, tau)",
+   "value": [
+    2.4,
+    360.0
+   ],
+   "class": "assumption",
+   "source": "No data. Rth = STS3215 value x 55/74.5 g (larger aluminium case); tau scaled up by 20%. Heat is higher at the same torque fraction (4.2 A x 12 V = 50 W stall vs 32 W)."
+  },
+  {
+   "constant": "sts3250-12v.dynamics (armature, friction, delay)",
+   "value": "from bam_feetech_sts3215_7_4V_m4.json",
+   "class": "extrapolated",
+   "source": "BAM 7.4 V fit borrowed for a different servo (same 1:345 gearbox assumed)"
+  },
+  {
+   "constant": "sts3250-12v.model quality",
+   "value": "datasheet_only",
+   "class": "extrapolated",
+   "source": "Feetech STS3250 12 V (50 kg.cm), datasheet only"
+  },
+  {
+   "constant": "catalog rpi-5-4gb (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.062,
+    "dimensions_mm": [
+     85,
+     56,
+     17
+    ],
+    "price_usd": 110.0
+   },
+   "class": "sourced_estimate",
+   "source": "https://www.pishop.us/product/raspberry-pi-5-4gb/ ($110, SKU 4GB-9024, IN STOCK); https://www.adafruit.com/product/5812 ($130); https://www.sparkfun.com/raspberry-pi-5-4gb.html ($110, OOS); price history: https://www.raspberrypi.com/news/more-memory-driven-price-rises/ (+$15 on 4 GB, 2 Feb 2026; a l"
+  },
+  {
+   "constant": "catalog microsd-32gb (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.001,
+    "dimensions_mm": null,
+    "price_usd": 12.0
+   },
+   "class": "sourced_estimate",
+   "source": "estimate: snippets only, pages not fetched. CDW SanDisk Ultra 32 GB $9.97 (https://cdwg.com/product/sandisk-ultra-flash-memory-card-32-gb-microsdhc-uhs-i/6400259, 403 on fetch); PiShop SanDisk Ultra 32 GB $14.95, official Raspberry Pi 32 GB A2 $19.95 (https://www.pishop.us/product/raspberry-pi-sd-ca"
+  },
+  {
+   "constant": "catalog waveshare-bus-servo-adapter (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.01,
+    "dimensions_mm": null,
+    "price_usd": 4.99
+   },
+   "class": "sourced_estimate",
+   "source": "https://www.waveshare.com/bus-servo-adapter-a.htm ($4.99); wiki https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A) (UART jumper A=UART/B=USB; RX-RX, TX-TX; input 9-12.6 V). verified false: only one fetched vendor; no US-stocked vendor confirmed; USB chip and UART pinout not stated."
+  },
+  {
+   "constant": "catalog imu-bno085 (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.003,
+    "dimensions_mm": null,
+    "price_usd": 29.5
+   },
+   "class": "sourced_estimate",
+   "source": "https://www.adafruit.com/product/4754 ($29.50, in stock, 2.5 g, 25.6x22.7x4.6 mm); https://www.sparkfun.com/sparkfun-vr-imu-breakout-bno086-qwiic.html (BNO086, $34.95, 3 g); bare chip Digi-Key BNO085 $12.29 (0 stock). verified false: only one fetched vendor sells the BNO085 itself (SparkFun's is the"
+  },
+  {
+   "constant": "catalog cam-rpi-v3 (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.004,
+    "dimensions_mm": [
+     25,
+     24,
+     11.5
+    ],
+    "price_usd": 29.25
+   },
+   "class": "sourced_estimate",
+   "source": "https://www.raspberrypi.com/products/camera-module-3/ (IMX708, 11.9 MP, 25x24x11.5 mm; 15-pin cable); https://www.adafruit.com/product/5657 ($29.25, in stock, ships today); https://www.pishop.us/product/raspberry-pi-camera-module-3/ ($29.25); https://www.sparkfun.com/raspberry-pi-camera-module-3.htm"
+  },
+  {
+   "constant": "catalog lipo-3s-1300-tattu (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.122,
+    "dimensions_mm": [
+     72,
+     36,
+     22
+    ],
+    "price_usd": 26.99
+   },
+   "class": "sourced_estimate",
+   "source": "https://www.racedayquads.com/products/tattu-11-1v-3s-1300mah-75c-lipo-micro-battery-xt60 ($26.99, in stock, ground only); https://wrekd.com/products/tattu-11-1v-3s-1300mah-75c-lipo-battery-xt60 ($26.99, FL warehouse, USPS Ground Advantage only); manufacturer shop https://genstattu.com/tattu-1300mah-"
+  },
+  {
+   "constant": "catalog buck-pololu-d36v50f5 (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.007,
+    "dimensions_mm": [
+     25.4,
+     25.4,
+     9.5
+    ],
+    "price_usd": 39.95
+   },
+   "class": "sourced_estimate",
+   "source": "https://www.pololu.com/product/4091/specs (5.5-50 V in, 5 V out, 25.4x25.4x9.5 mm, 7.0 g); https://www.robotshop.com/products/5v-55a-step-down-voltage-regulator-d36v50f5 ($39.95, in stock 2026-10-15)"
+  },
+  {
+   "constant": "catalog power-switch-xt60 (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.02,
+    "dimensions_mm": null,
+    "price_usd": 6.0
+   },
+   "class": "sourced_estimate",
+   "source": "estimate: pigtail https://www.racedayquads.com/products/xt60-pigtail-14awg-4 ($2.49, in stock); switch https://www.revrobotics.com/rev-31-1387/ ($13.00, XT30 not XT60). No US XT60 inline switch found; a rocker switch rated >=20 A DC is still to be sourced."
+  },
+  {
+   "constant": "catalog fastener-kit-m2-m3 (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.08,
+    "dimensions_mm": null,
+    "price_usd": 20.0
+   },
+   "class": "sourced_estimate",
+   "source": "estimate: search snippets only. https://vxb.com/fr/products/heat-set-inserts-for-plastic-3d-printing-kit-with ($49.98, 170 pcs M2/M3 brass); https://www.albanycountyfasteners.com/metric-socket-cap-screw-assortment-kit-p/1060-090.htm ($67.55, 441 pcs A2); Amazon M2 565-pc kit $9.99 (URL not captured)"
+  },
+  {
+   "constant": "catalog bearing-kit-small (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.05,
+    "dimensions_mm": null,
+    "price_usd": 12
+   },
+   "class": "sourced_estimate",
+   "source": "estimate: no STS3215 back-shaft bearing size confirmed by any BOM. Open Duck Mini's BOM lists 3x 6804ZZ (20x32x7 mm) EUR 3.50 each (https://www.amazon.fr/dp/B0CXXSVFTV), used in trunk_bottom and head, not as servo idlers. SO-101 BOM lists no bearings; ToddlerBot BOM sheet unreadable (https://hshi74."
+  },
+  {
+   "constant": "catalog wiring-kit-bus (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.04,
+    "dimensions_mm": null,
+    "price_usd": 10
+   },
+   "class": "assumption",
+   "source": "estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md"
+  },
+  {
+   "constant": "catalog charger-skyrc-b6neo (price, mass, dims)",
+   "value": {
+    "mass_kg": 0.082,
+    "dimensions_mm": [
+     70,
+     50,
+     31
+    ],
+    "price_usd": 39.99
+   },
+   "class": "sourced_estimate",
+   "source": "https://www.skyrc.com/b6neo (manufacturer: DC in 10-28 V XT60, USB-C PD in 12-20 V, 200 W DC / 80 W PD, 0.2-10 A, 1-6S, 70x50x31 mm, 82 g); https://wrekd.com/products/skyrc-b6-neo-200w-10a-1-6s-dc-smart-charger-xt60-choose-color ($39.99, SOLD OUT); https://www.evike.com/products/112273/SkyRC-B6Neo-S"
+  }
+ ],
+ "wall_seconds": 367.6
+}

@@ -1,0 +1,59 @@
+[
+ {
+  "table_m": 0.3,
+  "pickup_valid": true,
+  "invalid": {},
+  "strict_worst_margin": 2.418,
+  "worst_joint": "ankle_pitch_r",
+  "motions_run": [
+   "pickup",
+   "stand"
+  ]
+ },
+ {
+  "table_m": 0.35,
+  "pickup_valid": true,
+  "invalid": {},
+  "strict_worst_margin": 2.311,
+  "worst_joint": "shoulder_pitch_r",
+  "motions_run": [
+   "pickup",
+   "stand"
+  ]
+ },
+ {
+  "table_m": 0.4,
+  "pickup_valid": true,
+  "invalid": {},
+  "strict_worst_margin": 0.005,
+  "worst_joint": "shoulder_pitch_r",
+  "motions_run": [
+   "pickup",
+   "stand"
+  ]
+ },
+ {
+  "table_m": 0.45,
+  "pickup_valid": true,
+  "invalid": {},
+  "strict_worst_margin": 0.909,
+  "worst_joint": "shoulder_pitch_r",
+  "motions_run": [
+   "pickup",
+   "stand"
+  ]
+ },
+ {
+  "table_m": 0.5,
+  "pickup_valid": false,
+  "invalid": {
+   "pickup": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 32.6 mm (target not r"
+  },
+  "strict_worst_margin": 2.54,
+  "worst_joint": "knee_r",
+  "motions_run": [
+   "pickup",
+   "stand"
+  ]
+ }
+]

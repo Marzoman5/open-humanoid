@@ -1,0 +1,3376 @@
+[
+ {
+  "candidate": "R1x-a18-cut",
+  "height_m": 0.5,
+  "gait": {
+   "stance_knee_flex_deg": 40,
+   "step_time_s": 0.25,
+   "worst_margin": 1.214
+  },
+  "nominal": {
+   "label": "nominal",
+   "mass_kg": 3.13,
+   "strict_worst": 1.214,
+   "strict_worst_joint": "knee_l",
+   "cal_worst": 1.842,
+   "cal_worst_joint": "knee_l",
+   "strict_joint_gates_pass": false,
+   "cal_joint_gates_pass": false,
+   "r10_at_required": {
+    "stand_fwd": true,
+    "stand_lat": true,
+    "walk_fwd": false,
+    "walk_lat_out": false,
+    "walk_lat_in": false
+   },
+   "r10_pass": false,
+   "invalid": {
+    "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+    "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+    "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+    "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+    "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+    "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+   },
+   "strict_pass": false,
+   "cal_pass": false,
+   "cal_fails": {},
+   "strict_fails": {},
+   "rows": {
+    "hip_yaw_l": {
+     "strict_worst": 135.003,
+     "strict_fails": [],
+     "cal_peak": 205.204,
+     "cal_rms": 554.403,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 205.204,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_yaw_r": {
+     "strict_worst": 134.433,
+     "strict_fails": [],
+     "cal_peak": 204.339,
+     "cal_rms": 539.106,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 204.339,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_l": {
+     "strict_worst": 2.01,
+     "strict_fails": [],
+     "cal_peak": 3.055,
+     "cal_rms": 7.807,
+     "cal_env": 3.049,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.049,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_r": {
+     "strict_worst": 1.986,
+     "strict_fails": [],
+     "cal_peak": 3.019,
+     "cal_rms": 7.847,
+     "cal_env": 3.013,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.013,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_pitch_l": {
+     "strict_worst": 4.575,
+     "strict_fails": [],
+     "cal_peak": 6.954,
+     "cal_rms": 13.825,
+     "cal_env": 6.941,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 6.941,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_pitch_r": {
+     "strict_worst": 4.575,
+     "strict_fails": [],
+     "cal_peak": 6.954,
+     "cal_rms": 13.979,
+     "cal_env": 6.94,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 6.94,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "knee_l": {
+     "strict_worst": 1.214,
+     "strict_fails": [],
+     "cal_peak": 1.845,
+     "cal_rms": 2.368,
+     "cal_env": 1.842,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.842,
+     "cal_fails": [],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "knee_r": {
+     "strict_worst": 1.214,
+     "strict_fails": [],
+     "cal_peak": 1.845,
+     "cal_rms": 2.368,
+     "cal_env": 1.842,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.842,
+     "cal_fails": [],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "ankle_pitch_l": {
+     "strict_worst": 3.244,
+     "strict_fails": [],
+     "cal_peak": 4.932,
+     "cal_rms": 7.248,
+     "cal_env": 4.922,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.922,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "ankle_pitch_r": {
+     "strict_worst": 3.15,
+     "strict_fails": [],
+     "cal_peak": 4.788,
+     "cal_rms": 7.2,
+     "cal_env": 4.779,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.779,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_yaw": {
+     "strict_worst": 3.772,
+     "strict_fails": [],
+     "cal_peak": 5.734,
+     "cal_rms": 18.246,
+     "cal_env": 5.723,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.723,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_pitch": {
+     "strict_worst": 1012.503,
+     "strict_fails": [],
+     "cal_peak": 1539.004,
+     "cal_rms": 5338.661,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1539.004,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_l": {
+     "strict_worst": 5.866,
+     "strict_fails": [],
+     "cal_peak": 8.916,
+     "cal_rms": 15.746,
+     "cal_env": 8.899,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 8.899,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_r": {
+     "strict_worst": 5.866,
+     "strict_fails": [],
+     "cal_peak": 8.916,
+     "cal_rms": 16.996,
+     "cal_env": 8.899,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 8.899,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_l": {
+     "strict_worst": 4.772,
+     "strict_fails": [],
+     "cal_peak": 7.253,
+     "cal_rms": 10.418,
+     "cal_env": 7.239,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 7.239,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_r": {
+     "strict_worst": 4.786,
+     "strict_fails": [],
+     "cal_peak": 7.275,
+     "cal_rms": 10.387,
+     "cal_env": 7.261,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 7.261,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_l": {
+     "strict_worst": 825.434,
+     "strict_fails": [],
+     "cal_peak": 1610.034,
+     "cal_rms": 1601.341,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1601.341,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_r": {
+     "strict_worst": 775.21,
+     "strict_fails": [],
+     "cal_peak": 1587.688,
+     "cal_rms": 1503.907,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1503.907,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    }
+   }
+  },
+  "packaging_notes": [
+   "ankle_height: 22.5 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+   "foot_length: 85.0 mm -> 92.0 mm (T-0004 foot size)",
+   "foot_width: 37.5 mm -> 55.0 mm (T-0004 foot size)",
+   "shoulder_width: 150.0 mm -> 180.0 mm (T-0004 arm clearance)",
+   "standing height kept at 500 mm: the other vertical proportions scaled x0.907 (thigh 102 mm, shank 102 mm)",
+   "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+   "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+   "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+  ],
+  "rom_clamps": [
+   "squat_120",
+   "sit_to_stand_130"
+  ],
+  "should": {
+   "sit_to_stand_130": {
+    "valid": true,
+    "fails": []
+   }
+  },
+  "largest_recoverable_Ns": {
+   "stand_fwd": {
+    "Ns": 0.629,
+    "by": "ankle+1step@200ms",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "stand_lat": {
+    "Ns": 0.788,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_fwd": {
+    "Ns": 0.259,
+    "by": "ankle+1step@300ms",
+    "limited_by": "plan: reach / capture point"
+   },
+   "walk_lat_out": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   },
+   "walk_lat_in": {
+    "Ns": 0.17,
+    "by": "ankle+1step@250ms",
+    "limited_by": "plan: reach / capture point"
+   }
+  },
+  "bounds": [
+   {
+    "label": "structure mass x0.55",
+    "mass_kg": 2.46,
+    "strict_worst": 1.489,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 2.258,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   },
+   {
+    "label": "structure mass x1.4",
+    "mass_kg": 3.725,
+    "strict_worst": 1.043,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.582,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   },
+   {
+    "label": "wiring/electronics x0.8",
+    "mass_kg": 3.079,
+    "strict_worst": 1.236,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.875,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   },
+   {
+    "label": "wiring/electronics x1.5",
+    "mass_kg": 3.256,
+    "strict_worst": 1.162,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.763,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   },
+   {
+    "label": "pessimistic linear torque-speed",
+    "mass_kg": 3.13,
+    "strict_worst": 1.214,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.663,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   },
+   {
+    "label": "armature low",
+    "mass_kg": 3.13,
+    "strict_worst": 1.227,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.861,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   },
+   {
+    "label": "armature high",
+    "mass_kg": 3.13,
+    "strict_worst": 1.2,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.821,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   },
+   {
+    "label": "stall low",
+    "mass_kg": 3.13,
+    "strict_worst": 0.911,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.381,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "peak"
+     ],
+     "knee_r": [
+      "peak"
+     ]
+    }
+   },
+   {
+    "label": "stall high",
+    "mass_kg": 3.13,
+    "strict_worst": 1.221,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 2.302,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": false,
+     "walk_lat_in": true
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   },
+   {
+    "label": "walking speed x1.5",
+    "mass_kg": 3.13,
+    "strict_worst": 1.214,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.842,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   },
+   {
+    "label": "benchmark-fit mass (structure x1.46)",
+    "mass_kg": 3.809,
+    "strict_worst": 1.022,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.551,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   }
+  ],
+  "robust_strict": false,
+  "robust_cal": false,
+  "bounds_failing_cal": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.46)"
+  ],
+  "bounds_failing_strict": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.46)"
+  ],
+  "min_cal_worst_over_bounds": 1.381,
+  "seconds": 244.0
+ },
+ {
+  "candidate": "R1x-a18-cut",
+  "height_m": 0.55,
+  "gait": {
+   "stance_knee_flex_deg": 45,
+   "step_time_s": 0.25,
+   "worst_margin": 0.963
+  },
+  "nominal": {
+   "label": "nominal",
+   "mass_kg": 3.622,
+   "strict_worst": 0.963,
+   "strict_worst_joint": "knee_l",
+   "cal_worst": 1.461,
+   "cal_worst_joint": "knee_l",
+   "strict_joint_gates_pass": false,
+   "cal_joint_gates_pass": false,
+   "r10_at_required": {
+    "stand_fwd": true,
+    "stand_lat": true,
+    "walk_fwd": true,
+    "walk_lat_out": true,
+    "walk_lat_in": true
+   },
+   "r10_pass": true,
+   "invalid": {
+    "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+    "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+    "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+    "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+    "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+    "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+   },
+   "strict_pass": false,
+   "cal_pass": false,
+   "cal_fails": {},
+   "strict_fails": {
+    "knee_l": [
+     "peak",
+     "rms"
+    ],
+    "knee_r": [
+     "peak",
+     "rms"
+    ]
+   },
+   "rows": {
+    "hip_yaw_l": {
+     "strict_worst": 79.933,
+     "strict_fails": [],
+     "cal_peak": 121.498,
+     "cal_rms": 347.602,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 121.498,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_yaw_r": {
+     "strict_worst": 80.543,
+     "strict_fails": [],
+     "cal_peak": 122.425,
+     "cal_rms": 338.545,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 122.425,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_l": {
+     "strict_worst": 1.6,
+     "strict_fails": [],
+     "cal_peak": 2.431,
+     "cal_rms": 6.113,
+     "cal_env": 2.427,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.427,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_r": {
+     "strict_worst": 1.581,
+     "strict_fails": [],
+     "cal_peak": 2.403,
+     "cal_rms": 6.182,
+     "cal_env": 2.399,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.399,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_pitch_l": {
+     "strict_worst": 3.785,
+     "strict_fails": [],
+     "cal_peak": 5.753,
+     "cal_rms": 11.617,
+     "cal_env": 5.742,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.742,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_pitch_r": {
+     "strict_worst": 3.785,
+     "strict_fails": [],
+     "cal_peak": 5.753,
+     "cal_rms": 11.787,
+     "cal_env": 5.742,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.742,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "knee_l": {
+     "strict_worst": 0.963,
+     "strict_fails": [
+      "peak",
+      "rms"
+     ],
+     "cal_peak": 1.464,
+     "cal_rms": 1.881,
+     "cal_env": 1.461,
+     "cal_overload": 2.222,
+     "cal_worst": 1.461,
+     "cal_fails": [],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "knee_r": {
+     "strict_worst": 0.963,
+     "strict_fails": [
+      "peak",
+      "rms"
+     ],
+     "cal_peak": 1.464,
+     "cal_rms": 1.881,
+     "cal_env": 1.461,
+     "cal_overload": 2.222,
+     "cal_worst": 1.461,
+     "cal_fails": [],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "ankle_pitch_l": {
+     "strict_worst": 2.607,
+     "strict_fails": [],
+     "cal_peak": 3.962,
+     "cal_rms": 5.9,
+     "cal_env": 3.955,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.955,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "ankle_pitch_r": {
+     "strict_worst": 2.548,
+     "strict_fails": [],
+     "cal_peak": 3.874,
+     "cal_rms": 5.855,
+     "cal_env": 3.866,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.866,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_yaw": {
+     "strict_worst": 3.77,
+     "strict_fails": [],
+     "cal_peak": 5.73,
+     "cal_rms": 18.239,
+     "cal_env": 5.719,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.719,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_pitch": {
+     "strict_worst": 691.794,
+     "strict_fails": [],
+     "cal_peak": 1051.527,
+     "cal_rms": 3398.658,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1051.527,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_l": {
+     "strict_worst": 4.659,
+     "strict_fails": [],
+     "cal_peak": 7.081,
+     "cal_rms": 13.46,
+     "cal_env": 7.068,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 7.068,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_r": {
+     "strict_worst": 4.659,
+     "strict_fails": [],
+     "cal_peak": 7.081,
+     "cal_rms": 14.419,
+     "cal_env": 7.068,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 7.068,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_l": {
+     "strict_worst": 3.889,
+     "strict_fails": [],
+     "cal_peak": 5.912,
+     "cal_rms": 8.453,
+     "cal_env": 5.9,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.9,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_r": {
+     "strict_worst": 3.904,
+     "strict_fails": [],
+     "cal_peak": 5.934,
+     "cal_rms": 8.35,
+     "cal_env": 5.923,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.923,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_l": {
+     "strict_worst": 704.557,
+     "strict_fails": [],
+     "cal_peak": 1365.401,
+     "cal_rms": 1366.84,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1365.401,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_r": {
+     "strict_worst": 661.607,
+     "strict_fails": [],
+     "cal_peak": 1350.196,
+     "cal_rms": 1283.518,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1283.518,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    }
+   }
+  },
+  "packaging_notes": [
+   "ankle_height: 24.8 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+   "foot_length: 93.5 mm -> 101.2 mm (T-0004 foot size)",
+   "foot_width: 41.2 mm -> 60.5 mm (T-0004 foot size)",
+   "shoulder_width: 165.0 mm -> 198.0 mm (T-0004 arm clearance)",
+   "standing height kept at 550 mm: the other vertical proportions scaled x0.920 (thigh 114 mm, shank 114 mm)",
+   "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+   "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+   "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+  ],
+  "rom_clamps": [
+   "squat_120",
+   "sit_to_stand_130"
+  ],
+  "should": {
+   "sit_to_stand_130": {
+    "valid": true,
+    "fails": [
+     "knee_l: peak, rms",
+     "knee_r: peak, rms"
+    ]
+   }
+  },
+  "largest_recoverable_Ns": {
+   "stand_fwd": {
+    "Ns": 0.969,
+    "by": "ankle+1step@200ms",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "stand_lat": {
+    "Ns": 0.975,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_fwd": {
+    "Ns": 0.58,
+    "by": "ankle",
+    "limited_by": "plan: reach / capture point"
+   },
+   "walk_lat_out": {
+    "Ns": 0.821,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_lat_in": {
+    "Ns": 0.577,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   }
+  },
+  "bounds": [
+   {
+    "label": "structure mass x0.55",
+    "mass_kg": 2.731,
+    "strict_worst": 1.21,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.868,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   },
+   {
+    "label": "structure mass x1.4",
+    "mass_kg": 4.414,
+    "strict_worst": 0.805,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.042,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x0.8",
+    "mass_kg": 3.571,
+    "strict_worst": 0.979,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.485,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x1.5",
+    "mass_kg": 3.748,
+    "strict_worst": 0.926,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.405,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "pessimistic linear torque-speed",
+    "mass_kg": 3.622,
+    "strict_worst": 0.963,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.331,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "armature low",
+    "mass_kg": 3.622,
+    "strict_worst": 0.968,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.469,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "armature high",
+    "mass_kg": 3.622,
+    "strict_worst": 0.955,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.449,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "stall low",
+    "mass_kg": 3.622,
+    "strict_worst": 0.722,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.855,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "stall high",
+    "mass_kg": 3.622,
+    "strict_worst": 0.97,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.826,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "rms"
+     ],
+     "knee_r": [
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "walking speed x1.5",
+    "mass_kg": 3.622,
+    "strict_worst": 0.963,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.461,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "benchmark-fit mass (structure x1.56)",
+    "mass_kg": 4.734,
+    "strict_worst": 0.754,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.926,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   }
+  ],
+  "robust_strict": false,
+  "robust_cal": false,
+  "bounds_failing_cal": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.56)"
+  ],
+  "bounds_failing_strict": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.56)"
+  ],
+  "min_cal_worst_over_bounds": 0.855,
+  "seconds": 235.9
+ },
+ {
+  "candidate": "R1x-a18-cut",
+  "height_m": 0.6,
+  "gait": {
+   "stance_knee_flex_deg": 45,
+   "step_time_s": 0.25,
+   "worst_margin": 0.761
+  },
+  "nominal": {
+   "label": "nominal",
+   "mass_kg": 4.212,
+   "strict_worst": 0.761,
+   "strict_worst_joint": "knee_l",
+   "cal_worst": 0.943,
+   "cal_worst_joint": "knee_l",
+   "strict_joint_gates_pass": false,
+   "cal_joint_gates_pass": false,
+   "r10_at_required": {
+    "stand_fwd": true,
+    "stand_lat": true,
+    "walk_fwd": true,
+    "walk_lat_out": true,
+    "walk_lat_in": true
+   },
+   "r10_pass": true,
+   "invalid": {
+    "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+    "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+    "turn": "tether supplied 1.7% of body weight on average (limit 1%)",
+    "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+    "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+    "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+   },
+   "strict_pass": false,
+   "cal_pass": false,
+   "cal_fails": {
+    "knee_l": [
+     "overload_time"
+    ],
+    "knee_r": [
+     "overload_time"
+    ]
+   },
+   "strict_fails": {
+    "knee_l": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time"
+    ],
+    "knee_r": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time"
+    ]
+   },
+   "rows": {
+    "hip_yaw_l": {
+     "strict_worst": 53.653,
+     "strict_fails": [],
+     "cal_peak": 81.552,
+     "cal_rms": 238.629,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 81.552,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_yaw_r": {
+     "strict_worst": 54.033,
+     "strict_fails": [],
+     "cal_peak": 82.13,
+     "cal_rms": 231.985,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 82.13,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_l": {
+     "strict_worst": 1.284,
+     "strict_fails": [],
+     "cal_peak": 1.952,
+     "cal_rms": 4.801,
+     "cal_env": 1.948,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.948,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_r": {
+     "strict_worst": 1.271,
+     "strict_fails": [],
+     "cal_peak": 1.931,
+     "cal_rms": 4.88,
+     "cal_env": 1.928,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.928,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_pitch_l": {
+     "strict_worst": 3.112,
+     "strict_fails": [],
+     "cal_peak": 4.731,
+     "cal_rms": 9.671,
+     "cal_env": 4.722,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.722,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_pitch_r": {
+     "strict_worst": 3.112,
+     "strict_fails": [],
+     "cal_peak": 4.73,
+     "cal_rms": 9.806,
+     "cal_env": 4.722,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.722,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "knee_l": {
+     "strict_worst": 0.761,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "cal_peak": 1.157,
+     "cal_rms": 1.535,
+     "cal_env": 1.154,
+     "cal_overload": 0.943,
+     "cal_worst": 0.943,
+     "cal_fails": [
+      "overload_time"
+     ],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "knee_r": {
+     "strict_worst": 0.761,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "cal_peak": 1.157,
+     "cal_rms": 1.535,
+     "cal_env": 1.154,
+     "cal_overload": 0.943,
+     "cal_worst": 0.943,
+     "cal_fails": [
+      "overload_time"
+     ],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "ankle_pitch_l": {
+     "strict_worst": 2.069,
+     "strict_fails": [],
+     "cal_peak": 3.145,
+     "cal_rms": 4.775,
+     "cal_env": 3.139,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.139,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "ankle_pitch_r": {
+     "strict_worst": 2.057,
+     "strict_fails": [],
+     "cal_peak": 3.127,
+     "cal_rms": 4.736,
+     "cal_env": 3.121,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.121,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_yaw": {
+     "strict_worst": 3.765,
+     "strict_fails": [],
+     "cal_peak": 5.723,
+     "cal_rms": 18.229,
+     "cal_env": 5.713,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.713,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_pitch": {
+     "strict_worst": 481.404,
+     "strict_fails": [],
+     "cal_peak": 731.734,
+     "cal_rms": 2221.709,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 731.734,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_l": {
+     "strict_worst": 3.699,
+     "strict_fails": [],
+     "cal_peak": 5.623,
+     "cal_rms": 11.217,
+     "cal_env": 5.612,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.612,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_r": {
+     "strict_worst": 3.699,
+     "strict_fails": [],
+     "cal_peak": 5.623,
+     "cal_rms": 11.949,
+     "cal_env": 5.612,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.612,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_l": {
+     "strict_worst": 3.154,
+     "strict_fails": [],
+     "cal_peak": 4.794,
+     "cal_rms": 6.8,
+     "cal_env": 4.785,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.785,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_r": {
+     "strict_worst": 3.17,
+     "strict_fails": [],
+     "cal_peak": 4.819,
+     "cal_rms": 6.67,
+     "cal_env": 4.81,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.81,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_l": {
+     "strict_worst": 599.312,
+     "strict_fails": [],
+     "cal_peak": 1155.093,
+     "cal_rms": 1162.665,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1155.093,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_r": {
+     "strict_worst": 562.731,
+     "strict_fails": [],
+     "cal_peak": 1145.098,
+     "cal_rms": 1091.699,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1091.699,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    }
+   }
+  },
+  "packaging_notes": [
+   "ankle_height: 27.0 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+   "foot_length: 102.0 mm -> 110.4 mm (T-0004 foot size)",
+   "foot_width: 45.0 mm -> 66.0 mm (T-0004 foot size)",
+   "shoulder_width: 180.0 mm -> 216.0 mm (T-0004 arm clearance)",
+   "standing height kept at 600 mm: the other vertical proportions scaled x0.930 (thigh 126 mm, shank 126 mm)",
+   "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+   "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+   "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+  ],
+  "rom_clamps": [
+   "squat_120",
+   "sit_to_stand_130"
+  ],
+  "should": {
+   "sit_to_stand_130": {
+    "valid": true,
+    "fails": [
+     "knee_l: peak, rms, envelope, overload_time",
+     "knee_r: peak, rms, envelope, overload_time"
+    ]
+   }
+  },
+  "largest_recoverable_Ns": {
+   "stand_fwd": {
+    "Ns": 1.216,
+    "by": "ankle+2step@200ms",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "stand_lat": {
+    "Ns": 0.858,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_fwd": {
+    "Ns": 0.727,
+    "by": "ankle+1step@250ms",
+    "limited_by": "plan: reach / capture point"
+   },
+   "walk_lat_out": {
+    "Ns": 0.846,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_lat_in": {
+    "Ns": 0.516,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   }
+  },
+  "bounds": [
+   {
+    "label": "structure mass x0.55",
+    "mass_kg": 3.056,
+    "strict_worst": 1.016,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.542,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {}
+   },
+   {
+    "label": "structure mass x1.4",
+    "mass_kg": 5.241,
+    "strict_worst": 0.62,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.735,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x0.8",
+    "mass_kg": 4.162,
+    "strict_worst": 0.772,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.971,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x1.5",
+    "mass_kg": 4.339,
+    "strict_worst": 0.735,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.893,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "pessimistic linear torque-speed",
+    "mass_kg": 4.212,
+    "strict_worst": 0.761,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.943,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "armature low",
+    "mass_kg": 4.212,
+    "strict_worst": 0.762,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.962,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.9% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "armature high",
+    "mass_kg": 4.212,
+    "strict_worst": 0.753,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.952,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "stall low",
+    "mass_kg": 4.212,
+    "strict_worst": 0.571,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.658,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "stall high",
+    "mass_kg": 4.212,
+    "strict_worst": 0.791,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.443,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "walking speed x1.5",
+    "mass_kg": 4.212,
+    "strict_worst": 0.761,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.943,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "benchmark-fit mass (structure x1.61)",
+    "mass_kg": 5.773,
+    "strict_worst": 0.565,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.676,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   }
+  ],
+  "robust_strict": false,
+  "robust_cal": false,
+  "bounds_failing_cal": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.61)"
+  ],
+  "bounds_failing_strict": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.61)"
+  ],
+  "min_cal_worst_over_bounds": 0.658,
+  "seconds": 239.5
+ },
+ {
+  "candidate": "R1x-a18-cut",
+  "height_m": 0.65,
+  "gait": {
+   "stance_knee_flex_deg": 40,
+   "step_time_s": 0.25,
+   "worst_margin": 0.601
+  },
+  "nominal": {
+   "label": "nominal",
+   "mass_kg": 4.91,
+   "strict_worst": 0.601,
+   "strict_worst_joint": "knee_l",
+   "cal_worst": 0.752,
+   "cal_worst_joint": "knee_l",
+   "strict_joint_gates_pass": false,
+   "cal_joint_gates_pass": false,
+   "r10_at_required": {
+    "stand_fwd": true,
+    "stand_lat": true,
+    "walk_fwd": true,
+    "walk_lat_out": true,
+    "walk_lat_in": true
+   },
+   "r10_pass": true,
+   "invalid": {
+    "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+    "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+    "turn": "tether supplied 1.8% of body weight on average (limit 1%)",
+    "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+    "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+    "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+   },
+   "strict_pass": false,
+   "cal_pass": false,
+   "cal_fails": {
+    "knee_l": [
+     "peak",
+     "envelope",
+     "overload_time"
+    ],
+    "knee_r": [
+     "peak",
+     "envelope",
+     "overload_time"
+    ]
+   },
+   "strict_fails": {
+    "knee_l": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time"
+    ],
+    "knee_r": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time"
+    ]
+   },
+   "rows": {
+    "hip_yaw_l": {
+     "strict_worst": 39.711,
+     "strict_fails": [],
+     "cal_peak": 60.361,
+     "cal_rms": 174.841,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 60.361,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_yaw_r": {
+     "strict_worst": 39.948,
+     "strict_fails": [],
+     "cal_peak": 60.721,
+     "cal_rms": 169.476,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 60.721,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_l": {
+     "strict_worst": 1.04,
+     "strict_fails": [],
+     "cal_peak": 1.581,
+     "cal_rms": 3.79,
+     "cal_env": 1.578,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.578,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_r": {
+     "strict_worst": 1.032,
+     "strict_fails": [],
+     "cal_peak": 1.569,
+     "cal_rms": 3.876,
+     "cal_env": 1.566,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.566,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_pitch_l": {
+     "strict_worst": 2.552,
+     "strict_fails": [],
+     "cal_peak": 3.879,
+     "cal_rms": 8.211,
+     "cal_env": 3.872,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.872,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_pitch_r": {
+     "strict_worst": 2.552,
+     "strict_fails": [],
+     "cal_peak": 3.879,
+     "cal_rms": 8.302,
+     "cal_env": 3.872,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.872,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "knee_l": {
+     "strict_worst": 0.601,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "cal_peak": 0.913,
+     "cal_rms": 1.285,
+     "cal_env": 0.912,
+     "cal_overload": 0.752,
+     "cal_worst": 0.752,
+     "cal_fails": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "knee_r": {
+     "strict_worst": 0.601,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "cal_peak": 0.913,
+     "cal_rms": 1.285,
+     "cal_env": 0.912,
+     "cal_overload": 0.752,
+     "cal_worst": 0.752,
+     "cal_fails": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "ankle_pitch_l": {
+     "strict_worst": 1.679,
+     "strict_fails": [],
+     "cal_peak": 2.553,
+     "cal_rms": 3.872,
+     "cal_env": 2.548,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.548,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "ankle_pitch_r": {
+     "strict_worst": 1.657,
+     "strict_fails": [],
+     "cal_peak": 2.518,
+     "cal_rms": 3.837,
+     "cal_env": 2.514,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.514,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_yaw": {
+     "strict_worst": 3.76,
+     "strict_fails": [],
+     "cal_peak": 5.715,
+     "cal_rms": 18.216,
+     "cal_env": 5.704,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.704,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_pitch": {
+     "strict_worst": 340.377,
+     "strict_fails": [],
+     "cal_peak": 517.373,
+     "cal_rms": 1513.276,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 517.373,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_l": {
+     "strict_worst": 2.944,
+     "strict_fails": [],
+     "cal_peak": 4.475,
+     "cal_rms": 9.193,
+     "cal_env": 4.467,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.467,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_r": {
+     "strict_worst": 2.944,
+     "strict_fails": [],
+     "cal_peak": 4.475,
+     "cal_rms": 9.756,
+     "cal_env": 4.467,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.467,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_l": {
+     "strict_worst": 2.554,
+     "strict_fails": [],
+     "cal_peak": 3.883,
+     "cal_rms": 5.453,
+     "cal_env": 3.875,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.875,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_r": {
+     "strict_worst": 2.571,
+     "strict_fails": [],
+     "cal_peak": 3.908,
+     "cal_rms": 5.321,
+     "cal_env": 3.901,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.901,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_l": {
+     "strict_worst": 509.458,
+     "strict_fails": [],
+     "cal_peak": 978.643,
+     "cal_rms": 988.348,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 978.643,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_r": {
+     "strict_worst": 478.33,
+     "strict_fails": [],
+     "cal_peak": 971.811,
+     "cal_rms": 927.96,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 927.96,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    }
+   }
+  },
+  "packaging_notes": [
+   "ankle_height: 29.2 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+   "foot_length: 110.5 mm -> 119.6 mm (T-0004 foot size)",
+   "foot_width: 48.8 mm -> 71.5 mm (T-0004 foot size)",
+   "shoulder_width: 195.0 mm -> 234.0 mm (T-0004 arm clearance)",
+   "standing height kept at 650 mm: the other vertical proportions scaled x0.940 (thigh 137 mm, shank 137 mm)",
+   "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+   "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+   "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+  ],
+  "rom_clamps": [
+   "squat_120",
+   "sit_to_stand_130"
+  ],
+  "should": {
+   "sit_to_stand_130": {
+    "valid": true,
+    "fails": [
+     "knee_l: peak, rms, envelope, overload_time",
+     "knee_r: peak, rms, envelope, overload_time"
+    ]
+   }
+  },
+  "largest_recoverable_Ns": {
+   "stand_fwd": {
+    "Ns": 0.997,
+    "by": "ankle",
+    "limited_by": "plan: reach / capture point"
+   },
+   "stand_lat": {
+    "Ns": 0.84,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_fwd": {
+    "Ns": 0.658,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_lat_out": {
+    "Ns": 0.829,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_lat_in": {
+    "Ns": 0.641,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   }
+  },
+  "bounds": [
+   {
+    "label": "structure mass x0.55",
+    "mass_kg": 3.439,
+    "strict_worst": 0.837,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.163,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "structure mass x1.4",
+    "mass_kg": 6.217,
+    "strict_worst": 0.364,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.364,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.9% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x0.8",
+    "mass_kg": 4.859,
+    "strict_worst": 0.609,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.758,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x1.5",
+    "mass_kg": 5.037,
+    "strict_worst": 0.583,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.73,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "pessimistic linear torque-speed",
+    "mass_kg": 4.91,
+    "strict_worst": 0.601,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.752,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": false,
+     "walk_lat_in": true
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "armature low",
+    "mass_kg": 4.91,
+    "strict_worst": 0.601,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.752,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 2.0% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "armature high",
+    "mass_kg": 4.91,
+    "strict_worst": 0.595,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.758,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "stall low",
+    "mass_kg": 4.91,
+    "strict_worst": 0.35,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.35,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "envelope"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ]
+    }
+   },
+   {
+    "label": "stall high",
+    "mass_kg": 4.91,
+    "strict_worst": 0.662,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.99,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "walking speed x1.5",
+    "mass_kg": 4.91,
+    "strict_worst": 0.601,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.752,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": true,
+     "walk_lat_out": true,
+     "walk_lat_in": true
+    },
+    "r10_pass": true,
+    "invalid": {
+     "walk_forward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "benchmark-fit mass (structure x1.62)",
+    "mass_kg": 6.928,
+    "strict_worst": 0.342,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.342,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": true,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.9% of body weight on average (limit 1%)",
+     "wave": "reference infeasible: no abducted-arm pose found: arm joints missing or ranges too small; COM tracki",
+     "pickup": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm",
+     "pickup_0.45m": "reference infeasible: no gripper/arm joints: pickup not possible; COM tracking error 0.00 mm"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "envelope"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ]
+    }
+   }
+  ],
+  "robust_strict": false,
+  "robust_cal": false,
+  "bounds_failing_cal": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.62)"
+  ],
+  "bounds_failing_strict": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.62)"
+  ],
+  "min_cal_worst_over_bounds": 0.342,
+  "seconds": 260.7
+ }
+]
