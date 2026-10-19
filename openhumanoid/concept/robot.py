@@ -210,7 +210,7 @@ def part_list(concept: dict) -> list[dict]:
 
 def build_robot(concept, *, actuator_variants: dict | None = None, structure_scale: float = 1.0,
                 wiring_scale: float = 1.0) -> Robot:
-    """structure_scale: multiplier on the printed structure+shell mass (nominal 1.0; evidence band 0.9-1.8).
+    """structure_scale: multiplier on the printed structure+shell mass (nominal 1.0; band 0.55-1.4 around the ODM-recentred 11.9 kg per m^3).
     wiring_scale: multiplier on wiring harness + misc electronics (nominal 1.0; band 0.8-1.5).
     Servo, battery and board masses are taken from the catalog as listed (no band)."""
     concept = load_concept(concept)
