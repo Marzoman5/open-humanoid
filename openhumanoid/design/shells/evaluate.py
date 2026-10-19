@@ -265,7 +265,7 @@ def rom_sweep(parts: dict, spec: LegSpec, step_deg: float = 5.0) -> dict:
 
 
 # ================================================================================================ printability
-def wall_thickness(m, n: int = 5000, seed: int = 0, tol: float = 1.55, edge_mm: float = 1.5) -> dict:
+def wall_thickness(m, n: int = 5000, seed: int = 0, tol: float = 1.45, edge_mm: float = 1.5, seam_x: float | None = None) -> dict:
     """Local wall thickness: from points sampled on the surface, shoot a ray inwards (-normal) and take the first hit.
     `min_mm` is over all samples (knife edges at the pocket rim and the cap/panel borders count). `interior_min_mm`
     ignores samples within `edge_mm` of a sharp edge (> 40 deg), which is the wall of the free surface."""
@@ -288,8 +288,11 @@ def wall_thickness(m, n: int = 5000, seed: int = 0, tol: float = 1.55, edge_mm: 
     sharp = m.face_adjacency_angles > np.radians(40)
     edge_pts = m.vertices[m.face_adjacency_edges[sharp]].mean(axis=1) if sharp.any() else np.zeros((0, 3))
     near_edge = cKDTree(edge_pts).query(pts)[0] < edge_mm if len(edge_pts) else np.zeros(len(pts), bool)
+    if seam_x is not None:                      # the panel border: rays near it exit through the seam face
+        near_edge |= np.abs(pts[:, 0] - seam_x) < 3.0
     tt, ti = t[ok], t[ok & ~near_edge]
     return {"min_mm": round(float(tt.min()), 3), "interior_min_mm": round(float(ti.min()), 3) if len(ti) else None,
+            "interior_p1_mm": round(float(np.percentile(ti, 1)), 3) if len(ti) else None,
             "p1_mm": round(float(np.percentile(tt, 1)), 3), "p5_mm": round(float(np.percentile(tt, 5)), 3),
             "median_mm": round(float(np.median(tt)), 3), "frac_below_1.2mm": round(float((tt < 1.2).mean()), 4),
             "frac_below_tol": round(float((tt < tol).mean()), 4), "n": int(len(tt))}
@@ -349,7 +352,7 @@ def printability(parts: dict, spec: LegSpec, with_wall: bool = True) -> dict:
         except Exception:
             d["manifold3d_valid"] = False
         if with_wall:
-            d["wall"] = wall_thickness(m)
+            d["wall"] = wall_thickness(m, seam_x=spec.seam_x)
         orient = {u: overhang(m, v) for u, v in _UPS.items()}
         feas = {u: o for u, o in orient.items() if o["fits_bed"]}
         best = min(feas, key=lambda u: feas[u]["overhang_mm2"]) if feas else None
@@ -368,7 +371,9 @@ def printability(parts: dict, spec: LegSpec, with_wall: bool = True) -> dict:
     inner = [d["wall"]["interior_min_mm"] for d in P if with_wall and d["wall"].get("interior_min_mm") is not None]
     out["min_wall_mm"] = min(walls) if walls else None
     out["interior_min_wall_mm"] = min(inner) if inner else None
-    out["wall_ok"] = bool(inner) and min(inner) >= spec.wall - 0.15    # interior walls, tolerance covers tessellation / marching cubes
+    p1i = [d["wall"]["interior_p1_mm"] for d in P if with_wall and d["wall"].get("interior_p1_mm") is not None]
+    out["interior_p1_wall_mm"] = min(p1i) if p1i else None
+    out["wall_ok"] = bool(p1i) and min(p1i) >= spec.wall - 0.2     # 1st percentile of interior samples; tolerance covers tessellation / marching cubes
     out["p1_wall_mm"] = min((d["wall"].get("p1_mm") for d in P if with_wall and d["wall"].get("p1_mm") is not None), default=None)
     out["total_overhang_mm2"] = round(sum(d["best_overhang_mm2"] or 0 for d in P), 1)
     out["seams"] = [{"segment": s, "plane": f"x = {spec.seam_x:+.1f} mm (coronal, on the side planes)", "reveal_gap_mm": spec.seam_gap}

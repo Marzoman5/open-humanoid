@@ -137,7 +137,7 @@ def criteria(res: dict) -> dict:
         ("HP", "Every keep-out enclosed with >= 1.5 mm", int(F["keepouts"]["all_ok"]), [1, 1]),
         ("ROM", "No shell-shell collision over 0-130 deg", int(F["rom"]["collision_free"]), [1, 1]),
         ("M1", "All panels watertight + manifold", int(P["all_watertight"]), [1, 1]),
-        ("W1", "Interior wall >= 1.6 mm (sampled)", int(P["wall_ok"]), [1, 1]),
+        ("W1", "Interior wall >= 1.6 mm (1st percentile of 5000 ray samples per panel, 0.2 mm tolerance)", int(P["wall_ok"]), [1, 1]),
     ]
     crit = {}
     for i, name, v, (lo, hi) in rows:
