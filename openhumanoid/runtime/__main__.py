@@ -69,8 +69,18 @@ def cmd_pushscan(a) -> int:
 
 def cmd_run(a) -> int:
     from .frontends.web import JsonLineServer, WebServer
-    from .scenarios import make_sim
-    rt, hal = make_sim()
+    from .scenarios import get_model, make_sim
+    fe = {}
+    if a.config:
+        from .config import load_config
+        cfg = load_config(a.config)
+        fe = cfg["frontends"]
+        rt, hal = make_sim(get_model(cfg["concept"]), sim=cfg["sim"], rt_cfg=cfg["runtime"])
+    else:
+        rt, hal = make_sim()
+    a.web = a.web or int(fe.get("web_port", 0))
+    a.tcp = a.tcp or int(fe.get("tcp_port", 0))
+    a.host = fe.get("host", a.host) if a.host == "127.0.0.1" else a.host
     if a.web:
         w = WebServer(rt.bus, a.host, a.web, a.token).start()
         print(f"phone UI on http://{a.host}:{w.port}/")
@@ -107,6 +117,7 @@ def main(argv=None) -> int:
     s.add_argument("dirs", nargs="*")
     s.set_defaults(fn=cmd_pushscan)
     s = sub.add_parser("run")
+    s.add_argument("--config", default=None, help="YAML, e.g. software/configs/adam.yaml")
     s.add_argument("--web", type=int, default=0)
     s.add_argument("--tcp", type=int, default=0)
     s.add_argument("--host", default="127.0.0.1")

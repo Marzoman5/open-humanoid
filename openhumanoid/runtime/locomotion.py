@@ -61,7 +61,7 @@ class GaitConfig:
     gap_min: float = 0.016            # min clear gap between the feet (lateral) [m]
     capture_x: float = 0.030          # in hold: step when the measured DCM is this far from the support centre (forward/back) [m]
     capture_y: float = 0.045          # (sideways)
-    capture_enable: bool = True
+    capture_enable: bool = False      # measured: a standing capture step does not beat the passive servo stiffness + ankle loop here (docs/software.md), so it is opt-in
     arm_swing: float = 1.0
 
 

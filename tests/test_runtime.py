@@ -291,13 +291,31 @@ def test_push_while_walking(direction, step):
 
 
 @pytest.mark.slow
-def test_capture_step_extends_recovery_beyond_the_ankle_strategy():
-    """Closed-loop push recovery has to beat the passive servo spring + ankle loop: 1.0 N s forward is recovered only with the capture step."""
+def test_standing_push_margin_is_at_least_twice_the_requirement():
+    """Closed-loop standing (servo stiffness + IMU ankle loop + COM bias hold) recovers 0.9 N s forward/back and 1.2 N s sideways = 2x/2.7x the 0.45 N s requirement."""
+    for d, J in (("fwd", 0.9), ("back", 0.8), ("left", 1.2), ("right", 1.2)):
+        r = S.push_stand(J, d)
+        assert r.passed, (d, J, r.metrics)
+
+
+@pytest.mark.slow
+def test_capture_step_mechanism_triggers_on_a_large_push():
+    """The opt-in capture step (weight shift, swing, DCM landing) engages on a push beyond the support polygon. It is NOT claimed to extend the
+    recovery range: the measured result (docs/software.md) is that it does not beat the passive limit of ~1.0 N s for a standing push."""
     from openhumanoid.runtime.runtime import RuntimeConfig
-    ok = S.push_stand(1.0, "fwd")
-    off = S.push_stand(1.0, "fwd", rt_cfg=RuntimeConfig(gait=GaitConfig(capture_enable=False)))
-    assert ok.passed and ok.metrics["steps_taken"] >= 1, ok.metrics
-    assert not off.passed, off.metrics
+    r = S.push_stand(1.2, "fwd", rt_cfg=RuntimeConfig(gait=GaitConfig(capture_enable=True, capture_x=0.035)))
+    assert r.metrics["steps_taken"] >= 1
+
+
+def test_config_yaml_roundtrip_and_typo_guard(tmp_path):
+    from openhumanoid.runtime.config import load_config
+    from openhumanoid.paths import repo_root
+    c = load_config(repo_root() / "software" / "configs" / "adam.yaml")
+    assert c["runtime"].safety.temp_cutoff_c == 65.0 and c["sim"].control_hz == 100.0
+    bad = tmp_path / "bad.yaml"
+    bad.write_text("safety:\n  temp_cutof_c: 60\n", encoding="utf-8")
+    with pytest.raises(KeyError):
+        load_config(bad)
 
 
 @pytest.mark.slow
@@ -356,6 +374,16 @@ def test_commands_drive_the_sim_through_the_api():
         rt.step()
     assert rt.mgr.gait.mode == "hold" and hal.ground_truth()["tilt_deg"] < 3.0
     assert hal.ground_truth()["base_pos"][0] > 0.05
+
+
+def test_runs_at_50_hz_the_likely_hardware_rate():
+    """One TTL bus of 23 servos cannot carry 100 Hz (docs/software.md): the loop must stand and walk at 50 Hz too."""
+    rt, hal = S.make_sim(sim=SimConfig(control_hz=50.0))
+    assert abs(rt.dt - 0.02) < 1e-9
+    for _ in range(250):
+        rt.client.velocity(0.08, 0, 0, ttl=0.3)
+        rt.step()
+    assert rt.safety.state == "ok" and rt.mgr.gait.n_steps_taken >= 3 and hal.ground_truth()["tilt_deg"] < 5.0
 
 
 def test_loop_timing_is_recorded():

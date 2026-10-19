@@ -1,0 +1,25 @@
+# Runtime configuration for Adam (loaded by openhumanoid.runtime.config.load_config).
+# The robot itself (joints, limits, servo models, masses) comes from the concept below, never from this file.
+concept: variants/adam/concepts/R1-P1r-0p55-3s-sts3250-knee-hiproll.yaml   # R1 provisional hardware (23 DOF, 3S, Pi 5); swap for the baseline-v2 concept when T-20261019-4ab5 merges
+control_hz: 100          # 50-100 Hz allowed; 100 Hz is what every number in docs/software.md was measured at
+gait:
+  step_time: 0.36
+  clearance: 0.014
+  capture_enable: true
+stabiliser:
+  kp_pitch: 0.35
+  kd_pitch: 0.10
+safety:
+  temp_derate_c: 55.0
+  temp_cutoff_c: 65.0      # servo firmware cuts at 70 C
+  batt_warn_v_cell: 3.55
+  batt_cut_v_cell: 3.35
+  fall_tilt_deg: 32.0
+sim:
+  gyro_noise: 0.004
+  imu_latency_s: 0.006
+  bus_latency_s: 0.003
+frontends:
+  web_port: 8080           # phone UI (join the robot's Wi-Fi hotspot); 0 = off
+  tcp_port: 8765           # JSON-lines API for scripts and the later LLM/MCP plugin; 0 = off
+  host: 127.0.0.1          # 0.0.0.0 to reach it from a phone; then set a token
