@@ -250,7 +250,7 @@ def _thermal_block(b: Bundle, validation: dict) -> dict:
     if not b.thermal or not b.ms:
         return {}
     th, robot, ms = b.thermal, b.robot, b.ms
-    limit = config.value("gates.thermal_limit_c") if False else config.gate("thermal_limit_c")
+    limit = config.gate("thermal_limit_c")
     names = robot.names
     rated = np.array([robot.servo[n].rated_continuous_nm for n in names])
     rows = {}
@@ -410,7 +410,7 @@ def evaluate(path_or_concept, *, out_root: Path | None = None, samples: int | No
                      "proportions_m": {k: round(v, 4) for k, v in robot.geom.items()}, "packaging_floors_applied": _height_floor_note(robot),
                      "ankle_pitch_range_deg": next((j["range"] for j in robot.joints if j["base"] == "ankle_pitch"), None)}
     rep["mass"] = {"breakdown_kg": robot.mass_breakdown, "total_kg": round(robot.total_mass, 3), "sanity": msan,
-                   "bands": {"structure": [gates and config.thresholds()["mass"]["structure_factor"]["low"], config.thresholds()["mass"]["structure_factor"]["high"]],
+                   "bands": {"structure": [config.thresholds()["mass"]["structure_factor"]["low"], config.thresholds()["mass"]["structure_factor"]["high"]],
                              "wiring_electronics": [config.thresholds()["mass"]["wiring_electronics_factor"]["low"], config.thresholds()["mass"]["wiring_electronics_factor"]["high"]]}}
     rep["motions"] = {n: {"valid": d.valid, "invalid_reason": d.invalid_reason, "tether_mean_pct_bw": round(100 * d.assist_mean, 2),
                           "notes": d.notes[:3], "meta": {k: v for k, v in nominal.refs[n].meta.items() if isinstance(v, (int, float, str, list)) and k not in ("gait",)}}
@@ -431,29 +431,52 @@ def evaluate(path_or_concept, *, out_root: Path | None = None, samples: int | No
         rep["mass_cases"] = _mass_cases(concept, table_height, nominal)
         n = samples or config.thresholds()["uncertainty"]["monte_carlo"]["n_samples"]["value"]
         rep["monte_carlo"] = _monte_carlo(concept, table_height, int(n), config.thresholds()["uncertainty"]["monte_carlo"]["seed"])
-    # ---- verdict
-    reasons = list(nominal.failing())
+    # ---- verdict: blockers fail the candidate, warnings do not
+    blockers = list(nominal.failing())
+    warnings = []
     p = rep.get("power", {})
-    if rep.get("monte_carlo") and not rep["monte_carlo"]["p95_peak_gate_ok"]:
-        reasons.append(f"Monte Carlo p95 peak above the gate at {rep['monte_carlo']['worst_joint_p95_peak']} ({rep['monte_carlo']['worst_p95_peak']:.2f} of stall)")
+    mc = rep.get("monte_carlo")
+    if mc and not mc["p95_peak_gate_ok"]:
+        blockers.append(f"Monte Carlo p95 peak above the gate at {mc['worst_joint_p95_peak']} ({mc['worst_p95_peak']:.2f} of stall)")
+    th = rep.get("thermal", {})
+    if th and not th["rms_gate_ok"]:
+        blockers.append("mixed-schedule RMS torque above the vendor-rated continuous torque on at least one joint")
+    sim = rep.get("servo_in_the_loop", {})
+    if sim.get("pickup") is not None and sim["pickup"].get("grasp_ok") is False:
+        blockers.append("pickup: the servo-in-the-loop grasp did not lift the 150 g object")
+    bus = p.get("bus", {})
+    if bus and not bus["min_voltage_ok"]:
+        blockers.append(f"bus: {bus['min_voltage_at_far_servo_v']} V at the farthest servo is below the servo minimum {bus['servo_min_operating_v']} V")
+    if bus and not bus["pack_c_ok"]:
+        blockers.append("pack: peak current above the C-rating limit")
+    if p and not p["regulator"]["ok_at_peak"]:
+        blockers.append("regulator cannot carry the peak 5 V rail current")
+    cost = rep["cost"]
+    if not cost["within_cap_typical"]:
+        warnings.append(f"cost ${cost['total_usd']['typical']} typical is above the ${cost['budget_cap_usd']} cap (high band ${cost['total_usd']['high']}); prices are unverified")
+    for aid, vr in p.get("voltage_rating", {}).items():
+        if vr["over_rating_at_full_v"] > 0:
+            warnings.append(f"{aid}: full charge {vr['pack_full_v']} V is {vr['over_rating_at_full_v']} V over the rating for {100 * vr['soc_share_over']:.0f}% of the discharge ({vr['mitigation']['action'] if vr['mitigation'] else ''})")
+    if p and not p["runtime_ok"]:
+        warnings.append(f"runtime {p['runtime_min']} min is below the 15 min Should")
+    if th and not th["thermal_model_usable"]:
+        warnings.append("thermal model failed the Robonine replay: thermal temperatures are indicative only")
     rep["gate_results"] = {
         "motions_valid": not nominal.invalid, "joint_gates_nominal": nominal.passes,
-        "p95_peak_ok": rep.get("monte_carlo", {}).get("p95_peak_gate_ok"),
-        "rms_vs_rated_ok": rep["thermal"].get("rms_gate_ok") if rep.get("thermal") else None,
-        "thermal_10min_below_70c": bool(rep["thermal"]["T_10min_max_c"] < config.gate("thermal_limit_c")) if rep.get("thermal") else None,
-        "thermal_model_usable": rep["thermal"].get("thermal_model_usable") if rep.get("thermal") else None,
-        "runtime_ok(info)": p.get("runtime_ok"), "bus_min_voltage_ok": p.get("bus", {}).get("min_voltage_ok"), "pack_c_ok": p.get("bus", {}).get("pack_c_ok"),
-        "grasp_ok": rep.get("servo_in_the_loop", {}).get("pickup", {}).get("grasp_ok"),
-        "tracking_noted": {k: v["rms_err_deg"] for k, v in rep.get("servo_in_the_loop", {}).items()}}
-    ok = nominal.passes and (rep.get("monte_carlo", {}).get("p95_peak_gate_ok", True))
+        "p95_peak_ok": mc["p95_peak_gate_ok"] if mc else None, "rms_vs_rated_mixed_ok": th.get("rms_gate_ok"),
+        "thermal_10min_below_70c(info)": bool(th["T_10min_max_c"] < config.gate("thermal_limit_c")) if th else None,
+        "thermal_model_usable": th.get("thermal_model_usable"), "runtime_ok(info)": p.get("runtime_ok"),
+        "bus_min_voltage_ok": bus.get("min_voltage_ok"), "pack_c_ok": bus.get("pack_c_ok"),
+        "grasp_ok": sim.get("pickup", {}).get("grasp_ok"), "tracking_noted_rms_deg": {k: v["rms_err_deg"] for k, v in sim.items()}}
+    ok = not blockers
     robust = None
     if not quick:
         robust = all(r["passes"] for r in rep["bounds_sweep"])
         rep["robust_to_all_bounds"] = robust
         rep["passes_at_benchmark_mass"] = rep["mass_cases"]["cases"]["benchmark-fit mass"]["passes"]
     rep["verdict"] = {"status": "PASS" if ok else "FAIL", "robust_to_all_bounds": robust,
-                      "passes_at_benchmark_mass": rep.get("passes_at_benchmark_mass"), "reasons": reasons[:12],
-                      "meaning": "PASS = every frozen motion valid, nominal joint gates met, Monte Carlo p95 peak within the gate. 'robust' and 'benchmark mass' are the decision-rule checks (challenge-1)."}
+                      "passes_at_benchmark_mass": rep.get("passes_at_benchmark_mass"), "reasons": blockers[:14], "warnings": warnings,
+                      "meaning": "PASS = no blocker: every frozen motion valid, nominal joint gates met, Monte Carlo p95 peak and mixed RMS within the gates, grasp, bus and regulator OK. Warnings (cost, voltage rating, runtime, unusable thermal model) do not flip it. 'robust' and 'benchmark mass' are the decision-rule checks (challenge-1): a PASS that is not robust is not a decision."}
     rep["limitations"] = LIMITATIONS
     rep["provenance"] = provenance.collect(robot)
     rep["wall_seconds"] = round(time.time() - t0, 1)
@@ -492,8 +515,10 @@ def to_markdown(r: dict) -> str:
     L = [generated_header("concept evaluate", "<!--").rstrip() + " -->", f"# Concept report: {r['candidate']}", "", r["description"], ""]
     v = r["verdict"]
     L += [f"**Verdict: {v['status']}** (robust to all bounds: {v['robust_to_all_bounds']}; passes at benchmark mass: {v['passes_at_benchmark_mass']})", ""]
-    for x in v["reasons"][:12]:
-        L.append(f"- {x}")
+    for x in v["reasons"][:14]:
+        L.append(f"- BLOCKER: {x}")
+    for x in v["warnings"]:
+        L.append(f"- warning: {x}")
     d = r["design"]
     L += ["", "## Design", f"- {d['dof']} DOF, template `{d['template']}`, height {d['height_m']} m, actuators {d['actuators']}",
           f"- packaging floors applied: {d['packaging_floors_applied'] or 'none'}"]
