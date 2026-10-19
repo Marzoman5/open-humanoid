@@ -4,7 +4,7 @@
 # R1 landmarks), a vendor-CAD servo dimension (catalog/actuators/sts3215-12v.yaml), a dfm.yaml rule, or a stated design choice of region B.
 # Change requests go through the commander; B re-runs its checks against any change.
 schema: contract-ab/0.1
-status: published 2026-10-19 (v1)
+status: "published 2026-10-19, v3 (pelvis pocket = IMU + leg-bus adapter; Pi 5, buck, arm/head adapter, star, fuse in the torso)"
 owner: "region B (cad-upper); consumer: region A"
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -39,52 +39,58 @@ waist:
        note: "torso floor + hub sweep (+-60 deg): nothing of A above z 390.75 inside r 44 (waist shell band z 376..402 is B's)"}
     - {name: spigot, shape: cylinder, centre: [0, 0, 0], r: 13.5, z: [382.75, 391.75], note: "rotating spigot + inner race + horn; 1.0 mm moving gap included"}
   design_loads_at_bearing:               # for A's stator/deck sizing; B checks its own side
-    upper_body_mass_kg: 1.45              # region B estimate (arms, head, chest, pack); replaced by B's CAD mass when exported
-    standing_axial_N: 14.2
+    upper_body_mass_kg: 1.65              # region B estimate (arms, head, chest, pack, Pi 5 + adapter + buck); replaced by B's CAD mass at export
+    standing_axial_N: 16.2
     fall_case: "forward fall onto the arms/chest: 30 g peak on the upper-body COM (research/methods/d drop-load rule, 0.15 m above the waist)"
-    fall_moment_Nm: 64.0                  # 1.45 kg x 9.81 x 30 x 0.15
-    fall_radial_N: 427.0                  # 1.45 x 9.81 x 30
+    fall_moment_Nm: 72.8                  # 1.65 kg x 9.81 x 30 x 0.15
+    fall_radial_N: 486.0                  # 1.65 x 9.81 x 30
     servo_stall_torque_Nm: 2.94           # STS3215 12 V 30 kg*cm: the stator's anti-rotation must take this with SF >= 3 (8.8 N*m)
 
 # --------------------------------------------------------------------------------------------------------------------------------
-electronics_tray:
-  owner: "B designs the tray and its contents (ADR 0015 amendment); A provides the cavity, the mounting face and keeps the zone free"
+electronics_pocket:
+  owner: "B designs the tray and its contents; A provides the pocket, the mounting face and keeps the zone free (maintainer, v3)"
   host_link: pelvis
-  zone: {x: [-57.0, -16.0], y: [-50.0, 50.0], z: [312.0, 380.0]}
+  zone: {x: [-44.0, -16.0], y: [-57.0, 57.0], z: [345.0, 378.0]}
   zone_note: >-
-    R1's bay (x -37..-14.7, z 313..374.6) holds the Pi 5 only. Pi 5 + 2 bus adapters (42 x 33 board, Waveshare wiki) + buck + IMU need two
-    layers: the R2a pelvis rear must grow ~13 mm (x -44 -> -57 inside the shell, ~-60 outside). This is a CAD finding reported to the
-    maintainer with the head growth; if A cannot give x -57, A tells B before building and B moves the adapters (fallback: torso).
+    The only volume region A can give at R2a depth: the hip-yaw links sweep the lower pelvis rear across the full width (yaw +-45 deg).
+    A Pi 5 does not fit here, so (maintainer, v3) the Pi 5, its buck, the arm/head-bus adapter, the star and the fuse go in the TORSO by the
+    pack (B). The pocket holds the BNO085 IMU and the LEG-bus adapter only. The buck stays with the Pi (5 V / 5 A must not run through the
+    waist).
   mounting_face_A: {plane_x: -16.0, normal: [-1, 0, 0], note: "flat vertical face (A's rear bulkhead) the tray seats on"}
-  inserts_A:                              # heat-set M3 inserts in A's bulkhead, axis -x (screws come from the back; tool corridor along +x)
+  inserts_A:                              # heat-set M3 inserts in A's bulkhead, axis -x (screws from the back; tool corridor along +x, 30 mm free)
     thread: M3
-    points_yz: [[-42.0, 318.0], [42.0, 318.0], [-42.0, 374.0], [42.0, 374.0]]
+    points_yz: [[-52.0, 350.0], [52.0, 350.0], [-52.0, 373.0], [52.0, 373.0]]
     min_pad_d: 10.0
   screws: "4 x M3 x 10 low-head through the tray plate (2.4) into A's inserts, installed from the back with the back shell off"
   contents_B:
-    - {part: rpi-5-4gb, at: "standing in the y-z plane, components facing back, board z 323..379, y -42.5..42.5"}
-    - {part: imu-bno085, at: [-28.0, 0.0, 316.0], frame: "board x/y/z = pelvis x/y/z (chip axes aligned; yaw offset calibrated in software)",
-       isolation: "4 x M3 silicone anti-vibration grommets (FPV flight-controller type)", note: "0.0 m from the pelvis centre line, 41 mm above the hip axis; runtime IMU site = pelvis"}
-    - {part: buck-pololu-d36v50f5, at: "under the Pi, y +5..+30, z 312..322"}
-    - {part: waveshare-bus-servo-adapter, qty: 2, at: "second layer behind the Pi, x -42..-56, side by side y -44..+44, z 330..363; UART or USB to the Pi"}
-  ventilation: "Pi 5 needs airflow: tray plate slotted, the A pelvis shell gets a vent grille on the back face over x < -50, z 330..375"
-  mass_kg: 0.20                           # Pi 46 g + 2 adapters 20 g + buck 7 g + IMU 3 g + tray ~60 g + cables/standoffs ~60 g (estimate)
+    - {part: imu-bno085, at: [-26.0, 0.0, 361.5], frame: "board standing in the y-z plane (normal -x); chip axes remapped to pelvis x/y/z in software",
+       isolation: "4 x M2.5 silicone anti-vibration grommets (FPV flight-controller type), 6 mm stand-off from the tray plate",
+       note: "on the centre line, 86 mm above the hip axis, 26 mm behind the waist axis, rigid with the pelvis: the runtime's IMU site (docs/software.md)"}
+    - {part: waveshare-bus-servo-adapter, role: "leg bus (12 servos)", at: "y -55..-13, board tilted 25 deg about y (33 mm board in a 33 mm pocket), card-guided by the tray; USB from the Pi in the torso"}
+  free_for_A: "y +12..+55 of the pocket stays free for A's leg-feed splits (WAGO 221-413 taps) and cable management"
+  ventilation: "none needed (adapter + IMU < 0.3 W)"
+  mass_kg: 0.06                           # adapter 10 g + IMU 3 g + tray ~30 g + grommets/standoffs ~5 g + local cables ~12 g (estimate)
 
 # --------------------------------------------------------------------------------------------------------------------------------
 cable_pass_throughs:
   waist:
-    route: "behind the waist servo: torso floor slot (B) at r 18..32 behind the axis, arc +-70 deg -> 60 mm service loop in the gap z 382..391 -> A's opening into the tray zone"
-    a_opening: {x: [-32.0, -16.0], y: [-20.0, 20.0], z_from: 380.0, note: "open from the pelvis top down into the tray zone; edges rounded r >= 2"}
-    bundle: >-
-      4 x leg power feeds (18 AWG pairs, star in the torso -> the 4 leg segments), 1 x buck feed (18 AWG pair), 1 x upper-body bus data
-      (3 x 26 AWG from the tray's 2nd adapter up to the torso). Bundle Ø ~9 mm; silicone wire; strain-relieved on both sides.
-  legs: "A routes the 4 leg feeds and the leg bus data from the tray zone to each leg segment (R1 7.2: feed at the STS3250s)"
+    route: "behind the waist servo: torso floor slot (B) at r 18..32 behind the axis over an arc of +-75 deg; flat service loop in the gap z 382..391 on a 25 mm radius with 2 x the 60 deg twist of slack (~55 mm)"
+    a_opening: {x: [-32.0, -16.0], y: [-20.0, 20.0], z_from: 380.0, note: "open from the pelvis top down into the pocket; edges rounded r >= 2"}
+    bundle:
+      - "4 x leg power feeds, 18 AWG silicone pairs (star in the torso -> the 4 leg segments; R1 7.2: fed at the STS3250s); the leg adapter's own power is a tap on one feed inside the pocket"
+      - "1 x USB 2.0, slim (Ø <= 3.5 mm), Pi (torso) -> leg-bus adapter (pocket); bend radius >= 15 mm (4 x Ø)"
+      - "1 x IMU cable, 4 x 28 AWG twisted (BNO085 in UART-RVC or I2C mode: 3V3, GND, 2 signals), Pi (torso) -> IMU (pocket)"
+      - "the waist servo's own bus lead (arm/head chain) also drops through the opening to the waist servo's back-face connector"
+    bundle_d_mm: 11
+    twist_check: "B's ROM sweep includes the loop at +-60 deg: the loop radius (25 mm) stays >= the USB's 15 mm minimum and the slack is >= 2 x the arc length at r 25 (2 x 26 mm)"
+  legs: "A routes the 4 leg feeds and the leg bus data from the pocket to each leg segment"
 power_topology:
-  pack: "GNB 3S 1850 in the torso (B), chest back cradle, removed backward"
-  switch_fuse_star: "XT60 -> switch -> 18 A ATO fuse (R1 post-sign-off: 20 A had no margin on the WAGO 20 A rating) -> WAGO star (4 x 221-415) in the torso, beside the pack (B)"
-  feeds_to_A: "4 leg segment pairs + 1 buck pair through the waist pass-through above"
+  pack: "3S LiPo in the torso back (B), removed backward"
+  switch_fuse_star: "XT60 -> switch -> 18 A ATO fuse (R1 post-sign-off: 20 A had no margin on the WAGO 20 A rating) -> WAGO star (4 x 221-415) in the torso (B)"
+  feeds_to_A: "4 leg segment pairs through the waist opening"
+  compute: "Pi 5 + Active Cooler + buck (Pololu D36V50F5) in the torso by the pack (B)"
 bus_topology:
-  adapters: 2                             # adapter 1 = legs (12 servos), adapter 2 = upper body (11 servos); both in the tray, on the Pi
+  adapters: 2                             # adapter 1 = legs (12 servos) in the pelvis pocket; adapter 2 = arms + head + waist (11 servos) in the torso
   rate_hz: 100
 arms:
   display_cant_deg_min: 14.0              # ADR 0015 amendment; profiles use 19.5
