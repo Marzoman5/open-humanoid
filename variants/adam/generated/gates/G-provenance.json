@@ -1,0 +1,40 @@
+{
+  "gate": "G-provenance",
+  "variant": "adam",
+  "status": "pass",
+  "summary": "catalog 0 missing / 31 estimates, spec 8 missing / 0 estimates",
+  "metrics": {
+    "catalog_parts": 31,
+    "catalog_verified": 0,
+    "catalog_missing": 0,
+    "catalog_bad": 0,
+    "catalog_estimates": 31,
+    "spec_constants": 8,
+    "spec_missing": 8,
+    "spec_bad": 0,
+    "spec_estimates": 0,
+    "first_problems": [
+      "spec: analysis.safety_factor has no provenance entry (add provenance: {analysis.safety_factor: <file|url|measurement:file|estimate: why>})",
+      "spec: analysis.dynamic_factor.walk has no provenance entry (add provenance: {analysis.dynamic_factor.walk: <file|url|measurement:file|estimate: why>})",
+      "spec: analysis.dynamic_factor.run has no provenance entry (add provenance: {analysis.dynamic_factor.run: <file|url|measurement:file|estimate: why>})",
+      "spec: analysis.continuous_fraction_default has no provenance entry (add provenance: {analysis.continuous_fraction_default: <file|url|measurement:file|estimate: why>})",
+      "spec: analysis.peak_fraction has no provenance entry (add provenance: {analysis.peak_fraction: <file|url|measurement:file|estimate: why>})",
+      "spec: mass_model.structure_kg_at_1m has no provenance entry (add provenance: {mass_model.structure_kg_at_1m: <file|url|measurement:file|estimate: why>})",
+      "spec: mass_model.electronics_kg has no provenance entry (add provenance: {mass_model.electronics_kg: <file|url|measurement:file|estimate: why>})",
+      "spec: mass_model.waste_factor has no provenance entry (add provenance: {mass_model.waste_factor: <file|url|measurement:file|estimate: why>})"
+    ]
+  },
+  "thresholds": {
+    "max_catalog_missing": 0,
+    "max_catalog_bad": 0,
+    "max_catalog_estimates": 1000000,
+    "max_spec_missing": 1000000,
+    "max_spec_bad": 1000000,
+    "max_spec_estimates": 1000000
+  },
+  "sha": "6e18cac99e0f51429887773934d9a5e3480ecbde",
+  "dirty": false,
+  "timestamp": "2026-10-19T03:22:21-04:00",
+  "seconds": 0.11,
+  "written_by": "oh gate"
+}

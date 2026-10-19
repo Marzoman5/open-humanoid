@@ -1,0 +1,24 @@
+{
+  "gate": "G-size",
+  "variant": "adam",
+  "status": "pass",
+  "summary": "feasible (ok), cost $404.59, worst margin 1.0x",
+  "metrics": {
+    "feasible": true,
+    "height_m": 0.54,
+    "cost_usd": 404.59,
+    "budget_cap_usd": 550,
+    "walk_ok": true,
+    "worst_required_gait_margin": 1.0,
+    "mass_kg": 2.518
+  },
+  "thresholds": {
+    "max_cost_fraction_of_cap": 1.0,
+    "min_gait_margin": 0.99
+  },
+  "sha": "6e18cac99e0f51429887773934d9a5e3480ecbde",
+  "dirty": false,
+  "timestamp": "2026-10-19T03:22:20-04:00",
+  "seconds": 0.2,
+  "written_by": "oh gate"
+}

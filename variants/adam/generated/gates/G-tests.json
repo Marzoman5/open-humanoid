@@ -1,0 +1,19 @@
+{
+  "gate": "G-tests",
+  "variant": "adam",
+  "status": "pass",
+  "summary": "65 passed, 1 skipped in 27.20s",
+  "metrics": {
+    "returncode": 0,
+    "summary": "65 passed, 1 skipped in 27.20s",
+    "seconds": 27.5
+  },
+  "thresholds": {
+    "timeout_s": 900
+  },
+  "sha": "6e18cac99e0f51429887773934d9a5e3480ecbde",
+  "dirty": false,
+  "timestamp": "2026-10-19T03:22:49-04:00",
+  "seconds": 27.62,
+  "written_by": "oh gate"
+}

@@ -1,0 +1,27 @@
+{
+  "gate": "G-sim-stand",
+  "variant": "adam",
+  "status": "pass",
+  "summary": "stood, tilt 3.3 deg, worst hold knee_l 22% of stall",
+  "metrics": {
+    "stood": true,
+    "pelvis_z_start": 0.2718,
+    "pelvis_z_end": 0.2662,
+    "tilt_deg": 3.3,
+    "worst_joint": "knee_l",
+    "worst_torque_fraction_of_stall": 0.222,
+    "seconds": 3.0,
+    "mass_kg": 2.517
+  },
+  "thresholds": {
+    "seconds": 3.0,
+    "max_tilt_deg": 35,
+    "min_pelvis_z_fraction": 0.7,
+    "max_hold_torque_fraction": 1.0
+  },
+  "sha": "6e18cac99e0f51429887773934d9a5e3480ecbde",
+  "dirty": false,
+  "timestamp": "2026-10-19T03:22:21-04:00",
+  "seconds": 0.39,
+  "written_by": "oh gate"
+}
