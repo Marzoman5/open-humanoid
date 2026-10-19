@@ -143,8 +143,8 @@ def thin_wall_report(shape, min_mm: float, pitch: float | None = None, max_voxel
     """Find material thinner than `min_mm` by morphological opening of a voxelised solid.
 
     Material that no ball of radius min_mm/2 (fitting inside the solid) can reach is a wall thinner than `min_mm`.
-    Resolution is `pitch` (default: 0.25 mm, coarser only if the grid would exceed `max_voxels`), so walls within one pitch
-    of the limit are reported with that tolerance. Features smaller than ~2 pitches (a small chamfer) are ignored by design.
+    Resolution is `pitch` (default: 0.25 mm, coarser only if the grid would exceed `max_voxels`), so walls within about
+    one pitch of the limit are reported with that tolerance (a wall at exactly `min_mm` passes; one 0.3 mm under fails). Features smaller than ~2 pitches (a small chamfer) are ignored by design.
     Returns {'ok', 'thin_volume_mm3', 'thin_fraction', 'pitch_mm', 'worst_location' (mm, shape frame)}.
     """
     import numpy as np
@@ -159,7 +159,7 @@ def thin_wall_report(shape, min_mm: float, pitch: float | None = None, max_voxel
     total = float(grid.sum() * p**3)
     edt = ndi.distance_transform_edt(np.pad(grid, 1))[1:-1, 1:-1, 1:-1] * p
     r = min_mm / 2.0
-    core = edt >= r - 0.5 * p                       # centres of balls of radius r (half-voxel tolerance)
+    core = edt >= r - 0.25 * p          # EDT is measured to the next empty voxel CENTRE (surface + p/2); resolution is +-p/2, so a nominal wall passes and < ~min-0.3 mm fails
     if not core.any():
         return {"ok": False, "thin_volume_mm3": total, "thin_fraction": 1.0, "pitch_mm": p, "worst_location": None}
     reached = grid & (ndi.distance_transform_edt(~core) * p <= r + 0.5 * p)

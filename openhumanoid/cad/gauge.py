@@ -74,7 +74,7 @@ def _tile_height(actuator: str) -> tuple[bd.Shape, dict]:
 def _tile_horn(actuator: str) -> tuple[bd.Shape, dict]:
     P = get_component(actuator).params
     horn = get_component("horn-25t")
-    t = 3.2
+    t = 4.3          # same plate thickness as the real horn plates (counterbore + structural floor)
     plate = box_at(bd.Location(), (44, 30, t), (0, 0, t / 2))
     plate = bd.fillet(plate.edges().filter_by(bd.Axis.Z), 4.0)
     hm = horn_mount(actuator, plate_t=t, mode="flat")

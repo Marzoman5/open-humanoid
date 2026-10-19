@@ -147,8 +147,8 @@ def cmd_check(a) -> int:
     out = Path(a.out) if a.out else None
     g = gg.run_gate(asm, fast=a.fast)
     print(gg.summarize(g))
-    r = rom.sweep_all(asm, step_deg=a.step)
-    poses = [rom.check_pose(asm, p, side=a.side) for p in ("squat", "step_forward", "split_stance")]
+    r = rom.sweep_all(asm, step_deg=a.step, gap_check=True)           # also enforces dfm moving_gap_min_mm
+    poses = [rom.check_pose(asm, p, side=a.side, gap_check=True) for p in ("squat", "step_forward", "split_stance")]
     print(rom.summarize(r, poses))
     ac = access.analyse(asm)
     print(access.summarize(ac))

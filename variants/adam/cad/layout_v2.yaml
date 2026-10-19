@@ -34,9 +34,9 @@ limbs:
       # hip point because the pitch servo's housing (cable exit at its top) swings under the yaw horn plate.
       - {name: hip_yaw,   point: hip, servo: {host: pelvis,           horn: [0, 0, -1], long: [0, -1, 0], horn_at: 66}}
       - {name: hip_roll,  point: hip, servo: {host: hip_yaw_l_link,   horn: [1, 0, 0],  long: [0, 0, 1],  horn_at: -44}}
-      - {name: hip_pitch, range: [-110, 45], range_note: "CAD-limited from the spec's +60 extension: the thigh's rear face sweeps into the roll servo's horn plate behind the hip (ROM sweep: contact at 48 deg). Walking needs about 25.", point: hip, servo: {host: hip_roll_l_link,  horn: [0, 1, 0],  long: [0, 0, 1],  horn_at: 17.5, idler: {bearing: MR105ZZ, gap_mm: 1.5}}}
+      - {name: hip_pitch, range: [-110, 40], range_note: "CAD-limited from the spec's +60 extension: the thigh idler plate/rear face sweeps into the roll servo's horn plate behind the hip (ROM sweep: contact at 45 deg, 1 mm moving gap kept to 40). Walking needs about 25.", point: hip, servo: {host: hip_roll_l_link,  horn: [0, 1, 0],  long: [0, 0, 1],  horn_at: 17.5, idler: {bearing: MR105ZZ, gap_mm: 1.5}}}
       - {name: knee,      range: [0, 115], range_note: "CAD-limited from the spec's 130: at 118 deg the heel (ankle-roll servo housing) meets the glute (hip-roll servo housing); 115 keeps 3 deg of margin and still covers the deep squat (knee 103 deg in the squat pose)", point: knee, servo: {host: hip_pitch_l_link, horn: [0, 1, 0], long: [0, 0, 1],  horn_at: 17.5, idler: {bearing: MR105ZZ, gap_mm: 1.5}}}
-      - {name: ankle_pitch, range: [-60, 30], range_note: "CAD-limited from the spec's +60: the roll servo housing behind the ankle swings into the shank above +31 deg (ROM sweep)", point: ankle, servo: {host: knee_l_link,  horn: [0, 1, 0],  long: [0, 0, 1],  horn_at: 17.5, idler: {bearing: MR105ZZ, gap_mm: 1.5}}}
+      - {name: ankle_pitch, range: [-60, 25], range_note: "CAD-limited from the spec's +60: the roll servo housing behind the ankle swings into the shank above +29 deg (ROM sweep, 1 mm moving gap kept to 25)", point: ankle, servo: {host: knee_l_link,  horn: [0, 1, 0],  long: [0, 0, 1],  horn_at: 17.5, idler: {bearing: MR105ZZ, gap_mm: 1.5}}}
       - {name: ankle_roll,  point: ankle_roll, servo: {host: ankle_pitch_l_link, horn: [1, 0, 0], long: [0, 0, 1], horn_at: -26.5}}
   arm:
     mirror: [l, r]

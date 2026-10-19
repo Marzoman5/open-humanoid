@@ -201,7 +201,7 @@ def servo_pocket(actuator_id: str = "sts3215-12v", clearance: str | float = "sli
     return _at(f, at)
 
 
-def horn_mount(actuator_id: str = "sts3215-12v", *, plate_t: float = 3.2, mode: str = "flat", part: str = "", mates: str | None = None,
+def horn_mount(actuator_id: str = "sts3215-12v", *, plate_t: float = 4.3, mode: str = "flat", part: str = "", mates: str | None = None,
                fit: str = "slip", at: bd.Location | None = None) -> FeatureResult:
     """Features on the plate that attaches to the servo horn, in the servo's `horn_seat` frame (origin on the axis at the horn's
     underside, +z away from the servo).

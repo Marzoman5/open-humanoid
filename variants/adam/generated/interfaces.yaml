@@ -3,7 +3,7 @@ schema: interfaces/0.1
 variant: adam
 layout: humanoid_v2_22dof
 layout_status: validation stand-in (not a concept-loop output)
-layout_sha: 65de3f4b1b5e
+layout_sha: 2bb14259ca79
 units: {length: mm, angle: deg}
 frame: 'world: x forward, y left, z up; zero pose = all joint angles 0; links axis-aligned with the world at the zero pose'
 height_mm: 600.0
@@ -271,10 +271,10 @@ joints:
       origin_mm: [0.0, 45.0, 336.0]
       direction: [0, 1, 0]
       name: y
-    rom_deg: [-110, 45]
+    rom_deg: [-110, 40]
     rom_spec_deg: [-110, 60]
-    rom_note: 'CAD-limited from the spec''s +60 extension: the thigh''s rear face sweeps into the roll servo''s horn plate behind the hip (ROM
-      sweep: contact at 48 deg). Walking needs about 25.'
+    rom_note: 'CAD-limited from the spec''s +60 extension: the thigh idler plate/rear face sweeps into the roll servo''s horn plate behind the
+      hip (ROM sweep: contact at 45 deg, 1 mm moving gap kept to 40). Walking needs about 25.'
     actuator:
       id: sts3215-12v
       host_link: hip_roll_l_link
@@ -437,9 +437,10 @@ joints:
       origin_mm: [0.0, 45.0, 66.0]
       direction: [0, 1, 0]
       name: y
-    rom_deg: [-60, 30]
+    rom_deg: [-60, 25]
     rom_spec_deg: [-60, 60]
-    rom_note: 'CAD-limited from the spec''s +60: the roll servo housing behind the ankle swings into the shank above +31 deg (ROM sweep)'
+    rom_note: 'CAD-limited from the spec''s +60: the roll servo housing behind the ankle swings into the shank above +29 deg (ROM sweep, 1 mm
+      moving gap kept to 25)'
     actuator:
       id: sts3215-12v
       host_link: knee_l_link
@@ -753,10 +754,10 @@ joints:
       origin_mm: [0.0, -45.0, 336.0]
       direction: [0, 1, 0]
       name: y
-    rom_deg: [-110, 45]
+    rom_deg: [-110, 40]
     rom_spec_deg: [-110, 60]
-    rom_note: 'CAD-limited from the spec''s +60 extension: the thigh''s rear face sweeps into the roll servo''s horn plate behind the hip (ROM
-      sweep: contact at 48 deg). Walking needs about 25.'
+    rom_note: 'CAD-limited from the spec''s +60 extension: the thigh idler plate/rear face sweeps into the roll servo''s horn plate behind the
+      hip (ROM sweep: contact at 45 deg, 1 mm moving gap kept to 40). Walking needs about 25.'
     actuator:
       id: sts3215-12v
       host_link: hip_roll_r_link
@@ -919,9 +920,10 @@ joints:
       origin_mm: [0.0, -45.0, 66.0]
       direction: [0, 1, 0]
       name: y
-    rom_deg: [-60, 30]
+    rom_deg: [-60, 25]
     rom_spec_deg: [-60, 60]
-    rom_note: 'CAD-limited from the spec''s +60: the roll servo housing behind the ankle swings into the shank above +31 deg (ROM sweep)'
+    rom_note: 'CAD-limited from the spec''s +60: the roll servo housing behind the ankle swings into the shank above +29 deg (ROM sweep, 1 mm
+      moving gap kept to 25)'
     actuator:
       id: sts3215-12v
       host_link: knee_r_link
