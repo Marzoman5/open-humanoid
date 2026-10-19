@@ -1,4 +1,4 @@
-# Catalog part: schema schemas/catalog-part.schema.json. Updated by T-0017 (concept engine power/voltage trade study), accessed 2026-10-19.
+# Catalog part: schema schemas/catalog-part.schema.json. Updated by T-0017 (dimensions, mass, sources), accessed 2026-10-19.
 id: rpi-zero-2w
 name: Raspberry Pi Zero 2 W
 category: compute
@@ -23,7 +23,8 @@ verified: false
 source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md
   | dims/mass added 2026-10-19 by T-0017: 65x30 mm (Kubii, Little Bird; 5.2 mm max height Little Bird), mass 16 g (Kubii;
   Little Bird says 10 g). Power: research/methods/e (CNX Software: idle ~120 mA @5 V = 0.6 W; stress 1.35 A = 6.8 W); typical
-  2.0 W for a 50 Hz policy plus Wi-Fi is an ASSUMPTION. Prices unchanged and unverified.'
+  2.0 W for a 50 Hz policy plus Wi-Fi is an ASSUMPTION. Prices unchanged and unverified. | URLs: https://kubii.com/en/nano-computers/3455-raspberry-pi-zero-2-w-wh.html
+  (65x30.5 mm, 16 g), https://littlebirdelectronics.com.au/products/raspberry-pi-zero-2-w-2 (65x30x5.2 mm, 10 g)'
 dimensions_mm:
 - 65
 - 30

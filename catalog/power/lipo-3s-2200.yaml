@@ -1,4 +1,4 @@
-# Catalog part: schema schemas/catalog-part.schema.json. Updated by T-0017 (concept engine power/voltage trade study), accessed 2026-10-19.
+# Catalog part: schema schemas/catalog-part.schema.json. Updated by T-0017 (dimensions, mass, sources), accessed 2026-10-19.
 id: lipo-3s-2200
 name: 3S 11.1 V 2200 mAh LiPo (XT60)
 category: power
@@ -18,7 +18,8 @@ specs:
 verified: false
 source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md
   | dims/mass added 2026-10-19 by T-0017 from the comparable Tattu 2300 mAh 3S 75C listings (106x34x23 mm, 172-220 g; see
-  catalog/power/lipo-3s-2300-tattu.yaml). This 2200 mAh entry itself is still a generic estimate, not a real listing.'
+  catalog/power/lipo-3s-2300-tattu.yaml). This 2200 mAh entry itself is still a generic estimate, not a real listing. | URL:
+  https://rotorvillage.ca/tattu-2300mah-3s-45c-lipo-xt60'
 dimensions_mm:
 - 106
 - 34
