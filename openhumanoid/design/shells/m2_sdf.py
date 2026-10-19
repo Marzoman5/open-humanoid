@@ -156,6 +156,7 @@ def segment_field(spec: LegSpec, seg: str, voxel: float, calib: list):
         ph = np.arctan2(Z, X)
         Rcut = np.interp(ph, cut.ph, cut.rp)
         f = np.maximum(f, -(r - Rcut).astype(np.float32))
+        f = renormalise(f, voxel)       # the cutter field is not metric: without this the pocket wall came out 0.6-1.0 mm instead of 1.6
     t = spec.wall
     shell0 = np.maximum(f, -f - t)                      # |f + t/2| - t/2 : the walled shell, closed inside
     s = shell0

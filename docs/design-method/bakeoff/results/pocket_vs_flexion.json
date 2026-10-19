@@ -1,0 +1,19 @@
+{
+ "shank_envelope_mm3": 280062,
+ "flex_60": {
+  "pocket_mm3": 29723,
+  "pct_of_shank_envelope": 10.6
+ },
+ "flex_90": {
+  "pocket_mm3": 33961,
+  "pct_of_shank_envelope": 12.1
+ },
+ "flex_110": {
+  "pocket_mm3": 43455,
+  "pct_of_shank_envelope": 15.5
+ },
+ "flex_130": {
+  "pocket_mm3": 66236,
+  "pct_of_shank_envelope": 23.7
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "evaluation": {
+  "criteria": {
+   "T1a": {
+    "name": "Front silhouette IoU vs target",
+    "value": 0.9887,
+    "band": [
+     0.95,
+     null
+    ],
+    "verdict": "PASS"
+   },
+   "T1b": {
+    "name": "Side silhouette IoU vs target",
+    "value": 0.9862,
+    "band": [
+     0.95,
+     null
+    ],
+    "verdict": "PASS"
+   },
+   "P8a": {
+    "name": "Thigh taper: distal / proximal section area",
+    "value": 0.708,
+    "band": [
+     null,
+     0.65
+    ],
+    "verdict": "FAIL"
+   },
+   "P8b": {
+    "name": "Shank taper: ankle / calf section area",
+    "value": 0.712,
+    "band": [
+     null,
+     0.6
+    ],
+    "verdict": "FAIL"
+   },
+   "P9a": {
+    "name": "Thigh widest point, fraction from the top",
+    "value": 0.132,
+    "band": [
+     null,
+     0.33
+    ],
+    "verdict": "PASS"
+   },
+   "P9b": {
+    "name": "Calf widest point, fraction from the top",
+    "value": 0.24,
+    "band": [
+     null,
+     0.33
+    ],
+    "verdict": "PASS"
+   },
+   "S3a": {
+    "name": "Silhouette ledges (front + side)",
+    "value": 0,
+    "band": [
+     null,
+     6
+    ],
+    "verdict": "PASS"
+   },
+   "S4a": {
+    "name": "Share of surface in flat patches",
+    "value": 0.4341,
+    "band": [
+     null,
+     0.3
+    ],
+    "verdict": "FAIL"
+   },
+   "HP": {
+    "name": "Every keep-out enclosed with >= 1.5 mm",
+    "value": 1,
+    "band": [
+     1,
+     1
+    ],
+    "verdict": "PASS"
+   },
+   "ROM": {
+    "name": "No shell-shell collision over 0-130 deg",
+    "value": 1,
+    "band": [
+     1,
+     1
+    ],
+    "verdict": "PASS"
+   },
+   "M1": {
+    "name": "All panels watertight + manifold",
+    "value": 1,
+    "band": [
+     1,
+     1
+    ],
+    "verdict": "PASS"
+   },
+   "W1": {
+    "name": "Interior wall >= 1.6 mm (1st percentile of 5000 ray samples per panel, 0.2 mm tolerance)",
+    "value": 1,
+    "band": [
+     1,
+     1
+    ],
+    "verdict": "PASS"
+   }
+  },
+  "failed": [
+   "P8a",
+   "P8b",
+   "S4a"
+  ],
+  "n_pass": 9,
+  "n_scored": 12
+ }
+}

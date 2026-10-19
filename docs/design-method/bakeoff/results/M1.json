@@ -4,7 +4,7 @@
   "method_files": 82,
   "shared_spec_meshutil": 335
  },
- "build_seconds": 9.13,
+ "build_seconds": 13.68,
  "notes": {
   "brep_valid": {
    "shank_front": true,
@@ -70,13 +70,13 @@
    "rom": {
     "collision_free": true,
     "colliding_thetas": [],
-    "min_gap_mm": 2.736,
+    "min_gap_mm": 2.747,
     "min_gap_at_deg": 130.0,
-    "gap_at_0deg_mm": 3.254,
+    "gap_at_0deg_mm": 3.258,
     "steps": [
      {
       "theta": 0.0,
-      "approx_min_gap_mm": 3.254,
+      "approx_min_gap_mm": 3.258,
       "collision_mm3": 0.0
      },
      {
@@ -91,12 +91,12 @@
      },
      {
       "theta": 15.0,
-      "approx_min_gap_mm": 2.968,
+      "approx_min_gap_mm": 2.962,
       "collision_mm3": 0.0
      },
      {
       "theta": 20.0,
-      "approx_min_gap_mm": 3.036,
+      "approx_min_gap_mm": 3.018,
       "collision_mm3": 0.0
      },
      {
@@ -106,37 +106,37 @@
      },
      {
       "theta": 30.0,
-      "approx_min_gap_mm": 3.791,
+      "approx_min_gap_mm": 3.815,
       "collision_mm3": 0.0
      },
      {
       "theta": 35.0,
-      "approx_min_gap_mm": 4.123,
+      "approx_min_gap_mm": 4.122,
       "collision_mm3": 0.0
      },
      {
       "theta": 40.0,
-      "approx_min_gap_mm": 4.253,
+      "approx_min_gap_mm": 4.298,
       "collision_mm3": 0.0
      },
      {
       "theta": 45.0,
-      "approx_min_gap_mm": 4.063,
+      "approx_min_gap_mm": 4.059,
       "collision_mm3": 0.0
      },
      {
       "theta": 50.0,
-      "approx_min_gap_mm": 3.635,
+      "approx_min_gap_mm": 3.64,
       "collision_mm3": 0.0
      },
      {
       "theta": 55.0,
-      "approx_min_gap_mm": 3.359,
+      "approx_min_gap_mm": 3.36,
       "collision_mm3": 0.0
      },
      {
       "theta": 60.0,
-      "approx_min_gap_mm": 3.127,
+      "approx_min_gap_mm": 3.132,
       "collision_mm3": 0.0
      },
      {
@@ -161,12 +161,12 @@
      },
      {
       "theta": 85.0,
-      "approx_min_gap_mm": 3.379,
+      "approx_min_gap_mm": 3.394,
       "collision_mm3": 0.0
      },
      {
       "theta": 90.0,
-      "approx_min_gap_mm": 3.443,
+      "approx_min_gap_mm": 3.44,
       "collision_mm3": 0.0
      },
      {
@@ -176,12 +176,12 @@
      },
      {
       "theta": 100.0,
-      "approx_min_gap_mm": 3.69,
+      "approx_min_gap_mm": 3.67,
       "collision_mm3": 0.0
      },
      {
       "theta": 105.0,
-      "approx_min_gap_mm": 3.651,
+      "approx_min_gap_mm": 3.679,
       "collision_mm3": 0.0
      },
      {
@@ -191,22 +191,22 @@
      },
      {
       "theta": 115.0,
-      "approx_min_gap_mm": 3.728,
+      "approx_min_gap_mm": 3.722,
       "collision_mm3": 0.0
      },
      {
       "theta": 120.0,
-      "approx_min_gap_mm": 3.769,
+      "approx_min_gap_mm": 3.759,
       "collision_mm3": 0.0
      },
      {
       "theta": 125.0,
-      "approx_min_gap_mm": 3.5,
+      "approx_min_gap_mm": 3.502,
       "collision_mm3": 0.0
      },
      {
       "theta": 130.0,
-      "approx_min_gap_mm": 2.736,
+      "approx_min_gap_mm": 2.747,
       "collision_mm3": 0.0
      }
     ]
@@ -228,12 +228,13 @@
      "manifold3d_valid": true,
      "wall": {
       "min_mm": 0.069,
-      "interior_min_mm": 0.142,
+      "interior_min_mm": 0.767,
+      "interior_p1_mm": 0.916,
       "p1_mm": 0.873,
       "p5_mm": 1.093,
       "median_mm": 1.605,
       "frac_below_1.2mm": 0.0828,
-      "frac_below_tol": 0.3033,
+      "frac_below_tol": 0.2191,
       "n": 4998
      },
      "orientations": {
@@ -300,12 +301,13 @@
      "manifold3d_valid": true,
      "wall": {
       "min_mm": 0.094,
-      "interior_min_mm": 0.094,
+      "interior_min_mm": 0.983,
+      "interior_p1_mm": 1.072,
       "p1_mm": 1.025,
       "p5_mm": 1.186,
       "median_mm": 1.599,
       "frac_below_1.2mm": 0.057,
-      "frac_below_tol": 0.35,
+      "frac_below_tol": 0.2132,
       "n": 5000
      },
      "orientations": {
@@ -372,12 +374,13 @@
      "manifold3d_valid": true,
      "wall": {
       "min_mm": 0.086,
-      "interior_min_mm": 0.086,
+      "interior_min_mm": 0.956,
+      "interior_p1_mm": 1.024,
       "p1_mm": 1.022,
       "p5_mm": 1.321,
       "median_mm": 1.636,
       "frac_below_1.2mm": 0.0264,
-      "frac_below_tol": 0.2182,
+      "frac_below_tol": 0.113,
       "n": 4999
      },
      "orientations": {
@@ -444,12 +447,13 @@
      "manifold3d_valid": true,
      "wall": {
       "min_mm": 0.168,
-      "interior_min_mm": 0.168,
+      "interior_min_mm": 0.949,
+      "interior_p1_mm": 1.032,
       "p1_mm": 1.026,
       "p5_mm": 1.358,
       "median_mm": 1.649,
       "frac_below_1.2mm": 0.0264,
-      "frac_below_tol": 0.239,
+      "frac_below_tol": 0.1244,
       "n": 5000
      },
      "orientations": {
@@ -507,7 +511,8 @@
    "all_watertight": true,
    "all_fit_bed": true,
    "min_wall_mm": 0.069,
-   "interior_min_wall_mm": 0.086,
+   "interior_min_wall_mm": 0.767,
+   "interior_p1_wall_mm": 0.916,
    "wall_ok": false,
    "p1_wall_mm": 0.873,
    "total_overhang_mm2": 5658.6,
@@ -529,7 +534,7 @@
   "hash_run1": "7fbba9cec2a10a70",
   "hash_run2": "7fbba9cec2a10a70",
   "identical": true,
-  "seconds_run2": 8.31
+  "seconds_run2": 9.14
  },
  "variants": {
   "L0.90_W1.00": {
@@ -538,11 +543,11 @@
    "keepouts_ok": true,
    "keepouts_failed": [],
    "rom_collision_free": true,
-   "rom_min_gap_mm": 2.788,
+   "rom_min_gap_mm": 2.756,
    "watertight": true,
    "fits_bed": true,
    "parts": 4,
-   "build_seconds": 7.29,
+   "build_seconds": 7.45,
    "status": "built"
   },
   "L1.10_W1.00": {
@@ -551,11 +556,11 @@
    "keepouts_ok": true,
    "keepouts_failed": [],
    "rom_collision_free": true,
-   "rom_min_gap_mm": 2.653,
+   "rom_min_gap_mm": 2.655,
    "watertight": true,
    "fits_bed": true,
    "parts": 4,
-   "build_seconds": 8.28,
+   "build_seconds": 8.98,
    "status": "built"
   },
   "L1.00_W0.90": {
@@ -568,11 +573,11 @@
     "cable_thigh"
    ],
    "rom_collision_free": true,
-   "rom_min_gap_mm": 2.762,
+   "rom_min_gap_mm": 2.751,
    "watertight": true,
    "fits_bed": true,
    "parts": 4,
-   "build_seconds": 9.27,
+   "build_seconds": 10.06,
    "status": "built"
   },
   "L1.00_W1.10": {
@@ -581,11 +586,11 @@
    "keepouts_ok": true,
    "keepouts_failed": [],
    "rom_collision_free": true,
-   "rom_min_gap_mm": 2.711,
+   "rom_min_gap_mm": 2.713,
    "watertight": true,
    "fits_bed": true,
    "parts": 4,
-   "build_seconds": 7.36,
+   "build_seconds": 8.4,
    "status": "built"
   }
  }
