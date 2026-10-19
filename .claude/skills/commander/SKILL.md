@@ -23,6 +23,7 @@ Never write "accepted" decisions, start build work, or install tools on unverifi
 - Look at the evidence: renders, verdict JSONs, gate records. Check that numbers have provenance.
 - Run the challenger at wave boundaries and before review stops; answer every row in writing.
 - Escalate after two failed attempts on the same problem.
+- Never trade quality for a tooling hiccup: if an install or tool fails, retry or use an equal-quality alternative. Analysis, simulation (including software-in-the-loop) and strength checks are necessities, not optional extras.
 
 ## Merging
 - Only with the maintainer's approval (standing approval for an unattended run must be explicit and recorded in memory).
