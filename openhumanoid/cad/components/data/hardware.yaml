@@ -6,6 +6,8 @@
 #   derived   - computed here from other cited numbers
 #   estimate  - engineering judgement. MUST be confirmed by the fit gauge (docs/cad-foundation.md) before a full print.
 # Units: mm. Access date for all URLs: 2026-10-19.
+# HONESTY NOTE: `standard` rows are ISO/DIN values; `vendor` rows (insert and magnet sizes, flanged bearings, horn OD) come from vendor guides
+# and listings that were read or recalled, not all re-fetched. Treat `vendor` as indicative and `estimate` as unverified until the gauge runs.
 units: mm
 
 screws:

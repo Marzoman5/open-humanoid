@@ -14,5 +14,8 @@ Candidate list and reasoning: `research/reuse/REUSE.md`.
 | STS3215 driver + calibration | huggingface/lerobot | Apache-2.0 (re-read pending) | P6 HAL | — | planned |
 | Small-biped mechanics/CAD reference | apirrone/Open_Duck_Mini (main repo only) | Apache-2.0 (re-read pending) | reference | — | planned |
 | Training envs / assets | MuJoCo Playground, Menagerie | Apache-2.0 / per-model (re-read pending) | P5 | — | planned |
+| STS3215 / SO-ARM100 servo geometry (cross-check only) | TheRobotStudio/SO-ARM100 | Apache-2.0 (LICENSE read at `main`, 2026-10-19; the file names no copyright holder). Its STEP/STL folders were NOT opened | Cross-check of body size only; **no file, mesh or dimension was copied** | `catalog/actuators/sts3*.yaml` `mechanical:` (dimensions cite vendor listings, not this repo) | not reused |
+| Vendor 2D/3D drawings (Waveshare `ST3215-2D.zip`, `ST3215-3D.zip`) | Waveshare | not downloaded (links seen on the wiki page; licence unknown) | Would confirm the ESTIMATE servo features | - | not used. **Do not commit vendor STEP without a licence note (research G5)**; measure with the fit gauge instead |
+| Raspberry Pi Zero 2 W / Pi 5 mechanical drawings | Raspberry Pi Ltd datasheets | outline and hole-pattern numbers only (facts, not files; recalled from the drawings, not re-fetched: verify) | `components/data/electronics.yaml` | `openhumanoid/cad/components/data/electronics.yaml` | numbers cited by URL |
 
 **Don't copy:** ToddlerBot design files (CC-BY-NC-SA), the Open Duck Playground / reference-motion / Runtime repos (no license), Berkeley Humanoid Lite CAD (CC-BY-SA hardware), and Poppy software (GPL-3).

@@ -2,28 +2,30 @@
 # Catalog ids (catalog/*/*.yaml) are the keys. dims = [x, y, z] board footprint x, y and component height z.
 # holes = mounting hole centres from the board's lower-left corner (x, y), `hole_d` = hole diameter.
 # Several are ESTIMATES (clone boards vary); the packaging checks add `margin_mm` to every keep-out for that reason.
+# HONESTY NOTE: the Raspberry Pi, Adafruit and XT60 numbers were recalled from the published drawings/listings, NOT re-fetched in the
+# session that wrote this file (the PDFs were not opened). Their conf is therefore `vendor`, not `datasheet`. Verify against the board in hand.
 units: mm
 
 rpi-zero-2w:
   label: Raspberry Pi Zero 2 W
-  dims: {v: [65.0, 30.0, 5.0], src: "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-mechanical-drawing.pdf (65 x 30 mm board; ~5 mm tall without GPIO header)", conf: datasheet}
+  dims: {v: [65.0, 30.0, 5.0], src: "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-mechanical-drawing.pdf (65 x 30 mm board; ~5 mm tall without GPIO header)", conf: vendor}
   holes:
     v: [[3.5, 3.5], [61.5, 3.5], [3.5, 26.5], [61.5, 26.5]]
     src: "https://datasheets.raspberrypi.com/rpizero2/raspberry-pi-zero-2-w-mechanical-drawing.pdf (holes 3.5 mm from the edges, 58 x 23 mm spacing)"
-    conf: datasheet
-  hole_d: {v: 2.75, src: "same drawing (2.75 mm holes, M2.5 screws)", conf: datasheet}
+    conf: vendor
+  hole_d: {v: 2.75, src: "same drawing (2.75 mm holes, M2.5 screws)", conf: vendor}
   screw: M2.5
   mass_kg: 0.011
   margin_mm: 1.0
 
 rpi-5-4gb:
   label: Raspberry Pi 5
-  dims: {v: [85.0, 56.0, 17.0], src: "https://datasheets.raspberrypi.com/rpi5/raspberry-pi-5-mechanical-drawing.pdf (85 x 56 mm; tallest part is the USB/Ethernet stack ~16-17 mm)", conf: datasheet}
+  dims: {v: [85.0, 56.0, 17.0], src: "https://datasheets.raspberrypi.com/rpi5/raspberry-pi-5-mechanical-drawing.pdf (85 x 56 mm; tallest part is the USB/Ethernet stack ~16-17 mm)", conf: vendor}
   holes:
     v: [[3.5, 3.5], [61.5, 3.5], [3.5, 52.5], [61.5, 52.5]]
     src: "https://datasheets.raspberrypi.com/rpi5/raspberry-pi-5-mechanical-drawing.pdf (58 x 49 mm hole pattern, 3.5 mm from the board edge)"
-    conf: datasheet
-  hole_d: {v: 2.75, src: "same drawing", conf: datasheet}
+    conf: vendor
+  hole_d: {v: 2.75, src: "same drawing", conf: vendor}
   screw: M2.5
   mass_kg: 0.046
   margin_mm: 1.5

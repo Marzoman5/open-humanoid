@@ -340,7 +340,7 @@ def keepout(obj, margin: float = 0.0, mode: str = "bbox") -> bd.Shape:
 def split_for_bed(shape: bd.Shape, bed_mm=None, *, dowel: bool = True, part: str = "part", max_parts: int = 8) -> list[tuple[str, bd.Shape]]:
     """Cut `shape` into pieces that each fit the usable print volume (bed - edge margin, dfm.yaml) in some axis-aligned
     orientation. Recursively halves the part across its longest oversize axis at the position (0.35..0.65 of the span) with the
-    smallest cross-section, and adds dowel pockets (dfm split.dowel_*) on both faces of every cut so the pieces register when
+    smallest cross-section that is not within `min_cut_to_feature_mm` of a hole or boss, and adds dowel pockets (dfm split.dowel_*) on both faces of every cut so the pieces register when
     glued/bolted. Returns [(id, solid)] with ids `<part>_a`, `<part>_b`, ... Raises if the dowels cannot be placed inside the section."""
     usable = dfm.bed_usable(bed_mm)
     sp = dfm.load_dfm()["split"]
@@ -375,11 +375,15 @@ def split_for_bed(shape: bd.Shape, bed_mm=None, *, dowel: bool = True, part: str
         lo = [bb.min.X, bb.min.Y, bb.min.Z][ax]
         span = spans[ax]
         best = None
+        clear = float(val(sp["min_cut_to_feature_mm"]))
         for frac in [0.35 + 0.05 * k for k in range(7)]:
             pos = lo + frac * span
             sec = _section_area(s, ax, pos, bb)
-            if best is None or sec < best[0]:
-                best = (sec, pos)
+            # a cut must not run through a hole or boss: the section a few mm either side has to be the same
+            clean = all(abs(_section_area(s, ax, pos + d, bb) - sec) <= 1e-3 * max(sec, 1.0) for d in (-clear, clear))
+            key = (0 if clean else 1, sec)
+            if best is None or key < best[0]:
+                best = (key, pos)
         pos = best[1]
         n = [0.0, 0.0, 0.0]
         n[ax] = 1.0

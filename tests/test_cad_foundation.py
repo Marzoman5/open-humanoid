@@ -487,3 +487,23 @@ def test_leg_access_order_and_subassemblies(leg):
     assert sum(len(s["screws"]) for s in plan["order"]) >= 40
     # inserts are prep, not corridor-checked
     assert any(p["kind"] == "insert" for p in plan["prep"])
+
+
+def test_split_for_bed_avoids_features():
+    beam = bd.Box(450, 40, 30)
+    beam, _ = apply(beam, F.insert_boss("M3", at=loc_from((0, 0, 15), (0, 0, 1))), name="beam")       # a hole right where a mid cut would go
+    parts = F.split_for_bed(beam, [220, 220, 250], part="b")
+    cuts = sorted(s.bounding_box().max.X for _, s in parts)[:-1]
+    assert all(abs(c) > 3.0 for c in cuts)
+
+
+def test_cheatsheet_golden_examples_run():
+    """Every golden-example block in docs/cad-cheatsheet.md must run (research C5: examples that rot are worse than none)."""
+    import re
+
+    text = (ROOT / "docs" / "cad-cheatsheet.md").read_text(encoding="utf-8")
+    fence = "`" * 3
+    blocks = re.findall(fence + r"python golden\n(.*?)" + fence, text, flags=re.S)
+    assert len(blocks) == 3
+    for b in blocks:
+        exec(compile(b, "<golden>", "exec"), {})
