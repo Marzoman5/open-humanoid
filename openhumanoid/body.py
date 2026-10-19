@@ -17,6 +17,7 @@ ACTUATOR_HOST = {
     "ankle_pitch": "shank", "ankle_roll": "shank",
     "shoulder_pitch": "torso", "shoulder_roll": "upper_arm", "elbow": "upper_arm",
     "neck_yaw": "torso", "neck_pitch": "head",
+    "waist_yaw": "pelvis", "wrist": "forearm", "gripper": "forearm",
 }
 LIMB_DEFAULT_HOST = {"leg": "thigh", "arm": "upper_arm", "head": "torso", "torso": "torso", "hand": "forearm", "attachment": "torso"}
 

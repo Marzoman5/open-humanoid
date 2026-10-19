@@ -1,0 +1,33 @@
+# Concept candidate A: 3S (11.1 V nominal) pack, STS3215 12 V on every joint, 22 DOF.
+# A candidate is data for `python -m openhumanoid.concept evaluate <file>`; it does NOT pick Adam's design.
+id: A-3s-12v-sts3215
+description: 3S LiPo, one voltage for the whole bus, STS3215 12 V everywhere (22 DOF, 1-DOF gripper per hand).
+base: adam
+height_m: 0.45
+template: humanoid_v2
+# Proportion overrides (fractions of height). Longer arms than the spec default so a 150 g table pickup is reachable.
+proportions: {upper_arm: 0.19, forearm: 0.21}
+joints: [hip_yaw, hip_roll, hip_pitch, knee, ankle_pitch, ankle_roll, waist_yaw, neck_yaw,
+         shoulder_pitch, shoulder_roll, elbow, gripper]
+actuator_default: sts3215-12v
+locomotion:
+  walk: {stance_knee_flex_deg: 40}
+power:
+  pack: lipo-3s-2200
+  charger: charger-b3-3s
+  regulator: buck-5v-5a
+  compute: rpi-zero-2w
+parts:
+  onboard:
+    - {part: rpi-zero-2w, qty: 1}
+    - {part: microsd-32gb, qty: 1}
+    - {part: waveshare-bus-servo-adapter, qty: 1}
+    - {part: imu-bno085, qty: 1}
+    - {part: lipo-3s-2200, qty: 1}
+    - {part: buck-5v-5a, qty: 1}
+    - {part: power-switch-xt60, qty: 1}
+    - {part: fastener-kit-m2-m3, qty: 1}
+    - {part: bearing-kit-small, qty: 1}
+    - {part: wiring-kit-bus, qty: 1}
+  offboard:
+    - {part: charger-b3-3s, qty: 1}
