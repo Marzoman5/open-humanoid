@@ -1,0 +1,33 @@
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
+id: buck-pololu-d24v22f5
+name: Pololu D24V22F5 5 V 2.2 A (2.5 A typ) step-down regulator
+category: electronics
+tier: prosumer
+price_usd:
+  typical: 26.95
+  low: 26.95
+  high: 26.95
+  unit: each
+  as_of: '2026-10-19'
+verified: false
+source: 'https://www.pololu.com/product/2858/specs (5.3-36 V in, dropout ~5.8 V at 2.5 A, 2.2 A continuous at 24 V in, 2.3 g, $26.95). verified false: one vendor read.'
+vendors:
+- name: Pololu
+  url: https://www.pololu.com/product/2858
+  price: 26.95
+  sku: '2858'
+  stock: rationed
+  checked: '2026-10-19'
+mass_kg: 0.0023
+dimensions_mm:
+- 17.8
+- 17.8
+- 7.9
+specs:
+  input_v:
+  - 5.3
+  - 36
+  output_v: 5.0
+  max_current_a: 2.2
+notes: Added by T-0002 as the 2S-compatible regulator (a 2S pack sags to ~6 V; DFR0831 needs 7 V). 2.2 A is enough for a Pi Zero 2 W + camera (peak ~1.4-1.6 A) but NOT for a Pi 5. Dimensions
+  0.7x0.7x0.31 in.

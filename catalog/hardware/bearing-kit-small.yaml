@@ -1,4 +1,4 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: bearing-kit-small
 name: Small flanged ball bearings (assorted, e.g. F688/MR85)
 category: hardware
@@ -9,7 +9,9 @@ price_usd:
   as_of: 2026-10 (est)
   low: 8
   high: 18
-mass_kg: 0.05
 verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+source: 'estimate: no STS3215 back-shaft bearing size confirmed by any BOM. Open Duck Mini''s BOM lists 3x 6804ZZ (20x32x7 mm) EUR 3.50 each (https://www.amazon.fr/dp/B0CXXSVFTV), used
+  in trunk_bottom and head, not as servo idlers. SO-101 BOM lists no bearings; ToddlerBot BOM sheet unreadable (https://hshi74.github.io/toddlerbot/hardware/01_bill_of_materials.html).'
+mass_kg: 0.05
+notes: 'Price unchanged ($12 estimate). Still unknown: which bearing (688/683/MR85) fits the STS3215 25T back-shaft boss; measure on the bench servo. No vendor sells servo + idler bearing
+  together.'

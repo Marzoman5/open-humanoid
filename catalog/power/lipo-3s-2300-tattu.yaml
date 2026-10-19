@@ -1,32 +1,38 @@
-# Catalog part: schema schemas/catalog-part.schema.json. Added by T-0017 (concept engine power/voltage trade study), accessed 2026-10-19.
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: lipo-3s-2300-tattu
 name: Tattu 3S 11.1 V 2300 mAh 75C LiPo (XT60)
 category: power
 tier: hobby
 price_usd:
-  typical: 29.0
+  typical: 27.6
   low: 22.0
-  high: 40.0
+  high: 29.8
   unit: each
-  as_of: 2026-10-19 (CAD 39.99 at rotorvillage.ca, out of stock, ~US$29; Voelkner EUR 29.87 is the 45C variant)
+  as_of: '2026-10-19'
+  basis: Aloft Hobbies $27.60 (stock unclear); Rotorama EUR 25.59 and Gens Ace DE EUR 24.99 are EU shippers
 verified: false
-source: 'https://rotorvillage.ca/tattu-2300mah-3s-45c-lipo-xt60 (172 g, 106x34x23 mm, CAD 39.99); https://alofthobbies.com/products/tattu-3s-2300mah-45c-xt60
-  (179 g); https://www.gensace.de/tattu-2300mah-11-1v-75c-3s1p-lipo-battery-pack-with-xt60.html (220 g). Weight spread 172-220
-  g between vendors: 0.18 kg (mid-range) is used. verified=false: figures come from retailer listings read via web search
-  2026-10-19; vendors disagree on weight (+-20 g stated tolerance) and no price was cross-checked at two vendors. Re-check
-  at P7 (R5 Buy).'
+source: 'https://alofthobbies.com/products/tattu-3s-2300mah-45c-xt60 ($27.60, page contradicts itself: ''Sold Out'' button vs ''In stock'', 45c vs 75C, 179 g); https://www.rotorama.com/product/tattu-2300mah-3s-75c
+  (EUR 25.59, 166 g); https://gensace.de/products/tattu-2300mah-11-1v-75c-3s1p-lipo-battery-pack-with-xt60 (manufacturer''s own store, ~163 g, EUR 24.99). verified false: one US vendor,
+  stock unclear, no manufacturer datasheet.'
 vendors:
-- name: Rotor Village
-  url: https://rotorvillage.ca/tattu-2300mah-3s-45c-lipo-xt60
-  price: 29.0
-  checked: '2026-10-19'
 - name: Aloft Hobbies
   url: https://alofthobbies.com/products/tattu-3s-2300mah-45c-xt60
+  price: 27.6
+  shipping: at checkout; free over $99
+  stock: unclear (Sold Out button)
   checked: '2026-10-19'
-- name: Gens Ace DE
-  url: https://www.gensace.de/tattu-2300mah-11-1v-75c-3s1p-lipo-battery-pack-with-xt60.html
+- name: Rotorama (EU)
+  url: https://www.rotorama.com/product/tattu-2300mah-3s-75c
+  price: 29.8
+  stock: in stock
+  ship_from: Czech Republic
   checked: '2026-10-19'
-mass_kg: 0.18
+- name: Gens Ace DE (EU)
+  url: https://gensace.de/products/tattu-2300mah-11-1v-75c-3s1p-lipo-battery-pack-with-xt60
+  price: 29.0
+  stock: listed unavailable / 200+
+  checked: '2026-10-19'
+mass_kg: 0.172
 dimensions_mm:
 - 106
 - 34
@@ -37,4 +43,5 @@ specs:
   c_rating: 75
   energy_wh: 25.5
   chemistry: LiPo
-notes: mass_kg 0.18 is the mid-range of the 172-220 g listings; the 220 g Gens Ace figure may be the packaged weight.
+notes: mass_kg 0.18 -> 0.172 (median of seller weights 163/166/172/179/220 g; the manufacturer's store says ~163). LiPo shipping is ground-only at US vendors (hazmat). Seller weights
+  spread +-20 g by the manufacturer's own tolerance.

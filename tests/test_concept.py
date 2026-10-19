@@ -123,7 +123,10 @@ def test_new_catalog_parts_have_dims_mass_and_sources():
                 "buck-pololu-d36v50f5", "psu-rpi5-27w", "rpi-zero-2w", "rpi-5-4gb", "lipo-3s-2200"):
         p = catalog.get(pid)
         assert p.get("dimensions_mm") and p.get("mass_kg") and "http" in p["source"], pid
-        assert p["verified"] is False
+        # T-0002 (2026-10-19) verified some of these; a verified part needs >= 2 vendor rows and a URL source
+        assert isinstance(p["verified"], bool)
+        if p["verified"]:
+            assert len(p.get("vendors", [])) >= 2, pid
     for pid in ("lipo-2s-2200-turnigy", "lipo-3s-2300-tattu"):
         assert catalog.get(pid)["specs"]["cells"] in (2, 3)
 

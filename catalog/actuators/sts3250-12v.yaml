@@ -1,25 +1,57 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: sts3250-12v
 name: Feetech STS3250 (12 V, 50 kg·cm)
 category: actuator
 tier: hobby
 price_usd:
-  typical: 32
+  typical: 73.99
+  low: 43.0
+  high: 125.0
   unit: each
-  as_of: 2026-10 (est)
-  low: 26
-  high: 45
-mass_kg: 0.072
+  as_of: '2026-10-19'
+  basis: only OpenELAB $73.99 (DDP, pre-order/China ship) is a credible quote; AIFitLab $97 (backordered); rcdrone $125 (sold out); WowRobo $43 (SOLD OUT, unconfirmed).
+verified: false
+source: 'https://openelab.com/products/feetech-sts3250-c002-servo-12v ; https://aifitlab.com/products/feetech-sts3250-servo-motor ; Feetech wiki https://ftservo.github.io/ftservo-wiki/products/datasheets/st/
+  . verified stays false: only vendor listings were read for speed/mass (no Feetech PDF), and price spread is 3x.'
+vendors:
+- name: OpenELAB
+  url: https://openelab.com/products/feetech-sts3250-c002-servo-12v
+  price: 73.99
+  sku: Feetech-STS3250-C002
+  shipping: free over $55, YunExpress 8-15 bd
+  duty: included (DDP)
+  stock: pre-order 10-20 working days after restock
+  ship_from: Shenzhen
+  checked: '2026-10-19'
+- name: AIFitLab
+  url: https://aifitlab.com/products/feetech-sts3250-servo-motor
+  price: 97.0
+  sku: ST-3250-C001/C002
+  stock: C001 backordered
+  ship_from: China
+  checked: '2026-10-19'
+- name: rcdrone.top
+  url: https://rcdrone.top/ja/products/feetech-sts3250-servo-motor
+  price: 125.0
+  sku: ST-3250-C001
+  stock: sold out
+  checked: '2026-10-19'
+- name: WowRobo
+  url: https://shop.wowrobo.com/products/feetech-sts3250-c002-servo-12v-50kg-1-345-servo
+  price: 43.0
+  sku: STS3250 C002
+  stock: SOLD OUT
+  checked: '2026-10-19'
+mass_kg: 0.0745
 dimensions_mm:
 - 45.22
 - 24.72
 - 35
-# STS3250 dimensions: https://rcdrone.top/ja/products/feetech-sts3250-servo-motor (same case as the STS3215; research/actuators/feetech-sts3250/datasheet.yaml)
 actuator:
   family: feetech_sts
   type: serial_bus_servo
   stall_torque_nm: 4.903
-  no_load_speed_rad_s: 6.98
+  no_load_speed_rad_s: 7.854
   voltage_v:
   - 9.0
   - 12.6
@@ -28,10 +60,9 @@ actuator:
   backlash_deg: 0.5
   armature_kg_m2: 0.03
   resolution_bits: 12
-notes: Speed/mass figures are low-confidence estimates.
-verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'
+notes: 'CORRECTIONS 2026-10-19: no_load_speed 6.98 -> 7.854 rad/s (0.133 s/60deg = 75 rpm @12 V, OpenELAB/AIFitLab); mass 0.072 -> 0.0745 kg (74.5 +/-1 g); price $32 -> $73.99 (a 2.3x
+  surprise). Stall 50 kg.cm @12 V, rated 16 kg.cm, 4.2 A stall, 1:345, steel gears, aluminium case, 45.22x24.72x35 mm. OpenELAB lists the range as 6-12 V (catalog keeps 9-12.6 V = the
+  STS3215 12 V range; unconfirmed for the 3250).'
 
 # Mechanical interface data for CAD (openhumanoid/cad/components/servo.py). Each entry: {v, src, conf}.
 # conf: vendor = vendor listing/datasheet number | derived | estimate = engineering judgement, MUST be confirmed with the

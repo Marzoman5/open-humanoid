@@ -1,35 +1,60 @@
-# Catalog part: schema schemas/catalog-part.schema.json. Added by T-0017 (concept engine power/voltage trade study), accessed 2026-10-19.
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: charger-skyrc-b6neo
 name: SkyRC B6 Neo 200 W balance charger (1-6S, DC or USB-C PD)
 category: power
 tier: prosumer
 price_usd:
   typical: 39.99
-  low: 29.0
-  high: 43.5
+  low: 32.69
+  high: 49.95
   unit: each
-  as_of: 2026-10-19 (RadioMaster $39.99, Robitronic EUR 39.90, Scorched Parts GBP 29 sale)
-verified: false
-source: https://www.radiomasterrc.com/zh/products/skyrc-b6-neo-200w-dc-charger-with-dc-pd-dual-input ($39.99); https://shop.robitronic.com/en/skyrc-b6neo-smart-charger-sk100198-01
-  (EUR 39.90, 70x50x32 mm); https://www.galaxus.nl/en/s1/product/skyrc-b6neo-rc-chargers-36432087 (82 g). Two vendors agree
-  on price and size; verified stays false until a human opens the listings (search snippets only). Needs a DC supply or a
-  USB-C PD brick.
+  as_of: '2026-10-19'
+  basis: WREKD $39.99 (sold out), RadioMaster $39.99 (snippet), Evike $49.95, eBay RCJuice $32.69 (snippet)
+verified: true
+source: 'https://www.skyrc.com/b6neo (manufacturer: DC in 10-28 V XT60, USB-C PD in 12-20 V, 200 W DC / 80 W PD, 0.2-10 A, 1-6S, 70x50x31 mm, 82 g); https://wrekd.com/products/skyrc-b6-neo-200w-10a-1-6s-dc-smart-charger-xt60-choose-color
+  ($39.99, SOLD OUT); https://www.evike.com/products/112273/SkyRC-B6Neo-Smart-Balance-Charger-Discharger/ ($49.95, free lower-48 over $149); https://www.radiomasterrc.com/zh/products/skyrc-b6-neo-200w-dc-charger-with-dc-pd-dual-input
+  ($39.99)'
 vendors:
+- name: WREKD
+  url: https://wrekd.com/products/skyrc-b6-neo-200w-10a-1-6s-dc-smart-charger-xt60-choose-color
+  price: 39.99
+  stock: SOLD OUT (also says pre-order 0-1 days)
+  checked: '2026-10-19'
+- name: Evike
+  url: https://www.evike.com/products/112273/SkyRC-B6Neo-Smart-Balance-Charger-Discharger/
+  price: 49.95
+  shipping: free lower 48 over $149
+  stock: not visible (page 403; snippet)
+  checked: '2026-10-19'
 - name: RadioMaster
   url: https://www.radiomasterrc.com/zh/products/skyrc-b6-neo-200w-dc-charger-with-dc-pd-dual-input
   price: 39.99
+  stock: snippet only
   checked: '2026-10-19'
-- name: Robitronic
+- name: Robitronic (EU)
   url: https://shop.robitronic.com/en/skyrc-b6neo-smart-charger-sk100198-01
   price: 43.5
+  ship_from: EU
   checked: '2026-10-19'
 mass_kg: 0.082
 dimensions_mm:
 - 70
 - 50
-- 32
+- 31
 specs:
   max_cells: 6
   max_power_w: 200
   pd_input_w: 80
-notes: Off-board. Fast enough to charge a 2.3 Ah pack in under an hour.
+  dc_input_v:
+  - 10
+  - 28
+  pd_input_v:
+  - 12
+  - 20
+  dc_connector: XT60
+  charge_current_a:
+  - 0.2
+  - 10.0
+notes: 'CORRECTION: height 32 -> 31 mm (SkyRC). DC input is an XT60 connector at 10-28 V (NOT a barrel jack); the PD port takes only 12-20 V profiles, so a 27 W Pi supply works only
+  through its 12 V (2.25 A) or 15 V (1.8 A) profile, ~2 A into a 3S pack, and the B6 Neo''s profile negotiation with that supply was not verified. Needs a supply: see psu-usbc-pd-65w.
+  Fast enough to charge a 2.3 Ah pack in about an hour at >=2.5 A.'

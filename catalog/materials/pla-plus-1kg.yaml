@@ -1,16 +1,17 @@
-# Catalog part: schema schemas/catalog-part.schema.json
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: pla-plus-1kg
 name: PLA+ filament 1.75 mm
 category: material
 tier: hobby
 price_usd:
-  typical: 18
+  typical: 18.0
+  low: 9.67
+  high: 22.0
   unit: kg
-  as_of: 2026-10 (est)
-  low: 13
-  high: 25
+  as_of: '2026-10-19'
+  basis: 'estimate; evidence: Polymaker PolyLite $21.99 (MatterHackers, undated), Elegoo PLA+ 4x1kg $38.69 (Slickdeals, undated, ~$9.7/kg)'
+verified: false
+source: 'estimate: no live US store page readable (Amazon/Elegoo/Sunlu 403). https://matterhackers.com/store/l/polymaker-polylite-pla-red-175mm-1kg/sk/MDN80MSL ($21.99 undated); https://slickdeals.net/f/20056668
+  (Elegoo PLA+ 4-pack $38.69, undated); https://slickdeals.net/f/19699146-39-99-4-pk-1-kg-elegoo-pla-pro-1-75mm-filament-black-at-amazon (PLA PRO, expired).'
 specs:
   density_g_cm3: 1.24
-verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings.
-  Verify with prompts/sourcing/part-sourcing.md'

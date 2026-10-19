@@ -1,15 +1,44 @@
-# Catalog part: schema schemas/catalog-part.schema.json. Updated by T-0017 (dimensions, mass, sources), accessed 2026-10-19.
+# Catalog part: schema schemas/catalog-part.schema.json (prices re-quoted by T-0002 on 2026-10-19)
 id: rpi-5-4gb
 name: Raspberry Pi 5 (4 GB)
 category: compute
 tier: hobby
 price_usd:
-  typical: 60
+  typical: 110.0
+  low: 110.0
+  high: 130.0
   unit: each
-  as_of: 2026-10 (est)
-  low: 55
-  high: 70
+  as_of: '2026-10-19'
+  basis: PiShop $110 (in stock, max 10/order), SparkFun $110 (OOS), Adafruit $130 (ships today, max 2).
+verified: true
+source: 'https://www.pishop.us/product/raspberry-pi-5-4gb/ ($110, SKU 4GB-9024, IN STOCK); https://www.adafruit.com/product/5812 ($130); https://www.sparkfun.com/raspberry-pi-5-4gb.html
+  ($110, OOS); price history: https://www.raspberrypi.com/news/more-memory-driven-price-rises/ (+$15 on 4 GB, 2 Feb 2026; a later rise to $110 around April was read via search summaries
+  only). https://www.raspberrypi.com/products/raspberry-pi-5/ (5 V 5 A, A76 2.4 GHz). | dims/mass notes from T-0017 retained: board 85x56 mm; HEIGHT 17 mm and mass 62 g NOT confirmed
+  by the official page.'
+vendors:
+- name: PiShop.us
+  url: https://www.pishop.us/product/raspberry-pi-5-4gb/
+  price: 110.0
+  sku: 4GB-9024
+  stock: IN STOCK, max 10/order
+  checked: '2026-10-19'
+- name: Adafruit
+  url: https://www.adafruit.com/product/5812
+  price: 130.0
+  sku: '5812'
+  stock: in stock, 'order now to ship today', max 2
+  checked: '2026-10-19'
+- name: SparkFun
+  url: https://www.sparkfun.com/raspberry-pi-5-4gb.html
+  price: 110.0
+  sku: DEV-23550
+  stock: out of stock
+  checked: '2026-10-19'
 mass_kg: 0.062
+dimensions_mm:
+- 85
+- 56
+- 17
 specs:
   cpu: 4x Cortex-A76 2.4 GHz
   ram_gb: 4
@@ -17,15 +46,4 @@ specs:
   power_w_typical: 6.0
   power_w_peak: 25.0
   power_w_idle: 3.0
-verified: false
-source: 'estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md
-  | dims/mass added 2026-10-19 by T-0017: board 85x56 mm (hifiberry/retail spec); HEIGHT 17 mm is NOT confirmed (a retailer''s
-  packaging lists 25 mm); mass 62 g from a reseller (galaxus.de) listing. Power: the Pi 5 asks for 5 V 5 A (raspberrypi.com
-  product page, 27 W PSU); typical 6 W and idle 3 W are ASSUMPTIONS, 25 W is the supply rating. Prices unchanged and unverified
-  (the 2026 4 GB price may be above $60). | URLs: https://www.galaxus.de/en/s1/product/raspberry-pi-new-5-4gb-single-board-computer-kits-38955609
-  (reseller listing: 62 g, 85x56 mm), https://www.raspberrypi.com/products/raspberry-pi-5/ (5 V 5 A input; no dimensions or
-  weight on the page)'
-dimensions_mm:
-- 85
-- 56
-- 17
+notes: 'PRICE SURPRISE: catalog said $60; the live price is $110 (+83%) after two 2026 memory-driven rises. Candidate C carries this.'

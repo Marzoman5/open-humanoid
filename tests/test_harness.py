@@ -213,7 +213,7 @@ def test_catalog_provenance_flags_inconsistent_parts(repo):
     catalog.load_catalog.cache_clear()
     base = pv.check_catalog()["counts"]
     assert base["catalog_missing"] == 0 and base["catalog_parts"] > 20
-    f = next((repo / "catalog").rglob("sts3215-7v4.yaml"))
+    f = next((repo / "catalog").rglob("mg996r.yaml"))   # a part that is still an unverified estimate (sts3215-7v4 was verified by T-0002)
     part = yaml.safe_load(f.read_text(encoding="utf-8"))
     part["verified"] = True  # claims verified but the source is still an estimate
     f.write_text(yaml.safe_dump(part), encoding="utf-8")
