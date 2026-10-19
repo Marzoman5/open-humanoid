@@ -85,6 +85,14 @@ A catch-all claim like `./` or `*` never authorises protected files. Outside the
 - **Version skew is expected:** the scripts come from main while the worktree may be on an older branch. Hooks therefore keep their protection logic self-contained (`_common.session_task`, built-in default rules) and degrade when `openhumanoid.gate` or the new `coord` functions are missing.
 - Verified live on 2026-10-19: a headless CLI session started in the worktree ran the `SessionStart` hook; a desktop-app worktree session on the unmerged branch ran none of them (no context block, no denials), exactly as the docs predict.
 
+### The smoke run uses the toolkit's Python, not the hook's
+
+The hook is started by whatever `python` is first on PATH, which can be a bare system interpreter (PyYAML at most, no jsonschema, numpy or mujoco). So SessionStart runs `oh gate --smoke` as a subprocess under the toolkit interpreter: `$OH_PYTHON`, else `<repo>/.venv`, else the `.venv` of `$CLAUDE_PROJECT_DIR` (a desktop-app worktree usually has none of its own; the main checkout does). If none can import the toolkit it prints `Smoke gate: skipped, toolkit venv not found or incomplete (run python -m venv .venv ...)` instead of a false FAIL. A genuine smoke failure still prints `FAIL`.
+
+### Phases with no gates yet (P2)
+
+The Stop hook only blocks on gates whose `phase` matches the task's phase (or the task's own `gates:` list). Phase **P2** currently has only placeholder gates (G-envelopes, G-silhouette-R2a), which can never PASS, so a P2 task has nothing to block on and **Stop will not stop a P2 session** until those gates are implemented. Until then P2 "done" rests on the review stops (R1, R2a) and on the task's own `gates:` list if it names implemented gates. The same applies to P3 (G-geometry) and P4 (G-cad-sim). Implementing a placeholder gate is an ADR task, because `pipeline/` is protected.
+
 ### Failure behaviour and escape hatches
 
 - Any exception, timeout (watchdog 1.8 s; 100 s for the smoke run), unreadable config, or missing Python/PyYAML → the hook does nothing and exits 0. The error goes to `coordination/.local/hooks.log`.

@@ -55,12 +55,22 @@ def read_payload() -> dict:
         return {}
 
 
-def _venv_python(root: Path) -> Path | None:
-    for rel in (".venv/Scripts/python.exe", ".venv/bin/python"):
-        p = root / rel
-        if p.exists():
-            return p
+def venv_python(root: Path | None) -> Path | None:
+    """The toolkit's interpreter: $OH_PYTHON, else the repo's .venv, else the .venv of the project dir Claude Code gave us
+    (a desktop-app worktree usually has no .venv of its own; the main checkout does). None if there isn't one."""
+    cands: list[Path] = []
+    if os.environ.get("OH_PYTHON"):
+        cands.append(Path(os.environ["OH_PYTHON"]))
+    bases = [b for b in (root, Path(os.environ["CLAUDE_PROJECT_DIR"]) if os.environ.get("CLAUDE_PROJECT_DIR") else None) if b]
+    for b in bases:
+        cands += [b / ".venv" / "Scripts" / "python.exe", b / ".venv" / "bin" / "python"]
+    for c in cands:
+        if c.exists():
+            return c
     return None
+
+
+_venv_python = venv_python
 
 
 def ensure_deps(root: Path | None, raw_stdin: bytes | None = None) -> None:

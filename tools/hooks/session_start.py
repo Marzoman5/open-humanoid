@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _common import log, run, session_task  # noqa: E402
+from _common import log, run, session_task, venv_python  # noqa: E402
 
 MAX_CHARS = 9000  # Claude Code truncates hook context at 10k
 
@@ -33,6 +33,32 @@ def variant_for(task: dict | None, default: str) -> str:
         if m and m.group(1) != "_template":
             return m.group(1)
     return default
+
+
+def smoke_lines(root: Path, variant: str) -> list[str]:
+    """Run `oh gate --smoke` in the toolkit's own interpreter. The hook itself may be running under a bare system Python with
+    no jsonschema/numpy/mujoco, so never import the toolkit's heavy parts here. A missing toolkit gives a clear 'skipped',
+    never a false FAIL."""
+    py = venv_python(root) or Path(sys.executable)
+    env = {**os.environ, "OPENHUMANOID_ROOT": str(root), "PYTHONIOENCODING": "utf-8"}
+    try:
+        r = subprocess.run([str(py), "-m", "openhumanoid", "gate", "--smoke", variant], cwd=root, env=env, capture_output=True, timeout=90)
+    except subprocess.TimeoutExpired:
+        return [f"\nSmoke gate ({variant}): skipped, it took longer than 90 s. Run `oh gate --smoke {variant}` yourself."]
+    except OSError as e:
+        return [f"\nSmoke gate ({variant}): skipped, could not start {py}: {e}"]
+    out = r.stdout.decode("utf-8", "replace").strip()
+    err = r.stderr.decode("utf-8", "replace")
+    missing = any(m in err or m in out for m in ("ModuleNotFoundError", "ImportError", "No module named"))
+    if r.returncode not in (0, 2) or missing:  # gate checks that crash on an import are recorded as FAIL on stdout, not stderr
+        why = next((ln.strip() for ln in reversed((err + out).splitlines()) if "No module named" in ln or "Error" in ln),
+                   f"exit {r.returncode}")
+        why = why.split("check crashed:")[-1].strip()
+        return [f"\nSmoke gate ({variant}): skipped, toolkit venv not found or incomplete "
+                f"(run `python -m venv .venv` then `.venv/Scripts/pip install -e \".[sim,dev]\"`). Interpreter: {py}. Last error: {why}"]
+    lines = [ln for ln in out.splitlines() if ln.strip()]
+    status = "PASS" if r.returncode == 0 else "FAIL: fix this first, the previous session left something broken"
+    return [f"\nSmoke gate ({variant}): {status}"] + lines
 
 
 def handle(payload: dict, root: Path, cfg: dict):
@@ -86,16 +112,9 @@ def handle(payload: dict, root: Path, cfg: dict):
     L.append("\nBranch: " + (git(root, "branch", "--show-current") or "?") + "\ngit log -5:\n" + "\n".join("  " + ln for ln in git(root, "log", "--oneline", "-5").splitlines()))
 
     # Smoke gate: reports, never blocks
-    if gate is not None and cfg.get("smoke_on_session_start", True):
-        variant = variant_for(task, gate.default_variant())
-        try:
-            res = gate.smoke(variant)
-            bad = [r for r in res if r["status"] != "pass"]
-            L.append(f"\nSmoke gate ({variant}): " + ("PASS" if not bad else "FAIL — fix this first, the previous session left something broken"))
-            L += [f"  {r['gate']:12} {r['status'].upper():5} {r['summary']}" for r in res]
-        except Exception as e:  # never let smoke break the session start
-            L.append(f"\nSmoke gate could not run: {type(e).__name__}: {e}")
-            log(root, "sessionstart", f"smoke error: {e!r}")
+    if cfg.get("smoke_on_session_start", True) and (root / "openhumanoid" / "gate.py").exists():
+        variant = variant_for(task, gate.default_variant() if gate else "adam")
+        L += smoke_lines(root, variant)
 
     L.append("\nEnforced by hooks (docs/harness.md): no writes to generated/, pipeline/, schemas/, contracts; claimed paths are warned on; "
              "'done' needs a PASS gate record at HEAD (`oh gate --status`).")

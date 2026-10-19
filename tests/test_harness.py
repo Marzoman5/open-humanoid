@@ -83,6 +83,7 @@ def repo(tmp_path, monkeypatch):
     shutil.copy(REPO / "AGENTS.md", root / "AGENTS.md")
     for d in ("schemas", "catalog", "pipeline"):
         shutil.copytree(REPO / d, root / d)
+    shutil.copytree(REPO / "openhumanoid", root / "openhumanoid", ignore=shutil.ignore_patterns("__pycache__"))
     shutil.copytree(REPO / "variants" / "adam", root / "variants" / "adam", ignore=shutil.ignore_patterns("generated", "cad", "reviews", "renders"))
     (root / "coordination" / "handoffs").mkdir(parents=True)
     (root / "coordination" / "active-profile").write_text("solo")
@@ -621,6 +622,7 @@ def test_hook_output_is_utf8_even_when_the_locale_is_not(repo):
 def test_hooks_degrade_gracefully_on_a_branch_that_predates_the_harness(worker):
     """Desktop-app worktree sessions run the MAIN checkout's hook scripts against their own (possibly older) worktree."""
     pkg = worker / "openhumanoid"
+    shutil.rmtree(pkg)
     pkg.mkdir()
     (pkg / "__init__.py").write_text("")
     (pkg / "coord.py").write_text("ACTIVE = set()\n")  # no status_data / session_task / handoff(auto) / gate module
@@ -632,3 +634,70 @@ def test_hooks_degrade_gracefully_on_a_branch_that_predates_the_harness(worker):
     assert "predates the harness" in out and "Session id" in out and "git log -5" in out and "YOUR TASK: T-0100" in out
     assert run_hook(worker, "stop.py", {}, expect_exit=0)[1] == ""
     run_hook(worker, "precompact.py", {"trigger": "auto"}, expect_exit=0)  # fails open
+
+
+# --- the smoke run must use the toolkit's interpreter (commander's defect: false "FAIL ... jsonschema") ----------
+
+def test_smoke_interpreter_selection(tmp_path, monkeypatch):
+    import _common
+    root = tmp_path / "r"
+    (root / ".venv" / "Scripts").mkdir(parents=True)
+    monkeypatch.delenv("OH_PYTHON", raising=False)
+    monkeypatch.delenv("CLAUDE_PROJECT_DIR", raising=False)
+    assert _common.venv_python(root) is None
+    win = root / ".venv" / "Scripts" / "python.exe"
+    win.write_text("")
+    assert _common.venv_python(root) == win
+    # a worktree without its own .venv uses the main checkout's, found through CLAUDE_PROJECT_DIR
+    main = tmp_path / "main"
+    (main / ".venv" / "bin").mkdir(parents=True)
+    (main / ".venv" / "bin" / "python").write_text("")
+    bare = tmp_path / "worktree"
+    bare.mkdir()
+    monkeypatch.setenv("CLAUDE_PROJECT_DIR", str(main))
+    assert _common.venv_python(bare) == main / ".venv" / "bin" / "python"
+    monkeypatch.setenv("OH_PYTHON", str(win))
+    assert _common.venv_python(bare) == win  # explicit override wins
+
+
+def test_smoke_reports_skipped_not_fail_when_the_toolkit_cannot_import(tmp_path, monkeypatch):
+    import session_start
+    monkeypatch.delenv("OH_PYTHON", raising=False)
+
+    def fake_run(cmd, **kw):
+        return subprocess.CompletedProcess(cmd, 1, b"", b"Traceback ...\nModuleNotFoundError: No module named 'jsonschema'\n")
+    monkeypatch.setattr(session_start.subprocess, "run", fake_run)
+    out = "\n".join(session_start.smoke_lines(tmp_path, "adam"))
+    assert "skipped" in out and "toolkit venv not found" in out and "jsonschema" in out and "FAIL" not in out
+
+    def fail_run(cmd, **kw):
+        return subprocess.CompletedProcess(cmd, 2, b"  G-validate   PASS  ok\n  G-size       FAIL  infeasible\nsmoke FAIL: G-size\n", b"")
+    monkeypatch.setattr(session_start.subprocess, "run", fail_run)
+    out = "\n".join(session_start.smoke_lines(tmp_path, "adam"))
+    assert "Smoke gate (adam): FAIL" in out and "G-size       FAIL  infeasible" in out  # a real failure still says FAIL
+
+    def boom(cmd, **kw):
+        raise subprocess.TimeoutExpired(cmd, 90)
+    monkeypatch.setattr(session_start.subprocess, "run", boom)
+    assert "skipped" in "\n".join(session_start.smoke_lines(tmp_path, "adam"))
+
+
+@pytest.mark.skipif(not HAVE_MUJOCO, reason="mujoco not installed")
+def test_session_start_under_a_bare_system_python_still_smokes_with_the_toolkit_python(repo):
+    """The hook is launched by whatever `python` is on PATH, often one with PyYAML but without jsonschema/numpy/mujoco."""
+    import shutil
+    system = shutil.which("python") or shutil.which("python3")
+    if not system or Path(system).resolve() == Path(sys.executable).resolve():
+        pytest.skip("no separate system python on PATH")
+    probe = lambda mods: subprocess.run([system, "-c", f"import {mods}"], capture_output=True).returncode == 0  # noqa: E731
+    if not probe("yaml") or probe("jsonschema"):
+        pytest.skip("system python is not a bare interpreter with PyYAML only")
+    env = {**{k: v for k, v in os.environ.items() if k != "OPENHUMANOID_ROOT"}, "OH_PYTHON": sys.executable}
+    body = json.dumps({"session_id": "s", "cwd": str(repo), "source": "startup"}).encode()
+    r = subprocess.run([system, str(HOOKS / "session_start.py")], input=body, capture_output=True, env=env, timeout=120)
+    text = r.stdout.decode("utf-8", "replace")
+    assert r.returncode == 0 and "Smoke gate (adam): PASS" in text and "jsonschema" not in text, text
+    env.pop("OH_PYTHON")  # and with no toolkit python at all: skipped, never FAIL
+    r = subprocess.run([system, str(HOOKS / "session_start.py")], input=body, capture_output=True, env=env, timeout=120)
+    text = r.stdout.decode("utf-8", "replace")
+    assert r.returncode == 0 and "Smoke gate (adam): skipped" in text and "Smoke gate (adam): FAIL" not in text and "No module named 'jsonschema'" in text, text
