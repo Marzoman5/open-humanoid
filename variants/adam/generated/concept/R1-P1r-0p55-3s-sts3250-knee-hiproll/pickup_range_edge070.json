@@ -1,0 +1,192 @@
+{
+ "candidate": "R1-P1r-0p55-3s-sts3250-knee-hiproll",
+ "robot_height_m": 0.55,
+ "generated_by": "python -m openhumanoid.concept.motions.pickup",
+ "peak_factor": 1.52,
+ "reach": {
+  "side": "r",
+  "robot_height_m": 0.55,
+  "scan_m": [
+   0.25,
+   0.55,
+   0.025
+  ],
+  "resolution_m": 0.005,
+  "segments": [
+   {
+    "from_m": 0.2719,
+    "to_m": 0.3063
+   }
+  ],
+  "min_reachable_m": 0.2719,
+  "max_reachable_m": 0.3063,
+  "limits_outside": {
+   "0.2719-0.3063": {
+    "just_below": "table collision",
+    "just_above": "table collision",
+    "just_above_m": 0.3094,
+    "just_below_m": 0.2688
+   }
+  },
+  "object": {
+   "mass_kg": 0.15,
+   "radius_m": 0.02,
+   "half_height_m": 0.025,
+   "friction": 1.0
+  },
+  "edge_to_object_m": 0.07,
+  "tilt_limits_deg": [
+   -70.0,
+   45.0
+  ],
+  "rows": [
+   {
+    "table_m": 0.25,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table edge behind the toes (x2863); the body or arm meets the table at the grasp (x2812); table clearance -x mm (finger_fixed_r) at 3.4 s on the planned path (x703)"
+   },
+   {
+    "table_m": 0.2625,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table edge behind the toes (x2599); the body or arm meets the table at the grasp (x2337); table clearance -x mm (pelvis) at the rest posture (x543)"
+   },
+   {
+    "table_m": 0.2688,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table edge behind the toes (x2456); the body or arm meets the table at the grasp (x2223); table clearance -x mm (pelvis) at the rest posture (x822)"
+   },
+   {
+    "table_m": 0.2719,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 50.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": -13.4,
+    "arm_reach_fraction": 0.777,
+    "table_clearance_mm": 6.1,
+    "standing_gap_mm": 23.3,
+    "balance_margin_mm": 50.6,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.275,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 50.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": -14.0,
+    "arm_reach_fraction": 0.801,
+    "table_clearance_mm": 6.8,
+    "standing_gap_mm": 27.8,
+    "balance_margin_mm": 50.6,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.3,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 40.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": -2.9,
+    "arm_reach_fraction": 0.808,
+    "table_clearance_mm": 6.3,
+    "standing_gap_mm": 30.7,
+    "balance_margin_mm": 50.6,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.3063,
+    "reachable": true,
+    "limit": null,
+    "knee_deg": 30.0,
+    "hip_hinge_deg": 0.0,
+    "waist_yaw_deg": 0.0,
+    "finger_tilt_deg": -2.7,
+    "arm_reach_fraction": 0.809,
+    "table_clearance_mm": 6.3,
+    "standing_gap_mm": 32.4,
+    "balance_margin_mm": 50.6,
+    "lift_mm": 40
+   },
+   {
+    "table_m": 0.3094,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "the body or arm meets the table at the grasp (x2767); table edge behind the toes (x1393); table clearance -x mm (forearm_r) at the grasp (x1366)"
+   },
+   {
+    "table_m": 0.3125,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "the body or arm meets the table at the grasp (x2501); table clearance -x mm (forearm_r) at the grasp (x1642); table edge behind the toes (x1510)"
+   },
+   {
+    "table_m": 0.325,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x3076); table edge behind the toes (x1884); the body or arm meets the table at the grasp (x1778)"
+   },
+   {
+    "table_m": 0.35,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x5542); the body or arm meets the table at the grasp (x2458); table edge behind the toes (x821)"
+   },
+   {
+    "table_m": 0.375,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x8094); the body or arm meets the table at the grasp (x1797); table clearance x mm (forearm_r) at the grasp (x496)"
+   },
+   {
+    "table_m": 0.4,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x9310); the body or arm meets the table at the grasp (x2188); table clearance -x mm (finger_fixed_r) at 4.2 s on the planned path (x274)"
+   },
+   {
+    "table_m": 0.425,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x8867); the body or arm meets the table at the grasp (x2098); legs/waist out of range once the arm is out (x88)"
+   },
+   {
+    "table_m": 0.45,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x6710); the body or arm meets the table at the grasp (x765); legs/waist out of range once the arm is out (x128)"
+   },
+   {
+    "table_m": 0.475,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x2842); legs/waist out of range once the arm is out (x74)"
+   },
+   {
+    "table_m": 0.5,
+    "reachable": false,
+    "limit": "table collision",
+    "why": "table clearance -x mm (forearm_r) at the grasp (x415); legs/waist out of range once the arm is out (x16)"
+   },
+   {
+    "table_m": 0.525,
+    "reachable": false,
+    "limit": "arm reach",
+    "why": ""
+   },
+   {
+    "table_m": 0.55,
+    "reachable": false,
+    "limit": "arm reach",
+    "why": ""
+   }
+  ]
+ },
+ "seconds": 416.4
+}

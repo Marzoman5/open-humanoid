@@ -158,3 +158,6 @@ One run per condition is an anecdote, not a calibration.
 - S5 and the CAD-assembly pose use the MJCF neutral pose (all joints 0); arms hang straight.
 - References are approximations; see §4. The first thing to do when a maintainer supplies photos: re-run `calibrate` with measured silhouettes.
 - `oh` wiring: `openhumanoid/design/cli.py:register(sub)` and `render.render(spec, studio=True)` exist but `openhumanoid/cli.py` is untouched in this task (see the T-0016 handoff).
+
+## Calibration log: maintainer ratings
+- 2026-10-19, R2a lineup (B Atlas-capsule, A Optimus-lean, C Apple-monolith, all on the same R1 hard points): the maintainer said **"they all look about the same."** The critic ranked them B > A > C consistently. Interpretation: when hard points dominate the silhouette, shell-level differences are below the maintainer's perception threshold, so critic preferences between same-hardware directions carry little weight. Spend effort on packaging (hard points), not on shell variants.
