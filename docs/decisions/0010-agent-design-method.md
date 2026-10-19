@@ -1,6 +1,6 @@
 # 0010: Agent-only industrial design: silhouette first, outside-in shells, separate critic
 
-- **Status:** accepted · **Date:** 2026-10-19 · **Scope:** toolkit (method) + variant:adam · **Deciders:** maintainer, commander
+- **Status:** direction accepted by maintainer; implementation details PROVISIONAL until the T-0011 methods verification (research/ai-engineering/VERIFICATION.md) lands · **Date:** 2026-10-19 · **Scope:** toolkit (method) + variant:adam · **Deciders:** maintainer, commander
 - **Evidence:** research/ai-engineering/06-industrial-design-and-visual-review.md, RECOMMENDATIONS.md §A, the blind-critic experiment in 07 §4
 - **Trigger:** the first Adam CAD attempt read as "Roblox": a frame of servo boxes with fillets, self-graded on flat renders.
 

@@ -1,6 +1,6 @@
 # 0011: Enforce the rules with hooks and machine-checked gates
 
-- **Status:** accepted · **Date:** 2026-10-19 · **Scope:** toolkit · **Deciders:** maintainer, commander
+- **Status:** direction accepted by maintainer; implementation details PROVISIONAL until the T-0011 methods verification (research/ai-engineering/VERIFICATION.md) lands · **Date:** 2026-10-19 · **Scope:** toolkit · **Deciders:** maintainer, commander
 - **Evidence:** research/ai-engineering/03-agentic-workflows.md, RECOMMENDATIONS.md §B1–B2, B7, D3–D4
 
 ## Context

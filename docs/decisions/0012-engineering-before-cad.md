@@ -1,6 +1,6 @@
 # 0012: Engineering before CAD: a concept loop with measured actuators, envelopes, and power architecture
 
-- **Status:** accepted · **Date:** 2026-10-19 · **Scope:** toolkit (method) + variant:adam · **Deciders:** maintainer, commander
+- **Status:** direction accepted by maintainer; implementation details PROVISIONAL until the T-0011 methods verification (research/ai-engineering/VERIFICATION.md) lands · **Date:** 2026-10-19 · **Scope:** toolkit (method) + variant:adam · **Deciders:** maintainer, commander
 - **Evidence:** research/SUMMARY.md, research/methods/*, research/ai-engineering/02-ai-sim-robot-design.md, RECOMMENDATIONS.md §B3–B6, F
 - **Supersedes:** the quick sizing tool (`oh size`) as the mechanical go/no-go. It stays as a first estimate.
 

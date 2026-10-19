@@ -1,6 +1,6 @@
 # 0009: Gated, resumable pipeline; "first try" means the physical build; Adam-first tooling
 
-- **Status:** accepted · **Date:** 2026-10-19 · **Scope:** toolkit · **Deciders:** maintainer, commander
+- **Status:** direction accepted by maintainer; implementation details PROVISIONAL until the T-0011 methods verification (research/ai-engineering/VERIFICATION.md) lands · **Date:** 2026-10-19 · **Scope:** toolkit · **Deciders:** maintainer, commander
 - **Evidence:** research/ai-engineering/RECOMMENDATIONS.md (I1, I2), 07-challenging-our-assumptions.md
 - **Amends:** 0001 (how the toolkit grows, not what it is)
 
