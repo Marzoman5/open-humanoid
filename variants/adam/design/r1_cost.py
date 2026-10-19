@@ -49,7 +49,8 @@ COMMON = {"sd": 1, "adapter": 1, "cam": 1, "camcable": 1, "switch": 1, "fastener
 
 
 def config(name: str, *, servo: str, n_servo: int, n_sts3250: int = 0, compute: str = "pi5", pack: str = "lipo3s_1300", imu: str = "imu",
-           charger: str = "charger", gamepad: bool = True, cheap_buck: bool = False, spares: int | None = None, pla_kg: float = 0.758, note: str = "") -> dict:
+           charger: str = "charger", gamepad: bool = True, cheap_buck: bool = False, spares: int | None = None, pla_kg: float = 0.758, note: str = "",
+           spares_mix: dict | None = None) -> dict:
     lines = dict(COMMON)
     lines[servo] = n_servo
     if n_sts3250:
@@ -66,7 +67,8 @@ def config(name: str, *, servo: str, n_servo: int, n_sts3250: int = 0, compute: 
     lines["pla_kg"] = pla_kg
     if spares is None:                 # QUOTES.md section 6 rule: ~13% (3 per 23, 2 per 14)
         spares = max(1, round(0.13 * (n_servo + n_sts3250)))
-    return {"name": name, "lines": lines, "spares": {servo: spares} if spares else {}, "note": note}
+    sp = dict(spares_mix) if spares_mix is not None else ({servo: spares} if spares else {})
+    return {"name": name, "lines": lines, "spares": sp, "note": note}
 
 
 def total(c: dict, scen: str = "CHEAP") -> dict:
@@ -104,26 +106,30 @@ def max_servos_under(cap: float, base: dict, scen: str = "CHEAP", servo: str = "
     return best
 
 
+# Printed structure: the concept engine's nominal structure mass (11.9 kg/m^3 x h^3, the Open Duck Mini back-out) + 15% print waste:
+# 0.55 m -> 1.98 kg x 1.15 = 2.28 kg PLA+; 0.60 m -> 2.57 kg x 1.15 = 2.96 kg (totals.py's 0.758 kg was sized for 0.45 m).
+PLA_055, PLA_060 = 2.28, 2.96
+LEAN = dict(gamepad=False, charger="charger_b3", imu="imu_icm", compute="pi5_1gb", cheap_buck=True)
 CONFIGS = [
-    config("R1-P1 recommended full: 23 servos, Pi 5 1 GB + D36V50F5, 3S 1300", servo="servo12", n_servo=23, compute="pi5_1gb", note="path 1"),
-    config("R1-P1 lean extras: 23 servos, Pi 5 1 GB, phone instead of gamepad", servo="servo12", n_servo=23, compute="pi5_1gb", gamepad=False),
     # ---------------- path 1: full requirements
-    config("F23 full: 6-DOF legs, waist, neck 2, 3-DOF arms, 2 grippers, Pi 5", servo="servo12", n_servo=23, note="all MUSTs and SHOULDs"),
-    config("F21 full, 5-DOF legs (no ankle roll), Pi 5", servo="servo12", n_servo=21),
-    config("F23 + STS3250 at both knees, Pi 5", servo="servo12", n_servo=21, n_sts3250=2),
-    config("F23 + STS3250 at knees AND hip roll, Pi 5", servo="servo12", n_servo=19, n_sts3250=4),
-    config("F23 at 7.4 V (2S), Pi 5", servo="servo7v4", n_servo=23, pack="lipo2s"),
-    config("F23 with Pi Zero 2 W (out of stock), 3S 1300", servo="servo12", n_servo=23, compute="zero2w"),
-    # ---------------- path 2: cuts toward the cap (least valuable first)
-    config("C19: 5-DOF legs, no waist, neck 2, 3-DOF arms, 1 gripper, Pi 5", servo="servo12", n_servo=19),
-    config("C19 lean: as C19, phone instead of gamepad, B3 charger, ICM-42688 IMU, Pi 5", servo="servo12", n_servo=19, gamepad=False, charger="charger_b3", imu="imu_icm"),
-    config("C19 lean, no spares", servo="servo12", n_servo=19, gamepad=False, charger="charger_b3", imu="imu_icm", spares=0),
-    config("C17: 5-DOF legs, neck 2, 2-DOF arms (no elbows), 1 gripper, lean, Pi 5", servo="servo12", n_servo=17, gamepad=False, charger="charger_b3", imu="imu_icm"),
-    config("C19 lean, Pi 5 1 GB + DFR0831", servo="servo12", n_servo=19, compute="pi5_1gb", cheap_buck=True, gamepad=False, charger="charger_b3", imu="imu_icm"),
-    config("C17 lean, Pi 5 1 GB + DFR0831", servo="servo12", n_servo=17, compute="pi5_1gb", cheap_buck=True, gamepad=False, charger="charger_b3", imu="imu_icm"),
-    config("C17 lean, Pi 5 1 GB + DFR0831, no spares", servo="servo12", n_servo=17, compute="pi5_1gb", cheap_buck=True, gamepad=False, charger="charger_b3", imu="imu_icm", spares=0),
-    config("C17 lean with Pi Zero 2 W (if stock returns)", servo="servo12", n_servo=17, compute="zero2w", gamepad=False, charger="charger_b3", imu="imu_icm"),
-    config("E14 Open-Duck-like (legs 10, neck 2... reference)", servo="servo7v4", n_servo=14, compute="zero2w", pack="lipo2s", gamepad=False, pla_kg=0.616),
+    config("P1 RECOMMENDED: 23 DOF, 19 STS3215-12V + 4 STS3250 (knees, hip roll), 0.60 m, Pi 5 1 GB + D36V50F5, 3S 1300, BNO085, B6neo, gamepad",
+           servo="servo12", n_servo=19, n_sts3250=4, compute="pi5_1gb", pla_kg=PLA_060, spares_mix={"servo12": 2, "sts3250": 1}, note="path 1"),
+    config("P1 rec. with a phone instead of the gamepad (R9 allows it)", servo="servo12", n_servo=19, n_sts3250=4, compute="pi5_1gb", pla_kg=PLA_060, gamepad=False,
+           spares_mix={"servo12": 2, "sts3250": 1}),
+    config("P1 runner-up: 23 DOF, 21 STS3215-12V + 2 STS3250 (knees), 0.55 m, Pi 5 1 GB", servo="servo12", n_servo=21, n_sts3250=2, compute="pi5_1gb", pla_kg=PLA_055,
+           spares_mix={"servo12": 2, "sts3250": 1}),
+    config("P1 if the bench is favourable: 23 DOF, 23 STS3215-12V, 0.55 m, Pi 5 1 GB", servo="servo12", n_servo=23, compute="pi5_1gb", pla_kg=PLA_055),
+    # ---------------- path 2: the $550 cap
+    config("P2 RECOMMENDED (cheapest that keeps every engine-checked MUST): 21 servos, 6-DOF legs, no waist, neck 2, 3-DOF arms, 1 gripper, 0.55 m, lean",
+           servo="servo12", n_servo=21, pla_kg=PLA_055, **LEAN),
+    config("P2 rec. with no spares", servo="servo12", n_servo=21, pla_kg=PLA_055, spares=0, **LEAN),
+    config("P2 16 servos (5-DOF legs, neck yaw, 2-DOF arms, 1 gripper), 0.55 m, lean, no spares", servo="servo12", n_servo=16,
+           pla_kg=PLA_055, spares=0, **LEAN),
+    config("P2 cap held on the sticker: 14 servos (5-DOF legs, neck yaw, ONE arm: shoulder pitch + roll + gripper), 0.55 m, lean, no spares", servo="servo12",
+           n_servo=14, pla_kg=PLA_055, spares=0, **LEAN),
+    # ---------------- references
+    config("ref: 23 x STS3215-12V, 0.758 kg filament (QUOTES.md basis), Pi Zero 2 W board price (out of stock)", servo="servo12", n_servo=23, compute="zero2w"),
+    config("ref: 23 x STS3215-7.4V on 2S, 0.60 m, Pi 5 1 GB", servo="servo7v4", n_servo=23, pack="lipo2s", compute="pi5_1gb", pla_kg=PLA_060),
 ]
 
 

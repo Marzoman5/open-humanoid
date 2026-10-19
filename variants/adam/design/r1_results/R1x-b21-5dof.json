@@ -1,0 +1,4635 @@
+[
+ {
+  "candidate": "R1x-b21-5dof",
+  "height_m": 0.5,
+  "gait": {
+   "stance_knee_flex_deg": 20,
+   "step_time_s": 0.25,
+   "worst_margin": 0.625
+  },
+  "nominal": {
+   "label": "nominal",
+   "mass_kg": 3.312,
+   "strict_worst": 0.625,
+   "strict_worst_joint": "knee_l",
+   "cal_worst": 1.163,
+   "cal_worst_joint": "knee_l",
+   "strict_joint_gates_pass": false,
+   "cal_joint_gates_pass": false,
+   "r10_at_required": {
+    "stand_fwd": true,
+    "stand_lat": true,
+    "walk_fwd": false,
+    "walk_lat_out": false,
+    "walk_lat_in": false
+   },
+   "r10_pass": false,
+   "invalid": {
+    "walk_forward": "ideal playback fell over",
+    "walk_backward": "tether supplied 2.0% of body weight on average (limit 1%)",
+    "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+    "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+   },
+   "strict_pass": false,
+   "cal_pass": false,
+   "cal_fails": {},
+   "strict_fails": {
+    "hip_roll_r": [
+     "rms"
+    ],
+    "knee_l": [
+     "peak",
+     "rms"
+    ],
+    "knee_r": [
+     "peak",
+     "rms"
+    ]
+   },
+   "rows": {
+    "hip_yaw_l": {
+     "strict_worst": 12.919,
+     "strict_fails": [],
+     "cal_peak": 19.637,
+     "cal_rms": 88.329,
+     "cal_env": 19.6,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 19.6,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "pickup"
+    },
+    "hip_yaw_r": {
+     "strict_worst": 16.195,
+     "strict_fails": [],
+     "cal_peak": 24.617,
+     "cal_rms": 91.676,
+     "cal_env": 24.571,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 24.571,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "pickup"
+    },
+    "hip_roll_l": {
+     "strict_worst": 1.366,
+     "strict_fails": [],
+     "cal_peak": 2.076,
+     "cal_rms": 4.798,
+     "cal_env": 2.072,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.072,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_r": {
+     "strict_worst": 0.937,
+     "strict_fails": [
+      "rms"
+     ],
+     "cal_peak": 2.081,
+     "cal_rms": 2.363,
+     "cal_env": 2.077,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.077,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "wave"
+    },
+    "hip_pitch_l": {
+     "strict_worst": 3.038,
+     "strict_fails": [],
+     "cal_peak": 4.618,
+     "cal_rms": 8.884,
+     "cal_env": 4.609,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.609,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_pitch_r": {
+     "strict_worst": 3.038,
+     "strict_fails": [],
+     "cal_peak": 4.618,
+     "cal_rms": 8.846,
+     "cal_env": 4.609,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.609,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "knee_l": {
+     "strict_worst": 0.625,
+     "strict_fails": [
+      "peak",
+      "rms"
+     ],
+     "cal_peak": 1.22,
+     "cal_rms": 1.575,
+     "cal_env": 1.218,
+     "cal_overload": 1.163,
+     "cal_worst": 1.163,
+     "cal_fails": [],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "knee_r": {
+     "strict_worst": 0.625,
+     "strict_fails": [
+      "peak",
+      "rms"
+     ],
+     "cal_peak": 1.22,
+     "cal_rms": 1.575,
+     "cal_env": 1.218,
+     "cal_overload": 1.163,
+     "cal_worst": 1.163,
+     "cal_fails": [],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "ankle_pitch_l": {
+     "strict_worst": 1.795,
+     "strict_fails": [],
+     "cal_peak": 3.43,
+     "cal_rms": 4.528,
+     "cal_env": 3.424,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.424,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "ankle_pitch_r": {
+     "strict_worst": 1.411,
+     "strict_fails": [],
+     "cal_peak": 3.307,
+     "cal_rms": 3.559,
+     "cal_env": 3.301,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.301,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "wave"
+    },
+    "waist_yaw": {
+     "strict_worst": 1.943,
+     "strict_fails": [],
+     "cal_peak": 2.954,
+     "cal_rms": 13.867,
+     "cal_env": 2.948,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.948,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_yaw": {
+     "strict_worst": 2.653,
+     "strict_fails": [],
+     "cal_peak": 4.033,
+     "cal_rms": 11.849,
+     "cal_env": 4.025,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.025,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_pitch": {
+     "strict_worst": 498.095,
+     "strict_fails": [],
+     "cal_peak": 757.105,
+     "cal_rms": 2869.427,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 757.105,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_l": {
+     "strict_worst": 3.684,
+     "strict_fails": [],
+     "cal_peak": 5.6,
+     "cal_rms": 9.296,
+     "cal_env": 5.59,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 5.59,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_r": {
+     "strict_worst": 2.501,
+     "strict_fails": [],
+     "cal_peak": 3.801,
+     "cal_rms": 7.368,
+     "cal_env": 3.676,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.676,
+     "cal_fails": [],
+     "peak_motion": "wave",
+     "rms_motion": "pickup"
+    },
+    "shoulder_roll_l": {
+     "strict_worst": 2.543,
+     "strict_fails": [],
+     "cal_peak": 4.733,
+     "cal_rms": 6.414,
+     "cal_env": 4.724,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.724,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_r": {
+     "strict_worst": 2.509,
+     "strict_fails": [],
+     "cal_peak": 4.76,
+     "cal_rms": 6.328,
+     "cal_env": 4.751,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.751,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "elbow_l": {
+     "strict_worst": 5.459,
+     "strict_fails": [],
+     "cal_peak": 8.297,
+     "cal_rms": 14.28,
+     "cal_env": 8.282,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 8.282,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "elbow_r": {
+     "strict_worst": 1.253,
+     "strict_fails": [],
+     "cal_peak": 2.422,
+     "cal_rms": 3.159,
+     "cal_env": 2.417,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.417,
+     "cal_fails": [],
+     "peak_motion": "wave",
+     "rms_motion": "wave"
+    },
+    "gripper_l": {
+     "strict_worst": 410.595,
+     "strict_fails": [],
+     "cal_peak": 1122.917,
+     "cal_rms": 1035.521,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1035.521,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_r": {
+     "strict_worst": 2.182,
+     "strict_fails": [],
+     "cal_peak": 3.736,
+     "cal_rms": 5.502,
+     "cal_env": 3.729,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.729,
+     "cal_fails": [],
+     "peak_motion": "pickup",
+     "rms_motion": "pickup"
+    }
+   }
+  },
+  "packaging_notes": [
+   "ankle_height: 22.5 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+   "foot_length: 85.0 mm -> 92.0 mm (T-0004 foot size)",
+   "foot_width: 37.5 mm -> 55.0 mm (T-0004 foot size)",
+   "shoulder_width: 150.0 mm -> 180.0 mm (T-0004 arm clearance)",
+   "standing height kept at 500 mm: the other vertical proportions scaled x0.907 (thigh 102 mm, shank 102 mm)",
+   "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+   "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+   "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+  ],
+  "rom_clamps": [
+   "squat_120",
+   "sit_to_stand_130"
+  ],
+  "should": {
+   "sit_to_stand_130": {
+    "valid": true,
+    "fails": [
+     "knee_l: peak, rms, overload_time",
+     "knee_r: peak, rms, overload_time"
+    ]
+   }
+  },
+  "largest_recoverable_Ns": {
+   "stand_fwd": {
+    "Ns": 0.484,
+    "by": "ankle",
+    "limited_by": "plan: reach / capture point"
+   },
+   "stand_lat": {
+    "Ns": 0.682,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_fwd": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   },
+   "walk_lat_out": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   },
+   "walk_lat_in": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   }
+  },
+  "bounds": [
+   {
+    "label": "structure mass x0.55",
+    "mass_kg": 2.643,
+    "strict_worst": 0.753,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.47,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": false,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "ideal playback fell over",
+     "walk_backward": "tether supplied 2.6% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "structure mass x1.4",
+    "mass_kg": 3.908,
+    "strict_worst": 0.553,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.935,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "ideal playback fell over",
+     "walk_backward": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x0.8",
+    "mass_kg": 3.258,
+    "strict_worst": 0.634,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.205,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "ideal playback fell over",
+     "walk_backward": "tether supplied 2.0% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x1.5",
+    "mass_kg": 3.448,
+    "strict_worst": 0.601,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.075,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "ideal playback fell over",
+     "walk_backward": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "pessimistic linear torque-speed",
+    "mass_kg": 3.312,
+    "strict_worst": 0.625,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.118,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "ideal playback fell over",
+     "walk_backward": "tether supplied 2.0% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "armature low",
+    "mass_kg": 3.312,
+    "strict_worst": 0.626,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.176,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "armature high",
+    "mass_kg": 3.312,
+    "strict_worst": 0.623,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.163,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "ideal playback fell over",
+     "walk_backward": "ideal playback fell over",
+     "turn": "ideal playback fell over",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "stall low",
+    "mass_kg": 3.312,
+    "strict_worst": 0.625,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.98,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "ideal playback fell over",
+     "walk_backward": "tether supplied 4.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 2.5% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "stall high",
+    "mass_kg": 3.312,
+    "strict_worst": 0.625,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.339,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 4.0% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "walking speed x1.5",
+    "mass_kg": 3.312,
+    "strict_worst": 0.625,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.163,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "reference infeasible: COM tracking error after compensation 0.06 mm; leg IK unreachable at 42 of 590",
+     "walk_backward": "reference infeasible: COM tracking error after compensation 0.02 mm; leg IK unreachable at 31 of 590",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "benchmark-fit mass (structure x1.33)",
+    "mass_kg": 3.809,
+    "strict_worst": 0.564,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.971,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "ideal playback fell over",
+     "walk_backward": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   }
+  ],
+  "robust_strict": false,
+  "robust_cal": false,
+  "bounds_failing_cal": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.33)"
+  ],
+  "bounds_failing_strict": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.33)"
+  ],
+  "min_cal_worst_over_bounds": 0.935,
+  "seconds": 325.7
+ },
+ {
+  "candidate": "R1x-b21-5dof",
+  "height_m": 0.55,
+  "gait": {
+   "stance_knee_flex_deg": 20,
+   "step_time_s": 0.25,
+   "worst_margin": 0.516
+  },
+  "nominal": {
+   "label": "nominal",
+   "mass_kg": 3.805,
+   "strict_worst": 0.516,
+   "strict_worst_joint": "knee_l",
+   "cal_worst": 0.862,
+   "cal_worst_joint": "knee_l",
+   "strict_joint_gates_pass": false,
+   "cal_joint_gates_pass": false,
+   "r10_at_required": {
+    "stand_fwd": true,
+    "stand_lat": true,
+    "walk_fwd": false,
+    "walk_lat_out": false,
+    "walk_lat_in": false
+   },
+   "r10_pass": false,
+   "invalid": {
+    "walk_forward": "tether supplied 3.0% of body weight on average (limit 1%)",
+    "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+    "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+    "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+   },
+   "strict_pass": false,
+   "cal_pass": false,
+   "cal_fails": {
+    "knee_l": [
+     "peak",
+     "envelope",
+     "overload_time"
+    ],
+    "knee_r": [
+     "peak",
+     "envelope",
+     "overload_time"
+    ]
+   },
+   "strict_fails": {
+    "hip_roll_r": [
+     "rms"
+    ],
+    "knee_l": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time"
+    ],
+    "knee_r": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time"
+    ]
+   },
+   "rows": {
+    "hip_yaw_l": {
+     "strict_worst": 8.908,
+     "strict_fails": [],
+     "cal_peak": 13.54,
+     "cal_rms": 76.653,
+     "cal_env": 13.514,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 13.514,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_yaw_r": {
+     "strict_worst": 11.356,
+     "strict_fails": [],
+     "cal_peak": 17.262,
+     "cal_rms": 90.359,
+     "cal_env": 17.229,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 17.229,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_l": {
+     "strict_worst": 1.1,
+     "strict_fails": [],
+     "cal_peak": 1.671,
+     "cal_rms": 3.785,
+     "cal_env": 1.668,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.668,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_r": {
+     "strict_worst": 0.736,
+     "strict_fails": [
+      "rms"
+     ],
+     "cal_peak": 1.678,
+     "cal_rms": 1.857,
+     "cal_env": 1.675,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.675,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "wave"
+    },
+    "hip_pitch_l": {
+     "strict_worst": 2.539,
+     "strict_fails": [],
+     "cal_peak": 3.859,
+     "cal_rms": 7.808,
+     "cal_env": 3.851,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.851,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_pitch_r": {
+     "strict_worst": 2.538,
+     "strict_fails": [],
+     "cal_peak": 3.858,
+     "cal_rms": 7.769,
+     "cal_env": 3.851,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.851,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "knee_l": {
+     "strict_worst": 0.516,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "cal_peak": 0.974,
+     "cal_rms": 1.301,
+     "cal_env": 0.972,
+     "cal_overload": 0.862,
+     "cal_worst": 0.862,
+     "cal_fails": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "knee_r": {
+     "strict_worst": 0.516,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "cal_peak": 0.974,
+     "cal_rms": 1.301,
+     "cal_env": 0.972,
+     "cal_overload": 0.862,
+     "cal_worst": 0.862,
+     "cal_fails": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "ankle_pitch_l": {
+     "strict_worst": 1.34,
+     "strict_fails": [],
+     "cal_peak": 2.866,
+     "cal_rms": 3.379,
+     "cal_env": 2.861,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.861,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "pickup"
+    },
+    "ankle_pitch_r": {
+     "strict_worst": 1.12,
+     "strict_fails": [],
+     "cal_peak": 2.702,
+     "cal_rms": 2.825,
+     "cal_env": 2.697,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.697,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "wave"
+    },
+    "waist_yaw": {
+     "strict_worst": 1.65,
+     "strict_fails": [],
+     "cal_peak": 2.508,
+     "cal_rms": 12.665,
+     "cal_env": 2.503,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.503,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_yaw": {
+     "strict_worst": 2.652,
+     "strict_fails": [],
+     "cal_peak": 4.032,
+     "cal_rms": 11.845,
+     "cal_env": 4.024,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.024,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_pitch": {
+     "strict_worst": 336.852,
+     "strict_fails": [],
+     "cal_peak": 512.015,
+     "cal_rms": 1896.029,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 512.015,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_l": {
+     "strict_worst": 3.027,
+     "strict_fails": [],
+     "cal_peak": 4.602,
+     "cal_rms": 7.963,
+     "cal_env": 4.593,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.593,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_r": {
+     "strict_worst": 2.279,
+     "strict_fails": [],
+     "cal_peak": 3.464,
+     "cal_rms": 7.572,
+     "cal_env": 3.295,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.295,
+     "cal_fails": [],
+     "peak_motion": "wave",
+     "rms_motion": "wave"
+    },
+    "shoulder_roll_l": {
+     "strict_worst": 2.083,
+     "strict_fails": [],
+     "cal_peak": 3.898,
+     "cal_rms": 5.254,
+     "cal_env": 3.891,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.891,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_r": {
+     "strict_worst": 2.038,
+     "strict_fails": [],
+     "cal_peak": 3.923,
+     "cal_rms": 5.141,
+     "cal_env": 3.915,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.915,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "elbow_l": {
+     "strict_worst": 5.031,
+     "strict_fails": [],
+     "cal_peak": 7.647,
+     "cal_rms": 13.703,
+     "cal_env": 7.633,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 7.633,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "elbow_r": {
+     "strict_worst": 1.235,
+     "strict_fails": [],
+     "cal_peak": 2.389,
+     "cal_rms": 3.116,
+     "cal_env": 2.385,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.385,
+     "cal_fails": [],
+     "peak_motion": "wave",
+     "rms_motion": "wave"
+    },
+    "gripper_l": {
+     "strict_worst": 350.328,
+     "strict_fails": [],
+     "cal_peak": 954.022,
+     "cal_rms": 883.526,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 883.526,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_r": {
+     "strict_worst": 2.18,
+     "strict_fails": [],
+     "cal_peak": 3.736,
+     "cal_rms": 5.499,
+     "cal_env": 3.729,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.729,
+     "cal_fails": [],
+     "peak_motion": "pickup",
+     "rms_motion": "pickup"
+    }
+   }
+  },
+  "packaging_notes": [
+   "ankle_height: 24.8 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+   "foot_length: 93.5 mm -> 101.2 mm (T-0004 foot size)",
+   "foot_width: 41.2 mm -> 60.5 mm (T-0004 foot size)",
+   "shoulder_width: 165.0 mm -> 198.0 mm (T-0004 arm clearance)",
+   "standing height kept at 550 mm: the other vertical proportions scaled x0.920 (thigh 114 mm, shank 114 mm)",
+   "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+   "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+   "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+  ],
+  "rom_clamps": [
+   "squat_120",
+   "sit_to_stand_130"
+  ],
+  "should": {
+   "sit_to_stand_130": {
+    "valid": true,
+    "fails": [
+     "knee_l: peak, rms, envelope, overload_time",
+     "knee_r: peak, rms, envelope, overload_time"
+    ]
+   }
+  },
+  "largest_recoverable_Ns": {
+   "stand_fwd": {
+    "Ns": 0.595,
+    "by": "ankle",
+    "limited_by": "plan: reach / capture point"
+   },
+   "stand_lat": {
+    "Ns": 0.718,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_fwd": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   },
+   "walk_lat_out": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   },
+   "walk_lat_in": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   }
+  },
+  "bounds": [
+   {
+    "label": "structure mass x0.55",
+    "mass_kg": 2.914,
+    "strict_worst": 0.627,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 1.176,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 3.1% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {},
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms"
+     ],
+     "knee_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "structure mass x1.4",
+    "mass_kg": 4.597,
+    "strict_worst": 0.435,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.435,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 3.0% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x0.8",
+    "mass_kg": 3.751,
+    "strict_worst": 0.523,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.877,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 3.0% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x1.5",
+    "mass_kg": 3.94,
+    "strict_worst": 0.499,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.833,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 3.0% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "pessimistic linear torque-speed",
+    "mass_kg": 3.805,
+    "strict_worst": 0.516,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.862,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 3.0% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "armature low",
+    "mass_kg": 3.805,
+    "strict_worst": 0.516,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.87,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "armature high",
+    "mass_kg": 3.805,
+    "strict_worst": 0.516,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.862,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "ideal playback fell over",
+     "walk_backward": "ideal playback fell over",
+     "turn": "tether supplied 3.2% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "stall low",
+    "mass_kg": 3.805,
+    "strict_worst": 0.516,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.769,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 4.8% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.9% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "stall high",
+    "mass_kg": 3.805,
+    "strict_worst": 0.516,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.962,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "walking speed x1.5",
+    "mass_kg": 3.805,
+    "strict_worst": 0.516,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.862,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "reference infeasible: COM tracking error after compensation 0.05 mm; leg IK unreachable at 16 of 590",
+     "walk_backward": "reference infeasible: COM tracking error after compensation 0.05 mm; leg IK unreachable at 5 of 590 ",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ]
+    }
+   },
+   {
+    "label": "benchmark-fit mass (structure x1.47)",
+    "mass_kg": 4.734,
+    "strict_worst": 0.427,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.427,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 2.9% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "pickup_0.45m": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within r"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ]
+    }
+   }
+  ],
+  "robust_strict": false,
+  "robust_cal": false,
+  "bounds_failing_cal": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.47)"
+  ],
+  "bounds_failing_strict": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.47)"
+  ],
+  "min_cal_worst_over_bounds": 0.427,
+  "seconds": 337.6
+ },
+ {
+  "candidate": "R1x-b21-5dof",
+  "height_m": 0.6,
+  "gait": {
+   "stance_knee_flex_deg": 30,
+   "step_time_s": 0.25,
+   "worst_margin": 0.403
+  },
+  "nominal": {
+   "label": "nominal",
+   "mass_kg": 4.395,
+   "strict_worst": 0.403,
+   "strict_worst_joint": "knee_l",
+   "cal_worst": 0.403,
+   "cal_worst_joint": "knee_l",
+   "strict_joint_gates_pass": false,
+   "cal_joint_gates_pass": false,
+   "r10_at_required": {
+    "stand_fwd": true,
+    "stand_lat": true,
+    "walk_fwd": false,
+    "walk_lat_out": false,
+    "walk_lat_in": false
+   },
+   "r10_pass": false,
+   "invalid": {
+    "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+    "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+    "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+   },
+   "strict_pass": false,
+   "cal_pass": false,
+   "cal_fails": {
+    "knee_l": [
+     "peak",
+     "envelope",
+     "overload_time"
+    ],
+    "knee_r": [
+     "peak",
+     "envelope",
+     "overload_time"
+    ],
+    "shoulder_pitch_r": [
+     "peak",
+     "envelope"
+    ]
+   },
+   "strict_fails": {
+    "hip_roll_l": [
+     "peak"
+    ],
+    "hip_roll_r": [
+     "peak",
+     "rms"
+    ],
+    "knee_l": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time"
+    ],
+    "knee_r": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time"
+    ],
+    "ankle_pitch_l": [
+     "rms"
+    ],
+    "ankle_pitch_r": [
+     "rms"
+    ],
+    "shoulder_pitch_r": [
+     "peak",
+     "rms",
+     "envelope"
+    ]
+   },
+   "rows": {
+    "hip_yaw_l": {
+     "strict_worst": 6.324,
+     "strict_fails": [],
+     "cal_peak": 9.612,
+     "cal_rms": 30.947,
+     "cal_env": 9.594,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 9.594,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "pickup_0.45m"
+    },
+    "hip_yaw_r": {
+     "strict_worst": 8.013,
+     "strict_fails": [],
+     "cal_peak": 12.18,
+     "cal_rms": 42.596,
+     "cal_env": 12.157,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 12.157,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "pickup_0.45m"
+    },
+    "hip_roll_l": {
+     "strict_worst": 0.882,
+     "strict_fails": [
+      "peak"
+     ],
+     "cal_peak": 1.341,
+     "cal_rms": 2.988,
+     "cal_env": 1.338,
+     "cal_overload": 5.0,
+     "cal_worst": 1.338,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_r": {
+     "strict_worst": 0.578,
+     "strict_fails": [
+      "peak",
+      "rms"
+     ],
+     "cal_peak": 1.342,
+     "cal_rms": 1.457,
+     "cal_env": 1.34,
+     "cal_overload": 4.762,
+     "cal_worst": 1.34,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "wave"
+    },
+    "hip_pitch_l": {
+     "strict_worst": 1.355,
+     "strict_fails": [],
+     "cal_peak": 2.189,
+     "cal_rms": 3.416,
+     "cal_env": 2.185,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.185,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "pickup_0.45m"
+    },
+    "hip_pitch_r": {
+     "strict_worst": 2.103,
+     "strict_fails": [],
+     "cal_peak": 3.197,
+     "cal_rms": 6.401,
+     "cal_env": 3.191,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.191,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "pickup_0.45m"
+    },
+    "knee_l": {
+     "strict_worst": 0.403,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "cal_peak": 0.777,
+     "cal_rms": 1.038,
+     "cal_env": 0.776,
+     "cal_overload": 0.403,
+     "cal_worst": 0.403,
+     "cal_fails": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "knee_r": {
+     "strict_worst": 0.403,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "cal_peak": 0.777,
+     "cal_rms": 1.038,
+     "cal_env": 0.776,
+     "cal_overload": 0.403,
+     "cal_worst": 0.403,
+     "cal_fails": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "ankle_pitch_l": {
+     "strict_worst": 0.987,
+     "strict_fails": [
+      "rms"
+     ],
+     "cal_peak": 2.049,
+     "cal_rms": 2.489,
+     "cal_env": 2.045,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.045,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "pickup_0.45m"
+    },
+    "ankle_pitch_r": {
+     "strict_worst": 0.859,
+     "strict_fails": [
+      "rms"
+     ],
+     "cal_peak": 2.126,
+     "cal_rms": 2.165,
+     "cal_env": 2.122,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.122,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "wave"
+    },
+    "waist_yaw": {
+     "strict_worst": 1.365,
+     "strict_fails": [],
+     "cal_peak": 2.075,
+     "cal_rms": 10.808,
+     "cal_env": 2.071,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.071,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "pickup_0.45m"
+    },
+    "neck_yaw": {
+     "strict_worst": 2.651,
+     "strict_fails": [],
+     "cal_peak": 4.03,
+     "cal_rms": 11.84,
+     "cal_env": 4.023,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.023,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_pitch": {
+     "strict_worst": 157.059,
+     "strict_fails": [],
+     "cal_peak": 238.73,
+     "cal_rms": 500.309,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 238.73,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "pickup_0.45m"
+    },
+    "shoulder_pitch_l": {
+     "strict_worst": 2.471,
+     "strict_fails": [],
+     "cal_peak": 3.755,
+     "cal_rms": 6.679,
+     "cal_env": 3.748,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.748,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_r": {
+     "strict_worst": 0.619,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "cal_peak": 0.94,
+     "cal_rms": 2.391,
+     "cal_env": 0.938,
+     "cal_overload": 3.571,
+     "cal_worst": 0.938,
+     "cal_fails": [
+      "peak",
+      "envelope"
+     ],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "pickup_0.45m"
+    },
+    "shoulder_roll_l": {
+     "strict_worst": 1.693,
+     "strict_fails": [],
+     "cal_peak": 3.186,
+     "cal_rms": 4.271,
+     "cal_env": 3.18,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.18,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_r": {
+     "strict_worst": 1.354,
+     "strict_fails": [],
+     "cal_peak": 2.058,
+     "cal_rms": 4.15,
+     "cal_env": 2.054,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.054,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "dance"
+    },
+    "elbow_l": {
+     "strict_worst": 4.57,
+     "strict_fails": [],
+     "cal_peak": 6.946,
+     "cal_rms": 12.852,
+     "cal_env": 6.933,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 6.933,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "elbow_r": {
+     "strict_worst": 1.213,
+     "strict_fails": [],
+     "cal_peak": 1.857,
+     "cal_rms": 3.059,
+     "cal_env": 1.853,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.853,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "wave"
+    },
+    "gripper_l": {
+     "strict_worst": 297.879,
+     "strict_fails": [],
+     "cal_peak": 804.972,
+     "cal_rms": 751.252,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 751.252,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_r": {
+     "strict_worst": 2.171,
+     "strict_fails": [],
+     "cal_peak": 3.735,
+     "cal_rms": 5.476,
+     "cal_env": 3.728,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.728,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "pickup_0.45m"
+    }
+   }
+  },
+  "packaging_notes": [
+   "ankle_height: 27.0 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+   "foot_length: 102.0 mm -> 110.4 mm (T-0004 foot size)",
+   "foot_width: 45.0 mm -> 66.0 mm (T-0004 foot size)",
+   "shoulder_width: 180.0 mm -> 216.0 mm (T-0004 arm clearance)",
+   "standing height kept at 600 mm: the other vertical proportions scaled x0.930 (thigh 126 mm, shank 126 mm)",
+   "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+   "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+   "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+  ],
+  "rom_clamps": [
+   "squat_120",
+   "sit_to_stand_130"
+  ],
+  "should": {
+   "sit_to_stand_130": {
+    "valid": true,
+    "fails": [
+     "knee_l: peak, rms, envelope, overload_time",
+     "knee_r: peak, rms, envelope, overload_time"
+    ]
+   }
+  },
+  "largest_recoverable_Ns": {
+   "stand_fwd": {
+    "Ns": 0.817,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "stand_lat": {
+    "Ns": 0.682,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_fwd": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   },
+   "walk_lat_out": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   },
+   "walk_lat_in": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   }
+  },
+  "bounds": [
+   {
+    "label": "structure mass x0.55",
+    "mass_kg": 3.239,
+    "strict_worst": 0.518,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.862,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.6% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "overload_time"
+     ],
+     "knee_r": [
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_r": [
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "shoulder_pitch_r": [
+      "peak"
+     ]
+    }
+   },
+   {
+    "label": "structure mass x1.4",
+    "mass_kg": 5.424,
+    "strict_worst": 0.126,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.126,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "elbow_r": [
+      "peak"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x0.8",
+    "mass_kg": 4.341,
+    "strict_worst": 0.407,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.407,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x1.5",
+    "mass_kg": 4.531,
+    "strict_worst": 0.397,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.397,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "pessimistic linear torque-speed",
+    "mass_kg": 4.395,
+    "strict_worst": 0.403,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.403,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "armature low",
+    "mass_kg": 4.395,
+    "strict_worst": 0.405,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.405,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "armature high",
+    "mass_kg": 4.395,
+    "strict_worst": 0.405,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.405,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "stall low",
+    "mass_kg": 4.395,
+    "strict_worst": 0.248,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.248,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "stall high",
+    "mass_kg": 4.395,
+    "strict_worst": 0.411,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.741,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "walking speed x1.5",
+    "mass_kg": 4.395,
+    "strict_worst": 0.403,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.403,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.6% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "benchmark-fit mass (structure x1.54)",
+    "mass_kg": 5.773,
+    "strict_worst": 0.125,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.125,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "hip_roll_r": [
+      "overload_time"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "elbow_r": [
+      "peak"
+     ]
+    }
+   }
+  ],
+  "robust_strict": false,
+  "robust_cal": false,
+  "bounds_failing_cal": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.54)"
+  ],
+  "bounds_failing_strict": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.54)"
+  ],
+  "min_cal_worst_over_bounds": 0.125,
+  "seconds": 376.7
+ },
+ {
+  "candidate": "R1x-b21-5dof",
+  "height_m": 0.65,
+  "gait": {
+   "stance_knee_flex_deg": 20,
+   "step_time_s": 0.25,
+   "worst_margin": 0.123
+  },
+  "nominal": {
+   "label": "nominal",
+   "mass_kg": 5.093,
+   "strict_worst": 0.123,
+   "strict_worst_joint": "knee_l",
+   "cal_worst": 0.123,
+   "cal_worst_joint": "knee_l",
+   "strict_joint_gates_pass": false,
+   "cal_joint_gates_pass": false,
+   "r10_at_required": {
+    "stand_fwd": true,
+    "stand_lat": true,
+    "walk_fwd": false,
+    "walk_lat_out": false,
+    "walk_lat_in": false
+   },
+   "r10_pass": false,
+   "invalid": {
+    "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+    "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+    "turn": "tether supplied 1.8% of body weight on average (limit 1%)"
+   },
+   "strict_pass": false,
+   "cal_pass": false,
+   "cal_fails": {
+    "knee_l": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time",
+     "protection_trip"
+    ],
+    "knee_r": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time",
+     "protection_trip"
+    ],
+    "shoulder_pitch_r": [
+     "peak",
+     "envelope"
+    ]
+   },
+   "strict_fails": {
+    "hip_roll_l": [
+     "peak",
+     "rms",
+     "envelope"
+    ],
+    "hip_roll_r": [
+     "peak",
+     "rms",
+     "envelope"
+    ],
+    "knee_l": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time",
+     "protection_trip"
+    ],
+    "knee_r": [
+     "peak",
+     "rms",
+     "envelope",
+     "overload_time",
+     "protection_trip"
+    ],
+    "ankle_pitch_l": [
+     "rms"
+    ],
+    "ankle_pitch_r": [
+     "rms"
+    ],
+    "shoulder_pitch_r": [
+     "peak",
+     "rms",
+     "envelope"
+    ],
+    "shoulder_roll_r": [
+     "peak"
+    ],
+    "elbow_r": [
+     "peak"
+    ]
+   },
+   "rows": {
+    "hip_yaw_l": {
+     "strict_worst": 4.531,
+     "strict_fails": [],
+     "cal_peak": 6.887,
+     "cal_rms": 31.113,
+     "cal_env": 6.874,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 6.874,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "pickup_0.45m"
+    },
+    "hip_yaw_r": {
+     "strict_worst": 3.137,
+     "strict_fails": [],
+     "cal_peak": 4.768,
+     "cal_rms": 19.875,
+     "cal_env": 4.759,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.759,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "pickup_0.45m"
+    },
+    "hip_roll_l": {
+     "strict_worst": 0.719,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "cal_peak": 1.094,
+     "cal_rms": 2.373,
+     "cal_env": 1.092,
+     "cal_overload": 2.564,
+     "cal_worst": 1.092,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "hip_roll_r": {
+     "strict_worst": 0.457,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "cal_peak": 1.095,
+     "cal_rms": 1.153,
+     "cal_env": 1.093,
+     "cal_overload": 2.5,
+     "cal_worst": 1.093,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "wave"
+    },
+    "hip_pitch_l": {
+     "strict_worst": 1.741,
+     "strict_fails": [],
+     "cal_peak": 2.647,
+     "cal_rms": 4.807,
+     "cal_env": 2.642,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.642,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "pickup_0.45m"
+    },
+    "hip_pitch_r": {
+     "strict_worst": 1.714,
+     "strict_fails": [],
+     "cal_peak": 2.606,
+     "cal_rms": 5.628,
+     "cal_env": 2.601,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.601,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "dance"
+    },
+    "knee_l": {
+     "strict_worst": 0.123,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "cal_peak": 0.618,
+     "cal_rms": 0.767,
+     "cal_env": 0.617,
+     "cal_overload": 0.123,
+     "cal_worst": 0.123,
+     "cal_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "peak_motion": "squat_120",
+     "rms_motion": "pickup"
+    },
+    "knee_r": {
+     "strict_worst": 0.352,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "cal_peak": 0.618,
+     "cal_rms": 0.889,
+     "cal_env": 0.617,
+     "cal_overload": 0.385,
+     "cal_worst": 0.385,
+     "cal_fails": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "peak_motion": "squat_120",
+     "rms_motion": "squat_120"
+    },
+    "ankle_pitch_l": {
+     "strict_worst": 0.82,
+     "strict_fails": [
+      "rms"
+     ],
+     "cal_peak": 1.901,
+     "cal_rms": 2.067,
+     "cal_env": 1.897,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.897,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "pickup"
+    },
+    "ankle_pitch_r": {
+     "strict_worst": 0.71,
+     "strict_fails": [
+      "rms"
+     ],
+     "cal_peak": 1.763,
+     "cal_rms": 1.79,
+     "cal_env": 1.76,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.76,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "wave"
+    },
+    "waist_yaw": {
+     "strict_worst": 1.107,
+     "strict_fails": [],
+     "cal_peak": 1.683,
+     "cal_rms": 9.004,
+     "cal_env": 1.68,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 1.68,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "pickup_0.45m"
+    },
+    "neck_yaw": {
+     "strict_worst": 2.65,
+     "strict_fails": [],
+     "cal_peak": 4.029,
+     "cal_rms": 11.833,
+     "cal_env": 4.021,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 4.021,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "neck_pitch": {
+     "strict_worst": 108.88,
+     "strict_fails": [],
+     "cal_peak": 165.497,
+     "cal_rms": 296.115,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 165.497,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "pickup_0.45m"
+    },
+    "shoulder_pitch_l": {
+     "strict_worst": 1.987,
+     "strict_fails": [],
+     "cal_peak": 3.021,
+     "cal_rms": 5.526,
+     "cal_env": 3.015,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.015,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_pitch_r": {
+     "strict_worst": 0.321,
+     "strict_fails": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "cal_peak": 0.487,
+     "cal_rms": 1.783,
+     "cal_env": 0.487,
+     "cal_overload": 9.091,
+     "cal_worst": 0.487,
+     "cal_fails": [
+      "peak",
+      "envelope"
+     ],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "pickup_0.45m"
+    },
+    "shoulder_roll_l": {
+     "strict_worst": 1.372,
+     "strict_fails": [],
+     "cal_peak": 2.606,
+     "cal_rms": 3.459,
+     "cal_env": 2.601,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 2.601,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "shoulder_roll_r": {
+     "strict_worst": 0.813,
+     "strict_fails": [
+      "peak"
+     ],
+     "cal_peak": 1.236,
+     "cal_rms": 3.345,
+     "cal_env": 1.234,
+     "cal_overload": 12.5,
+     "cal_worst": 1.234,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "dance"
+    },
+    "elbow_l": {
+     "strict_worst": 4.121,
+     "strict_fails": [],
+     "cal_peak": 6.265,
+     "cal_rms": 11.768,
+     "cal_env": 6.253,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 6.253,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "elbow_r": {
+     "strict_worst": 0.918,
+     "strict_fails": [
+      "peak"
+     ],
+     "cal_peak": 1.395,
+     "cal_rms": 2.987,
+     "cal_env": 1.392,
+     "cal_overload": 12.5,
+     "cal_worst": 1.392,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "wave"
+    },
+    "gripper_l": {
+     "strict_worst": 253.095,
+     "strict_fails": [],
+     "cal_peak": 683.368,
+     "cal_rms": 638.305,
+     "cal_env": 1062000000.0,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 638.305,
+     "cal_fails": [],
+     "peak_motion": "dance",
+     "rms_motion": "dance"
+    },
+    "gripper_r": {
+     "strict_worst": 2.179,
+     "strict_fails": [],
+     "cal_peak": 3.735,
+     "cal_rms": 5.496,
+     "cal_env": 3.728,
+     "cal_overload": 1000000000.0,
+     "cal_worst": 3.728,
+     "cal_fails": [],
+     "peak_motion": "pickup_0.45m",
+     "rms_motion": "pickup"
+    }
+   }
+  },
+  "packaging_notes": [
+   "ankle_height: 29.2 mm -> 66.0 mm (CAD foundation: 35 mm servos on intersecting axes)",
+   "foot_length: 110.5 mm -> 119.6 mm (T-0004 foot size)",
+   "foot_width: 48.8 mm -> 71.5 mm (T-0004 foot size)",
+   "shoulder_width: 195.0 mm -> 234.0 mm (T-0004 arm clearance)",
+   "standing height kept at 650 mm: the other vertical proportions scaled x0.940 (thigh 137 mm, shank 137 mm)",
+   "hip_pitch range [-110, 60] -> [-110, 40] deg (CAD-limited)",
+   "knee range [0, 130] -> [0, 115] deg (CAD-limited)",
+   "ankle_pitch range [-80, 60] -> [-60, 25] deg (CAD-limited)"
+  ],
+  "rom_clamps": [
+   "squat_120",
+   "sit_to_stand_130"
+  ],
+  "should": {
+   "sit_to_stand_130": {
+    "valid": true,
+    "fails": [
+     "knee_l: peak, rms, envelope, overload_time",
+     "knee_r: peak, rms, envelope, overload_time"
+    ]
+   }
+  },
+  "largest_recoverable_Ns": {
+   "stand_fwd": {
+    "Ns": 0.823,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "stand_lat": {
+    "Ns": 0.897,
+    "by": "ankle",
+    "limited_by": "actuators (torque / speed demand)"
+   },
+   "walk_fwd": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   },
+   "walk_lat_out": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   },
+   "walk_lat_in": {
+    "Ns": 0.0,
+    "by": null,
+    "limited_by": "no strategy recovers even a small push"
+   }
+  },
+  "bounds": [
+   {
+    "label": "structure mass x0.55",
+    "mass_kg": 3.622,
+    "strict_worst": 0.131,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.131,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.3% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.7% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "structure mass x1.4",
+    "mass_kg": 6.4,
+    "strict_worst": 0.1,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.1,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "hip_roll_l": [
+      "peak",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "peak",
+      "rms"
+     ],
+     "waist_yaw": [
+      "peak"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "shoulder_roll_r": [
+      "peak"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x0.8",
+    "mass_kg": 5.039,
+    "strict_worst": 0.123,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.123,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "shoulder_roll_r": [
+      "peak"
+     ],
+     "elbow_r": [
+      "peak"
+     ]
+    }
+   },
+   {
+    "label": "wiring/electronics x1.5",
+    "mass_kg": 5.229,
+    "strict_worst": 0.122,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.122,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "hip_roll_r": [
+      "overload_time"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "shoulder_roll_r": [
+      "peak"
+     ],
+     "elbow_r": [
+      "peak"
+     ]
+    }
+   },
+   {
+    "label": "pessimistic linear torque-speed",
+    "mass_kg": 5.093,
+    "strict_worst": 0.123,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.123,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ],
+     "shoulder_roll_r": [
+      "envelope"
+     ],
+     "elbow_r": [
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "shoulder_roll_r": [
+      "peak",
+      "envelope"
+     ],
+     "elbow_r": [
+      "peak",
+      "envelope"
+     ]
+    }
+   },
+   {
+    "label": "armature low",
+    "mass_kg": 5.093,
+    "strict_worst": 0.123,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.123,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "shoulder_roll_r": [
+      "peak"
+     ]
+    }
+   },
+   {
+    "label": "armature high",
+    "mass_kg": 5.093,
+    "strict_worst": 0.123,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.123,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 3.2% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "shoulder_roll_r": [
+      "peak",
+      "envelope"
+     ],
+     "elbow_r": [
+      "peak"
+     ]
+    }
+   },
+   {
+    "label": "stall low",
+    "mass_kg": 5.093,
+    "strict_worst": 0.12,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.12,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "hip_roll_l": [
+      "peak",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "waist_yaw": [
+      "peak"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "shoulder_roll_r": [
+      "peak",
+      "envelope"
+     ],
+     "elbow_r": [
+      "peak"
+     ]
+    }
+   },
+   {
+    "label": "stall high",
+    "mass_kg": 5.093,
+    "strict_worst": 0.125,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.125,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "shoulder_roll_r": [
+      "peak"
+     ]
+    }
+   },
+   {
+    "label": "walking speed x1.5",
+    "mass_kg": 5.093,
+    "strict_worst": 0.123,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.123,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 4.5% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.7% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "rms"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "shoulder_roll_r": [
+      "peak"
+     ],
+     "elbow_r": [
+      "peak"
+     ]
+    }
+   },
+   {
+    "label": "benchmark-fit mass (structure x1.56)",
+    "mass_kg": 6.928,
+    "strict_worst": 0.1,
+    "strict_worst_joint": "knee_l",
+    "cal_worst": 0.1,
+    "cal_worst_joint": "knee_l",
+    "strict_joint_gates_pass": false,
+    "cal_joint_gates_pass": false,
+    "r10_at_required": {
+     "stand_fwd": true,
+     "stand_lat": true,
+     "walk_fwd": false,
+     "walk_lat_out": false,
+     "walk_lat_in": false
+    },
+    "r10_pass": false,
+    "invalid": {
+     "walk_forward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.5% of body weight on average (limit 1%)",
+     "turn": "tether supplied 1.8% of body weight on average (limit 1%)"
+    },
+    "strict_pass": false,
+    "cal_pass": false,
+    "cal_fails": {
+     "hip_roll_l": [
+      "peak",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "envelope"
+     ]
+    },
+    "strict_fails": {
+     "hip_roll_l": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "hip_roll_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_l": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "knee_r": [
+      "peak",
+      "rms",
+      "envelope",
+      "overload_time",
+      "protection_trip"
+     ],
+     "ankle_pitch_l": [
+      "peak",
+      "rms"
+     ],
+     "ankle_pitch_r": [
+      "peak",
+      "rms"
+     ],
+     "waist_yaw": [
+      "peak"
+     ],
+     "shoulder_pitch_r": [
+      "peak",
+      "rms",
+      "envelope"
+     ],
+     "shoulder_roll_r": [
+      "peak",
+      "rms"
+     ]
+    }
+   }
+  ],
+  "robust_strict": false,
+  "robust_cal": false,
+  "bounds_failing_cal": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.56)"
+  ],
+  "bounds_failing_strict": [
+   "structure mass x0.55",
+   "structure mass x1.4",
+   "wiring/electronics x0.8",
+   "wiring/electronics x1.5",
+   "pessimistic linear torque-speed",
+   "armature low",
+   "armature high",
+   "stall low",
+   "stall high",
+   "walking speed x1.5",
+   "benchmark-fit mass (structure x1.56)"
+  ],
+  "min_cal_worst_over_bounds": 0.1,
+  "seconds": 344.2
+ }
+]
