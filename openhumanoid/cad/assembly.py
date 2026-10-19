@@ -33,6 +33,7 @@ class Assembly:
     interfaces: dict | None = None
     bed_mm: tuple[float, float, float] | None = None
     allowed_pairs: set[frozenset] = field(default_factory=set)       # part-id pairs that touch/overlap by design
+    fits: dict[frozenset, float] = field(default_factory=dict)       # part-id pairs with a DESIGNED gap: minimum gap (mm) instead of the default
     stand_pose: dict[str, float] = field(default_factory=dict)       # joint -> rad
     notes: list[str] = field(default_factory=list)
 
@@ -55,7 +56,13 @@ class Assembly:
         raise KeyError(pid)
 
     def allow(self, a: str, b: str) -> None:
+        """a and b touch or overlap by design (press fit, horn on a plate): no clash, no gap check."""
         self.allowed_pairs.add(frozenset((a, b)))
+
+    def fit(self, a: str, b: str, min_gap: float) -> None:
+        """a and b are separate parts with a designed clearance (servo in its pocket, pin in a hole): clashes still count, but the
+        gap limit is `min_gap` instead of the generic moving/static gap."""
+        self.fits[frozenset((a, b))] = float(min_gap)
 
     def children_of(self, link: str) -> list[str]:
         return [n for n, L in self.links.items() if L.parent == link]

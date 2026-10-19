@@ -88,7 +88,7 @@ def _collisions(asm: Assembly, q: dict, moved: set[str] | None, min_mm3: float, 
             v = overlap_volume(a.shape, b.shape)
             if v > min_mm3:
                 out.append({"a": a.part.id, "b": b.part.id, "mm3": round(v, 1), "kind": "clash"})
-            elif gap_check and v >= 0 and min_distance(a.shape, b.shape) < gap:
+            elif gap_check and v >= 0 and min_distance(a.shape, b.shape) < asm.fits.get(frozenset((a.part.id, b.part.id)), gap):
                 out.append({"a": a.part.id, "b": b.part.id, "mm3": 0.0, "kind": "tight"})
     return out
 

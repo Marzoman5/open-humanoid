@@ -36,7 +36,7 @@ limbs:
       - {name: hip_pitch, point: hip, servo: {host: hip_roll_l_link,  horn: [0, 1, 0],  long: [0, 0, 1],  horn_at: 17.5, idler: {bearing: MR105ZZ, gap_mm: 1.5}}}
       - {name: knee,      point: knee, servo: {host: hip_pitch_l_link, horn: [0, 1, 0], long: [0, 0, 1],  horn_at: 17.5, idler: {bearing: MR105ZZ, gap_mm: 1.5}}}
       - {name: ankle_pitch, point: ankle, servo: {host: knee_l_link,  horn: [0, 1, 0],  long: [0, 0, 1],  horn_at: 17.5, idler: {bearing: MR105ZZ, gap_mm: 1.5}}}
-      - {name: ankle_roll,  point: ankle, servo: {host: ankle_pitch_l_link, horn: [1, 0, 0], long: [0, 0, 1], horn_at: -25}}
+      - {name: ankle_roll,  point: ankle, servo: {host: ankle_pitch_l_link, horn: [1, 0, 0], long: [0, 0, 1], horn_at: -26.5}}
   arm:
     mirror: [l, r]
     root: pelvis

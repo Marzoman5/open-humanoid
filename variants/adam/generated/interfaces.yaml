@@ -3,7 +3,7 @@ schema: interfaces/0.1
 variant: adam
 layout: humanoid_v2_22dof
 layout_status: validation stand-in (not a concept-loop output)
-layout_sha: 370f1e2663b9
+layout_sha: 94e9f79fa6d5
 units: {length: mm, angle: deg}
 frame: 'world: x forward, y left, z up; zero pose = all joint angles 0; links axis-aligned with the world at the zero pose'
 height_mm: 600.0
@@ -513,49 +513,49 @@ joints:
       host_link: ankle_pitch_l_link
       mass_kg: 0.055
       frame:
-        origin_mm: [-25.0, 45.0, 45.0]
+        origin_mm: [-26.5, 45.0, 45.0]
         z_dir: [1.0, 0.0, 0.0]
         x_dir: [0.0, 0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
-      horn_plane_offset_mm: -25.0
+      horn_plane_offset_mm: -26.5
       body_mm: [45.2, 24.7, 35.0]
       axis_from_near_end_mm: 12.0
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-33.0, 32.65, 45.0]
+        at_mm: [-34.5, 32.65, 45.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-52.0, 32.65, 45.0]
+        at_mm: [-53.5, 32.65, 45.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-33.0, 32.65, 69.0]
+        at_mm: [-34.5, 32.65, 69.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-52.0, 32.65, 69.0]
+        at_mm: [-53.5, 32.65, 69.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-33.0, 57.35, 45.0]
+        at_mm: [-34.5, 57.35, 45.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-52.0, 57.35, 45.0]
+        at_mm: [-53.5, 57.35, 45.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-33.0, 57.35, 69.0]
+        at_mm: [-34.5, 57.35, 69.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-52.0, 57.35, 69.0]
+        at_mm: [-53.5, 57.35, 69.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [-23.0, 45.0, 45.0]
+      seat_origin_mm: [-24.5, 45.0, 45.0]
       dir: [1.0, 0.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -567,7 +567,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [-60.0, 45.0, 45.0]
+      origin_mm: [-61.5, 45.0, 45.0]
       dir: [-1.0, -0.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -981,49 +981,49 @@ joints:
       host_link: ankle_pitch_r_link
       mass_kg: 0.055
       frame:
-        origin_mm: [-25.0, -45.0, 45.0]
+        origin_mm: [-26.5, -45.0, 45.0]
         z_dir: [1.0, -0.0, 0.0]
         x_dir: [0.0, -0.0, 1.0]
         y_dir: [0.0, -1.0, 0.0]
-      horn_plane_offset_mm: -25.0
+      horn_plane_offset_mm: -26.5
       body_mm: [45.2, 24.7, 35.0]
       axis_from_near_end_mm: 12.0
       corner_radius_mm: 35.423
       case_holes:
       - id: case_+y_00
-        at_mm: [-33.0, -57.35, 45.0]
+        at_mm: [-34.5, -57.35, 45.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_01
-        at_mm: [-52.0, -57.35, 45.0]
+        at_mm: [-53.5, -57.35, 45.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_10
-        at_mm: [-33.0, -57.35, 69.0]
+        at_mm: [-34.5, -57.35, 69.0]
         thread: M3
         depth_mm: 6.0
       - id: case_+y_11
-        at_mm: [-52.0, -57.35, 69.0]
+        at_mm: [-53.5, -57.35, 69.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_00
-        at_mm: [-33.0, -32.65, 45.0]
+        at_mm: [-34.5, -32.65, 45.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_01
-        at_mm: [-52.0, -32.65, 45.0]
+        at_mm: [-53.5, -32.65, 45.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_10
-        at_mm: [-33.0, -32.65, 69.0]
+        at_mm: [-34.5, -32.65, 69.0]
         thread: M3
         depth_mm: 6.0
       - id: case_-y_11
-        at_mm: [-52.0, -32.65, 69.0]
+        at_mm: [-53.5, -32.65, 69.0]
         thread: M3
         depth_mm: 6.0
     horn:
-      seat_origin_mm: [-23.0, -45.0, 45.0]
+      seat_origin_mm: [-24.5, -45.0, 45.0]
       dir: [1.0, -0.0, 0.0]
       type: round_25t
       od_mm: 20.0
@@ -1035,7 +1035,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [-60.0, -45.0, 45.0]
+      origin_mm: [-61.5, -45.0, 45.0]
       dir: [-1.0, 0.0, -0.0]
       stub_od_mm: 9.0
     idler: null
@@ -1803,5 +1803,5 @@ joints:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
 estimates_to_confirm: [axis_from_near_end_mm, back_shaft.boss_d_mm, back_shaft.protrusion_mm, back_shaft.spline_od_mm, cable.face, cable.plug_len_mm,
   cable.socket_wh_mm, cable.z_mm, case_holes.depth_mm, case_holes.thread, case_holes.x_mm, case_holes.z_mm, output_spline.boss_d_mm, output_spline.boss_h_mm,
-  output_spline.center_screw, output_spline.protrusion_mm]
+  output_spline.center_screw, output_spline.horn_float_mm, output_spline.protrusion_mm]
 problems: []

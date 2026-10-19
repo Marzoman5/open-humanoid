@@ -38,6 +38,9 @@ def build(catalog_id: str = "sts3215-12v", horn: bool = False) -> Component:
     sp = m["output_spline"]
     boss_d, boss_h = float(val(sp["boss_d_mm"])), float(val(sp["boss_h_mm"]))
     spl_od, spl_top = float(val(sp["od_mm"])), float(val(sp["protrusion_mm"]))
+    horn_float = float(val(sp["horn_float_mm"])) if "horn_float_mm" in sp else 0.0
+    if "horn_float_mm" in sp:
+        prov(sp["horn_float_mm"], "output_spline.horn_float_mm", pv)
     for k in ("teeth", "od_mm", "boss_d_mm", "boss_h_mm", "protrusion_mm", "center_screw"):
         prov(sp[k], f"output_spline.{k}", pv)
     bs = m["back_shaft"]
@@ -53,10 +56,12 @@ def build(catalog_id: str = "sts3215-12v", horn: bool = False) -> Component:
     back_boss = bd.Pos(0, 0, -H - back_h / 2) * bd.Cylinder(back_d / 2, back_h)
     stub = bd.Pos(0, 0, -H - (back_h + stub_top) / 2) * bd.Cylinder(stub_od / 2, stub_top - back_h)
     shape = core.union_all([body, boss, spline, back_boss, stub])
+    case_shape = core.union_all([body, boss, back_boss])          # static part of the servo
+    shaft_front, shaft_back = spline, stub                        # these two turn with the output
 
     frames = {
         "axis": bd.Location(),
-        "horn_seat": loc_from((0, 0, boss_h), (0, 0, 1), (1, 0, 0)),
+        "horn_seat": loc_from((0, 0, boss_h + horn_float), (0, 0, 1), (1, 0, 0)),
         "back_axis": loc_from((0, 0, -H), (0, 0, -1), (1, 0, 0)),
     }
 
@@ -87,9 +92,10 @@ def build(catalog_id: str = "sts3215-12v", horn: bool = False) -> Component:
     comp = Component(
         id=catalog_id, kind="servo", shape=shape, mass_kg=float(p.get("mass_kg", 0.055)), frames=frames, holes=holes,
         keepout=keepout, catalog_id=catalog_id,
-        params={"L": L, "W": W, "H": H, "axis_x": ax, "near_end_x": -ax, "far_end_x": L - ax, "boss_h": boss_h, "boss_d": boss_d,
+        params={"L": L, "W": W, "H": H, "axis_x": ax, "near_end_x": -ax, "far_end_x": L - ax, "boss_h": boss_h, "horn_float": horn_float, "boss_d": boss_d,
                 "spline_od": spl_od, "spline_top": spl_top, "back_boss_d": back_d, "back_top": stub_top, "plug_len": plug,
-                "corner_r": float(((W / 2) ** 2 + max(ax, L - ax) ** 2) ** 0.5), "cable_z": cz, "case_hole_thread": thr},
+                "corner_r": float(((W / 2) ** 2 + max(ax, L - ax) ** 2) ** 0.5), "cable_z": cz, "case_hole_thread": thr,
+                "case_shape": case_shape, "shaft_shapes": (shaft_front, shaft_back)},
         provenance=pv)
     if horn:
         from .hardware import horn as mk_horn
@@ -99,7 +105,7 @@ def build(catalog_id: str = "sts3215-12v", horn: bool = False) -> Component:
         comp.shape = bd.Compound(children=[shape, hs * h.shape])
         comp.params["horn"] = h.params
         comp.provenance.update({f"horn.{k}": v for k, v in h.provenance.items()})
-        comp.params["top_z"] = boss_h + h.params["thickness"]
+        comp.params["top_z"] = boss_h + horn_float + h.params["thickness"]
     else:
         comp.params["top_z"] = spl_top
     return comp

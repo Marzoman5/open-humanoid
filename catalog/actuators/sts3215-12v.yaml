@@ -50,6 +50,7 @@ mechanical:
     od_mm: {v: 5.9, src: https://servodatabase.com/servo/feetech/sts3215 ; https://www.robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215, conf: vendor}
     boss_d_mm: {v: 10.0, src: "estimate: round boss around the spline", conf: estimate}
     boss_h_mm: {v: 2.0, src: "estimate: horn seats ~2 mm above the case face", conf: estimate}
+    horn_float_mm: {v: 0.3, src: "estimate: air gap so the turning horn does not drag on the case boss", conf: estimate}
     protrusion_mm: {v: 4.5, src: "estimate: spline end above the case face (boss 2.0 + spline 2.5)", conf: estimate}
     center_screw: {v: M3, src: "estimate: STS-series horns are retained by a centre M3 screw", conf: estimate}
   horn: {v: round_25t, src: "openhumanoid/cad/components/data/hardware.yaml#horns", conf: estimate}

@@ -145,7 +145,7 @@ def _env(servo, c: float, extra_top: float = 0.0, extra_bot: float = 0.0) -> bd.
 
 
 def servo_pocket(actuator_id: str = "sts3215-12v", clearance: str | float = "slip", *, entry: str = "-z", lip: str = "far",
-                 lip_t: float = 2.4, wall: float = 2.4, cable_slot: bool = True, entry_len: float = 80.0, at: bd.Location | None = None,
+                 lip_t: float = 2.4, wall: float = 2.4, cable_slot: bool = True, slot_len: float = 40.0, entry_len: float = 80.0, at: bd.Location | None = None,
                  part: str = "", tag: str = "servo") -> FeatureResult:
     """Cutter that makes a pocket for a servo in its own frame (origin on the output axis, +z out of the horn face).
 
@@ -156,7 +156,7 @@ def servo_pocket(actuator_id: str = "sts3215-12v", clearance: str | float = "sli
       the horn, x > horn radius + 1), "none" leaves the whole horn face open. The `add` list holds the lip material; the host block
       must reach the servo top plane for the lip to join it;
     * `wall`: thickness of the host side walls the lip fuses into;
-    * `cable_slot`: slot for the servo plug through the end wall at the cable exit, with the plug room as keep-out;
+    * `cable_slot`: `slot_len` mm slot for the servo plug through the end wall at the cable exit, with the plug room as keep-out;
     * keep-out: the servo component keep-out (body, boss, back stub, plug) ready to register for the ROM check.
     """
     servo = get_component(actuator_id)
@@ -191,7 +191,7 @@ def servo_pocket(actuator_id: str = "sts3215-12v", clearance: str | float = "sli
     if cable_slot and entry != "+x":
         cw, ch = 12.0, 8.0
         cz = P["cable_z"]
-        slot = box_at(bd.Location(), (entry_len / 2, cw + 2 * c, ch + 2 * c), (P["far_end_x"] + entry_len / 4, 0, cz))
+        slot = box_at(bd.Location(), (slot_len, cw + 2 * c, ch + 2 * c), (P["far_end_x"] + slot_len / 2 - 0.5, 0, cz))
         f.cut.append(slot)
         f.notes.append("cable slot through the far end wall")
     f.keepouts.append(servo.keepout)

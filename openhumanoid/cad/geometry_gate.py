@@ -18,6 +18,7 @@ Part expectations (`Part.meta["expect"]`, a list of dicts, all in the LINK frame
   {"kind": "size", "axis": "z", "value": 12.0, "tol": 0.2}                      its extent
   {"kind": "void_cylinder", "origin": [x,y,z], "dir": [dx,dy,dz], "d": 3.4, "length": 8, "tol": 0.15, "label": "..."}
         a hole: a probe cylinder of d - 2 tol is fully void and one of d + 2 tol + 0.3 touches material
+  {"kind": "contains_bbox", "min": [x,y,z], "max": [x,y,z], "tol": 0.2}          the part's bounding box encloses this box (e.g. the servo envelope)
   {"kind": "solid_point", "point": [x,y,z], "label": "..."} / {"kind": "void_point", ...}
   {"kind": "interface", "joint": "hip_yaw_l", "key": "axis.origin", "value": [..], "tol": 0.05}   recorded value must equal interfaces.yaml
 """
@@ -143,6 +144,12 @@ def check_expect(shape: bd.Shape, exp: dict, interfaces: dict | None = None) -> 
         if touch <= 0.01:
             return _fail(f"expect:{label}", f"hole d{d} at {exp['origin']} is far larger than specified or missing material around it")
         return _ok(f"expect:{label}", f"hole d{d} present and clear")
+    if k == "contains_bbox":
+        bb = shape.bounding_box()
+        lo, hi = (bb.min.X, bb.min.Y, bb.min.Z), (bb.max.X, bb.max.Y, bb.max.Z)
+        ok = all(lo[i] <= exp["min"][i] + tol and hi[i] >= exp["max"][i] - tol for i in range(3))
+        return (_ok if ok else _fail)(f"expect:{label}", f"bbox [{[round(v, 1) for v in lo]}, {[round(v, 1) for v in hi]}] "
+                                                          f"{'encloses' if ok else 'does NOT enclose'} [{exp['min']}, {exp['max']}]")
     if k in ("solid_point", "void_point"):
         inside = bool(shape.is_inside(bd.Vector(*exp["point"])))
         ok = inside if k == "solid_point" else not inside
@@ -221,7 +228,7 @@ def check_assembly(asm: Assembly, q: dict[str, float] | None = None, *, min_gap:
         if allowed:
             continue
         d = min_distance(a.shape, b.shape)
-        lim = gap if a.link != b.link else static_gap
+        lim = asm.fits.get(key, gap if a.link != b.link else static_gap)
         if d < lim - 1e-6:
             tight.append({"a": a.part.id, "b": b.part.id, "dist_mm": round(d, 3), "limit_mm": lim, "links": [a.link, b.link]})
     for ko in kos:
@@ -239,6 +246,8 @@ def check_assembly(asm: Assembly, q: dict[str, float] | None = None, *, min_gap:
 def run_gate(asm: Assembly, *, fast: bool = False, only_parts: list[str] | None = None, stl_dir: Path | None = None) -> dict:
     """Full geometry gate for an assembly: every printed/purchased part plus the assembly pairwise checks."""
     parts = []
+    if stl_dir is not None:
+        Path(stl_dir).mkdir(parents=True, exist_ok=True)
     for ln, p in asm.parts(include_hardware=False):
         if only_parts and p.id not in only_parts:
             continue
