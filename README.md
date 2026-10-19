@@ -29,7 +29,10 @@ Open Humanoid isn't one robot. You describe the robot in a spec file. The toolki
 | Variant | Status | Target |
 |---|---|---|
 | [**Adam**](variants/adam/) | concept | ≤ $400 all-in · tallest for budget (0.50 m today) · walks · sleek (Optimus / electric Atlas / Apple) |
-| Eve | planned | ~$2k · bigger · `extends: adam` |
+| Eve | idea | ~$3k · application testbench · mostly off-the-shelf parts |
+| Cain | idea | ~$10k · real-life use |
+
+Roadmap and working decisions: [docs/roadmap.md](docs/roadmap.md).
 
 ## Quick start
 
