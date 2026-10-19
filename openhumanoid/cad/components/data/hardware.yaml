@@ -20,6 +20,8 @@ screws:
     clearance_medium: {v: 2.4, src: "ISO 273 medium series", conf: standard}
     counterbore_d: {v: 4.4, src: "ISO 4749 / DIN 974-1 (d=4.4)", conf: standard}
     counterbore_depth: {v: 2.3, src: "DIN 974-1 (t = 2.0 + 0.3 margin)", conf: derived}
+    low_head_k: {v: 1.5, src: "DIN 7984 low head cap screw (k = 1.5)", conf: standard}
+    low_counterbore_depth: {v: 1.8, src: "DIN 7984 k + 0.3 margin", conf: derived}
     tap_drill: {v: 1.6, src: "ISO 261 / standard tap drill chart", conf: standard}
     tool_corridor_d: {v: 6.0, src: "head + 2 mm either side for a 1.5 mm key or Ø3 driver shaft; estimate", conf: estimate}
   M2.5:
@@ -31,6 +33,8 @@ screws:
     clearance_medium: {v: 2.9, src: "ISO 273", conf: standard}
     counterbore_d: {v: 5.0, src: "ISO 4749 / DIN 974-1", conf: standard}
     counterbore_depth: {v: 2.8, src: "DIN 974-1 + margin", conf: derived}
+    low_head_k: {v: 1.75, src: "DIN 7984 (interpolated between M2 1.5 and M3 2.0); verify on the bought screw", conf: estimate}
+    low_counterbore_depth: {v: 2.05, src: "k + 0.3 margin", conf: derived}
     tap_drill: {v: 2.05, src: "standard tap drill chart", conf: standard}
     tool_corridor_d: {v: 7.0, src: "estimate", conf: estimate}
   M3:
@@ -42,6 +46,8 @@ screws:
     clearance_medium: {v: 3.4, src: "ISO 273 medium series", conf: standard}
     counterbore_d: {v: 6.0, src: "ISO 4749 / DIN 974-1 (d=6.0)", conf: standard}
     counterbore_depth: {v: 3.4, src: "DIN 974-1 (t = 3.0 + 0.4 margin)", conf: derived}
+    low_head_k: {v: 2.0, src: "DIN 7984 low head cap screw (k = 2.0, dk = 5.5, s = 2.5)", conf: standard}
+    low_counterbore_depth: {v: 2.3, src: "DIN 7984 k + 0.3 margin", conf: derived}
     tap_drill: {v: 2.5, src: "standard tap drill chart", conf: standard}
     tool_corridor_d: {v: 8.0, src: "head + 2.5 mm either side for a 2.5 mm key or Ø4 driver shaft; estimate", conf: estimate}
 
@@ -74,6 +80,8 @@ magnets:
 bearings:
   # Boundary dimensions per ISO 15:2017 (radial bearings, metric). Flanged variants add flange_d / flange_t (vendor typical).
   # `ID x OD x B`.  The STS3215 back (idler) shaft size is an ESTIMATE (see catalog), so the bearing choice is a parameter.
+  MR83ZZ: {id: {v: 3, src: "ISO 15 3x8x3", conf: standard}, od: {v: 8, src: same, conf: standard}, w: {v: 3, src: same, conf: standard}}
+  623ZZ: {id: {v: 3, src: "ISO 15 3x10x4", conf: standard}, od: {v: 10, src: same, conf: standard}, w: {v: 4, src: same, conf: standard}}
   MR85ZZ: {id: {v: 5, src: "ISO 15 / SKF/NSK miniature catalogue 5x8x2.5", conf: standard}, od: {v: 8, src: same, conf: standard}, w: {v: 2.5, src: same, conf: standard}}
   MR105ZZ: {id: {v: 5, src: "ISO 15 5x10x4", conf: standard}, od: {v: 10, src: same, conf: standard}, w: {v: 4, src: same, conf: standard}}
   685ZZ: {id: {v: 5, src: "ISO 15 5x11x5", conf: standard}, od: {v: 11, src: same, conf: standard}, w: {v: 5, src: same, conf: standard}}

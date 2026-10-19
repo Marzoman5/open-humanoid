@@ -25,14 +25,15 @@ def _g(sect: str, key: str) -> dict:
 
 
 def screw(spec: str = "M3x8") -> Component:
-    """Socket-head cap screw (ISO 4762). `spec` = "M3x8" (thread x length in mm)."""
-    m = re.fullmatch(r"(M[0-9.]+)x([0-9.]+)", spec)
+    """Socket-head cap screw (ISO 4762). `spec` = "M3x8" (thread x length in mm); a trailing L ("M3x8L") means the low-head
+    DIN 7984 variant (shorter head, shallower counterbore)."""
+    m = re.fullmatch(r"(M[0-9.]+)x([0-9.]+)(L?)", spec)
     if not m:
-        raise ValueError(f"screw spec must look like 'M3x8', got '{spec}'")
-    thread, length = m.group(1), float(m.group(2))
+        raise ValueError(f"screw spec must look like 'M3x8' or 'M3x8L', got '{spec}'")
+    thread, length, low = m.group(1), float(m.group(2)), bool(m.group(3))
     s = _g("screws", thread)
     d = float(thread[1:])
-    head_d, head_k = float(val(s["head_d"])), float(val(s["head_k"]))
+    head_d, head_k = float(val(s["head_d"])), float(val(s["low_head_k" if low else "head_k"]))
     head = bd.Pos(0, 0, head_k / 2) * bd.Cylinder(head_d / 2, head_k)
     key = float(val(s["hex_key"]))
     sock_d = 0.6 * head_k
@@ -46,7 +47,7 @@ def screw(spec: str = "M3x8") -> Component:
     return Component(f"screw:{spec}", "screw", shape, mass, {"seat": bd.Location()}, [], None,
                      {"thread": thread, "length": length, "d": d, "head_d": head_d, "head_k": head_k, "hex_key": key,
                       "clearance_close": float(val(s["clearance_close"])), "clearance_medium": float(val(s["clearance_medium"])),
-                      "counterbore_d": float(val(s["counterbore_d"])), "counterbore_depth": float(val(s["counterbore_depth"])),
+                      "counterbore_d": float(val(s["counterbore_d"])), "counterbore_depth": float(val(s["low_counterbore_depth" if low else "counterbore_depth"])), "low_head": low,
                       "tap_drill": float(val(s["tap_drill"])), "tool_corridor_d": float(val(s["tool_corridor_d"]))}, pv)
 
 
