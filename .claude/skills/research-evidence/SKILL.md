@@ -21,6 +21,7 @@ Written after the first real P1 run (2026-10-19, T-0012/13/14). Each rule exists
 ## Verification pass (mandatory before anyone builds on it)
 - Independent agents re-open every decision-relevant claim at its source and mark it **verified / corrected / unsupported / unreachable**. Write `VERIFICATION.md` as a claim → status → evidence table.
 - In the first run this changed real numbers: 1 claim removed, 7 corrected out of 41, plus a voltage mix-up and a hallucinated statistic.
+- Existence claims are verified against the actual files (directory listings, raw data), never against READMEs or summaries. A README-only check once wrongly removed a real 12 V servo model.
 - State the verifier's limits (summarizing fetchers, 403s, truncated pages).
 
 ## Output

@@ -85,7 +85,7 @@ Answers: 19.5 kg.cm = 7.4 V (Feetech: "Stall Torque：19.5kg.cm@7.4V"); 16.5 @6V
 | baud codes 5=76.8k, 6=57.6k, 7=38.4k | sts3215/datasheet | corrected | LeRobot: 4=115.2k 5=57.6k 6=38.4k 7=19.2k |
 | BAM m1/m6 params | sts3215/measured | verified | raw m1.json, m6.json match |
 | BAM voltage 7.4V | sts3215/measured | partly verified | only directory name "feetech_sts3215_7_4V"; abstract/README silent on voltage |
-| BAM "waveshare_st3025" in BAM | sts3250/measured | unsupported -> removed | README lists MX-64/106, XL-320, XL330, eRob80, STS3215 |
+| BAM "waveshare_st3025" in BAM | sts3250/measured | **CORRECTED 2026-10-19 (challenge #1, row 17): exists.** The earlier "unsupported" verdict checked only the README. `bam/params/` contains `waveshare_st3025` (12 V Feetech-class; `bam/waveshare/actuator.py` reuses the STS3215 error gain and fits its own error_gain_ratio). It is the only published 12 V Feetech-class firmware-level model, so use it to size 12 V uncertainty | https://github.com/Rhoban/bam/tree/main/bam/params ; https://github.com/Rhoban/bam/blob/main/bam/waveshare/actuator.py |
 | mcobzarenco fit values | sts3215/measured | verified | blog "kp 108.18, kv 13.377, forcerange ±3.478 ..." ; fit on six servos, applied to twelve; lag 2.19° |
 | "no independent torque/thermal data exists" | sts3215/measured, notes | corrected | Robonine (12V C018): stall ~35 kg.cm, 71 °C after ~110 min at 15 kg.cm oscillation |
 | HBRC gear-strip anecdote | sts3215/notes | verified (anecdote) | "gears strip when there is a stall of over 15% of the max torque limit" |

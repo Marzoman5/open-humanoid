@@ -13,7 +13,7 @@ Never write "accepted" decisions, start build work, or install tools on unverifi
 
 ## Delegating
 - **One task, one fresh agent, one worktree.** Pre-create the task on main before launching, so IDs and paths are settled. Tell the agent not to run `oh coord new`.
-- Brief = goal + the files to read (requirements, ADRs, research sections) + exact deliverables + the task's paths + "stay out of X (owned by Y)" + the definition of done + the final-message format. Don't include your own guesses as facts.
+- Brief = goal + the files to read (requirements, ADRs, research sections) + exact deliverables + the task's paths + "stay out of X (owned by Y)" + the definition of done + the final-message format. Don't include your own guesses as facts. Specify the design space and how to sweep it, **never the candidates or a fixed answer**. Challenger #1 caught the commander naming A/B/C and a height.
 - Model routing: Sonnet builds and runs checks; Opus for concept decisions, design judgment, and the challenger; Haiku/Sonnet subagents for search.
 - **Unattended runs:** the app forbids starting *sessions* on event-triggered turns, so use in-process background agents (Agent tool, worktree isolation). They wake the commander when done. Hold keep-awake.
 - Every new tool must be consumed by an Adam deliverable in the same wave (ADR 0009).
