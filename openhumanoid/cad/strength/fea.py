@@ -55,8 +55,8 @@ def tet_mesh(part: PartRec, h: float, fine_pts: list[tuple[np.ndarray, float, fl
                 gmsh.model.geo.addVolume([loop])
                 gmsh.model.geo.synchronize()
         gmsh.option.setNumber("Mesh.MeshSizeMax", h)
-        gmsh.option.setNumber("Mesh.MeshSizeMin", h_min or h / 6.0)
-        gmsh.option.setNumber("Mesh.MeshSizeFromCurvature", 10)
+        gmsh.option.setNumber("Mesh.MeshSizeMin", h_min or h / 5.0)
+        gmsh.option.setNumber("Mesh.MeshSizeFromCurvature", 0)
         gmsh.option.setNumber("Mesh.Algorithm3D", 1)
         gmsh.option.setNumber("Mesh.Optimize", 1)
         fids = []
@@ -167,17 +167,40 @@ def patch_nodes(points: np.ndarray, bnodes: np.ndarray, p: np.ndarray, r_min: fl
     return bnodes[order]
 
 
+def select_nodes(points: np.ndarray, bnodes: np.ndarray, ld: Load, patch_r: float) -> np.ndarray:
+    sp_ = ld.patch or {"type": "sphere", "r": patch_r}
+    X = points[bnodes]
+    if sp_["type"] == "annulus":
+        c, ax = np.asarray(sp_["c"]), np.asarray(sp_["axis"])
+        rel = X - c
+        along = rel @ ax
+        rad = np.linalg.norm(rel - np.outer(along, ax), axis=1)
+        sel = bnodes[(rad >= sp_["r0"]) & (rad <= sp_["r1"]) & (np.abs(along) <= sp_["half"] + (sp_.get("shift", 0.0)))]
+        if len(sel) >= 6:
+            return sel
+    elif sp_["type"] == "sites":
+        pts_ = [np.asarray(q) for q in sp_["points"]]
+        sel = np.unique(np.concatenate([bnodes[np.linalg.norm(X - q, axis=1) <= sp_["r"]] for q in pts_]))
+        if len(sel) >= 6:
+            return sel
+    return patch_nodes(points, bnodes, ld.point, r_min=float(sp_.get("r", patch_r)))
+
+
 def distribute(points: np.ndarray, nodes: np.ndarray, p: np.ndarray, F: np.ndarray, M: np.ndarray) -> np.ndarray:
-    """Nodal forces on `nodes` with resultant F at p and moment M about p (minimum-norm consistent distribution)."""
+    """Nodal forces on `nodes` with resultant F acting at p and moment M about p: f_i = F/n + omega x (r_i - mean r), omega from the
+    inertia-like tensor of the node cloud, so that sum f = F and sum r x f = M exactly."""
     r = points[nodes] - p
     n = len(nodes)
+    cb = r.mean(axis=0)
+    d = r - cb
     f = np.tile(F / n, (n, 1))
-    Mc = M - np.cross(r, f).sum(axis=0)
-    J = (np.einsum("ij,ij->i", r, r).sum() * np.eye(3)) - np.einsum("ij,ik->jk", r, r)
-    if np.linalg.cond(J) < 1e9:
-        om = np.linalg.solve(J, Mc)
-        f = f + np.cross(om, r)
-    return f
+    J = np.einsum("ij,ij->i", d, d).sum() * np.eye(3) - np.einsum("ij,ik->jk", d, d)
+    rhs = M - np.cross(cb, F)
+    if np.linalg.matrix_rank(J, tol=1e-6 * max(np.trace(J), 1e-12)) == 3:
+        om = np.linalg.solve(J, rhs)
+    else:                                   # degenerate cloud (collinear / coplanar): least squares
+        om = np.linalg.lstsq(J, rhs, rcond=1e-6)[0]
+    return f + np.cross(om, d)
 
 
 @dataclass
@@ -240,7 +263,7 @@ def solve_part(part: PartRec, loads: PartLoads, case: str, h: float, sf: float =
     node_loaded: list[int] = []
     tot_F, tot_M = np.zeros(3), np.zeros(3)
     for ld in loads.loads:
-        nn = patch_nodes(pts, bnodes, ld.point, r_min=patch_r)
+        nn = select_nodes(pts, bnodes, ld, patch_r)
         fn = distribute(pts, nn, ld.point, ld.F, ld.M)
         for a, ia in enumerate(nn):
             f[basis.nodal_dofs[:, ia]] += fn[a]
@@ -271,6 +294,15 @@ def solve_part(part: PartRec, loads: PartLoads, case: str, h: float, sf: float =
     # equilibrium: reaction at the supports
     react = (K @ x - f)[dofs]
     eq = float(np.linalg.norm(react))
+    comp_ = np.zeros(basis.N, int)
+    for r_ in range(3):
+        comp_[basis.nodal_dofs[r_]] = r_
+        if basis.edge_dofs is not None and basis.edge_dofs.size:
+            comp_[basis.edge_dofs[r_]] = r_
+    fsum = [float(f[comp_ == r_].sum()) for r_ in range(3)]
+    rres = float(np.linalg.norm(Kc @ x[I] - f[I]) / max(np.linalg.norm(f[I]), 1e-12))
+    if verbose:
+        print("  load sum", np.round(fsum, 3), "rel residual", rres, "reaction", np.round(react, 2))
     # stress at quadrature points
     gu = basis.interpolate(x).grad                 # (3, 3, nel, nqp)
     eps = 0.5 * (gu + np.swapaxes(gu, 0, 1))

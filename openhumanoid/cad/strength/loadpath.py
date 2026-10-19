@@ -31,6 +31,7 @@ class Load:
     F: np.ndarray            # N
     M: np.ndarray            # N.mm about `point`
     label: str = ""
+    patch: dict | None = None    # how the load enters the part for FEA: {'type': 'sphere'|'annulus'|'sites', ...} (link frame)
 
 
 @dataclass
@@ -229,7 +230,7 @@ def solve(model: Model, topo: Topology, sc: Scenario, mass_override: dict[str, f
         pl = to_link(c.link, c.point)
         d = [(_min_dist_points(p.mesh, pl[None, :])[0], p.id) for p in printed if p.id not in topo.exclude] or [(0, printed[0].id)]
         tgt = min(d)[1]
-        loads[tgt].loads.append(Load(pl, vec_link(c.link, c.force), np.zeros(3), c.label or "contact"))
+        loads[tgt].loads.append(Load(pl, vec_link(c.link, c.force), np.zeros(3), c.label or "contact", {"type": "sphere", "r": 4.0}))
     # ---- servo wrenches onto housings; bearing reactions onto idler plates and pins
     for jn, j in model.joints.items():
         w = W[jn]
@@ -250,11 +251,11 @@ def solve(model: Model, topo: Topology, sc: Scenario, mass_override: dict[str, f
                 Rb = -np.cross(Mperp, a) / Lb
                 idl = topo.idler[j.child_link]
                 il = loads[idl].link
-                loads[idl].loads.append(Load(to_link(il, cb), vec_link(il, Rb), np.zeros(3), f"idler bearing reaction of {jn}"))
+                loads[idl].loads.append(Load(to_link(il, cb), vec_link(il, Rb), np.zeros(3), f"idler bearing reaction of {jn}", {"type": "annulus", "c": to_link(il, cb), "axis": vec_link(il, a), "r0": 4.0, "r1": 5.8, "half": 2.6}))
                 pin = topo.pin.get(jn)
                 if pin and pin in loads:
                     pl_ = loads[pin].link
-                    loads[pin].loads.append(Load(to_link(pl_, cb), vec_link(pl_, -Rb), np.zeros(3), f"pin load from the idler bearing of {jn}"))
+                    loads[pin].loads.append(Load(to_link(pl_, cb), vec_link(pl_, -Rb), np.zeros(3), f"pin load from the idler bearing of {jn}", {"type": "annulus", "c": to_link(pl_, cb), "axis": vec_link(pl_, a), "r0": 0.0, "r1": 3.0, "half": 2.6}))
                 diag.setdefault("bearing_reaction_n", {})[jn] = float(np.linalg.norm(Rb))
     # ---- tree: totals and the wrench each child hands to its parent
     for L, order in topo.order.items():
@@ -279,7 +280,7 @@ def solve(model: Model, topo: Topology, sc: Scenario, mass_override: dict[str, f
                     C = edge_of(model, topo, ch, pid).centroid
                     # the child's total wrench (about o_ref) is applied to the parent at the connection centroid
                     mC = cM + np.cross(o_ref - C, cF)
-                    pl.loads.append(Load(C, cF, mC, f"carried from {ch}"))
+                    pl.loads.append(Load(C, cF, mC, f"carried from {ch}", {"type": "sites", "points": [st.p for st in edge_of(model, topo, ch, pid).sites if st.part == pid] or [C], "r": 3.0}))
                     F = F + cF
                     Mo = Mo + np.cross(C - o_ref, cF) + mC
             tot[pid] = (F, Mo)
@@ -291,7 +292,7 @@ def solve(model: Model, topo: Topology, sc: Scenario, mass_override: dict[str, f
                 ed = Edge(pid, pa, g.sites, C, F.copy(), Mo + np.cross(o_ref - C, F))
                 pl.reaction_to_parent = ed
                 # reaction on this child (equal and opposite) is part of its own applied set
-                pl.loads.append(Load(C, -F, -ed.wrench_M, f"reaction from {pa} (connection)"))
+                pl.loads.append(Load(C, -F, -ed.wrench_M, f"reaction from {pa} (connection)", {"type": "sites", "points": [st.p for st in g.sites if st.part == pid] or [C], "r": 3.0}))
         # horn reaction on the root
         rt = order[0]
         j = model.joint_of_link(L)
@@ -299,7 +300,7 @@ def solve(model: Model, topo: Topology, sc: Scenario, mass_override: dict[str, f
             Fr, Mr = tot[rt]
             hs = fk0_to_link(model, j.horn_seat, L)
             mP = Mr + np.cross(o_ref - hs, Fr)
-            loads[rt].loads.append(Load(hs, -Fr, -mP, f"horn reaction of {j.name}"))
+            loads[rt].loads.append(Load(hs, -Fr, -mP, f"horn reaction of {j.name}", {"type": "annulus", "c": hs, "axis": j.servo_z / np.linalg.norm(j.servo_z), "r0": 4.5, "r1": 9.5, "half": 1.5, "inward": True}))
             Fsum = np.zeros(3)
             for pid2 in order:
                 for ld in loads[pid2].loads:

@@ -163,7 +163,10 @@ def slice_mesh(mesh: trimesh.Trimesh, origin: np.ndarray, normal: np.ndarray, sh
         t_min = float(math.sqrt(big.area))
     # torsion constant: closed single cell -> Bredt (4 Am^2 t / Pm); solid -> A^4 / (40 Ip)
     Ip = Suu + Svv
-    J = max(A_solid ** 4 / (40.0 * max(Ip, 1e-9)), 1e-6)
+    # solid section: area-equivalent rectangle of the thin dimension t (Saint-Venant): J = b t^3 / 3 (1 - 0.63 t / b), b = A / t
+    tt = max(t_min, 1e-3)
+    bb = max(A_solid / tt, tt)
+    J = max(bb * tt ** 3 / 3.0 * (1.0 - 0.63 * tt / bb), 1e-6)
     t_tors = t_min
     if n_cells >= 1:
         p0 = big
