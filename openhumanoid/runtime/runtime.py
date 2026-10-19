@@ -78,6 +78,7 @@ class Runtime:
         self.last_est = None
         self.last_state = None
         self.compute_ms: list = []
+        self.hal_ms: list = []
         self.hold_after_override = False
         self.started = False
 
@@ -143,6 +144,7 @@ class Runtime:
         t0 = time.perf_counter()
         hal, mgr, sf = self.hal, self.mgr, self.safety
         s = hal.read()
+        t_read = time.perf_counter()
         est = self.est.update(s, mgr.contact)
         self.last_state, self.last_est = s, est
         sf.heartbeat()
@@ -164,12 +166,16 @@ class Runtime:
             mgr.mode = "limp"
         q, tl, contact = mgr.update(est, s)
         cmd = sf.filter(q, tl, s, fall_q=mgr.fall_q)
+        t_w0 = time.perf_counter()
         hal.write(cmd)
         t1 = time.perf_counter()
-        self.compute_ms.append((t1 - t0) * 1e3)
+        # compute = everything but the HAL calls (on hardware those are bus transfers, not CPU work; the sim's own cost is not the robot's)
+        compute = (t_w0 - t_read)
+        self.compute_ms.append(compute * 1e3)
+        self.hal_ms.append(((t_read - t0) + (t1 - t_w0)) * 1e3)
         if self.k % self.cfg.log_every == 0:
             self.rec.add(t=s.t, q=s.q, q_cmd=cmd.q, tilt=est.tilt, pitch=est.pitch, roll=est.roll, c=est.c, v=est.v, dcm=est.dcm,
-                         temp=s.temp_c, volt=s.voltage, load=s.load, compute_ms=(t1 - t0) * 1e3,
+                         temp=s.temp_c, volt=s.voltage, load=s.load, compute_ms=compute * 1e3,
                          stab=mgr.stab.last, gait_mode=0 if mgr.gait.mode == "hold" else (1 if mgr.gait.mode == "shift" else 2))
         hal.tick()
         self.k += 1

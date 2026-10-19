@@ -25,7 +25,7 @@ class ClipStore:
         self._mem: dict = {}
 
     def _key(self, name: str, params: dict) -> str:
-        h = hashlib.sha1(json.dumps([self.m.concept_id, name, params, round(self.m.robot.height, 4)], sort_keys=True, default=str).encode()).hexdigest()[:12]
+        h = hashlib.sha1(json.dumps(["v2", self.m.concept_id, name, params, round(self.m.robot.height, 4)], sort_keys=True, default=str).encode()).hexdigest()[:12]
         return f"{name}-{h}"
 
     def build(self, name: str, **params) -> Reference:
