@@ -9,22 +9,27 @@ import math
 
 import numpy as np
 
+from .. import config
 from ..kin import RobotKin, smoothstep5
 from .common import fill_legs, finish, knee_flex_from, rest_upper_body, set_col, stand_geometry
 from .lipm import PreviewController
 
 
-def default_gait(kin: RobotKin) -> dict:
-    lg = kin.lg
-    h = kin.robot.height
-    leg = lg.L1 + lg.L2
-    t_step = 0.5 * math.sqrt(h / 1.75) * 1.4        # human step time 0.5 s, Froude-scaled, x1.4 for servo bandwidth
-    return {"step_len": 0.30 * leg, "step_time": round(t_step, 2), "clearance": max(0.012, 0.07 * h),
-            "ds_fraction": 0.2, "turn_per_step": 0.30, "arm_swing": 0.5}
+def frozen_gait() -> dict:
+    """Walk spec shared by every candidate (thresholds.yaml `motions.walk`): absolute speed, step time, turn rate, clearance."""
+    w = config.walk_spec()
+    return {"step_len": w["speed_mps"] * w["step_time_s"], "step_time": w["step_time_s"], "clearance": w["clearance_m"],
+            "ds_fraction": w["ds_fraction"], "turn_per_step": w["turn_rate_rad_s"] * w["step_time_s"],
+            "arm_swing": w["arm_swing"], "n_steps": w["n_steps"]}
 
 
-def walk(kin: RobotKin, mode: str = "forward", n_steps: int = 8, dt: float = 0.01, **over) -> Reference:
-    gait = {**default_gait(kin), **{k: v for k, v in over.items() if v is not None}}
+def walk(kin: RobotKin, mode: str = "forward", n_steps: int | None = None, dt: float = 0.01, *, landing_shift: int = 0,
+         capture_n: int | None = None, capture_m: float = 0.0, **over) -> Reference:
+    """mode: forward | backward | turn. `over` overrides frozen gait keys (stress variants and the diagnostic ladder).
+    landing_shift: swing foot lands this many samples (10 ms each) later (+) or earlier (-) than the ZMP plan assumes.
+    capture_n / capture_m: swing foot of step `capture_n` lands `capture_m` further out sideways (one lateral capture step)."""
+    gait = {**frozen_gait(), **{k: v for k, v in over.items() if v is not None}}
+    n_steps = n_steps or int(gait["n_steps"])
     lg = kin.lg
     L = {"forward": 1.0, "backward": -1.0, "turn": 0.0}[mode] * gait["step_len"]
     dpsi = gait["turn_per_step"] if mode == "turn" else 0.0
@@ -53,7 +58,11 @@ def walk(kin: RobotKin, mode: str = "forward", n_steps: int = 8, dt: float = 0.0
             c = c + np.array([math.cos(psi), math.sin(psi)]) * L
         if n < S - 1:
             psi = psi + dpsi
-        land.append(pose(c.copy(), psi, "r" if support[n] == "l" else "l"))
+        lp = pose(c.copy(), psi, "r" if support[n] == "l" else "l")
+        if capture_n is not None and n == capture_n:
+            sw = "r" if support[n] == "l" else "l"
+            lp = lp + np.array([-side_sign[sw] * capture_m * math.sin(psi), side_sign[sw] * capture_m * math.cos(psi), 0.0])
+        land.append(lp)
     init = {"l": pose(np.zeros(2), 0.0, "l"), "r": pose(np.zeros(2), 0.0, "r")}
 
     # foot trajectories (x, y, z, yaw) at dt
@@ -66,13 +75,14 @@ def walk(kin: RobotKin, mode: str = "forward", n_steps: int = 8, dt: float = 0.0
         t0 = n_init + n * n_step
         stance_pose.append(cur[sup].copy())
         a, b = cur[swing], land[n]
-        s = smoothstep5(np.arange(n_ss) / max(n_ss - 1, 1))
+        n_sw = max(4, min(n_ss + landing_shift, n_step - 1))
+        s = smoothstep5(np.arange(n_sw) / max(n_sw - 1, 1))
         xs = a[0] + (b[0] - a[0]) * s
         ys = a[1] + (b[1] - a[1]) * s
         ps = a[2] + (b[2] - a[2]) * s
-        zs = gait["clearance"] * 0.5 * (1 - np.cos(2 * math.pi * np.arange(n_ss) / max(n_ss - 1, 1)))
-        foot[swing][t0:t0 + n_ss] = np.stack([xs, ys, zs, ps], 1)
-        foot[swing][t0 + n_ss:] = [b[0], b[1], 0.0, b[2]]
+        zs = gait["clearance"] * 0.5 * (1 - np.cos(2 * math.pi * np.arange(n_sw) / max(n_sw - 1, 1)))
+        foot[swing][t0:t0 + n_sw] = np.stack([xs, ys, zs, ps], 1)
+        foot[swing][t0 + n_sw:] = [b[0], b[1], 0.0, b[2]]
         cur[swing] = b.copy()
     final_mid = 0.5 * (cur["l"][:2] + cur["r"][:2])
 

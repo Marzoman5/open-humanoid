@@ -29,33 +29,25 @@ gates:
   envelope_utilisation_max:
     value: 0.90
     class: assumption
-    source: operating points (|tau|, |w|) must sit inside 90% of the torque-speed envelope; stands in for a speed-margin gate (no source). The lead's gates do not name a speed criterion.
+    source: "operating points (|tau|, |w|) must sit inside 90% of the torque-speed envelope; stands in for a speed-margin gate (no source). RECOMMENDATIONS B4 names no speed criterion."
   tracking_error_deg:
     value: 2.0
     class: gate
-    source: RECOMMENDATIONS.md B4 ("held-out actuator-model tracking <= ~2 deg"). NOTED, not gating, in this tool: tracking of a reference by a P-servo with learned feedforward is not the same as model-vs-real error.
+    source: "RECOMMENDATIONS.md B4 (held-out actuator-model tracking <= ~2 deg). NOTED, not gating, in this tool: a P-servo following a reference with learned feedforward is not model-vs-real error."
     gating: false
-  assist_mean_fraction_of_weight:
-    value: 0.05
-    class: assumption
-    source: the playback tether may supply at most 6% of body weight; a gait whose mean assist exceeds 5% is not dynamically consistent. Reported as a warning.
-  mc_pass_rate_min:
-    value: 0.90
-    class: assumption
-    source: share of Monte Carlo samples that satisfy every per-sample criterion (upright, torque, envelope, grasp)
-  walk_speed_min_mps:
-    value: 0.05
-    class: assumption
-    source: requirement R2 says "walks around" but gives no speed. 0.05 m/s is a placeholder for "reads as walking"; the commander should set it.
   runtime_min_min:
     value: 15.0
     class: gate
-    source: variants/adam/requirements.md "Should: run time >= 15 min of mixed activity per charge" (a Should, reported, not gating)
+    source: "variants/adam/requirements.md Should: run time >= 15 min of mixed activity per charge (a Should: reported, not gating)"
     gating: false
   pack_peak_current_fraction_of_c:
     value: 0.8
     class: assumption
-    source: peak battery draw must stay below 80% of C-rating x capacity (research/methods/e: choose C so peak < ~50% of C x capacity; judgement, not sourced)
+    source: "peak battery draw must stay below 80% of C-rating x capacity (research/methods/e: peak < ~50% of C x capacity; judgement, not sourced)"
+  motion_pass_all_required:
+    value: 1
+    class: gate
+    source: "every frozen motion must be VALID (reference feasible, upright, tether <= 1% of weight) and pass the joint gates; an invalid motion is a FAIL, not a skip"
 
 thermal:
   ambient_c:
@@ -68,27 +60,39 @@ thermal:
     source: cold start inside the shell
 
 mass:
-  structure_band: {low: -0.15, high: 0.40}
-  structure_band_class: assumption
-  structure_band_source: maintainer/commander correction 2026-10-19. Before CAD the printed structure + shell mass is a guess, so it gets its own asymmetric band.
-  parts_band: 0.05
-  parts_band_class: sourced_estimate
-  parts_band_source: catalog masses (vendor figures; +-1 g on a 55 g servo ~ 2%; +-5% covers wiring/connectors)
+  # Challenge-1 row 3 (supersedes the earlier -15/+40 instruction): uncertainty on NON-SERVO terms only, asymmetric.
+  structure_factor: {low: 0.9, high: 1.8, class: assumption, source: "printed frame + shell mass before CAD/shells exist; the structure coefficient (6.4 kg at 1 m cubed) is NOT recalibrated until shelled CAD exists. The ToddlerBot/OP3 masses are sanity bounds only"}
+  wiring_electronics_factor: {low: 0.8, high: 1.5, class: assumption, source: "wiring harness and electronics_kg: harnesses grow in practice"}
+  servo_battery_board_factor: {value: 1.0, class: sourced_estimate, source: "catalog masses of servos, battery and boards are taken as listed (no band): vendor figures, +-1 g on a 55 g servo"}
   benchmark_fit: {k: 18.5, n: 2.28}
-  benchmark_role: SANITY BOUND ONLY. The fit over nine comparable robots (research/robots/benchmarks.md) is never used as Adam's estimate.
+  benchmark_role: SANITY BOUND AND STRESS CASE ONLY. The fit over nine comparable robots (research/robots/benchmarks.md) is never used as Adam's estimate; it defines the stress mass at which the gates are re-run.
   wiring_kg_per_servo: {value: 0.006, class: assumption, source: cable + connector per servo}
   wiring_kg_trunk: {value: 0.025, class: assumption, source: bus trunk, switch lead}
 
-monte_carlo:
-  n_samples: {value: 24, class: assumption, source: runtime budget; raise with --samples for a final gate}
-  seed: 1234
-  friction_floor: {low: 0.5, high: 1.0, class: sourced_estimate, source: Open Duck Mini randomize.py floor friction 0.5-1.0 (research/methods/domain_randomization_ranges.yaml)}
-  kp_scale: {low: 0.9, high: 1.1, class: sourced_estimate, source: Open Duck Mini kp +-10%; ToddlerBot kp +-10%}
-  latency_extra_ms: {low: 0.0, high: 40.0, class: sourced_estimate, source: Open Duck Mini action delay 0-2 control steps = up to 40 ms (jax randint upper bound exclusive)}
-  backlash_deg: {low: 0.2, high: 1.0, class: sourced_estimate, source: datasheet <= 0.5 deg; Robonine measured 0.87 deg on one 12 V unit}
-  com_shift_frac_h: {value: 0.03, class: assumption, source: torso COM shift +-3% of height per axis. Open Duck uses +-0.05 m on a 0.42 m robot (12%), which is a CAD-uncertainty level we do not claim for a printed torso; no data}
-  soc_range: {low: 0.15, high: 1.0, class: assumption, source: pack state of charge at the start of each activity}
-  pack_r_scale: {low: 0.8, high: 1.5, class: assumption, source: unit-to-unit and ageing spread of pack internal resistance}
+uncertainty:
+  # Challenge-1 rows 5/9/10: the HEADLINE is a bounds ("tornado") sweep, one unknown at a time at its low/high bound, because
+  # most of these unknowns are not random variables. A small Monte Carlo covers the QUASI-STATIC dimensions only.
+  tornado:
+    mass_structure: {low: 0.9, high: 1.8, class: assumption, source: "same band as mass.structure_factor"}
+    mass_wiring_electronics: {low: 0.8, high: 1.5, class: assumption, source: "same band as mass.wiring_electronics_factor"}
+    torque_speed_model: {values: [anchored, linear], class: extrapolated, source: "anchored = DC law with datasheet cap; linear = pessimistic stall*(1 - w/w_noload). Nothing in the research verifies the 12 V mid-speed curve."}
+    armature: {class: extrapolated, source: "per-actuator spec.uncertainty.armature: +-20% at 7.4 V (BAM fit), +-50% for 12 V and STS3250 (borrowed from the 7.4 V fit)"}
+    stall: {class: extrapolated, source: "per-actuator spec.uncertainty.stall: 10% (7.4 V), 25% (12 V and STS3250)"}
+    rth: {class: assumption, source: "per-actuator spec.uncertainty.rth: 35-50%"}
+    ambient_c: {low: 35.0, high: 40.0, class: assumption, source: "in-shell ambient; 40 C is the hot case requested by the commander"}
+    pack_sag: {soc: 0.15, r_scale: 1.5, class: assumption, source: "nearly empty pack with 1.5x internal resistance"}
+    gait_speed: {values: [1.0, 1.5], class: assumption, source: "walking speed x1.5 (the stress walk variants are also run on their own)"}
+  monte_carlo:
+    n_samples: {value: 16, class: assumption, source: "runtime budget; raise with --samples"}
+    seed: 1234
+    quasi_static_only: true
+    com_shift_frac_h: {value: 0.03, class: assumption, source: "torso COM shift +-3% of height per axis. Open Duck uses +-0.05 m on a 0.42 m robot (12%); no data for a printed torso"}
+    floor_friction: {low: 0.5, high: 1.0, class: sourced_estimate, source: "Open Duck Mini randomize.py floor friction 0.5-1.0 (research/methods/domain_randomization_ranges.yaml)"}
+  closed_loop_only:
+    note: "Latency (0-40 ms, Open Duck), backlash (0.2-1.0 deg) and kp (+-10%) change the CLOSED loop, which an open-loop replay cannot judge. They are applied in the servo-in-the-loop tracking runs as sensitivity only and labelled 'needs closed loop (P5)'; they never enter a gate."
+    latency_extra_ms: {low: 0.0, high: 40.0, class: sourced_estimate, source: "Open Duck Mini action delay 0-2 control steps = up to 40 ms (jax randint upper bound exclusive)"}
+    backlash_deg: {low: 0.2, high: 1.0, class: sourced_estimate, source: "datasheet <= 0.5 deg; Robonine measured 0.87 deg on one 12 V unit"}
+    kp_scale: {low: 0.9, high: 1.1, class: sourced_estimate, source: "Open Duck Mini and ToddlerBot kp +-10%"}
 
 mixed_activity:
   # 10-minute duty cycle, repeated. Seconds per 100 s cycle. Walking dominates because Adam's job is to walk around.
@@ -106,14 +110,56 @@ mixed_activity:
   source: invented usage mix (walk + wave + dance + pickup) as requested; no usage data exists
 
 power:
-  usable_battery_fraction: {value: 0.85, class: assumption, source: cutoff at 3.3 V/cell instead of 3.0 V (RECOMMENDATIONS/methods e: 3.0 V cutoff is the damage limit)}
-  regulator_efficiency: {value: 0.90, class: assumption, source: buck converter; catalog specs.efficiency overrides}
-  compute_power_w_default: {value: 3.0, class: assumption, source: used if the catalog part has no specs.power_w}
+  usable_battery_fraction: {value: 0.85, class: assumption, source: "cutoff at 3.3 V/cell instead of 3.0 V (3.0 V is the damage limit, research/methods/e)"}
+  regulator_efficiency: {value: 0.90, class: assumption, source: "buck converter; catalog specs.efficiency overrides"}
+  compute_power_w_default: {value: 3.0, class: assumption, source: "used if the catalog part has no specs.power_w_typical"}
+  cell_nominal_v: {value: 3.7, class: sourced_estimate, source: "LiPo nominal voltage per cell; operating voltage for the stall reference = cells x 3.7"}
+  wire_resistance_ohm_per_branch: {value: 0.02, class: assumption, source: "bus wiring + connectors from the pack to a servo branch (for the minimum-voltage-at-the-farthest-servo check); no data"}
+  fuse_margin: {value: 1.25, class: assumption, source: "fuse rating = 1.25 x the peak legitimate draw, must stay below the wiring/connector limit (connector rating null in research)"}
 
-walk_gait:
-  # The walking reference is Froude-scaled and then slowed down (time scaling) until the ideal-actuator demand fits the
-  # envelope. This ladder is tried from fastest to slowest.
-  step_time_ladder_s: [0.40, 0.50, 0.65, 0.85, 1.10, 1.40, 1.80, 2.40]
-  clearance_m_frac_h: 0.04
+# FROZEN MOTION SPECS (challenge-1 row 8): shared requirement constants. Every candidate is judged on the SAME motions, in
+# absolute SI units, so a weak design FAILS instead of being given a gentler gait. Changing these is a maintainer/commander call.
+motions:
   class: assumption
-  source: foot clearance 4% of height (18 mm at 0.45 m; the sole is 20 mm thick in the primitive model)
+  source: "requirements.md R2-R5 give no speeds, depths or tempos. These are requirement-level placeholders chosen once, not tuned per candidate."
+  walk:
+    step_time_s: 0.50          # one footfall every 0.5 s (2 steps/s)
+    speed_mps: 0.10            # forward and backward; step length = speed x step_time = 50 mm
+    turn_rate_rad_s: 0.50      # turn in place; yaw per step = rate x step_time
+    clearance_m: 0.015         # swing foot lift on a flat indoor floor
+    ds_fraction: 0.20
+    n_steps: 8
+    arm_swing: 0.5
+  squat: {depths_deg: [90, 120], down_s: 2.5, hold_s: 1.0}
+  wave: {freq_hz: 1.25, amp_deg: 22.0, duration_s: 7.0}
+  dance: {bpm: 80.0, phrases: 6, v_limit_rad_s: 3.0, smoother_max_deviation_deg: 8.0}
+  pickup: {object_mass_kg: 0.150, table_height_m: 0.25, table_height_note: "R5 'table height' is undefined (maintainer question Q1). 0.25 m is a placeholder; run --table-height to sweep it."}
+  sit_to_stand: {knee_deg: 130.0, down_s: 3.0, hold_s: 0.5}
+  stress:
+    walk_speed_factor: 1.5        # step length x1.5 at the same step time
+    walk_step_time_factor: 0.8    # step time -20% at the same step length
+    landing_timing_error_s: 0.010 # swing foot lands 10 ms early / late relative to the ZMP plan
+    capture_step_lateral_m: 0.030 # one wide lateral step after a push
+
+assist:
+  mean_fraction_of_weight_max: {value: 0.01, class: gate, source: "challenge-1 row 7: the playback tether may not carry the motion; mean assist above 1% of body weight invalidates the motion"}
+
+overload_protection:
+  gate_fraction_of_protection_time: {value: 0.5, class: gate, source: "challenge-1 row 6: time continuously above 70% of stall must stay below half the Feetech Protection_Time"}
+
+reference_gait_search:
+  # Diagnostic only: the fastest ladder step the envelope allows (NOT used to pick the gate motion)
+  step_time_ladder_s: [0.35, 0.45, 0.60, 0.80, 1.00, 1.30, 1.70, 2.20]
+
+# PACKAGING FLOORS (challenge-1 row 2): proportions and ranges every candidate must respect, from the servo envelope and the
+# T-0004 CAD handoff (coordination/handoffs/2026-10-19-0222-T-0004-adam-cad.md, measured on STS3215 45.2x24.7x35 mm at h = 0.50 m).
+# Applied to every candidate; the report lists which floors raised a candidate's proportions.
+packaging_floors:
+  reference_height_m: 0.50
+  ankle_height_frac: {value: 0.06, class: sourced_estimate, source: "T-0004: ankle height 22.5 mm (0.045 h) leaves 4.6 mm under the ankle-roll servo; ~0.06 h fixes it. Below it ankle roll is limited to +-18 deg"}
+  ankle_roll_limit_deg_if_low: {value: 18.0, class: sourced_estimate, source: "T-0004: yoke hits the sole at about +-18 deg"}
+  foot_length_m_at_ref: {value: 0.092, class: sourced_estimate, source: "T-0004: the foot grows from 85x38 to 92x55 mm at 0.5 m; scaled linearly with height"}
+  foot_width_m_at_ref: {value: 0.055, class: sourced_estimate, source: "T-0004, as above"}
+  hip_width_m_min: {value: 0.070, class: sourced_estimate, source: "T-0004: 2*(L - offset) + 2 = 70 mm between hip centres, fixed by the servo size (does not scale with height)"}
+  shoulder_width_frac: {value: 0.36, class: sourced_estimate, source: "T-0004: shoulder_width 0.30 makes straight arms hit the thighs; ~0.36 h (or a 10 deg A-pose cant) fixes it"}
+  link_length_m_min: {value: 0.060, class: assumption, source: "a limb link must at least house the 45 mm servo plus stand-offs; below this a CAD layout cannot exist"}

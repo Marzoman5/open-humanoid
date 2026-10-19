@@ -82,6 +82,7 @@ class PlayConfig:
     servo_scale: dict | None = None  # Monte Carlo: per-joint arrays {"stall":..,"speed":..,"friction":..,"rth":..}
     hold_end_s: float = 0.0
     fall_tilt_deg: float = 45.0
+    model_hook: object = None          # callable(MjModel) applied after the model is built (COM shift, floor friction)
     cmd_offset: tuple | None = None   # (t_log, offsets[T, n]) learned by `learn_offsets` (stand-in for policy feedforward)
 
 
@@ -122,6 +123,8 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
     cfg = cfg or PlayConfig()
     extra = ref.scene["xml"] if ref.scene else ""
     model = model or robot.build_model(extra)
+    if cfg.model_hook is not None:
+        cfg.model_hook(model)
     data = mujoco.MjData(model)
     model.opt.timestep = cfg.sim_dt
     names = robot.names
@@ -181,7 +184,7 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
     pelvis = model.body("pelvis").id
     mass = float(model.body_mass.sum())
     zc = max(float(data.subtree_com[1][2]), 0.05)
-    wn, wr = 2 * np.pi * 0.7, 3.0
+    wn, wr = 2 * np.pi * 0.25, 1.5       # very soft tether: 1% of body weight needs ~13 cm of drift
     f_max = cfg.assist_frac * mass * G
     t_max = cfg.assist_frac * mass * G * zc
     fr_rows = None
@@ -268,7 +271,12 @@ def play(robot: Robot, ref: Reference, cfg: PlayConfig | None = None, kin: Robot
                 break
     A = {k: np.array(v) for k, v in L.items()}
     wn_log = int(round(warm / log_every))
-    extras = {"mass_kg": mass, "pack_soc_end": pack.soc if pack else None}
+    extras = {"mass_kg": mass, "pack_soc_end": pack.soc if pack else None,
+              "sat_frac": (getattr(bank, "sat_steps", np.zeros(n)) / max(getattr(bank, "steps", 1), 1)).tolist(),
+              "protection_trips": getattr(bank, "trips", np.zeros(n, int)).tolist(),
+              "assist_mean_bw": float(np.mean(A["as"][wn_log:])) if len(A["as"]) > wn_log else 0.0,
+              "assist_peak_bw": float(np.max(A["as"][wn_log:])) if len(A["as"]) > wn_log else 0.0,
+              "assist_free": cfg.assist_free}
     if ref.scene and ref.scene.get("object"):
         try:
             extras["object_pos"] = data.body(ref.scene["object"]).xpos.copy()

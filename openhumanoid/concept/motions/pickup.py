@@ -104,7 +104,8 @@ def pickup(kin: RobotKin, dt: float = 0.01, table_height_frac: float = 0.36, tab
 
     # ---- timeline
     n = lambda s: int(round(s / dt))  # noqa: E731
-    marks = {"stand": 0.8, "down": 3.0, "pre": 4.2, "grasp": 5.0, "closed": 5.8, "lift": 6.8, "up": 9.0, "end": 10.0}
+    # gripper timing is set by the servo: 45 mm of jaw travel on a 12 mm/rad pinion is 3.75 rad, so closing takes 2 s
+    marks = {"stand": 0.8, "down": 3.0, "pre": 4.2, "grasp": 5.0, "closed": 7.0, "lift": 8.0, "up": 10.2, "end": 11.2}
     T = n(marks["end"]) + 1
     t = np.arange(T) * dt
 
@@ -179,7 +180,7 @@ def pickup(kin: RobotKin, dt: float = 0.01, table_height_frac: float = 0.36, tab
               (marks["lift"], {a: float(Ql[kin.index[a]]) for a in arm}), (marks["end"], {a: float(Ql[kin.index[a]]) for a in arm})]
         up_series = upper_from(wp)
         g_ser = np.full(T, grip_rest)
-        g_ser += (q_open - grip_rest) * prof(marks["down"], marks["pre"] - 0.3)
+        g_ser += (q_open - grip_rest) * prof(marks["stand"], marks["down"])
         g_ser += (0.005 - q_open) * prof(marks["grasp"], marks["closed"])
         up_series[f"gripper_{side}"] = g_ser
 

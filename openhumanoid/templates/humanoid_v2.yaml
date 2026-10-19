@@ -117,4 +117,4 @@ joints:
   # Slide joint along the hand's y axis (positive = open). `ratio_m_per_rad` is the rack-and-pinion transmission
   # (slide travel in m per servo radian); the actuator model works in servo radians. Spec range is in mm for this joint
   # because the spec schema's ranges are degrees: the builder reads `range` as the opening in mm when type=slide.
-  gripper: {axis: y, type: slide, ratio_m_per_rad: 0.008}
+  gripper: {axis: y, type: slide, ratio_m_per_rad: 0.012}

@@ -68,6 +68,11 @@ class ServoSpec:
     tau_th_s: float
     uncertainty: dict
     max_temp_c: float = 70.0
+    torque_model: str = "anchored"      # anchored (DC law capped at the datasheet stall) | linear (pessimistic: stall*(duty - w/w_nl))
+    protection_time_s: float = 2.0
+    overload_fraction: float = 0.8
+    protective_fraction: float = 0.2
+    release_time_s: float = 1.0
     backlash_rad: float = 0.0087  # +-0.5 deg: datasheet <=0.5 deg; Robonine measured 0.87 deg on one 12 V unit
     notes: tuple = field(default_factory=tuple)
 
@@ -92,25 +97,35 @@ class ServoSpec:
     def noload(self, vin) -> np.ndarray | float:
         return np.asarray(vin) * self.pwm_max / self.kt
 
-    def tau_available(self, w, vin, *, optimistic: bool = False):
-        """Maximum motor torque at output speed `w` (rad/s, same direction as torque). Conservative = capped at the datasheet stall."""
+    def tau_available(self, w, vin, *, optimistic: bool = False, model: str | None = None):
+        """Maximum motor torque at output speed `w` (rad/s, same direction as torque).
+        anchored (default): DC law capped at the datasheet stall. linear: the pessimistic straight line stall*(1 - w/w_noload),
+        which is what a servo with weak mid-speed torque would look like (nothing in the research verifies the mid-speed curve)."""
         w = np.abs(np.asarray(w, dtype=float))
         vin = np.asarray(vin, dtype=float)
+        if (model or self.torque_model) == "linear":
+            wnl = self.noload_rad_s_ref * vin / self.vin_ref
+            return np.clip(self.stall_cap(vin) * (1.0 - w / wnl), 0.0, None)
         dc = self.kt * (vin * self.pwm_max - self.kt * w) / self.R_dc
         cap = self.stall_electrical(vin) if optimistic else self.stall_cap(vin)
         return np.clip(np.minimum(dc, cap), 0.0, None)
 
     def perturbed(self, *, stall: float = 1.0, speed: float = 1.0, friction: float = 1.0, rth: float = 1.0,
-                  kp: float = 1.0) -> "ServoSpec":
+                  kp: float = 1.0, armature: float = 1.0) -> "ServoSpec":
         """Scaled copy for Monte Carlo draws. `speed` scales the no-load speed (kt and R move together, so the DC stall
         stays put); `stall` scales the usable stall cap; `friction` the friction terms; `kp` the firmware error gain."""
         fr = {k: (v * friction if k in _FRICTION_TORQUE_KEYS else v) for k, v in self.friction.items()}
         return replace(self, kt=self.kt / speed, R_dc=self.R_dc / speed, stall_nm_ref=self.stall_nm_ref * stall,
-                       friction=fr, rth_k_per_w=self.rth_k_per_w * rth, error_gain_ratio=self.error_gain_ratio * kp)
+                       friction=fr, rth_k_per_w=self.rth_k_per_w * rth, error_gain_ratio=self.error_gain_ratio * kp,
+                       armature=self.armature * armature)
+
+    def with_model(self, torque_model: str) -> "ServoSpec":
+        return replace(self, torque_model=torque_model)
 
 
 def _resolve(entry: dict, key: str, vin_op: float | None, variant: str | None) -> ServoSpec:
     fw = _models_yaml()["BAM_SOURCE"]["firmware"]
+    prot = _models_yaml()["protection"]
     dyn_file = entry.get("bam_file") or entry["dynamics_from"]
     bam = bam_params(dyn_file)
     dc = dict(entry["dc"])
@@ -150,7 +165,9 @@ def _resolve(entry: dict, key: str, vin_op: float | None, variant: str | None) -
         rate_limit_rad_s=0.894 * ratio_noload, armature=bam["armature"] * scale.get("armature", 1.0), friction=fr,
         stall_nm_ref=stall, stall_current_a=stall_i, rated_continuous_nm=entry["rated_continuous_nm"]["v"],
         noload_rad_s_ref=noload, mass_kg=entry["mass_kg"]["v"], rth_k_per_w=entry["thermal"]["rth_k_per_w"],
-        tau_th_s=entry["thermal"]["tau_s"], uncertainty=dict(entry["uncertainty"]), notes=tuple(notes))
+        tau_th_s=entry["thermal"]["tau_s"], uncertainty=dict(entry["uncertainty"]), notes=tuple(notes),
+        protection_time_s=prot["protection_time_s"]["v"], overload_fraction=prot["overload_fraction"]["v"],
+        protective_fraction=prot["protective_fraction"]["v"], release_time_s=prot["release_time_s"]["v"])
     return spec
 
 
@@ -242,6 +259,10 @@ class ServoBank:
         self.vin_ref = f("vin_ref")
         self.kt_cur, self.R_heat = f("kt_current"), f("R_heat")
         self.armature = f("armature")
+        self.linear = np.array([s.torque_model == "linear" for s in specs])
+        self.wnl_ref = f("noload_rad_s_ref")
+        self.prot_time, self.ov_frac = f("protection_time_s"), f("overload_fraction")
+        self.prot_frac, self.rel_time = f("protective_fraction"), f("release_time_s")
         self.torque_frac = np.ones(self.n) if torque_frac is None else np.asarray(torque_frac, dtype=float)
         self.backlash = np.array([s.backlash_rad for s in specs]) if backlash_rad is None else np.broadcast_to(np.asarray(backlash_rad, float), (self.n,)).copy()
         self.delay_steps = (f("delay_s") + extra_latency_s) / dt
@@ -263,6 +284,13 @@ class ServoBank:
         self.play = theta0.copy()                              # backlash play operator state (seen position)
         self.duty = np.zeros(self.n)
         self.tau_m = np.zeros(self.n)
+        self.fric_last = np.zeros(self.n)       # friction budget of the previous step (added to the torque cap, see control)
+        self.ov_timer = np.zeros(self.n)        # time spent above Overload_Torque
+        self.rel_timer = np.zeros(self.n)       # time spent below it while protected
+        self.protected = np.zeros(self.n, bool)
+        self.trips = np.zeros(self.n, int)
+        self.sat_steps = np.zeros(self.n, int)  # steps at the torque cap
+        self.steps = 0
 
     def _delayed(self, idx: np.ndarray) -> np.ndarray:
         # sample the command history `delay_steps` (fractional) ago
@@ -287,14 +315,36 @@ class ServoBank:
         self.play = np.clip(self.play, theta - self.backlash / 2, theta + self.backlash / 2)
         duty = np.clip((self.q_ts - self.play) * self.gain, -self.pwm, self.pwm)
         volts = self.vin * duty
-        tau = self.kt * (volts - self.kt * omega) / self.R
-        cap = self.stall_ref * self.vin / self.vin_ref * self.torque_frac
+        tau_dc = self.kt * (volts - self.kt * omega) / self.R
+        # pessimistic variant: the straight line stall*(duty/pwm - w/w_nl) instead of the DC law with a flat cap
+        wnl = self.wnl_ref * self.vin / self.vin_ref
+        tau_lin = self.stall_ref * self.vin / self.vin_ref * (duty / self.pwm - omega / wnl)
+        tau = np.where(self.linear, tau_lin, tau_dc)
+        cap0 = self.stall_ref * self.vin / self.vin_ref * self.torque_frac
+        # The datasheet stall is an OUTPUT torque (gearbox friction already inside it), so the friction budget is added
+        # to the motor-side cap: net torque at the shaft can still reach the datasheet figure. (No double counting.)
+        cap = cap0 + self.fric_last
+        # firmware overload protection: > Overload_Torque for Protection_Time -> torque drops to Protective_Torque
+        over = np.abs(tau) > self.ov_frac * cap0
+        self.ov_timer = np.where(over, self.ov_timer + self.dt, np.maximum(self.ov_timer - self.dt, 0.0))
+        newly = (~self.protected) & (self.ov_timer >= self.prot_time)
+        self.trips += newly
+        self.protected |= newly
+        self.rel_timer = np.where(self.protected & ~over, self.rel_timer + self.dt, 0.0)
+        rel = self.protected & (self.rel_timer >= self.rel_time)
+        self.protected &= ~rel
+        self.ov_timer = np.where(rel | newly, 0.0, self.ov_timer)
+        cap = np.where(self.protected, self.prot_frac * cap0, cap)
+        self.sat_steps += (np.abs(tau) >= cap - 1e-9)
+        self.steps += 1
         tau = np.clip(tau, -cap, cap)
         self.duty, self.tau_m = duty, tau
         return tau
 
     def frictions(self, tau_m, tau_ext, omega):
-        return friction_budget(self.fr, tau_m, tau_ext, omega)
+        fl, d = friction_budget(self.fr, tau_m, tau_ext, omega)
+        self.fric_last = fl + d * np.abs(omega)
+        return fl, d
 
     # ---- electrical / thermal bookkeeping (not part of the dynamics) ---------------------------------------
     def current(self, tau_m) -> np.ndarray:

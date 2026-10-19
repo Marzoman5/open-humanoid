@@ -21,6 +21,13 @@ BAM_SOURCE:
   default_model: m4          # Stribeck + load-dependent friction; research/methods/a recommends m4, m6 only if validation justifies it
   firmware: {kp_fw: 32, error_gain: 0.166, pwm_max: 0.97, source: "bam/feetech/actuator.py (error_gain 'determined using an oscilloscope', max_pwm 'also determined with oscilloscope')"}
 
+protection:
+  # Feetech firmware overload protection: when torque exceeds Overload_Torque for Protection_Time, torque drops to Protective_Torque.
+  overload_fraction: {v: 0.80, kind: sourced_estimate, source: "Overload_Torque register (36) default 80 % (research/actuators/feetech-sts3215/notes.md, commanderfun register reference)"}
+  protective_fraction: {v: 0.20, kind: sourced_estimate, source: "Protective_Torque register (34) default 20 %; Robonine observed torque cut to ~20 % under prolonged load"}
+  protection_time_s: {v: 2.0, kind: assumption, source: "Protection_Time register (35) default 200; the UNIT IS UNCONFIRMED. 200 x 10 ms = 2 s is assumed (rcdrone quotes a 2 s hold)"}
+  release_time_s: {v: 1.0, kind: assumption, source: "how long torque must stay below Overload_Torque before the servo recovers; 'clears on new command' is unsupported in the research notes, so this is a guess"}
+
 models:
   sts3215-7v4:
     label: Feetech STS3215 7.4 V (19.5 kg.cm), BAM-identified
@@ -37,7 +44,7 @@ models:
     mass_kg: {v: 0.055, kind: datasheet, source: "Evelta, tolerance 1 g"}
     thermal: {rth_k_per_w: 3.2, tau_s: 300.0, kind: assumed,
               source: "Same body as the 12 V part: Rth derived from Robonine bench of the 12 V part (static 15 kg.cm hold, ~8.1 W by our current model, 48 C after 10 min, stable >1 h; AMBIENT NOT GIVEN, 22 C assumed => dT 26 K => 3.2 K/W). tau 300 s assumed (10 min to a stable 48 C). No 7.4 V thermal measurement exists."}
-    uncertainty: {stall: 0.10, speed: 0.06, friction: 0.25, kt: 0.10, rth: 0.35}
+    uncertainty: {stall: 0.10, speed: 0.06, friction: 0.25, kt: 0.10, rth: 0.35, armature: 0.20}
 
   sts3215-12v:
     label: Feetech STS3215 12 V (30 kg.cm), datasheet-anchored, dynamics extrapolated from the BAM 7.4 V fit
@@ -54,7 +61,7 @@ models:
     mass_kg: {v: 0.055, kind: datasheet, source: "Evelta"}
     thermal: {rth_k_per_w: 3.2, tau_s: 300.0, kind: derived,
               source: "Robonine 12 V bench: 48 C after 10 min at 15 kg.cm static (stable >1 h); our current model gives ~8.1 W there; ambient assumed 22 C => 3.2 K/W. tau 300 s assumed. One unit, ambient unknown."}
-    uncertainty: {stall: 0.20, speed: 0.20, friction: 0.30, kt: 0.20, rth: 0.40}
+    uncertainty: {stall: 0.25, speed: 0.25, friction: 0.30, kt: 0.20, rth: 0.40, armature: 0.50}
     alt_model:                      # lead's physical scaling 'kt same, R same, V scales' (optimistic bound; see docs)
       name: bam_scaled
       dc: {mode: bam, vin: 12.0}
@@ -77,4 +84,4 @@ models:
     mass_kg: {v: 0.0745, kind: datasheet, source: "Feetech, tolerance 1 g"}
     thermal: {rth_k_per_w: 2.4, tau_s: 360.0, kind: assumed,
               source: "No data. Rth = STS3215 value x 55/74.5 g (larger aluminium case); tau scaled up by 20%. Heat is higher at the same torque fraction (4.2 A x 12 V = 50 W stall vs 32 W)."}
-    uncertainty: {stall: 0.25, speed: 0.30, friction: 0.40, kt: 0.30, rth: 0.50}
+    uncertainty: {stall: 0.25, speed: 0.30, friction: 0.40, kt: 0.30, rth: 0.50, armature: 0.50}

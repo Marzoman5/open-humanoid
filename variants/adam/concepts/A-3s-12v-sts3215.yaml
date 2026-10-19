@@ -7,8 +7,8 @@ height_m: 0.45
 template: humanoid_v2
 # Proportion overrides (fractions of height). Longer arms than the spec default so a 150 g table pickup is reachable.
 proportions: {upper_arm: 0.19, forearm: 0.21}
-joints: [hip_yaw, hip_roll, hip_pitch, knee, ankle_pitch, ankle_roll, waist_yaw, neck_yaw,
-         shoulder_pitch, shoulder_roll, elbow, gripper]
+joints: [hip_yaw, hip_roll, hip_pitch, knee, {name: ankle_pitch, range: [-80, 60]}, ankle_roll, waist_yaw, neck_yaw,
+         neck_pitch, shoulder_pitch, shoulder_roll, elbow, gripper]
 actuator_default: sts3215-12v
 locomotion:
   walk: {stance_knee_flex_deg: 40}
@@ -23,6 +23,7 @@ parts:
     - {part: microsd-32gb, qty: 1}
     - {part: waveshare-bus-servo-adapter, qty: 1}
     - {part: imu-bno085, qty: 1}
+    - {part: cam-rpi-v3, qty: 1, power_w: 1.2}
     - {part: lipo-3s-2200, qty: 1}
     - {part: buck-5v-5a, qty: 1}
     - {part: power-switch-xt60, qty: 1}
