@@ -547,7 +547,7 @@ def evaluate(path_or_concept, *, out_root: Path | None = None, samples: int | No
         "thermal_10min_below_70c(info)": bool(th["T_10min_max_c"] < config.gate("thermal_limit_c")) if th else None,
         "thermal_model_usable": th.get("thermal_model_usable"), "runtime_ok(info)": p.get("runtime_ok"),
         "bus_min_voltage_ok": bus.get("min_voltage_ok"), "pack_c_ok": bus.get("pack_c_ok"),
-        "grasp_ok": sim.get("pickup", {}).get("grasp_ok"), "tracking_noted_rms_deg": {k: v["rms_err_deg"] for k, v in sim.items()}}
+        "grasp_ok": sim.get("pickup", {}).get("grasp_ok"), "tracking_noted_rms_deg": {k: v["rms_err_deg"] for k, v in sim.items() if "rms_err_deg" in v}}
     ok = not blockers
     robust = None
     if not quick:
@@ -660,6 +660,9 @@ def to_markdown(r: dict) -> str:
     if "servo_in_the_loop" in r:
         L += ["", "## Servo-in-the-loop (tracking, saturation, overload trips; NOT envelopes)"]
         for k, s in r["servo_in_the_loop"].items():
+            if "rms_err_deg" not in s:
+                L.append(f"- {k}: fell={s['fell']}, leg tracking max {s['leg_max_err_deg']} deg (rms {s['leg_rms_err_deg']}), saturation {s['saturation_fraction_max']} at {s['saturated_joint']}, trips {s['overload_trips']}, delivered in time: {s['delivered_in_time']} (servo delay {s['servo_delay_ms']} ms)")
+                continue
             L.append(f"- {k}: rms err {s['rms_err_deg']} deg, max {s['max_err_deg']} deg, saturation {s['saturation_fraction_max']} at {s['saturated_joint']}, trips {s['overload_trips']}, min bus {s['min_bus_voltage_v']} V" + (f", grasp ok {s['grasp_ok']}" if "grasp_ok" in s else ""))
         L.append(f"- closed-loop sensitivity (needs closed loop, P5): {r.get('closed_loop_sensitivity')}")
     L += ["", "## Model quality"]
