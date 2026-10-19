@@ -16,6 +16,9 @@ A proof of concept that is genuinely impressive and fun to walk around and inter
 | R6 | **Does not read as a toy**, in stills and in motion. Design references: Tesla Optimus, electric Atlas, Apple | Maintainer approval at R2a / R2 / R3, plus the design-critic rubric |
 | R7 | **Interactive**: head and torso can orient toward a person | Neck/waist (or equivalent) range in the concept |
 
+| R8 | **Works anywhere, standalone**: walking, balance, behaviors, and control run on board. No PC, network, or LLM needed to function | All behaviors run on the onboard computer in the sim-HAL bring-up; a handheld controller works with no network |
+| R9 | **Commandable**: handheld gamepad and/or phone, plus a documented command API (velocity, poses, motion clips) that an off-board LLM can drive later | API spec exists; the same commands drive sim and hardware |
+
 ## Should
 - Height: as tall as the budget and the physics allow (the previous plan was ~0.5 m).
 - Run time ≥ 15 min of mixed activity per charge (to be confirmed by the power trade study).
