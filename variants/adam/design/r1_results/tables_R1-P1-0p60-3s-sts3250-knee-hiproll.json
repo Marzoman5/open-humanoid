@@ -5,10 +5,19 @@
   "invalid": {},
   "strict_worst_margin": 2.418,
   "worst_joint": "ankle_pitch_r",
-  "motions_run": [
-   "pickup",
-   "stand"
-  ]
+  "peak_frac_stall": 0.281,
+  "peak_joint": "gripper_r",
+  "cal_peak_margin": 3.789,
+  "peak_frac_stall_table_contact_off": 0.182,
+  "peak_joint_table_contact_off": "shoulder_pitch_r",
+  "meta": {
+   "squat_deg": 40.0,
+   "table_height_m": 0.3,
+   "grasp_ik_m": 0.0003,
+   "pregrasp_ik_m": 0.0002,
+   "lift_ik_m": 0.0004,
+   "jaw_axis_off_horizontal_deg": 0.3722
+  }
  },
  {
   "table_m": 0.35,
@@ -16,10 +25,19 @@
   "invalid": {},
   "strict_worst_margin": 2.311,
   "worst_joint": "shoulder_pitch_r",
-  "motions_run": [
-   "pickup",
-   "stand"
-  ]
+  "peak_frac_stall": 0.303,
+  "peak_joint": "shoulder_pitch_r",
+  "cal_peak_margin": 3.512,
+  "peak_frac_stall_table_contact_off": 0.214,
+  "peak_joint_table_contact_off": "shoulder_roll_r",
+  "meta": {
+   "squat_deg": 40.0,
+   "table_height_m": 0.35,
+   "grasp_ik_m": 0.0004,
+   "pregrasp_ik_m": 0.0003,
+   "lift_ik_m": 0.0002,
+   "jaw_axis_off_horizontal_deg": 0.3998
+  }
  },
  {
   "table_m": 0.4,
@@ -27,10 +45,19 @@
   "invalid": {},
   "strict_worst_margin": 0.005,
   "worst_joint": "shoulder_pitch_r",
-  "motions_run": [
-   "pickup",
-   "stand"
-  ]
+  "peak_frac_stall": 131.371,
+  "peak_joint": "shoulder_pitch_r",
+  "cal_peak_margin": 0.008,
+  "peak_frac_stall_table_contact_off": 0.219,
+  "peak_joint_table_contact_off": "shoulder_pitch_r",
+  "meta": {
+   "squat_deg": 40.0,
+   "table_height_m": 0.4,
+   "grasp_ik_m": 0.0002,
+   "pregrasp_ik_m": 0.0003,
+   "lift_ik_m": 0.0002,
+   "jaw_axis_off_horizontal_deg": 0.4755
+  }
  },
  {
   "table_m": 0.45,
@@ -38,22 +65,27 @@
   "invalid": {},
   "strict_worst_margin": 0.909,
   "worst_joint": "shoulder_pitch_r",
-  "motions_run": [
-   "pickup",
-   "stand"
-  ]
+  "peak_frac_stall": 0.77,
+  "peak_joint": "shoulder_pitch_r",
+  "cal_peak_margin": 1.382,
+  "peak_frac_stall_table_contact_off": 0.375,
+  "peak_joint_table_contact_off": "shoulder_roll_r",
+  "meta": {
+   "squat_deg": 40.0,
+   "table_height_m": 0.45,
+   "grasp_ik_m": 0.0005,
+   "pregrasp_ik_m": 0.0003,
+   "lift_ik_m": 0.0002,
+   "jaw_axis_off_horizontal_deg": 0.4839
+  }
  },
  {
   "table_m": 0.5,
   "pickup_valid": false,
   "invalid": {
-   "pickup": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 32.6 mm (target not r"
+   "pickup": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 32.6 mm (target not reached with the avai"
   },
   "strict_worst_margin": 2.54,
-  "worst_joint": "knee_r",
-  "motions_run": [
-   "pickup",
-   "stand"
-  ]
+  "worst_joint": "knee_r"
  }
 ]

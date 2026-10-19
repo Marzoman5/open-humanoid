@@ -1,7 +1,7 @@
 {
  "rows": [
   {
-   "name": "P1 RECOMMENDED: 23 DOF, 19 STS3215-12V + 4 STS3250 (knees, hip roll), 0.60 m, Pi 5 1 GB + D36V50F5, 3S 1300, BNO085, B6neo, gamepad",
+   "name": "P1 RECOMMENDED hardware at the DEFAULT height 0.55 m: 19 STS3215-12V + 4 STS3250 (knees, hip roll), Pi 5 1 GB + D36V50F5, GNB 3S 1850, BNO085, B6neo, gamepad",
    "servos": 23,
    "lines": {
     "sd": 1,
@@ -14,11 +14,68 @@
     "wiring": 1,
     "psu": 1,
     "fuse": 1,
+    "dist": 1,
     "servo12": 19,
     "sts3250": 4,
     "pi5_1gb": 1,
     "buck_d36": 1,
-    "lipo3s_1300": 1,
+    "lipo3s_1850": 1,
+    "imu": 1,
+    "charger": 1,
+    "gamepad": 1,
+    "pla_kg": 2.28
+   },
+   "spares_lines": {
+    "servo12": 2,
+    "sts3250": 1
+   },
+   "cheap": {
+    "scenario": "CHEAP",
+    "parts_sticker": 1108.23,
+    "estimate_lines": 189.18,
+    "spares": 115.79,
+    "tax": 92.17,
+    "ship": 60.0,
+    "delivered": 1376.19,
+    "r1_total": 1513.8,
+    "fits_550": false,
+    "tariff_worst": 1696.91,
+    "servo_share": 0.661
+   },
+   "fast": {
+    "scenario": "FAST",
+    "parts_sticker": 1257.27,
+    "estimate_lines": 203.51,
+    "spares": 129.97,
+    "tax": 104.46,
+    "ship": 45.0,
+    "delivered": 1536.7,
+    "r1_total": 1690.37,
+    "fits_550": false,
+    "tariff_worst": 1690.37,
+    "servo_share": 0.69
+   }
+  },
+  {
+   "name": "P1 same hardware at the CONDITIONAL height 0.60 m (only if the bench STS3250 stall at 11.1 V >= ~1.3x datasheet)",
+   "servos": 23,
+   "lines": {
+    "sd": 1,
+    "adapter": 1,
+    "cam": 1,
+    "camcable": 1,
+    "switch": 1,
+    "fasteners": 1,
+    "bearings": 1,
+    "wiring": 1,
+    "psu": 1,
+    "fuse": 1,
+    "dist": 1,
+    "servo12": 19,
+    "sts3250": 4,
+    "pi5_1gb": 1,
+    "buck_d36": 1,
+    "lipo3s_1850": 1,
     "imu": 1,
     "charger": 1,
     "gamepad": 1,
@@ -30,33 +87,33 @@
    },
    "cheap": {
     "scenario": "CHEAP",
-    "parts_sticker": 1100.56,
-    "estimate_lines": 192.32,
+    "parts_sticker": 1123.18,
+    "estimate_lines": 204.13,
     "spares": 115.79,
-    "tax": 91.59,
+    "tax": 93.29,
     "ship": 60.0,
-    "delivered": 1367.94,
-    "r1_total": 1504.74,
+    "delivered": 1392.26,
+    "r1_total": 1531.49,
     "fits_550": false,
-    "tariff_worst": 1687.84,
-    "servo_share": 0.665
+    "tariff_worst": 1714.6,
+    "servo_share": 0.653
    },
    "fast": {
     "scenario": "FAST",
-    "parts_sticker": 1271.37,
+    "parts_sticker": 1272.22,
     "estimate_lines": 218.46,
     "spares": 129.97,
-    "tax": 105.52,
+    "tax": 105.58,
     "ship": 45.0,
-    "delivered": 1551.86,
-    "r1_total": 1707.05,
+    "delivered": 1552.78,
+    "r1_total": 1708.05,
     "fits_550": false,
-    "tariff_worst": 1707.05,
+    "tariff_worst": 1708.05,
     "servo_share": 0.683
    }
   },
   {
-   "name": "P1 rec. with a phone instead of the gamepad (R9 allows it)",
+   "name": "P1 LEAN, 0.55 m: STS3250 at hip roll ONLY (knees STS3215, if Q3 says no deep squat and the bench 12 V curve is not the linear one), phone, ICM-42688, DFR0831",
    "servos": 23,
    "lines": {
     "sd": 1,
@@ -69,14 +126,15 @@
     "wiring": 1,
     "psu": 1,
     "fuse": 1,
-    "servo12": 19,
-    "sts3250": 4,
+    "dist": 1,
+    "servo12": 21,
+    "sts3250": 2,
     "pi5_1gb": 1,
-    "buck_d36": 1,
-    "lipo3s_1300": 1,
-    "imu": 1,
+    "buck_dfr": 1,
+    "lipo3s_1850": 1,
+    "imu_icm": 1,
     "charger": 1,
-    "pla_kg": 2.96
+    "pla_kg": 2.28
    },
    "spares_lines": {
     "servo12": 2,
@@ -84,33 +142,33 @@
    },
    "cheap": {
     "scenario": "CHEAP",
-    "parts_sticker": 1061.88,
-    "estimate_lines": 153.64,
+    "parts_sticker": 906.82,
+    "estimate_lines": 158.5,
     "spares": 115.79,
-    "tax": 88.68,
+    "tax": 77.0,
     "ship": 60.0,
-    "delivered": 1326.35,
-    "r1_total": 1458.98,
+    "delivered": 1159.61,
+    "r1_total": 1275.57,
     "fits_550": false,
-    "tariff_worst": 1642.09,
+    "tariff_worst": 1475.92,
     "servo_share": 0.687
    },
    "fast": {
     "scenario": "FAST",
-    "parts_sticker": 1232.69,
-    "estimate_lines": 179.78,
+    "parts_sticker": 1071.35,
+    "estimate_lines": 172.83,
     "spares": 129.97,
-    "tax": 102.61,
+    "tax": 90.46,
     "ship": 45.0,
-    "delivered": 1510.27,
-    "r1_total": 1661.3,
+    "delivered": 1336.78,
+    "r1_total": 1470.45,
     "fits_550": false,
-    "tariff_worst": 1661.3,
-    "servo_share": 0.703
+    "tariff_worst": 1470.45,
+    "servo_share": 0.721
    }
   },
   {
-   "name": "P1 RUNNER-UP: the recommended parts at 0.55 m (19 STS3215-12V + 4 STS3250), Pi 5 1 GB + D36V50F5, gamepad",
+   "name": "P1 LEAN, 0.55 m, knees kept STS3250 (phone, ICM-42688, DFR0831)",
    "servos": 23,
    "lines": {
     "sd": 1,
@@ -123,14 +181,14 @@
     "wiring": 1,
     "psu": 1,
     "fuse": 1,
+    "dist": 1,
     "servo12": 19,
     "sts3250": 4,
     "pi5_1gb": 1,
-    "buck_d36": 1,
-    "lipo3s_1300": 1,
-    "imu": 1,
+    "buck_dfr": 1,
+    "lipo3s_1850": 1,
+    "imu_icm": 1,
     "charger": 1,
-    "gamepad": 1,
     "pla_kg": 2.28
    },
    "spares_lines": {
@@ -139,33 +197,33 @@
    },
    "cheap": {
     "scenario": "CHEAP",
-    "parts_sticker": 1088.32,
-    "estimate_lines": 180.08,
+    "parts_sticker": 1013.0,
+    "estimate_lines": 158.5,
     "spares": 115.79,
-    "tax": 90.67,
+    "tax": 85.0,
     "ship": 60.0,
-    "delivered": 1354.78,
-    "r1_total": 1490.26,
+    "delivered": 1273.78,
+    "r1_total": 1401.16,
     "fits_550": false,
-    "tariff_worst": 1673.36,
-    "servo_share": 0.672
+    "tariff_worst": 1584.27,
+    "servo_share": 0.717
    },
    "fast": {
     "scenario": "FAST",
-    "parts_sticker": 1256.42,
-    "estimate_lines": 203.51,
+    "parts_sticker": 1163.35,
+    "estimate_lines": 172.83,
     "spares": 129.97,
-    "tax": 104.39,
+    "tax": 97.39,
     "ship": 45.0,
-    "delivered": 1535.78,
-    "r1_total": 1689.36,
+    "delivered": 1435.7,
+    "r1_total": 1579.27,
     "fits_550": false,
-    "tariff_worst": 1689.36,
-    "servo_share": 0.691
+    "tariff_worst": 1579.27,
+    "servo_share": 0.741
    }
   },
   {
-   "name": "P1 alternative: 23 DOF, 21 STS3215-12V + 2 STS3250 (knees only), 0.55 m, Pi 5 1 GB",
+   "name": "P1 if the bench is favourable: 23 STS3215-12V, 0.55 m, Pi 5 1 GB",
    "servos": 23,
    "lines": {
     "sd": 1,
@@ -178,65 +236,11 @@
     "wiring": 1,
     "psu": 1,
     "fuse": 1,
-    "servo12": 21,
-    "sts3250": 2,
-    "pi5_1gb": 1,
-    "buck_d36": 1,
-    "lipo3s_1300": 1,
-    "imu": 1,
-    "charger": 1,
-    "gamepad": 1,
-    "pla_kg": 2.28
-   },
-   "spares_lines": {
-    "servo12": 2,
-    "sts3250": 1
-   },
-   "cheap": {
-    "scenario": "CHEAP",
-    "parts_sticker": 982.14,
-    "estimate_lines": 180.08,
-    "spares": 115.79,
-    "tax": 82.67,
-    "ship": 60.0,
-    "delivered": 1240.6,
-    "r1_total": 1364.66,
-    "fits_550": false,
-    "tariff_worst": 1565.01,
-    "servo_share": 0.64
-   },
-   "fast": {
-    "scenario": "FAST",
-    "parts_sticker": 1164.42,
-    "estimate_lines": 203.51,
-    "spares": 129.97,
-    "tax": 97.47,
-    "ship": 45.0,
-    "delivered": 1436.85,
-    "r1_total": 1580.54,
-    "fits_550": false,
-    "tariff_worst": 1580.54,
-    "servo_share": 0.669
-   }
-  },
-  {
-   "name": "P1 if the bench is favourable: 23 DOF, 23 STS3215-12V, 0.55 m, Pi 5 1 GB",
-   "servos": 23,
-   "lines": {
-    "sd": 1,
-    "adapter": 1,
-    "cam": 1,
-    "camcable": 1,
-    "switch": 1,
-    "fasteners": 1,
-    "bearings": 1,
-    "wiring": 1,
-    "psu": 1,
-    "fuse": 1,
+    "dist": 1,
     "servo12": 23,
     "pi5_1gb": 1,
     "buck_d36": 1,
-    "lipo3s_1300": 1,
+    "lipo3s_1850": 1,
     "imu": 1,
     "charger": 1,
     "gamepad": 1,
@@ -247,33 +251,33 @@
    },
    "cheap": {
     "scenario": "CHEAP",
-    "parts_sticker": 875.96,
-    "estimate_lines": 180.08,
+    "parts_sticker": 895.87,
+    "estimate_lines": 189.18,
     "spares": 62.7,
-    "tax": 70.68,
+    "tax": 72.18,
     "ship": 60.0,
-    "delivered": 1069.34,
-    "r1_total": 1176.28,
+    "delivered": 1090.75,
+    "r1_total": 1199.82,
     "fits_550": false,
-    "tariff_worst": 1402.49,
-    "servo_share": 0.579
+    "tariff_worst": 1426.03,
+    "servo_share": 0.567
    },
    "fast": {
     "scenario": "FAST",
-    "parts_sticker": 1072.42,
+    "parts_sticker": 1073.27,
     "estimate_lines": 203.51,
     "spares": 83.97,
-    "tax": 87.08,
+    "tax": 87.14,
     "ship": 45.0,
-    "delivered": 1288.46,
-    "r1_total": 1417.31,
+    "delivered": 1289.38,
+    "r1_total": 1418.31,
     "fits_550": false,
-    "tariff_worst": 1417.31,
+    "tariff_worst": 1418.31,
     "servo_share": 0.629
    }
   },
   {
-   "name": "P2 RECOMMENDED (cheapest that keeps every engine-checked MUST): 21 servos, 6-DOF legs, no waist, neck 2, 3-DOF arms, 1 gripper, 0.55 m, lean",
+   "name": "P2 RECOMMENDED (cheapest that keeps every engine-checked MUST): 21 servos, 6-DOF legs, no waist, neck 2, 3-DOF arms, 1 gripper, 0.55 m, lean + B3 charger",
    "servos": 21,
    "lines": {
     "sd": 1,
@@ -285,6 +289,7 @@
     "bearings": 1,
     "wiring": 1,
     "fuse": 1,
+    "dist": 1,
     "servo12": 21,
     "pi5_1gb": 1,
     "buck_dfr": 1,
@@ -298,29 +303,29 @@
    },
    "cheap": {
     "scenario": "CHEAP",
-    "parts_sticker": 677.95,
-    "estimate_lines": 128.41,
+    "parts_sticker": 688.9,
+    "estimate_lines": 137.51,
     "spares": 62.7,
-    "tax": 55.77,
+    "tax": 56.6,
     "ship": 60.0,
-    "delivered": 856.42,
-    "r1_total": 942.06,
+    "delivered": 868.19,
+    "r1_total": 955.01,
     "fits_550": false,
-    "tariff_worst": 1151.03,
-    "servo_share": 0.677
+    "tariff_worst": 1163.98,
+    "servo_share": 0.667
    },
    "fast": {
     "scenario": "FAST",
-    "parts_sticker": 851.58,
+    "parts_sticker": 853.43,
     "estimate_lines": 151.84,
     "spares": 83.97,
-    "tax": 70.45,
+    "tax": 70.59,
     "ship": 45.0,
-    "delivered": 1050.99,
-    "r1_total": 1156.09,
+    "delivered": 1052.98,
+    "r1_total": 1158.28,
     "fits_550": false,
-    "tariff_worst": 1156.09,
-    "servo_share": 0.718
+    "tariff_worst": 1158.28,
+    "servo_share": 0.717
    }
   },
   {
@@ -336,6 +341,7 @@
     "bearings": 1,
     "wiring": 1,
     "fuse": 1,
+    "dist": 1,
     "servo12": 21,
     "pi5_1gb": 1,
     "buck_dfr": 1,
@@ -347,82 +353,33 @@
    "spares_lines": {},
    "cheap": {
     "scenario": "CHEAP",
-    "parts_sticker": 677.95,
-    "estimate_lines": 128.41,
+    "parts_sticker": 688.9,
+    "estimate_lines": 137.51,
     "spares": 0,
-    "tax": 51.05,
+    "tax": 51.87,
     "ship": 60.0,
-    "delivered": 789.0,
-    "r1_total": 867.9,
+    "delivered": 800.77,
+    "r1_total": 880.85,
     "fits_550": false,
-    "tariff_worst": 1051.0,
-    "servo_share": 0.647
+    "tariff_worst": 1063.95,
+    "servo_share": 0.637
    },
    "fast": {
     "scenario": "FAST",
-    "parts_sticker": 851.58,
+    "parts_sticker": 853.43,
     "estimate_lines": 151.84,
     "spares": 0,
-    "tax": 64.12,
+    "tax": 64.26,
     "ship": 45.0,
-    "delivered": 960.7,
-    "r1_total": 1056.77,
+    "delivered": 962.69,
+    "r1_total": 1058.96,
     "fits_550": false,
-    "tariff_worst": 1056.77,
-    "servo_share": 0.69
+    "tariff_worst": 1058.96,
+    "servo_share": 0.689
    }
   },
   {
-   "name": "P2 16 servos (5-DOF legs, neck yaw, 2-DOF arms, 1 gripper), 0.55 m, lean, no spares",
-   "servos": 16,
-   "lines": {
-    "sd": 1,
-    "adapter": 1,
-    "cam": 1,
-    "camcable": 1,
-    "switch": 1,
-    "fasteners": 1,
-    "bearings": 1,
-    "wiring": 1,
-    "fuse": 1,
-    "servo12": 16,
-    "pi5_1gb": 1,
-    "buck_dfr": 1,
-    "lipo3s_1300": 1,
-    "imu_icm": 1,
-    "charger_b3": 1,
-    "pla_kg": 2.28
-   },
-   "spares_lines": {},
-   "cheap": {
-    "scenario": "CHEAP",
-    "parts_sticker": 573.45,
-    "estimate_lines": 128.41,
-    "spares": 0,
-    "tax": 43.18,
-    "ship": 60.0,
-    "delivered": 676.63,
-    "r1_total": 744.29,
-    "fits_550": false,
-    "tariff_worst": 884.29,
-    "servo_share": 0.583
-   },
-   "fast": {
-    "scenario": "FAST",
-    "parts_sticker": 711.63,
-    "estimate_lines": 151.84,
-    "spares": 0,
-    "tax": 53.59,
-    "ship": 45.0,
-    "delivered": 810.21,
-    "r1_total": 891.23,
-    "fits_550": false,
-    "tariff_worst": 891.23,
-    "servo_share": 0.629
-   }
-  },
-  {
-   "name": "P2 cap held on the sticker: 14 servos (5-DOF legs, neck yaw, ONE arm: shoulder pitch + roll + gripper), 0.55 m, lean, no spares",
+   "name": "P2 cap held on the sticker: 14 servos (5-DOF legs, neck yaw, ONE arm: shoulder pitch + roll + gripper), 0.55 m, lean + B3 charger, no spares",
    "servos": 14,
    "lines": {
     "sd": 1,
@@ -434,6 +391,7 @@
     "bearings": 1,
     "wiring": 1,
     "fuse": 1,
+    "dist": 1,
     "servo12": 14,
     "pi5_1gb": 1,
     "buck_dfr": 1,
@@ -445,29 +403,29 @@
    "spares_lines": {},
    "cheap": {
     "scenario": "CHEAP",
-    "parts_sticker": 531.65,
-    "estimate_lines": 128.41,
+    "parts_sticker": 542.6,
+    "estimate_lines": 137.51,
     "spares": 0,
-    "tax": 40.03,
+    "tax": 40.86,
     "ship": 60.0,
-    "delivered": 631.68,
-    "r1_total": 694.85,
+    "delivered": 643.45,
+    "r1_total": 707.8,
     "fits_550": false,
-    "tariff_worst": 817.61,
-    "servo_share": 0.55
+    "tariff_worst": 830.56,
+    "servo_share": 0.539
    },
    "fast": {
     "scenario": "FAST",
-    "parts_sticker": 655.65,
+    "parts_sticker": 657.5,
     "estimate_lines": 151.84,
     "spares": 0,
-    "tax": 49.37,
+    "tax": 49.51,
     "ship": 45.0,
-    "delivered": 750.02,
-    "r1_total": 825.02,
+    "delivered": 752.01,
+    "r1_total": 827.21,
     "fits_550": false,
-    "tariff_worst": 825.02,
-    "servo_share": 0.598
+    "tariff_worst": 827.21,
+    "servo_share": 0.596
    }
   },
   {
@@ -484,6 +442,7 @@
     "wiring": 1,
     "psu": 1,
     "fuse": 1,
+    "dist": 1,
     "servo12": 23,
     "zero2w": 1,
     "buck_dfr": 1,
@@ -498,91 +457,74 @@
    },
    "cheap": {
     "scenario": "CHEAP",
-    "parts_sticker": 780.36,
-    "estimate_lines": 152.68,
+    "parts_sticker": 795.2,
+    "estimate_lines": 155.71,
     "spares": 62.7,
-    "tax": 63.48,
+    "tax": 64.6,
     "ship": 60.0,
-    "delivered": 966.55,
-    "r1_total": 1063.2,
+    "delivered": 982.5,
+    "r1_total": 1080.75,
     "fits_550": false,
-    "tariff_worst": 1289.41,
-    "servo_share": 0.645
+    "tariff_worst": 1306.96,
+    "servo_share": 0.633
    },
    "fast": {
     "scenario": "FAST",
-    "parts_sticker": 972.96,
+    "parts_sticker": 974.81,
     "estimate_lines": 170.04,
     "spares": 83.97,
-    "tax": 79.59,
+    "tax": 79.73,
     "ship": 45.0,
-    "delivered": 1181.52,
-    "r1_total": 1299.67,
+    "delivered": 1183.5,
+    "r1_total": 1301.85,
     "fits_550": false,
-    "tariff_worst": 1299.67,
-    "servo_share": 0.689
-   }
-  },
-  {
-   "name": "ref: 23 x STS3215-7.4V on 2S, 0.60 m, Pi 5 1 GB",
-   "servos": 23,
-   "lines": {
-    "sd": 1,
-    "adapter": 1,
-    "cam": 1,
-    "camcable": 1,
-    "switch": 1,
-    "fasteners": 1,
-    "bearings": 1,
-    "wiring": 1,
-    "psu": 1,
-    "fuse": 1,
-    "servo7v4": 23,
-    "pi5_1gb": 1,
-    "buck_d36": 1,
-    "lipo2s": 1,
-    "imu": 1,
-    "charger": 1,
-    "gamepad": 1,
-    "pla_kg": 2.96
-   },
-   "spares_lines": {
-    "servo7v4": 3
-   },
-   "cheap": {
-    "scenario": "CHEAP",
-    "parts_sticker": 879.28,
-    "estimate_lines": 208.32,
-    "spares": 62.97,
-    "tax": 70.95,
-    "ship": 60.0,
-    "delivered": 1073.2,
-    "r1_total": 1180.52,
-    "fits_550": false,
-    "tariff_worst": 1407.7,
-    "servo_share": 0.579
-   },
-   "fast": {
-    "scenario": "FAST",
-    "parts_sticker": 984.38,
-    "estimate_lines": 234.46,
-    "spares": 71.97,
-    "tax": 79.54,
-    "ship": 45.0,
-    "delivered": 1180.89,
-    "r1_total": 1298.98,
-    "fits_550": false,
-    "tariff_worst": 1298.98,
-    "servo_share": 0.59
+    "tariff_worst": 1301.85,
+    "servo_share": 0.687
    }
   }
  ],
  "per_servo_r1_cheap": 27.93,
  "per_servo_r1_fast": 37.41,
  "max_servos_under_550_lean_pi5": 3,
- "max_servos_under_550_lean_zero": 10,
+ "max_servos_under_550_lean_zero": 9,
  "max_servos_under_550_lean_pi5_1gb": 8,
- "lean_non_servo_r1_pi5_1gb": 341.07,
- "lean_non_servo_r1_pi5": 454.09,
- "lean_non_servo_r1_zero": 301.86
+ "lean_non_servo_r1_pi5_1gb": 346.84,
+ "lean_non_servo_r1_pi5": 459.86,
+ "lean_non_servo_r1_zero": 307.63,
+ "levers": [
+  {
+   "lever": "phone instead of the gamepad (R9 allows it)",
+   "delta_r1": -45.75
+  },
+  {
+   "lever": "ICM-42688 instead of BNO085 (unverified, own sensor fusion)",
+   "delta_r1": -25.43
+  },
+  {
+   "lever": "DFR0831 4 A buck instead of the D36V50F5 (Pi 5 at reduced USB current; confirm at bring-up)",
+   "delta_r1": -41.45
+  },
+  {
+   "lever": "STS3215 knees instead of STS3250 (needs Q3 = no deep squat AND a non-linear 12 V curve on the bench)",
+   "delta_r1": -125.59
+  },
+  {
+   "lever": "B3 charger instead of B6neo (unverified, ~0.8 A, no 4.0 V/cell setting)",
+   "delta_r1": -83.91
+  },
+  {
+   "lever": "no spares (risk: 10-20 day re-order)",
+   "delta_r1": -136.96
+  },
+  {
+   "lever": "0.60 m instead of 0.55 m (filament)",
+   "delta_r1": 17.69
+  }
+ ],
+ "bench_order": {
+  "STS3215 12 V (Seeed C047)": 22.0,
+  "STS3215 7.4 V (Seeed C001)": 21.99,
+  "STS3250 12 V (OpenELAB C002, DDP)": 73.99,
+  "total": 117.98
+ }
 }
