@@ -20,7 +20,7 @@ import numpy as np
 import trimesh
 
 from .chain import Scenario, joint_wrenches
-from .model import Model, PartRec
+from .model import JointRec, Model, PartRec
 
 BEARING_WIDTH = {"MR105ZZ": 4.0, "MR85ZZ": 2.5, "MR83ZZ": 3.0, "623ZZ": 4.0, "685ZZ": 5.0, "625ZZ": 5.0, "MR126ZZ": 4.0, "606ZZ": 6.0, "688ZZ": 5.0}
 
@@ -303,7 +303,7 @@ def solve(model: Model, topo: Topology, sc: Scenario, mass_override: dict[str, f
         j = model.joint_of_link(L)
         if j is not None:
             Fr, Mr = tot[rt]
-            hs = fk0_to_link(model, j.horn_seat, L)
+            hs = fk0_to_link(model, j.horn_seat, L) + horn_thickness(model, j) * (j.servo_z / np.linalg.norm(j.servo_z))      # plate underside, on the horn top
             mP = Mr + np.cross(o_ref - hs, Fr)
             loads[rt].loads.append(Load(hs, -Fr, -mP, f"horn reaction of {j.name}", {"type": "annulus", "c": hs, "axis": j.servo_z / np.linalg.norm(j.servo_z), "r0": 4.5, "r1": 9.5, "half": 1.5, "inward": True}))
             Fsum = np.zeros(3)
@@ -314,6 +314,16 @@ def solve(model: Model, topo: Topology, sc: Scenario, mass_override: dict[str, f
                 Fsum = Fsum + mo.get(pid2, model.parts[pid2].mass_kg) * loads[pid2].g_link
             diag["equilibrium_residual"][j.name] = float(np.linalg.norm(Fsum))
     return loads, diag
+
+
+def horn_thickness(model: Model, j: JointRec) -> float:
+    """Thickness (mm) of the horn disc of joint j along the axis (the plate sits on top of it: the horn reaction acts on the plate underside)."""
+    h = model.parts.get(f"horn_{j.name}")
+    if h is None:
+        return 3.0
+    a = j.servo_z / np.linalg.norm(j.servo_z)
+    ext = np.asarray(h.mesh.vertices) @ a
+    return float(ext.max() - ext.min())
 
 
 def fk0_origin(model: Model, link: str) -> np.ndarray:

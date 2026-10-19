@@ -235,7 +235,7 @@ def build(ctx) -> Assembly:
     plate2 = safe_union(plate2, bridge, "roll plate+bridge")
     # joining screws: along world x from the cradle's front face, through the 29.8 mm cradle, into inserts in the bridge's front face
     yaxis = s3.position.Y
-    join_pts = [(z_ax_hip + p3["x_ins"] + 0.0, yaxis + zz) for zz in (-7.0, -17.0)]            # (world z, world y)
+    join_pts = [(z_ax_hip + p3["x_ins"] + 0.0, yaxis + zz) for zz in (-7.0, -17.0, -27.0)]            # (world z, world y)
     join_feats_plate = [insert_boss("M3", part="roll_plate", mates="roll_cradle", tag=f"join_insert_{i}",
                                     at=loc_from((wall_x, y, z), (1, 0, 0), (0, 1, 0))) for i, (z, y) in enumerate(join_pts)]
     hm2 = horn_plate_feat("hip_roll", mate=f"servo_{J['hip_roll']}")

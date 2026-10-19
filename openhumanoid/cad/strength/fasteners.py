@@ -76,7 +76,9 @@ def horn_checks(model: Model, topo: Topology, j: JointRec, pl: PartLoads, part: 
     th = j.horn_screw
     V = abs(tau) / (n * r) + float(np.linalg.norm(Fperp)) / n
     T = 2.0 * float(np.linalg.norm(Mperp)) / (n * r) + abs(Fax) / n
-    hs = j.horn_seat - model.fk({})[j.child_link][1] - model.if_offset
+    from .loadpath import horn_thickness
+
+    hs = j.horn_seat - model.fk({})[j.child_link][1] - model.if_offset + horn_thickness(model, j) * a        # plate underside (on the horn top)
     off = _perp(a, r)
     cb = LOW_CB_DEPTH.get(th, 1.8)
     t_pl = _thickness(part.mesh, hs, a, off)

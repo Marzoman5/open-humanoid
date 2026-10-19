@@ -116,24 +116,46 @@ def fillet_internal(shape: bd.Shape, r: float | None = None, min_len: float = 6.
             if rad < r:
                 rep["notes"].append(f"all {len(edges)} edges filleted at {rad:.1f} mm (requested {r:.1f})")
             return out, rep
+    # group the edges that meet at a vertex (a fillet needs the whole chain at once), then do the groups one after the other,
+    # re-detecting the concave edges of the evolving shape inside each group's neighbourhood
+    def ends(e):
+        a_, b_ = e.start_point(), e.end_point()
+        return [(round(a_.X, 2), round(a_.Y, 2), round(a_.Z, 2)), (round(b_.X, 2), round(b_.Y, 2), round(b_.Z, 2))]
+
+    groups: list[list] = []
+    for e in edges:
+        pe = set(ends(e))
+        hit = [g for g in groups if any(pe & set(ends(x)) for x in g)]
+        merged = [e] + [x for g in hit for x in g]
+        groups = [g for g in groups if g not in hit] + [merged]
     cur, done = shape, 0
-    for e in edges:                                    # one by one: whatever works
-        tgt = None
-        for c, _ in concave_edges(cur, min_len):
-            m1, m2 = c.center(), e.center()
-            if abs(m1.X - m2.X) + abs(m1.Y - m2.Y) + abs(m1.Z - m2.Z) < 1e-2 and abs(c.length - e.length) < 1e-2:
-                tgt = c
-                break
-        if tgt is None:
-            rep["skipped"] += 1
+    for g in sorted(groups, key=lambda g: -sum(x.length for x in g)):
+        pts = np.array([[c.X, c.Y, c.Z] for c in [x.center() for x in g]] + [[v.X, v.Y, v.Z] for x in g for v in (x.start_point(), x.end_point())])
+        lo, hi = pts.min(axis=0) - 2.0, pts.max(axis=0) + 2.0
+        cur_edges = [c for c, inf in concave_edges(cur, min_len) if np.all(np.asarray(inf["mid"]) >= lo) and np.all(np.asarray(inf["mid"]) <= hi)]
+        if not cur_edges:
             continue
-        for rad in (r, 0.6 * r):
-            out = try_fillet([tgt], rad)
+        for rad in (r, 0.7 * r, 0.5 * r, 0.3 * r):
+            out = try_fillet(cur_edges, rad)
             if out is not None:
-                cur, done = out, done + 1
+                cur, done = out, done + len(cur_edges)
+                if rad < r:
+                    rep["notes"].append(f"{len(cur_edges)} edge(s) at {rad:.1f} mm")
                 break
-        else:
-            rep["skipped"] += 1
+        else:                                          # the chain does not blend at its vertices: longest edges first, one at a time
+            for e0 in sorted(cur_edges, key=lambda x: -x.length):
+                m0 = e0.center()
+                tgt = [c for c, inf in concave_edges(cur, min_len)
+                       if abs(c.center().X - m0.X) + abs(c.center().Y - m0.Y) + abs(c.center().Z - m0.Z) < 0.5 and abs(c.length - e0.length) < 1.0]
+                if not tgt:
+                    continue                           # already rounded by a neighbour's fillet
+                for rad in (r, 0.7 * r, 0.5 * r, 0.3 * r):
+                    out = try_fillet(tgt, rad)
+                    if out is not None:
+                        cur, done = out, done + 1
+                        break
+                else:
+                    rep["skipped"] += 1
     rep["filleted"] = done
     if rep["skipped"]:
         rep["notes"].append(f"{rep['skipped']} concave edge(s) could not be filleted (vertex blends): check them in the strength report")

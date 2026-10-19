@@ -66,7 +66,7 @@ def run(model: Model, cfg: dict, only_cases: list[str] | None = None, only_parts
         root = topo.root.get(j.child_link)
         if root and root in ana and not (only_parts and root not in only_parts):
             part = model.parts[root]
-            pl = loadpath.PartLoads(root, j.child_link, [loadpath.Load(j.horn_seat - model.fk({})[j.child_link][1] - model.if_offset, np.zeros(3), j.servo_z * 0.0, "horn reaction (stall)")],
+            pl = loadpath.PartLoads(root, j.child_link, [loadpath.Load(j.horn_seat - model.fk({})[j.child_link][1] - model.if_offset + loadpath.horn_thickness(model, j) * j.servo_z / np.linalg.norm(j.servo_z), np.zeros(3), j.servo_z * 0.0, "horn reaction (stall)")],
                                     g_link=np.zeros(3))
             rows += horn_checks(model, topo, j, pl, part, f"torque_stall_{jn}", "stall", tau_cap_nmm=stall[jn] * 1000.0)
     for p in printed:
