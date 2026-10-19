@@ -381,5 +381,83 @@
   "delta_r1": 124.44,
   "sticker": 1164.44,
   "estimate_lines": 201.18
+ },
+ {
+  "config": "C2 package (L1d + L6b + L5c, flat Tattu 1300, waist kept)",
+  "lines": {
+   "sd": 1,
+   "adapter": 1,
+   "cam": 1,
+   "camcable": 1,
+   "switch": 1,
+   "fasteners": 1,
+   "bearings": 1,
+   "wiring": 1,
+   "psu": 1,
+   "fuse": 1,
+   "dist": 1,
+   "servo12": 9,
+   "sts3250": 4,
+   "pi5_1gb": 1,
+   "buck_d36": 1,
+   "lipo3s_1300": 1,
+   "imu": 1,
+   "charger": 1,
+   "gamepad": 1,
+   "pla_kg": 2.28,
+   "sts3045m": 6,
+   "scs0009": 4,
+   "buck6": 1,
+   "linkage_kit": 1
+  },
+  "spares": {
+   "servo12": 2,
+   "sts3250": 1,
+   "sts3045m": 1,
+   "scs0009": 1
+  },
+  "r1_total": 1713.58,
+  "delta_r1": 199.78,
+  "sticker": 1228.14,
+  "estimate_lines": 201.18
+ },
+ {
+  "config": "C2 lean (C2 + STS3215 knees, after the bench + Q3)",
+  "lines": {
+   "sd": 1,
+   "adapter": 1,
+   "cam": 1,
+   "camcable": 1,
+   "switch": 1,
+   "fasteners": 1,
+   "bearings": 1,
+   "wiring": 1,
+   "psu": 1,
+   "fuse": 1,
+   "dist": 1,
+   "servo12": 11,
+   "sts3250": 2,
+   "pi5_1gb": 1,
+   "buck_d36": 1,
+   "lipo3s_1300": 1,
+   "imu": 1,
+   "charger": 1,
+   "gamepad": 1,
+   "pla_kg": 2.28,
+   "sts3045m": 6,
+   "scs0009": 4,
+   "buck6": 1,
+   "linkage_kit": 1
+  },
+  "spares": {
+   "servo12": 2,
+   "sts3250": 1,
+   "sts3045m": 1,
+   "scs0009": 1
+  },
+  "r1_total": 1587.99,
+  "delta_r1": 74.19,
+  "sticker": 1121.96,
+  "estimate_lines": 201.18
  }
 ]

@@ -54,6 +54,11 @@ VARIANTS.update({
     "C1-5": (replace(C1, legs="5dof"), "C1 with 5-DOF legs (L7)"),
     "C1-600": (replace(C1, H=600.0), "C1 at 0.60 m (L8)"),
 })
+# C2: C1 with the pack kept across the upper back as a flat Tattu 1300 and the waist yaw kept. Reason (C1 render): the lumbar pack makes a
+# wide belt box at the waist and, by emptying the chest, pulls the arm root in so the cant rises to 24.5 deg (P3 0.370 vs 0.358 for L1d).
+C2 = replace(C1, pack="chest_flat1300", waist=True)
+VARIANTS.update({"C2": (C2, "combined package C2: small arm + neck (6 V rail), flat 1300 pack in the upper back, waist yaw kept, knee + ankle servos relocated (1:1)"),
+                 "C2-600": (replace(C2, H=600.0), "C2 at 0.60 m")})
 KEYS = ["P1", "P2a", "P2b", "P3", "P4", "P5", "P6", "P7", "P8a", "P8b", "P9a", "P9b", "P10a", "P10b", "S3a", "S3b", "S4a", "S4b", "HP"]
 
 
@@ -126,16 +131,27 @@ def b4_row() -> dict:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", nargs="*")
+    ap.add_argument("--part", help="write only these rows to results/look_part_<PART>.json (parallel runs); merge with --merge")
+    ap.add_argument("--merge", action="store_true", help="fold every results/look_part_*.json into look.json / look.md")
     a = ap.parse_args(argv)
     RES.mkdir(parents=True, exist_ok=True)
     gap = baseline_gap()
-    print(f"target front-view arm gap (B4 rules at 21 deg): {gap:.2f} mm")
+    print(f"target front-view arm gap (B4 rules at 21 deg): {gap:.2f} mm", flush=True)
     prev = {}
     pj = RES / "look.json"
     if pj.exists():
         prev = {r["key"]: r for r in json.loads(pj.read_text(encoding="utf-8"))["rows"]}
+    if a.part:
+        rows = [run_variant(k, *VARIANTS[k], gap) for k in VARIANTS if k in (a.only or [])]
+        (RES / f"look_part_{a.part}.json").write_text(json.dumps({"rows": rows}, indent=1, default=str), encoding="utf-8")
+        return 0
+    if a.merge:
+        for p in sorted(RES.glob("look_part_*.json")):
+            for r in json.loads(p.read_text(encoding="utf-8"))["rows"]:
+                prev[r["key"]] = r
+            p.unlink()
     for key, (lv, label) in VARIANTS.items():
-        if a.only and key not in a.only:
+        if a.merge or (a.only and key not in a.only):
             continue
         prev[key] = run_variant(key, lv, label, gap)
     rows = [prev[k] for k in VARIANTS if k in prev] + [r for k, r in prev.items() if k not in VARIANTS]

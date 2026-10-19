@@ -3,12 +3,12 @@
   "subject": "C1",
   "source": "profiles:C:\\Users\\aemar\\Documents\\Easy Humanoid\\.claude\\worktrees\\agent-ae685f7b15df277c4\\variants\\adam\\design\\packaging\\variants\\C1\\profiles.yaml",
   "measured": {
-    "P1_head_height_f": 0.134,
-    "P2_neck_length_hu": 0.2388,
-    "P2_neck_width_ratio": 0.68,
-    "P3_shoulder_width_f": 0.379,
-    "P4_waist_over_shoulder": 0.5752,
-    "P5_pelvis_over_shoulder": 0.6544,
+    "P1_head_height_f": 0.136,
+    "P2_neck_length_hu": 0.2059,
+    "P2_neck_width_ratio": 0.57,
+    "P3_shoulder_width_f": 0.37,
+    "P4_waist_over_shoulder": 0.5892,
+    "P5_pelvis_over_shoulder": 0.6703,
     "P6_hip_height_f": 0.5,
     "P6_source": "joint",
     "P7_source": "joint",
@@ -35,8 +35,8 @@
     ],
     "M1_not_computed_reason": "needs the frame/servo model and the CAD geometry gate (T-0004 / cad check); not derivable from an outer mesh",
     "S2_iou_front_vs_refs": {
-      "optimus_like": 0.5885,
-      "atlas_like": 0.6134
+      "optimus_like": 0.5888,
+      "atlas_like": 0.6125
     },
     "HP_hard_points": [
       {
@@ -49,9 +49,9 @@
       {
         "id": "neck_yaw_servo",
         "segment": "neck",
-        "margin_m": 0.0005,
+        "margin_m": 0.0034,
         "required_m": 0.0031,
-        "pass": false
+        "pass": true
       },
       {
         "id": "hip_yaw_servo_l",
@@ -705,22 +705,22 @@
         "pass": true
       }
     ],
-    "HP_all_enclosed_with_margin": false,
+    "HP_all_enclosed_with_margin": true,
     "height_m": 0.55,
-    "head_unit_m": 0.0737,
+    "head_unit_m": 0.0748,
     "landmarks_f": {
       "crotch": 0.525,
       "knee": 0.27,
       "hip": 0.5,
-      "neck_bottom": 0.834,
-      "head_bottom": 0.866
+      "neck_bottom": 0.836,
+      "head_bottom": 0.864
     }
   },
   "evaluation": {
     "criteria": {
       "P1": {
         "key": "P1_head_height_f",
-        "value": 0.134,
+        "value": 0.136,
         "band": [
           0.11,
           0.15
@@ -730,7 +730,7 @@
       },
       "P2a": {
         "key": "P2_neck_length_hu",
-        "value": 0.2388,
+        "value": 0.2059,
         "band": [
           0.18,
           0.55
@@ -740,7 +740,7 @@
       },
       "P2b": {
         "key": "P2_neck_width_ratio",
-        "value": 0.68,
+        "value": 0.57,
         "band": [
           0.5,
           null
@@ -750,7 +750,7 @@
       },
       "P3": {
         "key": "P3_shoulder_width_f",
-        "value": 0.379,
+        "value": 0.37,
         "band": [
           0.22,
           0.29
@@ -760,7 +760,7 @@
       },
       "P4": {
         "key": "P4_waist_over_shoulder",
-        "value": 0.5752,
+        "value": 0.5892,
         "band": [
           0.5,
           0.75
@@ -770,7 +770,7 @@
       },
       "P5": {
         "key": "P5_pelvis_over_shoulder",
-        "value": 0.6544,
+        "value": 0.6703,
         "band": [
           0.62,
           0.9
@@ -940,25 +940,24 @@
       },
       "HP": {
         "key": "HP_all_enclosed_with_margin",
-        "value": false,
+        "value": true,
         "band": [
           1,
           1
         ],
-        "verdict": "FAIL",
+        "verdict": "PASS",
         "name": "Every hard point enclosed with wall + gap"
       }
     },
-    "n_pass": 13,
+    "n_pass": 14,
     "n_scored": 19,
-    "pass_fraction": 0.684,
+    "pass_fraction": 0.737,
     "failed": [
       "P3",
       "P8b",
       "P10a",
       "S3b",
-      "S4b",
-      "HP"
+      "S4b"
     ]
   },
   "rubric": "rubric.yaml",

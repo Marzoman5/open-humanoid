@@ -3,9 +3,9 @@
   "subject": "L6b",
   "source": "profiles:C:\\Users\\aemar\\Documents\\Easy Humanoid\\.claude\\worktrees\\agent-ae685f7b15df277c4\\variants\\adam\\design\\packaging\\variants\\L6b\\profiles.yaml",
   "measured": {
-    "P1_head_height_f": 0.134,
-    "P2_neck_length_hu": 0.1119,
-    "P2_neck_width_ratio": 0.68,
+    "P1_head_height_f": 0.136,
+    "P2_neck_length_hu": 0.0956,
+    "P2_neck_width_ratio": 0.6,
     "P3_shoulder_width_f": 0.397,
     "P4_waist_over_shoulder": 0.5491,
     "P5_pelvis_over_shoulder": 0.6272,
@@ -35,8 +35,8 @@
     ],
     "M1_not_computed_reason": "needs the frame/servo model and the CAD geometry gate (T-0004 / cad check); not derivable from an outer mesh",
     "S2_iou_front_vs_refs": {
-      "optimus_like": 0.5246,
-      "atlas_like": 0.5584
+      "optimus_like": 0.5248,
+      "atlas_like": 0.5581
     },
     "HP_hard_points": [
       {
@@ -49,9 +49,9 @@
       {
         "id": "neck_yaw_servo",
         "segment": "neck",
-        "margin_m": 0.0005,
+        "margin_m": 0.0034,
         "required_m": 0.0031,
-        "pass": false
+        "pass": true
       },
       {
         "id": "pack_gnb3s1850",
@@ -684,22 +684,22 @@
         "pass": true
       }
     ],
-    "HP_all_enclosed_with_margin": false,
+    "HP_all_enclosed_with_margin": true,
     "height_m": 0.55,
-    "head_unit_m": 0.0737,
+    "head_unit_m": 0.0748,
     "landmarks_f": {
       "crotch": 0.525,
       "knee": 0.27,
       "hip": 0.5,
       "neck_bottom": 0.851,
-      "head_bottom": 0.866
+      "head_bottom": 0.864
     }
   },
   "evaluation": {
     "criteria": {
       "P1": {
         "key": "P1_head_height_f",
-        "value": 0.134,
+        "value": 0.136,
         "band": [
           0.11,
           0.15
@@ -709,7 +709,7 @@
       },
       "P2a": {
         "key": "P2_neck_length_hu",
-        "value": 0.1119,
+        "value": 0.0956,
         "band": [
           0.18,
           0.55
@@ -719,7 +719,7 @@
       },
       "P2b": {
         "key": "P2_neck_width_ratio",
-        "value": 0.68,
+        "value": 0.6,
         "band": [
           0.5,
           null
@@ -919,26 +919,25 @@
       },
       "HP": {
         "key": "HP_all_enclosed_with_margin",
-        "value": false,
+        "value": true,
         "band": [
           1,
           1
         ],
-        "verdict": "FAIL",
+        "verdict": "PASS",
         "name": "Every hard point enclosed with wall + gap"
       }
     },
-    "n_pass": 12,
+    "n_pass": 13,
     "n_scored": 19,
-    "pass_fraction": 0.632,
+    "pass_fraction": 0.684,
     "failed": [
       "P2a",
       "P3",
       "P8a",
       "P8b",
       "P10a",
-      "S4b",
-      "HP"
+      "S4b"
     ]
   },
   "rubric": "rubric.yaml",

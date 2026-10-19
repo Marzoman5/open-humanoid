@@ -33,6 +33,7 @@ from openhumanoid.design.profiles import expand, validate  # noqa: E402
 N, K = 2.5, 9.0                 # B4 section family and blend
 KL = max(3.0, K * 0.5)
 ARM_N, ARM_WIN = 2.8, 3.2
+REFINE: dict = {}              # styling refinements from critic rounds (set by build(refine=...)); empty = the plain B4 rules
 
 
 def S(z, w, d, n=N, cx=0.0, cy=0.0):
@@ -107,6 +108,11 @@ def head_parts(c: Ctx, style: dict) -> list[dict]:
     head = [S(ch - 6, 0.40 * w, 0.40 * d, 2.2, 3.0), S(ch - 3, 0.76 * w, 0.70 * d, 2.5, 3.0), S(ch - 0.1, 0.92 * w, 0.86 * d, 2.8, 3.5),
             S(ch + 13.5, w, d, n, cx), S(H - 20, w, d, n, cx), S(H - 11, 0.93 * w, 0.93 * d, n, cx), S(H - 4.5, 0.74 * w, 0.76 * d, 2.4, cx),
             S(H - 0.4, 0.32 * w, 0.36 * d, 2.2, cx)]
+    if REFINE.get("head_ovoid"):     # critic r1 (G1/G4): an ovoid head, narrower chin and crown, rounder sections
+        head = [S(ch - 6, 0.36 * w, 0.38 * d, 2.1, 3.0), S(ch - 3, 0.66 * w, 0.66 * d, 2.2, 3.0), S(ch - 0.1, 0.84 * w, 0.84 * d, 2.3, 3.5),
+                S(ch + 13.5, 0.98 * w, d, 2.05, cx), S(H - 22, w, d, 2.05, cx), S(H - 11, 0.86 * w, 0.90 * d, 2.05, cx),
+                S(H - 4.5, 0.66 * w, 0.72 * d, 2.1, cx), S(H - 0.4, 0.28 * w, 0.32 * d, 2.0, cx)]
+        n = 2.05
     vz0, vz1 = ch + 8.5, H - 19
     zc, r, sh = (vz0 + vz1) / 2, (vz1 - vz0) / 2, 2.5
     vis = [S(zc + r * t, w, d, n, cx + 0.3 + sh * (1 - t * t) ** 0.5) for t in (-0.99, -0.85, -0.6, -0.3, 0.0, 0.3, 0.6, 0.85, 0.99)]
@@ -135,10 +141,15 @@ def torso_parts(c: Ctx) -> list[dict]:
     x_back = min(b["x"][0] for b in ch_boxes if b["id"] == "shoulder_pitch_servos")
     x0, x1 = x_back - 23.0, x_front + 13.0
     cx, dc = (x0 + x1) / 2, x1 - x0
-    Wc = c.fw("chest", zb - 3.05 + 6, dc, N, cx, extra=1.0)
-    chest = [S(zb - 9.45, 0.793 * Wc, dc - 26, N, cx - 4), S(zb - 5.45, 0.922 * Wc, dc - 12, N, cx - 1),
-             S(zb - 3.05, Wc, dc, N, cx), S(s - 9.3, c.fw("chest", s - 9.3, dc + 2, N, cx, extra=1.0), dc + 2, N, cx),
-             S(top + 3.15, Wc, dc, N, cx), S(top + 5.35, 0.772 * Wc, 0.75 * dc, N - 0.2, cx - 4), S(top + 7.85, 38, 40, 2.5, cx - 7)]
+    cn = REFINE.get("chest_n", N)
+    Wc = c.fw("chest", zb - 3.05 + 6, dc, cn, cx, extra=1.0)
+    chest = [S(zb - 9.45, 0.793 * Wc, dc - 26, cn, cx - 4), S(zb - 5.45, 0.922 * Wc, dc - 12, cn, cx - 1),
+             S(zb - 3.05, Wc, dc, cn, cx), S(s - 9.3, c.fw("chest", s - 9.3, dc + 2, cn, cx, extra=1.0), dc + 2, cn, cx),
+             S(top + 3.15, Wc, dc, cn, cx), S(top + 5.35, 0.772 * Wc, 0.75 * dc, cn - 0.2, cx - 4), S(top + 7.85, 38, 40, 2.5, cx - 7)]
+    if REFINE.get("chest_blend"):    # critic r1 (G2): no bib ledge; the chest tapers down into the waist ring
+        chest = [S(zb - 20.0, 0.60 * Wc, dc - 42, cn, cx - 6), S(zb - 12.0, 0.80 * Wc, dc - 24, cn, cx - 4)] + chest[2:]
+    if REFINE.get("low_roll"):       # critic r1 (P2a): the chest top rolls over lower and faster, so more neck shows
+        chest = chest[:-2] + [S(top + 4.0, 0.70 * Wc, 0.70 * dc, cn - 0.2, cx - 5), S(top + 5.6, 34, 36, 2.4, cx - 7)]
     segs = [{"id": "chest", "role": "shell", "k": K + 4.0, "stations": chest}]
     bk = c.seg("back")
     if bk:
@@ -146,15 +157,16 @@ def torso_parts(c: Ctx) -> list[dict]:
         p0, p1 = b["z"]
         pcx = (b["x"][0] + b["x"][1]) / 2 + 8.15
         pd = (b["x"][1] - b["x"][0]) + 41.7
-        Wb = c.fw("back", (p0 + p1) / 2, pd, N, pcx, extra=1.0)
-        back = [S(p0 - 18.65, 0.70 * Wb, 50 * pd / 76, N, pcx + 10), S(p0 - 10.65, 0.81 * Wb, 66 * pd / 76, N, pcx + 4),
-                S(p0 - 3.05, Wb, pd, N, pcx), S(p1 + 3.15, Wb, pd, N, pcx), S(p1 + 6.55, 0.64 * Wb, 58 * pd / 76, N - 0.2, pcx + 5),
+        bn = REFINE.get("back_n", N)
+        Wb = c.fw("back", (p0 + p1) / 2, pd, bn, pcx, extra=1.0)
+        back = [S(p0 - 18.65, 0.70 * Wb, 50 * pd / 76, bn, pcx + 10), S(p0 - 10.65, 0.81 * Wb, 66 * pd / 76, bn, pcx + 4),
+                S(p0 - 3.05, Wb, pd, bn, pcx), S(p1 + 3.15, Wb, pd, bn, pcx), S(p1 + 6.55, 0.64 * Wb, 58 * pd / 76, bn - 0.2, pcx + 5),
                 S(p1 + 9.05, 0.37 * Wb, 36 * pd / 76, 2.6, pcx + 14)]
         if p1 + 9.05 > top + 9:          # never above the chest roll-over (a pack lower in the back simply ends lower)
             back = [st for st in back if st["z"] <= top + 9.1]
         segs.append({"id": "back", "role": "shell", "k": K + 4.0, "stations": back})
     # pelvis capsule
-    pn = N + 1.0
+    pn = REFINE.get("pelvis_n", N + 1.0)
     yz0, yz1 = c.zr("hip_yaw_servo_l")
     pz0 = c.zr("pi5_adapter_buck_imu_bay")[0]
     Wp = c.fw("pelvis", (yz0 + yz1) / 2, 100, pn, 3.0, extra=0.5)
@@ -234,7 +246,16 @@ def leg_parts(c: Ctx) -> list[dict]:
         if flare_z is not None:          # the thigh is widest at the hip (design language rule 4)
             f = max(out, key=lambda q: q["z"])
             out.append(S(flare_z, f["w"] + 5.6, f["d"] - 2, n, f["cx"], inner(f["w"] + 5.6)))
-        return sorted(out, key=lambda q: q["z"])
+        out = sorted(out, key=lambda q: q["z"])
+        if REFINE.get("leg_smooth"):     # critic r1 (G2, S3b, P8b): one monotonic taper; only WIDENS stations, so every box stays enclosed
+            top_i = max(range(len(out)), key=lambda i: (out[i]["w"], -out[i]["z"] if flare_z is None else out[i]["z"]))
+            for i in range(1, top_i + 1):          # from the narrow lower end up to the widest station: never narrower going up
+                if out[i]["w"] < out[i - 1]["w"]:
+                    out[i] = S(out[i]["z"], out[i - 1]["w"], max(out[i]["d"], out[i - 1]["d"]), out[i]["n"], out[i]["cx"], inner(out[i - 1]["w"]))
+            for i in range(len(out) - 2, top_i, -1):   # above the widest station (calf -> knee): never narrower going down
+                if out[i]["w"] < out[i + 1]["w"]:
+                    out[i] = S(out[i]["z"], out[i + 1]["w"], max(out[i]["d"], out[i + 1]["d"]), out[i]["n"], out[i]["cx"], inner(out[i + 1]["w"]))
+        return out
     th = cover(k + 6, h + 30, flare_z=h + 3)
     sk = cover(a - 10, k - 6)
     segs += [{"id": "thigh", "role": "shell", "mirror": True, "k": KL, "stations": ends(th, th[0]["z"] - 10, h + 30, 0.86)},
@@ -321,10 +342,12 @@ def arm_parts(c: Ctx) -> list[dict]:
     cap = sh(dense(c0 + 4, c1 - 3, 12), cap_d, 6.0)
     upper = sh(dense(e0 + 31, e1 - 2, 10), elbow_d, 5.0) if (e1 - 2) - (e0 + 31) > 4 else sh([e1 - 6], elbow_d, 5.0)
     fore = sh(dense(g0 + 4, g1 - 2, 12), fore_d, 5.0)
-    gap = 12.0
+    joints_only = REFINE.get("arm_bands") == "joints"   # critic r1 (G2/G3): dark bands only at the real joints (shoulder, elbow, wrist)
+    gap = 5.0 if joints_only else 12.0
     ua0, fa1 = e0 + 20 + gap / 2, e0 + 20 - gap / 2
+    ua1 = (c0 + 3.0) if joints_only else (e1 + 5)       # the upper-arm cover runs up under the shoulder cap (one link: no band)
     segs += [{"id": "deltoid", "role": "shell", "mirror": True, "k": KL, "stations": rolled(cap, c0 - 1, c1 + 4, 0.70)},
-             {"id": "upper_arm", "role": "shell", "mirror": True, "k": KL, "stations": rolled(upper, min(ua0, upper[0]["z"] - 2), e1 + 5, 0.80)},
+             {"id": "upper_arm", "role": "shell", "mirror": True, "k": KL, "stations": rolled(upper, min(ua0, upper[0]["z"] - 2), ua1, 0.80 if not joints_only else 0.95)},
              {"id": "forearm", "role": "shell", "mirror": True, "k": KL, "stations": rolled(fore, g0 - 6, max(fa1, fore[-1]["z"] + 2), 0.80)}]
     return segs
 
@@ -343,7 +366,9 @@ def style_for(lv) -> dict:
     return dict(head_w=62.0, head_d=68.0, head_n=2.2, neck_w=(36.0, 32.0))
 
 
-def build(lv, cant: float, style: dict | None = None, name: str | None = None) -> dict:
+def build(lv, cant: float, style: dict | None = None, name: str | None = None, refine: dict | None = None) -> dict:
+    REFINE.clear()
+    REFINE.update(refine or {})
     lay = LY.layout(lv, cant)
     c = Ctx(lay)
     st = style or style_for(lv)
@@ -429,9 +454,14 @@ def min_gap(prof: dict) -> float:
 
 
 def gap_rule_cant(lv, target_gap: float, lo: float = 4.0, hi: float = 30.0, step: float = 0.5) -> float:
+    def ok(c):
+        return min_gap(build(lv, c)) >= target_gap
     c = lo
-    while c <= hi:
-        if min_gap(build(lv, c)) >= target_gap:
-            return c
-        c += step
-    return hi
+    while c <= hi and not ok(c):          # coarse 2-degree scan, then the first passing 0.5-degree step below it
+        c += 2.0
+    if c > hi:
+        return hi
+    f = max(lo, c - 2.0 + step)
+    while f < c and not ok(f):
+        f += step
+    return min(f, c)

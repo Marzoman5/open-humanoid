@@ -66,6 +66,8 @@ ROWS = [
     ("L8 0.60 m", dict(h=0.60)),
     ("C1 package (L1d + L6 + L2/L3b + L5, 6-DOF)", dict(small_arm=True, small_neck=True, waist=False, links=True)),
     ("C1 with 5-DOF legs", dict(small_arm=True, small_neck=True, waist=False, links=True, five_dof=True)),
+    ("C2 package (L1d + L6b + L5c, flat Tattu 1300, waist kept)", dict(small_arm=True, small_neck=True, links=True, pack="lipo3s_1300")),
+    ("C2 lean (C2 + STS3215 knees, after the bench + Q3)", dict(small_arm=True, small_neck=True, links=True, pack="lipo3s_1300", knees_3250=False)),
 ]
 
 
