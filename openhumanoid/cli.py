@@ -241,6 +241,13 @@ def main(argv=None) -> int:
     s.add_argument("--zebra", action="store_true"); s.set_defaults(f=cmd_render)
     from .design.cli import register as register_design
     register_design(sub)
+    s = sub.add_parser("runtime", help="robot runtime / software-in-the-loop (scenarios | run | bench | pushscan | info | describe)",
+                       add_help=False)
+    s.add_argument("rest", nargs=argparse.REMAINDER)
+    s.set_defaults(f=lambda a: __import__("openhumanoid.runtime.__main__", fromlist=["main"]).main(a.rest))
+    s = sub.add_parser("concept", help="P2 concept engine (python -m openhumanoid.concept ...)", add_help=False)
+    s.add_argument("rest", nargs=argparse.REMAINDER)
+    s.set_defaults(f=lambda a: __import__("openhumanoid.concept.__main__", fromlist=["main"]).main(a.rest))
     s = sub.add_parser("cad", help="spec-driven CAD (build123d): build | check")
     s.add_argument("action", choices=["build", "check"]); s.add_argument("variant")
     s.add_argument("--min-mm3", type=float, default=20.0, help="ignore overlaps smaller than this"); s.set_defaults(f=cmd_cad)

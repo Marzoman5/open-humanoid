@@ -63,3 +63,9 @@ Silhouette-first design tools: studio render rig, `profiles.yaml` massing, code-
 | `verdict a.json b.json --metrics m.json` | Combines design-critic reports (both presentation orders) with the fixed rules: UNCERTAIN = no-pass, consistent pairwise only, numeric hard gates override, 3-round cap |
 
 `render.render(spec, studio=True)` is the library entry for `oh render <id> --studio`; wiring `design.cli.register` into `openhumanoid/cli.py` is left to the commander (see the T-0016 handoff). Known limitations: references are approximated (confidence low), no production shell library yet, M1 wall/clearance/ROM belong to the CAD geometry gate.
+
+## Runtime and concept engine (wired 2026-10-19)
+| Command | Does |
+|---|---|
+| `oh runtime scenarios\|run\|bench\|pushscan\|info\|describe ...` | Software-in-the-loop: Adam's control stack on SimHAL (MuJoCo + measured servo models). See docs/software.md |
+| `oh concept evaluate\|compare\|sweep\|calibrate-odm\|validate-thermal\|thresholds ...` | P2 concept engine. See docs/concept-engine.md (use `oh concept <sub> --help`) |
