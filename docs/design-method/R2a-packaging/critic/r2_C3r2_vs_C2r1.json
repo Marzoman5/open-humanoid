@@ -1,0 +1,25 @@
+{
+ "round": 2,
+ "candidate": "C3_r2 (C2 + lever 9a/9b longer arms + wrist; refine r2: ovoid head, chest blend, lower chest roll, rounder chest/back, arm bands only at joints, monotonic leg covers)",
+ "baseline": "C2_r1 (best so far)",
+ "note": "Verdicts, reads_as and pairwise verbatim from the blind design-critic (Sonnet); evidence abridged by the author.",
+ "reports": [
+  {"order": "cand_first", "reads_as": "unfinished",
+   "reads_as_reason": "Stacked slab-and-block segments (chest slab with a hard underside ledge, box backpack, cuffed shanks, wedge feet) and wing-like wide arms read as a prototype shell, not a unibody product.",
+   "criteria": {"G1": "FAIL", "G2": "FAIL", "G3": "PASS", "G4": "FAIL", "G6": "FAIL"},
+   "pairwise": "candidate",
+   "pairwise_evidence": "Thin joint rings and dark hand tips replace the heavy graphite arm bands; smoother arm taper. Torso, backpack, legs and feet unchanged. Small margin.",
+   "top_changes": ["G6: pull the arms in, narrow shoulder and upper arm, slope the shoulder line, lower the splay",
+                   "G2: blend chest into waist and pelvis; remove the underside ledge; shrink chest depth toward the waist",
+                   "G4: lower n on back pack and pelvis; soften shank cuffs; taper shank; shorten foot"]},
+  {"order": "cand_second", "reads_as": "unfinished",
+   "reads_as_reason": "The two-tone is calmer than the baseline, but the huge boxy shoulder and arm masses, stepped chest-to-torso ledge, block pelvis and oversized feet still read as a prototype or character, not a unibody product.",
+   "criteria": {"G1": "FAIL", "G2": "FAIL", "G3": "PASS", "G4": "FAIL", "G6": "FAIL"},
+   "pairwise": "candidate",
+   "pairwise_evidence": "Removes the zebra arm bands; legs calmer (S3b 7 -> 3), n_pass 14 vs 13. Costs: P3 0.365 vs 0.358 and slightly lower IoU. Modest improvement.",
+   "top_changes": ["G6: narrow shoulders, arms closer to the body",
+                   "G2: blend chest, waist and pelvis into one form",
+                   "G4: chest, pelvis, head and back pack in the limbs' squareness family"]}
+ ],
+ "combined": {"G5": "PASS (candidate preferred in both orders)", "reads_as": "unfinished / unfinished", "G1": "FAIL", "G2": "FAIL", "G3": "PASS", "G4": "FAIL", "G6": "FAIL"}
+}

@@ -20,32 +20,36 @@ import capsule as C  # noqa: E402
 import render_pack as RP  # noqa: E402
 import study as ST  # noqa: E402
 
-C2_CANT = 20.5
+C3 = ST.replace(ST.C2, upper=0.20, fore=0.23, wrist=ST.SM)   # C2 + lever 9a+9b (arm length + wrist), the final package
+C3_CANT = 19.5
 ROUNDS = {
     # round 2: critic r1 (C2_r1 vs B4, both orders) top changes that the hard points allow
-    "r2": dict(head_ovoid=True, chest_blend=True, low_roll=True, chest_n=2.3, back_n=2.3, pelvis_n=3.0, arm_bands="joints", leg_smooth=True),
+    "r2": dict(head_ovoid=True, chest_blend=True, low_roll=True, chest_n=2.3, back_n=2.3, arm_bands="joints", leg_smooth=True),
+    # round 3: critic r2 (C3_r2 vs C2_r1, both orders) top changes that the hard points allow: stronger chest-to-waist taper, rounder back
+    # pack, softer shank cuffs (a long rolled lower end). Narrower shoulders / less splay are hardware-bound (P3, cant gap rule): not applied.
+    "r3": dict(head_ovoid=True, chest_blend_strong=True, low_roll=True, chest_n=2.3, back_n=2.15, arm_bands="joints", leg_smooth=True, soft_cuffs=True),
 }
 
 
 def run(tag: str, refine: dict, render: bool = True) -> dict:
     gap = ST.baseline_gap()
-    cant = C2_CANT
+    cant = C3_CANT
     while True:
-        prof = C.build(ST.C2, cant, name=f"adam-pack-C2-{tag}", refine=refine)
+        prof = C.build(C3, cant, name=f"adam-pack-C3-{tag}", refine=refine)
         if C.min_gap(prof) >= gap or cant >= 30:
             break
         cant += 0.5
     fails = C.hp_fails(prof)
     prof.pop("_L")
-    d = HERE / "variants" / f"C2_{tag}"
+    d = HERE / "variants" / f"C3_{tag}"
     d.mkdir(parents=True, exist_ok=True)
     pp = d / "profiles.yaml"
-    pp.write_text(f"# Packaging-for-look C2, critic round {tag} (T-20261019-c1aa, PROVISIONAL). levers: {ST.C2.tag()}; refine: {refine}\n"
+    pp.write_text(f"# Packaging-for-look C3, critic round {tag} (T-20261019-c1aa, PROVISIONAL). levers: {C3.tag()}; refine: {refine}\n"
                   "# Written by variants/adam/design/packaging/rounds.py; re-run, do not edit.\n" + yaml.safe_dump(prof, sort_keys=False, width=160),
                   encoding="utf-8")
-    print(f"C2 {tag}: cant {cant}  HP fails {fails}", flush=True)
+    print(f"C3 {tag}: cant {cant}  HP fails {fails}", flush=True)
     if render and not fails:
-        RP.render(pp, f"C2_{tag}", "design-7")
+        RP.render(pp, f"C3_{tag}", "design-7")
     return {"cant": cant, "hp_fails": fails}
 
 

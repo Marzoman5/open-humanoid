@@ -111,6 +111,11 @@ if __name__ == "__main__":
                     "0.40 -> 0.37 H).", upper=0.20, fore=0.23),
           arm_lever(C2, "PK-C2-L9b-wrist", "C2 + lever 9b: wrist-pitch joint (STS3045M on the 6 V rail) between elbow and gripper.", wrist=True),
           arm_lever(C2, "PK-C2-L9ab", "C2 + lever 9a + 9b: longer arms and a wrist-pitch joint.", upper=0.20, fore=0.23, wrist=True)]
+    c3 = arm_lever(C2, "PK-C3-package", "Combined package C3 (final): C2 + longer arms + wrist pitch, gripper on an STS3045M (the SCS0009 gripper "
+                   "fails the post-merge pickup envelope). Small arm/neck servos on a 6 V rail, flat Tattu 1300 across the upper back, waist yaw "
+                   "kept, knee + ankle-pitch servos relocated through 1:1 parallelograms, 6-DOF legs.", upper=0.20, fore=0.23, wrist=True)
+    c3["actuators"]["gripper"] = "sts3045m"
+    L9.append(c3)
     for p in write_all(L9 + [combined("PK-C1-package", "Combined package C1: small arm + neck servos (6 V rail), no waist yaw, pack low, "
                                  "knee + ankle-pitch servos relocated through 1:1 parallelograms, 6-DOF legs."),
                         combined("PK-C1-5dof", "Combined package C1 with 5-DOF legs (no ankle roll).", five_dof=True),

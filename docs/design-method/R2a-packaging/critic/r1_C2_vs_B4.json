@@ -1,0 +1,25 @@
+{
+ "round": 1,
+ "candidate": "C2_r1 (combined package C2, plain B4 rules)",
+ "baseline": "B4_ref (R2a B4, signed-provisional)",
+ "note": "Verdicts, reads_as and pairwise verbatim from the blind design-critic (Sonnet); evidence abridged by the author.",
+ "reports": [
+  {"order": "cand_first", "reads_as": "toy",
+   "reads_as_reason": "Boxy head on a very short neck, slab shoulders, an apron-style chest with a hard ledge, thick banded tube arms and a large boxy back pack read as a toy robot, although the pelvis and knee recesses and the white-over-graphite palette are a clear step toward a product.",
+   "criteria": {"G1": "FAIL", "G2": "FAIL", "G3": "PASS", "G4": "FAIL", "G6": "FAIL"},
+   "pairwise": "candidate",
+   "pairwise_evidence": "Narrower waist and hips, dark pelvis and knee recesses, visible neck; baseline fuses chest, hips and thighs into one pillow-padded column. Moderate margin; both read as toys.",
+   "top_changes": ["G1: narrow shoulders and arm thickness, round shoulder tops into the neck (P3)",
+                   "G2: remove the chest apron ledge, lengthen the neck, rounder head, dark bands only at real joints",
+                   "G4: one squareness family; round and slim the back pack; smooth the shank steps into one taper (P8b)"]},
+  {"order": "cand_second", "reads_as": "toy",
+   "reads_as_reason": "Box head, bib-edged box chest, ledged block limbs and wide black stripes still read as a stacked-block character, though less than the baseline.",
+   "criteria": {"G1": "FAIL", "G2": "FAIL", "G3": "FAIL", "G4": "FAIL", "G6": "FAIL"},
+   "pairwise": "candidate",
+   "pairwise_evidence": "Narrower shoulders, tapered forearms, visible neck, dark pelvis under-structure, thigh taper (P8a 0.485 vs 0.860); silhouette closer to both references (IoU 0.583/0.609 vs 0.526/0.559). Busier: more bands and ledges (S3b 7 vs 3).",
+   "top_changes": ["G6: narrow shoulder/upper-arm mass, lower the chest bib edge, less A-pose splay",
+                   "G2: one monotonic shank taper, no stacked steps (S3b, P8b)",
+                   "G4: unify squareness (rounder head, chest, pelvis); thin joint grooves on the arms (also G3)"]}
+ ],
+ "combined": {"G5": "PASS (candidate preferred in both orders)", "reads_as": "toy / toy", "G1": "FAIL", "G2": "FAIL", "G3": "UNCERTAIN (split)", "G4": "FAIL", "G6": "FAIL"}
+}

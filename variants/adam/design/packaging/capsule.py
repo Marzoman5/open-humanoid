@@ -148,6 +148,9 @@ def torso_parts(c: Ctx) -> list[dict]:
              S(top + 3.15, Wc, dc, cn, cx), S(top + 5.35, 0.772 * Wc, 0.75 * dc, cn - 0.2, cx - 4), S(top + 7.85, 38, 40, 2.5, cx - 7)]
     if REFINE.get("chest_blend"):    # critic r1 (G2): no bib ledge; the chest tapers down into the waist ring
         chest = [S(zb - 20.0, 0.60 * Wc, dc - 42, cn, cx - 6), S(zb - 12.0, 0.80 * Wc, dc - 24, cn, cx - 4)] + chest[2:]
+    if REFINE.get("chest_blend_strong"):   # critic r2 (G2): a long, soft taper from the chest into the waist ring, rounder at the bottom
+        chest = [S(zb - 30.0, 0.50 * Wc, dc - 50, 2.2, cx - 7), S(zb - 21.0, 0.68 * Wc, dc - 36, 2.2, cx - 6),
+                 S(zb - 12.0, 0.86 * Wc, dc - 18, cn, cx - 3)] + [q for q in chest if q["z"] >= zb - 3.1]
     if REFINE.get("low_roll"):       # critic r1 (P2a): the chest top rolls over lower and faster, so more neck shows
         chest = chest[:-2] + [S(top + 4.0, 0.70 * Wc, 0.70 * dc, cn - 0.2, cx - 5), S(top + 5.6, 34, 36, 2.4, cx - 7)]
     segs = [{"id": "chest", "role": "shell", "k": K + 4.0, "stations": chest}]
@@ -259,7 +262,7 @@ def leg_parts(c: Ctx) -> list[dict]:
     th = cover(k + 6, h + 30, flare_z=h + 3)
     sk = cover(a - 10, k - 6)
     segs += [{"id": "thigh", "role": "shell", "mirror": True, "k": KL, "stations": ends(th, th[0]["z"] - 10, h + 30, 0.86)},
-             {"id": "shank", "role": "shell", "mirror": True, "k": KL, "stations": ends(sk, sk[0]["z"] - 10, sk[-1]["z"] + 4, 0.88)}]
+             {"id": "shank", "role": "shell", "mirror": True, "k": KL, "stations": ends(sk, sk[0]["z"] - (16 if REFINE.get("soft_cuffs") else 10), sk[-1]["z"] + 4, 0.70 if REFINE.get("soft_cuffs") else 0.88)}]
     # heel (6-DOF: the ankle-roll servo behind the ankle)
     if lv.legs == "6dof":
         segs.append({"id": "heel", "role": "dark", "mirror": True, "k": 6.0, "stations": [
@@ -346,8 +349,17 @@ def arm_parts(c: Ctx) -> list[dict]:
     gap = 5.0 if joints_only else 12.0
     ua0, fa1 = e0 + 20 + gap / 2, e0 + 20 - gap / 2
     ua1 = (c0 + 3.0) if joints_only else (e1 + 5)       # the upper-arm cover runs up under the shoulder cap (one link: no band)
+    if joints_only and c0 - e1 > 12:
+        # between the elbow servo and the shoulder cap the arm holds no servo: a SLIM white sleeve 2 mm proud of the dark core there
+        def core_at(z, key):
+            zs = [q["z"] for q in m]
+            i = max(0, min(len(m) - 2, int(np.searchsorted(zs, z)) - 1))
+            t = (z - zs[i]) / max(zs[i + 1] - zs[i], 1e-9)
+            return m[i][key] + t * (m[i + 1][key] - m[i][key])
+        upper = upper + [S(z, core_at(z, "w") + 4.0, core_at(z, "d") + 4.0, ARM_N, 0, c.ay(z)) for z in (e1 + 8.0, (e1 + c0) / 2, c0 - 2.0)]
+        upper.sort(key=lambda q: q["z"])
     segs += [{"id": "deltoid", "role": "shell", "mirror": True, "k": KL, "stations": rolled(cap, c0 - 1, c1 + 4, 0.70)},
-             {"id": "upper_arm", "role": "shell", "mirror": True, "k": KL, "stations": rolled(upper, min(ua0, upper[0]["z"] - 2), ua1, 0.80 if not joints_only else 0.95)},
+             {"id": "upper_arm", "role": "shell", "mirror": True, "k": KL, "stations": rolled(upper, min(ua0, upper[0]["z"] - 2), ua1, 0.80 if not joints_only else 1.0)},
              {"id": "forearm", "role": "shell", "mirror": True, "k": KL, "stations": rolled(fore, g0 - 6, max(fa1, fore[-1]["z"] + 2), 0.80)}]
     return segs
 

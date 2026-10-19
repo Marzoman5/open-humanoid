@@ -1,0 +1,26 @@
+{
+ "round": 3,
+ "candidate": "C3_r3 (final combined package C3 = C2 + longer arms + wrist; refine r3: r2 plus a long chest-to-waist taper, rounder back pack, soft shank cuffs)",
+ "baseline": "B4_ref (R2a B4, signed-provisional)",
+ "note": "Verdicts, reads_as and pairwise verbatim from the blind design-critic (Sonnet); evidence abridged by the author. Cap of 3 rounds reached.",
+ "reports": [
+  {"order": "cand_first", "reads_as": "toy",
+   "reads_as_reason": "Boxy stacked chest, bucket-shaped pelvis and wide slab arms dominate the silhouette, so it still reads as a character figure despite better legs and a visible neck.",
+   "criteria": {"G1": "FAIL", "G2": "FAIL", "G3": "PASS", "G4": "FAIL", "G6": "FAIL"},
+   "pairwise": "candidate",
+   "pairwise_evidence": "Visible neck (P2a 0.187 pass vs 0.110), real thigh taper (P8a 0.485 vs 0.860), less shoulder width (0.365 vs 0.397), dark confined to joints; pass fraction 0.789 vs 0.684. Moderate margin; both toy-like in torso and arms.",
+   "top_changes": ["G1: narrow shoulder and upper-arm mass toward 0.22-0.29 H, arms closer to the body, sloping trapezius",
+                   "G2: blend chest, waist and pelvis into one form; thin dark waist recess only",
+                   "G4: chest, pelvis, arms and foot in the legs' rounded family; soften the heel block"]},
+  {"order": "cand_second", "reads_as": "toy",
+   "reads_as_reason": "Block head with a flat visor slab, oversized shoulder and arm masses, and a box torso with a hard lower ledge read as a character or toy robot, not an adult product.",
+   "criteria": {"G1": "FAIL", "G2": "FAIL", "G3": "PASS", "G4": "FAIL", "G6": "FAIL"},
+   "pairwise": "candidate",
+   "pairwise_evidence": "Visible neck, tapered arms, calmer dark placement, stronger thigh taper. Both still read as blocky toy robots with oversized shoulders and arms; moderate margin.",
+   "top_changes": ["G6: narrow the shoulder and upper-arm mass, reduce the splay",
+                   "G2: one continuous thigh-knee-calf taper; soften the torso-to-pelvis ledge",
+                   "G4: rounder head, chest front and shank; break up the flat chest front (S4b)"]}
+ ],
+ "combined": {"G5": "PASS (candidate preferred over B4 in both orders)", "reads_as": "toy / toy", "G1": "FAIL", "G2": "FAIL", "G3": "PASS", "G4": "FAIL", "G6": "FAIL"},
+ "what_is_left": "Every round's first change is the shoulder and arm mass (P3 0.365 vs <= 0.29) and the arm splay: both are set by hardware (shoulder-roll and elbow servo widths, the 52 mm hip forks at 70 mm hip spacing that the hanging arm must clear). Not fixable by styling at 0.55 m."
+}
