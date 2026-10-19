@@ -1,0 +1,330 @@
+# Low-cost humanoid survey, half A. Researcher: read-only web (WebSearch/WebFetch + public GitHub API).
+# Access date for every URL: 2026-10-19 (some pages report their own earlier check dates).
+# Rules: null = unknown. Manufacturer pages primary; retailers/news/aggregators labelled secondary.
+# Search results were summarised by a fetcher model; numbers below were taken from fetched pages where noted,
+# otherwise from search snippets (marked "search-snippet"). Nothing here is a conclusion.
+# NOTE: no robot in this file was verified by the researcher to walk; "walking_evidence" is what exists publicly.
+
+meta:
+  topic: cheap (< ~$6k) commercial/open humanoids on sale 2026
+  accessed: 2026-10-19
+  not_covered_here: [Noetix Bumi, Faraday Future FF Nova, zyrestore, K-Scale (K-Bot/Z-Bot), ToddlerBot, BH Lite]
+  headline_observations:
+    - Only Unitree R1 / R1 Air and Booster K1 (Geek) are plausibly < $6k list AND from a real manufacturer selling internationally.
+    - "R1 $5,900 and R1 Air $4,900 are Unitree's own store list prices EXCLUDING tax and shipping (shipping $300-$1,200, buyer pays customs). AliExpress listing is higher."
+    - Unitree R1 Air and standard R1 do NOT support secondary development per Unitree store page; only R1 EDU (price quote, ~$10,500 per one secondary source) does.
+    - Booster K1 "from $5,999" (or $4,999 in Oct-2025 marketing) is the Geek edition (48 TOPS, 2 Ah battery ~20-30 min); the research-grade Pro EDU resells at ~GBP 16.6k. I could not load Booster's own price page (JS store).
+    - No independent hands-on walking test found for either R1 or K1; B-Human (RoboCup) documents K1 as only partially supported with learned walk tested once.
+
+robots:
+
+  - name: Unitree R1 AIR
+    maker: Unitree Robotics (Hangzhou, China)
+    height_m: 1.23
+    mass_kg: 27   # with battery, "about"
+    dof: {total: 20, legs: 12, arms: 8, waist: 0, head: 0}
+    actuators: "Low-inertia high-speed internal-rotor PMSM, crossed roller / double hook ball bearings, dual+single encoders; Unitree in-house (per Unitree page)"
+    compute: "8-core processor (model not stated); no external module on Air"
+    battery: {voltage_v: null, capacity_wh: 199, capacity_mah: 6000, runtime_min: 60, note: "6000 mAh / 199 Wh quick-release; ~1 h claim; Wh/mAh from secondary (robozaps) quoting Unitree spec; spare pack $500 on Unitree shop"}
+    walking_evidence: "Manufacturer launch/demo videos (running, cartwheel, stand-up from ground); Air/R1 share leg design (6 DOF per leg). No independent measured walking test found. Press (Robot Report via robozaps) called demos operator-triggered. Unitree page itself says some sample functions still being developed."
+    price_usd: 4900
+    price_notes: "Unitree.com list price, tax and shipping excluded. Unitree US shop shows $4,900 but 'R1 Air (White)' backordered. Shipping $300-$1,200; customer pays customs duties/taxes; returns not accepted (robozaps). AliExpress listing ~$6,802 observed (robozaps), Bloomberg/VnExpress say ~$6,800 'scaled-down version'. China: from CNY 29,900 (~$4,370)."
+    sold_where: "Unitree direct store (shop.unitree.com, worldwide with country selector, no restriction list found); AliExpress (US, Canada, Japan, UAE, Singapore; free US shipping, import fees folded into price per Unitree statement to Bloomberg); JD.com in China. US reseller RoboStore reportedly $8,990."
+    availability_status: "Shipping claimed; AliExpress deliveries scheduled from 2026-06-30. No documented owner deliveries/unboxings found (robozaps says none)."
+    openness: "No secondary development on Air (Unitree store). Marketing page says 'fully open control interfaces for joints and sensors'. unitree_sdk2 (BSD-3), unitree_rl_gym/lab, unitree_mujoco public on GitHub; whether R1 Air can use them unverified."
+    sources:
+      - {url: "https://www.unitree.com/R1", type: manufacturer, note: "spec/price table"}
+      - {url: "https://www.unitree.com/mobile/R1/", type: manufacturer}
+      - {url: "https://shop.unitree.com/products/unitree-r1", type: manufacturer-store, note: "$4,900, shipping $300-1200, customs on buyer, backorder"}
+      - {url: "https://blog.robozaps.com/b/unitree-r1-review", type: secondary, note: "price-by-channel table; no first-hand test"}
+      - {url: "https://e.vnexpress.net/news/tech/enterprises/unitree-starts-selling-cheapest-humanoid-robot-from-6-800-5063068.html", type: news, note: "2026-04-16"}
+      - {url: "https://interestingengineering.com/ai-robotics/unitree-r1-robot-aliexpress-global-debut", type: news, note: "2026-04-09, China price 29,900 yuan"}
+    confidence: "Spec/price list: high (manufacturer page). Real-world cost to US buyer: medium-low (channels conflict). Walking quality: low (marketing only)."
+
+  - name: Unitree R1 (standard)
+    maker: Unitree Robotics
+    height_m: 1.23
+    mass_kg: 29
+    dof: {total: 26, legs: 12, arms: 10, waist: 2, head: 2}
+    actuators: "Same as R1 AIR (in-house PMSM)"
+    compute: "8-core processor (model not stated)"
+    battery: {voltage_v: null, capacity_wh: 199, runtime_min: 60, note: "see R1 AIR"}
+    walking_evidence: "Manufacturer demos; Italian outlet BusinessOnline reports 'several days of direct testing' and calls walking/running/balance fluid, self-recovers after fall (secondary, qualitative, reviewer purchase terms undisclosed). Russian vc.ru buyer write-up: setup 2-3 h, calibration needs support rod, redo if robot tips forward during first calibration; no speed/terrain data."
+    price_usd: 5900
+    price_notes: "Unitree list, excl. tax+shipping. AliExpress ~$8,123 observed (robozaps) / ~$8,150 'after import fees' (Bloomberg via VnExpress). China launch CNY 39,900 July 2025, JD later 'from 29,900'(may be Air). RoboStore US $8,990 'Basic'."
+    sold_where: "Same as R1 AIR"
+    availability_status: "see R1 AIR"
+    openness: "Per Unitree store: standard R1 does not support secondary development; EDU does. Hands: none (fixed/closed) on consumer version."
+    sources:
+      - {url: "https://www.unitree.com/R1", type: manufacturer}
+      - {url: "https://www.businessonline.it/news/abbiamo-provato-unitree-r1-le-nostre-impressioni-sul-robot-umanoide-che-si-pu-comprare-anche-in-italia_n84060.html", type: secondary-review}
+      - {url: "https://vc.ru/life/2936910-obzor-gumanoidnogo-robota-unitree-r1", type: secondary-review}
+    confidence: "medium for specs, low-medium for walking"
+
+  - name: Unitree R1 EDU
+    maker: Unitree Robotics
+    height_m: 1.23
+    mass_kg: 29
+    dof: {total: "26-40", legs: 12, arms: 10, waist: 2, head: 2, note: "optional dexterous hands raise DOF"}
+    actuators: "same"
+    compute: "8-core + optional Orin module (40-100 TOPS class)"
+    battery: {runtime_min: 60}
+    walking_evidence: "same as R1"
+    price_usd: null
+    price_notes: "Unitree page: 'Contact sales'. robozaps lists $10,500 (secondary, unverified)."
+    sold_where: "Via Unitree sales (sales_global@unitree.cc per store page)"
+    openness: "Secondary development supported (only tier that does). SDK2 BSD-3 on GitHub (unitree_sdk2, last push 2026-10-15)."
+    sources:
+      - {url: "https://www.unitree.com/R1", type: manufacturer}
+      - {url: "https://github.com/unitreerobotics/unitree_sdk2", type: manufacturer-repo, note: "license from GitHub API: BSD-3-Clause"}
+    confidence: "price low; spec medium"
+
+  - name: Unitree G1 (reference)
+    maker: Unitree Robotics
+    height_m: 1.32
+    mass_kg: 35
+    dof: {total: 23, legs: 12, arms: 10, waist: 1, head: 0}
+    actuators: "Internal-rotor PMSM, crossed roller bearings, dual encoders (in-house); knee peak 90 N.m (G1), 120 N.m (EDU)"
+    compute: "8-core CPU; EDU optional Orin"
+    battery: {capacity_mah: 9000, voltage_v: null, cells: 13, runtime_min: 120, note: "13-cell, 54 V charger"}
+    walking_evidence: "Widely demonstrated; not independently audited by me."
+    price_usd: 13500
+    price_notes: "Unitree.com 'US' price $13.5K excluding tax+shipping; EDU contact sales."
+    sold_where: "Unitree direct / resellers"
+    openness: "Secondary development only on EDU."
+    sources:
+      - {url: "https://www.unitree.com/g1", type: manufacturer}
+    confidence: "high for list spec; out of the < $6k range"
+
+  - name: Unitree H2
+    maker: Unitree Robotics
+    height_m: null
+    mass_kg: null
+    dof: null
+    price_usd: 29900
+    price_notes: "search-snippet: Unitree list $29,900 excl. tax+shipping; US resellers $40,500-$40,900 incl. tariffs (RobotShop sale price $40,500); EDU from $68,900 (secondary). Not cheap - out of range."
+    sold_where: "Unitree + RobotShop; phased deliveries from Q3 2026 per RobotShop"
+    walking_evidence: null
+    sources:
+      - {url: "https://www.robotshop.com/products/unitree-h2-humanoid-robot", type: retailer-secondary, note: "from search results only, not opened"}
+      - {url: "https://kr-asia.com/unitrees-new-h2-brings-streamlined-elegance-to-humanoid-robotics", type: news}
+      - {url: "https://www.unitree.com/h2", type: manufacturer, note: "HTTP 404 on fetch"}
+    confidence: "low (not opened); excluded by price"
+
+  - name: Booster K1 Geek (entry edition)
+    maker: Booster Robotics (Beijing, China)
+    height_m: 0.95
+    mass_kg: 19.5
+    dof: {total: 22, legs: 12, arms: 8, waist: 0, head: 2}
+    actuators: "Peak joint torque 60 N.m, dual encoders per joint; actuator maker/in-house not stated on datasheet"
+    compute: "48 TOPS (dense) module (maker not stated); Education 117 TOPS; Professional = Jetson AGX Orin 32GB 200 TOPS"
+    battery: {voltage_v: null, capacity_ah: 2, runtime_min: "~20 (booster.tech, 'walking at 1.1 m/s') / ~30 (robozaps secondary)", note: "Education/Pro: 5 Ah magnetic, ~70 min walking per booster.tech vs ~80 min at 0.4 m/s per datasheet/RobotShop - conflicting walking speed basis"}
+    walking_evidence: "Booster claims walking up to 2 m/s on its site; datasheet/retailers state 0.4 m/s basis for runtime. RoboCup teams use it: B-Human docs (2025 code release) say real K1 'only partially supported', learned walk tested once, 'proof of concept', stand-up motions not supported on real robot, motionboard sometimes unreachable (power cycle). NUbots spec sheet lists 0.5-1.0 m/s (secondary). No independent consumer review found. Marketing video shows moonwalk/dance."
+    price_usd: 5999
+    price_notes: "CONFLICT. Booster Oct-2025 marketing: 'from $4,999' (mikekalil.com blog, secondary). robozaps/physicalailab (secondary, citing Booster pages checked Jul-Aug 2026): 'from US$5,999' (base config only). Dec-2025 China launch CNY 29,900 limited-time (36kr.jp, secondary). Another dealer 2026-08-11 lists Geek 5Ah $10,999 and Pro $16,999 (search-snippet, secondary). RobotShop UK Professional GBP 16,614 (special order). Could not load Booster store page (client-side), so no first-party USD price verified."
+    sold_where: "booster.tech 'Buy now' store (global; terms not retrievable); resellers RobotShop (UK/JP/CA), Switch Science JP (sold out at JPY 3.07M for Pro), roboticscenter.ai ($16,000 base, $200 US flat shipping, display-unit style), OpenELAB EU. China 1,000+ dealer orders at Dec-2025 launch (36kr.jp). Customs/duties for US: not stated anywhere I could reach."
+    availability_status: "Described 'commercially available' (robozaps). Dec-2025 launch; some retailers sold out / special order."
+    openness: "Booster GitHub org public: booster_robotics_sdk (Apache-2.0 LICENSE file in repo), booster_robotics_sdk_ros2, booster_gym, booster_train (Isaac Lab), booster_deploy, booster_assets (BSD-3), robocup_demo (Apache-2.0). GitHub license detection says NOASSERTION for several (gym/train/deploy) - read LICENSE files before relying. Python/C++ SDK; ROS2 interface package. Hardware not open-source. Doubao LLM bundled 6 months."
+    sources:
+      - {url: "https://www.booster.tech/booster-k1/", type: manufacturer, note: "editions, battery, 2 m/s claim; no price"}
+      - {url: "https://a.storyblok.com/f/298593/x/b1cf8e0cc4/booster-k1_englisch.pdf", type: manufacturer-datasheet-hosted, note: "22 DoF 6/4/2, 60 N.m, battery 5 Ah/80 min walking 0.4 m/s"}
+      - {url: "https://uk.robotshop.com/products/booster-robotics-k1-professional-humanoid-robot", type: retailer-secondary}
+      - {url: "https://36kr.jp/?p=447223", type: news-secondary, note: "CNY 29,900; 1,000 orders; 2025-12-07"}
+      - {url: "https://mikekalil.com/blog/booster-noetix-cheap-humanoid-robots/", type: blog-secondary, note: "$4,999"}
+      - {url: "https://robozaps.com/products/k1-geek", type: aggregator-secondary, note: "$5,999 from booster.tech obs. 2026-07-10; also says ROS/SDK 'No' contradicting GitHub"}
+      - {url: "https://physicalailab.io/en/booster-k1-vs-t1-vs-t2/", type: aggregator-secondary}
+      - {url: "https://docs.b-human.de/coderelease2025/handling-the-booster/", type: third-party-team-docs}
+      - {url: "https://github.com/BoosterRobotics", type: manufacturer-repos}
+    confidence: "Specs high (datasheet+retailers agree). Price medium-low (conflicting secondary; $5,999 base only). Walking: low-medium; third-party notes say immature."
+
+  - name: Booster T1
+    maker: Booster Robotics
+    height_m: 1.18
+    mass_kg: 30
+    dof: {total: "23 standard / 31 with grippers / 41 with dexterous hands", legs: 12, arms: null}
+    actuators: "130 N.m peak (physicalailab, secondary)"
+    compute: "NVIDIA AGX Orin 200 TOPS"
+    battery: {capacity_ah: 10.5, runtime_min: "~120 walking / ~240 standing (claim)"}
+    walking_evidence: "Used in RoboCup (B-Human, NUbots etc.) so there is real third-party use; no measured data collected."
+    price_usd: null
+    price_notes: "No public list ('request quote'). Retailers: ~$30,000 backorder (roboticscenter.ai), GBP 31,385 (RobotShop UK), CAD 48,571. Dex-hands variant listed discontinued as T2 replaces T1. Out of < $6k range."
+    sold_where: "Booster quote; RobotShop, Generation Robots (price on request)"
+    openness: "Same Booster SDK/ROS2/Gym repos as K1."
+    sources:
+      - {url: "https://uk.robotshop.com/products/booster-t1-humanoid-robot-standard", type: retailer-secondary}
+      - {url: "https://physicalailab.io/en/booster-k1-vs-t1-vs-t2/", type: aggregator-secondary}
+    confidence: "medium; out of price range"
+
+  - name: Booster T2
+    maker: Booster Robotics
+    height_m: 1.40
+    mass_kg: 42
+    dof: {total: 31}
+    price_usd: null
+    price_notes: "No public price. Dealer figures $29,900-$54,999 (US resellers, search-snippet); EUR 53,590 ex-VAT dex-hand (funduinoshop). Out of range."
+    sources:
+      - {url: "https://physicalailab.io/en/booster-k1-vs-t1-vs-t2/", type: aggregator-secondary}
+      - {url: "https://www.maverickdrone.com/products/booster-t2", type: retailer-secondary, note: "search result only"}
+    confidence: "low-medium; out of range"
+
+  - name: Swancor / Zhihui Jun "Qiyuan Q1" (and T1) -- NEW, not in assignment list but sub-$3k
+    maker: Swancor New Materials with Peng Zhihui (Zhihui Jun, AgiBot co-founder; companies say they are independent)
+    height_m: {Q1: 0.88, T1: 1.00}
+    mass_kg: {Q1: 15, T1: 16}
+    dof: null
+    actuators: "Q1: miniaturised QDD (quasi-direct drive) joints (per 36kr)"
+    compute: null
+    battery: null
+    walking_evidence: "Claimed bipedal; Gasgoo says 'can walk and converse'. 36kr describes T1 as wheel-foot / quadruped-style. Unveiled 2025-12-31 (Bilibili). No video, test data or independent hands-on seen."
+    price_cny: {Q1: 19999, Q1_Explorer: 26999, T1: 19999, T1_Pro: 29999}
+    price_usd: null
+    price_notes: "CNY 19,999 ~= $2,800 at ~7.1 (my conversion, not from source). Orders launched 2026-09-20; shipping 'from Oct 1' in order sequence (36kr, 2026-10-12). Domestic China; no international sale info found."
+    sold_where: "China (channel not stated)"
+    openness: "Q1 Explorer Edition claims 'complete open SDK and hardware development interfaces' (marketing); license unknown."
+    sources:
+      - {url: "https://eu.36kr.com/en/p/4020176648755077", type: news-secondary}
+      - {url: "https://autonews.gasgoo.com/articles/news/swancor-advanced-materials-announces-entry-into-the-personal-robot-market-officially-launches-qiyuan-q1-2007816039524216833", type: news-secondary, note: "search result only"}
+    confidence: "low (news only, no hands-on); watch item"
+
+  - name: EngineAI SA01
+    maker: EngineAI (Shenzhen, China)
+    height_m: null
+    mass_kg: 40
+    dof: {total: 12, legs: 12, arms: 0, note: "bipedal LEG platform only; no arms/torso per EngineAI site and resellers. Not a full humanoid."}
+    actuators: "In-house S160 motor; 160 N.m peak (EngineAI page: hip+knee; one reseller: knee 160 / ankle 96)"
+    compute: null
+    battery: {capacity_ah: 15, runtime_min: "~120 (reseller)"}
+    walking_evidence: "EngineAI site shows product; no independent test found. Height unclear (a reseller listing implies ~0.32-0.35 m dimension, probably wrong axis)."
+    price_usd: 5250
+    price_notes: "CNY 38,500 at Sept-2024 launch (36kr.jp, ~$5,250 search-snippet); a US reseller (4gltemall) lists 'SA01 EDU'; current 2026 price not found. Research/education positioning."
+    sold_where: "China + resellers; 'Buy now' on EngineAI EN site"
+    openness: "Described as open-source platform (36kr.jp, founder decision); license/repo not verified."
+    sources:
+      - {url: "https://www.engineai.com.cn/", type: manufacturer, note: "SA01: 12 DOF, 15 Ah, S160 motor"}
+      - {url: "https://en.engineai.com.cn/product-sa01", type: manufacturer, note: "specs section not retrievable"}
+      - {url: "https://36kr.jp/307110/", type: news-secondary, note: "CNY 38,500, 2024-09-26"}
+    confidence: "medium on 12 DOF/legs only; price from 2024; not a humanoid per se"
+
+  - name: EngineAI PM01
+    maker: EngineAI
+    height_m: 1.38
+    mass_kg: 40
+    dof: {total: 24, legs: 12, arms: 10}
+    price_usd: 12030
+    price_notes: "Launch CNY 88,000 (~$12k) promo; retailers list ~$39,500 backordered (2026). Out of < $6k range."
+    sources:
+      - {url: "https://www.engineai.com.cn/", type: manufacturer}
+      - {url: "https://www.therobotreport.com/engineai-releases-pm01-humanoid-robot-for-commercial-educational-use/", type: news}
+    confidence: "medium; out of range. 'SA01' small humanoid not found - SA01 is the legs-only platform above."
+
+  - name: Fourier GR-1 / GR-3 / N1
+    maker: Fourier Intelligence (Shanghai)
+    price_usd: null
+    price_notes: "No cheap Fourier model found. No official price. Unverified forum $120,000 for GR-3; humanoid.guide $80,000 (not verified). N1 open-source: 1.3 m, 38 kg, 23 DOF (search-snippet), no price found. GR-3 is care-bot, institutional."
+    sources:
+      - {url: "https://theresarobotforthat.com/humanoid-reality-index/fourier-gr3/", type: aggregator-secondary}
+      - {url: "https://boingboing.net/2025/09/18/fourier-gr-3-care-bot-is-a-squishy-pint-sized-companion.html", type: news}
+    confidence: "low; out of range"
+
+  - name: Hiwonder AiNex
+    maker: Hiwonder (Shenzhen, China)
+    height_m: 0.415   # RobotShop 'product size 193x135x415 mm' (secondary; axis labelling unclear)
+    mass_kg: 2.45     # standard kit (RobotShop, secondary); starter 2.25
+    dof: {total: 24, note: "Standard kit 24 DOF, Starter 20 DOF; 2-DOF head, hands"}
+    actuators: "Hiwonder serial bus servos (LX-class, ~17 kg.cm class per servo listings; exact AiNex model not named on page); 'magnetic-encoder bus servos at hips' per RobotShop page. Hobby servos, bought-in."
+    compute: "Raspberry Pi 5 (2/4/8 GB variants) per titles; older spec field says Pi 4B"
+    battery: {voltage_v: 11.1, capacity_mah: 3500, runtime_min: null}
+    walking_evidence: "Vendor claim of IK-based self-stabilising gait; speed ~21 cm/s (secondary). Small toy-class biped; walking is well established for this class but I found no independent test."
+    price_usd: 1046
+    price_notes: "RobotShop US $1,045.99 (4GB Pi5 standard kit, in stock, page checked 2026-10-14 by fetcher); $1,009.99 and $1,399.99 other listings; OzRobotics ~$1,029-1,129; OpenELAB EUR 1,198 (sold out). Shipping extra; OzRobotics notes low-value shipments no longer duty-free."
+    sold_where: "International via RobotShop, OzRobotics, OpenELAB, thinkrobotics etc.; Hiwonder direct (free shipping > $499 banner)."
+    openness: "ROS (ROS1 per one reseller), Python, OpenCV tutorials/source from vendor; license not verified; hardware not open."
+    sources:
+      - {url: "https://robotshop.com/products/hiwonder-ainex-ros-education-ai-vision-humanoid-robot-kit-powered-by-raspberry-pi-5-inverse-kinematics-algorithm-standard-kit-with-raspberry-pi-5-4gb", type: retailer-secondary}
+      - {url: "https://www.hiwonder.com/products/ainex", type: manufacturer, note: "fetch returned navigation only"}
+    confidence: "medium; toy/education class, 0.4 m tall - not a research humanoid scale"
+
+  - name: Hiwonder TonyPi Pro
+    maker: Hiwonder
+    height_m: null
+    mass_kg: null
+    dof: {total: 20}
+    compute: "Raspberry Pi 4B/5"
+    price_usd: 930
+    price_notes: "RobotShop US $929.99 (Pi 4B 8GB) ; Pi5 kits ~$1,085-1,323 (OzRobotics); OpenELAB EUR 1,249. Secondary retail only."
+    sources:
+      - {url: "https://www.robotshop.com/products/hiwonder-tonypi-pro-hiwonder-humanoid-robot-professional-development-kit-powered-by-raspberry-pi-raspberry-pi-4b-8gb-included", type: retailer-secondary, note: "from search results"}
+    confidence: "low-medium"
+
+  - name: ROBOTIS OP3 (2025 re-release)
+    maker: ROBOTIS (Korea)
+    height_m: 0.51
+    mass_kg: 3.5   # without skin cover
+    dof: {total: 20}
+    actuators: "Dynamixel XM430-W350-R (ROBOTIS in-house)"
+    compute: "Intel NUC dual-core Core i3, 8 GB DDR4, 250 GB M.2 SSD"
+    battery: {voltage_v: 11.1, capacity_mah: 3300, runtime_min: null}
+    walking_evidence: "Long-standing RoboCup/research platform (since 2017); page re-release 2025 for ROS 2."
+    price_usd: 11000
+    price_notes: "Reseller RobotLAB ~$11,000; others $13,000-13,764 (search-snippet, secondary). No ROBOTIS official price retrieved. No new low-cost ROBOTIS humanoid found. Out of range."
+    sold_where: "ROBOTIS + resellers"
+    openness: "ROS 2, Dynamixel SDK; OP3 hardware/software open-source claim - license NOT found on the page (page only links GitHub for the manual)."
+    sources:
+      - {url: "https://emanual.robotis.com/docs/en/platform/op3/introduction/", type: manufacturer}
+      - {url: "https://robotlab.com/store/darwin-op3-robot", type: retailer-secondary, note: "search result"}
+    confidence: "specs high; price medium-low"
+
+  - name: AgiBot Q1 (Quester 1)
+    maker: AgiBot (Shanghai)
+    height_m: 0.80
+    mass_kg: null   # "one-eighth of full-size" per press
+    dof: null
+    actuators: "Quasi-direct-drive joints (press)"
+    price_usd: null
+    price_notes: "Revealed 2025-12-31 (Bilibili); no price or sale date announced per every source found. humanoid.guide lists $28,000 unverified; ignore. Related AgiBot Lingxi X2 ~ $14k class, not consumer."
+    openness: "Claimed open SDK + HDK, 3D-printable shells (press); not verified."
+    walking_evidence: "Reveal demo only."
+    sources:
+      - {url: "https://mikekalil.com/blog/agibot-q1-humanoid-robot/", type: blog-secondary, note: "search result"}
+      - {url: "https://humanoid.guide/product/quester1-q1", type: aggregator-secondary}
+    confidence: "low; not on sale as far as found"
+
+  - name: UBTech (Yanshee / Alpha Mini / Walker)
+    maker: UBTech
+    price_usd: null
+    price_notes: "Yanshee reseller 'from $1,495' (search-snippet, secondary); Alpha Mini price not found. Walker S2 ~ $80,000; research humanoids CNY ~299,000 (earnings write-up). No consumer UBTech robot in 2026 found that is a walking humanoid under $6k other than toy-scale Yanshee/Alpha Mini."
+    sources:
+      - {url: "https://www.robotlab.com/manufacturers/ubtech/", type: retailer-secondary, note: "search result"}
+      - {url: "https://heise.de/-10315912", type: news}
+    confidence: "low"
+
+  - name: HighTorque Mini Pi / Mini Pi+ (extra, found incidentally)
+    maker: HighTorque Robotics
+    height_m: null
+    mass_kg: "7-10.9"
+    dof: {total: "12 (biped) / 22 (Mini Pi+ full humanoid)"}
+    price_usd: 6750
+    price_notes: "RoboCup-2026 team price $6,750 for Mini Pi plus Pro (22 DOF); retail list $8,145 backordered (aifitlab); 2024 biped $7,600-$11,950. Slightly above range."
+    sources:
+      - {url: "https://lists.robocup.org/archives/list/robocup-humanoid@lists.robocup.org/thread/5JYZ2BHHFSSQSSNSUPYUAHHYK7HRL5PY/", type: community-mailing-list}
+      - {url: "https://aifitlab.com/products/high-torque-mini-pi-series-robot", type: retailer-secondary}
+    confidence: "low-medium"
+
+  - name: Others checked and dismissed (price or availability)
+    items:
+      - {name: MagicLab MagicBot Z1, price_usd: "39,800-52,800", note: "40 kg, 24 DOF; JD.com sold out in minutes; out of range", url: "https://support.magiclab.top/en/human-z1/about"}
+      - {name: Xiaomi CyberOne, note: "no search hit for any on-sale product; assumed not for sale (null)"}
+      - {name: K-Scale K-Bot / Z-Bot, note: "only 2025 coverage found ($8-9k / <$1k); no 2026 data; covered by another researcher", url: "https://www.automate.org/robotics/industry-insights/this-open-source-legged-humanoid-robot-is-available-to-order-at-8-000"}
+      - {name: Chery AiMoga Mornine M1, price_usd: "~42,000", note: "JD.com CNY 285,800; out of range"}
+      - {name: LimX Oli, price_usd: 21800, note: "search-snippet; out of range"}
+
+unreached_or_unverified:
+  - "Booster store/pricing page (client-rendered; fetch returned no prices) -> K1 USD price not first-party verified."
+  - "Unitree H2 page (404), Bloomberg (403), X/Twitter (403), hiwonder.com product pages (nav only / connection reset), EngineAI SA01 spec section (not rendered)."
+  - "No independent third-party walking test for R1 or K1 reached; the Italian BusinessOnline review is qualitative only."
+  - "AliExpress listing itself not opened (login-free fetch of AliExpress not attempted); price channel data from news/robozaps."
+
+only_measurable_by_buying_or_testing:
+  - "Actual landed cost of R1 to a US buyer (shipping $300-1,200 + duties/tariffs, or AliExpress ~$6.8-8.2k)."
+  - "Whether R1 Air/standard can run user RL policies (store page says no secondary development)."
+  - "K1 real walking speed/stability and battery with Geek 2 Ah pack."
