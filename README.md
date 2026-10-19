@@ -2,69 +2,80 @@
 
 **A toolkit for making the humanoid robot *you* want: any size, any budget, any CAD tool, with or without an AI brain.**
 
-Open Humanoid is not one robot. It is a pipeline plus a library:
+Open Humanoid isn't one robot. You describe the robot in a spec file. The toolkit sizes it, picks parts, prices it, simulates it, and guides an AI agent (or you) through CAD, walking, sourcing, and the build.
+
+<p align="center"><img src="variants/adam/generated/renders/sheet.png" alt="Adam, primitive sim model (pre-CAD)" width="100%"></p>
+<p align="center"><i>Adam, the first reference variant: the current pre-CAD simulation model, generated straight from its spec.</i></p>
+
+## How it works
 
 ```
-  your requirements          the toolkit                          your robot
- ┌────────────────┐   ┌──────────────────────────────┐   ┌──────────────────────────┐
- │ spec.yaml      │──►│ size → select parts → budget │──►│ CAD + STL/STEP           │
- │ height, budget │   │ generate sim → train → test  │   │ MuJoCo model + policies  │
- │ priorities     │   │ source → document → build    │   │ BOM with live prices     │
- └────────────────┘   └──────────────────────────────┘   │ build guide + software   │
-                                                         └──────────────────────────┘
+ spec.yaml ──► oh size ──► oh bom ──► oh sim ──► CAD (any tool) ──► train walking ──► source ──► build
+ "0.5 m,       torque,     priced     MuJoCo     export contract    RL in sim          verify     guide +
+  $400,        speed,      parts      model +    → STEP/STL/mass    → policy           prices     bring-up
+  walk"        servo pick  list       renders    → sim model
 ```
 
-Every robot is a **variant**: one folder under `variants/` with a `spec.yaml`. The tools read that spec and adapt to it. A $400 50 cm walker and a $100k full-size robot go through the same pipeline. The tools pick different parts, processes, and modules.
+- **Requirements in, parts out.** You state height, budget, and gaits. `oh size` works out joint torques and speeds and picks the cheapest catalog actuator that can do it, from $4 hobby servos to $450 brushless units. It can also find **the tallest robot your budget allows**.
+- **Honest numbers.** Every price carries `verified:` and a source. If a design can't run or can't afford a joint, the report says so and says why.
+- **Sim from day one.** A MuJoCo model is generated from the spec before any CAD exists. CAD exports replace it later.
+- **Any CAD tool.** build123d (code, so AI can author it fully), Onshape, SolidWorks, or FreeCAD. The pipeline only reads [standard exports](cad/EXPORT_CONTRACT.md).
+- **Modular, optionally.** Standard [module interfaces](modules/INTERFACE.md) for swappable limbs, hands, and attachments, or `integrated` designs if you don't want modularity.
+- **Optional brains.** The software core is control and safety. RL walking, LLM/MCP, teleop, and the rest are plugins.
+- **Built for AI agents and teams.** A [one-shot prompt](prompts/oneshot/build-a-humanoid.md) with human review stops, a task and claim system so parallel agents don't collide, and session handoffs for when context runs out.
 
 ## Variants
 
-| Variant | Status | Target | Notes |
-|---|---|---|---|
-| [**Adam**](variants/adam/) | concept | ≤ $400 all-in, max height for budget (~0.5 m), walking first, sleek | Reference variant, 3D printed, hobby serial-bus servos |
-| Eve | planned | ~$2k, bigger | Will `extends: adam` and override what changes |
+| Variant | Status | Target |
+|---|---|---|
+| [**Adam**](variants/adam/) | concept | ≤ $400 all-in · tallest for budget (0.50 m today) · walks · sleek (Optimus / electric Atlas / Apple) |
+| Eve | planned | ~$2k · bigger · `extends: adam` |
 
 ## Quick start
 
 ```bash
-python -m venv .venv
-.venv/Scripts/activate          # Windows  (Linux/macOS: source .venv/bin/activate)
+python -m venv .venv && .venv/Scripts/activate     # Linux/macOS: source .venv/bin/activate
 pip install -e ".[sim,cad,dev]"
-
-oh validate adam                # check the spec against the schema
-oh size adam                    # torque/speed sizing + actuator selection (+ max height for budget)
-oh bom adam                     # bill of materials with price ranges
-oh sim build adam               # generate a MuJoCo model straight from the spec
-oh sim test adam                # physics smoke test (stands? falls? explodes?)
-oh coord status                 # what are agents working on right now
+oh size adam && oh bom adam && oh sim test adam && oh render adam
+oh new my-bot --extends adam                        # then edit variants/my-bot/spec.yaml
 ```
 
-## Make your own humanoid
+Full walkthrough: **[docs/getting-started.md](docs/getting-started.md)**.
 
-1. `oh new my-bot` (or copy `variants/_template/`). Use `extends: adam` to start from Adam.
-2. Edit `spec.yaml`: height, budget, priorities, which joints, CAD backend, plugins.
-3. Give an AI agent [`prompts/oneshot/build-a-humanoid.md`](prompts/oneshot/build-a-humanoid.md). It runs the whole pipeline phase by phase and checkpoints as it goes, so it can stop and resume across sessions.
+## Documentation
+
+| Doc | For |
+|---|---|
+| [Getting started](docs/getting-started.md) | Install, explore Adam, make your own variant, hand off to an agent |
+| [Vision](docs/vision.md) | Why this exists, principles, roadmap |
+| [Architecture](docs/architecture.md) | Data flow, layers, spec resolution, mass calibration loop |
+| [Tools reference](docs/tools.md) | Every `oh` command and the sizing model's math |
+| [Design language](docs/design-language.md) | Frame + shell, what "sleek" means |
+| [Decisions](docs/decisions/) | Why things are the way they are (ADRs) |
+| [AGENTS.md](AGENTS.md) | Rules for AI agents and contributors |
+| [Coordination](coordination/README.md) | Tasks, claims, handoffs, orchestration profiles |
+| [Prompts](prompts/README.md) | One-shot pipeline, part sourcing, session resume |
 
 ## Repo map
 
 | Path | What lives there |
 |---|---|
-| `openhumanoid/` | Python framework + `oh` CLI. **Variant-agnostic.** |
-| `schemas/` | JSON Schemas: the contracts (spec, catalog part, module) |
-| `catalog/` | Parts database across all budget tiers, one YAML per part |
-| `modules/` | Reusable mechanical/electrical/software modules (joints, limbs, hands, attachments) |
-| `variants/` | Concrete robots. Each folder has its spec, CAD, generated outputs, and build guide |
-| `cad/` | CAD backend adapters & the export contract (build123d, Onshape, SolidWorks, FreeCAD) |
-| `sim/` | Simulation: MuJoCo tooling, training, scenarios |
-| `software/` | Robot runtime core + optional plugins (RL policy, LLM/MCP, teleop…) |
-| `prompts/` | Proven prompts: one-shot pipeline, sourcing, session handoff |
-| `coordination/` | Multi-agent protocol: tasks, claims, handoffs, workstreams, token profiles |
-| `docs/` | Vision, architecture, design language, decision records (ADRs) |
-| `tests/` | Tests for the framework |
+| `openhumanoid/` | Python framework + `oh` CLI. Variant-agnostic |
+| `schemas/` | Contracts: spec, catalog part |
+| `catalog/` | Parts database across budget tiers, one YAML per part |
+| `modules/` | Reusable joints, limbs, hands, attachments |
+| `variants/` | Concrete robots: spec, generated reports, CAD, build guide |
+| `cad/` | CAD export contract + backend adapters |
+| `sim/` | Simulation and locomotion training |
+| `software/` | Robot runtime core + plugins |
+| `prompts/` | Proven, versioned prompts |
+| `coordination/` | Multi-agent tasks, handoffs, profiles |
+| `docs/` | Everything above, explained |
 
-## For AI agents
+## Status
 
-Read [`AGENTS.md`](AGENTS.md) first. It has the rules, the repo map, and how to claim work without overwriting other agents.
+v0.1: foundation. Sizing, BOM, sim generation, renders, and coordination work. CAD tooling, RL training, the software runtime, and live sourcing are next. See the [roadmap](docs/vision.md#roadmap-of-toolkit-capabilities) and `oh coord status`.
 
 ## License
 
-Software: MIT · Hardware (CAD, mechanical designs): CERN-OHL-S-2.0 · Docs: CC-BY-SA-4.0. See `LICENSE*`.
+Software: MIT · Hardware: CERN-OHL-S-2.0 · Docs: CC-BY-SA-4.0.

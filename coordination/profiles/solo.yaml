@@ -7,3 +7,4 @@ phase_order: sequential
 checkpoint: every_gate_and_30_tool_calls
 on_context_full: prompt_user  # stop at the next checkpoint and hand the user a resume line
 notes: Prefer finishing one phase cleanly over starting many. Skip optional polish.
+review_stops: all          # all | looks | none (see prompts/oneshot/build-a-humanoid.md, Review gates)

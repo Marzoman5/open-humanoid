@@ -77,6 +77,14 @@ def cmd_sim(a):
     return 0
 
 
+def cmd_render(a):
+    from .render import render
+    spec = _spec(a.variant)
+    files = render(spec)
+    print(f"{spec['name']}: {len(files)} images -> {files[-1]} (contact sheet)")
+    return 0
+
+
 def cmd_catalog(a):
     from . import catalog
     parts = catalog.load_catalog().values()
@@ -148,6 +156,8 @@ def main(argv=None) -> int:
     s = sub.add_parser("sim", help="MuJoCo: build | test | view")
     s.add_argument("action", choices=["build", "test", "view"]); s.add_argument("variant")
     s.add_argument("--seconds", type=float, default=3.0); s.add_argument("--json", action="store_true"); s.set_defaults(f=cmd_sim)
+    s = sub.add_parser("render", help="review images (front/side/3-4/back + sheet) of the current model")
+    s.add_argument("variant"); s.set_defaults(f=cmd_render)
     s = sub.add_parser("catalog", help="list catalog parts"); s.add_argument("--category"); s.set_defaults(f=cmd_catalog)
     s = sub.add_parser("new", help="create a variant from variants/_template")
     s.add_argument("id"); s.add_argument("--name"); s.add_argument("--extends"); s.set_defaults(f=cmd_new)

@@ -10,6 +10,7 @@ All tools are subcommands of `oh` (or `python -m openhumanoid`). Each prints a s
 | `oh sim build <id>` | spec, sizing.json | `generated/sim/<id>.xml` | primitive MJCF, joint names follow the spec |
 | `oh sim test <id> [--json]` | sim model | — | stand-hold smoke test, torque usage per actuator |
 | `oh sim view <id>` | sim model | — | interactive MuJoCo viewer |
+| `oh render <id>` | sim or CAD model | `generated/renders/*.png` | front/side/¾/back + contact sheet for review gates |
 | `oh catalog [--category actuator]` | catalog | — | `✓` verified, `~` estimate |
 | `oh new <id> [--extends adam]` | `variants/_template` | `variants/<id>/` | |
 | `oh coord status\|new\|claim\|set\|done\|release\|handoff\|resume` | `coordination/` | task / handoff files | protocol: `coordination/README.md` |

@@ -47,6 +47,7 @@ Each phase has a **gate** (a command or check that must pass) and a **checkpoint
 | Capability | Status |
 |---|---|
 | Spec schema + inheritance (`extends`) | ✅ v0.1 |
+| Review renders (`oh render`) | ✅ v0.1 |
 | Parts catalog (multi-tier actuators, compute, power) | ✅ v0.1, prices unverified |
 | Sizing & actuator selection, max-height-for-budget | ✅ v0.1 (quasi-static + dynamic factors) |
 | BOM roll-up | ✅ v0.1 |

@@ -7,3 +7,4 @@ lanes: [[mech, design, sourcing], [sim, software, framework, docs]]
 phase_order: overlap_where_independent
 checkpoint: every_gate_and_30_tool_calls
 on_context_full: new_session
+review_stops: all          # all | looks | none (see prompts/oneshot/build-a-humanoid.md, Review gates)

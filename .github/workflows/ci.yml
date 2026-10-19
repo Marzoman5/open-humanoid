@@ -1,0 +1,20 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -e ".[sim,dev]"
+      - run: pytest -q
+      - name: Validate and size every variant
+        run: |
+          for d in variants/*/; do
+            id=$(basename "$d"); [ "$id" = "_template" ] && continue
+            oh validate "$id"
+            oh size "$id" || echo "::warning::$id sizing infeasible"
+          done
+      - name: Generated files are up to date
+        run: git diff --exit-code -- 'variants/*/generated/*.json' || (echo "::error::run oh size/bom and commit generated files" && exit 1)

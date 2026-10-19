@@ -9,6 +9,7 @@
   </default>
   <visual><headlight diffuse="0.7 0.7 0.7"/></visual>
   <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.95 0.95 0.97" rgb2="0.62 0.64 0.68" width="512" height="512"/>
     <texture name="grid" type="2d" builtin="checker" rgb1="0.2 0.22 0.25" rgb2="0.28 0.3 0.33" width="512" height="512"/>
     <material name="grid" texture="grid" texrepeat="8 8"/>
   </asset>

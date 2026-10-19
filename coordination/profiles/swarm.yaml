@@ -9,3 +9,4 @@ phase_order: dependency_graph
 branching: branch_per_task
 checkpoint: every_task_status_change
 on_context_full: orchestrator
+review_stops: all          # all | looks | none (see prompts/oneshot/build-a-humanoid.md, Review gates)
