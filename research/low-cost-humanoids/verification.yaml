@@ -1,0 +1,44 @@
+# Verification pass, 2026-10-19. Two independent Sonnet verifiers re-opened sources (no access to our conclusions' reasoning).
+# Status: verified | corrected | unsupported | unreachable. Limits: WebFetch is a summarising fetcher; JS-rendered stores were read via
+# Shopify .js endpoints where possible; cubemars.com, techrepublic.com, JD.com, Booster's store price were not reachable.
+humanoid_claims:
+- {id: H1, claim: "Noetix site bundle: 98x35x20 cm, ~17 kg, 21 DoF, knee 70 N.m, 6 TOPS, 48 V 5.1 Ah, 2-3 h, 'max torque of joint modules 70 N.m; max travel speed 0.5 m/s'", status: verified, note: "6/4/1 DOF split read from hip/knee/ankle string and wallstreetcn, not from arm keys directly"}
+- {id: H2, claim: "bumi.py effort limits 27/27/60/60/13/5.5/27; BSD-3-Clause", status: verified}
+- {id: H3, claim: "robotsinternational lists Bumi $5,995 and EDU Air $9,995", status: corrected, note: "listed with Add-to-Cart, but page text says price confirmed by quote; reseller, not Noetix. Wording in docs updated."}
+- {id: H4, claim: "botinfo: CNY 9,998 China-only, Chinese delivery address; elsewhere on request", status: verified, note: "botinfo lists 94 cm / 12 kg, differing from Noetix's 98 cm / 17 kg"}
+- {id: H5, claim: "wallstreetcn: 21 DOF split, JD presale, motors not self-developed", status: verified}
+- {id: H6, claim: "qq: Pre-B ~300 M yuan, 100/1 h, 500/2 days, 9998", status: verified}
+- {id: H7, claim: "founder: margins 'indeed quite low'", status: verified, note: "same article says 'nearly all components in-house', which conflicts with wallstreetcn on motors"}
+- {id: H8, claim: "FF Nova $2,490, 20 DOF, 49.7 cm, 2.8 kg, 0.1 m/s, 100 invitation-only", status: verified, note: "dimensions/DoF secondary (Unite.AI quoting product page)"}
+- {id: H9, claim: "zyre $44.99, 25 joints, ECOMG LLC, no height/battery/servo spec", status: verified}
+- {id: H10, claim: "Unitree R1 AIR $4,900 / R1 $5,900 excl. tax+shipping; EDU only for secondary dev", status: verified, note: "R1 EDU $10,500 on the page"}
+- {id: H11, claim: "Booster K1 22 DoF, 0.95 m, 19.5 kg, 60 N.m; Geek from $5,999", status: corrected, note: "specs verified on booster.tech; $5,999 secondary only; resellers now $7.5k (RobotsInternational) to ~$11.9k (RobotShop). Docs updated."}
+- {id: H12, claim: "BHL 0.8 m, 16 kg, BOM $4,312/$3,236, $188/$136 per actuator", status: verified}
+- {id: H13, claim: "Roboto Origin 14x DM4340P CNY 949, 9x DM10010L CNY 1,989, total ~CNY 49.7k", status: verified, note: "file header says 49,713, footer 49,743.53"}
+- {id: H14, claim: "AGILOped 10x X6-40 $545, $6,380, 1.10 m, 14.5 kg", status: verified, note: "$545 unit price inferred from table row; excludes optional Jetson"}
+- {id: H15, claim: "K-Scale ceased operations Nov 2025", status: verified, note: "no exact day"}
+actuator_claims:
+- {id: A1, claim: "RS06 36/11 N.m, 621 g, 9:1, dual encoders, $210", status: verified, note: "$228 with USB-CAN; shipping weight 770 g"}
+- {id: A2, claim: "RS03 60/20, 880 g, $225", status: verified}
+- {id: A3, claim: "RS02 17/6, 405 g, $145", status: verified}
+- {id: A4, claim: "RS00 14/5, 310 g, $125", status: verified}
+- {id: A5, claim: "RS05 5.5/1.6, 191 g, $110", status: verified}
+- {id: A6, claim: "RS04 120/40, 1420 g, $255", status: verified}
+- {id: A7, claim: "openelab RS06 $221.99 duties included; RS02 $174.99", status: verified, note: "RS06 variant shows 'sold out' text in markup: check stock"}
+- {id: A8, claim: "roboticscenter RS02 $195 / RS03 $245 / RS06 $255; SF stock claim", status: verified}
+- {id: A9, claim: "Damiao J4340 27/9, $155; J10010L 120/40 $265; J8006 20/8 $210", status: corrected, note: "J4340: catalog 27/9 but aifitlab V4 table now 40/14. J10010L and J8006 verified."}
+- {id: A10, claim: "J4310 conflict 7 vs 12.5 N.m", status: verified}
+- {id: A11, claim: "GO-M8010-6 23.7 N.m, 530 g, $280", status: verified}
+- {id: A12, claim: "AK70-10 24.8 N.m, $399-499 (cubemars), $563.76 RobotShop; AK45-36 24 N.m, 349 g, $185.9", status: corrected, note: "AK45-36 is 340 g, $149.9 motor / $185.9 with driver board; cubemars.com unreachable (aifitlab/roboticscenter show AK70-10 $398.9 backordered)"}
+- {id: A13, claim: "CyberGear 12 N.m, 317 g, $179, single encoder", status: verified}
+- {id: A14, claim: "moteus r4.11 $94, Apache-2.0", status: verified}
+- {id: A15, claim: "STS3250 4.9 N.m, 74.5 g, openelab $73.99", status: corrected, note: "aifitlab $88-97; $73.99 openelab unverified. Docs updated."}
+- {id: A16, claim: "BHL $188/$136 in public BOM; paper gives no per-actuator peak torque", status: verified}
+- {id: A17, claim: "aifitlab ships SF Express 7-12 days, duties finalised at checkout", status: verified, note: "no explicit 'ships from China' sentence found"}
+- {id: A18, claim: "bumi.py has ARMATURE_DM4340/LZ00/LZ05; limits 27/60/13/5.5 match DM-J4340 catalog 27, RS03 60, RS05 5.5", status: verified, note: "13 N.m ankle matches no listed part; code never names RobStride; labelled inference in docs"}
+cheaper_alternative_search: "none clearly cheaper than RS06 ($210/36 N.m) or RS03 ($225/60 N.m); DM-J6248P $265/97 N.m is 48:1 and not backdrivable"
+not_verified:
+- "Our feasibility arithmetic (feasibility.py) is our own scaling, not source-verified. The 'other parts' lines ($1,130) are estimates."
+- "Tariff rates: sources conflict; not verified."
+- "Any non-China Bumi availability, true Bumi mass, motor maker, margin, independent walking quality."
+- "Verifier limitation: summarising fetchers; Chinese pages read through APIs where possible."

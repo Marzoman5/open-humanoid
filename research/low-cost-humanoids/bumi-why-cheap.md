@@ -9,7 +9,7 @@ Accessed 2026-10-19. Evidence classes: **primary** = Noetix's own site/repo, **p
 
 ## 2. What those joints would cost us (our arithmetic)
 At the cheapest retail prices we found (aifitlab, China-shipped): 4x RS03-class (60 N.m, $225) = $900; 5x 27 N.m class (Damiao J4340 $155 or RS06 $210) = $775-1,050; 4x ankle 13 N.m (RS00 $125) = $500; 8x RS05 (5.5 N.m, $110) = $880. **Total about $3,050-3,330 for the actuators alone, over twice the whole robot's price.** (US-facing resellers add 6-35%.)
-A coincidence worth recording, not a finding: Noetix's sim limits 27 / 5.5 / 60 equal the peak ratings of Damiao DM-J4340 (27), RobStride RS05 (5.5) and RS03 (60), and its code names armature constants for "DM4340" and "LZ05/LZ00" (plausibly Lingzu = RobStride). That may only mean they prototyped with such parts. No source confirms what ships in the retail Bumi. **Motor maker/model: unpublished.** Founder says own control boards and motor drivers; one outlet says motors are not in-house.
+A coincidence worth recording, not a finding: Noetix's sim limits 27 / 5.5 / 60 equal the peak ratings of Damiao DM-J4340 (27), RobStride RS05 (5.5) and RS03 (60), and its code names armature constants for "DM4340" and "LZ05/LZ00" (plausibly Lingzu = RobStride). The 27 matches the Damiao catalog figure only (aifitlab now lists 40), and the 13 N.m ankle limit matches no listed part; the LZ labels are not documented as RobStride. That may only mean they prototyped with such parts. No source confirms what ships in the retail Bumi. **Motor maker/model: unpublished.** Founder says own control boards and motor drivers; one outlet says motors are not in-house.
 
 ## 3. The evidence-based explanation (ranked by how well supported)
 1. **Not our price class: a China domestic presale price.** CNY 9,998 on JD.com, tax-inclusive (13% VAT in China is our assumption, ex-VAT about $1,210), needs a Chinese delivery address (reseller statement). First batch of 500 sold in 2 days; deliveries began March-April 2026.
@@ -22,7 +22,7 @@ A coincidence worth recording, not a finding: Noetix's sim limits 27 / 5.5 / 60 
 | Fact | Source |
 |---|---|
 | CNY 9,998 JD.com presale needs a Chinese delivery address; elsewhere "price on request", no official international channel | botinfo.ai (broker, checked 2026-09-06) |
-| One reseller lists Bumi at **$5,995** (quote-based, subject to availability, authorisation by Noetix unstated); "EDU Air" $9,995 | robotsinternational.com |
+| One reseller lists Bumi at **$5,995** with an Add-to-Cart button, while its own text says price is confirmed by quote; authorisation by Noetix unstated; "EDU Air" $9,995. A search snippet (unopened) also showed a EUR ~2,220 'coming April 2026' European listing | robotsinternational.com; verifier pass | robotsinternational.com |
 | Noetix said at CES 2026 it plans a first 1,000-unit overseas delivery in Q2 2026 (article is about its N2 model); no confirmation that any Bumi has shipped to the US | Gasgoo |
 | Spring 2026 sources: sold out, deliveries delayed to April; not sold in US/EU | robozaps |
 | Tariff: Chinese-origin robots/motors face duties; sources conflict (2.5% MFN, +25% Section 301 mentioned); treat as unknown | multiple, unverified |

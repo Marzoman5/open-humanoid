@@ -17,13 +17,13 @@ Source of truth: `humanoids.yaml` (per-field basis and URLs) and `raw/*.yaml` (f
 | Zyre "smart robot" | null | "25 joints" | null | $44.99 (retail) | Shopify store | none | no |
 | FF Nova | 0.50 m / 2.8 kg | 20 | null | $2,490 + $390 pkg (vendor) | FF.com/Amazon, 100 invite-only units, 20 in stock | 0.1 m/s, claim | ROS 2, SDK (claimed) |
 | Hiwonder AiNex | 0.42 m / 2.45 kg | 24 | 3.4 N.m bus servos | ~$1,046 (retail) | RobotShop etc. | vendor claim | ROS2/Python |
-| **Noetix Bumi** | **0.98 m / ~17 kg** (press 0.94 / 12) | **21** | joint modules, 70 N.m max knee; maker unpublished | **CNY 9,998 (~$1,370)** China; **$5,995** at one US reseller (press / retail) | China JD.com; deliveries from ~Mar-Apr 2026; overseas on quote | demo video, Gala, Isaac Lab AMP task published; 0.5 m/s max | SDK + sim repo BSD-3; hardware closed |
+| **Noetix Bumi** | **0.98 m / ~17 kg official** (press and the consumer-price coverage: 0.94 m / 12 kg: possibly different variants) | **21** | joint modules, 70 N.m max knee; maker unpublished | **CNY 9,998 (~$1,370)** China; **$5,995** at one US reseller (press / retail) | China JD.com; deliveries from ~Mar-Apr 2026; overseas on quote | demo video, Gala, Isaac Lab AMP task published; 0.5 m/s max | SDK + sim repo BSD-3; hardware closed |
 | Swancor Qiyuan Q1 | 0.88 m / 15 kg | null | null | CNY 19,999 (press) | China, shipping from 2026-10-01 | news only | null |
 | Berkeley Humanoid Lite | 0.8 m / 16 kg | 22 | printed cycloidal + drone BLDC, DIY | **$4,312 BOM** (paper) | DIY | 1 zero-shot walk, no speed data | MIT code, CC BY-SA assets |
 | Unitree R1 AIR | 1.23 m / 27 kg | 20 | in-house PMSM | $4,900 excl. tax+shipping (vendor) | Unitree store, AliExpress (~$6.8k) | demos only | dev access on EDU only |
 | EngineAI SA01 | null / 40 kg | 12 (legs) | null | ~$5,250 (2024) | China | none found | null |
 | Unitree R1 | 1.23 m / 29 kg | 26 | in-house | $5,900 excl. tax+shipping; ~$8.1k AliExpress | same | demos, 1 qualitative review | EDU only |
-| Booster K1 Geek | 0.95 m / 19.5 kg | 22 | 60 N.m peak, maker null | "from $5,999" (retail, unverified) | booster.tech + resellers | partial: RoboCup team says real walk barely supported | Apache-2.0 SDK |
+| Booster K1 Geek | 0.95 m / 19.5 kg | 22 | 60 N.m peak, maker null | "from $5,999" launch figure (secondary only); resellers now $7.5k-$11.9k | booster.tech + resellers | partial: RoboCup team says real walk barely supported | Apache-2.0 SDK |
 | ToddlerBot 2.0 | 0.56 m / 3.4 kg | 30 | Dynamixel | <$6,000 (paper) | DIY | zero-shot walk (paper) | MIT |
 | AGILOped | 1.10 m / 14.5 kg | 10 (legs) | MyActuator X6-40 40 N.m, $545 each | $6,380 (paper) | DIY | real, grass | files, licence unnamed |
 | HighTorque Mini Pi+ | 0.68 m / 14.8 kg | 22 | closed | $6,750 (vendor) | direct | null | SDK |

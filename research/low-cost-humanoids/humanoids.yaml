@@ -107,7 +107,7 @@ robots:
   battery: "2 Ah (~20-30 min) Geek; 5 Ah Education"
   walking_evidence: "Maker video. B-Human RoboCup docs: real K1 only partially supported, learned walk tested once, stand-up not supported on the real robot."
   price: {usd: 5999, basis: retail, note: "'from', Geek base only, from aggregators citing booster.tech (store page not loadable); Oct-2025 marketing said 4,999; China launch CNY 29,900; Pro resells GBP 16.6k"}
-  sold: "booster.tech store + resellers (RobotShop, Switch Science JP, OpenELab)"
+  sold: "booster.tech store (no price visible) + resellers; verifier found RobotsInternational USD 7,500 and RobotShop about USD 11.9k, so the 5,999 figure is a launch/from price only"
   openness: "Apache-2.0 SDK, ROS2, Gym/Train/Deploy repos on GitHub; hardware closed"
   sources: [{url: "https://www.booster.tech/booster-k1/", kind: vendor}, {url: "https://docs.b-human.de/coderelease2025/handling-the-booster/", kind: third-party}, {url: "https://github.com/BoosterRobotics", kind: vendor}]
 

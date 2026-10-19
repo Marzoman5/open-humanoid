@@ -20,7 +20,7 @@ actuators:
 - {id: robstride_rs04, peak_nm: 120, rated_nm: 40, mass_g: 1420, size_mm: [120,120,56], volt_v: "48 (15-60)", encoder: "dual 14-bit", ratio: 9, price_usd: 255, us_facing_usd: 295, source: "https://aifitlab.com/products/robstride-04-motor", kind: vendor}
 - {id: damiao_dm_j3507, peak_nm: 3, rated_nm: 0.8, mass_g: 150, ratio: 7, price_usd: 120, kind: vendor, source: "Damiao 2025 catalog"}
 - {id: damiao_dm_j4310, peak_nm: "7 (catalog) or 12.5 (aifitlab V4 table): CONFLICT", rated_nm: 3, mass_g: 300, volt_v: "24 (24-48)", bus: "CAN / CAN-FD", encoder: "dual 14/16-bit", ratio: 10, price_usd: 125, us_facing_usd: 167, source: "https://aifitlab.com/products/damiao-dm-j4310-2ec-v1-1-servo-motor", kind: vendor}
-- {id: damiao_dm_j4340, peak_nm: 27, rated_nm: 9, no_load_rpm: "52 at 24 V, 100 at 48 V", mass_g: 362, ratio: 40, price_usd: 155, source: "Damiao 2025 selection catalog + aifitlab listing (see raw/actuators-raw.yaml)", kind: vendor, note: "40:1: slow, not backdrivable; arms/waist, not dynamic legs. Roboto Origin pays CNY 949 for the 4340P"}
+- {id: damiao_dm_j4340, peak_nm: "27 (Damiao 2025 catalog) or 40 (aifitlab V4 table, rated 14): CONFLICT, verifier-confirmed", rated_nm: 9, no_load_rpm: "52 at 24 V, 100 at 48 V", mass_g: 362, ratio: 40, price_usd: 155, source: "Damiao 2025 selection catalog + aifitlab listing (see raw/actuators-raw.yaml)", kind: vendor, note: "40:1: slow, not backdrivable; arms/waist, not dynamic legs. Roboto Origin pays CNY 949 for the 4340P"}
 - {id: damiao_dm_j6006, peak_nm: "11-12 (conflict)", rated_nm: 4, mass_g: 335, ratio: 6, price_usd: 150, kind: vendor}
 - {id: damiao_dm_j8006, peak_nm: 20, rated_nm: 8, no_load_rpm: "194 at 24 V", mass_g: 559, ratio: 6, price_usd: 210, kind: vendor, note: "RS06 gives about 1.8x the peak at similar price and mass"}
 - {id: damiao_dm_j8009p, peak_nm: 40, rated_nm: 20, mass_g: 921, ratio: 9, price_usd: 395, kind: vendor}
@@ -28,11 +28,11 @@ actuators:
 - {id: damiao_dm_j10010l, peak_nm: 120, rated_nm: 40, mass_g: 1375, ratio: 10, price_usd: 265, kind: vendor, note: "Roboto Origin BOM: CNY 1,989 each"}
 - {id: xiaomi_cybergear, peak_nm: 12, rated_nm: 4, mass_g: 317, volt_v: 24, encoder: "SINGLE 14-bit", ratio: 7.75, price_usd: 179, kind: vendor, note: "dominated by RS02 now (17 N.m, USD 145)"}
 - {id: unitree_go_m8010_6, peak_nm: 23.7, mass_g: 530, volt_v: "12-30", bus: "RS-485 4 Mbps", encoder: "15-bit", ratio: 6.33, price_usd: 280, us_facing_usd: 369, kind: vendor, note: "dominated by RS06; Qmini robot uses 11 of these"}
-- {id: cubemars_ak45_36, peak_nm: 24, rated_nm: 8, mass_g: 349, ratio: 36, backlash_arcmin: 12, price_usd: 186, kind: vendor, note: "36:1, poor backdrivability"}
+- {id: cubemars_ak45_36, peak_nm: 24, rated_nm: 8, mass_g: "340-349", ratio: 36, backlash_arcmin: 12, price_usd: "150 motor only / 186 with driver board", kind: vendor, note: "36:1, poor backdrivability"}
 - {id: cubemars_ak70_10, peak_nm: 24.8, rated_nm: 8.3, mass_g: "521-621 (conflict)", ratio: 10, price_usd: 399, us_facing_usd: 564, kind: vendor, note: "RobotShop USD 563.76 in stock; MEVITA robot uses 6"}
 - {id: cubemars_ak10_9, peak_nm: 53, rated_nm: 18, mass_g: 940, ratio: 9, price_usd: 699, kind: vendor}
 - {id: myactuator_rmd_x6_40, peak_nm: 40, rated_nm: 18, volt_v: 48, price_usd: 545, kind: paper, note: "AGILOped paper BOM price; no US-store USD list found for MyActuator"}
-- {id: feetech_sts3250, peak_nm: 4.9, rated_nm: 1.57, mass_g: 74.5, volt_v: "6-12", bus: "TTL serial bus", encoder: "12-bit magnetic", ratio: 345, price_usd: 74, us_facing_usd: 97, kind: vendor, note: "the Adam servo class; no hobby bus servo above ~8 N.m found; Dynamixel XM540 10.6 N.m is USD 494 and sold out"}
+- {id: feetech_sts3250, peak_nm: 4.9, rated_nm: 1.57, mass_g: 74.5, volt_v: "6-12", bus: "TTL serial bus", encoder: "12-bit magnetic", ratio: 345, price_usd: "74 (openelab, unverified) / 88-97 (aifitlab, verified)", us_facing_usd: 97, kind: vendor, note: "the Adam servo class; no hobby bus servo above ~8 N.m found; Dynamixel XM540 10.6 N.m is USD 494 and sold out"}
 diy:
   moteus_r4_11: {price_usd: 94, volt_v: "10-44", bus: "CAN-FD 5 Mbps", license: "firmware Apache-2.0", source: "https://mjbots.com/products/moteus-r4-11"}
   odrive_s1: {price_usd: 149, volt_v: "12-48", stock: "sold out on page"}
