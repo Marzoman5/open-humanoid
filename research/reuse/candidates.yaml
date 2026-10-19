@@ -1,0 +1,779 @@
+# Reuse audit candidates (T-0012). Accessed 2026-10-19.
+# Our licenses: MIT software / CERN-OHL-S hardware / CC-BY-SA docs.
+# root_license_independently_checked: the root LICENSE file name/SPDX was re-checked by the lead via the GitHub contents/license API
+# (and raw LICENSING/README text for roboninecom and toddlerbot); everything else comes from a summarizing fetcher and must be
+# re-read from the LICENSE text before copying files.
+- id: open-duck-mini
+  repo_url: 'https://github.com/apirrone/Open_Duck_Mini   # accessed: 2026-10-19'
+  artifacts:
+  - kind: repo-wide (code, print/*.stl, docs, urdf/xml, onnx)
+    path: LICENSE
+    license_spdx: Apache-2.0
+    license_url: 'https://raw.githubusercontent.com/apirrone/Open_Duck_Mini/v2/LICENSE   # accessed: 2026-10-19'
+    license_note: 'First line "Apache License". Copyright appendix is unfilled template (no named holder). Single
+      root LICENSE; no per-folder LICENSE found in tree listing (listing was truncated at 100k chars; print/mods/
+      not fully seen). README has no license text, so there is no README/LICENSE conflict. Apache-2.0 is applied
+      to CAD/STL/docs too although it is a software license; applicability to hardware is legally untested. Community
+      mods under print/mods/ (Justins_Park_Head_Mod, v2_Jaimes_Mods) may carry other authors; their own README not
+      checked (null).
+
+      '
+  - kind: CAD source
+    path: Onshape doc 64074dfcfa379b37d8a47762 (linked from README)
+    license_spdx: null
+    license_url: null
+    license_note: Onshape doc license not stated in README; treat as covered by repo Apache-2.0 only by assumption.
+      Not fetched (Onshape not in allowed hosts).
+  - kind: printable STL / mods
+    path: print/*.stl, print/mods/**
+    license_spdx: Apache-2.0
+    license_url: 'https://raw.githubusercontent.com/apirrone/Open_Duck_Mini/v2/LICENSE   # accessed: 2026-10-19'
+    license_note: Covered by root LICENSE (inferred from repo-wide license; no separate file).
+  - kind: sim assets
+    path: mini_bdx/robots/open_duck_mini_v2/{robot.urdf,robot.xml,robot_motors.xml,scene*.xml} + STL meshes
+    license_spdx: Apache-2.0
+    license_url: 'https://raw.githubusercontent.com/apirrone/Open_Duck_Mini/v2/LICENSE   # accessed: 2026-10-19'
+    license_note: Root license; per-file headers not checked (null).
+  - kind: trained policy
+    path: BEST_WALK_ONNX.onnx, BEST_WALK_ONNX_2.onnx
+    license_spdx: Apache-2.0
+    license_url: 'https://raw.githubusercontent.com/apirrone/Open_Duck_Mini/v2/LICENSE   # accessed: 2026-10-19'
+    license_note: Root license only. Policies are for the Duck's own kinematics/dynamics, not transferable to Adam.
+  - kind: docs
+    path: docs/ (assembly_guide.md, print_guide.md, sim2real.md, configure_motors.md, feetech_identification.md,
+      wiring diagrams)
+    license_spdx: Apache-2.0
+    license_url: 'https://raw.githubusercontent.com/apirrone/Open_Duck_Mini/v2/LICENSE   # accessed: 2026-10-19'
+    license_note: Root license; no separate doc license.
+  reusable_for_adam: 'Best-in-class reference for a STS3215 biped: wiring + motor config (docs/configure_motors.md,
+    wiring drawio), Feetech identification math (docs/feetech_identification.md), sim2real guide (docs/sim2real.md),
+    placo walk engine (mini_bdx/mini_bdx/placo_walk_engine), experiments/identification, MJCF/URDF structure and
+    head/neck mechanics (head pitch/yaw/roll STLs, print/mods Park head). Kinematics are for a 42 cm duck with no
+    arms, so leg/body CAD must be redesigned for a 0.5 m humanoid with arms and grippers.
+
+    '
+  effort: M
+  maturity: '4319 stars, 549 forks (GitHub API); last push 2026-01-31; created 2024-05-16; README claims BOM under
+    $400, walks on real hardware (BAM-identified actuators, RL sim2real). Build count not stated (null); forks suggest
+    hundreds of interested builders.
+
+    '
+  sts3215_compat: 'Servo model and voltage NOT stated in README/print_guide/feetech_identification (null from fetched
+    docs); the project pairs with BAM actuator identification (bam supports feetech_sts3215_7_4V). So 7.4 V STS3215
+    is the likely config, but unconfirmed from these files; verify against BOM sheet (not fetched).
+
+    '
+  license_compat_with_ours: 'Apache-2.0 is permissive: software compatible with MIT (keep NOTICE/attribution, state
+    changes). Apache-2.0 on CAD/docs is compatible for incorporation into CERN-OHL-S / CC-BY-SA works (permissive
+    input, retain notices). Combining is one-way (Apache into our copyleft is fine; our copyleft not back into theirs).
+    Apache-2.0 patent clause with GPLv2 irrelevant here. No conflict found. Caveat: copyright holder unnamed in
+    LICENSE.
+
+    '
+  verdict: adapt
+  notes: Use as the primary pattern source; copy docs/ideas with attribution, redo mechanical CAD.
+  root_license_independently_checked: Apache-2.0
+- id: open-duck-playground
+  repo_url: 'https://github.com/apirrone/Open_Duck_Playground   # accessed: 2026-10-19'
+  artifacts:
+  - kind: code (MuJoCo Playground RL envs)
+    path: repo root
+    license_spdx: null
+    license_url: 'https://raw.githubusercontent.com/apirrone/Open_Duck_Playground/main/LICENSE   # accessed: 2026-10-19
+      -> HTTP 404'
+    license_note: 'No LICENSE file (404 at main/LICENSE; GitHub API license=null). No license => all rights reserved
+      by default. Per-file headers not checked (null). May vendor Apache-2.0 MuJoCo Playground code; unverified.
+
+      '
+  reusable_for_adam: Reference only for RL env structure (reward terms, imitation of reference motions, BAM actuator
+    hookup) for a Playground-based walk policy.
+  effort: M
+  maturity: 195 stars, 94 forks; last push 2025-08-11; trained policies deployed on real Duck via Open_Duck_Mini_Runtime.
+  sts3215_compat: null
+  license_compat_with_ours: 'CONFLICT: no license = all rights reserved; cannot copy code into MIT repo. Ideas/algorithms
+    only, or ask author to add a license.
+
+    '
+  verdict: inspiration-only
+  notes: Re-implement from MuJoCo Playground (Apache-2.0) directly; do not copy files. Ask upstream to add a license
+    (issue) as an option.
+  root_license_independently_checked: NO LICENSE FILE (API 404)
+- id: open-duck-reference-motion-generator
+  repo_url: 'https://github.com/apirrone/Open_Duck_reference_motion_generator   # accessed: 2026-10-19'
+  artifacts:
+  - kind: code
+    path: repo root
+    license_spdx: null
+    license_url: 'https://raw.githubusercontent.com/apirrone/Open_Duck_reference_motion_generator/main/LICENSE   #
+      accessed: 2026-10-19 -> HTTP 404'
+    license_note: No LICENSE file (404; API license=null). All rights reserved by default. Per-file headers not
+      checked (null).
+  reusable_for_adam: 'Concept: parametric gait reference-motion generation (placo-based) feeding imitation RL; could
+    inform Adam''s walk references.'
+  effort: M
+  maturity: 123 stars, 50 forks; last push 2026-02-09.
+  sts3215_compat: null
+  license_compat_with_ours: 'CONFLICT: no license = all rights reserved; cannot be copied into MIT repo.'
+  verdict: inspiration-only
+  notes: 'The related placo_walk_engine inside Open_Duck_Mini (Apache-2.0) is the legally safe substitute for the
+    same idea.
+
+    '
+  root_license_independently_checked: NO LICENSE FILE (API 404)
+- id: open-duck-mini-runtime
+  repo_url: 'https://github.com/apirrone/Open_Duck_Mini_Runtime   # accessed: 2026-10-19'
+  artifacts:
+  - kind: 'code (Pi Zero 2W runtime: IMU, servo driver, ONNX policy loop)'
+    path: repo root
+    license_spdx: null
+    license_url: 'https://raw.githubusercontent.com/apirrone/Open_Duck_Mini_Runtime/main/LICENSE   # accessed: 2026-10-19
+      -> HTTP 404'
+    license_note: No LICENSE file (404; API license=null). All rights reserved by default. Per-file headers not
+      checked (null).
+  reusable_for_adam: Reference for on-board control loop, Feetech serial driver usage, IMU, ONNX inference on a
+    Pi Zero 2W.
+  effort: M
+  maturity: 188 stars, 116 forks; last push 2026-09-07 (most actively maintained of the duck repos); runs on real
+    robot.
+  sts3215_compat: null (not read; likely STS3215 over serial, unconfirmed)
+  license_compat_with_ours: 'CONFLICT: no license = all rights reserved; cannot copy into MIT repo.'
+  verdict: inspiration-only
+  notes: Write our own runtime (rustypot/feetech SDK are separately licensed; check before use). Ask upstream for
+    a license.
+  root_license_independently_checked: NO LICENSE FILE (API 404)
+- id: toddlerbot
+  repo_url: 'https://github.com/hshi74/toddlerbot   # accessed: 2026-10-19'
+  artifacts:
+  - kind: code + documentation
+    path: LICENSE (repo root); toddlerbot/, scripts/, docs/
+    license_spdx: MIT
+    license_url: 'https://raw.githubusercontent.com/hshi74/toddlerbot/main/LICENSE   # accessed: 2026-10-19'
+    license_note: 'First line "MIT License"; Copyright Haochen Shi 2023. README: codebase "(including the documentation)"
+      is MIT.'
+  - kind: hardware design (Onshape, STL, "etc.")
+    path: Onshape 565bc33af293a651f66e88d2; MakerWorld 1733983; STL/MJCF assets under toddlerbot/descriptions/assemblies/*/assets
+    license_spdx: CC-BY-NC-SA-4.0
+    license_url: 'https://creativecommons.org/licenses/by-nc-sa/4.0/   # accessed: 2026-10-19 (cited by README,
+      no separate license file in repo)'
+    license_note: 'README states design is CC BY-NC-SA, "non-commercially". CONFLICT INSIDE REPO: root LICENSE is
+      MIT (applies to whole repo text) while README carves out design files as NC. The MJCF/STL assets live inside
+      the MIT-licensed repo tree; the README intent (NC) should be presumed to govern them. No per-folder license
+      file found.
+
+      '
+  - kind: docs (Sphinx site)
+    path: docs/ , https://hshi74.github.io/toddlerbot
+    license_spdx: MIT
+    license_url: 'https://raw.githubusercontent.com/hshi74/toddlerbot/main/LICENSE   # accessed: 2026-10-19'
+    license_note: README says docs are MIT; site footer says only "Copyright 2025, ToddlerBot" with no license named.
+  - kind: trained policies
+    path: Google Drive checkpoints (linked from README)
+    license_spdx: null
+    license_url: null
+    license_note: No license stated for checkpoints; hosted on Google Drive (not fetched). Treat as unlicensed.
+  - kind: sysID tooling
+    path: toddlerbot/tools/run_sysID.py; docs/tools/02_sysID.rst; sysID_fixed policy
+    license_spdx: MIT
+    license_url: 'https://raw.githubusercontent.com/hshi74/toddlerbot/main/LICENSE   # accessed: 2026-10-19'
+    license_note: Optuna + PostgreSQL based; the sysID rig CAD/print files are design files (NC). Source file run_sysID.py
+      not directly fetched (referenced by docs).
+  - kind: teleop
+    path: toddlerbot/manipulation/teleoperation/ (incl. general_motion_retargeting), examples/test_teleoperation_gmr.py
+    license_spdx: MIT
+    license_url: 'https://raw.githubusercontent.com/hshi74/toddlerbot/main/LICENSE   # accessed: 2026-10-19'
+    license_note: GMR (general motion retargeting) is likely a third-party dependency with its own license (null,
+      not checked).
+  reusable_for_adam: 'Software ideas/code (MIT): RL pipeline (train_mjx.py, MJX), keyframe-motion/Keyframe App workflow
+    for wave/dance (motion/ folder format), arm teleoperation + motion retargeting for manipulation, sysID optimization
+    approach. Hardware is Dynamixel (XC330/XC430/2XC430/XM430) based, not STS3215; CAD/MJCF are NC and unusable.
+
+    '
+  effort: L
+  maturity: 786 stars, 94 forks; last push 2026-07-31; real-hardware humanoid with manipulation (gripper/palm variants);
+    papers/videos exist (not fetched). Build count null.
+  sts3215_compat: 'None: documented actuators are Dynamixel (2XC430, 2XL430, XC330, XC430, XM430 per sysID doc).
+    Voltage null. Software would need an STS3215 driver and new actuator model (BAM can supply).
+
+    '
+  license_compat_with_ours: 'Code/docs MIT: compatible with our MIT software; docs would need to be CC-BY-SA-compatible
+    (MIT is permissive: fine). HARDWARE CONFLICT: CC-BY-NC-SA-4.0 design files are noncommercial + ShareAlike; cannot
+    be incorporated into a CERN-OHL-S design (NC restriction cannot be preserved by CERN-OHL-S; CC-BY-NC-SA cannot
+    be relicensed). Do not copy or derive from CAD/STL/MJCF assets.
+
+    '
+  verdict: adapt
+  notes: Adapt MIT code and workflows only; derive mechanics independently (ideas are not copyrightable but geometry
+    is). Verdict for hardware alone would be avoid.
+  root_license_independently_checked: MIT (root); design files CC-BY-NC-SA-4.0 per README
+- id: rhoban-bam
+  repo_url: 'https://github.com/Rhoban/bam   # accessed: 2026-10-19'
+  artifacts:
+  - kind: code
+    path: bam/ (fit.py, model.py, actuator.py, feetech/, mujoco.py, testbench.py, to_mujoco.py, ...)
+    license_spdx: Apache-2.0
+    license_url: 'https://raw.githubusercontent.com/Rhoban/bam/main/LICENSE   # accessed: 2026-10-19'
+    license_note: 'First line "Apache License"; template appendix unfilled. Per-file header seen in bam/feetech/__init__.py:
+      "Copyright 2025 Marc Duclusaud & Grégoire Passault, Licensed under the Apache License, Version 2.0". README
+      citation: license = Apache-2.0. No conflict.
+
+      '
+  - kind: actuator models / identified parameters
+    path: bam/params/feetech_sts3215_7_4V/m1.json ... m6.json (also waveshare_st3025, dynamixel mx64/mx106/xl320/xl330,
+      erob80_*)
+    license_spdx: Apache-2.0
+    license_url: 'https://raw.githubusercontent.com/Rhoban/bam/main/LICENSE   # accessed: 2026-10-19'
+    license_note: 'Covered by root license (inferred; bam/params/README.md says only "identifier parameters for
+      various actuators", no license text). m1..m6 are increasing-complexity friction models (6 files per actuator,
+      per tree listing).
+
+      '
+  - kind: docs
+    path: docs/, https://bam.readthedocs.io/en/latest/
+    license_spdx: Apache-2.0
+    license_url: 'https://raw.githubusercontent.com/Rhoban/bam/main/LICENSE   # accessed: 2026-10-19'
+    license_note: Root license; docs site not fetched.
+  - kind: scientific citation requirement
+    path: README.md
+    license_spdx: null
+    license_url: 'https://raw.githubusercontent.com/Rhoban/bam/main/README.md   # accessed: 2026-10-19'
+    license_note: README asks (a request, not a license term) that work using BAM cite the ICRA 2025 paper by Duclusaud
+      et al.
+  reusable_for_adam: 'Directly usable: pip-install bam; use bam/params/feetech_sts3215_7_4V/ model JSONs in MuJoCo
+    (bam/mujoco.py, to_mujoco.py) so sim matches STS3215 friction/backlash; reuse fit.py + testbench.py to identify
+    Adam''s own servos (and 12 V variants) with a simple pendulum rig; this is the sim2real backbone for the walk
+    policy.
+
+    '
+  effort: S
+  maturity: 552 stars, 72 forks; last push 2026-09-28; 498 commits; ICRA 2025 paper; used on real Open Duck Mini;
+    supports MuJoCo CPU / Warp / mjlab.
+  sts3215_compat: 'Yes, native: Feetech STS3215 at 7.4 V (folder name feetech_sts3215_7_4V). 12 V STS3215 variant:
+    no params shipped (null); would need re-identification with BAM''s own pipeline.
+
+    '
+  license_compat_with_ours: 'Apache-2.0 into MIT: compatible (keep license, NOTICE, attribution, mark modifications).
+    Params data under Apache-2.0 usable in CERN-OHL-S/CC-BY-SA docs with attribution. No conflict.'
+  verdict: reuse-as-is
+  notes: Add as a dependency (not vendored) where possible; cite the ICRA 2025 paper in docs.
+  root_license_independently_checked: Apache-2.0
+- id: lerobot
+  repo_url: https://github.com/huggingface/lerobot
+  artifacts:
+  - kind: code
+    path: LICENSE (repo root); src/lerobot/motors/feetech/feetech.py, src/lerobot/motors/motors_bus.py, src/lerobot/motors/calibration_gui.py
+    license_spdx: Apache-2.0
+    license_url: https://raw.githubusercontent.com/huggingface/lerobot/main/LICENSE
+    license_note: 'First line: "Copyright 2024 The Hugging Face team. All rights reserved." then "Apache License
+      Version 2.0". File also lists third-party copyrights (Columbia AIRL, Yunhai Feng, Hansen & Ze, Tony Zhao,
+      StarVLA, Meta). accessed 2026-10-19. Per-file headers not checked.'
+  - kind: models/policies
+    path: Hugging Face Hub checkpoints (ACT, diffusion, SmolVLA, etc.)
+    license_spdx: null
+    license_url: null
+    license_note: Not audited; per-model Hub licenses vary. unknown.
+  reusable_for_adam: 'Feetech STS3215 bus driver (src/lerobot/motors/feetech/feetech.py: model table, sync read/write,
+    register map, baudrate, torque enable, homing offset), motors_bus.py abstraction, calibration flow (calibration_gui.py,
+    robots/so_follower calibrate), teleop leader-follower pattern (robots/so_follower, bi_so_follower). pyproject
+    uses rustypot>=1.13.1 + pyserial for feetech extra (not the FT SCServo SDK).'
+  effort: M
+  maturity: Very mature software. 28280 stars, 5910 forks, last push 2026-10-19 (API pushed_at). Runs on real SO-100/101
+    hardware widely (STS3215). Hardware build count not stated by repo.
+  sts3215_compat: 'Native STS3215 support. Voltage per SO-101 docs: 7.4V (5-6V rail) and 12V variants both supported
+    at driver level; voltage is hardware, not driver.'
+  license_compat_with_ours: 'Apache-2.0 is compatible with MIT project (keep NOTICE/attribution, state changes;
+    patent clause). One-way: can be included in MIT-licensed project with Apache notices retained. No copyleft.'
+  verdict: adapt
+  notes: 'Heavy dependency (torch etc.) - extract/port the motor layer rather than depend on whole lerobot. Honest
+    note: bus layer is ~1-2 files; M for trimming, S if used as pip dependency on a Pi/PC.'
+  root_license_independently_checked: Apache-2.0
+- id: so-arm100-so101
+  repo_url: https://github.com/TheRobotStudio/SO-ARM100
+  artifacts:
+  - kind: whole repo (CAD STEP/STL, docs, URDF/MJCF, software)
+    path: LICENSE (repo root); STEP/, STL/, Simulation/SO100, Simulation/SO101, Optional/Compliant_Gripper, Mini/,
+      docs/
+    license_spdx: Apache-2.0
+    license_url: https://raw.githubusercontent.com/TheRobotStudio/SO-ARM100/main/LICENSE
+    license_note: 'First line: "Apache License". Copyright line is the unfilled template "Copyright [yyyy] [name
+      of copyright owner]" (no holder named). GitHub UI/API label Apache-2.0. Hardware (CAD/STL) is covered by this
+      software license; no separate CAD license file found. No per-folder licenses seen (not exhaustively checked).
+      README/SO100.md contain no license statement.'
+  - kind: sim models
+    path: Simulation/SO101/{so101_new_calib.urdf, so101_new_calib.xml, scene.xml, joints_properties.xml, assets/};
+      Simulation/SO100
+    license_spdx: Apache-2.0
+    license_url: https://raw.githubusercontent.com/TheRobotStudio/SO-ARM100/main/LICENSE
+    license_note: Covered by repo root licence; Simulation/README.md not read.
+  reusable_for_adam: 'Arm/gripper mechanical design for the pick-up-150g task: SO101 follower 5-DOF + gripper STEP/STL
+    (STEP/, STL/SO101/Individual), Optional/Compliant_Gripper, wrist-cam mounts (Wrist_Cam_Mount_32x32_UVC_Module),
+    SO101 URDF/MJCF for sim, parts list and wiring (STS3215 bus). Scale needs checking vs Adam ~0.5 m body (SO101
+    is a desk arm; arm length likely too large/heavy for a 0.5 m humanoid - scaling effort).'
+  effort: M
+  maturity: 7805 stars, 719 forks, last push 2026-10-06, 231 commits. Large community builds (count not stated by
+    repo); validated on real hardware, with LeRobot.
+  sts3215_compat: 'Designed around STS3215: 7.4V version (16.5 kg.cm @6V, "sufficient" for follower, leader always
+    7.4V) and 12V version (30 kg.cm, needs 12V 5A+ supply). Gear ratios 1/345, 1/191, 1/147.'
+  license_compat_with_ours: 'Apache-2.0 hardware files: compatible for use in a CERN-OHL-S project in practice (permissive,
+    keep attribution/NOTICE), but Apache-2.0 is not itself a hardware licence and a derived file remains Apache
+    for the original portions. No copyleft/NC conflict. Lacking named copyright holder - low risk but note.'
+  verdict: adapt
+  notes: Best-matched actuator/arm reference. Printed PLA arm looks toy-like; use geometry/gripper concept, redesign
+    cosmetic shells.
+  root_license_independently_checked: Apache-2.0
+- id: berkeley-humanoid-lite
+  repo_url: https://github.com/HybridRobotics/Berkeley-Humanoid-Lite
+  artifacts:
+  - kind: code (Isaac Lab envs/tasks, training, deploy scripts)
+    path: LICENCE (note British spelling; README links LICENSE which 404s); source/berkeley_humanoid_lite/, scripts/,
+      configs/, motor_configuration.json
+    license_spdx: MIT
+    license_url: https://raw.githubusercontent.com/HybridRobotics/Berkeley-Humanoid-Lite/main/LICENCE
+    license_note: 'First line: "MIT License"; "Copyright (c) 2025, The Berkeley Humanoid Lite Project Developers."
+      README: "The code in this repository is licensed under MIT License." Consistent. GitHub API says MIT. LICENSE
+      path returns 404 (file is LICENCE).'
+  - kind: CAD, 3D-print files, other assets, docs
+    path: Releases page / GitBook docs (CAD hosted there, not in repo); source/berkeley_humanoid_lite_assets submodule
+    license_spdx: CC-BY-SA-4.0
+    license_url: https://raw.githubusercontent.com/HybridRobotics/Berkeley-Humanoid-Lite/main/LICENCE
+    license_note: 'README states: "Other assets are under Creative Commons Attribution-ShareAlike 4.0 International".
+      The repo LICENCE file is MIT only; CC-BY-SA claim is README-only for this repo (README/LICENCE partial conflict).
+      CAD release package licence text not fetched: unknown.'
+  - kind: trained policies
+    path: checkpoints/
+    license_spdx: null
+    license_url: null
+    license_note: checkpoints/ folder exists; no folder-level licence found; falls under MIT or CC-BY-SA ambiguity.
+      Not verified.
+  reusable_for_adam: Training pipeline structure (Isaac Lab; heavy GPU, not MuJoCo), sim2real deploy scaffolding
+    (lowlevel), actuator-model/PD config ideas, URDF/MJCF kinematics as 12-DOF biped reference. Its actuators are
+    custom BLDC with 3D-printed cycloidal-like gearboxes - NOT STS3215; leg design does not transfer to servo legs.
+  effort: L
+  maturity: 1985 stars, 316 forks, last push 2026-03-10. Paper says deployed on real robot (README links paper/video;
+    not verified here). Sub-$5000 humanoid, ~$5k vs our $550 budget.
+  sts3215_compat: None. Uses custom BLDC actuators (README does not name motor/voltage). STS3215 incompatible in
+    torque/bandwidth for this control stack.
+  license_compat_with_ours: 'MIT code: compatible with MIT. CC-BY-SA-4.0 CAD/assets: COPYLEFT - cannot be relicensed
+    under CERN-OHL-S (CC-BY-SA 4.0 only upgradable to GPLv3); keep any derived CAD CC-BY-SA, or avoid. Flag.'
+  verdict: inspiration-only
+  notes: Take MIT-licensed training/sim code patterns only. Do not copy CAD into CERN-OHL-S tree.
+  root_license_independently_checked: MIT (file LICENCE)
+- id: berkeley-humanoid-lite-assets
+  repo_url: https://github.com/HybridRobotics/Berkeley-Humanoid-Lite-Assets
+  artifacts:
+  - kind: assets (URDF, MJCF, USD, Onshape export script)
+    path: LICENCE (root)
+    license_spdx: CC-BY-SA-4.0
+    license_url: https://raw.githubusercontent.com/HybridRobotics/Berkeley-Humanoid-Lite-Assets/main/LICENCE
+    license_note: 'First line: "Attribution-ShareAlike 4.0 International". GitHub API CC-BY-SA-4.0. (Main README
+      says code is MIT; this assets repo is whole-repo CC-BY-SA incl. any scripts.) LICENSE path 404; file is LICENCE.'
+  reusable_for_adam: Reference robot description only (12-DOF biped). Not for Adam geometry.
+  effort: L
+  maturity: 43 stars, 35 forks (API), last push 2025-09-07.
+  sts3215_compat: None (custom BLDC actuators).
+  license_compat_with_ours: 'COPYLEFT CC-BY-SA-4.0: conflicts with CERN-OHL-S relicensing; usable only if kept under
+    CC-BY-SA. Docs-compatible (our docs are CC-BY-SA).'
+  verdict: inspiration-only
+  notes: Fetched via contents of submodule listing in .gitmodules (SSH URL).
+  root_license_independently_checked: CC-BY-SA-4.0 (file LICENCE)
+- id: berkeley-humanoid-lite-lowlevel
+  repo_url: https://github.com/HybridRobotics/Berkeley-Humanoid-Lite-Lowlevel
+  artifacts:
+  - kind: code (on-robot low-level)
+    path: repo root
+    license_spdx: null
+    license_url: null
+    license_note: 'No LICENSE file (LICENSE URL 404; GitHub API license null). No licence declared at all -> all
+      rights reserved by default. Note: parent repo README says code is MIT, but this is a separate repo with no
+      licence - unresolved, do not assume MIT. LICENCE spelling not tried.'
+  reusable_for_adam: Nothing safely reusable until a licence is added.
+  effort: L
+  maturity: 47 stars, 35 forks, last push 2026-03-02.
+  sts3215_compat: None known (custom actuators).
+  license_compat_with_ours: 'NO-LICENSE CONFLICT: cannot copy or adapt code.'
+  verdict: avoid
+  notes: Open an issue upstream if we want it. Reading for ideas only.
+  root_license_independently_checked: false
+- id: mujoco-playground
+  repo_url: https://github.com/google-deepmind/mujoco_playground
+  artifacts:
+  - kind: 'code (humanoid envs: berkeley_humanoid, t1, g1, h1, op3, apollo, barkour, go1, spot)'
+    path: mujoco_playground/_src/locomotion/{berkeley_humanoid,t1,g1,h1,op3,apollo,...}; joystick.py
+    license_spdx: Apache-2.0
+    license_url: https://raw.githubusercontent.com/google-deepmind/mujoco_playground/main/LICENSE
+    license_note: 'First line: "Apache License Version 2.0". File header of berkeley_humanoid/joystick.py: Apache-2.0,
+      copyright Google LLC. Robot XML/asset licences are per model (see menagerie) - Playground vendors some robot
+      assets; per-folder licences not checked.'
+  reusable_for_adam: Joystick velocity-tracking env template with phase-based gait (feet_phase reward), reset/obs-noise/push
+    randomization; MJX + Brax PPO training recipe. Good template to write an Adam env (12-DOF servo biped). Domain
+    randomization lacks friction/mass.
+  effort: M
+  maturity: 2255 stars, 364 forks, last push 2026-10-07. Sim-to-real shown by authors for some robots (Berkeley
+    Humanoid, T1, Go1) - not verified here.
+  sts3215_compat: Not hardware. Env assumes torque/position actuators with PD; must add STS3215 model (position
+    servo, ~16.5 kg.cm @6V, latency, backlash) as actuator model.
+  license_compat_with_ours: 'Apache-2.0: compatible with MIT project with notices.'
+  verdict: adapt
+  notes: Strong path for walking RL on MuJoCo/MJX; GPU needed for training.
+  root_license_independently_checked: Apache-2.0
+- id: mujoco-menagerie
+  repo_url: https://github.com/google-deepmind/mujoco_menagerie
+  artifacts:
+  - kind: repo-level (non-model content)
+    path: LICENSE (root) + README statement
+    license_spdx: null
+    license_url: https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/main/LICENSE
+    license_note: 'Root LICENSE is a concatenation of per-model licences; first line is a separator then "License
+      for contents in the directory agilex_piper/" (MIT, RosenYin). GitHub API NOASSERTION. README: "All other content
+      is Copyright 2022 DeepMind Technologies Limited and licensed under the Apache License, Version 2.0." Per-model
+      licence files govern models.'
+  - kind: berkeley_humanoid model
+    path: berkeley_humanoid/{berkeley_humanoid.xml,scene.xml,assets/}
+    license_spdx: BSD-3-Clause
+    license_url: https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/main/berkeley_humanoid/LICENSE
+    license_note: 'First line: "Copyright (c) 2024 Hybrid Robotics" ; "All rights reserved."; BSD-3 text (identified
+      from content). Consistent with README table.'
+  - kind: booster_t1 model
+    path: booster_t1/
+    license_spdx: Apache-2.0
+    license_url: https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/main/booster_t1/LICENSE
+    license_note: First line "Apache License"; template copyright left unfilled. README table also Apache-2.0. Derived
+      from Booster public URDF.
+  - kind: unitree_g1 / h1 models
+    path: unitree_g1/, unitree_h1/
+    license_spdx: BSD-3-Clause
+    license_url: https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/main/unitree_g1/LICENSE
+    license_note: 'First line: "Copyright (c) 2016-2023 HangZhou YuShu TECHNOLOGY CO.,LTD. ("Unitree Robotics")".
+      H1 BSD-3-Clause per README table (own LICENSE file not fetched).'
+  - kind: robotis_op3 model
+    path: robotis_op3/
+    license_spdx: Apache-2.0
+    license_url: https://github.com/google-deepmind/mujoco_menagerie/tree/main/robotis_op3
+    license_note: Per README table only; LICENSE file not fetched.
+  reusable_for_adam: 'Reference MJCFs: robotis_op3 (small Dynamixel humanoid, closest in scale/servo-driven to Adam)
+    and berkeley_humanoid for MJCF structure; scene.xml patterns. Good for position-actuator tuning examples. SO101
+    may also be in menagerie (not checked).'
+  effort: S
+  maturity: 4217 stars, 596 forks, last push 2026-10-15. Models are simulation-only descriptions.
+  sts3215_compat: None directly; OP3 uses Dynamixel XM430 (not STS3215).
+  license_compat_with_ours: 'Per-model: Apache-2.0 / BSD-3 / MIT permissive - all compatible with MIT/CERN-OHL-S
+    derivative if notices kept. Always check each model dir; no copyleft seen in rows read. Other models not audited.'
+  verdict: adapt
+  notes: Never assume repo-level licence applies to a model; copy LICENSE with the model files.
+  root_license_independently_checked: false
+- id: mujoco-core
+  repo_url: https://github.com/google-deepmind/mujoco
+  artifacts:
+  - kind: code (physics engine, python bindings)
+    path: LICENSE
+    license_spdx: Apache-2.0
+    license_url: https://github.com/google-deepmind/mujoco/blob/main/LICENSE
+    license_note: SPDX from GitHub API only; LICENSE text not fetched. Includes mjx (JAX).
+  reusable_for_adam: Simulator + MJX GPU physics via pip as dependency.
+  effort: S
+  maturity: 15746 stars, 1865 forks, last push 2026-10-18. Industry standard.
+  sts3215_compat: n/a (simulator).
+  license_compat_with_ours: Apache-2.0 compatible as dependency with MIT.
+  verdict: reuse-as-is
+  notes: Use as pip dependency, do not vendor.
+  root_license_independently_checked: false
+- id: brax
+  repo_url: https://github.com/google/brax
+  artifacts:
+  - kind: code (RL training, PPO)
+    path: LICENSE
+    license_spdx: Apache-2.0
+    license_url: https://github.com/google/brax/blob/main/LICENSE
+    license_note: SPDX from GitHub API only; LICENSE text not fetched.
+  reusable_for_adam: PPO trainer used by MuJoCo Playground.
+  effort: S
+  maturity: 3249 stars, 357 forks, last push 2026-10-07.
+  sts3215_compat: n/a.
+  license_compat_with_ours: Apache-2.0 compatible as dependency.
+  verdict: reuse-as-is
+  notes: ''
+  root_license_independently_checked: false
+- id: mujoco-mpc
+  repo_url: https://github.com/google-deepmind/mujoco_mpc
+  artifacts:
+  - kind: code (predictive control, C++ with python bindings)
+    path: LICENSE
+    license_spdx: Apache-2.0
+    license_url: https://github.com/google-deepmind/mujoco_mpc/blob/main/LICENSE
+    license_note: SPDX from GitHub API only; LICENSE text not fetched.
+  reusable_for_adam: Optional MPC reference/simulation-only behaviour search (e.g. dance motions); C++ build.
+  effort: L
+  maturity: 1749 stars, 285 forks, last push 2026-10-07. Not used on real hardware by default.
+  sts3215_compat: n/a.
+  license_compat_with_ours: Apache-2.0 compatible.
+  verdict: inspiration-only
+  notes: Windows C++ build effort; not essential for MVP.
+  root_license_independently_checked: false
+- id: placo
+  repo_url: https://github.com/Rhoban/placo
+  artifacts:
+  - kind: code (QP kinematics/dynamics, bindings; bundled qpmad)
+    path: LICENSE; thirdparty/qpmad
+    license_spdx: MIT
+    license_url: https://raw.githubusercontent.com/Rhoban/placo/master/LICENSE
+    license_note: 'First line: "Copyright (c) <2023-2099> Rhoban Team" then MIT permission text. GitHub API MIT.
+      README: bundled qpmad is Apache-2.0 (per README, not verified in file). Built on Pinocchio (BSD-2, not checked
+      here).'
+  reusable_for_adam: pip install placo as dependency for IK/CoM/whole-body tasks, arm IK for pick-up, torso/head
+    tracking; Rhoban humanoid walking (Sigmaban/ Rhoban walk engines are separate repos - README says nothing about
+    walking).
+  effort: M
+  maturity: 381 stars, 34 forks, last push 2026-09-30 (default branch master). Used on Rhoban robots (real hardware)
+    per project history, not verified here.
+  sts3215_compat: n/a (kinematics lib); outputs joint targets to STS3215.
+  license_compat_with_ours: 'MIT: fully compatible. Wheels listed for Linux/macOS only (README); Windows build not
+    stated -> use WSL/Linux or build from source.'
+  verdict: reuse-as-is
+  notes: Usable as dependency.
+  root_license_independently_checked: MIT
+- id: feetech-scservo-sdk
+  repo_url: https://pypi.org/project/feetech-servo-sdk/
+  artifacts:
+  - kind: code (python SDK fork "feetech-servo-sdk" by vertigra / Adam-Software)
+    path: PyPI package feetech-servo-sdk 1.0.0; source github.com/Adam-Software/FEETECH-Servo-Python-SDK
+    license_spdx: Unlicense
+    license_url: https://pypi.org/pypi/feetech-servo-sdk/json
+    license_note: PyPI metadata only (license "UNLICENSE", classifier Unlicense); repo LICENSE file not fetched.
+      Released 2022-11-08. Not the original Feetech vendor repo.
+  - kind: code (official FT SCServo SDK from Feetech)
+    path: vendor distribution (feetechrc.com / github.com/ftservo)
+    license_spdx: null
+    license_url: null
+    license_note: 'Official vendor SDK licence NOT verified (not found via allowed hosts). Third-party mirrors:
+      32bitmicro/Feetech-SCServoSDK has no licence; adityakamath/SCServo_Linux is MIT (fork, upstream licence unclear).'
+  reusable_for_adam: Protocol reference for STS/SCS serial bus (register map, sync write). LeRobot (uses rustypot)
+    already covers this; prefer lerobot driver.
+  effort: S
+  maturity: Small forks; official SDK widely used by community.
+  sts3215_compat: STS series protocol; STS3215 supported. Voltage hardware-dependent (7.4V/12V variants).
+  license_compat_with_ours: Unlicense compatible (public domain dedication) but provenance of a fork of vendor code
+    is uncertain; vendor-licence-unknown -> treat as risk.
+  verdict: inspiration-only
+  notes: Use lerobot/rustypot (Apache-2.0 LeRobot; rustypot licence not checked).
+  root_license_independently_checked: false
+- id: roboninecom-so-arm-parallel-gripper
+  repo_url: https://github.com/roboninecom/SO-ARM100-101-Parallel-Gripper
+  accessed: 2026-10-19
+  artifacts:
+  - kind: cad
+    path: models/ (parts/*.STL, assembly STL)
+    license_spdx: CERN-OHL-P-2.0
+    license_url: https://github.com/roboninecom/SO-ARM100-101-Parallel-Gripper
+    license_note: Per README multi-license table; file-level detail in NOTICE/LICENSING.md/REUSE.toml (not read).
+      GitHub API repo-level license field says CC-BY-4.0, which disagrees with README table - flag.
+  - kind: code
+    path: software/, examples/, simulation/
+    license_spdx: Apache-2.0
+    license_url: https://github.com/roboninecom/SO-ARM100-101-Parallel-Gripper
+    license_note: README table
+  - kind: docs
+    path: docs/, assets/, READMEs
+    license_spdx: CC-BY-4.0
+    license_url: https://github.com/roboninecom/SO-ARM100-101-Parallel-Gripper
+    license_note: README table; matches API repo-level CC-BY-4.0
+  - kind: upstream-arm-meshes
+    path: SO-ARM101 meshes
+    license_spdx: Apache-2.0
+    license_url: https://github.com/TheRobotStudio/SO-ARM100
+    license_note: Stated as inherited from TheRobotStudio
+  - kind: policies
+    path: releases <= v0.3.1
+    license_spdx: GPL-3.0
+    license_url: https://github.com/roboninecom/SO-ARM100-101-Parallel-Gripper
+    license_note: README says old releases were GPL-3.0; only use current HEAD, not old tags
+  reusable_for_adam: 'Best gripper candidate: 1x STS3215 parallel-jaw, 84 mm stroke, 120 N, 170 g assembly (heavy
+    for a 0.5 m robot; trim/light-weight it). Needs a mount to our wrist.'
+  effort: M
+  maturity: 193 stars, 20 forks, pushed 2026-10-10. Hardware build proof not verified from page; sims listed (Gazebo/MuJoCo
+    ready).
+  sts3215_compat: Yes, 1x Feetech STS3215 (and Waveshare ST3215). Voltage listed as 12 V variant.
+  license_compat_with_ours: 'Compatible: permissive licenses (CERN-OHL-P, Apache, CC-BY) can be absorbed into CERN-OHL-S/MIT/CC-BY-SA
+    with attribution. Caveat: license mismatch between README table and API; resolve via LICENSING.md before copying.'
+  verdict: adapt
+  notes: Check REUSE.toml for per-file truth. 170 g gripper mass is large for ~0.5 m arm; expect a lightened redesign.
+  root_license_independently_checked: hardware CERN-OHL-P-2.0, software Apache-2.0, docs CC-BY-4.0 (LICENSING.md
+    + HARDWARE-LICENSE.txt)
+- id: xlerobot
+  repo_url: https://github.com/Vector-Wangel/XLeRobot
+  accessed: 2026-10-19
+  artifacts:
+  - kind: repo-wide
+    path: LICENSE
+    license_spdx: Apache-2.0
+    license_url: https://raw.githubusercontent.com/Vector-Wangel/XLeRobot/main/LICENSE
+    license_note: Stock Apache-2.0 text
+  - kind: cad
+    path: hardware/ (SO101_soft_fin.stl, Ender_Follower_SO101.stl, step/, ...)
+    license_spdx: null
+    license_url: https://github.com/Vector-Wangel/XLeRobot/tree/main/hardware
+    license_note: No license file or note in hardware/ folder listing; only repo-level Apache. Flag.
+  reusable_for_adam: Soft fin-ray fingertip (SO101_soft_fin.stl) and dual-arm-on-mobile-base layout as reference.
+  effort: S
+  maturity: 5612 stars, 619 forks, pushed 2026-10-06.
+  sts3215_compat: Uses SO-101 arms (STS3215) per credits; servo not named in README fetched. Treat as likely, verify.
+  license_compat_with_ours: Compatible if Apache applies to hardware; hardware license unstated so risk is low but
+    not zero.
+  verdict: adapt
+  notes: Mobile wheeled base, not a biped; use only for fingertip/arm ideas.
+  root_license_independently_checked: Apache-2.0 (root)
+- id: poppy-humanoid
+  repo_url: https://github.com/poppy-project/poppy-humanoid
+  accessed: 2026-10-19
+  artifacts:
+  - kind: cad
+    path: hardware
+    license_spdx: CC-BY-SA-4.0
+    license_url: http://creativecommons.org/licenses/by-sa/4.0/
+    license_note: README statement (variant 4.0 via link)
+  - kind: code
+    path: software
+    license_spdx: GPL-3.0-only
+    license_url: http://www.gnu.org/licenses/gpl.html
+    license_note: README says 'GPL v3'; or-later not specified. GitHub API license field is null (no LICENSE file
+      detected).
+  - kind: docs
+    path: doc
+    license_spdx: null
+    license_url: null
+    license_note: Not stated
+  - kind: trademark
+    path: name
+    license_spdx: null
+    license_url: null
+    license_note: '''Poppy'' is a protected trademark'
+  reusable_for_adam: 'Inspiration for a 0.8 m-class 3D-printed humanoid: bio-inspired legs/spine. Uses 25 Dynamixel
+    servos, ~$8-9k.'
+  effort: L
+  maturity: 1079 stars, 291 forks, last push 2021-12-06 (stale).
+  sts3215_compat: No. Robotis Dynamixel actuators.
+  license_compat_with_ours: 'CONFLICT: GPL-3.0 software cannot go into MIT repo; CC-BY-SA hardware is not CERN-OHL-S
+    compatible.'
+  verdict: inspiration-only
+  notes: Do not copy files.
+  root_license_independently_checked: false
+- id: pollen-pincopen
+  repo_url: https://github.com/pollen-robotics/PincOpen
+  accessed: 2026-10-19
+  artifacts:
+  - kind: repo-wide
+    path: LICENSE
+    license_spdx: CC-BY-SA-4.0
+    license_url: https://api.github.com/repos/pollen-robotics/PincOpen
+    license_note: From GitHub API license field; README only states CC BY-SA 4.0 for the 'work' (docs). No separate
+      hardware/software license stated.
+  reusable_for_adam: Low-cost (~25 EUR) parallel-finger gripper derived from Reachy 2's gripper, STS3215-driven;
+    good mechanism reference.
+  effort: M
+  maturity: 173 stars, 24 forks, pushed 2026-06-16.
+  sts3215_compat: Yes, STS3215 (same motor as SO-ARM100). Voltage and payload not specified.
+  license_compat_with_ours: 'CONFLICT: CC-BY-SA-4.0 for hardware is not compatible with CERN-OHL-S-2.0. Docs may
+    be mixed into our CC-BY-SA docs. Do not copy CAD into a CERN-OHL-S design.'
+  verdict: inspiration-only
+  notes: Re-implement mechanism independently; or ask upstream for dual-licensing.
+  root_license_independently_checked: false
+- id: reachy-mini
+  repo_url: https://github.com/pollen-robotics/reachy_mini
+  accessed: 2026-10-19
+  artifacts:
+  - kind: code
+    path: LICENSE
+    license_spdx: Apache-2.0
+    license_url: https://github.com/pollen-robotics/reachy_mini/blob/main/LICENSE
+    license_note: Copyright 2025 Pollen Robotics
+  - kind: cad
+    path: hardware design files
+    license_spdx: null
+    license_url: https://raw.githubusercontent.com/pollen-robotics/reachy_mini/develop/README.md
+    license_note: README says 'Creative Commons BY-SA-NC' - not a valid CC identifier; likely CC-BY-NC-SA-4.0 (NOT
+      confirmed). Treat as noncommercial.
+  reusable_for_adam: 'Expressive head: Stewart-platform neck + animated antennas, a proven approach for an interactive
+    head.'
+  effort: L
+  maturity: 1569 stars, 325 forks, pushed 2026-10-16; commercial kit.
+  sts3215_compat: Not verified (actuator type not in README fetched).
+  license_compat_with_ours: 'CONFLICT: NC hardware cannot be used in CERN-OHL-S project. Code Apache-2.0 is fine.'
+  verdict: inspiration-only
+  notes: Use only ideas (mechanism type), no CAD.
+  root_license_independently_checked: false
+- id: zeroth-bot
+  repo_url: https://github.com/zeroth-robotics/zeroth-bot
+  accessed: 2026-10-19
+  artifacts:
+  - kind: repo-wide
+    path: LICENSE
+    license_spdx: MIT
+    license_url: https://raw.githubusercontent.com/zeroth-robotics/zeroth-bot/main/LICENSE
+    license_note: Copyright (c) 2024 Jingxiang Mo; README states hardware also under MIT (no separate CAD license)
+  reusable_for_adam: Small 3D-printed biped with Feetech servos, sim-to-real stack (ksim); leg kinematics and RL
+    pipeline reference.
+  effort: M
+  maturity: 839 stars, 131 forks (upstream); fork API reported pushed 2026-04-01. Public beta, basic locomotion.
+  sts3215_compat: Feetech named, exact model not stated in README fetched (null). Voltage null.
+  license_compat_with_ours: Compatible (MIT).
+  verdict: adapt
+  notes: Verify servo model in kos-zbot / BOM before use. Submodules kos-zbot, ksim-gym-zbot have own licenses not
+    checked.
+  root_license_independently_checked: MIT (root)
+- id: hopejr
+  repo_url: https://github.com/TheRobotStudio/HOPEJr
+  accessed: 2026-10-19
+  artifacts:
+  - kind: all
+    path: repo
+    license_spdx: null
+    license_url: https://api.github.com/repos/TheRobotStudio/HOPEJr
+    license_note: GitHub API license=null; no LICENSE file in listing (Arm/, Humanoid/, README). No-license = all
+      rights reserved.
+  reusable_for_adam: Underactuated finger/hand and arm ideas.
+  effort: L
+  maturity: 837 stars, 102 forks, pushed 2026-05-04. Humanoid uses Robstride 02 motors.
+  sts3215_compat: Unclear; LeRobot docs link a Feetech hand, not confirmed on repo.
+  license_compat_with_ours: 'CONFLICT: no license, cannot be reused.'
+  verdict: avoid
+  notes: Software side in lerobot is Apache-2.0 (huggingface/lerobot, 28280 stars).
+  root_license_independently_checked: false
+- id: so101-legs
+  repo_url: https://github.com/tgreen-fe/so101-legs
+  accessed: 2026-10-19
+  artifacts:
+  - kind: cad-docs
+    path: '*.SLDPRT, *.SLDASM, *.STL, README'
+    license_spdx: CC-BY-SA-4.0
+    license_url: https://api.github.com/repos/tgreen-fe/so101-legs
+    license_note: 'README: ''Hardware and documentation: CC BY-SA 4.0'''
+  - kind: code
+    path: (not yet present)
+    license_spdx: MIT
+    license_url: https://github.com/tgreen-fe/so101-legs
+    license_note: README says software 'will be MIT' when added
+  reusable_for_adam: STS3215 humanoid legs in SolidWorks - the only STS3215 biped found; ideas for hip roll+pitch
+    module.
+  effort: L
+  maturity: 0 stars, 0 forks, pushed 2026-09-14; nothing assembled or walked.
+  sts3215_compat: Yes (STS3215); voltage and height not stated.
+  license_compat_with_ours: 'CONFLICT for CAD: CC-BY-SA-4.0 hardware vs CERN-OHL-S. Docs OK with CC-BY-SA.'
+  verdict: inspiration-only
+  notes: Unproven; draft.
+  root_license_independently_checked: false
+- id: marc0builds-humanoid-robot
+  repo_url: https://github.com/marc0builds/humanoid-robot
+  accessed: 2026-10-19
+  artifacts:
+  - kind: designs-docs
+    path: LICENSE
+    license_spdx: CC-BY-NC-4.0
+    license_url: https://github.com/marc0builds/humanoid-robot
+    license_note: 'README: ''My own designs and docs: CC BY-NC 4.0 ... Not for commercial use.'' References InMoov
+      (CC BY-NC).'
+  reusable_for_adam: Nothing; planning-stage.
+  effort: L
+  maturity: Phase 1; files not released.
+  sts3215_compat: No (hobby servos + QDD).
+  license_compat_with_ours: 'CONFLICT: noncommercial.'
+  verdict: avoid
+  notes: ''
+  root_license_independently_checked: false
