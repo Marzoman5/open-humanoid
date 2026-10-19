@@ -106,33 +106,68 @@ def max_servos_under(cap: float, base: dict, scen: str = "CHEAP", servo: str = "
     return best
 
 
+# ---- challenge-3 row 13 price fixes (read 2026-10-19 by the R1 power check; QUOTES.md had these lines from a sold-out page / a catalog estimate)
+# B6neo: WREKD $39.99 is SOLD OUT; in stock: Evike $49.95 (https://www.evike.com/products/112273/SkyRC-B6Neo-Smart-Balance-Charger-Discharger/).
+P["charger"] = (49.95, 49.95)
+# PLA+: the CHEAP column used the $18 catalog estimate; the only quoted price is MatterHackers PolyLite $21.99/kg (snippet, QUOTES.md section 3).
+P["pla_kg"] = (21.99, 21.99)
+# 3S 1850 mAh (challenge-3 row 9): Gaoneng GNB 1850 mAh 100C XT60, 75 x 29 x 34 mm, 146 g, $25.99, in stock at Pyrodrone
+# (https://pyrodrone.com/collections/gnb-gaoneng-lipo-batteries). Not in the catalog yet.
+P["lipo3s_1850"] = (25.99, 25.99)
+# Star power distribution (challenge-3 row 10): 2 x WAGO 221-415 lever connectors, $0.924 each, in stock at Del City
+# (https://www.delcity.net/store/wire-connectors-quick-splices/wago-connectors/221-lever-nut-5-conductor/); 18 AWG feeds come out of the wiring kit.
+P["dist"] = (1.85, 1.85)
+COMMON["dist"] = 1
+
 # Printed structure: the concept engine's nominal structure mass (11.9 kg/m^3 x h^3, the Open Duck Mini back-out) + 15% print waste:
 # 0.55 m -> 1.98 kg x 1.15 = 2.28 kg PLA+; 0.60 m -> 2.57 kg x 1.15 = 2.96 kg (totals.py's 0.758 kg was sized for 0.45 m).
 PLA_055, PLA_060 = 2.28, 2.96
-LEAN = dict(gamepad=False, charger="charger_b3", imu="imu_icm", compute="pi5_1gb", cheap_buck=True)
+LEAN = dict(gamepad=False, imu="imu_icm", compute="pi5_1gb", cheap_buck=True)            # B6neo kept (the B3 is unverified and slow)
+SP4 = {"servo12": 2, "sts3250": 1}
 CONFIGS = [
-    # ---------------- path 1: full requirements
-    config("P1 RECOMMENDED: 23 DOF, 19 STS3215-12V + 4 STS3250 (knees, hip roll), 0.60 m, Pi 5 1 GB + D36V50F5, 3S 1300, BNO085, B6neo, gamepad",
-           servo="servo12", n_servo=19, n_sts3250=4, compute="pi5_1gb", pla_kg=PLA_060, spares_mix={"servo12": 2, "sts3250": 1}, note="path 1"),
-    config("P1 rec. with a phone instead of the gamepad (R9 allows it)", servo="servo12", n_servo=19, n_sts3250=4, compute="pi5_1gb", pla_kg=PLA_060, gamepad=False,
-           spares_mix={"servo12": 2, "sts3250": 1}),
-    config("P1 RUNNER-UP: the recommended parts at 0.55 m (19 STS3215-12V + 4 STS3250), Pi 5 1 GB + D36V50F5, gamepad", servo="servo12", n_servo=19, n_sts3250=4,
-           compute="pi5_1gb", pla_kg=PLA_055, spares_mix={"servo12": 2, "sts3250": 1}),
-    config("P1 alternative: 23 DOF, 21 STS3215-12V + 2 STS3250 (knees only), 0.55 m, Pi 5 1 GB", servo="servo12", n_servo=21, n_sts3250=2, compute="pi5_1gb", pla_kg=PLA_055,
-           spares_mix={"servo12": 2, "sts3250": 1}),
-    config("P1 if the bench is favourable: 23 DOF, 23 STS3215-12V, 0.55 m, Pi 5 1 GB", servo="servo12", n_servo=23, compute="pi5_1gb", pla_kg=PLA_055),
+    # ---------------- path 1: full requirements (hardware chosen separately from height)
+    config("P1 RECOMMENDED hardware at the DEFAULT height 0.55 m: 19 STS3215-12V + 4 STS3250 (knees, hip roll), Pi 5 1 GB + D36V50F5, GNB 3S 1850, BNO085, B6neo, gamepad",
+           servo="servo12", n_servo=19, n_sts3250=4, compute="pi5_1gb", pack="lipo3s_1850", pla_kg=PLA_055, spares_mix=SP4, note="path 1"),
+    config("P1 same hardware at the CONDITIONAL height 0.60 m (only if the bench STS3250 stall at 11.1 V >= ~1.3x datasheet)",
+           servo="servo12", n_servo=19, n_sts3250=4, compute="pi5_1gb", pack="lipo3s_1850", pla_kg=PLA_060, spares_mix=SP4),
+    config("P1 LEAN, 0.55 m: STS3250 at hip roll ONLY (knees STS3215, if Q3 says no deep squat and the bench 12 V curve is not the linear one), phone, ICM-42688, DFR0831",
+           servo="servo12", n_servo=21, n_sts3250=2, pack="lipo3s_1850", pla_kg=PLA_055, spares_mix=SP4, **LEAN),
+    config("P1 LEAN, 0.55 m, knees kept STS3250 (phone, ICM-42688, DFR0831)", servo="servo12", n_servo=19, n_sts3250=4, pack="lipo3s_1850", pla_kg=PLA_055,
+           spares_mix=SP4, **LEAN),
+    config("P1 if the bench is favourable: 23 STS3215-12V, 0.55 m, Pi 5 1 GB", servo="servo12", n_servo=23, compute="pi5_1gb", pack="lipo3s_1850", pla_kg=PLA_055),
     # ---------------- path 2: the $550 cap
-    config("P2 RECOMMENDED (cheapest that keeps every engine-checked MUST): 21 servos, 6-DOF legs, no waist, neck 2, 3-DOF arms, 1 gripper, 0.55 m, lean",
-           servo="servo12", n_servo=21, pla_kg=PLA_055, **LEAN),
-    config("P2 rec. with no spares", servo="servo12", n_servo=21, pla_kg=PLA_055, spares=0, **LEAN),
-    config("P2 16 servos (5-DOF legs, neck yaw, 2-DOF arms, 1 gripper), 0.55 m, lean, no spares", servo="servo12", n_servo=16,
-           pla_kg=PLA_055, spares=0, **LEAN),
-    config("P2 cap held on the sticker: 14 servos (5-DOF legs, neck yaw, ONE arm: shoulder pitch + roll + gripper), 0.55 m, lean, no spares", servo="servo12",
-           n_servo=14, pla_kg=PLA_055, spares=0, **LEAN),
+    config("P2 RECOMMENDED (cheapest that keeps every engine-checked MUST): 21 servos, 6-DOF legs, no waist, neck 2, 3-DOF arms, 1 gripper, 0.55 m, lean + B3 charger",
+           servo="servo12", n_servo=21, pla_kg=PLA_055, charger="charger_b3", **LEAN),
+    config("P2 rec. with no spares", servo="servo12", n_servo=21, pla_kg=PLA_055, spares=0, charger="charger_b3", **LEAN),
+    config("P2 cap held on the sticker: 14 servos (5-DOF legs, neck yaw, ONE arm: shoulder pitch + roll + gripper), 0.55 m, lean + B3 charger, no spares",
+           servo="servo12", n_servo=14, pla_kg=PLA_055, spares=0, gamepad=False, imu="imu_icm", compute="pi5_1gb", cheap_buck=True, charger="charger_b3"),
     # ---------------- references
     config("ref: 23 x STS3215-12V, 0.758 kg filament (QUOTES.md basis), Pi Zero 2 W board price (out of stock)", servo="servo12", n_servo=23, compute="zero2w"),
-    config("ref: 23 x STS3215-7.4V on 2S, 0.60 m, Pi 5 1 GB", servo="servo7v4", n_servo=23, pack="lipo2s", compute="pi5_1gb", pla_kg=PLA_060),
 ]
+
+# Levers on the recommended Path 1 build (challenge-3 row 13): each applied alone, R1-total delta (CHEAP).
+BASE_P1 = dict(servo="servo12", n_servo=19, n_sts3250=4, compute="pi5_1gb", pack="lipo3s_1850", pla_kg=PLA_055, spares_mix=SP4)
+LEVERS = [
+    ("phone instead of the gamepad (R9 allows it)", dict(gamepad=False)),
+    ("ICM-42688 instead of BNO085 (unverified, own sensor fusion)", dict(imu="imu_icm")),
+    ("DFR0831 4 A buck instead of the D36V50F5 (Pi 5 at reduced USB current; confirm at bring-up)", dict(cheap_buck=True)),
+    ("STS3215 knees instead of STS3250 (needs Q3 = no deep squat AND a non-linear 12 V curve on the bench)", dict(n_servo=21, n_sts3250=2)),
+    ("B3 charger instead of B6neo (unverified, ~0.8 A, no 4.0 V/cell setting)", dict(charger="charger_b3")),
+    ("no spares (risk: 10-20 day re-order)", dict(spares_mix={})),
+    ("0.60 m instead of 0.55 m (filament)", dict(pla_kg=PLA_060)),
+]
+
+
+def levers() -> list[dict]:
+    base = total(config("base", **BASE_P1))["r1_total"]
+    out = []
+    for name, mod in LEVERS:
+        kw = {**BASE_P1, **mod}
+        out.append({"lever": name, "delta_r1": round(total(config(name, **kw))["r1_total"] - base, 2)})
+    return out
+
+
+BENCH = {"STS3215 12 V (Seeed C047)": 22.00, "STS3215 7.4 V (Seeed C001)": 21.99, "STS3250 12 V (OpenELAB C002, DDP)": 73.99}
 
 
 def markdown(rows: list[dict]) -> str:
@@ -167,6 +202,15 @@ def main(argv=None) -> int:
     print(f"Non-servo floor at the R1 accounting (lean: phone, B3, ICM-42688, camera, 3S 1300): Pi 5 ${out['lean_non_servo_r1_pi5']:.0f}, Pi Zero 2 W ${out['lean_non_servo_r1_zero']:.0f}")
     print(f"Pi 5 1 GB + DFR0831 lean floor ${out['lean_non_servo_r1_pi5_1gb']:.0f}; most servos under $550: {out['max_servos_under_550_lean_pi5_1gb']}")
     print(f"Most 12 V servos that fit $550 at the R1 accounting on that floor: Pi 5 {out['max_servos_under_550_lean_pi5']}, Pi Zero 2 W {out['max_servos_under_550_lean_zero']}")
+    out["levers"] = levers()
+    out["bench_order"] = {**BENCH, "total": round(sum(BENCH.values()), 2)}
+    print()
+    print("| Lever on the recommended Path 1 build (alone) | R1 total change |")
+    print("|---|---|")
+    for lv in out["levers"]:
+        print(f"| {lv['lever']} | {lv['delta_r1']:+.0f} $ |")
+    print()
+    print("Bench order (test equipment, outside the BOM): " + ", ".join(f"{k} ${v:.2f}" for k, v in BENCH.items()) + f" = ${out['bench_order']['total']:.2f} + shipping")
     if a.json:
         Path(a.json).write_text(json.dumps(out, indent=1), encoding="utf-8")
     return 0

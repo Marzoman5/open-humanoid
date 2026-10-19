@@ -1,0 +1,22 @@
+{
+  "order": "cand_second",
+  "candidate": "studio_chest-6dof-600/sheet.png (0.60 m)",
+  "baseline": "studio_chest-6dof-550/sheet.png (0.55 m)",
+  "critic": "design-critic agent (sonnet), blind: sheets + candidate metrics only, 2026-10-19",
+  "reads_as": "unfinished",
+  "reads_as_reason": "Both sheets are stacked blocky massings with a slab head, a flat shoulder shelf and boxy thigh and shank segments, so the candidate reads as a hard-point volume study rather than a finished adult product.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "The head is a flat-topped, sharp-cornered slab with almost no neck (side view). The shoulder block sits on the torso with a horizontal ledge. Thighs and shanks are near-square boxes. The overall read is a toy or character, not a calm adult product."},
+    "G2": {"verdict": "FAIL", "evidence": "The silhouette is stepped, not flowing: shoulder shelf, chest-to-waist break, pelvis block, thigh-to-shank ledges. Agrees with the failed numerics S3a (8 ledges, band max 6) and S3b (6 leg bumps, band max 3)."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Single-tone grey clay with black gaps only where parts separate; no shell and recess colours or accent to judge."},
+    "G4": {"verdict": "FAIL", "evidence": "Legs, torso and head are near-square sections with small corner radii; the arms are faceted and lumpy with a flared hand wedge; the flat head top has a different crown radius from the rounded foot caps. No single radius family."},
+    "G6": {"verdict": "FAIL", "evidence": "Head size and the hip and knee levels match optimus_like and human_canon. It differs in the very wide shoulder-and-arm mass (shoulder width 0.3644 H, band 0.22-0.29), the pelvis as wide as or wider than the shoulders (P5 1.1319), no visible neck (P2a 0.1037 hu), and long feet (P10a 0.1922). The references taper continuously from shoulder to waist to leg."}
+  },
+  "pairwise": {"preferred": "candidate", "evidence": "Image A (baseline, 550) has more exaggerated winged arms, a wider shoulder shelf relative to the body and a more bulbous foot, so it reads more toy-like. Image B (candidate, 600) has narrower shoulders, less arm flare and darker, cleaner joint recesses. Both fail the same gestalt criteria, so the margin is small: a modest preference, not a clear win."},
+  "top_changes": [
+    {"criterion": "G6", "change": "Narrow the shoulder and upper-arm mass and give the arm a smooth taper without the wedge flare at the hand; fold the shoulder shelf into a rounded cap; bring shoulder width toward the 0.22-0.29 H band.", "profile_param": "segments[torso].stations[shoulder].w (and segments[arm_l/arm_r].stations[*].w)"},
+    {"criterion": "G2", "change": "Remove the thigh-to-shank ledges and the pelvis step; blend pelvis width into the thigh top; reduce the pelvis width relative to the shoulders.", "profile_param": "segments[torso].stations[pelvis].w; segments[leg_l].stations[thigh_bottom/knee/calf_top].w and .n"},
+    {"criterion": "G1", "change": "Add a visible neck with real length and round the head crown and corners so the head reads as a capsule.", "profile_param": "segments[head].stations[crown/top].n and .d; segments[head].stations[neck].z and .w"}
+  ],
+  "notes": "Both sheets are unstyled hard-point massings, so G3 cannot be judged. The baseline metrics JSON was not provided, so the pairwise call rests only on the images."
+}

@@ -1,0 +1,69 @@
+[
+ {
+  "table_m": 0.3,
+  "pickup_valid": true,
+  "invalid": {},
+  "strict_worst_margin": 2.493,
+  "worst_joint": "gripper_r",
+  "peak_frac_stall": 0.281,
+  "peak_joint": "gripper_r",
+  "cal_peak_margin": 3.789,
+  "peak_frac_stall_table_contact_off": 0.241,
+  "peak_joint_table_contact_off": "shoulder_roll_r",
+  "meta": {
+   "squat_deg": 40.0,
+   "table_height_m": 0.3,
+   "grasp_ik_m": 0.0003,
+   "pregrasp_ik_m": 0.0003,
+   "lift_ik_m": 0.0003,
+   "jaw_axis_off_horizontal_deg": 0.3571
+  }
+ },
+ {
+  "table_m": 0.35,
+  "pickup_valid": true,
+  "invalid": {},
+  "strict_worst_margin": 2.493,
+  "worst_joint": "gripper_r",
+  "peak_frac_stall": 0.281,
+  "peak_joint": "gripper_r",
+  "cal_peak_margin": 3.789,
+  "peak_frac_stall_table_contact_off": 0.211,
+  "peak_joint_table_contact_off": "shoulder_roll_r",
+  "meta": {
+   "squat_deg": 40.0,
+   "table_height_m": 0.35,
+   "grasp_ik_m": 0.0003,
+   "pregrasp_ik_m": 0.0002,
+   "lift_ik_m": 0.0004,
+   "jaw_axis_off_horizontal_deg": 0.4371
+  }
+ },
+ {
+  "table_m": 0.4,
+  "pickup_valid": false,
+  "invalid": {
+   "pickup": "ideal playback fell over"
+  },
+  "strict_worst_margin": 3.206,
+  "worst_joint": "knee_r"
+ },
+ {
+  "table_m": 0.45,
+  "pickup_valid": false,
+  "invalid": {
+   "pickup": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 21.6 mm (target not reached with the avai"
+  },
+  "strict_worst_margin": 3.206,
+  "worst_joint": "knee_r"
+ },
+ {
+  "table_m": 0.5,
+  "pickup_valid": false,
+  "invalid": {
+   "pickup": "reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 56.3 mm (target not reached with the avai"
+  },
+  "strict_worst_margin": 3.206,
+  "worst_joint": "knee_r"
+ }
+]

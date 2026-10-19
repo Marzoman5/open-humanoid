@@ -6,7 +6,7 @@ R1 path 1: 0.60 m, 3S (11.1 V bus), 23 DOF, STS3250 at the knees and hip roll, S
 **Verdict: FAIL** (robust to all bounds: False; passes at benchmark mass: False)
 
 - BLOCKER: INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]
-- BLOCKER: Monte Carlo p95 peak above the gate at hip_roll_l (1.02 of stall)
+- BLOCKER: Monte Carlo p95 peak above the gate at hip_roll_l (1.01 of stall)
 - warning: cost $1093.87 typical is above the $550 cap (high band $1557.35); prices are unverified
 - warning: sts3250-12v: full charge 12.6 V is 0.6 V over the rating for 23% of the discharge (charge only to 4.00 V/cell (12.0 V) -- most chargers allow it; costs about 23% of the capacity)
 - warning: thermal model failed the Robonine replay: thermal temperatures are indicative only
@@ -125,8 +125,8 @@ largest recoverable impulse >= required in every scenario: MET; the weakest scen
 | walking speed x1.5 | 0.0 (invalid motion: pickup_0.45m) | 0.0 | False | INVALID pickup_0.45m: reference infeasible: arm too short / table too low: no squat up to 120 deg brings the hand within reach; grasp_ik_m = 11.3 mm (target not reached with the available arm joints); lift_ik_m = 27.0 mm (target not reached with the available arm joints); COM tracking error 0.00 mm; joint range violations: knee_l: [0.785,2.094] outside [0.000,1.920]; knee_r: [0.785,2.094] outside [0.000,1.920]; ankle_pitch_l: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_r: [-1.060,-0.408] outside [-1.047,0.436]; ankle_pitch_l: peak, rms |
 | (sensitivity) SENSITIVITY armature = BAM ST3025 (0.00399), not a bound | 0.0 (invalid motion: walk_forward, walk_backward, turn, pickup_0.45m) | 0.0 | False | INVALID walk_forward: tether supplied 1.1% of body weight on average (limit 1%); INVALID walk_backward: tether supplied 1.2% of body weight on average (limit 1%) |
 
-## Monte Carlo (quasi-static dimensions only, 16 samples)
-- pass rate 0.0; worst p95 peak 1.023 at hip_roll_l; latency, backlash and kp are NOT sampled here: they need the closed loop (P5)
+## Monte Carlo (quasi-static dimensions only, 64 samples)
+- pass rate 0.0; worst p95 peak 1.009 at hip_roll_l; latency, backlash and kp are NOT sampled here: they need the closed loop (P5)
 
 ## Walk stress variants (informational)
 - stress_walk_speed_x1.5: peak 0.681 of stall at hip_roll_l, within gate: True

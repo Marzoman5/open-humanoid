@@ -1,0 +1,91 @@
+{
+  "step": "D1",
+  "round": 1,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "The head is a flat-topped, near-square block almost as wide as the chest block (front clay view). The torso is a stacked box with a hard black gap under the shoulder block. The neck is a stub (P2a = 0.1037 hu, FAIL). The arms are heavy flared slabs wider than the torso. Together this gives a chunky, toy-like block-figure gestalt.",
+        "The head is a flat-topped, sharp-cornered slab with almost no neck (side view). The shoulder block sits on the torso with a horizontal ledge. Thighs and shanks are near-square boxes. The overall read is a toy or character, not a calm adult product."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Chest, waist and pelvis are separate stacked slabs with horizontal ledges (front and side clay views). The side silhouette steps in and out at the chest, mid-torso block and rear block. Thigh and shank are rectangular blocks with a pinched knee, and the arms have stepped bumps. The dark gaps look like leftover gaps between boxes, not designed recesses. Metrics agree: S3a ledges = 8 (FAIL), S3b leg bumps = 6 (FAIL).",
+        "The silhouette is stepped, not flowing: shoulder shelf, chest-to-waist break, pelvis block, thigh-to-shank ledges. Agrees with the failed numerics S3a (8 ledges, band max 6) and S3b (6 leg bumps, band max 3)."
+      ]
+    },
+    "G3": {
+      "verdict": "UNCERTAIN",
+      "per_report": [
+        "UNCERTAIN",
+        "UNCERTAIN"
+      ],
+      "evidence": [
+        "The sheet is single-tone clay with no shell/recess/accent assignment, so two-tone discipline cannot be judged.",
+        "Single-tone grey clay with black gaps only where parts separate; no shell and recess colours or accent to judge."
+      ]
+    },
+    "G4": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Radii and squareness are inconsistent. The head, chest and thigh blocks are near-square with small corner radii. The feet are soft ovals. The arms are faceted tapered wedges with ripples. The rear back and battery boxes are hard cuboids.",
+        "Legs, torso and head are near-square sections with small corner radii; the arms are faceted and lumpy with a flared hand wedge; the flat head top has a different crown radius from the rounded foot caps. No single radius family."
+      ]
+    },
+    "G6": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "In the equal-height lineup it does not share the optimus_like / human_canon silhouette. Matches: head height and the leg height split (P1, P6, P7 pass). Does not match: the shoulder and arm mass is far wider and boxier (P3 = 0.3644 vs band 0.22-0.29, FAIL), the neck is almost absent (P2a FAIL), the pelvis is wide (P5 = 1.1319 vs band 0.62-0.9, FAIL), the legs are straight blocks with no taper, and the feet are long (P10a = 0.1922, FAIL). The references have a smooth S-curve flank; this design has stepped ledges.",
+        "Head size and the hip and knee levels match optimus_like and human_canon. It differs in the very wide shoulder-and-arm mass (shoulder width 0.3644 H, band 0.22-0.29), the pelvis as wide as or wider than the shoulders (P5 1.1319), no visible neck (P2a 0.1037 hu), and long feet (P10a 0.1922). The references taper continuously from shoulder to waist to leg."
+      ]
+    },
+    "G5": {
+      "verdict": "PASS",
+      "reason": "candidate preferred in both presentation orders"
+    }
+  },
+  "reads_as": "unfinished",
+  "numeric_hard_failures": [
+    "P3",
+    "P10a",
+    "S3a"
+  ],
+  "top_changes": [
+    {
+      "criterion": "G1",
+      "change": "Lengthen the visible neck and slim the head so it reads as a capsule, not a block. Raise the neck length toward the 0.18-0.55 band and narrow the neck-to-head transition.",
+      "profile_param": "segments[head].stations[base].z / w and segments[torso].stations[neck].z / w"
+    },
+    {
+      "criterion": "G6",
+      "change": "Cut the shoulder and arm span toward the 0.22-0.29 band. Round the shoulder block into a capsule and taper the upper arm. Narrow the pelvis and thigh block toward the 0.62-0.9 band relative to the shoulder.",
+      "profile_param": "segments[torso].stations[shoulder].w; segments[arm_l/r].stations[*].w; segments[torso].stations[pelvis].w and glute_l/r width"
+    },
+    {
+      "criterion": "G2",
+      "change": "Blend the chest, waist and pelvis stations into one continuous profile to remove ledges. Give each leg segment a single monotone taper without mid-segment bumps. Make the neck, waist and knee gaps deliberate and uniform.",
+      "profile_param": "segments[torso].stations[chest|waist|pelvis].w, d, n; segments[leg_l/r].stations[*].w and .n"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}
