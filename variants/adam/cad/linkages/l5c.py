@@ -85,6 +85,24 @@ def slot(p1, r1, p2, r2, y0, y1) -> bd.Shape:
     return safe_union(s, bar, "slot")
 
 
+def taper(p1, r1, p2, r2, y0, y1) -> bd.Shape:
+    """Tapered crank arm: convex hull of the discs (p1, r1) and (p2, r2) in the x-z plane, extruded y0..y1 (external tangent lines)."""
+    dx, dz = p2[0] - p1[0], p2[1] - p1[1]
+    d = math.hypot(dx, dz)
+    ux, uz = dx / d, dz / d
+    a = math.asin((r1 - r2) / d)
+    pts = []
+    for sgn in (1, -1):
+        ang = sgn * (math.pi / 2 + a)
+        nx, nz = ux * math.cos(ang) - uz * math.sin(ang), ux * math.sin(ang) + uz * math.cos(ang)
+        pts.append(((p1[0] + r1 * nx, p1[1] + r1 * nz), (p2[0] + r2 * nx, p2[1] + r2 * nz)))
+    poly = [pts[0][0], pts[0][1], pts[1][1], pts[1][0]]
+    face = bd.Face(bd.Wire.make_polygon([bd.Vector(x, y0, z) for x, z in poly], close=True))
+    body = bd.extrude(face, amount=y1 - y0, dir=(0, 1, 0))
+    s = safe_union(ycyl(p1[0], p1[1], y0, y1, 2 * r1), ycyl(p2[0], p2[1], y0, y1, 2 * r2), "taper ends", single=False)
+    return safe_union(s, body, "taper")
+
+
 def ybox(x0, x1, y0, y1, z0, z1) -> bd.Shape:
     return box_at(bd.Location(), (x1 - x0, y1 - y0, z1 - z0), ((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2))
 
@@ -241,7 +259,7 @@ def build(ctx=None) -> Assembly:
 
     # ======================================================================== knee input crank (on the knee servo horn) + coupler
     def crank(pid, S, aid, pin, axis_xz, r_axis, link, tag):
-        arm = slot(axis_xz, r_axis, pin, P["pin_boss_r"], *y_plate)
+        arm = taper(axis_xz, r_axis, pin, P["pin_boss_r"], *y_plate)
         boss = ycyl(pin[0], pin[1], *y_boss, 2 * P["pin_boss_r"])
         hm = horn_mount(aid, plate_t=P["plate_t"], mode="flat", part=pid, mates=f"servo_{tag}").placed(S * get_component(aid).frames["horn_seat"])
         bb = bearing_bore(pin[0], pin[1], y_boss[1], +1, n=2, part=pid)
@@ -270,7 +288,7 @@ def build(ctx=None) -> Assembly:
     z_hc_top, z_hc_bot = zcs + hc["outer_y"][1], zcs + hc["outer_y"][0]
     med_plate = slot((0.0, Z_KNEE), P["axle_boss_r"], (0.0, Z_KNEE - 12.0), P["axle_boss_r"], *cm)
     lat_axis = ycyl(0.0, Z_KNEE, *y_ax_lat, 2 * P["axle_boss_r"])
-    lat_arm = slot((0.0, Z_KNEE), P["axle_boss_r"], pin_k_out, P["pin_boss_r"], *y_plate)
+    lat_arm = taper((0.0, Z_KNEE), P["axle_boss_r"], pin_k_out, P["pin_boss_r"], *y_plate)
     lat_down = slot((0.0, Z_KNEE), P["axle_boss_r"], (0.0, Z_KNEE - 12.0), P["axle_boss_r"], *y_plate)
     out_boss = ycyl(pin_k_out[0], pin_k_out[1], *y_boss, 2 * P["pin_boss_r"])
     z_br = (Z_KNEE - 21.5, Z_KNEE - 11.0)                           # bridge below the knee: outside the tongue's 9 mm radius, above the calf crank sweep
@@ -301,7 +319,7 @@ def build(ctx=None) -> Assembly:
     Hr = servo_housing(ROLL_SERVO, part="ankle_cradle", cover_part="cover_roll", cover_t=4.4)
     f_med = slot((0.0, Z_ANK), P["axle_boss_r"], (-20.0, Z_ANK - 4.0), P["axle_boss_r"], *cm)
     f_lat_ax = ycyl(0.0, Z_ANK, *y_ax_lat, 2 * P["axle_boss_r"])
-    f_lat_arm = slot((0.0, Z_ANK), P["axle_boss_r"], pin_a_out, P["pin_boss_r"], *y_plate)
+    f_lat_arm = taper((0.0, Z_ANK), P["axle_boss_r"], pin_a_out, P["pin_boss_r"], *y_plate)
     f_lat_back = slot((0.0, Z_ANK), P["axle_boss_r"], (-20.0, Z_ANK - 4.0), P["axle_boss_r"], *y_plate)
     f_boss = ycyl(pin_a_out[0], pin_a_out[1], *y_boss, 2 * P["pin_boss_r"])
     hr = Hr.params
