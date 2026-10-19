@@ -49,17 +49,18 @@ def bolt_circle(n: int, pcd: float, start_deg: float = 0.0) -> list[tuple[float,
 
 
 def insert_boss(thread: str = "M3", *, boss_h: float | None = None, boss_d: float | None = None, part: str = "", mates: str | None = None,
-                tag: str = "insert", at: bd.Location | None = None) -> FeatureResult:
+                tag: str = "insert", delta_d: float = 0.0, at: bd.Location | None = None) -> FeatureResult:
     """Heat-set insert pocket (diameter, depth, entry chamfer from components/data/hardware.yaml + dfm.yaml), optionally with a
     raised boss of wall >= dfm insert_boss.wall around it.
 
     `boss_h`: height of a cylindrical boss standing below the surface (z in [-boss_h, 0]); the boss overlaps 0.5 mm into whatever it
     stands on, so it fuses with the base. Omit when the hole goes into existing material.
     The pocket depth is hole_depth (insert length + 1 mm). Raises when `boss_h` leaves less floor than dfm insert_boss.min_floor.
+    `delta_d` shifts the hole diameter (only the fit gauge's calibration ladder uses it).
     """
     ins = get_component(f"insert:{thread}")
     r = dfm.load_dfm()["insert_boss"]
-    hole_d = ins.params["hole_d"]
+    hole_d = ins.params["hole_d"] + delta_d
     depth = ins.params["hole_depth"]
     wall = float(val(r["wall_mm"]))
     od = boss_d or (hole_d + 2 * wall)
@@ -111,12 +112,12 @@ def counterbore(thread: str = "M3", **kw) -> FeatureResult:
 
 
 def magnet_boss(spec: str = "6x3", *, boss: bool = False, boss_h: float | None = None, access: str = "pause", at: bd.Location | None = None,
-                part: str = "") -> FeatureResult:
+                part: str = "", delta_d: float = 0.0) -> FeatureResult:
     """Pocket for a disc magnet. The pocket sits `cover` below the mating surface (a printed skin keeps the magnet in; pause the print
     to drop it in: `access="pause"`), or opens onto the surface (`access="open"`, glued in). Pocket = disc + dfm magnet.extra_d/depth."""
     mag = get_component(f"magnet:{spec}")
     r = dfm.load_dfm()["magnet"]
-    d = mag.params["d"] + float(val(r["extra_d_mm"]))
+    d = mag.params["d"] + float(val(r["extra_d_mm"])) + delta_d
     h = mag.params["h"] + float(val(r["extra_depth_mm"]))
     cover = float(val(r["cover_mm"])) if access == "pause" else 0.0
     f = FeatureResult(name="magnet_boss")
@@ -245,7 +246,8 @@ def horn_mount(actuator_id: str = "sts3215-12v", *, plate_t: float = 3.2, mode: 
     return _at(f, at)
 
 
-def idler_seat(bearing: str = "MR83ZZ", *, plate_t: float = 4.0, boss: bool = True, part: str = "", at: bd.Location | None = None) -> FeatureResult:
+def idler_seat(bearing: str = "MR83ZZ", *, plate_t: float = 4.0, boss: bool = True, part: str = "", delta_d: float = 0.0,
+               at: bd.Location | None = None) -> FeatureResult:
     """Bearing seat in a plate that supports the servo's back (idler) side. Frame: origin on the plate surface that FACES the
     bearing's entry, +z out of the plate (toward the servo), on the back axis.
 
@@ -258,7 +260,7 @@ def idler_seat(bearing: str = "MR83ZZ", *, plate_t: float = 4.0, boss: bool = Tr
     b = get_component(f"bearing:{bearing}")
     P = b.params
     r = dfm.load_dfm()["bearing_seat"]
-    seat_d = P["od"] + float(val(r["seat_d_over_od_mm"]))
+    seat_d = P["od"] + float(val(r["seat_d_over_od_mm"])) + delta_d
     shoulder = float(val(r["shoulder_mm"]))
     wall = float(val(r["wall_mm"]))
     w = P["w"]

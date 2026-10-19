@@ -25,6 +25,13 @@ class Part:
     catalog: str | None = None
     fit: bool = True             # include in shell clearance fitting
     print: dict = field(default_factory=dict)
+    # --- CAD-foundation fields (all optional, ignored by the older biped_v1 template) ---
+    sites: list = field(default_factory=list)      # core.Site fastener/insert locations in the LINK frame
+    meta: dict = field(default_factory=dict)       # interface checks etc. (see geometry_gate)
+    process: str = "fdm"                           # fdm | purchased
+    print_up: tuple[float, float, float] | None = None   # build direction (+z of the print) in the part frame; None = as modelled
+    keepout: bool = False                          # reserved volume: counted for clearance, never for mass/BOM
+    hardware: bool = False                         # fasteners/inserts: excluded from interference, included in access/BOM
 
 
 @dataclass
