@@ -21,3 +21,10 @@ Adam's concept for full-body CAD is **v2**, concept file `variants/adam/concepts
 - **Attainable parts only:** off-the-shelf parts purchasable online; no custom-machined metal unless absolutely needed (requirements, Should).
 - **Every printed structural part passes** the geometry gate, ROM sweep, assembly-access check and strength/FEA before it's called done.
 - **Vendor CAD models may be downloaded** (maintainer, 2026-10-19), license-checked and recorded in THIRD_PARTY.md; non-redistributable files stay local and gitignored.
+
+## Amendment: upper-body CAD decisions (maintainer, 2026-10-19 evening)
+Driven by real vendor servo dimensions:
+- **Head:** grows a few mm (deeper / at the chin) so the neck yaw turns about the head centre and the pitch servo fits; visor-pill style kept.
+- **Gripper:** sized for soda-can / ball objects (~70 mm opening, ~62 mm palm, so the hand is wider than the forearm).
+- **Electronics bay:** in the **pelvis** (Pi 5, 2 bus adapters, BNO085 IMU near the COM, fuse, star distribution). Region B designs it as a tray with a mounting contract for region A.
+- **Arms:** keep the ≥ 14° display cant (v2 profiles use 19.5°).
