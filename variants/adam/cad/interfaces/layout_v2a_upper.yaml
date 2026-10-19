@@ -10,13 +10,14 @@
 #   waist yaw: R1 waist-yaw servo between the hip-yaw servos, horn up; axis moved to x = 0 (R1 box centre 10.6 = servo centre, axis
 #     12 mm from the near end). Horn face z 382 (R1 box top 378.65 + 3.4): the 6806 ring bearing's seat must clear the hip-yaw
 #     housings (top 380.6 in leg_v2) -> region A contract, interfaces/README.md.
-#   neck yaw: R1 "neck-yaw servo in a front chest slot, long axis across y" (r1_packaging.py). Axis on the centre line (y = 0, R1's
-#     centred box would put it at y = -12.5) and as far back as the shoulder-pitch housings allow (x = 30.8). FINDING: the yaw axis
-#     is 26-28 mm ahead of the head centre (cx 3-5): the head orbits r ~ 27 mm when it turns (README section "Findings").
-#   neck pitch: R1 neck-pitch servo standing in the head (box centre z 506.9, near end down -> axis z 496). The servo is HOSTED BY THE HEAD
-#     (it turns with it) and the neck post grips its horn and its stock idler horn: with the servo on the post, its housing would sweep
-#     the whole head interior over +-30 deg and leave no room for the camera or the head frame (README, Findings).
-#   neck yaw z 451: its horn plate must clear the shoulder-pitch housings (top 451.96) by the 1 mm moving gap.
+#   NECK (ADR 0015 amendment: the head grows a few mm deeper / at the chin so the yaw turns about the head centre): PITCH FIRST.
+#     neck pitch: STS3215 in R1's front chest slot (the only chest volume left: shoulder-pitch pair in the centre, pack behind), axis
+#       along y at (30.8, z 441); long axis down (top of its housing 453.7 < chest top 457). The neck post is a fork on its horn and its
+#       stock idler horn and rises behind it into the neck column (x -5..15).
+#     neck yaw: STS3215 INVERTED in the head's lower half, horn DOWN onto the neck post, axis through the head centre (x 3); the head is
+#       rigid with the servo body (host = neck_yaw_link), so nothing in the head sweeps. Needs the head front at x ~43.8 and full depth
+#       down to the chin (z 478) -> the head growth the maintainer approved. Camera above the servo (z 519..543).
+#     Kinematic order pitch -> yaw (the humanoid_v2 template lists yaw -> pitch at one point): reported for the concept/sim (head only).
 # Ranges: concept engine defaults (openhumanoid/concept/robot.py) unless noted. Gripper: pinion on the servo horn (m1, z24, pitch
 #   radius 12 mm = the template's 0.012 m/rad), so the joint is the servo angle; 0..40 mm opening = 0..191 deg (README).
 name: adam_v2a_upper
@@ -33,8 +34,8 @@ points:
   shoulder: [0, 65.15, 439.3]
   elbow: [0, 65.15, 329.3]
   gripper: [0, 65.15, 266.0]
-  neck_yaw: [30.8, 0, 451.0]
-  neck_pitch: [0, 0, 496.0]
+  neck_pitch: [30.8, 0, 441.0]
+  neck_yaw: [3.0, 0, 478.0]
 roots:
   pelvis: [0, 0, 275.0]          # hip-joint height (R1 hip 275 mm); the pelvis link frame is region A's
 limbs:
@@ -61,5 +62,5 @@ limbs:
     mirror: []
     root: waist_yaw_link
     joints:
-      - {name: neck_yaw, axis: z, range: [-90, 90], point: neck_yaw, servo: {host: waist_yaw_link, horn: [0, 0, 1], long: [0, 1, 0], horn_at: 0}}
-      - {name: neck_pitch, axis: y, range: [-30, 30], point: neck_pitch, servo: {host: neck_pitch_link, horn: [0, 1, 0], long: [0, 0, 1], horn_at: 19.15}}
+      - {name: neck_pitch, axis: y, range: [-30, 30], point: neck_pitch, servo: {host: waist_yaw_link, horn: [0, 1, 0], long: [0, 0, -1], horn_at: 19.15}}
+      - {name: neck_yaw, axis: z, range: [-90, 90], point: neck_yaw, servo: {host: neck_yaw_link, horn: [0, 0, -1], long: [1, 0, 0], horn_at: 0}}

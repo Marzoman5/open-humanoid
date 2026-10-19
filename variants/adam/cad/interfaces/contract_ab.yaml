@@ -1,0 +1,91 @@
+# A <-> B contract of Adam v2 (frozen concept V2a-0p55-longarm, ADR 0015 + amendment). Task T-20261019-f6e2 (region B, cad-upper).
+# Region A (pelvis + legs, T-20261019-3d4d) builds the pelvis TO THIS FILE. Units mm / deg / N / N*m; world frame at the zero pose
+# (x forward, y left, z up; z = 0 at the sole). Every number below is either a frozen-concept hard point (variants/adam/design/profiles.yaml,
+# R1 landmarks), a vendor-CAD servo dimension (catalog/actuators/sts3215-12v.yaml), a dfm.yaml rule, or a stated design choice of region B.
+# Change requests go through the commander; B re-runs its checks against any change.
+schema: contract-ab/0.1
+status: published 2026-10-19 (v1)
+owner: "region B (cad-upper); consumer: region A"
+
+# --------------------------------------------------------------------------------------------------------------------------------
+waist:
+  joint: waist_yaw                       # concept range [-60, 60] deg; parent = pelvis (A), child = torso (B: waist_yaw_link)
+  axis: {origin: [0.0, 0.0, 382.0], direction: [0, 0, 1]}
+  split: >-
+    Turntable split: A owns the STATOR (the waist STS3215 body, its housing in the pelvis, and the seat of the 6805ZZ ring bearing's
+    OUTER race). B owns the ROTOR (the horn, the torso hub whose spigot carries the INNER race, everything above).
+  servo:
+    actuator: sts3215-12v
+    host_link: pelvis
+    frame: {origin: [0.0, 0.0, 382.0], z_dir: [0, 0, 1], x_dir: [1, 0, 0]}   # origin = top of the case envelope on the output axis; body below
+    body_world: {x: [-10.11, 35.11], y: [-12.36, 12.36], z: [347.0, 382.0]}   # vendor CAD envelope (45.22 x 24.72 x 35)
+    connectors: "2 x 5264 on the BACK face (z = 347), x 12.5..22 from the axis: A's cover needs a plug window there + 12 mm plug room below"
+    horn: "stock round horn (Ø19.2 x 2.5) fitted by B; its underside is at z 381.75, its top at 384.25 (B's hub sits on it)"
+    a_housing_rules: >-
+      Housing per servo_housing (slip 0.15/side, walls >= 2.4) with a HORN RELIEF: nothing of A within r 10.6 of the axis above z 380.7
+      (the horn rim needs the 1.0 mm moving gap; vendor CAD). The housing top must not rise above z 382.15 anywhere except the bearing ring.
+  bearing:
+    part: "6805ZZ (25 x 37 x 7, ISO 15), deep-groove thin-section; carries the torso's radial load and fall moments so the servo spline does not"
+    outer_race_seat_A:
+      bore_d: 37.10                       # OD + 0.10 (dfm bearing_seat.seat_d_over_od)
+      seat_z: [383.75, 390.75]            # race occupies this band
+      shoulder: {z: [382.15, 383.75], inner_d: 33.8, note: "supports the outer ring only (outer ring land d 33.5..37); keep d >= 33.8 free so the inner ring and B's spigot pass"}
+      min_wall_around_seat: 2.0           # dfm bearing_seat.wall -> ring OD >= 41.1
+      ring_top_z_max: 390.75              # flush with the race top; B's torso floor starts at 391.75 (1.0 moving gap)
+    inner_race_B: "hub spigot d 25 (inner race slip/press), bore d 19.8 around the horn; hub shoulder on the race top at z 390.75 (d 25..28.6)"
+    axial_load_path: "torso weight: hub shoulder -> inner race -> balls -> outer race -> A's shoulder. Lift-off: horn screws (M3 centre + 4 x M2)."
+  keepouts_for_A:
+    - {name: rotor_sweep, shape: cylinder, axis: [0, 0, 1], centre: [0, 0, 0], r: 44.0, z: [391.75, 402.0],
+       note: "torso floor + hub sweep (+-60 deg): nothing of A above z 390.75 inside r 44 (waist shell band z 376..402 is B's)"}
+    - {name: spigot, shape: cylinder, centre: [0, 0, 0], r: 13.5, z: [382.75, 391.75], note: "rotating spigot + inner race + horn; 1.0 mm moving gap included"}
+  design_loads_at_bearing:               # for A's stator/deck sizing; B checks its own side
+    upper_body_mass_kg: 1.45              # region B estimate (arms, head, chest, pack); replaced by B's CAD mass when exported
+    standing_axial_N: 14.2
+    fall_case: "forward fall onto the arms/chest: 30 g peak on the upper-body COM (research/methods/d drop-load rule, 0.15 m above the waist)"
+    fall_moment_Nm: 64.0                  # 1.45 kg x 9.81 x 30 x 0.15
+    fall_radial_N: 427.0                  # 1.45 x 9.81 x 30
+    servo_stall_torque_Nm: 2.94           # STS3215 12 V 30 kg*cm: the stator's anti-rotation must take this with SF >= 3 (8.8 N*m)
+
+# --------------------------------------------------------------------------------------------------------------------------------
+electronics_tray:
+  owner: "B designs the tray and its contents (ADR 0015 amendment); A provides the cavity, the mounting face and keeps the zone free"
+  host_link: pelvis
+  zone: {x: [-57.0, -16.0], y: [-50.0, 50.0], z: [312.0, 380.0]}
+  zone_note: >-
+    R1's bay (x -37..-14.7, z 313..374.6) holds the Pi 5 only. Pi 5 + 2 bus adapters (42 x 33 board, Waveshare wiki) + buck + IMU need two
+    layers: the R2a pelvis rear must grow ~13 mm (x -44 -> -57 inside the shell, ~-60 outside). This is a CAD finding reported to the
+    maintainer with the head growth; if A cannot give x -57, A tells B before building and B moves the adapters (fallback: torso).
+  mounting_face_A: {plane_x: -16.0, normal: [-1, 0, 0], note: "flat vertical face (A's rear bulkhead) the tray seats on"}
+  inserts_A:                              # heat-set M3 inserts in A's bulkhead, axis -x (screws come from the back; tool corridor along +x)
+    thread: M3
+    points_yz: [[-42.0, 318.0], [42.0, 318.0], [-42.0, 374.0], [42.0, 374.0]]
+    min_pad_d: 10.0
+  screws: "4 x M3 x 10 low-head through the tray plate (2.4) into A's inserts, installed from the back with the back shell off"
+  contents_B:
+    - {part: rpi-5-4gb, at: "standing in the y-z plane, components facing back, board z 323..379, y -42.5..42.5"}
+    - {part: imu-bno085, at: [-28.0, 0.0, 316.0], frame: "board x/y/z = pelvis x/y/z (chip axes aligned; yaw offset calibrated in software)",
+       isolation: "4 x M3 silicone anti-vibration grommets (FPV flight-controller type)", note: "0.0 m from the pelvis centre line, 41 mm above the hip axis; runtime IMU site = pelvis"}
+    - {part: buck-pololu-d36v50f5, at: "under the Pi, y +5..+30, z 312..322"}
+    - {part: waveshare-bus-servo-adapter, qty: 2, at: "second layer behind the Pi, x -42..-56, side by side y -44..+44, z 330..363; UART or USB to the Pi"}
+  ventilation: "Pi 5 needs airflow: tray plate slotted, the A pelvis shell gets a vent grille on the back face over x < -50, z 330..375"
+  mass_kg: 0.20                           # Pi 46 g + 2 adapters 20 g + buck 7 g + IMU 3 g + tray ~60 g + cables/standoffs ~60 g (estimate)
+
+# --------------------------------------------------------------------------------------------------------------------------------
+cable_pass_throughs:
+  waist:
+    route: "behind the waist servo: torso floor slot (B) at r 18..32 behind the axis, arc +-70 deg -> 60 mm service loop in the gap z 382..391 -> A's opening into the tray zone"
+    a_opening: {x: [-32.0, -16.0], y: [-20.0, 20.0], z_from: 380.0, note: "open from the pelvis top down into the tray zone; edges rounded r >= 2"}
+    bundle: >-
+      4 x leg power feeds (18 AWG pairs, star in the torso -> the 4 leg segments), 1 x buck feed (18 AWG pair), 1 x upper-body bus data
+      (3 x 26 AWG from the tray's 2nd adapter up to the torso). Bundle Ø ~9 mm; silicone wire; strain-relieved on both sides.
+  legs: "A routes the 4 leg feeds and the leg bus data from the tray zone to each leg segment (R1 7.2: feed at the STS3250s)"
+power_topology:
+  pack: "GNB 3S 1850 in the torso (B), chest back cradle, removed backward"
+  switch_fuse_star: "XT60 -> switch -> 18 A ATO fuse (R1 post-sign-off: 20 A had no margin on the WAGO 20 A rating) -> WAGO star (4 x 221-415) in the torso, beside the pack (B)"
+  feeds_to_A: "4 leg segment pairs + 1 buck pair through the waist pass-through above"
+bus_topology:
+  adapters: 2                             # adapter 1 = legs (12 servos), adapter 2 = upper body (11 servos); both in the tray, on the Pi
+  rate_hz: 100
+arms:
+  display_cant_deg_min: 14.0              # ADR 0015 amendment; profiles use 19.5
+  keepout_for_A: "the arm sweep at shoulder roll >= 14 deg (abducted) must stay clear of the pelvis/hip shells; B publishes the swept volume with its export"
