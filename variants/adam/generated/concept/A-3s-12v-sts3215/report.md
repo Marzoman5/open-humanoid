@@ -5,140 +5,162 @@
 
 **Verdict: FAIL** (robust to all bounds: False; passes at benchmark mass: True)
 
-- BLOCKER: R10 push_hip_fwd: no valid recovery (ideal playback fell over)
-- BLOCKER: R10 push_capture_fwd: no valid recovery (reference infeasible: push dv = [0.341, 0.0] m/s, J = 0.87 N.s; reaction delay 25 ms; initial capture-point offset 54 mm)
-- BLOCKER: R10 push_capture_lat: no valid recovery (reference infeasible: push dv = [0.0, 0.201] m/s, J = 0.51 N.s; reaction delay 25 ms; initial capture-point offset 32 mm)
-- BLOCKER: Monte Carlo p95 peak above the gate at knee_r (1.07 of stall)
-- warning: cost $569.63 typical is above the $550 cap (high band $785.45); prices are unverified
+- BLOCKER: R10 push_walk_fwd: actuators cannot deliver 0.45 N.s by any strategy (ankle+1step@150ms: knee_r operating point 9.99x the torque-speed envelope)
+- BLOCKER: R10 push_walk_lat_in: actuators cannot deliver 0.45 N.s by any strategy (ankle+1step@200ms: knee_r operating point 2.95x the torque-speed envelope)
+- BLOCKER: Monte Carlo p95 peak above the gate at knee_r (0.90 of stall)
+- warning: cost $720.39 typical is above the $550 cap (high band $984.93); prices are unverified
 - warning: thermal model failed the Robonine replay: thermal temperatures are indicative only
 
 ## Design
 - 23 DOF, template `humanoid_v2`, height 0.45 m, actuators {'sts3215-12v': 23}
 - packaging floors applied: ['ankle_height: 20.2 mm -> 27.0 mm (T-0004 ankle-roll servo stand-off)', 'foot_length: 76.5 mm -> 82.8 mm (T-0004 foot size)', 'foot_width: 33.8 mm -> 49.5 mm (T-0004 foot size)', 'hip_width: 67.5 mm -> 70.0 mm (servo-fixed hip spacing)', 'shoulder_width: 135.0 mm -> 162.0 mm (T-0004 arm clearance)']
 
+## Gait (rows 12-13: stance knee flexion x step time, the same set for every candidate)
+- chosen: **45 deg, 0.5 s** (worst joint margin 1.063); at the old default 40 deg / 0.5 s: 1.054
+| flex deg | step s | worst margin | worst joint | passes | gait-dependent invalid |
+|---|---|---|---|---|---|
+| 20 | 0.25 | 0.09 | knee_l | False | - |
+| 20 | 0.35 | 0.09 | knee_l | False | walk_forward, walk_backward |
+| 20 | 0.5 | 1.113 | knee_r | False | walk_forward, walk_backward, turn |
+| 30 | 0.25 | 0.09 | knee_l | False | - |
+| 30 | 0.35 | 0.09 | knee_l | False | - |
+| 30 | 0.5 | 0.09 | knee_l | False | - |
+| 40 | 0.25 | 0.483 | knee_r | False | - |
+| 40 | 0.35 | 0.744 | knee_r | False | - |
+| 40 | 0.5 | 1.054 | knee_r | True | - |
+| 45 | 0.25 | 0.51 | knee_r | False | - |
+| 45 | 0.35 | 0.767 | knee_r | False | - |
+| 45 | 0.5 | 1.063 | knee_r | True | - |
+
 ## Mass
-- component sum 2.55 kg: {'structure_kg': 0.583, 'actuators_kg': 1.265, 'onboard_parts_kg': 0.419, 'wiring_kg': 0.163, 'electronics_misc_kg': 0.12, 'total_kg': 2.5502}
-- benchmark fit 2.996 kg (within the sanity band (0.6x-1.6x of the fit)). The fit 18.5*h^2.28 (N=9, R2 0.93, research/robots/benchmarks.md) and the ToddlerBot/OP3 masses are SANITY BOUNDS ONLY. The mass used everywhere in this report is the component sum (catalog masses as listed; printed structure x0.9-1.8 and wiring/electronics x0.8-1.5 bands); the structure term is a pre-CAD guess.
-- mass to first gate failure: **3.521**; cases: structure x1.8: 3.017 kg worst margin 1.055 (pass); benchmark-fit mass: 2.996 kg worst margin 1.056 (pass)
+- component sum 3.043 kg: {'structure_kg': 1.084, 'actuators_kg': 1.265, 'onboard_parts_kg': 0.411, 'wiring_kg': 0.163, 'electronics_misc_kg': 0.12, 'total_kg': 3.0434}
+- benchmark fit 2.996 kg (within the sanity band (0.6x-1.6x of the fit)). The fit 18.5*h^2.28 (N=9, R2 0.93, research/robots/benchmarks.md) and the ToddlerBot/OP3 masses are SANITY BOUNDS ONLY. The mass used everywhere in this report is the component sum (catalog masses as listed; printed structure x0.55-1.4 around the Open Duck Mini-recentred nominal and wiring/electronics x0.8-1.5 bands); the structure term is a pre-CAD guess.
+- mass to first gate failure: **3.296**; cases: structure x1.4: 3.477 kg worst margin 0.955 (FAIL); benchmark-fit mass: 3.043 kg worst margin 1.063 (pass)
 
 ## Frozen motions (identical for every candidate)
 | motion | valid | tether % BW | note |
 |---|---|---|---|
 | stand | True | 0.01 | COM tracking error 0.00 mm |
-| walk_forward | True | 0.5 | COM tracking error after compensation 0.00 mm |
-| walk_backward | True | 0.5 | COM tracking error after compensation 0.00 mm |
-| turn | True | 0.5 | COM tracking error after compensation 0.00 mm |
+| walk_forward | True | 0.52 | COM tracking error after compensation 0.00 mm |
+| walk_backward | True | 0.51 | COM tracking error after compensation 0.00 mm |
+| turn | True | 0.51 | COM tracking error after compensation 0.00 mm |
 | squat_90 | True | 0.02 | COM tracking error 0.00 mm |
 | squat_120 | True | 0.03 | COM tracking error 0.00 mm |
 | wave | True | 0.02 | COM tracking error 0.00 mm |
 | dance | True | 0.07 | COM tracking error 0.00 mm |
 | pickup | True | 0.02 | COM tracking error 0.00 mm |
+| pickup_0.45m | True | 0.03 | arm too short / table too low: no squat up to 120 deg brings the hand within reach |
 | sit_to_stand_130 | True | 0.03 | COM tracking error 0.00 mm |
 
 ## Joints, worst margin first (margin = gate / value, < 1 fails)
 | joint | actuator | worst | peak/stall | rms/rated | envelope | overload | fails |
 |---|---|---|---|---|---|---|---|
-| knee_r | sts3215-12v | 1.069 | 0.632 (walk_forward) | 0.905 (walk_forward) | 0.842 | 0.0 |  |
-| knee_l | sts3215-12v | 1.096 | 0.63 (walk_forward) | 0.876 (walk_forward) | 0.821 | 0.0 |  |
-| hip_pitch_l | sts3215-12v | 1.343 | 0.521 (walk_forward) | 0.507 (walk_forward) | 0.521 | 0.0 |  |
-| hip_pitch_r | sts3215-12v | 1.343 | 0.521 (walk_forward) | 0.527 (walk_forward) | 0.521 | 0.0 |  |
-| hip_roll_r | sts3215-12v | 1.346 | 0.52 (turn) | 0.651 (walk_backward) | 0.52 | 0.0 |  |
-| hip_roll_l | sts3215-12v | 1.365 | 0.513 (walk_backward) | 0.704 (walk_backward) | 0.513 | 0.0 |  |
-| ankle_pitch_r | sts3215-12v | 1.666 | 0.42 (walk_backward) | 0.577 (walk_backward) | 0.42 | 0.0 |  |
-| ankle_pitch_l | sts3215-12v | 1.666 | 0.42 (walk_backward) | 0.573 (walk_backward) | 0.42 | 0.0 |  |
-| elbow_r | sts3215-12v | 2.329 | 0.301 (wave) | 0.391 (wave) | 0.301 | 0.0 |  |
-| gripper_r | sts3215-12v | 2.492 | 0.281 (pickup) | 0.332 (pickup) | 0.322 | 0.0 |  |
-| hip_yaw_r | sts3215-12v | 2.494 | 0.281 (turn) | 0.294 (turn) | 0.281 | 0.0 |  |
-| hip_yaw_l | sts3215-12v | 2.682 | 0.261 (turn) | 0.284 (turn) | 0.261 | 0.0 |  |
-| shoulder_roll_r | sts3215-12v | 2.791 | 0.251 (pickup) | 0.14 (dance) | 0.251 | 0.0 |  |
-| waist_yaw | sts3215-12v | 3.391 | 0.206 (dance) | 0.083 (dance) | 0.206 | 0.0 |  |
+| knee_r | sts3215-12v | 1.063 | 0.576 (walk_forward) | 0.941 (walk_forward) | 0.598 | 0.0 |  |
+| knee_l | sts3215-12v | 1.084 | 0.574 (walk_forward) | 0.923 (pickup_0.45m) | 0.59 | 0.0 |  |
+| hip_roll_r | sts3215-12v | 1.146 | 0.611 (walk_backward) | 0.766 (walk_backward) | 0.611 | 0.0 |  |
+| hip_roll_l | sts3215-12v | 1.16 | 0.603 (walk_backward) | 0.828 (walk_backward) | 0.603 | 0.0 |  |
+| hip_pitch_r | sts3215-12v | 1.381 | 0.507 (walk_forward) | 0.505 (walk_forward) | 0.507 | 0.0 |  |
+| hip_pitch_l | sts3215-12v | 1.381 | 0.507 (walk_forward) | 0.489 (walk_forward) | 0.507 | 0.0 |  |
+| ankle_pitch_l | sts3215-12v | 1.678 | 0.408 (walk_backward) | 0.596 (walk_backward) | 0.408 | 0.0 |  |
+| ankle_pitch_r | sts3215-12v | 1.69 | 0.408 (walk_backward) | 0.592 (walk_backward) | 0.408 | 0.0 |  |
+| hip_yaw_r | sts3215-12v | 2.272 | 0.308 (turn) | 0.319 (turn) | 0.308 | 0.0 |  |
+| elbow_r | sts3215-12v | 2.303 | 0.304 (wave) | 0.394 (wave) | 0.304 | 0.0 |  |
+| hip_yaw_l | sts3215-12v | 2.454 | 0.285 (turn) | 0.307 (turn) | 0.285 | 0.0 |  |
+| shoulder_roll_r | sts3215-12v | 2.464 | 0.284 (pickup_0.45m) | 0.162 (dance) | 0.313 | 0.0 |  |
+| gripper_r | sts3215-12v | 2.494 | 0.281 (pickup) | 0.33 (pickup) | 0.322 | 0.0 |  |
+| waist_yaw | sts3215-12v | 3.184 | 0.22 (dance) | 0.085 (dance) | 0.22 | 0.0 |  |
 
 ## Where reinforcement would help (per-joint utilisation, 1.0 = at the gate)
-- knee (sts3215-12v): 0.935 driven by walk_forward
-- hip_pitch (sts3215-12v): 0.745 driven by walk_forward
-- hip_roll (sts3215-12v): 0.743 driven by turn
-- ankle_pitch (sts3215-12v): 0.6 driven by walk_backward
-- elbow (sts3215-12v): 0.429 driven by wave
-- hip_yaw (sts3215-12v): 0.401 driven by turn
+- knee (sts3215-12v): 0.941 driven by walk_forward
+- hip_roll (sts3215-12v): 0.872 driven by walk_backward
+- hip_pitch (sts3215-12v): 0.724 driven by walk_forward
+- ankle_pitch (sts3215-12v): 0.596 driven by walk_backward
+- hip_yaw (sts3215-12v): 0.44 driven by turn
+- elbow (sts3215-12v): 0.434 driven by wave
+- shoulder_roll (sts3215-12v): 0.406 driven by pickup_0.45m
 - gripper (sts3215-12v): 0.401 driven by pickup
-- shoulder_roll (sts3215-12v): 0.358 driven by pickup
 
 ## Power
-- pack lipo-3s-2300-tattu 3S 2.3 Ah (25.5 Wh, 0.18 kg)
-- average 19.2 W -> runtime 67.8 min (requirement 15.0 min, ok=True)
-- peak bus 6.34 A, sag 0.17 V, fuse 10 A, min voltage at far servo 10.83 V (servo minimum 6.0 V)
-- regulator: {'regulator': 'buck-5v-5a', 'rail_current_typical_a': 0.64, 'rail_current_peak_a': 1.36, 'regulator_rating_a': 5.0, 'ok_at_typical': True, 'ok_at_peak': True}
+- pack lipo-3s-2300-tattu 3S 2.3 Ah (25.5 Wh, 0.172 kg)
+- average 20.45 W -> runtime 63.7 min (requirement 15.0 min, ok=True)
+- peak bus 8.22 A (frozen motions 5.92 A, R10 push transient 8.22 A in push_walk_fwd), sag 0.22 V, **fuse 15 A** (a fuse sized from the motions alone would be 7.5 A and blow on R10: True); all leg servos stalled 30.0 A -> 40 A (fault case); min voltage at far servo 10.75 V (servo minimum 6.0 V)
+- regulator: {'regulator': 'buck-5v-5a', 'rail_current_typical_a': 0.64, 'rail_current_peak_a': 1.36, 'regulator_rating_a': 4.0, 'ok_at_typical': True, 'ok_at_peak': True}
 - voltage rating: {'sts3215-12v': {'rating_v': [6.0, 12.6], 'pack_full_v': 12.6, 'over_rating_at_full_v': 0.0, 'soc_share_over': 0.0, 'mitigation': None}}
 
 ## Thermal
 - primary gate (RMS <= rated): ok
-- 10-min mixed: max 40.0 C; steady 41.1 C; hot case (Rth x1.4, 40 C) 48.6 C at knee_r
+- 10-min mixed: max 40.9 C; steady 42.1 C; hot case (Rth x1.4, 40 C) 49.9 C at knee_r
 - model validation: The first-order model does NOT reproduce both Robonine runs (run 1 ok=True, run 2 ok=False). Its thermal numbers are UNUSABLE as predictions; they are shown as indicative only. The primary thermal gate is RMS torque <= vendor-rated continuous torque.
 
 ## Cost
-- typical $569.63, low $452.85, high $785.45 (cap $550; within cap at high price: False); 13 unverified lines
+- typical $720.39, low $509.61, high $984.93 (cap $550; within cap at high price: False); 8 unverified lines
 
 ## Push recovery (R10, a MUST)
-Push = velocity impulse of the whole body, J = M dv, in capture-point units (see docs/concept-engine.md). Demand may use the whole stall torque (emergency transient).
-| case | dv m/s | J N.s | capture offset / foot half-length mm | valid | peak/stall | envelope | delivered in time | largest recoverable (x defined, dv) |
+Required: an ABSOLUTE impulse of **0.45 N.s** (= 0.148 m/s on this 3.043 kg robot), PROVISIONAL pending the maintainer, recovered by ANY combination of strategies (ankle, hip, up to two steps with 0.15-0.35 s swing), standing and at mid single support of walk_forward. One gate: the largest recoverable impulse must be at least the requirement. The emergency demand may use the whole stall torque.
+Hip strategy: the hip strategy counts only up to 90% of the hip-pitch no-load speed; beyond it it is unavailable, and it is never a blocker by itself (limit 3.98 rad/s).
+
+| scenario | strategy at the requirement | recoverable | peak/stall | envelope | steps (crouch) | largest recoverable N.s (m/s) | by | limited by |
 |---|---|---|---|---|---|---|---|---|
-| push_ankle_fwd | 0.13 | 0.33 | 20.7 / 41.4 | True | 0.3 ankle_pitch_l | 0.3 | True | 1.284x (0.168 m/s) |
-| push_hip_fwd | 0.30 | 0.77 | 47.6 / 41.4 | False | -  | - | - | 0.513x (0.155 m/s) |
-|  | | | | reason: ideal playback fell over | | | | |
-|  | 0.152 | 0.387 | at the largest recoverable push (0.503x) | True | 1.14 hip_pitch_l | 1.38 | demand ok: False |  |
-|  | | | | hip strategy needs a trunk pitch speed of 11.5 rad/s; the hip servos give 4.4 rad/s at most | | | | |
-| push_capture_fwd | 0.34 | 0.87 | 53.8 / 41.4 | False | -  | - | - | 0.945x (0.322 m/s) |
-|  | | | | reason: reference infeasible: push dv = [0.341, 0.0] m/s, J = 0.87 N.s; reaction delay 25 ms; initial capture-point offset 54 mm vs foot half-length 41 mm; COM tracking | | | | |
-|  | 0.316 | 0.805 | at the largest recoverable push (0.926x) | True | 4.46 knee_r | 9.99 | demand ok: False |  |
-| push_capture_lat | 0.20 | 0.51 | 31.7 / 41.4 | False | -  | - | - | 0.791x (0.159 m/s) |
-|  | | | | reason: reference infeasible: push dv = [0.0, 0.201] m/s, J = 0.51 N.s; reaction delay 25 ms; initial capture-point offset 32 mm vs foot half-length 41 mm; COM tracking | | | | |
-|  | 0.156 | 0.397 | at the largest recoverable push (0.775x) | True | 2.4 knee_l | 9.99 | demand ok: False |  |
+| push_stand_fwd | ankle | True | 0.37 ankle_pitch_l | 0.37 | 0 (0.0 mm) | 0.72 (0.237) | ankle+1step@200ms | actuators (torque / speed demand) |
+| push_stand_lat | ankle | True | 0.29 knee_l | 0.29 | 0 (0.0 mm) | 0.808 (0.266) | ankle | actuators (torque / speed demand) |
+| push_walk_fwd | ankle+1step@150ms | False | 0.98 knee_r | 9.99 | 1 (0.0 mm) | 0.412 (0.135) | ankle | plan: reach / capture point |
+|  | knee_r operating point 9.99x the torque-speed envelope | | | | | | | |
+| push_walk_lat_out | ankle | True | 0.6 hip_roll_l | 0.7 | 0 (0.0 mm) | 0.508 (0.167) | ankle | actuators (torque / speed demand) |
+| push_walk_lat_in | ankle+1step@200ms | False | 0.69 knee_r | 2.95 | 1 (0.0 mm) | 0.374 (0.123) | ankle+1step@250ms | actuators (torque / speed demand) |
+|  | knee_r operating point 2.95x the torque-speed envelope | | | | | | | |
+
+largest recoverable impulse >= required in every scenario: NOT MET; the weakest scenario is push_walk_lat_in at 0.374 N.s (0.123 m/s).
 
 ## Bounds sweep (tornado)
 | unknown | worst margin | delta | passes | failing |
 |---|---|---|---|---|
-| structure mass x0.9 | 1.071 (knee_r) | 0.002 | True |  |
-| structure mass x1.8 | 1.055 (knee_r) | -0.014 | True |  |
-| wiring/electronics x0.8 | 1.069 (knee_r) | -0.0 | True |  |
-| wiring/electronics x1.5 | 1.071 (knee_r) | 0.002 | True |  |
-| pessimistic linear torque-speed | 0.493 (knee_r) | -0.576 | False | hip_pitch_l: envelope; hip_pitch_r: envelope |
-| armature low | 1.395 (hip_roll_r) | 0.326 | True |  |
-| armature high | 0.711 (knee_r) | -0.358 | False | hip_pitch_l: peak; hip_pitch_r: peak |
-| stall low | 0.831 (knee_r) | -0.238 | False | knee_l: peak; knee_r: peak |
-| stall high | 1.069 (knee_r) | -0.0 | True |  |
-| Rth high + 40 C ambient | 1.069 (knee_r) | -0.0 | True |  |
-| walking speed x1.5 | 0.09 (hip_pitch_l) | -0.979 | False | hip_pitch_l: peak, envelope; hip_pitch_r: peak, envelope |
+| structure mass x0.55 | 1.127 (knee_r) | 0.064 | True |  |
+| structure mass x1.4 | 0.955 (knee_r) | -0.108 | False | knee_l: rms; knee_r: rms |
+| wiring/electronics x0.8 | 1.076 (knee_r) | 0.013 | True |  |
+| wiring/electronics x1.5 | 1.022 (knee_r) | -0.041 | True |  |
+| pessimistic linear torque-speed | 0.694 (knee_r) | -0.369 | False | hip_pitch_l: envelope; hip_pitch_r: envelope |
+| armature low | 1.081 (knee_r) | 0.018 | True |  |
+| armature high | 0.846 (knee_r) | -0.217 | False | hip_pitch_l: peak; hip_pitch_r: peak |
+| stall low | 0.86 (hip_roll_r) | -0.203 | False | hip_roll_l: peak; hip_roll_r: peak |
+| stall high | 1.063 (knee_r) | 0.0 | True |  |
+| Rth high + 40 C ambient | 1.063 (knee_r) | 0.0 | True |  |
+| walking speed x1.5 | 0.09 (hip_pitch_l) | -0.973 | False | hip_pitch_l: peak, envelope; hip_pitch_r: peak, envelope |
+| (sensitivity) SENSITIVITY armature = BAM ST3025 (0.00399), not a bound | 1.072 (knee_r) | 0.009 | True |  |
 
 ## Monte Carlo (quasi-static dimensions only, 16 samples)
-- pass rate 0.375; worst p95 peak 1.068 at knee_r; latency, backlash and kp are NOT sampled here: they need the closed loop (P5)
+- pass rate 0.312; worst p95 peak 0.899 at knee_r; latency, backlash and kp are NOT sampled here: they need the closed loop (P5)
 
 ## Walk stress variants (informational)
-- stress_walk_speed_x1.5: peak 2.023 of stall at knee_r, within gate: False
-- stress_walk_step_time_x0.8: peak 0.731 of stall at knee_r, within gate: False
-- stress_landing_late_10ms: peak 0.624 of stall at knee_r, within gate: True
-- stress_landing_early_10ms: peak 0.639 of stall at knee_r, within gate: True
-- stress_capture_step: peak 0.808 of stall at knee_l, within gate: False
+- stress_walk_speed_x1.5: peak 0.941 of stall at knee_r, within gate: False
+- stress_walk_step_time_x0.8: peak 0.601 of stall at hip_roll_l, within gate: True
+- stress_landing_late_10ms: peak 0.605 of stall at hip_roll_r, within gate: True
+- stress_landing_early_10ms: peak 0.601 of stall at hip_roll_l, within gate: True
+- stress_capture_step: peak 0.666 of stall at knee_l, within gate: True
 
 ## Servo-in-the-loop (tracking, saturation, overload trips; NOT envelopes)
-- walk_forward: rms err 0.21 deg, max 1.38 deg, saturation 0.0 at hip_yaw_l, trips 0, min bus 12.41 V
-- turn: rms err 0.19 deg, max 0.83 deg, saturation 0.0 at hip_yaw_l, trips 0, min bus 12.46 V
-- squat_90: rms err 0.17 deg, max 0.53 deg, saturation 0.0 at hip_yaw_l, trips 0, min bus 12.54 V
-- wave: rms err 0.23 deg, max 0.72 deg, saturation 0.0 at hip_yaw_l, trips 0, min bus 12.55 V
-- pickup: rms err 0.24 deg, max 0.63 deg, saturation 0.0 at hip_yaw_l, trips 0, min bus 12.55 V, grasp ok True
-- push_ankle_fwd: fell=False, leg tracking max 0.72 deg (rms 0.14), saturation 0.0 at hip_yaw_l, trips 0, delivered in time: True (servo delay 4.9 ms)
-- closed-loop sensitivity (needs closed loop, P5): {'label': 'needs closed loop (P5): open-loop replay with frozen feedforward; not a gate', 'latency_40ms': {'rms_err_deg': 1.48, 'max_err_deg': 11.24, 'fell': False, 'tether_mean_pct_bw': 1.16}, 'backlash_1deg': {'rms_err_deg': 0.32, 'max_err_deg': 1.57, 'fell': False, 'tether_mean_pct_bw': 0.75}, 'kp_-10%': {'rms_err_deg': 0.23, 'max_err_deg': 2.14, 'fell': False, 'tether_mean_pct_bw': 0.72}, 'kp_+10%': {'rms_err_deg': 0.27, 'max_err_deg': 1.96, 'fell': False, 'tether_mean_pct_bw': 0.86}}
+- walk_forward: rms err 0.24 deg, max 1.55 deg, saturation 0.0 at hip_yaw_l, trips 0, min bus 12.41 V
+- turn: rms err 0.21 deg, max 1.07 deg, saturation 0.0 at hip_yaw_l, trips 0, min bus 12.44 V
+- squat_90: rms err 0.17 deg, max 0.65 deg, saturation 0.0 at hip_yaw_l, trips 0, min bus 12.53 V
+- wave: rms err 0.23 deg, max 0.65 deg, saturation 0.0 at hip_yaw_l, trips 0, min bus 12.53 V
+- pickup: rms err 0.25 deg, max 0.68 deg, saturation 0.0 at hip_yaw_l, trips 0, min bus 12.53 V, grasp ok True
+- push_stand_fwd: fell=False, leg tracking max 0.71 deg (rms 0.13), saturation 0.0 at hip_yaw_l, trips 0, delivered in time: True (servo delay 4.9 ms)
+- push_stand_lat: fell=False, leg tracking max 0.75 deg (rms 0.24), saturation 0.0 at hip_yaw_l, trips 0, delivered in time: True (servo delay 4.9 ms)
+- push_walk_lat_out: fell=False, leg tracking max 1.76 deg (rms 0.25), saturation 0.0 at hip_yaw_l, trips 0, delivered in time: True (servo delay 4.9 ms)
+- closed-loop sensitivity (needs closed loop, P5): {'label': 'needs closed loop (P5): open-loop replay with frozen feedforward; not a gate', 'latency_40ms': {'rms_err_deg': 1.41, 'max_err_deg': 9.61, 'fell': False, 'tether_mean_pct_bw': 1.34}, 'backlash_1deg': {'rms_err_deg': 0.33, 'max_err_deg': 1.6, 'fell': False, 'tether_mean_pct_bw': 0.9}, 'kp_-10%': {'rms_err_deg': 0.23, 'max_err_deg': 1.37, 'fell': False, 'tether_mean_pct_bw': 0.84}, 'kp_+10%': {'rms_err_deg': 0.29, 'max_err_deg': 2.06, 'fell': False, 'tether_mean_pct_bw': 0.99}}
 
 ## Model quality
 - sts3215-12v: extrapolated_12v (score 0.4), bus 11.1 V vs model 12.0 V -> at the model voltage
 
 ## Limitations
-- Open-loop reference replay: LIPM + analytic IK gait (no trajectory optimisation), so loads are a lower bound for a real balancing controller; stress walks bound some of the gap.
-- Torque demand includes the servo's reflected rotor inertia (BAM armature 0.0234 kg m^2), which dominates dynamic loads; that value is a 7.4 V identification used for all servos.
-- 12 V STS3215 and STS3250 are datasheet-anchored with dynamics borrowed from the 7.4 V fit; the mid-speed torque curve is unverified (anchored vs pessimistic linear shown).
-- Printed structure mass is a pre-CAD guess; shells and brackets are not modelled. The benchmark fit is only a sanity bound / stress case.
-- Thermal: single lumped node, Rth/tau derived from one Robonine unit with assumed ambient; the model does not reproduce Robonine run 2, so thermal numbers are indicative and RMS <= rated is the thermal gate.
+- Open-loop reference replay: LIPM + analytic IK gait (no trajectory optimisation), so loads are a lower bound for a real balancing controller; stress walks bound some of the gap. A minimum-torque inverse-dynamics demand (no tether, no PD) agrees with the PD harness within about 4% on the sagittal leg joints.
+- Torque demand includes the servo's reflected rotor inertia (BAM armature 0.0234 kg m^2), which dominates dynamic loads; that value is a 7.4 V identification used for all servos. The only other armature in BAM's files that applies to a 12 V class servo (Waveshare ST3025, 0.00399) is reported as a SENSITIVITY row, not a bound.
+- 12 V STS3215 and STS3250 are datasheet-anchored with dynamics borrowed from the 7.4 V fit; the mid-speed torque curve is unverified (anchored vs pessimistic linear shown). A bench test settles it.
+- Printed structure mass: the nominal (11.9 kg per m^3) was recentred on Open Duck Mini's back-out (its structure is 1.86x the old 6.4); shells and brackets of Adam are still not modelled. The benchmark fit is only a sanity bound / stress case.
+- Thermal: single lumped node, Rth/tau derived from one Robonine unit with assumed ambient; the model does not reproduce Robonine run 2, so thermal numbers are indicative and RMS <= rated is the thermal gate. The rated continuous torque of the 7.4 V part is contested (0.49 vs 0.637 N.m): the verdict is shown at both.
+- R10 (PROVISIONAL absolute impulse): LIPM plans with perfect state estimation, instant unloading of the stepping foot, no foot rotation, no foot/leg collision (cross-steps are placed a foot length away from the stance foot), backward pushes not run, lateral hip-roll (trunk roll) strategy not modelled, the hip strategy is forward only and counts only within the hip servos' speed. Walking pushes use the third step of the frozen gait.
+- Gait: stance knee flexion 20-45 deg and step time {0.25, 0.35, 0.5} s are swept identically for every candidate and the gates use the best feasible combination; Open Duck Mini itself walks at about 77 deg knee flexion and 0.27 s steps.
 - Latency, backlash and kp need the closed loop (P5); here they are sensitivities on one walk, never gates.
-- Leg-table / self-collision, cable routing and packaging are not checked (T-0004 floors are applied only as proportion minimums).
+- Leg-table / self-collision, cable routing and packaging are not checked (T-0004 floors, and in the height sweep the CAD-foundation ankle height and ranges, are applied only as proportion / range minimums; the 106 mm hip stack is not modelled).
 - Stand-up from a fall is not modelled; the quasi-static sit-to-stand at 130 deg knee is a proxy only.
 
 ## Constants and their provenance class
@@ -156,7 +178,7 @@ Push = velocity impulse of the whole body, J = M dv, in capture-point units (see
 | gates.motion_pass_all_required | gate | every frozen motion must be VALID (reference feasible, upright, tether <= 1% of weight) and pass the joint gates; an invalid motion is a FAI |
 | thermal.ambient_c | assumption | closed printed shell with 22 servos and a Pi; no measurement. 22 C room + 13 K enclosure rise (research/methods/e says "derate for ambient i |
 | thermal.start_c | assumption | cold start inside the shell |
-| mass.structure_factor | assumption | printed frame + shell mass before CAD/shells exist; the structure coefficient (6.4 kg at 1 m cubed) is NOT recalibrated until shelled CAD ex |
+| mass.structure_factor | assumption | printed frame + shell mass before CAD/shells exist. RECENTRED by the Open Duck Mini calibration (challenge-2 row 11): the nominal structure  |
 | mass.wiring_electronics_factor | assumption | wiring harness and electronics_kg: harnesses grow in practice |
 | mass.servo_battery_board_factor | sourced_estimate | catalog masses of servos, battery and boards are taken as listed (no band): vendor figures, +-1 g on a 55 g servo |
 | mass.wiring_kg_per_servo | assumption | cable + connector per servo |
@@ -184,6 +206,8 @@ Push = velocity impulse of the whole body, J = M dv, in capture-point units (see
 | power.wire_resistance_ohm_per_branch | assumption | bus wiring + connectors from the pack to a servo branch (for the minimum-voltage-at-the-farthest-servo check); no data |
 | power.fuse_margin | assumption | fuse rating = 1.25 x the peak legitimate draw, must stay below the wiring/connector limit (connector rating null in research) |
 | motions | assumption | requirements.md R2-R5 give no speeds, depths or tempos. These are requirement-level placeholders chosen once, not tuned per candidate. |
+| gait_sweep | assumption | challenge-2 commander response rows 12-13: stance knee flex 20-45 deg, step time {0.25, 0.35, 0.5} s |
+| packaging_cad_foundation | sourced_estimate | docs/cad-foundation.md 'Design facts the leg established'; coordination/commander-log.md CAD foundation entry. Servo feature dimensions behi |
 | assist.mean_fraction_of_weight_max | gate | challenge-1 row 7: the playback tether may not carry the motion; mean assist above 1% of body weight invalidates the motion |
 | overload_protection.gate_fraction_of_protection_time | gate | challenge-1 row 6: time continuously above 70% of stall must stay below half the Feetech Protection_Time |
 | packaging_floors.ankle_height_frac | sourced_estimate | T-0004: ankle height 22.5 mm (0.045 h) leaves 4.6 mm under the ankle-roll servo; ~0.06 h fixes it. Below it ankle roll is limited to +-18 de |
@@ -207,15 +231,15 @@ Push = velocity impulse of the whole body, J = M dv, in capture-point units (see
 | sts3215-12v.thermal (Rth, tau) | extrapolated | Robonine 12 V bench: 48 C after 10 min at 15 kg.cm static (stable >1 h); our current model gives ~8.1 W there; ambient assumed 22 C => 3.2 K |
 | sts3215-12v.dynamics (armature, friction, delay) | extrapolated | BAM 7.4 V fit borrowed for a different servo (same 1:345 gearbox assumed) |
 | sts3215-12v.model quality | extrapolated | Feetech STS3215 12 V (30 kg.cm), datasheet-anchored, dynamics extrapolated from the BAM 7.4 V fit |
-| catalog rpi-zero-2w (price, mass, dims) | sourced_estimate | estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md / dims/mass added  |
-| catalog microsd-32gb (price, mass, dims) | assumption | estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md |
-| catalog waveshare-bus-servo-adapter (price, mass, dims) | assumption | estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md |
-| catalog imu-bno085 (price, mass, dims) | assumption | estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md |
-| catalog cam-rpi-v3 (price, mass, dims) | assumption | estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md |
-| catalog lipo-3s-2300-tattu (price, mass, dims) | sourced_estimate | https://rotorvillage.ca/tattu-2300mah-3s-45c-lipo-xt60 (172 g, 106x34x23 mm, CAD 39.99); https://alofthobbies.com/products/tattu-3s-2300mah- |
-| catalog buck-5v-5a (price, mass, dims) | assumption | estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md |
-| catalog power-switch-xt60 (price, mass, dims) | assumption | estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md |
-| catalog fastener-kit-m2-m3 (price, mass, dims) | assumption | estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md |
-| catalog bearing-kit-small (price, mass, dims) | assumption | estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md |
+| catalog rpi-zero-2w (price, mass, dims) | sourced_estimate | https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/ (65x30 mm, quad A53 1 GHz, 512 MB); prices: https://www.pishop.us/product/raspbe |
+| catalog microsd-32gb (price, mass, dims) | sourced_estimate | estimate: snippets only, pages not fetched. CDW SanDisk Ultra 32 GB $9.97 (https://cdwg.com/product/sandisk-ultra-flash-memory-card-32-gb-mi |
+| catalog waveshare-bus-servo-adapter (price, mass, dims) | sourced_estimate | https://www.waveshare.com/bus-servo-adapter-a.htm ($4.99); wiki https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A) (UART jumper A=UART/B=U |
+| catalog imu-bno085 (price, mass, dims) | sourced_estimate | https://www.adafruit.com/product/4754 ($29.50, in stock, 2.5 g, 25.6x22.7x4.6 mm); https://www.sparkfun.com/sparkfun-vr-imu-breakout-bno086- |
+| catalog cam-rpi-v3 (price, mass, dims) | sourced_estimate | https://www.raspberrypi.com/products/camera-module-3/ (IMX708, 11.9 MP, 25x24x11.5 mm; 15-pin cable); https://www.adafruit.com/product/5657  |
+| catalog lipo-3s-2300-tattu (price, mass, dims) | sourced_estimate | https://alofthobbies.com/products/tattu-3s-2300mah-45c-xt60 ($27.60, page contradicts itself: 'Sold Out' button vs 'In stock', 45c vs 75C, 1 |
+| catalog buck-5v-5a (price, mass, dims) | sourced_estimate | https://www.dfrobot.com/product-2240.html (7-24 V in, 5 V out, 0-4 A, 5 A max with heat dissipation, 90% efficiency, $4.90); https://www.rob |
+| catalog power-switch-xt60 (price, mass, dims) | sourced_estimate | estimate: pigtail https://www.racedayquads.com/products/xt60-pigtail-14awg-4 ($2.49, in stock); switch https://www.revrobotics.com/rev-31-13 |
+| catalog fastener-kit-m2-m3 (price, mass, dims) | sourced_estimate | estimate: search snippets only. https://vxb.com/fr/products/heat-set-inserts-for-plastic-3d-printing-kit-with ($49.98, 170 pcs M2/M3 brass); |
+| catalog bearing-kit-small (price, mass, dims) | sourced_estimate | estimate: no STS3215 back-shaft bearing size confirmed by any BOM. Open Duck Mini's BOM lists 3x 6804ZZ (20x32x7 mm) EUR 3.50 each (https:// |
 | catalog wiring-kit-bus (price, mass, dims) | assumption | estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md |
-| catalog charger-skyrc-b6neo (price, mass, dims) | sourced_estimate | https://www.radiomasterrc.com/zh/products/skyrc-b6-neo-200w-dc-charger-with-dc-pd-dual-input ($39.99); https://shop.robitronic.com/en/skyrc- |
+| catalog charger-skyrc-b6neo (price, mass, dims) | sourced_estimate | https://www.skyrc.com/b6neo (manufacturer: DC in 10-28 V XT60, USB-C PD in 12-20 V, 200 W DC / 80 W PD, 0.2-10 A, 1-6S, 70x50x31 mm, 82 g);  |

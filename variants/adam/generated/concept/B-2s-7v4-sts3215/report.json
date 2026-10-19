@@ -2,7 +2,7 @@
  "generated_by": "python -m openhumanoid.concept evaluate",
  "candidate": "B-2s-7v4-sts3215",
  "description": "2S LiPo (7.4 V bus), STS3215 7.4 V (BAM-identified) on every joint, 23 DOF incl. neck pitch, camera. Full charge (8.4 V) is above the servo rating: reported with its mitigation.",
- "source_file": "C:\\Users\\aemar\\Documents\\Easy Humanoid\\.claude\\worktrees\\agent-a75199eb87db2b876\\variants\\adam\\concepts\\B-2s-7v4-sts3215.yaml",
+ "source_file": "variants\\adam\\concepts\\B-2s-7v4-sts3215.yaml",
  "thresholds_file": "openhumanoid/concept/thresholds.yaml",
  "design": {
   "height_m": 0.45,
@@ -64,27 +64,229 @@
    60
   ]
  },
+ "gait": {
+  "chosen": {
+   "stance_knee_flex_deg": 45,
+   "step_time_s": 0.5
+  },
+  "chosen_worst_margin": 0.537,
+  "at_the_old_default_40deg_0p5s": {
+   "stance_knee_flex_deg": 40,
+   "step_time_s": 0.5,
+   "worst_margin": 0.533,
+   "worst_joint": "knee_r",
+   "passes": false,
+   "invalid": {},
+   "other_invalid": {},
+   "failing": [
+    "hip_roll_l: peak, rms",
+    "hip_roll_r: peak, rms",
+    "hip_pitch_l: peak, rms"
+   ]
+  },
+  "rule": "same set for every candidate; the gates use the combination with the largest worst-joint margin among those whose motions are all valid",
+  "sweep": [
+   {
+    "stance_knee_flex_deg": 20,
+    "step_time_s": 0.25,
+    "worst_margin": 0.082,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {
+     "walk_forward": "tether supplied 4.4% of body weight on average (limit 1%)",
+     "walk_backward": "tether supplied 1.6% of body weight on average (limit 1%)"
+    },
+    "other_invalid": {},
+    "failing": [
+     "INVALID walk_forward: tether supplied 4.4% of body weight on average (limit 1%)",
+     "INVALID walk_backward: tether supplied 1.6% of body weight on average (limit 1%)",
+     "hip_roll_l: peak, rms"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 20,
+    "step_time_s": 0.35,
+    "worst_margin": 0.09,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {
+     "walk_forward": "reference infeasible: COM tracking error after compensation 0.10 mm; leg IK unreachable at 19 of 575 samples",
+     "walk_backward": "reference infeasible: COM tracking error after compensation 0.06 mm; leg IK unreachable at 9 of 575 samples"
+    },
+    "other_invalid": {},
+    "failing": [
+     "INVALID walk_forward: reference infeasible: COM tracking error after compensation 0.10 mm; leg IK unreachable at 19 of 575 samples",
+     "INVALID walk_backward: reference infeasible: COM tracking error after compensation 0.06 mm; leg IK unreachable at 9 of 575 samples",
+     "hip_roll_l: peak, rms"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 20,
+    "step_time_s": 0.5,
+    "worst_margin": 0.567,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {
+     "walk_forward": "reference infeasible: COM tracking error after compensation 0.17 mm; leg IK unreachable at 102 of 590 samples",
+     "walk_backward": "reference infeasible: COM tracking error after compensation 0.08 mm; leg IK unreachable at 77 of 590 samples",
+     "turn": "reference infeasible: COM tracking error after compensation 0.07 mm; leg IK unreachable at 10 of 590 samples"
+    },
+    "other_invalid": {},
+    "failing": [
+     "INVALID walk_forward: reference infeasible: COM tracking error after compensation 0.17 mm; leg IK unreachable at 102 of 590 samples",
+     "INVALID walk_backward: reference infeasible: COM tracking error after compensation 0.08 mm; leg IK unreachable at 77 of 590 samples",
+     "INVALID turn: reference infeasible: COM tracking error after compensation 0.07 mm; leg IK unreachable at 10 of 590 samples"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 30,
+    "step_time_s": 0.25,
+    "worst_margin": 0.126,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_roll_l: peak, rms",
+     "hip_roll_r: peak, rms",
+     "hip_pitch_l: peak, rms, envelope"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 30,
+    "step_time_s": 0.35,
+    "worst_margin": 0.33,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_roll_l: peak, rms",
+     "hip_roll_r: peak, rms",
+     "hip_pitch_l: peak, rms, envelope"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 30,
+    "step_time_s": 0.5,
+    "worst_margin": 0.192,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_roll_l: peak, rms",
+     "hip_roll_r: peak, rms",
+     "hip_pitch_l: peak, rms"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 40,
+    "step_time_s": 0.25,
+    "worst_margin": 0.242,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_roll_l: peak, rms",
+     "hip_roll_r: peak, rms",
+     "hip_pitch_l: peak, rms, envelope"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 40,
+    "step_time_s": 0.35,
+    "worst_margin": 0.373,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_roll_l: peak, rms",
+     "hip_roll_r: peak, rms",
+     "hip_pitch_l: peak, rms"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 40,
+    "step_time_s": 0.5,
+    "worst_margin": 0.533,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_roll_l: peak, rms",
+     "hip_roll_r: peak, rms",
+     "hip_pitch_l: peak, rms"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 45,
+    "step_time_s": 0.25,
+    "worst_margin": 0.256,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_roll_l: peak, rms",
+     "hip_roll_r: peak, rms",
+     "hip_pitch_l: peak, rms"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 45,
+    "step_time_s": 0.35,
+    "worst_margin": 0.385,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_roll_l: peak, rms",
+     "hip_roll_r: peak, rms",
+     "hip_pitch_l: peak, rms"
+    ]
+   },
+   {
+    "stance_knee_flex_deg": 45,
+    "step_time_s": 0.5,
+    "worst_margin": 0.537,
+    "worst_joint": "knee_r",
+    "passes": false,
+    "invalid": {},
+    "other_invalid": {},
+    "failing": [
+     "hip_roll_l: peak, rms",
+     "hip_roll_r: peak, rms",
+     "hip_pitch_l: peak"
+    ]
+   }
+  ]
+ },
  "mass": {
   "breakdown_kg": {
-   "structure_kg": 0.583,
+   "structure_kg": 1.084,
    "actuators_kg": 1.265,
    "onboard_parts_kg": 0.361,
    "wiring_kg": 0.163,
    "electronics_misc_kg": 0.12,
-   "total_kg": 2.4922
+   "total_kg": 2.9934
   },
-  "total_kg": 2.492,
+  "total_kg": 2.993,
   "sanity": {
-   "component_sum_kg": 2.492,
+   "component_sum_kg": 2.993,
    "benchmark_fit_kg": 2.996,
-   "ratio": 0.832,
+   "ratio": 0.999,
    "status": "within the sanity band (0.6x-1.6x of the fit)",
-   "note": "The fit 18.5*h^2.28 (N=9, R2 0.93, research/robots/benchmarks.md) and the ToddlerBot/OP3 masses are SANITY BOUNDS ONLY. The mass used everywhere in this report is the component sum (catalog masses as listed; printed structure x0.9-1.8 and wiring/electronics x0.8-1.5 bands); the structure term is a pre-CAD guess."
+   "note": "The fit 18.5*h^2.28 (N=9, R2 0.93, research/robots/benchmarks.md) and the ToddlerBot/OP3 masses are SANITY BOUNDS ONLY. The mass used everywhere in this report is the component sum (catalog masses as listed; printed structure x0.55-1.4 around the Open Duck Mini-recentred nominal and wiring/electronics x0.8-1.5 bands); the structure term is a pre-CAD guess."
   },
   "bands": {
    "structure": [
-    0.9,
-    1.8
+    0.55,
+    1.4
    ],
    "wiring_electronics": [
     0.8,
@@ -107,7 +309,7 @@
   "walk_forward": {
    "valid": true,
    "invalid_reason": "",
-   "tether_mean_pct_bw": 0.5,
+   "tether_mean_pct_bw": 0.52,
    "notes": [
     "COM tracking error after compensation 0.00 mm"
    ],
@@ -116,7 +318,7 @@
     "steps": 8,
     "step_len_m": 0.05,
     "step_time_s": 0.5,
-    "zc_m": 0.24298805773699936,
+    "zc_m": 0.2374184438739844,
     "speed_mps": 0.1,
     "turn_rate_rad_s": 0.0,
     "clearance_m": 0.015,
@@ -129,7 +331,7 @@
   "walk_backward": {
    "valid": true,
    "invalid_reason": "",
-   "tether_mean_pct_bw": 0.5,
+   "tether_mean_pct_bw": 0.51,
    "notes": [
     "COM tracking error after compensation 0.00 mm"
    ],
@@ -138,7 +340,7 @@
     "steps": 8,
     "step_len_m": -0.05,
     "step_time_s": 0.5,
-    "zc_m": 0.24298805773699936,
+    "zc_m": 0.2374184438739844,
     "speed_mps": 0.1,
     "turn_rate_rad_s": 0.0,
     "clearance_m": 0.015,
@@ -151,7 +353,7 @@
   "turn": {
    "valid": true,
    "invalid_reason": "",
-   "tether_mean_pct_bw": 0.5,
+   "tether_mean_pct_bw": 0.51,
    "notes": [
     "COM tracking error after compensation 0.00 mm"
    ],
@@ -160,7 +362,7 @@
     "steps": 8,
     "step_len_m": 0.0,
     "step_time_s": 0.5,
-    "zc_m": 0.24298805773699936,
+    "zc_m": 0.2374184438739844,
     "speed_mps": 0.0,
     "turn_rate_rad_s": 0.5,
     "clearance_m": 0.015,
@@ -238,19 +440,48 @@
     "COM tracking error 0.00 mm"
    ],
    "meta": {
-    "squat_deg": 40.0,
+    "squat_deg": 45.0,
     "table_height_m": 0.25,
     "object_m": 0.15,
     "object_xyz": [
-     0.1304,
+     0.1295,
      -0.11,
      0.275
     ],
     "arm_reach_m": 0.1629,
     "grasp_ik_m": 0.0004,
     "pregrasp_ik_m": 0.0003,
-    "lift_ik_m": 0.0003,
-    "jaw_axis_off_horizontal_deg": 0.3424,
+    "lift_ik_m": 0.0004,
+    "jaw_axis_off_horizontal_deg": 0.355,
+    "lift_marks_s": [
+     11.4,
+     14.6
+    ]
+   }
+  },
+  "pickup_0.45m": {
+   "valid": true,
+   "invalid_reason": "",
+   "tether_mean_pct_bw": 0.03,
+   "notes": [
+    "arm too short / table too low: no squat up to 120 deg brings the hand within reach",
+    "grasp_ik_m = 88.9 mm (target not reached with the available arm joints)",
+    "pregrasp_ik_m = 44.6 mm (target not reached with the available arm joints)"
+   ],
+   "meta": {
+    "squat_deg": 120.0,
+    "table_height_m": 0.45,
+    "object_m": 0.15,
+    "object_xyz": [
+     0.1222,
+     -0.11,
+     0.475
+    ],
+    "arm_reach_m": 0.1629,
+    "grasp_ik_m": 0.0889,
+    "pregrasp_ik_m": 0.0446,
+    "lift_ik_m": 0.1243,
+    "jaw_axis_off_horizontal_deg": 20.0,
     "lift_marks_s": [
      11.4,
      14.6
@@ -262,12 +493,14 @@
    "invalid_reason": "",
    "tether_mean_pct_bw": 0.03,
    "notes": [
-    "COM tracking error 0.00 mm"
+    "COM tracking error 0.00 mm",
+    "ROM CLAMP: 130 deg requested, knee range ends at 130 deg; run at 129.8 deg"
    ],
    "meta": {
-    "depth_deg": 130.0,
+    "depth_deg": 129.8,
     "hold_s": 0.5,
-    "down_s": 3.0
+    "down_s": 3.0,
+    "rom_clamped_from_deg": 130.0
    }
   }
  },
@@ -275,319 +508,317 @@
   {
    "joint": "knee_r",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.901,
+   "peak_frac_of_stall": 0.821,
    "peak_motion": "walk_forward",
-   "rms_over_rated": 1.797,
+   "rms_over_rated": 1.862,
    "rms_motion": "walk_forward",
-   "util_max": 0.901,
+   "util_max": 0.821,
    "util_motion": "walk_forward",
-   "overload_run_ratio": 0.05,
-   "overload_motion": "walk_forward",
+   "overload_run_ratio": 0.78,
+   "overload_motion": "squat_120",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 0.777,
-   "margin_rms": 0.556,
-   "margin_util": 0.999,
-   "margin_overload": 20.0,
+   "margin_peak": 0.853,
+   "margin_rms": 0.537,
+   "margin_util": 1.096,
+   "margin_overload": 1.282,
    "fails": [
     "peak",
-    "rms",
-    "envelope"
+    "rms"
    ],
-   "worst_margin": 0.556
+   "worst_margin": 0.537
   },
   {
    "joint": "knee_l",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.898,
+   "peak_frac_of_stall": 0.818,
    "peak_motion": "walk_forward",
-   "rms_over_rated": 1.74,
-   "rms_motion": "walk_forward",
-   "util_max": 0.898,
+   "rms_over_rated": 1.81,
+   "rms_motion": "pickup_0.45m",
+   "util_max": 0.818,
    "util_motion": "walk_forward",
-   "overload_run_ratio": 0.05,
-   "overload_motion": "walk_forward",
+   "overload_run_ratio": 0.78,
+   "overload_motion": "squat_120",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 0.78,
-   "margin_rms": 0.575,
-   "margin_util": 1.003,
-   "margin_overload": 20.0,
+   "margin_peak": 0.856,
+   "margin_rms": 0.552,
+   "margin_util": 1.1,
+   "margin_overload": 1.282,
    "fails": [
     "peak",
     "rms"
    ],
-   "worst_margin": 0.575
+   "worst_margin": 0.552
   },
   {
    "joint": "hip_roll_l",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.717,
+   "peak_frac_of_stall": 0.847,
    "peak_motion": "walk_backward",
-   "rms_over_rated": 1.387,
+   "rms_over_rated": 1.638,
    "rms_motion": "walk_backward",
-   "util_max": 0.717,
+   "util_max": 0.847,
    "util_motion": "walk_backward",
-   "overload_run_ratio": 0.18,
+   "overload_run_ratio": 0.26,
    "overload_motion": "walk_forward",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 0.976,
-   "margin_rms": 0.721,
-   "margin_util": 1.255,
-   "margin_overload": 5.556,
+   "margin_peak": 0.826,
+   "margin_rms": 0.611,
+   "margin_util": 1.062,
+   "margin_overload": 3.846,
    "fails": [
     "peak",
     "rms"
    ],
-   "worst_margin": 0.721
+   "worst_margin": 0.611
   },
   {
    "joint": "hip_roll_r",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.727,
-   "peak_motion": "turn",
-   "rms_over_rated": 1.282,
+   "peak_frac_of_stall": 0.858,
+   "peak_motion": "walk_backward",
+   "rms_over_rated": 1.515,
    "rms_motion": "walk_backward",
-   "util_max": 0.727,
-   "util_motion": "turn",
-   "overload_run_ratio": 0.08,
-   "overload_motion": "walk_backward",
+   "util_max": 0.858,
+   "util_motion": "walk_backward",
+   "overload_run_ratio": 0.15,
+   "overload_motion": "walk_forward",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 0.963,
-   "margin_rms": 0.78,
-   "margin_util": 1.239,
-   "margin_overload": 12.5,
+   "margin_peak": 0.816,
+   "margin_rms": 0.66,
+   "margin_util": 1.049,
+   "margin_overload": 6.667,
    "fails": [
     "peak",
     "rms"
    ],
-   "worst_margin": 0.78
-  },
-  {
-   "joint": "ankle_pitch_r",
-   "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.6,
-   "peak_motion": "walk_backward",
-   "rms_over_rated": 1.148,
-   "rms_motion": "walk_backward",
-   "util_max": 0.6,
-   "util_motion": "walk_backward",
-   "overload_run_ratio": 0.0,
-   "overload_motion": "stand",
-   "trips": 0,
-   "trip_motion": "",
-   "stall_nm": 1.912,
-   "margin_peak": 1.167,
-   "margin_rms": 0.871,
-   "margin_util": 1.501,
-   "margin_overload": 1000000000.0,
-   "fails": [
-    "rms"
-   ],
-   "worst_margin": 0.871
+   "worst_margin": 0.66
   },
   {
    "joint": "ankle_pitch_l",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.6,
+   "peak_frac_of_stall": 0.583,
    "peak_motion": "walk_backward",
-   "rms_over_rated": 1.14,
+   "rms_over_rated": 1.186,
    "rms_motion": "walk_backward",
-   "util_max": 0.6,
+   "util_max": 0.583,
    "util_motion": "walk_backward",
    "overload_run_ratio": 0.0,
    "overload_motion": "stand",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 1.167,
-   "margin_rms": 0.877,
-   "margin_util": 1.501,
+   "margin_peak": 1.201,
+   "margin_rms": 0.843,
+   "margin_util": 1.545,
    "margin_overload": 1000000000.0,
    "fails": [
     "rms"
    ],
-   "worst_margin": 0.877
+   "worst_margin": 0.843
   },
   {
-   "joint": "hip_pitch_l",
+   "joint": "ankle_pitch_r",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.744,
-   "peak_motion": "walk_forward",
-   "rms_over_rated": 1.013,
-   "rms_motion": "walk_forward",
-   "util_max": 0.744,
-   "util_motion": "walk_forward",
-   "overload_run_ratio": 0.04,
-   "overload_motion": "walk_forward",
+   "peak_frac_of_stall": 0.583,
+   "peak_motion": "walk_backward",
+   "rms_over_rated": 1.178,
+   "rms_motion": "walk_backward",
+   "util_max": 0.583,
+   "util_motion": "walk_backward",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 0.941,
-   "margin_rms": 0.987,
-   "margin_util": 1.21,
-   "margin_overload": 25.0,
+   "margin_peak": 1.201,
+   "margin_rms": 0.849,
+   "margin_util": 1.544,
+   "margin_overload": 1000000000.0,
    "fails": [
-    "peak",
     "rms"
    ],
-   "worst_margin": 0.941
+   "worst_margin": 0.849
   },
   {
    "joint": "hip_pitch_r",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.744,
+   "peak_frac_of_stall": 0.723,
    "peak_motion": "walk_forward",
-   "rms_over_rated": 1.057,
+   "rms_over_rated": 1.012,
    "rms_motion": "walk_forward",
-   "util_max": 0.744,
+   "util_max": 0.723,
    "util_motion": "walk_forward",
-   "overload_run_ratio": 0.04,
+   "overload_run_ratio": 0.02,
    "overload_motion": "walk_forward",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 0.941,
-   "margin_rms": 0.946,
-   "margin_util": 1.21,
-   "margin_overload": 25.0,
+   "margin_peak": 0.968,
+   "margin_rms": 0.988,
+   "margin_util": 1.244,
+   "margin_overload": 50.0,
    "fails": [
     "peak",
     "rms"
    ],
-   "worst_margin": 0.941
+   "worst_margin": 0.968
+  },
+  {
+   "joint": "hip_pitch_l",
+   "actuator": "sts3215-7v4",
+   "peak_frac_of_stall": 0.723,
+   "peak_motion": "walk_forward",
+   "rms_over_rated": 0.979,
+   "rms_motion": "walk_forward",
+   "util_max": 0.723,
+   "util_motion": "walk_forward",
+   "overload_run_ratio": 0.02,
+   "overload_motion": "walk_forward",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 1.912,
+   "margin_peak": 0.968,
+   "margin_rms": 1.021,
+   "margin_util": 1.245,
+   "margin_overload": 50.0,
+   "fails": [
+    "peak"
+   ],
+   "worst_margin": 0.968
   },
   {
    "joint": "elbow_r",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.428,
+   "peak_frac_of_stall": 0.433,
    "peak_motion": "wave",
-   "rms_over_rated": 0.784,
+   "rms_over_rated": 0.788,
    "rms_motion": "wave",
-   "util_max": 0.428,
+   "util_max": 0.433,
    "util_motion": "wave",
    "overload_run_ratio": 0.0,
    "overload_motion": "stand",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 1.637,
-   "margin_rms": 1.276,
-   "margin_util": 2.104,
+   "margin_peak": 1.618,
+   "margin_rms": 1.269,
+   "margin_util": 2.08,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 1.276
+   "worst_margin": 1.269
   },
   {
    "joint": "hip_yaw_r",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.393,
+   "peak_frac_of_stall": 0.433,
    "peak_motion": "turn",
-   "rms_over_rated": 0.582,
+   "rms_over_rated": 0.633,
    "rms_motion": "turn",
-   "util_max": 0.393,
+   "util_max": 0.433,
    "util_motion": "turn",
    "overload_run_ratio": 0.0,
    "overload_motion": "stand",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 1.781,
-   "margin_rms": 1.719,
-   "margin_util": 2.29,
+   "margin_peak": 1.616,
+   "margin_rms": 1.581,
+   "margin_util": 2.078,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 1.719
+   "worst_margin": 1.581
   },
   {
    "joint": "hip_yaw_l",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.366,
+   "peak_frac_of_stall": 0.401,
    "peak_motion": "turn",
-   "rms_over_rated": 0.562,
+   "rms_over_rated": 0.608,
    "rms_motion": "turn",
-   "util_max": 0.366,
+   "util_max": 0.401,
    "util_motion": "turn",
    "overload_run_ratio": 0.0,
    "overload_motion": "stand",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 1.913,
-   "margin_rms": 1.78,
-   "margin_util": 2.46,
+   "margin_peak": 1.746,
+   "margin_rms": 1.645,
+   "margin_util": 2.245,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 1.78
+   "worst_margin": 1.645
   },
   {
    "joint": "shoulder_roll_r",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.357,
-   "peak_motion": "pickup",
-   "rms_over_rated": 0.28,
+   "peak_frac_of_stall": 0.404,
+   "peak_motion": "pickup_0.45m",
+   "rms_over_rated": 0.325,
    "rms_motion": "dance",
-   "util_max": 0.357,
-   "util_motion": "pickup",
+   "util_max": 0.404,
+   "util_motion": "pickup_0.45m",
    "overload_run_ratio": 0.0,
    "overload_motion": "stand",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 1.96,
-   "margin_rms": 3.575,
-   "margin_util": 2.52,
+   "margin_peak": 1.731,
+   "margin_rms": 3.081,
+   "margin_util": 2.226,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 1.96
+   "worst_margin": 1.731
   },
   {
    "joint": "shoulder_pitch_r",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.287,
+   "peak_frac_of_stall": 0.291,
    "peak_motion": "walk_backward",
-   "rms_over_rated": 0.479,
+   "rms_over_rated": 0.48,
    "rms_motion": "walk_backward",
-   "util_max": 0.287,
+   "util_max": 0.291,
    "util_motion": "walk_backward",
    "overload_run_ratio": 0.0,
    "overload_motion": "stand",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 2.44,
-   "margin_rms": 2.087,
-   "margin_util": 3.137,
+   "margin_peak": 2.403,
+   "margin_rms": 2.082,
+   "margin_util": 3.09,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 2.087
+   "worst_margin": 2.082
   },
   {
    "joint": "shoulder_pitch_l",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.287,
+   "peak_frac_of_stall": 0.291,
    "peak_motion": "walk_backward",
-   "rms_over_rated": 0.478,
+   "rms_over_rated": 0.479,
    "rms_motion": "walk_backward",
-   "util_max": 0.287,
+   "util_max": 0.291,
    "util_motion": "walk_backward",
    "overload_run_ratio": 0.0,
    "overload_motion": "stand",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 2.441,
-   "margin_rms": 2.091,
-   "margin_util": 3.138,
+   "margin_peak": 2.404,
+   "margin_rms": 2.088,
+   "margin_util": 3.091,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 2.091
+   "worst_margin": 2.088
   },
   {
    "joint": "gripper_r",
@@ -603,33 +834,75 @@
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 2.457,
-   "margin_rms": 2.182,
-   "margin_util": 3.159,
+   "margin_peak": 2.459,
+   "margin_rms": 2.181,
+   "margin_util": 3.162,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 2.182
+   "worst_margin": 2.181
   },
   {
    "joint": "waist_yaw",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.293,
+   "peak_frac_of_stall": 0.312,
    "peak_motion": "dance",
-   "rms_over_rated": 0.165,
+   "rms_over_rated": 0.17,
    "rms_motion": "dance",
-   "util_max": 0.293,
+   "util_max": 0.312,
    "util_motion": "dance",
    "overload_run_ratio": 0.0,
    "overload_motion": "stand",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 2.388,
-   "margin_rms": 6.063,
-   "margin_util": 3.07,
+   "margin_peak": 2.241,
+   "margin_rms": 5.892,
+   "margin_util": 2.882,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 2.388
+   "worst_margin": 2.241
+  },
+  {
+   "joint": "ankle_roll_r",
+   "actuator": "sts3215-7v4",
+   "peak_frac_of_stall": 0.229,
+   "peak_motion": "turn",
+   "rms_over_rated": 0.39,
+   "rms_motion": "turn",
+   "util_max": 0.229,
+   "util_motion": "turn",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 1.912,
+   "margin_peak": 3.057,
+   "margin_rms": 2.563,
+   "margin_util": 3.93,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 2.563
+  },
+  {
+   "joint": "ankle_roll_l",
+   "actuator": "sts3215-7v4",
+   "peak_frac_of_stall": 0.194,
+   "peak_motion": "dance",
+   "rms_over_rated": 0.39,
+   "rms_motion": "turn",
+   "util_max": 0.194,
+   "util_motion": "dance",
+   "overload_run_ratio": 0.0,
+   "overload_motion": "stand",
+   "trips": 0,
+   "trip_motion": "",
+   "stall_nm": 1.912,
+   "margin_peak": 3.607,
+   "margin_rms": 2.567,
+   "margin_util": 4.638,
+   "margin_overload": 1000000000.0,
+   "fails": [],
+   "worst_margin": 2.567
   },
   {
    "joint": "neck_yaw",
@@ -645,103 +918,61 @@
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 2.654,
+   "margin_peak": 2.653,
    "margin_rms": 4.699,
-   "margin_util": 3.412,
+   "margin_util": 3.411,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 2.654
-  },
-  {
-   "joint": "ankle_roll_l",
-   "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.169,
-   "peak_motion": "turn",
-   "rms_over_rated": 0.351,
-   "rms_motion": "turn",
-   "util_max": 0.169,
-   "util_motion": "turn",
-   "overload_run_ratio": 0.0,
-   "overload_motion": "stand",
-   "trips": 0,
-   "trip_motion": "",
-   "stall_nm": 1.912,
-   "margin_peak": 4.15,
-   "margin_rms": 2.853,
-   "margin_util": 5.336,
-   "margin_overload": 1000000000.0,
-   "fails": [],
-   "worst_margin": 2.853
-  },
-  {
-   "joint": "ankle_roll_r",
-   "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.187,
-   "peak_motion": "turn",
-   "rms_over_rated": 0.348,
-   "rms_motion": "turn",
-   "util_max": 0.187,
-   "util_motion": "turn",
-   "overload_run_ratio": 0.0,
-   "overload_motion": "stand",
-   "trips": 0,
-   "trip_motion": "",
-   "stall_nm": 1.912,
-   "margin_peak": 3.734,
-   "margin_rms": 2.871,
-   "margin_util": 4.801,
-   "margin_overload": 1000000000.0,
-   "fails": [],
-   "worst_margin": 2.871
+   "worst_margin": 2.653
   },
   {
    "joint": "shoulder_roll_l",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.162,
+   "peak_frac_of_stall": 0.185,
    "peak_motion": "dance",
-   "rms_over_rated": 0.282,
+   "rms_over_rated": 0.324,
    "rms_motion": "dance",
-   "util_max": 0.162,
+   "util_max": 0.185,
    "util_motion": "dance",
    "overload_run_ratio": 0.0,
    "overload_motion": "stand",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 4.333,
-   "margin_rms": 3.546,
-   "margin_util": 5.571,
+   "margin_peak": 3.774,
+   "margin_rms": 3.087,
+   "margin_util": 4.852,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 3.546
+   "worst_margin": 3.087
   },
   {
    "joint": "elbow_l",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.121,
+   "peak_frac_of_stall": 0.124,
    "peak_motion": "dance",
-   "rms_over_rated": 0.169,
+   "rms_over_rated": 0.171,
    "rms_motion": "dance",
-   "util_max": 0.121,
+   "util_max": 0.124,
    "util_motion": "dance",
    "overload_run_ratio": 0.0,
    "overload_motion": "stand",
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 5.766,
-   "margin_rms": 5.902,
-   "margin_util": 7.414,
+   "margin_peak": 5.665,
+   "margin_rms": 5.831,
+   "margin_util": 7.284,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 5.766
+   "worst_margin": 5.665
   },
   {
    "joint": "neck_pitch",
    "actuator": "sts3215-7v4",
-   "peak_frac_of_stall": 0.002,
+   "peak_frac_of_stall": 0.003,
    "peak_motion": "walk_forward",
-   "rms_over_rated": 0.005,
+   "rms_over_rated": 0.007,
    "rms_motion": "walk_forward",
    "util_max": 0.0,
    "util_motion": "stand",
@@ -750,12 +981,12 @@
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 328.97,
-   "margin_rms": 211.65,
+   "margin_peak": 227.812,
+   "margin_rms": 143.753,
    "margin_util": 900000000.0,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 211.65
+   "worst_margin": 143.753
   },
   {
    "joint": "gripper_l",
@@ -771,85 +1002,85 @@
    "trips": 0,
    "trip_motion": "",
    "stall_nm": 1.912,
-   "margin_peak": 1088.348,
-   "margin_rms": 600.192,
+   "margin_peak": 865.804,
+   "margin_rms": 477.898,
    "margin_util": 900000000.0,
    "margin_overload": 1000000000.0,
    "fails": [],
-   "worst_margin": 600.192
+   "worst_margin": 477.898
   }
  ],
  "utilisation_ranking": [
   {
    "joint": "knee",
    "actuator": "sts3215-7v4",
-   "utilisation": 1.797,
-   "peak_frac_of_stall": 0.901,
-   "rms_over_rated": 1.797,
-   "envelope_util": 0.901,
+   "utilisation": 1.862,
+   "peak_frac_of_stall": 0.821,
+   "rms_over_rated": 1.862,
+   "envelope_util": 0.821,
    "driving_motion": "walk_forward"
   },
   {
    "joint": "hip_roll",
    "actuator": "sts3215-7v4",
-   "utilisation": 1.387,
-   "peak_frac_of_stall": 0.717,
-   "rms_over_rated": 1.387,
-   "envelope_util": 0.717,
+   "utilisation": 1.638,
+   "peak_frac_of_stall": 0.847,
+   "rms_over_rated": 1.638,
+   "envelope_util": 0.847,
    "driving_motion": "walk_backward"
   },
   {
    "joint": "ankle_pitch",
    "actuator": "sts3215-7v4",
-   "utilisation": 1.148,
-   "peak_frac_of_stall": 0.6,
-   "rms_over_rated": 1.148,
-   "envelope_util": 0.6,
+   "utilisation": 1.186,
+   "peak_frac_of_stall": 0.583,
+   "rms_over_rated": 1.186,
+   "envelope_util": 0.583,
    "driving_motion": "walk_backward"
   },
   {
    "joint": "hip_pitch",
    "actuator": "sts3215-7v4",
-   "utilisation": 1.063,
-   "peak_frac_of_stall": 0.744,
-   "rms_over_rated": 1.013,
-   "envelope_util": 0.744,
+   "utilisation": 1.033,
+   "peak_frac_of_stall": 0.723,
+   "rms_over_rated": 1.012,
+   "envelope_util": 0.723,
    "driving_motion": "walk_forward"
   },
   {
    "joint": "elbow",
    "actuator": "sts3215-7v4",
-   "utilisation": 0.784,
-   "peak_frac_of_stall": 0.428,
-   "rms_over_rated": 0.784,
-   "envelope_util": 0.428,
+   "utilisation": 0.788,
+   "peak_frac_of_stall": 0.433,
+   "rms_over_rated": 0.788,
+   "envelope_util": 0.433,
    "driving_motion": "wave"
   },
   {
    "joint": "hip_yaw",
    "actuator": "sts3215-7v4",
-   "utilisation": 0.582,
-   "peak_frac_of_stall": 0.393,
-   "rms_over_rated": 0.582,
-   "envelope_util": 0.393,
+   "utilisation": 0.633,
+   "peak_frac_of_stall": 0.433,
+   "rms_over_rated": 0.633,
+   "envelope_util": 0.433,
    "driving_motion": "turn"
   },
   {
    "joint": "shoulder_roll",
    "actuator": "sts3215-7v4",
-   "utilisation": 0.51,
-   "peak_frac_of_stall": 0.357,
-   "rms_over_rated": 0.28,
-   "envelope_util": 0.357,
-   "driving_motion": "pickup"
+   "utilisation": 0.578,
+   "peak_frac_of_stall": 0.404,
+   "rms_over_rated": 0.325,
+   "envelope_util": 0.404,
+   "driving_motion": "pickup_0.45m"
   },
   {
    "joint": "shoulder_pitch",
    "actuator": "sts3215-7v4",
-   "utilisation": 0.479,
-   "peak_frac_of_stall": 0.287,
-   "rms_over_rated": 0.479,
-   "envelope_util": 0.287,
+   "utilisation": 0.48,
+   "peak_frac_of_stall": 0.291,
+   "rms_over_rated": 0.48,
+   "envelope_util": 0.291,
    "driving_motion": "walk_backward"
   },
   {
@@ -864,11 +1095,20 @@
   {
    "joint": "waist_yaw",
    "actuator": "sts3215-7v4",
-   "utilisation": 0.419,
-   "peak_frac_of_stall": 0.293,
-   "rms_over_rated": 0.165,
-   "envelope_util": 0.293,
+   "utilisation": 0.446,
+   "peak_frac_of_stall": 0.312,
+   "rms_over_rated": 0.17,
+   "envelope_util": 0.312,
    "driving_motion": "dance"
+  },
+  {
+   "joint": "ankle_roll",
+   "actuator": "sts3215-7v4",
+   "utilisation": 0.39,
+   "peak_frac_of_stall": 0.229,
+   "rms_over_rated": 0.39,
+   "envelope_util": 0.229,
+   "driving_motion": "turn"
   },
   {
    "joint": "neck_yaw",
@@ -880,35 +1120,26 @@
    "driving_motion": "dance"
   },
   {
-   "joint": "ankle_roll",
-   "actuator": "sts3215-7v4",
-   "utilisation": 0.351,
-   "peak_frac_of_stall": 0.169,
-   "rms_over_rated": 0.351,
-   "envelope_util": 0.169,
-   "driving_motion": "turn"
-  },
-  {
    "joint": "neck_pitch",
    "actuator": "sts3215-7v4",
-   "utilisation": 0.005,
-   "peak_frac_of_stall": 0.002,
-   "rms_over_rated": 0.005,
+   "utilisation": 0.007,
+   "peak_frac_of_stall": 0.003,
+   "rms_over_rated": 0.007,
    "envelope_util": 0.0,
    "driving_motion": "walk_forward"
   }
  ],
  "nominal": {
   "passes": false,
-  "worst_margin": 0.556,
+  "worst_margin": 0.537,
   "worst_joint": "knee_r",
   "failing": [
    "hip_roll_l: peak, rms",
    "hip_roll_r: peak, rms",
-   "hip_pitch_l: peak, rms",
+   "hip_pitch_l: peak",
    "hip_pitch_r: peak, rms",
    "knee_l: peak, rms",
-   "knee_r: peak, rms, envelope",
+   "knee_r: peak, rms",
    "ankle_pitch_l: rms",
    "ankle_pitch_r: rms"
   ]
@@ -947,68 +1178,75 @@
    "regulator": "buck-5v-5a",
    "rail_current_typical_a": 0.64,
    "rail_current_peak_a": 1.36,
-   "regulator_rating_a": 5.0,
+   "regulator_rating_a": 4.0,
    "ok_at_typical": true,
    "ok_at_peak": true
   },
-  "average_power_w": 18.81,
-  "servo_average_w": 15.26,
+  "average_power_w": 20.47,
+  "servo_average_w": 16.92,
   "rail_w": 3.56,
-  "runtime_min": 44.1,
+  "runtime_min": 40.6,
   "runtime_requirement_min": 15.0,
   "runtime_ok": true,
   "activity_power_w": {
-   "stand": 9.7,
-   "walk_forward": 28.4,
-   "walk_backward": 27.6,
-   "turn": 21.6,
-   "squat_90": 12.2,
-   "wave": 11.1,
-   "dance": 12.1,
-   "pickup": 10.6
+   "stand": 10.5,
+   "walk_forward": 30.4,
+   "walk_backward": 30.4,
+   "turn": 24.7,
+   "squat_90": 13.7,
+   "wave": 12.0,
+   "dance": 13.5,
+   "pickup": 11.4
   },
   "bus": {
    "pack_nominal_v": 7.4,
-   "peak_total_a": 12.0,
-   "peak_total_w": 85.8,
-   "sag_at_peak_v": 0.25,
-   "v_at_peak_v": 7.15,
+   "peak_total_a": 11.28,
+   "peak_total_w": 80.8,
+   "peak_from_frozen_motions_a": 11.06,
+   "peak_from_r10_transient_a": 11.28,
+   "r10_transient_scenario": "push_walk_lat_in",
+   "sag_at_peak_v": 0.24,
+   "v_at_peak_v": 7.16,
    "branches": {
     "leg_l": {
-     "peak_w": 71.3,
-     "peak_a": 9.97,
-     "voltage_at_far_servo_v": 6.95
+     "peak_w": 54.7,
+     "peak_a": 7.63,
+     "voltage_at_far_servo_v": 7.01
     },
     "leg_r": {
-     "peak_w": 72.3,
-     "peak_a": 10.11,
-     "voltage_at_far_servo_v": 6.95
+     "peak_w": 55.1,
+     "peak_a": 7.69,
+     "voltage_at_far_servo_v": 7.01
     },
     "torso_head": {
-     "peak_w": 13.7,
-     "peak_a": 1.92,
-     "voltage_at_far_servo_v": 7.11
+     "peak_w": 14.5,
+     "peak_a": 2.02,
+     "voltage_at_far_servo_v": 7.12
     },
     "arm_l": {
-     "peak_w": 3.3,
-     "peak_a": 0.46,
-     "voltage_at_far_servo_v": 7.14
+     "peak_w": 3.4,
+     "peak_a": 0.47,
+     "voltage_at_far_servo_v": 7.15
     },
     "arm_r": {
-     "peak_w": 11.0,
-     "peak_a": 1.54,
-     "voltage_at_far_servo_v": 7.12
+     "peak_w": 10.6,
+     "peak_a": 1.47,
+     "voltage_at_far_servo_v": 7.13
     }
    },
-   "min_voltage_at_far_servo_v": 6.95,
+   "min_voltage_at_far_servo_v": 7.01,
    "servo_min_operating_v": 4.0,
    "min_voltage_ok": true,
    "fuse_a": 15,
-   "fuse_rule": "1.25 x peak legitimate draw, next standard value",
+   "fuse_a_if_sized_from_motions_only": 15,
+   "fuse_blows_on_r10_if_sized_from_motions_only": false,
+   "fuse_rule": "1.25 x peak legitimate draw (larger of the frozen motions and the R10 push transient), next standard value",
+   "all_leg_servos_stalled_a": 30.0,
+   "fuse_a_to_ride_through_all_leg_stall": 40,
    "all_servos_stalled_a": 57.5,
    "pack_limit_a": 88.0,
    "pack_c_ok": true,
-   "connector_rating_note": "STS3215 connector current rating is unknown (research/methods/e); the fuse must also stay below the wiring limit"
+   "connector_rating_note": "STS3215 connector current rating is unknown (research/methods/e); the fuse must also stay below the wiring/connector limit"
   },
   "voltage_rating": {
    "sts3215-7v4": {
@@ -1028,6 +1266,30 @@
    }
   }
  },
+ "rms_denominators": {
+  "joints": 23,
+  "rows": [
+   {
+    "rated_nm": 0.49,
+    "per_motion_rms_gate_worst": 1.862,
+    "per_motion_rms_gate_ok": false,
+    "worst_joint": "knee_r",
+    "worst_motion": "walk_forward",
+    "mixed_schedule_rms_worst": 1.424,
+    "mixed_schedule_ok": false
+   },
+   {
+    "rated_nm": 0.637,
+    "per_motion_rms_gate_worst": 1.433,
+    "per_motion_rms_gate_ok": false,
+    "worst_joint": "knee_r",
+    "worst_motion": "walk_forward",
+    "mixed_schedule_rms_worst": 1.095,
+    "mixed_schedule_ok": false
+   }
+  ],
+  "note": "the PRIMARY gate uses the first figure; the others are a sensitivity until a bench thermal hold measures the real continuous torque"
+ },
  "thermal": {
   "primary_gate": "RMS torque (mixed schedule) <= vendor-rated continuous torque",
   "rms_gate_ok": false,
@@ -1036,15 +1298,15 @@
   "limit_c": 70.0,
   "ambient_c": 35.0,
   "hot_case": "Rth x1.4 and 40 C in-shell ambient",
-  "T_10min_max_c": 41.2,
-  "steady_max_c": 42.5,
-  "hot_steady_max_c": 50.5,
+  "T_10min_max_c": 42.3,
+  "steady_max_c": 43.8,
+  "hot_steady_max_c": 52.4,
   "hottest_joint": "knee_r",
   "per_joint": {
    "hip_yaw_l": {
-    "rms_mixed_nm": 0.08,
+    "rms_mixed_nm": 0.087,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.164,
+    "rms_mixed_over_rated": 0.178,
     "T_10min_c": 35.4,
     "steady_c": 35.5,
     "hot_steady_c": 40.7,
@@ -1056,9 +1318,9 @@
     }
    },
    "hip_yaw_r": {
-    "rms_mixed_nm": 0.083,
+    "rms_mixed_nm": 0.091,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.169,
+    "rms_mixed_over_rated": 0.185,
     "T_10min_c": 35.4,
     "steady_c": 35.5,
     "hot_steady_c": 40.7,
@@ -1070,12 +1332,12 @@
     }
    },
    "hip_roll_l": {
-    "rms_mixed_nm": 0.469,
+    "rms_mixed_nm": 0.554,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.958,
-    "T_10min_c": 38.3,
-    "steady_c": 39.1,
-    "hot_steady_c": 45.8,
+    "rms_mixed_over_rated": 1.131,
+    "T_10min_c": 39.5,
+    "steady_c": 40.6,
+    "hot_steady_c": 47.8,
     "minutes_to_70c": {
      "150": null,
      "300": null,
@@ -1084,12 +1346,12 @@
     }
    },
    "hip_roll_r": {
-    "rms_mixed_nm": 0.434,
+    "rms_mixed_nm": 0.512,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.886,
-    "T_10min_c": 37.9,
-    "steady_c": 38.6,
-    "hot_steady_c": 45.0,
+    "rms_mixed_over_rated": 1.044,
+    "T_10min_c": 38.9,
+    "steady_c": 39.8,
+    "hot_steady_c": 46.7,
     "minutes_to_70c": {
      "150": null,
      "300": null,
@@ -1098,12 +1360,12 @@
     }
    },
    "hip_pitch_l": {
-    "rms_mixed_nm": 0.324,
+    "rms_mixed_nm": 0.314,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.66,
-    "T_10min_c": 36.9,
-    "steady_c": 37.4,
-    "hot_steady_c": 43.3,
+    "rms_mixed_over_rated": 0.642,
+    "T_10min_c": 36.8,
+    "steady_c": 37.3,
+    "hot_steady_c": 43.2,
     "minutes_to_70c": {
      "150": null,
      "300": null,
@@ -1112,12 +1374,12 @@
     }
    },
    "hip_pitch_r": {
-    "rms_mixed_nm": 0.338,
+    "rms_mixed_nm": 0.327,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.69,
-    "T_10min_c": 37.1,
-    "steady_c": 37.6,
-    "hot_steady_c": 43.6,
+    "rms_mixed_over_rated": 0.667,
+    "T_10min_c": 37.0,
+    "steady_c": 37.4,
+    "hot_steady_c": 43.4,
     "minutes_to_70c": {
      "150": null,
      "300": null,
@@ -1126,12 +1388,12 @@
     }
    },
    "knee_l": {
-    "rms_mixed_nm": 0.613,
+    "rms_mixed_nm": 0.67,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 1.251,
-    "T_10min_c": 40.8,
-    "steady_c": 42.1,
-    "hot_steady_c": 49.9,
+    "rms_mixed_over_rated": 1.368,
+    "T_10min_c": 41.8,
+    "steady_c": 43.2,
+    "hot_steady_c": 51.5,
     "minutes_to_70c": {
      "150": null,
      "300": null,
@@ -1140,12 +1402,12 @@
     }
    },
    "knee_r": {
-    "rms_mixed_nm": 0.635,
+    "rms_mixed_nm": 0.698,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 1.295,
-    "T_10min_c": 41.2,
-    "steady_c": 42.5,
-    "hot_steady_c": 50.5,
+    "rms_mixed_over_rated": 1.424,
+    "T_10min_c": 42.3,
+    "steady_c": 43.8,
+    "hot_steady_c": 52.4,
     "minutes_to_70c": {
      "150": null,
      "300": null,
@@ -1154,12 +1416,12 @@
     }
    },
    "ankle_pitch_l": {
-    "rms_mixed_nm": 0.34,
+    "rms_mixed_nm": 0.351,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.693,
-    "T_10min_c": 37.1,
-    "steady_c": 37.5,
-    "hot_steady_c": 43.5,
+    "rms_mixed_over_rated": 0.717,
+    "T_10min_c": 37.2,
+    "steady_c": 37.6,
+    "hot_steady_c": 43.7,
     "minutes_to_70c": {
      "150": null,
      "300": null,
@@ -1168,12 +1430,12 @@
     }
    },
    "ankle_pitch_r": {
-    "rms_mixed_nm": 0.345,
+    "rms_mixed_nm": 0.354,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.704,
-    "T_10min_c": 37.1,
-    "steady_c": 37.6,
-    "hot_steady_c": 43.6,
+    "rms_mixed_over_rated": 0.723,
+    "T_10min_c": 37.2,
+    "steady_c": 37.7,
+    "hot_steady_c": 43.7,
     "minutes_to_70c": {
      "150": null,
      "300": null,
@@ -1182,9 +1444,9 @@
     }
    },
    "ankle_roll_l": {
-    "rms_mixed_nm": 0.116,
+    "rms_mixed_nm": 0.127,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.236,
+    "rms_mixed_over_rated": 0.258,
     "T_10min_c": 35.6,
     "steady_c": 35.7,
     "hot_steady_c": 41.0,
@@ -1196,9 +1458,9 @@
     }
    },
    "ankle_roll_r": {
-    "rms_mixed_nm": 0.117,
+    "rms_mixed_nm": 0.129,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.24,
+    "rms_mixed_over_rated": 0.264,
     "T_10min_c": 35.6,
     "steady_c": 35.7,
     "hot_steady_c": 41.0,
@@ -1210,9 +1472,9 @@
     }
    },
    "waist_yaw": {
-    "rms_mixed_nm": 0.043,
+    "rms_mixed_nm": 0.046,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.088,
+    "rms_mixed_over_rated": 0.093,
     "T_10min_c": 35.4,
     "steady_c": 35.4,
     "hot_steady_c": 40.6,
@@ -1238,9 +1500,9 @@
     }
    },
    "neck_pitch": {
-    "rms_mixed_nm": 0.001,
+    "rms_mixed_nm": 0.002,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.003,
+    "rms_mixed_over_rated": 0.004,
     "T_10min_c": 35.3,
     "steady_c": 35.4,
     "hot_steady_c": 40.5,
@@ -1252,11 +1514,11 @@
     }
    },
    "shoulder_pitch_l": {
-    "rms_mixed_nm": 0.156,
+    "rms_mixed_nm": 0.157,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.318,
+    "rms_mixed_over_rated": 0.321,
     "T_10min_c": 35.8,
-    "steady_c": 35.9,
+    "steady_c": 36.0,
     "hot_steady_c": 41.3,
     "minutes_to_70c": {
      "150": null,
@@ -1266,10 +1528,10 @@
     }
    },
    "shoulder_pitch_r": {
-    "rms_mixed_nm": 0.166,
+    "rms_mixed_nm": 0.17,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.34,
-    "T_10min_c": 35.8,
+    "rms_mixed_over_rated": 0.346,
+    "T_10min_c": 35.9,
     "steady_c": 36.0,
     "hot_steady_c": 41.4,
     "minutes_to_70c": {
@@ -1280,24 +1542,10 @@
     }
    },
    "shoulder_roll_l": {
-    "rms_mixed_nm": 0.065,
+    "rms_mixed_nm": 0.076,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.133,
+    "rms_mixed_over_rated": 0.154,
     "T_10min_c": 35.4,
-    "steady_c": 35.5,
-    "hot_steady_c": 40.6,
-    "minutes_to_70c": {
-     "150": null,
-     "300": null,
-     "600": null,
-     "1200": null
-    }
-   },
-   "shoulder_roll_r": {
-    "rms_mixed_nm": 0.079,
-    "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.16,
-    "T_10min_c": 35.5,
     "steady_c": 35.5,
     "hot_steady_c": 40.7,
     "minutes_to_70c": {
@@ -1307,10 +1555,24 @@
      "1200": null
     }
    },
-   "elbow_l": {
-    "rms_mixed_nm": 0.038,
+   "shoulder_roll_r": {
+    "rms_mixed_nm": 0.089,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.078,
+    "rms_mixed_over_rated": 0.181,
+    "T_10min_c": 35.5,
+    "steady_c": 35.5,
+    "hot_steady_c": 40.8,
+    "minutes_to_70c": {
+     "150": null,
+     "300": null,
+     "600": null,
+     "1200": null
+    }
+   },
+   "elbow_l": {
+    "rms_mixed_nm": 0.04,
+    "rated_nm": 0.49,
+    "rms_mixed_over_rated": 0.081,
     "T_10min_c": 35.4,
     "steady_c": 35.4,
     "hot_steady_c": 40.6,
@@ -1322,9 +1584,9 @@
     }
    },
    "elbow_r": {
-    "rms_mixed_nm": 0.112,
+    "rms_mixed_nm": 0.113,
     "rated_nm": 0.49,
-    "rms_mixed_over_rated": 0.23,
+    "rms_mixed_over_rated": 0.231,
     "T_10min_c": 35.6,
     "steady_c": 35.7,
     "hot_steady_c": 40.9,
@@ -1336,7 +1598,7 @@
     }
    },
    "gripper_l": {
-    "rms_mixed_nm": 0.0,
+    "rms_mixed_nm": 0.001,
     "rated_nm": 0.49,
     "rms_mixed_over_rated": 0.001,
     "T_10min_c": 35.3,
@@ -1371,55 +1633,55 @@
     "part": "sts3215-7v4",
     "qty": 23,
     "label": "actuators",
-    "typical": 322,
-    "low": 276,
-    "high": 460,
-    "verified": false
+    "typical": 482.77,
+    "low": 321.77,
+    "high": 551.77,
+    "verified": true
    },
    {
     "part": "rpi-zero-2w",
     "qty": 1,
     "label": "on-board",
-    "typical": 15,
-    "low": 15,
-    "high": 20,
-    "verified": false
+    "typical": 17.43,
+    "low": 16.35,
+    "high": 19.05,
+    "verified": true
    },
    {
     "part": "microsd-32gb",
     "qty": 1,
     "label": "on-board",
-    "typical": 7,
-    "low": 5,
-    "high": 10,
+    "typical": 12.0,
+    "low": 9.97,
+    "high": 19.95,
     "verified": false
    },
    {
     "part": "waveshare-bus-servo-adapter",
     "qty": 1,
     "label": "on-board",
-    "typical": 8,
-    "low": 6,
-    "high": 12,
+    "typical": 4.99,
+    "low": 4.3,
+    "high": 11.3,
     "verified": false
    },
    {
     "part": "imu-bno085",
     "qty": 1,
     "label": "on-board",
-    "typical": 15,
-    "low": 10,
-    "high": 25,
+    "typical": 29.5,
+    "low": 27.15,
+    "high": 34.95,
     "verified": false
    },
    {
     "part": "cam-rpi-v3",
     "qty": 1,
     "label": "on-board",
-    "typical": 25,
-    "low": 25,
-    "high": 35,
-    "verified": false
+    "typical": 29.25,
+    "low": 29.25,
+    "high": 32.95,
+    "verified": true
    },
    {
     "part": "lipo-2s-2200-turnigy",
@@ -1434,27 +1696,27 @@
     "part": "buck-5v-5a",
     "qty": 1,
     "label": "on-board",
-    "typical": 6,
-    "low": 4,
-    "high": 10,
-    "verified": false
+    "typical": 5.56,
+    "low": 4.5,
+    "high": 6.21,
+    "verified": true
    },
    {
     "part": "power-switch-xt60",
     "qty": 1,
     "label": "on-board",
-    "typical": 6,
-    "low": 4,
-    "high": 10,
+    "typical": 6.0,
+    "low": 4.0,
+    "high": 13.0,
     "verified": false
    },
    {
     "part": "fastener-kit-m2-m3",
     "qty": 1,
     "label": "on-board",
-    "typical": 15,
-    "low": 10,
-    "high": 22,
+    "typical": 20.0,
+    "low": 10.0,
+    "high": 60.0,
     "verified": false
    },
    {
@@ -1480,29 +1742,29 @@
     "qty": 1,
     "label": "off-board (charger etc., counts toward the budget)",
     "typical": 39.99,
-    "low": 29.0,
-    "high": 43.5,
-    "verified": false
+    "low": 32.69,
+    "high": 49.95,
+    "verified": true
    },
    {
     "part": "pla-plus-1kg",
-    "qty": 0.758,
+    "qty": 1.409,
     "label": "printed structure (kg incl. waste)",
-    "typical": 13.6422,
-    "low": 9.8527,
-    "high": 18.9475,
+    "typical": 25.365600000000004,
+    "low": 13.626964000000003,
+    "high": 31.002400000000005,
     "verified": false
    }
   ],
   "total_usd": {
-   "low": 418.85,
-   "typical": 508.63,
-   "high": 719.45
+   "low": 498.61,
+   "typical": 708.86,
+   "high": 883.13
   },
   "budget_cap_usd": 550,
-  "within_cap_typical": true,
+  "within_cap_typical": false,
   "within_cap_at_high": false,
-  "unverified_lines": 13,
+  "unverified_lines": 8,
   "note": "every price in the catalog is an estimate unless verified: true; the decision needs a pass at the high price"
  },
  "model_quality": {
@@ -1526,34 +1788,47 @@
  },
  "servo_in_the_loop": {
   "walk_forward": {
-   "rms_err_deg": 0.45,
-   "max_err_deg": 3.54,
-   "worst_joint": "knee_l",
-   "saturation_fraction_max": 0.037,
+   "rms_err_deg": 0.41,
+   "max_err_deg": 3.86,
+   "worst_joint": "knee_r",
+   "saturation_fraction_max": 0.024,
    "saturated_joint": "knee_r",
    "gripper_saturation_fraction(by design, torque-limited)": 0.0,
    "overload_trips": 0,
    "fell": false,
-   "min_bus_voltage_v": 8.12,
-   "peak_total_current_a": 12.83,
-   "tether_mean_pct_bw": 1.14
+   "min_bus_voltage_v": 8.11,
+   "peak_total_current_a": 13.05,
+   "tether_mean_pct_bw": 1.23
   },
   "turn": {
-   "rms_err_deg": 0.31,
-   "max_err_deg": 2.07,
+   "rms_err_deg": 0.36,
+   "max_err_deg": 2.33,
    "worst_joint": "knee_r",
-   "saturation_fraction_max": 0.002,
-   "saturated_joint": "knee_l",
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
    "gripper_saturation_fraction(by design, torque-limited)": 0.0,
    "overload_trips": 0,
    "fell": false,
-   "min_bus_voltage_v": 8.15,
-   "peak_total_current_a": 11.43,
-   "tether_mean_pct_bw": 1.02
+   "min_bus_voltage_v": 8.14,
+   "peak_total_current_a": 12.04,
+   "tether_mean_pct_bw": 1.13
   },
   "squat_90": {
-   "rms_err_deg": 0.09,
-   "max_err_deg": 0.71,
+   "rms_err_deg": 0.1,
+   "max_err_deg": 0.91,
+   "worst_joint": "knee_l",
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "gripper_saturation_fraction(by design, torque-limited)": 0.0,
+   "overload_trips": 0,
+   "fell": false,
+   "min_bus_voltage_v": 8.31,
+   "peak_total_current_a": 4.11,
+   "tether_mean_pct_bw": 0.07
+  },
+  "wave": {
+   "rms_err_deg": 0.24,
+   "max_err_deg": 0.91,
    "worst_joint": "knee_l",
    "saturation_fraction_max": 0.0,
    "saturated_joint": "hip_yaw_l",
@@ -1561,45 +1836,54 @@
    "overload_trips": 0,
    "fell": false,
    "min_bus_voltage_v": 8.32,
-   "peak_total_current_a": 3.51,
-   "tether_mean_pct_bw": 0.07
-  },
-  "wave": {
-   "rms_err_deg": 0.21,
-   "max_err_deg": 0.72,
-   "worst_joint": "hip_roll_r",
-   "saturation_fraction_max": 0.0,
-   "saturated_joint": "hip_yaw_l",
-   "gripper_saturation_fraction(by design, torque-limited)": 0.0,
-   "overload_trips": 0,
-   "fell": false,
-   "min_bus_voltage_v": 8.34,
-   "peak_total_current_a": 2.78,
-   "tether_mean_pct_bw": 0.24
+   "peak_total_current_a": 3.92,
+   "tether_mean_pct_bw": 0.26
   },
   "pickup": {
-   "rms_err_deg": 0.27,
-   "max_err_deg": 0.71,
+   "rms_err_deg": 0.26,
+   "max_err_deg": 0.91,
    "worst_joint": "knee_l",
    "saturation_fraction_max": 0.0,
    "saturated_joint": "hip_yaw_l",
    "gripper_saturation_fraction(by design, torque-limited)": 0.389,
    "overload_trips": 0,
    "fell": false,
-   "min_bus_voltage_v": 8.34,
-   "peak_total_current_a": 2.8,
-   "tether_mean_pct_bw": 0.09,
-   "object_lift_m": 0.0269,
+   "min_bus_voltage_v": 8.31,
+   "peak_total_current_a": 3.93,
+   "tether_mean_pct_bw": 0.08,
+   "object_lift_m": 0.0274,
    "grasp_ok": true
   },
-  "push_ankle_fwd": {
+  "push_stand_fwd": {
    "fell": false,
-   "leg_max_err_deg": 1.27,
-   "leg_rms_err_deg": 0.29,
+   "leg_max_err_deg": 1.01,
+   "leg_rms_err_deg": 0.25,
    "saturation_fraction_max": 0.0,
    "saturated_joint": "hip_yaw_l",
    "overload_trips": 0,
-   "min_bus_voltage_v": 8.33,
+   "min_bus_voltage_v": 8.3,
+   "delivered_in_time": true,
+   "servo_delay_ms": 4.9
+  },
+  "push_stand_lat": {
+   "fell": false,
+   "leg_max_err_deg": 1.35,
+   "leg_rms_err_deg": 0.3,
+   "saturation_fraction_max": 0.0,
+   "saturated_joint": "hip_yaw_l",
+   "overload_trips": 0,
+   "min_bus_voltage_v": 8.32,
+   "delivered_in_time": true,
+   "servo_delay_ms": 4.9
+  },
+  "push_walk_lat_out": {
+   "fell": false,
+   "leg_max_err_deg": 3.87,
+   "leg_rms_err_deg": 0.41,
+   "saturation_fraction_max": 0.01,
+   "saturated_joint": "knee_r",
+   "overload_trips": 0,
+   "min_bus_voltage_v": 8.12,
    "delivered_in_time": true,
    "servo_delay_ms": 4.9
   }
@@ -1607,161 +1891,167 @@
  "closed_loop_sensitivity": {
   "label": "needs closed loop (P5): open-loop replay with frozen feedforward; not a gate",
   "latency_40ms": {
-   "rms_err_deg": 1.68,
-   "max_err_deg": 14.08,
+   "rms_err_deg": 1.5,
+   "max_err_deg": 11.88,
    "fell": false,
-   "tether_mean_pct_bw": 1.65
+   "tether_mean_pct_bw": 1.54
   },
   "backlash_1deg": {
-   "rms_err_deg": 0.6,
-   "max_err_deg": 5.46,
+   "rms_err_deg": 0.56,
+   "max_err_deg": 4.0,
    "fell": false,
-   "tether_mean_pct_bw": 1.4
+   "tether_mean_pct_bw": 1.29
   },
   "kp_-10%": {
-   "rms_err_deg": 0.52,
-   "max_err_deg": 4.98,
+   "rms_err_deg": 0.46,
+   "max_err_deg": 3.77,
    "fell": false,
-   "tether_mean_pct_bw": 1.25
+   "tether_mean_pct_bw": 1.12
   },
   "kp_+10%": {
-   "rms_err_deg": 0.61,
-   "max_err_deg": 5.71,
+   "rms_err_deg": 0.57,
+   "max_err_deg": 4.34,
    "fell": false,
-   "tether_mean_pct_bw": 1.47
+   "tether_mean_pct_bw": 1.37
   }
  },
  "stress_walks": {
   "stress_walk_speed_x1.5": {
    "valid": true,
-   "worst_peak_frac_of_stall": 14.372,
+   "worst_peak_frac_of_stall": 1.344,
    "joint": "knee_r",
-   "worst_rms_over_rated": 15.935,
-   "worst_util": 9.99,
+   "worst_rms_over_rated": 2.629,
+   "worst_util": 3.069,
    "peak_within_gate": false
   },
   "stress_walk_step_time_x0.8": {
    "valid": true,
-   "worst_peak_frac_of_stall": 1.025,
-   "joint": "knee_r",
-   "worst_rms_over_rated": 2.374,
-   "worst_util": 1.334,
+   "worst_peak_frac_of_stall": 0.844,
+   "joint": "hip_roll_l",
+   "worst_rms_over_rated": 2.248,
+   "worst_util": 0.844,
    "peak_within_gate": false
   },
   "stress_landing_late_10ms": {
    "valid": true,
-   "worst_peak_frac_of_stall": 0.891,
-   "joint": "knee_r",
-   "worst_rms_over_rated": 1.774,
-   "worst_util": 0.891,
+   "worst_peak_frac_of_stall": 0.85,
+   "joint": "hip_roll_r",
+   "worst_rms_over_rated": 1.827,
+   "worst_util": 0.85,
    "peak_within_gate": false
   },
   "stress_landing_early_10ms": {
    "valid": true,
-   "worst_peak_frac_of_stall": 0.911,
-   "joint": "knee_r",
-   "worst_rms_over_rated": 1.849,
-   "worst_util": 0.925,
+   "worst_peak_frac_of_stall": 0.844,
+   "joint": "hip_roll_l",
+   "worst_rms_over_rated": 1.905,
+   "worst_util": 0.844,
    "peak_within_gate": false
   },
   "stress_capture_step": {
    "valid": true,
-   "worst_peak_frac_of_stall": 1.155,
+   "worst_peak_frac_of_stall": 0.951,
    "joint": "knee_l",
-   "worst_rms_over_rated": 1.896,
-   "worst_util": 1.419,
+   "worst_rms_over_rated": 1.928,
+   "worst_util": 0.951,
    "peak_within_gate": false
   }
  },
  "bounds_sweep": [
   {
-   "label": "structure mass x0.9",
-   "worst_margin": 0.56,
+   "label": "structure mass x0.55",
+   "kind": "bound",
+   "worst_margin": 0.568,
    "worst_joint": "knee_r",
    "passes": false,
    "failing": [
     "hip_roll_l: peak, rms",
     "hip_roll_r: peak, rms",
-    "hip_pitch_l: peak, rms",
-    "hip_pitch_r: peak, rms",
+    "hip_pitch_l: peak",
+    "hip_pitch_r: peak",
     "knee_l: peak, rms",
     "knee_r: peak, rms"
    ],
-   "hot_steady_max_c": 50.4,
-   "rms_mixed_over_rated_max": 1.284,
-   "delta_vs_nominal": 0.004
+   "hot_steady_max_c": 50.6,
+   "rms_mixed_over_rated_max": 1.308,
+   "delta_vs_nominal": 0.031
   },
   {
-   "label": "structure mass x1.8",
-   "worst_margin": 0.535,
+   "label": "structure mass x1.4",
+   "kind": "bound",
+   "worst_margin": 0.486,
    "worst_joint": "knee_r",
    "passes": false,
    "failing": [
-    "hip_roll_l: peak, rms",
-    "hip_roll_r: peak, rms",
-    "hip_pitch_l: peak, rms",
+    "hip_roll_l: peak, rms, envelope",
+    "hip_roll_r: peak, rms, envelope",
+    "hip_pitch_l: peak",
     "hip_pitch_r: peak, rms",
-    "knee_l: peak, rms, envelope",
-    "knee_r: peak, rms, envelope"
+    "knee_l: peak, rms, overload_time",
+    "knee_r: peak, rms, overload_time"
    ],
-   "hot_steady_max_c": 51.8,
-   "rms_mixed_over_rated_max": 1.383,
-   "delta_vs_nominal": -0.021
+   "hot_steady_max_c": 54.1,
+   "rms_mixed_over_rated_max": 1.532,
+   "delta_vs_nominal": -0.051
   },
   {
    "label": "wiring/electronics x0.8",
-   "worst_margin": 0.561,
+   "kind": "bound",
+   "worst_margin": 0.541,
    "worst_joint": "knee_r",
    "passes": false,
    "failing": [
     "hip_roll_l: peak, rms",
     "hip_roll_r: peak, rms",
-    "hip_pitch_l: peak, rms",
     "hip_pitch_r: peak, rms",
     "knee_l: peak, rms",
-    "knee_r: peak, rms, envelope"
+    "knee_r: peak, rms",
+    "ankle_pitch_l: rms"
    ],
-   "hot_steady_max_c": 50.4,
-   "rms_mixed_over_rated_max": 1.283,
-   "delta_vs_nominal": 0.005
+   "hot_steady_max_c": 52.1,
+   "rms_mixed_over_rated_max": 1.409,
+   "delta_vs_nominal": 0.004
   },
   {
    "label": "wiring/electronics x1.5",
-   "worst_margin": 0.545,
+   "kind": "bound",
+   "worst_margin": 0.52,
    "worst_joint": "knee_r",
    "passes": false,
    "failing": [
     "hip_roll_l: peak, rms",
     "hip_roll_r: peak, rms",
-    "hip_pitch_l: peak, rms",
+    "hip_pitch_l: peak",
     "hip_pitch_r: peak, rms",
     "knee_l: peak, rms",
     "knee_r: peak, rms"
    ],
-   "hot_steady_max_c": 51.0,
-   "rms_mixed_over_rated_max": 1.33,
-   "delta_vs_nominal": -0.011
+   "hot_steady_max_c": 53.1,
+   "rms_mixed_over_rated_max": 1.47,
+   "delta_vs_nominal": -0.017
   },
   {
    "label": "pessimistic linear torque-speed",
-   "worst_margin": 0.53,
+   "kind": "bound",
+   "worst_margin": 0.537,
    "worst_joint": "knee_r",
    "passes": false,
    "failing": [
-    "hip_roll_l: peak, rms",
-    "hip_roll_r: peak, rms",
-    "hip_pitch_l: peak, rms, envelope",
+    "hip_roll_l: peak, rms, envelope",
+    "hip_roll_r: peak, rms, envelope",
+    "hip_pitch_l: peak, envelope",
     "hip_pitch_r: peak, rms, envelope",
     "knee_l: peak, rms, envelope",
     "knee_r: peak, rms, envelope"
    ],
-   "hot_steady_max_c": 50.5,
-   "rms_mixed_over_rated_max": 1.295,
-   "delta_vs_nominal": -0.026
+   "hot_steady_max_c": 52.4,
+   "rms_mixed_over_rated_max": 1.424,
+   "delta_vs_nominal": 0.0
   },
   {
    "label": "armature low",
-   "worst_margin": 0.646,
+   "kind": "bound",
+   "worst_margin": 0.551,
    "worst_joint": "knee_r",
    "passes": false,
    "failing": [
@@ -1772,13 +2062,14 @@
     "ankle_pitch_l: rms",
     "ankle_pitch_r: rms"
    ],
-   "hot_steady_max_c": 48.5,
-   "rms_mixed_over_rated_max": 1.148,
-   "delta_vs_nominal": 0.09
+   "hot_steady_max_c": 50.8,
+   "rms_mixed_over_rated_max": 1.323,
+   "delta_vs_nominal": 0.014
   },
   {
    "label": "armature high",
-   "worst_margin": 0.484,
+   "kind": "bound",
+   "worst_margin": 0.481,
    "worst_joint": "knee_r",
    "passes": false,
    "failing": [
@@ -1789,64 +2080,68 @@
     "knee_l: peak, rms, envelope",
     "knee_r: peak, rms, envelope"
    ],
-   "hot_steady_max_c": 53.1,
-   "rms_mixed_over_rated_max": 1.458,
-   "delta_vs_nominal": -0.072
+   "hot_steady_max_c": 54.5,
+   "rms_mixed_over_rated_max": 1.549,
+   "delta_vs_nominal": -0.056
   },
   {
    "label": "stall low",
-   "worst_margin": 0.556,
+   "kind": "bound",
+   "worst_margin": 0.537,
    "worst_joint": "knee_r",
    "passes": false,
    "failing": [
-    "hip_roll_l: peak, rms",
-    "hip_roll_r: peak, rms",
-    "hip_pitch_l: peak, rms",
+    "hip_roll_l: peak, rms, envelope",
+    "hip_roll_r: peak, rms, envelope",
+    "hip_pitch_l: peak",
     "hip_pitch_r: peak, rms",
-    "knee_l: peak, rms, envelope",
-    "knee_r: peak, rms, envelope"
+    "knee_l: peak, rms, envelope, overload_time",
+    "knee_r: peak, rms, envelope, overload_time"
    ],
-   "hot_steady_max_c": 52.7,
-   "rms_mixed_over_rated_max": 1.295,
-   "delta_vs_nominal": -0.0
+   "hot_steady_max_c": 54.9,
+   "rms_mixed_over_rated_max": 1.424,
+   "delta_vs_nominal": 0.0
   },
   {
    "label": "stall high",
-   "worst_margin": 0.556,
-   "worst_joint": "knee_r",
-   "passes": false,
-   "failing": [
-    "hip_roll_l: rms",
-    "hip_roll_r: rms",
-    "hip_pitch_l: rms",
-    "hip_pitch_r: rms",
-    "knee_l: peak, rms",
-    "knee_r: peak, rms"
-   ],
-   "hot_steady_max_c": 49.0,
-   "rms_mixed_over_rated_max": 1.295,
-   "delta_vs_nominal": -0.0
-  },
-  {
-   "label": "Rth high + 40 C ambient",
-   "worst_margin": 0.556,
+   "kind": "bound",
+   "worst_margin": 0.537,
    "worst_joint": "knee_r",
    "passes": false,
    "failing": [
     "hip_roll_l: peak, rms",
     "hip_roll_r: peak, rms",
-    "hip_pitch_l: peak, rms",
+    "hip_pitch_r: rms",
+    "knee_l: peak, rms",
+    "knee_r: peak, rms",
+    "ankle_pitch_l: rms"
+   ],
+   "hot_steady_max_c": 50.4,
+   "rms_mixed_over_rated_max": 1.424,
+   "delta_vs_nominal": 0.0
+  },
+  {
+   "label": "Rth high + 40 C ambient",
+   "kind": "bound",
+   "worst_margin": 0.537,
+   "worst_joint": "knee_r",
+   "passes": false,
+   "failing": [
+    "hip_roll_l: peak, rms",
+    "hip_roll_r: peak, rms",
+    "hip_pitch_l: peak",
     "hip_pitch_r: peak, rms",
     "knee_l: peak, rms",
-    "knee_r: peak, rms, envelope"
+    "knee_r: peak, rms"
    ],
-   "hot_steady_max_c": 54.2,
-   "rms_mixed_over_rated_max": 1.295,
-   "delta_vs_nominal": -0.0
+   "hot_steady_max_c": 56.7,
+   "rms_mixed_over_rated_max": 1.424,
+   "delta_vs_nominal": 0.0
   },
   {
    "label": "walking speed x1.5",
-   "worst_margin": 0.049,
+   "kind": "bound",
+   "worst_margin": 0.293,
    "worst_joint": "knee_r",
    "passes": false,
    "failing": [
@@ -1857,54 +2152,72 @@
     "knee_l: peak, rms, envelope",
     "knee_r: peak, rms, envelope"
    ],
-   "hot_steady_max_c": 501.2,
-   "rms_mixed_over_rated_max": 9.143,
-   "delta_vs_nominal": -0.507
+   "hot_steady_max_c": 60.1,
+   "rms_mixed_over_rated_max": 1.821,
+   "delta_vs_nominal": -0.244
+  },
+  {
+   "label": "SENSITIVITY armature = BAM ST3025 (0.00399), not a bound",
+   "kind": "sensitivity",
+   "worst_margin": 0.537,
+   "worst_joint": "knee_r",
+   "passes": false,
+   "failing": [
+    "hip_roll_l: peak, rms",
+    "hip_roll_r: peak, rms",
+    "hip_pitch_l: peak",
+    "hip_pitch_r: peak, rms",
+    "knee_l: peak, rms",
+    "knee_r: peak, rms"
+   ],
+   "hot_steady_max_c": 52.4,
+   "rms_mixed_over_rated_max": 1.424,
+   "delta_vs_nominal": 0.0
   }
  ],
  "mass_cases": {
-  "nominal_kg": 2.492,
+  "nominal_kg": 2.993,
   "benchmark_fit_kg": 2.996,
-  "structure_kg_nominal": 0.583,
+  "structure_kg_nominal": 1.084,
   "cases": {
-   "structure x1.8": {
-    "structure_scale": 1.8,
-    "total_kg": 2.959,
-    "worst_margin": 0.535,
+   "structure x1.4": {
+    "structure_scale": 1.4,
+    "total_kg": 3.427,
+    "worst_margin": 0.486,
     "worst_joint": "knee_r",
     "passes": false,
     "failing": [
-     "hip_roll_l: peak, rms",
-     "hip_roll_r: peak, rms",
-     "hip_pitch_l: peak, rms",
+     "hip_roll_l: peak, rms, envelope",
+     "hip_roll_r: peak, rms, envelope",
+     "hip_pitch_l: peak",
      "hip_pitch_r: peak, rms",
-     "knee_l: peak, rms, envelope",
-     "knee_r: peak, rms, envelope"
+     "knee_l: peak, rms, overload_time",
+     "knee_r: peak, rms, overload_time"
     ]
    },
    "benchmark-fit mass": {
-    "structure_scale": 1.86,
+    "structure_scale": 1.0,
     "total_kg": 2.996,
-    "worst_margin": 0.533,
+    "worst_margin": 0.537,
     "worst_joint": "knee_r",
     "passes": false,
     "failing": [
      "hip_roll_l: peak, rms",
      "hip_roll_r: peak, rms",
-     "hip_pitch_l: peak, rms",
+     "hip_pitch_l: peak",
      "hip_pitch_r: peak, rms",
-     "knee_l: peak, rms, envelope",
-     "knee_r: peak, rms, envelope"
+     "knee_l: peak, rms",
+     "knee_r: peak, rms"
     ]
    }
   },
   "note": "benchmark fit is a SANITY BOUND and a stress case, not an estimate",
-  "mass_to_first_gate_failure_kg": "fails at the nominal mass (2.49 kg)",
+  "mass_to_first_gate_failure_kg": "fails at the nominal mass (2.99 kg)",
   "scan": [
    {
     "structure_scale": 1.0,
-    "total_kg": 2.492,
-    "worst_margin": 0.556,
+    "total_kg": 2.993,
+    "worst_margin": 0.537,
     "passes": false
    }
   ]
@@ -1916,277 +2229,641 @@
   "pass_rate": 0.0,
   "pass_rate_required": null,
   "p95_peak_frac_of_stall": {
-   "hip_yaw_l": 0.455,
-   "hip_yaw_r": 0.474,
-   "hip_roll_l": 0.952,
-   "hip_roll_r": 0.86,
-   "hip_pitch_l": 0.901,
-   "hip_pitch_r": 0.93,
-   "knee_l": 1.125,
-   "knee_r": 1.13,
-   "ankle_pitch_l": 0.72,
-   "ankle_pitch_r": 0.721,
-   "ankle_roll_l": 0.22,
-   "ankle_roll_r": 0.28,
-   "waist_yaw": 0.359,
+   "hip_yaw_l": 0.485,
+   "hip_yaw_r": 0.5,
+   "hip_roll_l": 1.085,
+   "hip_roll_r": 0.957,
+   "hip_pitch_l": 0.859,
+   "hip_pitch_r": 0.868,
+   "knee_l": 1.021,
+   "knee_r": 1.034,
+   "ankle_pitch_l": 0.706,
+   "ankle_pitch_r": 0.72,
+   "ankle_roll_l": 0.243,
+   "ankle_roll_r": 0.314,
+   "waist_yaw": 0.372,
    "neck_yaw": 0.329,
-   "neck_pitch": 0.003,
-   "shoulder_pitch_l": 0.349,
-   "shoulder_pitch_r": 0.349,
-   "shoulder_roll_l": 0.194,
-   "shoulder_roll_r": 0.437,
-   "elbow_l": 0.142,
-   "elbow_r": 0.524,
+   "neck_pitch": 0.004,
+   "shoulder_pitch_l": 0.353,
+   "shoulder_pitch_r": 0.353,
+   "shoulder_roll_l": 0.214,
+   "shoulder_roll_r": 0.487,
+   "elbow_l": 0.144,
+   "elbow_r": 0.528,
    "gripper_l": 0.001,
    "gripper_r": 0.292
   },
   "p95_rms_over_rated": {
-   "hip_yaw_l": 0.644,
-   "hip_yaw_r": 0.656,
-   "hip_roll_l": 1.767,
-   "hip_roll_r": 1.524,
-   "hip_pitch_l": 1.155,
-   "hip_pitch_r": 1.208,
+   "hip_yaw_l": 0.683,
+   "hip_yaw_r": 0.695,
+   "hip_roll_l": 1.983,
+   "hip_roll_r": 1.685,
+   "hip_pitch_l": 1.099,
+   "hip_pitch_r": 1.136,
    "knee_l": 2.085,
-   "knee_r": 2.157,
-   "ankle_pitch_l": 1.342,
-   "ankle_pitch_r": 1.346,
-   "ankle_roll_l": 0.463,
-   "ankle_roll_r": 0.503,
-   "waist_yaw": 0.179,
+   "knee_r": 2.194,
+   "ankle_pitch_l": 1.392,
+   "ankle_pitch_r": 1.394,
+   "ankle_roll_l": 0.486,
+   "ankle_roll_r": 0.558,
+   "waist_yaw": 0.183,
    "neck_yaw": 0.231,
-   "neck_pitch": 0.006,
-   "shoulder_pitch_l": 0.547,
-   "shoulder_pitch_r": 0.548,
-   "shoulder_roll_l": 0.32,
-   "shoulder_roll_r": 0.32,
-   "elbow_l": 0.178,
-   "elbow_r": 0.902,
+   "neck_pitch": 0.009,
+   "shoulder_pitch_l": 0.548,
+   "shoulder_pitch_r": 0.549,
+   "shoulder_roll_l": 0.359,
+   "shoulder_roll_r": 0.362,
+   "elbow_l": 0.18,
+   "elbow_r": 0.905,
    "gripper_l": 0.002,
-   "gripper_r": 0.499
+   "gripper_r": 0.498
   },
   "p95_peak_gate_ok": false,
-  "worst_joint_p95_peak": "knee_r",
-  "worst_p95_peak": 1.13,
+  "worst_joint_p95_peak": "hip_roll_l",
+  "worst_p95_peak": 1.085,
   "note": "latency, backlash and kp are NOT sampled here: they need the closed loop (P5)"
  },
  "push_recovery": {
-  "requirement": "R10: balance recovery / fall prevention is a MUST (getting up after a face-plant is not required yet)",
-  "definition": "Magnitudes are requirement-level placeholders in the range of the precedent in research/methods/domain_randomization_ranges.yaml: Open Duck Mini adds 0.1-1.0 m/s to the base velocity every 5-10 s, MuJoCo Playground (Berkeley Humanoid, G1, T1) 0.1-2.0 m/s, ToddlerBot 1-3 N for 0.2 s (0.06-0.18 m/s on 3.4 kg). The k values below are set once, for every candidate.",
+  "requirement": "R10 (a MUST, PROVISIONAL value pending the maintainer): survive an absolute push, the same for every candidate, by any combination of strategies, standing and at mid single support of walk_forward. Getting up after a face-plant is not required yet.",
+  "required_impulse_Ns": 0.45,
+  "required_dv_mps": 0.15,
+  "mass_kg": 2.993,
+  "definition": "PROVISIONAL, pending maintainer Q1. 0.45 N.s is the top of the ToddlerBot push randomization range (1-3 N for 0.2 s = 0.06-0.18 m/s on 3.4 kg; 0.18 m/s on a 2.5 kg robot is 0.45 N.s); the Open Duck Mini Playground adds 0.1-1.0 m/s to the base velocity every 5-10 s and MuJoCo Playground (Berkeley Humanoid, G1, T1) 0.1-2.0 m/s (research/methods/domain_randomization_ranges.yaml). Challenge-2 commander response, rows 5-8.",
+  "hip_strategy": {
+   "trunk_speed_limit_rad_s": 5.11,
+   "note": "the hip strategy counts only up to 90% of the hip-pitch no-load speed; beyond it it is unavailable, and it is never a blocker by itself"
+  },
   "cases": {
-   "push_ankle_fwd": {
+   "push_stand_fwd": {
     "valid": true,
     "reason": "",
     "demand_ok": true,
+    "strategy": "ankle",
     "notes": [
-     "push dv = [0.132, 0.0] m/s, J = 0.33 N.s; reaction delay 25 ms; initial capture-point offset 21 mm vs foot half-length 41 mm",
+     "push 0.45 N.s = dv 0.150 m/s (stand_fwd), strategy ankle; reaction delay 25 ms; initial capture-point offset 23 mm",
      "COM tracking error 0.00 mm"
     ],
-    "peak_frac_of_stall": 0.423588723410047,
+    "peak_frac_of_stall": 0.5276293801490163,
     "peak_joint": "ankle_pitch_l",
-    "peak_nm": 0.8099016391600098,
-    "util_max": 0.423588723410047,
+    "peak_nm": 1.008827374844919,
+    "util_max": 0.5276293801490163,
     "util_joint": "ankle_pitch_l",
-    "omega_peak": 0.7148827894437898,
+    "omega_peak": 0.9108800529188132,
     "omega_peak_joint": "hip_pitch_l",
     "why": [],
-    "push": {
-     "dv_mps": 0.13152623376622782,
-     "impulse_Ns": 0.3277906530863228,
-     "capture_offset_mm": 20.7,
-     "foot_half_length_mm": 41.4,
-     "reaction_delay_ms": 24.9,
-     "free_fall_time_to_edge_s": 0.109
-    },
-    "strategy": {
-     "cop_peak_offset_mm": 31.0,
+    "plan": {
+     "steps_taken": 0,
+     "landings": [],
+     "crouch_peak_mm": 0.0,
+     "reach_clipped": false,
      "trunk_pitch_peak_deg": 0.0,
      "trunk_speed_peak_rad_s": 0.0,
-     "hip_pitch_servo_noload_rad_s": 5.67,
-     "capture_point_xy": null,
-     "landing_ankle_xy": null
+     "capture_offset_mm": 23.4,
+     "reaction_delay_ms": 24.9,
+     "cop_peak_offset_mm": 31.1
     },
     "servo_in_the_loop": {
      "fell": false,
-     "leg_max_err_deg": 1.27,
-     "leg_rms_err_deg": 0.29,
+     "leg_max_err_deg": 1.01,
+     "leg_rms_err_deg": 0.25,
      "saturation_fraction_max": 0.0,
      "saturated_joint": "hip_yaw_l",
      "overload_trips": 0,
-     "min_bus_voltage_v": 8.33,
+     "min_bus_voltage_v": 8.3,
      "delivered_in_time": true,
      "servo_delay_ms": 4.9
     },
-    "largest_recoverable_push": {
-     "scale": 1.284,
-     "dv_mps": 0.169,
-     "impulse_Ns": 0.421
+    "recoverable_at_required": true,
+    "largest_recoverable": {
+     "scenario": "stand_fwd",
+     "largest_recoverable_Ns": 0.619,
+     "dv_mps": 0.207,
+     "mass_kg": 2.993,
+     "best_strategy": "ankle+1step@250ms",
+     "limited_by": "plan: reach / capture point",
+     "at_search_ceiling": false,
+     "strategies": [
+      {
+       "option": "ankle+2step@150ms",
+       "plan_limit_Ns": 1.577
+      },
+      {
+       "option": "ankle+1step@150ms",
+       "plan_limit_Ns": 0.884
+      },
+      {
+       "option": "ankle+2step@200ms",
+       "plan_limit_Ns": 0.867
+      },
+      {
+       "option": "ankle+1step@200ms",
+       "plan_limit_Ns": 0.736
+      },
+      {
+       "option": "ankle+2step@250ms",
+       "plan_limit_Ns": 0.722
+      },
+      {
+       "option": "ankle+1step@250ms",
+       "plan_limit_Ns": 0.619
+      },
+      {
+       "option": "ankle+hip",
+       "plan_limit_Ns": 0.516
+      },
+      {
+       "option": "ankle",
+       "plan_limit_Ns": 0.492
+      },
+      {
+       "option": "ankle+1step@300ms",
+       "plan_limit_Ns": 0.459
+      },
+      {
+       "option": "ankle+1step@350ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@300ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@350ms",
+       "plan_limit_Ns": 0.0
+      }
+     ],
+     "at_largest": {
+      "peak_frac_of_stall": 0.7986100443150312,
+      "peak_joint": "hip_roll_l",
+      "util_max": 0.7986100443150312,
+      "omega_peak": 3.962575776950752,
+      "ok": true
+     }
     }
    },
-   "push_hip_fwd": {
-    "valid": false,
-    "reason": "ideal playback fell over",
-    "demand_ok": false,
+   "push_stand_lat": {
+    "valid": true,
+    "reason": "",
+    "demand_ok": true,
+    "strategy": "ankle",
     "notes": [
-     "push dv = [0.303, 0.0] m/s, J = 0.75 N.s; reaction delay 25 ms; initial capture-point offset 48 mm vs foot half-length 41 mm",
-     "COM tracking error 0.01 mm"
+     "push 0.45 N.s = dv 0.150 m/s (stand_lat), strategy ankle; reaction delay 25 ms; initial capture-point offset 23 mm",
+     "COM tracking error 0.00 mm"
     ],
-    "push": {
-     "dv_mps": 0.30251033766232394,
-     "impulse_Ns": 0.7539185020985424,
-     "capture_offset_mm": 47.6,
-     "foot_half_length_mm": 41.4,
+    "peak_frac_of_stall": 0.40656092281111,
+    "peak_joint": "knee_l",
+    "peak_nm": 0.7773444844148423,
+    "util_max": 0.40656092281111,
+    "util_joint": "knee_l",
+    "omega_peak": 0.6199684996010167,
+    "omega_peak_joint": "hip_roll_l",
+    "why": [],
+    "plan": {
+     "steps_taken": 0,
+     "landings": [],
+     "crouch_peak_mm": 0.0,
+     "reach_clipped": false,
+     "trunk_pitch_peak_deg": 0.0,
+     "trunk_speed_peak_rad_s": 0.0,
+     "capture_offset_mm": 23.4,
      "reaction_delay_ms": 24.9,
-     "free_fall_time_to_edge_s": 0.0
+     "cop_peak_offset_mm": 53.6
     },
-    "strategy": {
-     "cop_peak_offset_mm": 31.0,
-     "trunk_pitch_peak_deg": 35.0,
-     "trunk_speed_peak_rad_s": 11.54,
-     "hip_pitch_servo_noload_rad_s": 5.67,
-     "capture_point_xy": null,
-     "landing_ankle_xy": null
+    "servo_in_the_loop": {
+     "fell": false,
+     "leg_max_err_deg": 1.35,
+     "leg_rms_err_deg": 0.3,
+     "saturation_fraction_max": 0.0,
+     "saturated_joint": "hip_yaw_l",
+     "overload_trips": 0,
+     "min_bus_voltage_v": 8.32,
+     "delivered_in_time": true,
+     "servo_delay_ms": 4.9
     },
+    "recoverable_at_required": true,
+    "largest_recoverable": {
+     "scenario": "stand_lat",
+     "largest_recoverable_Ns": 0.848,
+     "dv_mps": 0.283,
+     "mass_kg": 2.993,
+     "best_strategy": "ankle",
+     "limited_by": "plan: reach / capture point",
+     "at_search_ceiling": false,
+     "strategies": [
+      {
+       "option": "ankle",
+       "plan_limit_Ns": 0.848
+      },
+      {
+       "option": "ankle+1step@150ms",
+       "plan_limit_Ns": 0.505
+      },
+      {
+       "option": "ankle+2step@150ms",
+       "plan_limit_Ns": 0.305
+      },
+      {
+       "option": "ankle+1step@200ms",
+       "plan_limit_Ns": 0.291
+      },
+      {
+       "option": "ankle+1step@250ms",
+       "plan_limit_Ns": 0.137
+      },
+      {
+       "option": "ankle+2step@200ms",
+       "plan_limit_Ns": 0.127
+      },
+      {
+       "option": "ankle+1step@300ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+1step@350ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@250ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@300ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@350ms",
+       "plan_limit_Ns": 0.0
+      }
+     ],
+     "at_largest": {
+      "peak_frac_of_stall": 0.9392987181081196,
+      "peak_joint": "hip_roll_l",
+      "util_max": 0.9392987181081196,
+      "omega_peak": 1.4285715542154227,
+      "ok": true
+     }
+    }
+   },
+   "push_walk_fwd": {
+    "valid": true,
+    "reason": "",
+    "demand_ok": false,
+    "strategy": "ankle+1step@150ms",
+    "notes": [
+     "push 0.45 N.s = dv 0.150 m/s (walk_fwd), strategy ankle+1step@150ms; reaction delay 25 ms; initial capture-point offset 23 mm",
+     "COM tracking error 0.01 mm",
+     "steps: r at t=2.28 s ankle xy [0.145, -0.035] crouch 0 mm"
+    ],
+    "peak_frac_of_stall": 1.6309101948740619,
+    "peak_joint": "knee_r",
+    "peak_nm": 3.1183002925992063,
+    "util_max": 2.906139266046377,
+    "util_joint": "knee_r",
+    "omega_peak": 5.058929886654808,
+    "omega_peak_joint": "knee_r",
     "why": [
-     "hip strategy needs a trunk pitch speed of 11.5 rad/s; the hip servos give 5.7 rad/s at most"
+     "knee_r needs 1.63 of stall (limit 1.0)",
+     "knee_r operating point 2.91x the torque-speed envelope"
     ],
-    "largest_recoverable_push": {
-     "scale": 0.575,
-     "dv_mps": 0.174,
-     "impulse_Ns": 0.433
-    },
-    "at_largest_recoverable": {
-     "scale": 0.564,
-     "dv_mps": 0.17,
-     "impulse_Ns": 0.425,
-     "valid": true,
-     "reason": "",
-     "peak_frac_of_stall": 1.9811671974762424,
-     "peak_joint": "hip_pitch_l",
-     "util_max": 2.983685467226242,
-     "omega_peak": 5.102969896923291,
-     "ok": false,
-     "why": [
-      "hip_pitch_l needs 1.98 of stall (limit 1.0)",
-      "hip_pitch_l operating point 2.98x the torque-speed envelope"
-     ]
-    }
-   },
-   "push_capture_fwd": {
-    "valid": false,
-    "reason": "reference infeasible: push dv = [0.342, 0.0] m/s, J = 0.85 N.s; reaction delay 25 ms; initial capture-point offset 54 mm vs foot half-length 41 mm; COM tracking error 0.11 mm; leg IK unreachable at 47 of 1101 samples",
-    "demand_ok": false,
-    "notes": [
-     "push dv = [0.342, 0.0] m/s, J = 0.85 N.s; reaction delay 25 ms; initial capture-point offset 54 mm vs foot half-length 41 mm",
-     "COM tracking error 0.11 mm",
-     "leg IK unreachable at 47 of 1101 samples"
-    ],
-    "push": {
-     "dv_mps": 0.34196820779219234,
-     "impulse_Ns": 0.8522556980244393,
-     "capture_offset_mm": 53.8,
-     "foot_half_length_mm": 41.4,
-     "reaction_delay_ms": 24.9,
-     "free_fall_time_to_edge_s": 0.0
-    },
-    "strategy": {
-     "cop_peak_offset_mm": 142.1,
+    "plan": {
+     "steps_taken": 1,
+     "landings": [
+      {
+       "t_s": 2.2800000000000002,
+       "ankle_xy": [
+        0.14463857281824025,
+        -0.035
+       ],
+       "foot": "r",
+       "capture_point_xy": [
+        0.14705857281824022,
+        0.019068480954161835
+       ],
+       "crouch_m": 0.0,
+       "clipped": false
+      }
+     ],
+     "crouch_peak_mm": 0.0,
+     "reach_clipped": false,
      "trunk_pitch_peak_deg": 0.0,
      "trunk_speed_peak_rad_s": 0.0,
-     "hip_pitch_servo_noload_rad_s": 5.67,
-     "capture_point_xy": [
-      0.10634705037072681,
-      -0.026480814032950578
+     "capture_offset_mm": 23.4,
+     "reaction_delay_ms": 24.9,
+     "cop_peak_offset_mm": 143.1
+    },
+    "recoverable_at_required": false,
+    "largest_recoverable": {
+     "scenario": "walk_fwd",
+     "largest_recoverable_Ns": 0.406,
+     "dv_mps": 0.136,
+     "mass_kg": 2.993,
+     "best_strategy": "ankle",
+     "limited_by": "plan: reach / capture point",
+     "at_search_ceiling": false,
+     "strategies": [
+      {
+       "option": "ankle+1step@150ms",
+       "plan_limit_Ns": 0.509
+      },
+      {
+       "option": "ankle+1step@200ms",
+       "plan_limit_Ns": 0.436
+      },
+      {
+       "option": "ankle",
+       "plan_limit_Ns": 0.406
+      },
+      {
+       "option": "ankle+1step@250ms",
+       "plan_limit_Ns": 0.384
+      },
+      {
+       "option": "ankle+1step@300ms",
+       "plan_limit_Ns": 0.347
+      },
+      {
+       "option": "ankle+2step@150ms",
+       "plan_limit_Ns": 0.347
+      },
+      {
+       "option": "ankle+1step@350ms",
+       "plan_limit_Ns": 0.32
+      },
+      {
+       "option": "ankle+2step@200ms",
+       "plan_limit_Ns": 0.302
+      },
+      {
+       "option": "ankle+2step@250ms",
+       "plan_limit_Ns": 0.286
+      },
+      {
+       "option": "ankle+2step@300ms",
+       "plan_limit_Ns": 0.281
+      },
+      {
+       "option": "ankle+2step@350ms",
+       "plan_limit_Ns": 0.278
+      }
      ],
-     "landing_ankle_xy": [
-      0.1039270503707268,
-      -0.035
-     ]
-    },
-    "largest_recoverable_push": {
-     "scale": 0.945,
-     "dv_mps": 0.323,
-     "impulse_Ns": 0.805
-    },
-    "at_largest_recoverable": {
-     "scale": 0.926,
-     "dv_mps": 0.317,
-     "impulse_Ns": 0.789,
-     "valid": true,
-     "reason": "",
-     "peak_frac_of_stall": 44.055619381960696,
-     "peak_joint": "knee_r",
-     "util_max": 9.99,
-     "omega_peak": 7.521097230242354,
-     "ok": false,
-     "why": [
-      "knee_r needs 44.06 of stall (limit 1.0)",
-      "hip_pitch_r operating point 9.99x the torque-speed envelope"
-     ]
+     "at_largest": {
+      "peak_frac_of_stall": 0.749824535685331,
+      "peak_joint": "hip_roll_l",
+      "util_max": 0.749824535685331,
+      "omega_peak": 2.5863899957990766,
+      "ok": true
+     }
     }
    },
-   "push_capture_lat": {
-    "valid": false,
-    "reason": "reference infeasible: push dv = [0.0, 0.201] m/s, J = 0.50 N.s; reaction delay 25 ms; initial capture-point offset 32 mm vs foot half-length 41 mm; COM tracking error 0.04 mm; leg IK unreachable at 52 of 1101 samples",
-    "demand_ok": false,
+   "push_walk_lat_out": {
+    "valid": true,
+    "reason": "",
+    "demand_ok": true,
+    "strategy": "ankle",
     "notes": [
-     "push dv = [0.0, 0.201] m/s, J = 0.50 N.s; reaction delay 25 ms; initial capture-point offset 32 mm vs foot half-length 41 mm",
-     "COM tracking error 0.04 mm",
-     "leg IK unreachable at 52 of 1101 samples"
+     "push 0.45 N.s = dv 0.150 m/s (walk_lat_out), strategy ankle; reaction delay 25 ms; initial capture-point offset 23 mm",
+     "COM tracking error 0.00 mm",
+     "steps: r at t=2.30 s ankle xy [0.125, -0.035] crouch 0 mm"
     ],
-    "push": {
-     "dv_mps": 0.20133997741388135,
-     "impulse_Ns": 0.5017809816267079,
-     "capture_offset_mm": 31.7,
-     "foot_half_length_mm": 41.4,
-     "reaction_delay_ms": 24.9,
-     "free_fall_time_to_edge_s": 0.042
-    },
-    "strategy": {
-     "cop_peak_offset_mm": 150.7,
+    "peak_frac_of_stall": 0.8423987960226086,
+    "peak_joint": "hip_roll_l",
+    "peak_nm": 1.6106664979952277,
+    "util_max": 0.8423987960226086,
+    "util_joint": "hip_roll_l",
+    "omega_peak": 3.8161720762712186,
+    "omega_peak_joint": "knee_r",
+    "why": [],
+    "plan": {
+     "steps_taken": 0,
+     "landings": [
+      {
+       "t_s": 2.3000000000000003,
+       "ankle_xy": [
+        0.125,
+        -0.035
+       ],
+       "foot": "r",
+       "capture_point_xy": null,
+       "crouch_m": 0.0,
+       "clipped": false,
+       "nominal": true
+      }
+     ],
+     "crouch_peak_mm": 0.0,
+     "reach_clipped": false,
      "trunk_pitch_peak_deg": 0.0,
      "trunk_speed_peak_rad_s": 0.0,
-     "hip_pitch_servo_noload_rad_s": 5.67,
-     "capture_point_xy": [
-      0.011450446508948359,
-      0.12212627963741332
+     "capture_offset_mm": 23.4,
+     "reaction_delay_ms": 24.9,
+     "cop_peak_offset_mm": 106.1
+    },
+    "servo_in_the_loop": {
+     "fell": false,
+     "leg_max_err_deg": 3.87,
+     "leg_rms_err_deg": 0.41,
+     "saturation_fraction_max": 0.01,
+     "saturated_joint": "knee_r",
+     "overload_trips": 0,
+     "min_bus_voltage_v": 8.12,
+     "delivered_in_time": true,
+     "servo_delay_ms": 4.9
+    },
+    "recoverable_at_required": true,
+    "largest_recoverable": {
+     "scenario": "walk_lat_out",
+     "largest_recoverable_Ns": 0.572,
+     "dv_mps": 0.191,
+     "mass_kg": 2.993,
+     "best_strategy": "ankle",
+     "limited_by": "plan: reach / capture point",
+     "at_search_ceiling": false,
+     "strategies": [
+      {
+       "option": "ankle+1step@150ms",
+       "plan_limit_Ns": 0.708
+      },
+      {
+       "option": "ankle+1step@200ms",
+       "plan_limit_Ns": 0.667
+      },
+      {
+       "option": "ankle+1step@250ms",
+       "plan_limit_Ns": 0.641
+      },
+      {
+       "option": "ankle+2step@150ms",
+       "plan_limit_Ns": 0.625
+      },
+      {
+       "option": "ankle+1step@300ms",
+       "plan_limit_Ns": 0.622
+      },
+      {
+       "option": "ankle+1step@350ms",
+       "plan_limit_Ns": 0.608
+      },
+      {
+       "option": "ankle+2step@200ms",
+       "plan_limit_Ns": 0.602
+      },
+      {
+       "option": "ankle",
+       "plan_limit_Ns": 0.572
+      },
+      {
+       "option": "ankle+2step@250ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@300ms",
+       "plan_limit_Ns": 0.0
+      },
+      {
+       "option": "ankle+2step@350ms",
+       "plan_limit_Ns": 0.0
+      }
      ],
-     "landing_ankle_xy": [
-      0.0,
-      0.13212627963741333
-     ]
+     "at_largest": {
+      "peak_frac_of_stall": 0.9268331321681662,
+      "peak_joint": "hip_roll_l",
+      "util_max": 0.9268331321681662,
+      "omega_peak": 4.3875510493697165,
+      "ok": true
+     }
+    }
+   },
+   "push_walk_lat_in": {
+    "valid": true,
+    "reason": "",
+    "demand_ok": false,
+    "strategy": "ankle+1step@200ms",
+    "notes": [
+     "push 0.45 N.s = dv 0.150 m/s (walk_lat_in), strategy ankle+1step@200ms; reaction delay 25 ms; initial capture-point offset 23 mm",
+     "COM tracking error 0.00 mm",
+     "steps: r at t=2.33 s ankle xy [0.091, -0.093] crouch 0 mm"
+    ],
+    "peak_frac_of_stall": 0.9993710693109273,
+    "peak_joint": "knee_r",
+    "peak_nm": 1.910797484522493,
+    "util_max": 1.1536991772652234,
+    "util_joint": "knee_r",
+    "omega_peak": 4.293281608235823,
+    "omega_peak_joint": "knee_r",
+    "why": [
+     "knee_r operating point 1.15x the torque-speed envelope"
+    ],
+    "plan": {
+     "steps_taken": 1,
+     "landings": [
+      {
+       "t_s": 2.33,
+       "ankle_xy": [
+        0.09146902235175289,
+        -0.09251191693849173
+       ],
+       "foot": "r",
+       "capture_point_xy": [
+        0.08829649000184583,
+        -0.08251191693849173
+       ],
+       "crouch_m": 0.0,
+       "clipped": false
+      }
+     ],
+     "crouch_peak_mm": 0.0,
+     "reach_clipped": false,
+     "trunk_pitch_peak_deg": 0.0,
+     "trunk_speed_peak_rad_s": 0.0,
+     "capture_offset_mm": 23.4,
+     "reaction_delay_ms": 24.9,
+     "cop_peak_offset_mm": 111.1
     },
-    "largest_recoverable_push": {
-     "scale": 0.791,
-     "dv_mps": 0.159,
-     "impulse_Ns": 0.397
-    },
-    "at_largest_recoverable": {
-     "scale": 0.775,
-     "dv_mps": 0.156,
-     "impulse_Ns": 0.389,
-     "valid": true,
-     "reason": "",
-     "peak_frac_of_stall": 28.994697891029844,
-     "peak_joint": "knee_l",
-     "util_max": 9.99,
-     "omega_peak": 6.873556362552776,
-     "ok": false,
-     "why": [
-      "knee_l needs 28.99 of stall (limit 1.0)",
-      "knee_l operating point 9.99x the torque-speed envelope"
-     ]
+    "recoverable_at_required": false,
+    "largest_recoverable": {
+     "scenario": "walk_lat_in",
+     "largest_recoverable_Ns": 0.393,
+     "dv_mps": 0.131,
+     "mass_kg": 2.993,
+     "best_strategy": "ankle+1step@250ms",
+     "limited_by": "actuators (torque / speed demand)",
+     "at_search_ceiling": false,
+     "strategies": [
+      {
+       "option": "ankle+1step@150ms",
+       "plan_limit_Ns": 0.8
+      },
+      {
+       "option": "ankle+1step@200ms",
+       "plan_limit_Ns": 0.577
+      },
+      {
+       "option": "ankle+2step@150ms",
+       "plan_limit_Ns": 0.481
+      },
+      {
+       "option": "ankle+1step@250ms",
+       "plan_limit_Ns": 0.419
+      },
+      {
+       "option": "ankle+2step@200ms",
+       "plan_limit_Ns": 0.409
+      },
+      {
+       "option": "ankle+1step@300ms",
+       "plan_limit_Ns": 0.306
+      },
+      {
+       "option": "ankle+2step@250ms",
+       "plan_limit_Ns": 0.287
+      },
+      {
+       "option": "ankle",
+       "plan_limit_Ns": 0.256
+      },
+      {
+       "option": "ankle+1step@350ms",
+       "plan_limit_Ns": 0.227
+      },
+      {
+       "option": "ankle+2step@300ms",
+       "plan_limit_Ns": 0.206
+      },
+      {
+       "option": "ankle+2step@350ms",
+       "plan_limit_Ns": 0.15
+      }
+     ],
+     "at_largest": {
+      "peak_frac_of_stall": 0.9347459649636586,
+      "peak_joint": "hip_roll_l",
+      "util_max": 0.9347459649636586,
+      "omega_peak": 3.9497852287118835,
+      "ok": true
+     }
     }
    }
   },
-  "all_ok": false
+  "all_ok": false,
+  "largest_recoverable_Ns": {
+   "push_stand_fwd": 0.619,
+   "push_stand_lat": 0.848,
+   "push_walk_fwd": 0.406,
+   "push_walk_lat_out": 0.572,
+   "push_walk_lat_in": 0.393
+  },
+  "largest_recoverable_min": {
+   "scenario": "push_walk_lat_in",
+   "impulse_Ns": 0.393,
+   "dv_mps": 0.131
+  },
+  "gate": "largest recoverable impulse >= required in every scenario: NOT MET"
  },
  "should_checks": {
   "sit_to_stand_130": {
    "valid": true,
    "fails": [
-    "knee_l: peak, rms",
-    "knee_r: peak, rms"
+    "knee_l: peak, rms, overload_time",
+    "knee_r: peak, rms, overload_time"
    ]
   }
  },
@@ -2202,11 +2879,11 @@
   "pack_c_ok": true,
   "grasp_ok": true,
   "tracking_noted_rms_deg": {
-   "walk_forward": 0.45,
-   "turn": 0.31,
-   "squat_90": 0.09,
-   "wave": 0.21,
-   "pickup": 0.27
+   "walk_forward": 0.41,
+   "turn": 0.36,
+   "squat_90": 0.1,
+   "wave": 0.24,
+   "pickup": 0.26
   }
  },
  "robust_to_all_bounds": false,
@@ -2218,33 +2895,35 @@
   "reasons": [
    "hip_roll_l: peak, rms",
    "hip_roll_r: peak, rms",
-   "hip_pitch_l: peak, rms",
+   "hip_pitch_l: peak",
    "hip_pitch_r: peak, rms",
    "knee_l: peak, rms",
-   "knee_r: peak, rms, envelope",
+   "knee_r: peak, rms",
    "ankle_pitch_l: rms",
    "ankle_pitch_r: rms",
-   "R10 push_hip_fwd: no valid recovery (ideal playback fell over)",
-   "R10 push_capture_fwd: no valid recovery (reference infeasible: push dv = [0.342, 0.0] m/s, J = 0.85 N.s; reaction delay 25 ms; initial capture-point offset 54 mm)",
-   "R10 push_capture_lat: no valid recovery (reference infeasible: push dv = [0.0, 0.201] m/s, J = 0.50 N.s; reaction delay 25 ms; initial capture-point offset 32 mm)",
-   "Monte Carlo p95 peak above the gate at knee_r (1.13 of stall)",
+   "R10 push_walk_fwd: actuators cannot deliver 0.45 N.s by any strategy (ankle+1step@150ms: knee_r needs 1.63 of stall (limit 1.0); knee_r operating point 2.91x the torque-speed envelope)",
+   "R10 push_walk_lat_in: actuators cannot deliver 0.45 N.s by any strategy (ankle+1step@200ms: knee_r operating point 1.15x the torque-speed envelope)",
+   "Monte Carlo p95 peak above the gate at hip_roll_l (1.08 of stall)",
    "mixed-schedule RMS torque above the vendor-rated continuous torque on at least one joint"
   ],
   "warnings": [
-   "SHOULD sit_to_stand_130 (proxy for getting up, not required yet): knee_l: peak, rms; knee_r: peak, rms",
+   "SHOULD sit_to_stand_130 (proxy for getting up, not required yet): knee_l: peak, rms, overload_time; knee_r: peak, rms, overload_time",
+   "cost $708.86 typical is above the $550 cap (high band $883.13); prices are unverified",
    "sts3215-7v4: full charge 8.4 V is 1.0 V over the rating for 80% of the discharge (charge only to 3.70 V/cell (7.4 V) -- most chargers allow it; costs about 80% of the capacity)",
    "thermal model failed the Robonine replay: thermal temperatures are indicative only"
   ],
   "meaning": "PASS = no blocker: every frozen motion valid, nominal joint gates met, Monte Carlo p95 peak and mixed RMS within the gates, grasp, bus and regulator OK. Warnings (cost, voltage rating, runtime, unusable thermal model) do not flip it. 'robust' and 'benchmark mass' are the decision-rule checks (challenge-1): a PASS that is not robust is not a decision."
  },
  "limitations": [
-  "Open-loop reference replay: LIPM + analytic IK gait (no trajectory optimisation), so loads are a lower bound for a real balancing controller; stress walks bound some of the gap.",
-  "Torque demand includes the servo's reflected rotor inertia (BAM armature 0.0234 kg m^2), which dominates dynamic loads; that value is a 7.4 V identification used for all servos.",
-  "12 V STS3215 and STS3250 are datasheet-anchored with dynamics borrowed from the 7.4 V fit; the mid-speed torque curve is unverified (anchored vs pessimistic linear shown).",
-  "Printed structure mass is a pre-CAD guess; shells and brackets are not modelled. The benchmark fit is only a sanity bound / stress case.",
-  "Thermal: single lumped node, Rth/tau derived from one Robonine unit with assumed ambient; the model does not reproduce Robonine run 2, so thermal numbers are indicative and RMS <= rated is the thermal gate.",
+  "Open-loop reference replay: LIPM + analytic IK gait (no trajectory optimisation), so loads are a lower bound for a real balancing controller; stress walks bound some of the gap. A minimum-torque inverse-dynamics demand (no tether, no PD) agrees with the PD harness within about 4% on the sagittal leg joints.",
+  "Torque demand includes the servo's reflected rotor inertia (BAM armature 0.0234 kg m^2), which dominates dynamic loads; that value is a 7.4 V identification used for all servos. The only other armature in BAM's files that applies to a 12 V class servo (Waveshare ST3025, 0.00399) is reported as a SENSITIVITY row, not a bound.",
+  "12 V STS3215 and STS3250 are datasheet-anchored with dynamics borrowed from the 7.4 V fit; the mid-speed torque curve is unverified (anchored vs pessimistic linear shown). A bench test settles it.",
+  "Printed structure mass: the nominal (11.9 kg per m^3) was recentred on Open Duck Mini's back-out (its structure is 1.86x the old 6.4); shells and brackets of Adam are still not modelled. The benchmark fit is only a sanity bound / stress case.",
+  "Thermal: single lumped node, Rth/tau derived from one Robonine unit with assumed ambient; the model does not reproduce Robonine run 2, so thermal numbers are indicative and RMS <= rated is the thermal gate. The rated continuous torque of the 7.4 V part is contested (0.49 vs 0.637 N.m): the verdict is shown at both.",
+  "R10 (PROVISIONAL absolute impulse): LIPM plans with perfect state estimation, instant unloading of the stepping foot, no foot rotation, no foot/leg collision (cross-steps are placed a foot length away from the stance foot), backward pushes not run, lateral hip-roll (trunk roll) strategy not modelled, the hip strategy is forward only and counts only within the hip servos' speed. Walking pushes use the third step of the frozen gait.",
+  "Gait: stance knee flexion 20-45 deg and step time {0.25, 0.35, 0.5} s are swept identically for every candidate and the gates use the best feasible combination; Open Duck Mini itself walks at about 77 deg knee flexion and 0.27 s steps.",
   "Latency, backlash and kp need the closed loop (P5); here they are sensitivities on one walk, never gates.",
-  "Leg-table / self-collision, cable routing and packaging are not checked (T-0004 floors are applied only as proportion minimums).",
+  "Leg-table / self-collision, cable routing and packaging are not checked (T-0004 floors, and in the height sweep the CAD-foundation ankle height and ranges, are applied only as proportion / range minimums; the 106 mm hip stack is not modelled).",
   "Stand-up from a fall is not modelled; the quasi-static sit-to-stand at 130 deg knee is a proxy only."
  ],
  "provenance": [
@@ -2323,11 +3002,11 @@
   {
    "constant": "mass.structure_factor",
    "value": {
-    "low": 0.9,
-    "high": 1.8
+    "low": 0.55,
+    "high": 1.4
    },
    "class": "assumption",
-   "source": "printed frame + shell mass before CAD/shells exist; the structure coefficient (6.4 kg at 1 m cubed) is NOT recalibrated until shelled CAD exists. The ToddlerBot/OP3 masses are sanity bounds only"
+   "source": "printed frame + shell mass before CAD/shells exist. RECENTRED by the Open Duck Mini calibration (challenge-2 row 11): the nominal structure coefficient is 11.9 kg per m^3 (ODM backs out at 0.88 kg of structure at 0.42 m, 1.86x the old 6.4), set per concept in mass_model. The band is relative to the new nominal: 0.55 is the old 6.4 nominal, 1.4 about the benchmark-fit mass. NOT recalibrated again until shelled CAD exists. The ToddlerBot/OP3 masses are sanity bounds only"
   },
   {
    "constant": "mass.wiring_electronics_factor",
@@ -2359,8 +3038,8 @@
   {
    "constant": "uncertainty.tornado.mass_structure",
    "value": {
-    "low": 0.9,
-    "high": 1.8
+    "low": 0.55,
+    "high": 1.4
    },
    "class": "assumption",
    "source": "same band as mass.structure_factor"
@@ -2568,7 +3247,11 @@
     "pickup": {
      "object_mass_kg": 0.15,
      "table_height_m": 0.25,
-     "table_height_note": "R5 'table height' is undefined (maintainer question Q1). 0.25 m is a placeholder; run --table-height to sweep it."
+     "table_heights_m": [
+      0.25,
+      0.45
+     ],
+     "table_height_note": "R5 'table height' is undefined (maintainer question Q1): the provisional answer is a coffee-table height of 0.40-0.50 m while the engine started at 0.25 m. BOTH are run (challenge-2 row 16): the first is the motion named `pickup`, the others `pickup_<h>m`; a joint is judged on the worst of them. --table-height replaces the list."
     },
     "sit_to_stand": {
      "knee_deg": 130.0,
@@ -2577,11 +3260,26 @@
     },
     "push": {
      "class": "assumption",
-     "source": "Magnitudes are requirement-level placeholders in the range of the precedent in research/methods/domain_randomization_ranges.yaml: Open Duck Mini adds 0.1-1.0 m/s to the base velocity every 5-10 s, MuJoCo Playground (Berkeley Humanoid, G1, T1) 0.1-2.0 m/s, ToddlerBot 1-3 N for 0.2 s (0.06-0.18 m/s on 3.4 kg). The k values below are set once, for every candidate.",
-     "ankle_k": 0.5,
-     "hip_k": 1.15,
-     "capture_fwd_k": 1.3,
-     "capture_lat_k": 0.75,
+     "source": "PROVISIONAL, pending maintainer Q1. 0.45 N.s is the top of the ToddlerBot push randomization range (1-3 N for 0.2 s = 0.06-0.18 m/s on 3.4 kg; 0.18 m/s on a 2.5 kg robot is 0.45 N.s); the Open Duck Mini Playground adds 0.1-1.0 m/s to the base velocity every 5-10 s and MuJoCo Playground (Berkeley Humanoid, G1, T1) 0.1-2.0 m/s (research/methods/domain_randomization_ranges.yaml). Challenge-2 commander response, rows 5-8.",
+     "required_impulse_Ns": 0.45,
+     "push_time_s": 1.0,
+     "horizon_s": 4.0,
+     "swing_times_s": [
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.35
+     ],
+     "max_steps": 2,
+     "walk_push_step_index": 2,
+     "walk_steps_built": 5,
+     "second_step_trigger_shrink": 0.6,
+     "settle_tol_frac": 0.3,
+     "settle_speed_mps": 0.03,
+     "max_com_excursion_m": 0.6,
+     "reach_frac": 0.985,
+     "crouch_knee_max_deg": 120.0,
      "dcm_gain": 2.0,
      "cop_margin_frac": 0.75,
      "trunk_pitch_max_deg": 35.0,
@@ -2589,7 +3287,6 @@
      "control_period_s": 0.01,
      "sensing_latency_s": 0.01,
      "sensing_latency_class": "assumption",
-     "capture_swing_s": 0.15,
      "capture_clearance_m": 0.015,
      "land_margin_m": 0.01,
      "deliver": {
@@ -2608,6 +3305,49 @@
    },
    "class": "assumption",
    "source": "requirements.md R2-R5 give no speeds, depths or tempos. These are requirement-level placeholders chosen once, not tuned per candidate."
+  },
+  {
+   "constant": "gait_sweep",
+   "value": {
+    "stance_knee_flex_deg": [
+     20,
+     30,
+     40,
+     45
+    ],
+    "step_time_s": [
+     0.25,
+     0.35,
+     0.5
+    ]
+   },
+   "class": "assumption",
+   "source": "challenge-2 commander response rows 12-13: stance knee flex 20-45 deg, step time {0.25, 0.35, 0.5} s"
+  },
+  {
+   "constant": "packaging_cad_foundation",
+   "value": {
+    "ankle_height_m_min": 0.066,
+    "rom_deg": {
+     "knee": [
+      0,
+      115
+     ],
+     "hip_pitch": [
+      -110,
+      40
+     ],
+     "ankle_pitch": [
+      -60,
+      25
+     ]
+    },
+    "keep_total_height": true,
+    "hip_stack_above_m": 0.106,
+    "hip_stack_behind_m": 0.084
+   },
+   "class": "sourced_estimate",
+   "source": "docs/cad-foundation.md 'Design facts the leg established'; coordination/commander-log.md CAD foundation entry. Servo feature dimensions behind them are ESTIMATES until the fit gauge is printed"
   },
   {
    "constant": "assist.mean_fraction_of_weight_max",
@@ -2720,7 +3460,7 @@
    "constant": "sts3215-7v4.rated_continuous_nm",
    "value": 0.49,
    "class": "sourced_estimate",
-   "source": "Seeed C001 lists rated 5 kg.cm @7.4V = 0.490 N.m (26% of stall); Evelta says 6.5 (labelled 6 V). Vendor rating, not a measured thermal limit (research/actuators/feetech-sts3215/notes.md)"
+   "source": "Seeed C001 lists rated 5 kg.cm @7.4V = 0.490 N.m (26% of stall); Evelta says 6.5 kg.cm = 0.637 N.m (labelled 6 V; `alt`, challenge-2 row 2: the RMS verdicts are shown at both 0.49 and 0.64). Vendor rating, not a measured thermal limit (research/actuators/feetech-sts3215/notes.md)"
   },
   {
    "constant": "sts3215-7v4.noload_rad_s",
@@ -2764,50 +3504,54 @@
      30,
      5.2
     ],
-    "price_usd": 15
+    "price_usd": 17.43
    },
    "class": "sourced_estimate",
-   "source": "estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md | dims/mass added 2026-10-19 by T-0017: 65x30 mm (Kubii, Little Bird; 5.2 mm max height Little Bird), mass 16 g (Kubii; Little Bird says 10 g). Power: research/methods/e (CNX Sof"
+   "source": "https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/ (65x30 mm, quad A53 1 GHz, 512 MB); prices: https://www.pishop.us/product/raspberry-pi-zero-2-w/ ($17.25), https://www.canakit.com/raspberry-pi-zero-2-w.html ($16.35), https://vilros.com/products/raspberry-pi-zero-2-w ($17.43), https://www."
   },
   {
    "constant": "catalog microsd-32gb (price, mass, dims)",
    "value": {
     "mass_kg": 0.001,
     "dimensions_mm": null,
-    "price_usd": 7
+    "price_usd": 12.0
    },
-   "class": "assumption",
-   "source": "estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md"
+   "class": "sourced_estimate",
+   "source": "estimate: snippets only, pages not fetched. CDW SanDisk Ultra 32 GB $9.97 (https://cdwg.com/product/sandisk-ultra-flash-memory-card-32-gb-microsdhc-uhs-i/6400259, 403 on fetch); PiShop SanDisk Ultra 32 GB $14.95, official Raspberry Pi 32 GB A2 $19.95 (https://www.pishop.us/product/raspberry-pi-sd-ca"
   },
   {
    "constant": "catalog waveshare-bus-servo-adapter (price, mass, dims)",
    "value": {
     "mass_kg": 0.01,
     "dimensions_mm": null,
-    "price_usd": 8
+    "price_usd": 4.99
    },
-   "class": "assumption",
-   "source": "estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md"
+   "class": "sourced_estimate",
+   "source": "https://www.waveshare.com/bus-servo-adapter-a.htm ($4.99); wiki https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A) (UART jumper A=UART/B=USB; RX-RX, TX-TX; input 9-12.6 V). verified false: only one fetched vendor; no US-stocked vendor confirmed; USB chip and UART pinout not stated."
   },
   {
    "constant": "catalog imu-bno085 (price, mass, dims)",
    "value": {
     "mass_kg": 0.003,
     "dimensions_mm": null,
-    "price_usd": 15
+    "price_usd": 29.5
    },
-   "class": "assumption",
-   "source": "estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md"
+   "class": "sourced_estimate",
+   "source": "https://www.adafruit.com/product/4754 ($29.50, in stock, 2.5 g, 25.6x22.7x4.6 mm); https://www.sparkfun.com/sparkfun-vr-imu-breakout-bno086-qwiic.html (BNO086, $34.95, 3 g); bare chip Digi-Key BNO085 $12.29 (0 stock). verified false: only one fetched vendor sells the BNO085 itself (SparkFun's is the"
   },
   {
    "constant": "catalog cam-rpi-v3 (price, mass, dims)",
    "value": {
     "mass_kg": 0.004,
-    "dimensions_mm": null,
-    "price_usd": 25
+    "dimensions_mm": [
+     25,
+     24,
+     11.5
+    ],
+    "price_usd": 29.25
    },
-   "class": "assumption",
-   "source": "estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md"
+   "class": "sourced_estimate",
+   "source": "https://www.raspberrypi.com/products/camera-module-3/ (IMX708, 11.9 MP, 25x24x11.5 mm; 15-pin cable); https://www.adafruit.com/product/5657 ($29.25, in stock, ships today); https://www.pishop.us/product/raspberry-pi-camera-module-3/ ($29.25); https://www.sparkfun.com/raspberry-pi-camera-module-3.htm"
   },
   {
    "constant": "catalog lipo-2s-2200-turnigy (price, mass, dims)",
@@ -2828,30 +3572,30 @@
    "value": {
     "mass_kg": 0.015,
     "dimensions_mm": null,
-    "price_usd": 6
+    "price_usd": 5.56
    },
-   "class": "assumption",
-   "source": "estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md"
+   "class": "sourced_estimate",
+   "source": "https://www.dfrobot.com/product-2240.html (7-24 V in, 5 V out, 0-4 A, 5 A max with heat dissipation, 90% efficiency, $4.90); https://www.robotshop.com/products/dfrobot-dc-dc-buck-converter-7-24v-to-5v-4a ($6.21, in stock 2026-10-14)"
   },
   {
    "constant": "catalog power-switch-xt60 (price, mass, dims)",
    "value": {
     "mass_kg": 0.02,
     "dimensions_mm": null,
-    "price_usd": 6
+    "price_usd": 6.0
    },
-   "class": "assumption",
-   "source": "estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md"
+   "class": "sourced_estimate",
+   "source": "estimate: pigtail https://www.racedayquads.com/products/xt60-pigtail-14awg-4 ($2.49, in stock); switch https://www.revrobotics.com/rev-31-1387/ ($13.00, XT30 not XT60). No US XT60 inline switch found; a rocker switch rated >=20 A DC is still to be sourced."
   },
   {
    "constant": "catalog fastener-kit-m2-m3 (price, mass, dims)",
    "value": {
     "mass_kg": 0.08,
     "dimensions_mm": null,
-    "price_usd": 15
+    "price_usd": 20.0
    },
-   "class": "assumption",
-   "source": "estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md"
+   "class": "sourced_estimate",
+   "source": "estimate: search snippets only. https://vxb.com/fr/products/heat-set-inserts-for-plastic-3d-printing-kit-with ($49.98, 170 pcs M2/M3 brass); https://www.albanycountyfasteners.com/metric-socket-cap-screw-assortment-kit-p/1060-090.htm ($67.55, 441 pcs A2); Amazon M2 565-pc kit $9.99 (URL not captured)"
   },
   {
    "constant": "catalog bearing-kit-small (price, mass, dims)",
@@ -2860,8 +3604,8 @@
     "dimensions_mm": null,
     "price_usd": 12
    },
-   "class": "assumption",
-   "source": "estimate: model knowledge as of 2026-10, NOT checked against live listings. Verify with prompts/sourcing/part-sourcing.md"
+   "class": "sourced_estimate",
+   "source": "estimate: no STS3215 back-shaft bearing size confirmed by any BOM. Open Duck Mini's BOM lists 3x 6804ZZ (20x32x7 mm) EUR 3.50 each (https://www.amazon.fr/dp/B0CXXSVFTV), used in trunk_bottom and head, not as servo idlers. SO-101 BOM lists no bearings; ToddlerBot BOM sheet unreadable (https://hshi74."
   },
   {
    "constant": "catalog wiring-kit-bus (price, mass, dims)",
@@ -2880,13 +3624,13 @@
     "dimensions_mm": [
      70,
      50,
-     32
+     31
     ],
     "price_usd": 39.99
    },
    "class": "sourced_estimate",
-   "source": "https://www.radiomasterrc.com/zh/products/skyrc-b6-neo-200w-dc-charger-with-dc-pd-dual-input ($39.99); https://shop.robitronic.com/en/skyrc-b6neo-smart-charger-sk100198-01 (EUR 39.90, 70x50x32 mm); https://www.galaxus.nl/en/s1/product/skyrc-b6neo-rc-chargers-36432087 (82 g). Two vendors agree on pri"
+   "source": "https://www.skyrc.com/b6neo (manufacturer: DC in 10-28 V XT60, USB-C PD in 12-20 V, 200 W DC / 80 W PD, 0.2-10 A, 1-6S, 70x50x31 mm, 82 g); https://wrekd.com/products/skyrc-b6-neo-200w-10a-1-6s-dc-smart-charger-xt60-choose-color ($39.99, SOLD OUT); https://www.evike.com/products/112273/SkyRC-B6Neo-S"
   }
  ],
- "wall_seconds": 234.9
+ "wall_seconds": 477.2
 }

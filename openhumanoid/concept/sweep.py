@@ -112,3 +112,24 @@ def to_markdown(r: dict) -> str:
     for x in r["heights"]:
         L.append(f"- {x['height_m']:.2f} m: " + ("; ".join(f"{v['constraint']} x{v['factor']}" for v in x["violations"][:4]) or "none"))
     return "\n".join(L) + "\n"
+
+
+def relaxed_feasibility(res: dict, factors: dict) -> dict:
+    """INDICATIVE, not applied anywhere: which heights of a sweep would be feasible if the joint gates were looser by `factors` (e.g. the factors the
+    frozen gait needs on Open Duck Mini's own model, `calibration/odm_calibration.json` b_frozen_on_odm), with R10 and invalid motions (except the
+    high-table pickup) unchanged. `factors`: {"peak torque": f, "RMS vs rated": f, "torque-speed envelope": f, "overload time": f}.
+    Uses the top violations stored per height, which is complete for every category above the smallest factor."""
+    out = {}
+    for x in res["heights"]:
+        ok, why = True, []
+        for v in x["violations"]:
+            if v["kind"] == "joint gate":
+                cat = v["constraint"].split(" @ ")[0]
+                if v["factor"] > factors.get(cat, 1.0):
+                    ok = False
+                    why.append(f"{v['constraint']} x{v['factor']} > {factors.get(cat, 1.0):.2f}")
+            elif v["kind"] == "R10" or (v["kind"] == "invalid motion" and not v["constraint"].startswith("motion pickup_")):
+                ok = False
+                why.append(v["constraint"][:80])
+        out[f"{x['height_m']:.2f}"] = {"feasible": ok, "why_not": why[:3]}
+    return out

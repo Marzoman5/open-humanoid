@@ -31,7 +31,12 @@ class IdealBank:
         self.n, self.dt = len(specs), dt
         tf = np.ones(self.n) if torque_frac is None else np.asarray(torque_frac, float)
         self.cap = np.where(tf < 1, np.array([x.stall_nm_ref for x in specs]) * tf, 1e3)
-        self.kp, self.kd = kp, kd
+        # The PD is explicit at the sim step: with a small joint inertia (e.g. the ST3025 armature sensitivity, 0.004) a damping of 6 N.m.s/rad is
+        # numerically unstable (kd*dt/I > 2). Cap kd at 0.6*I/dt and keep the damping ratio at 1 (kp = kd^2 / 4I); for the BAM armature (0.0234)
+        # neither cap binds, so every earlier result is unchanged.
+        inertia = np.array([max(float(x.armature), 1e-6) for x in specs])
+        self.kd = np.minimum(kd, 0.6 * inertia / dt)
+        self.kp = np.minimum(kp, self.kd ** 2 / (4.0 * inertia))
         self.vin = np.array([s.vin_ref for s in specs], float)
         self.kt_cur = np.array([s.kt_current for s in specs])
         self.R_heat = np.array([s.R_heat for s in specs])

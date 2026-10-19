@@ -482,6 +482,7 @@ def _r10_transient(b: Bundle) -> dict | None:
     specs = [robot.servo[n] for n in robot.names]
     bank = ServoBank(specs, 0.01)
     kt, rh = bank.kt_cur, bank.R_heat
+    stall = np.array([float(sp.stall_cap(b.vin)) for sp in specs])
     br = {}
     for i, n in enumerate(robot.names):
         br.setdefault(branch_of(n), []).append(i)
@@ -491,6 +492,7 @@ def _r10_transient(b: Bundle) -> dict | None:
             continue
         sl = d.window
         tau, om = d.tau[sl], d.omega[sl]
+        tau = np.clip(tau, -stall, stall)               # a servo cannot draw more than its stall current: an infeasible plan's torque spikes are not a supply load
         k_ = max(1, int(round(0.04 / float(d.t[1] - d.t[0]))))
         ker = np.ones(k_) / k_
         cur = np.abs(tau) / kt

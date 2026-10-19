@@ -1,9 +1,6 @@
-# KNOWN-ROBOT CHECK (challenge-1 row 12), not an Adam candidate: an Open Duck Mini-like robot, the one direct STS3215 analogue
-# (research/robots/benchmarks.md: 0.42 m, 14x STS3215, Pi Zero 2 W, 2S pack, sim2real walking "partial").
-# What is approximated: the template has no head-roll/antenna joints (14 servos modelled: 6-DOF legs + neck yaw/pitch; the real robot has 5-DOF legs and 4 head joints);
-# Open Duck's real proportions are not in the research, so the spec default proportions (with the same packaging floors) are used;
-# the duck has no arms, so only the leg motions are evaluated. Use the result to see how much headroom a robot that walks leaves
-# under these gates: if it fails by a wide margin the gates are too strict for a hobby biped, if it passes narrowly they are about right.
+# OLD KNOWN-ROBOT CHECK (challenge-1 row 12), NOT Open Duck Mini: spec-default proportions with the packaging floors, 6-DOF legs, 14 STS3215 7.4 V, 2S pack, legs only
+# (the template always carries two passive arms; their structure share is dead weight). Challenge #2 found it unfaithful (legs ~20% long, 6 not 5 DOF, wrong mass); the
+# faithful comparison is `python -m openhumanoid.concept calibrate-odm` and variants/adam/concepts/odm-like-0p42-5dof.yaml. This file is kept as column (d) of that table.
 id: duck-like-0p42-2s-sts3215
 description: "Open Duck Mini-like known-robot check, 0.42 m, STS3215 7.4 V, 2S pack, legs only."
 base: adam
