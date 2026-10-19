@@ -25,7 +25,9 @@
 | **Honest numbers** | Every price and spec carries `verified` and `source`. Infeasible stays infeasible. |
 | **Built for humans and AI** | Small files, schemas, runnable commands, proven prompts, and checkpointed workflows that survive context limits and run solo or as a swarm. |
 
-## The pipeline (what "one-shot a humanoid" means)
+> **Superseded (2026-10-19):** the current pipeline is in [pipeline.md](pipeline.md) (ADRs 0009–0012). The phase list below is kept for history.
+
+## The pipeline, v0.1 (historical)
 
 ```
 P0 Intake        spec.yaml complete & valid

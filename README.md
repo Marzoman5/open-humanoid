@@ -22,7 +22,7 @@ Open Humanoid isn't one robot. You describe the robot in a spec file. The toolki
 - **Any CAD tool.** build123d (code, so AI can author it fully), Onshape, SolidWorks, or FreeCAD. The pipeline only reads [standard exports](cad/EXPORT_CONTRACT.md).
 - **Modular, optionally.** Standard [module interfaces](modules/INTERFACE.md) for swappable limbs, hands, and attachments, or `integrated` designs if you don't want modularity.
 - **Optional brains.** The software core is control and safety. RL walking, LLM/MCP, teleop, and the rest are plugins.
-- **Built for AI agents and teams.** A [one-shot prompt](prompts/oneshot/build-a-humanoid.md) with human review stops, a task and claim system so parallel agents don't collide, and session handoffs for when context runs out.
+- **Built for AI agents and teams.** A [gated, resumable pipeline](docs/pipeline.md): machine-checked gates, a separate design critic, human review stops, task claims so parallel agents don't collide, and handoffs for when context runs out. Backed by [verified research](research/).
 
 ## Variants
 
@@ -47,7 +47,9 @@ Full walkthrough: **[docs/getting-started.md](docs/getting-started.md)**.
 | Doc | For |
 |---|---|
 | [Getting started](docs/getting-started.md) | Install, explore Adam, make your own variant, hand off to an agent |
+| [Pipeline](docs/pipeline.md) | **How a robot is designed and built: phases, gates, review stops** |
 | [Vision](docs/vision.md) | Why this exists, principles, roadmap |
+| [Research](research/) | Verified evidence base: actuators, comparable robots, methods, AI-engineering practice, reuse audit |
 | [Architecture](docs/architecture.md) | Data flow, layers, spec resolution, mass calibration loop |
 | [Tools reference](docs/tools.md) | Every `oh` command and the sizing model's math |
 | [Design language](docs/design-language.md) | Frame + shell, what "sleek" means |
