@@ -8,7 +8,7 @@ A proof of concept that is genuinely impressive and fun to walk around and inter
 ## Must
 | # | Requirement | Acceptance (verified in sim first, then on the real build) |
 |---|---|---|
-| R1 | **Budget ≤ $550 all-in** (servos, structure/filament, fasteners, electronics, compute, battery, charger). Excludes printer and tools. | Verified BOM ≤ $550 (gate R5) |
+| R1 | **Budget: R1 Path 1, ~$1,276 lean / ~$1,540 full delivered** (maintainer-confirmed 2026-10-19 after verified 2026 pricing showed $550 can't buy a walking humanoid; was ≤ $550) (servos, structure/filament, fasteners, electronics, compute, battery, charger). Excludes printer and tools. | Verified BOM ≤ $550 (gate R5) |
 | R2 | **Walks around**: forward, backward, turning, on flat indoor floors | Concept-loop envelopes pass; the policy walks ≥ 10 m over 5 seeds under randomization |
 | R3 | **Expressive arm motion**: waving and arms raised outward | Arm reach and range cover a wave with the arm abducted outward |
 | R4 | **Dances**: scripted full-body routines while staying balanced | A demo routine runs in sim within torque and thermal limits |
