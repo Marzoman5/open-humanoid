@@ -1,0 +1,43 @@
+# Catalog part: schema schemas/catalog-part.schema.json (added by T-20261019-c669, 2026-10-19)
+id: wire-silicone-16awg
+name: 16 AWG silicone-insulated tinned-copper wire, 252 strands, red + black (BNTECHGO-style)
+category: electronics
+tier: hobby
+price_usd:
+  typical: 9.98
+  low: 8.48
+  high: 19.98
+  unit: kit of 2 x 10 ft (red + black)
+  as_of: '2026-10-19'
+  basis: BNTECHGO 20 ft kit (10 ft each colour) $9.98; 10 ft kit (5 ft each) $8.48; 50 ft kit (25 ft each) $19.98 (listing read twice); Common Sense RC 25 ft single-colour spool $16.99 (not in stock). Shipping not visible.
+verified: false
+source: 'https://bntechgo.com/silicone-wire/16-gauge-silicone-wire/ (kit prices; 252 strands of 0.08 mm tinned copper), https://bntechgo.com/bntechgo-16-awg-silicone-wire-spool-50-feet-25-ft-black-and-25-ft-red-ultra-flexible-high-temp-200-deg-c-600v-16-gauge-silicone-wire-252-strands-of-tinned-copper-wire-stranded-wire-for-model-battery/
+  (50 ft: $19.98, schema.org InStock, OD 3.0 +-0.1 mm, 200 C, 600 V), https://www.commonsenserc.com/parent_info.php?cPath=182_184&parents_id=48 ($16.99/25 ft, 252 strands, 3 mm OD, "35 A" claimed, out of stock).
+  Ampacity reference (NOT a datasheet): https://www.powerstream.com/Wire_Size.htm (16 AWG: 1.29 mm, 4.016 ohm per 1000 ft, 22 A chassis wiring in free air, 3.7 A power transmission).'
+vendors:
+- name: BNTECHGO
+  url: https://bntechgo.com/silicone-wire/16-gauge-silicone-wire/
+  price: 9.98
+  pack: 20 ft kit (10 ft red + 10 ft black)
+  stock: InStock per page schema (count blank)
+  checked: '2026-10-19'
+- name: Common Sense RC
+  url: https://www.commonsenserc.com/parent_info.php?cPath=182_184&parents_id=48
+  price: 16.99
+  pack: 25 ft single colour
+  stock: not in stock ("in stock soon")
+  checked: '2026-10-19'
+mass_kg: 0.0186
+specs:
+  awg: 16
+  strands: 252 x 0.08 mm tinned copper
+  od_mm: 3.0
+  conductor_mm2: 1.3
+  resistance_ohm_per_m: 0.0132
+  ampacity_chassis_a: 22
+  temp_c: 200
+  voltage_v: 600
+notes: 'NOT verified: silicone hook-up wire has no manufacturer datasheet; the OD, strand count and 200 C / 600 V figures are seller claims, and only one vendor was in stock. mass_kg is PER METRE and
+  COMPUTED (1.3 mm2 copper 11.6 g/m + ~7 g/m silicone at 3 mm OD), not weighed. Ampacity: Powerstream "chassis wiring" 22 A is for wire in free air, not in a bundle, and is conservative; it is a
+  generic table value, so the R1 "16 AWG trunk 22 A" claim rests on that table, not on this wire. Engineering ToolBox lists 15 A for single-core 16 AWG (PVC, 30 C), the stricter number to use inside a
+  harness. A 20 A ATO fuse on this wire inside a bundle is therefore NOT covered by a standard table; verify temperature rise on the bench. Resistance 0.0132 ohm/m (Powerstream).'

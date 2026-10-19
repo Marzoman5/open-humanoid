@@ -1,0 +1,41 @@
+# Catalog part: schema schemas/catalog-part.schema.json (added by T-20261019-c669, 2026-10-19)
+id: wire-silicone-18awg
+name: 18 AWG silicone-insulated tinned-copper wire, 150 strands, red + black (BNTECHGO-style)
+category: electronics
+tier: hobby
+price_usd:
+  typical: 9.48
+  low: 7.98
+  high: 15.0
+  unit: kit of 2 x 10 ft (red + black)
+  as_of: '2026-10-19'
+  basis: BNTECHGO 20 ft kit (10 ft each colour) $9.48; 10 ft kit (5 ft each) $7.98; 50 ft kit $13.98; The Thrifty Bot 25 ft single-colour spool $15.00. Shipping not visible.
+verified: false
+source: 'https://bntechgo.com/silicone-wire/18-gauge-silicone-wire/ (12 listings, all 150 strands tinned copper, 200 C, 600 V; stock not shown on the page), https://www.thethriftybot.com/products/25-feet-bonded-18-awg-flexible-silicone-jacketed-wire
+  ($15.00 / 25 ft, 150 strands of 0.08 mm, 0.43 lb with spool, add-to-cart shown). Ampacity reference (NOT a datasheet): https://www.powerstream.com/Wire_Size.htm (18 AWG: 1.02 mm, 6.385 ohm per 1000 ft,
+  16 A chassis wiring in free air, 2.3 A power transmission).'
+vendors:
+- name: BNTECHGO
+  url: https://bntechgo.com/silicone-wire/18-gauge-silicone-wire/
+  price: 9.48
+  pack: 20 ft kit (10 ft red + 10 ft black)
+  stock: not shown
+  checked: '2026-10-19'
+- name: The Thrifty Bot
+  url: https://www.thethriftybot.com/products/25-feet-bonded-18-awg-flexible-silicone-jacketed-wire
+  price: 15.0
+  pack: 25 ft single colour
+  stock: add-to-cart shown, no count
+  checked: '2026-10-19'
+mass_kg: 0.012
+specs:
+  awg: 18
+  strands: 150 x 0.08 mm tinned copper
+  conductor_mm2: 0.82
+  resistance_ohm_per_m: 0.021
+  ampacity_chassis_a: 16
+  temp_c: 200
+  voltage_v: 600
+notes: 'NOT verified: no manufacturer datasheet (seller claims only) and neither vendor showed a stock count. mass_kg is PER METRE and an ESTIMATE (0.82 mm2 copper 7.3 g/m + silicone, OD not listed).
+  Ampacity: Powerstream "chassis wiring" 16 A is for wire in free air, not in a bundle; Engineering ToolBox lists 9.5 A for single-core 18 AWG (PVC, 30 C). The R1 feeds are sized against the 16 A figure.
+  The 18 AWG feed segments carry up to 4 A in the R1 star (leg total) so the stricter 9.5 A figure still has margin; the 16 AWG trunk is the part to check.'

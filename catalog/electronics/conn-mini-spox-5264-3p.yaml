@@ -1,0 +1,44 @@
+# Catalog part: schema schemas/catalog-part.schema.json (added by T-20261019-c669, 2026-10-19)
+id: conn-mini-spox-5264-3p
+name: Molex Mini-SPOX 5264 3-circuit receptacle housing + 5263 crimp terminals (the STS3215/STS3250 servo-lead connector family)
+category: electronics
+tier: hobby
+price_usd:
+  typical: 0.21
+  low: 0.03
+  high: 0.21
+  unit: each (housing; sold in 10-packs, $2.09)
+  as_of: '2026-10-19'
+  basis: Altex/Waldom 3-circuit SPOX housing 10-pack $2.09 (page read, stock not shown). LCSC 2-circuit 50-37-5023 housing $0.025 (20+), 3,380 in stock (a different circuit count). Terminals not priced.
+verified: false
+source: 'RATING (the citation asked for): Molex part page 0022035055 (5267 header, mating housing 5264), https://www.zoro.com/static/cms/enhanced_pdf/Waldom%20Electronics_0022035055xxPCBxxHEADERSxx92d75a.pdf
+  (copy of the Molex part-page PDF generated 2022-10-26): "Current - Maximum per Contact 3.0A; Voltage - Maximum 250V; Temperature Range - Operating -55 to +105 C; Mating Housing 5264; Series 5267;
+  Product Specification PS-5264-001-001". Also https://www.lcsc.com/product-detail/C293435.html (Molex 22035025: 3 A, 250 V, Mini-SPOX 5264 family), Arrow 5264-02 listing (3 A/contact, search snippet).
+  Terminal wire range 28-22 AWG, tin on phosphor bronze, 20 mohm max contact resistance: RS Components 5263 listings (search snippet; page 403). Servo side: https://www.waveshare.com/wiki/ST3215_Servo
+  FAQ calls the servo connector "5264/2.54 3P" (3 pin). The Molex datasheet itself (molex.com) timed out for the fetcher.'
+vendors:
+- name: Altex (Waldom)
+  url: https://altex.com/products/3-circuit-spox-connectors-10-pack
+  price: 0.209
+  pack: 10 for $2.09
+  stock: not shown
+  checked: '2026-10-19'
+- name: LCSC
+  url: https://www.lcsc.com/product-detail/C142370.html
+  price: 0.025
+  pack: 2-circuit 50-37-5023 housing, min 20 (not the 3-circuit part)
+  stock: 3,380
+  checked: '2026-10-19'
+mass_kg: 0.0005
+specs:
+  rated_current_a_per_contact: 3.0
+  rated_voltage_v: 250
+  pitch_mm: 2.5
+  circuits: 3
+  wire_awg: 28-22
+  temp_c: [-55, 105]
+notes: 'NOT verified as a PART, but the rating is cited: Molex lists 3.0 A MAXIMUM PER CONTACT and 250 V for the Mini-SPOX 5264/5267 system (22 AWG wire). Caveats: (1) Molex pitch is 2.50 mm but Waveshare
+  calls the servo connector "2.54", so the STS3215 lead is probably a generic 5264-style clone, not a Molex part; clone contact plating and the crimp are the real limits and no rating exists for the
+  servo''s own leads (their wire gauge is not published). Do not assume 3 A. (2) The 3 A is per contact at 22 AWG; the STS3250 stalls at 4.2 A, over it (R1 section 7.2). (3) The ratings page is the
+  header (5267); the housing 5264 is its mate and the system is rated as one. Mass 0.5 g is an estimate. 2.5 mm Mini-SPOX will not mate with a 2.54 mm pin header cleanly: buy both ends from one family
+  if you ever make cables.'

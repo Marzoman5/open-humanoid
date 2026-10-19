@@ -1,0 +1,42 @@
+# Catalog part: schema schemas/catalog-part.schema.json (added by T-20261019-c669, 2026-10-19)
+id: lipo-3s-1500-lumenier
+name: Lumenier 3S 1500 mAh 75C LiPo (XT60)
+category: power
+tier: hobby
+price_usd:
+  typical: 31.49
+  low: 31.49
+  high: 31.49
+  unit: each
+  as_of: '2026-10-19'
+  basis: RaceDayQuads $31.49 in stock (page read). GetFPV page returned 403, price unread.
+verified: false
+source: 'https://racedayquads.com/products/lumenier-1500mah-3s-75c-lipo-battery ($31.49, in stock, 76x34x27 mm, 130 g, 75C continuous / 150C burst, XT60 on 12 AWG wire, 3S); GetFPV listing
+  https://www.getfpv.com/lumenier-1500mah-3s-75c-lipo-battery.html (403 to the fetcher; search snippet specs matched: 76x34x27, 130 g). No manufacturer datasheet found.'
+vendors:
+- name: RaceDayQuads
+  url: https://racedayquads.com/products/lumenier-1500mah-3s-75c-lipo-battery
+  price: 31.49
+  stock: in stock
+  shipping: ground only (US domestic); cost not visible
+  checked: '2026-10-19'
+- name: GetFPV
+  url: https://www.getfpv.com/lumenier-1500mah-3s-75c-lipo-battery.html
+  stock: unread (HTTP 403); search snippets showed both in-stock and out-of-stock states
+  checked: '2026-10-19'
+mass_kg: 0.13
+dimensions_mm:
+- 76
+- 34
+- 27
+specs:
+  cells: 3
+  capacity_mah: 1500
+  c_rating: 75
+  c_rating_burst: 150
+  energy_wh: 16.65
+  chemistry: LiPo
+  connector: XT60 (12 AWG lead)
+notes: 'NOT verified: one page read (RaceDayQuads), no price from a second vendor, no datasheet. A GetFPV snippet shows "14.8 V (4 cell)" in its spec table, an apparent error (3S per the title
+  and the RaceDayQuads cell count; the 45C sibling lists 3s 11.1v). RaceDayQuads does not print the nominal voltage itself. This fills the "3S 1500 alternative" slot of the task: no GNB 3S
+  1500 mAh pack was found anywhere. Cross-section is 34 x 27 mm vs the GNB 1850 at 29 x 34 mm: check the chest slot orientation.'

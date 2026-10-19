@@ -40,6 +40,15 @@ P = {  # part -> (FAST, CHEAP)
     "fuse": (4.5, 4.25),            # Del City holder + fuse estimate
     "gamepad": (38.68, 38.68),      # Logitech F710 SHI
     "pla_kg": (21.99, 18.0),        # MatterHackers PolyLite | catalog estimate
+    # --- R1 lines added by T-20261019-c669 (catalog ids in QUOTES.md section 10). No A-E candidate references them, so the tables above do not move.
+    "pi5_1gb": (49.50, 49.50),      # rpi-5-1gb (verified): Adafruit #6447 in stock
+    "lipo3s_1850": (25.99, 25.99),  # lipo-3s-1850-gnb (NOT verified, one US vendor): Pyrodrone in stock
+    "lipo3s_1500": (31.49, 31.49),  # lipo-3s-1500-lumenier (NOT verified, one page): RaceDayQuads in stock
+    "wago_x4": (3.60, 3.60),        # wago-221-415 (verified) x 4 at $0.90 (R1 star needs 4, two per polarity); the real minimum buy is the $9.00 10-pack
+    "wire16": (9.98, 9.98),         # wire-silicone-16awg (NOT verified): BNTECHGO 2 x 10 ft kit; shipping unread
+    "wire18": (9.48, 9.48),         # wire-silicone-18awg (NOT verified): BNTECHGO 2 x 10 ft kit; shipping unread
+    "bearing_mr105zz": (8.99, 8.99),  # bearing-mr105zz (NOT verified, snippets): 10-pack, eBay US sellers
+    "horn25t_alu": (5.0, 5.0),      # horn-25t-aluminum-disc (NOT verified, placeholder); stock horns ship in the servo box
 }
 EST = {"lipo2s", "switch", "fasteners", "bearings", "wiring", "psu", "fuse", "gamepad", "pla_kg", "sd", "adapter", "camcable"}
 # lines that are sourced from China and may carry duty NOT included in the shown price in the CHEAP scenario
