@@ -21,6 +21,7 @@ A proof of concept that is genuinely impressive and fun to walk around and inter
 | R10 | **Balance recovery / fall prevention**: recovers from moderate pushes and stumbles (ankle and hip strategies, capture steps) instead of falling | Concept push-recovery stress cases pass actuator limits including delay; P5 policy recovers from defined push impulses in sim under randomization |
 
 ## Should
+- **Attainable parts only** (maintainer, 2026-10-19): no custom-machined or cut metal parts unless absolutely necessary; off-the-shelf parts purchasable online are fine. Adam is the pilot, so guard against scope creep into Eve.
 - Self-righting: getting back up after a face-plant is **not required yet** (maintainer, 2026-10-19). Design so a sit-to-stand / kneel-to-stand is feasible; full get-up-from-prone is a later goal.
 - Height: as tall as the budget and the physics allow (the previous plan was ~0.5 m).
 - Run time ≥ 15 min of mixed activity per charge (to be confirmed by the power trade study).
