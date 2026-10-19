@@ -46,7 +46,7 @@ PLAN = {
     "jaw_axis_max_deg": 25.0,            # jaw axis off horizontal (the parallel jaw squeezes a vertical cylinder from the side)
     "ik_tol_m": 0.002,
     "reach_slack_m": 0.004,              # the grasp may not need the arm straighter than this (the arm is singular when straight)
-    "clearance_m": 0.005,                # every robot geom vs the table top, every frame
+    "clearance_m": 0.003,                # every robot geom vs the table top, every frame (the links are capsules: re-check in CAD)
     "balance_margin_foot_lengths": 0.20,   # COM margin to the foot polygon edge
     "edge_to_object_m": 0.05,            # object centre behind the table's front edge (its rim is 30 mm from the edge)
     "table_half_depth_m": 0.15, "table_half_width_m": 0.20, "table_half_thickness_m": 0.01,
@@ -59,7 +59,12 @@ PLAN = {
     "hinge_deg": (0.0, 10.0, 20.0, 30.0, 40.0),
     "waist_deg": (0.0, 15.0, 30.0),
     "com_fracs": (0.0, 0.25, 0.5, 0.75, 1.0),   # COM x offset from the foot centre, as a fraction of half the foot length (> 0.5 breaks the margin)
-    "max_verify": 12,
+    "max_verify": 12,                    # full time-parameterised builds tried before giving up
+    # two search passes: a coarse grid first (cheap), the full grid only when the coarse one finds nothing; each pass has a budget of
+    # grasp-pose checks and of path checks (a height that is out of reach by a hair is reported as such, not searched for minutes)
+    "levels": ({"name": "coarse", "knee_step_deg": 10.0, "hinge_deg": (0.0, 20.0, 40.0), "waist_deg": (0.0, 30.0), "com_fracs": (0.0, 0.5),
+                "budget_grasp": 3000, "budget_path": 300},
+               {"name": "fine", "budget_grasp": 9000, "budget_path": 1200}),
 }
 
 
@@ -247,8 +252,8 @@ def _pose_arm(ctx: _Ctx, pose: dict, opt: dict) -> dict:
             "shoulder": kin.data.body(f"upper_arm_{ctx.side}").xpos.copy(), "legs_ok": bool(r0.feasible)}
 
 
-def _candidates(ctx: _Ctx) -> list[dict]:
-    pl = ctx.plan
+def _candidates(ctx: _Ctx, level: dict | None = None) -> list[dict]:
+    pl = {**ctx.plan, **{k: v for k, v in (level or {}).items() if k not in ("name", "budget_grasp", "budget_path")}}
     ks = np.arange(math.radians(pl["knee_min_deg"]), ctx.kmax - math.radians(0.5) + 1e-9, math.radians(pl["knee_step_deg"]))
     ks = sorted(set(ks.round(6)) | {round(min(ctx.f0, ctx.kmax - math.radians(0.5)), 6)})
     waists = [0.0]
@@ -504,7 +509,7 @@ def _build(ctx: _Ctx, cand: dict, pose: dict, opt: dict, z_t: float, c_up: float
         prev = Qrow
         worst = 0.0
         fail = None
-        for tgt, tt, kind in _path_points(g_rest, R, P, G, z_t, marks, pl):
+        for tgt, tt, kind in _path_points(sh_g, g_rest, R, P, G, marks):
             idx = gi(tt)
             sol, err = _solve_arm(ctx, prev, pelv[idx], quat[idx], tgt, prev)
             worst = max(worst, err)
@@ -575,22 +580,25 @@ def _final_checks(ctx: _Ctx, ref: Reference, info: dict, opt: dict, z_t: float) 
 
 
 
-def _path_points(g_rest: np.ndarray, R: np.ndarray, P: np.ndarray, G: np.ndarray, z_t: float, marks: dict, pl: dict):
-    """Cartesian samples (target, time) of the hand path after the rest posture: straight up first when the rest hand is below the table
-    top plus a clearance (so it never scrapes the edge), then a straight line to the waiting point R, then R -> P, then the straight
-    approach P -> G along (nearly) the fingers. Each straight line is sampled and solved by IK sample by sample."""
+def _arc(sh: np.ndarray, a: np.ndarray, b: np.ndarray, s: float) -> np.ndarray:
+    """Point at fraction s on the arc from a to b about the shoulder (direction slerp, radius linear). A straight line between two points near the
+    edge of the arm's reach cuts through the region the arm cannot reach (too close to the shoulder); the arc stays in the annulus."""
+    va, vb = a - sh, b - sh
+    ra, rb = float(np.linalg.norm(va)), float(np.linalg.norm(vb))
+    ua, ub = va / ra, vb / rb
+    w = math.acos(max(-1.0, min(1.0, float(ua @ ub))))
+    d = ub if w < 1e-6 else (math.sin((1 - s) * w) * ua + math.sin(s * w) * ub) / math.sin(w)
+    return sh + ((1 - s) * ra + s * rb) * d
+
+
+def _path_points(sh: np.ndarray, g_rest: np.ndarray, R: np.ndarray, P: np.ndarray, G: np.ndarray, marks: dict):
+    """Cartesian samples (target, time, kind) of the hand path after the rest posture: an arc about the shoulder from the rest hand to the
+    waiting point R (so the swing stays inside the arm's annulus), a straight line R -> P, then the straight approach P -> G along (nearly)
+    the fingers. Each piece is sampled and solved by IK sample by sample."""
+    t1 = marks["raise"]
     pts: list[tuple[np.ndarray, float, str]] = []
-    t0, t1 = marks["down"], marks["raise"]
-    z_top = max(R[2], z_t + pl["table_half_thickness_m"] * 0 + 0.05)
-    start = g_rest
-    if g_rest[2] < z_top - 0.005 and z_top > g_rest[2]:
-        W1 = np.array([g_rest[0], g_rest[1], z_top])
-        tm = t0 + 0.4 * (t1 - t0)
-        for i in range(1, 4):
-            pts.append((g_rest + (W1 - g_rest) * (i / 3), t0 + (tm - t0) * (i / 3), "raise"))
-        start, t0 = W1, tm
-    for i in range(1, 6):
-        pts.append((start + (R - start) * (i / 5), t0 + (t1 - t0) * (i / 5), "raise"))
+    for i in range(1, 9):
+        pts.append((_arc(sh, g_rest, R, i / 8), marks["down"] + (t1 - marks["down"]) * (i / 8), "raise"))
     for i in range(1, 4):
         pts.append((R + (P - R) * (i / 3), t1 + (marks["pre"] - t1) * (i / 3), "approach"))
     for i in range(1, 5):
@@ -598,26 +606,48 @@ def _path_points(g_rest: np.ndarray, R: np.ndarray, P: np.ndarray, G: np.ndarray
     return pts
 
 
-def _static_paths(ctx: _Ctx, pose: dict, opt: dict, z_t: float, c_up: float, lead: float, lift: float):
-    """Cheap pre-check of one plan: the arm's annulus (min/max reach) for P, R and the lift point, IK of the whole hand path, and the table
-    clearance along the (PCHIP-interpolated) joint path with the pelvis moving from the rest-arm pose to the grasp-arm pose. Returns (ok, reason)."""
-    kin, pl = ctx.kin, ctx.plan
+def _stage_a(ctx: _Ctx, pose: dict, opt: dict, z_t: float):
+    """What does not depend on the waiting point or the lift: legs and waist still in range once the arm is out (the pelvis moves back with
+    the arm's weight), the table clear of the body at the grasp AND of the rest posture, and the table edge not behind the toes.
+    Returns (ok, reason, data)."""
+    pl = ctx.plan
     pg = _pose_arm(ctx, pose, opt)
     if not pg["legs_ok"]:
-        return False, "legs/waist out of range once the arm is out"
+        return False, "legs/waist out of range once the arm is out", None
+    sh0 = pg["shoulder"]
+    O = sh0 + opt["O_rel"]
+    h = np.array([math.cos(pose["waist"]), math.sin(pose["waist"]), 0.0])
+    edge = O[:2] - h[:2] * pl["edge_to_object_m"]
+    gap = float((edge - np.array([0.65 * ctx.kin.lg.foot_len, 0.0])) @ h[:2])
+    if gap < 0.0:
+        return False, "table edge behind the toes", None
+    clr = _Clearance.of(ctx)
+    clr.place(O, pose["waist"], z_t)
+    d1 = clr.min_dist(pg["Q"][None], pg["pel"][None], pg["quat"][None])
+    d2 = clr.min_dist(pose["Q"][None], pose["pel"][None], pose["quat"][None])
+    dmin = min(d1[0], d2[0])
+    if dmin < pl["clearance_m"]:
+        return False, f"table clearance {dmin * 1000:.1f} mm ({d1[1] if d1[0] <= d2[0] else d2[1]}) at the {'grasp' if d1[0] <= d2[0] else 'rest posture'}", None
+    return True, "", {"pg": pg, "O": O, "h": h}
+
+
+def _static_paths(ctx: _Ctx, pose: dict, opt: dict, z_t: float, c_up: float, lead: float, lift: float, A: dict):
+    """Cheap pre-check of one plan: the arm's annulus (min/max reach) for P, R and the lift point, IK of the whole hand path, and the table
+    clearance along the (PCHIP-interpolated) joint path with the pelvis moving from the rest-arm pose to the grasp-arm pose.
+    Returns (ok, reason, heavy) - heavy=False when it was rejected by the cheap analytic reach test."""
+    kin, pl = ctx.kin, ctx.plan
+    pg, O, h = A["pg"], A["O"], A["h"]
     sh0 = pg["shoulder"]
     pel, quat = pg["pel"], pg["quat"]
     G = sh0 + opt["tgt_rel"]
-    O = sh0 + opt["O_rel"]
     u = opt["u"]
-    h = np.array([math.cos(pose["waist"]), math.sin(pose["waist"]), 0.0])
     P = G - 0.05 * u + np.array([0.0, 0.0, c_up])
     R = G - lead * u + np.array([0.0, 0.0, c_up])
     Lp = _lift_point(sh0, G, h, lift)
     for name, X in (("pre-grasp", P), ("waiting point", R), ("lift point", Lp)):
         D = float(np.linalg.norm(X - sh0))
         if not (ctx.d_min + 0.003 <= D <= ctx.d_max + 0.0005):
-            return False, f"{name} is {D * 1000:.0f} mm from the shoulder; the arm covers {ctx.d_min * 1000:.0f}-{ctx.d_max * 1000:.0f} mm"
+            return False, f"{name} is {D * 1000:.0f} mm from the shoulder; the arm covers {ctx.d_min * 1000:.0f}-{ctx.d_max * 1000:.0f} mm", False
     Qrest = pose["Q"].copy()
     kin.set_state(Qrest, pose["pel"], pose["quat"])
     kin.mj.mj_kinematics(kin.model, kin.data)
@@ -628,19 +658,19 @@ def _static_paths(ctx: _Ctx, pose: dict, opt: dict, z_t: float, c_up: float, lea
     prev = pg["Q"].copy()
     for a in ctx.arm:
         prev[kin.index[a]] = ctx.rest_arm[a]
-    for tgt, tt, kind in _path_points(g_rest, R, P, G, z_t, marks, pl):
+    for tgt, tt, kind in _path_points(sh0, g_rest, R, P, G, marks):
         sol, err = _solve_arm(ctx, prev, pel, quat, tgt, prev)
         if err > 0.004:
-            return False, f"IK residual {err * 1000:.1f} mm on the {kind} path"
+            return False, f"IK residual {err * 1000:.1f} mm on the {kind} path", True
         rows.append(sol)
         times.append(tt)
         prev = sol
     Qlift, err = _solve_arm(ctx, prev, pel, quat, Lp, prev)
     if err > 0.004:
-        return False, f"IK residual {err * 1000:.1f} mm on the lift path"
+        return False, f"IK residual {err * 1000:.1f} mm on the lift path", True
     rows += [prev, Qlift]
     times += [marks["closed"], marks["lift"]]
-    tt = np.arange(0.0, marks["lift"] + 1e-9, 0.1)
+    tt = np.arange(marks["down"], marks["lift"] + 1e-9, 0.2)
     dense = _series_matrix(tt, times, np.array(rows))
     s_arm = smoothstep5(np.clip((tt - marks["down"]) / (marks["grasp"] - marks["down"]), 0, 1))[:, None]
     pels = pose["pel"][None, :] + (pel - pose["pel"])[None, :] * s_arm
@@ -649,8 +679,8 @@ def _static_paths(ctx: _Ctx, pose: dict, opt: dict, z_t: float, c_up: float, lea
     clr.place(O, pose["waist"], z_t)
     dmin, gname, at = clr.min_dist(dense, pels, quats)
     if dmin < pl["clearance_m"]:
-        return False, f"table clearance {dmin * 1000:.1f} mm ({gname}) at {tt[at]:.1f} s on the planned path"
-    return True, ""
+        return False, f"table clearance {dmin * 1000:.1f} mm ({gname}) at {tt[at]:.1f} s on the planned path", True
+    return True, "", True
 
 
 def _grasp_clear(ctx: _Ctx, pose: dict, opt: dict, z_t: float) -> float:
@@ -667,89 +697,101 @@ def plan_pickup(kin: RobotKin, z_t: float, side: str = "r", dt: float = 0.01, pl
     """Search the whole-body posture and build the reference. Returns (Reference | None, info dict). `info["limit"]` names what stops it."""
     pl = {**PLAN, **(plan or {})}
     ctx = _Ctx(kin, side, pl)
-    cands = _candidates(ctx)
     cache: dict = {}
-    seen = {"arm": False, "legs": False, "balance": False, "table": False, "path": False, "armlegs": False}
+    seen = {"arm": False, "table": False, "path": False, "balance": False}
     verifies = 0
-    last_reason = ""
     tally: dict[str, int] = {}
-    for cand in cands:
-        pose = _pose(ctx, cand["K"], cand["hinge"], cand["waist"], cand["cfrac"])
-        legs, bal = pose["legs_ok"], pose["balance_ok"]
-        if not (legs and bal):
-            continue
-        opts = _grasp_options(ctx, pose, z_t, cache)
-        if not opts:
-            continue
-        seen["arm"] = True
-        for opt in opts:
-            if _grasp_clear(ctx, pose, opt, z_t) < pl["clearance_m"] - 0.02:      # coarse: the exact check moves the pelvis (see _pose_arm)
-                seen["table"] = True
-                last_reason = "the body or arm meets the table at the grasp"
-                tally[last_reason] = tally.get(last_reason, 0) + 1
+    done: set = set()
+
+    def note(msg: str) -> None:
+        k = re.sub(r"[0-9.]+ mm", "x mm", msg)
+        tally[k] = tally.get(k, 0) + 1
+
+    levels = [{**lv, **{k: v for k, v in (plan or {}).items() if k in ("knee_step_deg", "hinge_deg", "waist_deg", "com_fracs")}} for lv in pl["levels"]]
+    for level in levels:
+        n_grasp = n_path = 0
+        for cand in _candidates(ctx, level):
+            key = (round(cand["K"], 5), round(cand["hinge"], 5), round(cand["waist"], 5), round(cand["cfrac"], 4))
+            if key in done:
                 continue
-            for lift in pl["lift_m"]:
-                for c_up in pl["raise_clear_m"]:
-                    for lead in pl["lead_in_m"]:
-                        if verifies >= pl["max_verify"]:
-                            break
-                        ok, why = _static_paths(ctx, pose, opt, z_t, c_up, lead, lift)
-                        if not ok:
-                            seen["table" if "clearance" in why else "path"] = True
-                            last_reason = why
-                            tally[re.sub(r"[0-9.]+ mm", "x mm", why)] = tally.get(re.sub(r"[0-9.]+ mm", "x mm", why), 0) + 1
-                            continue
-                        verifies += 1
-                        ref, info = _build(ctx, cand, pose, opt, z_t, c_up, lead, lift, dt)
-                        if ref is None:
-                            seen["path"] = True
-                            last_reason = info
-                            tally[re.sub(r"[0-9.]+ mm", "x mm", info)] = tally.get(re.sub(r"[0-9.]+ mm", "x mm", info), 0) + 1
-                            continue
-                        chk = _final_checks(ctx, ref, info, opt, z_t)
-                        why = []
-                        if not ref.feasible:
-                            why.append("legs/waist range: " + "; ".join(n for n in ref.notes if "COM tracking" not in n)[:200])
-                        if chk["table_min_dist_m"] < pl["clearance_m"]:
-                            why.append(f"table clearance {chk['table_min_dist_m'] * 1000:.1f} mm at {chk['table_closest_t_s']:.1f} s ({chk['table_closest_geom']})")
-                            seen["table"] = True
-                        if chk["balance_margin_min_m"] < pl["balance_margin_foot_lengths"] * kin.lg.foot_len - 1e-4:
-                            why.append(f"balance margin {chk['balance_margin_min_m'] * 1000:.1f} mm")
-                            seen["balance"] = True
-                        if chk["carry_min_m"] < 0.015 and lift >= 0.03:
-                            why.append(f"carried object comes within {chk['carry_min_m'] * 1000:.0f} mm of the table")
-                        if chk["gap_m"] < 0.0:
-                            why.append(f"table edge {chk['gap_m'] * 1000:.0f} mm behind the toes")
-                        if why:
-                            last_reason = "; ".join(why)
-                            tally[re.sub(r"[0-9.]+ mm", "x mm", last_reason)] = tally.get(re.sub(r"[0-9.]+ mm", "x mm", last_reason), 0) + 1
-                            continue
-                        info.update(chk)
-                        info.update({"cand": cand, "opt": opt, "pose": pose, "lift_m": lift, "raise_clear_m": c_up, "lead_in_m": lead, "verified_plans_tried": verifies})
-                        return ref, info
+            done.add(key)
+            pose = _pose(ctx, cand["K"], cand["hinge"], cand["waist"], cand["cfrac"])
+            if not (pose["legs_ok"] and pose["balance_ok"]):
+                continue
+            opts = _grasp_options(ctx, pose, z_t, cache)
+            if not opts:
+                continue
+            seen["arm"] = True
+            for opt in opts:
+                if n_grasp >= level["budget_grasp"]:
+                    break
+                n_grasp += 1
+                if _grasp_clear(ctx, pose, opt, z_t) < pl["clearance_m"] - 0.02:      # coarse: the exact check moves the pelvis (see _pose_arm)
+                    seen["table"] = True
+                    note("the body or arm meets the table at the grasp")
+                    continue
+                okA, whyA, A = _stage_a(ctx, pose, opt, z_t)
+                if not okA:
+                    seen["table" if "clearance" in whyA or "edge" in whyA else "balance"] = True
+                    note(whyA)
+                    continue
+                for lift in pl["lift_m"]:
+                    for c_up in pl["raise_clear_m"]:
+                        for lead in pl["lead_in_m"]:
+                            if n_path >= level["budget_path"] or verifies >= pl["max_verify"]:
+                                break
+                            ok, why, heavy = _static_paths(ctx, pose, opt, z_t, c_up, lead, lift, A)
+                            n_path += int(heavy)
+                            if not ok:
+                                seen["table" if "clearance" in why else "path"] = True
+                                note(why)
+                                continue
+                            verifies += 1
+                            ref, info = _build(ctx, cand, pose, opt, z_t, c_up, lead, lift, dt)
+                            if ref is None:
+                                seen["path"] = True
+                                note(info)
+                                continue
+                            chk = _final_checks(ctx, ref, info, opt, z_t)
+                            bad = []
+                            if not ref.feasible:
+                                bad.append("legs/waist range: " + "; ".join(n for n in ref.notes if "COM tracking" not in n)[:160])
+                            if chk["table_min_dist_m"] < pl["clearance_m"]:
+                                bad.append(f"table clearance {chk['table_min_dist_m'] * 1000:.1f} mm at {chk['table_closest_t_s']:.1f} s ({chk['table_closest_geom']})")
+                                seen["table"] = True
+                            if chk["balance_margin_min_m"] < pl["balance_margin_foot_lengths"] * kin.lg.foot_len - 1e-4:
+                                bad.append(f"balance margin {chk['balance_margin_min_m'] * 1000:.1f} mm")
+                                seen["balance"] = True
+                            if chk["carry_min_m"] < 0.015 and lift >= 0.03:
+                                bad.append(f"carried object comes within {chk['carry_min_m'] * 1000:.0f} mm of the table")
+                            if chk["gap_m"] < 0.0:
+                                bad.append(f"table edge {chk['gap_m'] * 1000:.0f} mm behind the toes")
+                            if bad:
+                                note("final check: " + "; ".join(bad))
+                                continue
+                            info.update(chk)
+                            info.update({"cand": cand, "opt": opt, "pose": pose, "lift_m": lift, "raise_clear_m": c_up, "lead_in_m": lead,
+                                         "verified_plans_tried": verifies, "search_level": level["name"]})
+                            return ref, info
     # nothing passed: say why. Re-run the geometry without the leg/balance constraints to classify the limit.
     limit = "arm reach" if not seen["arm"] else ("table collision" if seen["table"] else ("path/IK" if seen["path"] else "balance" if seen["balance"] else "joint range"))
     if not seen["arm"]:
-        arm_free = False
-        legs_only = balance_only = False
-        for cand in cands:
+        arm_free = balance_only = False
+        for cand in _candidates(ctx, levels[0]):
             pose = _pose(ctx, cand["K"], cand["hinge"], cand["waist"], cand["cfrac"])
             if pose["legs_ok"] and pose["balance_ok"]:
                 continue
-            if not (-1.0 <= (z_t - pose["shoulder"][2]) / ctx.L_arm <= 1.0):
+            if abs(z_t - pose["shoulder"][2]) > ctx.d_max:
                 continue
             if _grasp_options(ctx, pose, z_t, cache):
                 arm_free = True
-                if pose["legs_ok"]:
-                    balance_only = True
-                else:
-                    legs_only = True
+                balance_only = balance_only or pose["legs_ok"]
                 if balance_only:
                     break
         if arm_free:
             limit = "balance" if balance_only else "leg joint range"
     top = sorted(tally.items(), key=lambda kv: -kv[1])[:3]
-    return None, {"limit": limit, "reason": "; ".join(f"{k} (x{v})" for k, v in top) or last_reason, "verified_plans_tried": verifies, "tally": tally}
+    return None, {"limit": limit, "reason": "; ".join(f"{k} (x{v})" for k, v in top), "verified_plans_tried": verifies, "tally": tally}
 
 
 def _limit_note(limit: str, z_t: float, ctx: _Ctx, info: dict) -> str:
@@ -770,7 +812,7 @@ def pickup(kin: RobotKin, dt: float = 0.01, table_height_frac: float = 0.36, tab
         return ref
     z_t = table_height_m if table_height_m else table_height_frac * robot.height
     pl = {**PLAN, **(plan or {})}
-    ref, info = plan_pickup(kin, z_t, side, dt, pl)
+    ref, info = plan_pickup(kin, z_t, side, dt, plan)
     ctx = _Ctx(kin, side, pl)
     if ref is None:
         ref = double_support(kin, "pickup", dt, 101, notes=[_limit_note(info["limit"], z_t, ctx, info)])
@@ -812,7 +854,7 @@ def reach_range(kin: RobotKin, side: str = "r", lo: float = 0.15, hi: float | No
     def probe(z: float) -> bool:
         z = round(z, 4)
         if z not in rows:
-            ref, info = plan_pickup(kin, z, side, dt, pl)
+            ref, info = plan_pickup(kin, z, side, dt, plan)
             if ref is None:
                 rows[z] = {"table_m": z, "reachable": False, "limit": info["limit"], "why": info.get("reason", "")}
             else:
@@ -868,8 +910,8 @@ PEAK_FACTOR_ADR0014 = 1.52     # ADR 0014 section 2: Open Duck Mini measured pea
 def demand_at(concept, table_height: float, peak_factor: float = PEAK_FACTOR_ADR0014, servo: bool = False) -> dict:
     """The pickup's per-joint demand at one table height through the engine (ideal playback, nominal masses, nominal pack voltage).
     Strict = the datasheet gate (peak <= 0.70 of stall); calibrated = the same demand against `peak_factor` x the stall."""
-    from . import envelopes as E
-    from . import evaluate as EV
+    from .. import envelopes as E
+    from .. import evaluate as EV
     b = EV.run_bundle(concept, EV.Mods(), table_height=table_height, thermal=False, motions=["stand", "pickup"])
     out: dict = {"table_m": table_height, "valid": "pickup" not in b.invalid, "reason": b.invalid.get("pickup", "")}
     if "pickup" not in b.dem or not b.dem["pickup"].valid:
@@ -962,7 +1004,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{concept['id']}: reachable {[(s['from_m'], s['to_m']) for s in rep['reach']['segments']]}", flush=True)
         if not a.no_demand:
             rep["demand"] = []
-            for h in a.tables:
+            mx = rep["reach"]["max_reachable_m"]
+            for h in sorted(set(a.tables) | ({mx} if mx else set())):
                 d = demand_at(path, h, a.peak_factor, a.servo)
                 rep["demand"].append(d)
                 print(f"  {h:.2f} m: valid={d.get('valid')} worst={d.get('worst_joint')} {d.get('worst_peak_frac')} {d.get('servo', '')}", flush=True)

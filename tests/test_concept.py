@@ -584,3 +584,131 @@ def test_open_duck_mini_calibration_runs(tmp_path):
     res = X.run_all(os.environ["ODM_DIR"], CONCEPTS, tmp_path, quick=True)
     assert res["structure_mass"]["gap_factor"] > 1.5 and res["b_frozen_on_odm"]["best"]["gates"]["peak_frac_of_stall"] > 0
     assert "| gate |" in X.to_markdown(res)
+
+
+# ----------------------------------------------------------------------------------------------- whole-body pickup planner (T-20261019-a536)
+R1P1R = CONCEPTS / "R1-P1r-0p55-3s-sts3250-knee-hiproll.yaml"
+
+
+@pytest.fixture(scope="module")
+def kin_r1():
+    return RobotKin(build_robot(R1P1R))
+
+
+def _table_distances(robot, ref):
+    """Independent re-measurement: MuJoCo signed distance of EVERY robot geom to the table top in EVERY frame of the finished reference."""
+    import mujoco
+    m = robot.build_model(ref.scene["xml"])
+    d = mujoco.MjData(m)
+    tg = m.geom("table_top").id
+    skip = {m.body("table").id, m.body("obj").id}
+    geoms = [g for g in range(m.ngeom) if m.geom_bodyid[g] > 0 and int(m.geom_bodyid[g]) not in skip]
+    qadr = np.array([m.joint(n).qposadr[0] for n in robot.names])
+    ft = np.zeros(6)
+    out = np.empty(len(ref.q))
+    for i in range(len(ref.q)):
+        d.qpos[:3], d.qpos[3:7], d.qpos[qadr] = ref.base_pos[i], ref.base_quat[i], ref.q[i]
+        mujoco.mj_kinematics(m, d)
+        out[i] = min(mujoco.mj_geomDistance(m, d, g, tg, 0.3, ft) for g in geoms)
+    return out
+
+
+def test_pickup_arm_ik_is_closed_form_and_exact(kin_r1):
+    """The closed-form shoulder/elbow IK reproduces MuJoCo's forward kinematics, and unreachable targets are reported (not faked)."""
+    from openhumanoid.concept.motions import pickup as P
+    ctx = P._Ctx(kin_r1, "r", dict(P.PLAN))
+    pose = P._pose(ctx, ctx.f0, 0.0, 0.0, 0.0)
+    rng = np.random.default_rng(1)
+    worst, n = 0.0, 0
+    for _ in range(40):
+        d = np.array([rng.uniform(0.02, 0.12), rng.uniform(-0.03, 0.004), -rng.uniform(0.05, 0.17)])
+        if not (ctx.d_min + 0.004 < np.linalg.norm(d) < ctx.d_max - 0.004):
+            continue
+        Q, err = P._solve_arm(ctx, pose["Q"], pose["pel"], pose["quat"], pose["shoulder"] + d)
+        worst, n = max(worst, err), n + 1
+    assert n >= 10 and worst < 1e-4
+    _, far = P._solve_arm(ctx, pose["Q"], pose["pel"], pose["quat"], pose["shoulder"] + np.array([0.0, 0.0, -0.40]))
+    assert far > 0.15      # 40 cm below the shoulder is out of a 20 cm arm: the residual says so
+
+
+def test_pickup_path_is_collision_free_and_table_height_is_a_parameter(kin_r1):
+    from openhumanoid.concept.motions import pickup as P
+    robot = kin_r1.robot
+    seen = {}
+    for z in (0.15, 0.30, 0.35):
+        ref = P.pickup(kin_r1, table_height_m=z)
+        assert ref.feasible and ref.meta["reachable"], ref.notes
+        assert ref.meta["table_height_m"] == pytest.approx(z) and ref.scene["table_z"] == pytest.approx(z)
+        dist = _table_distances(robot, ref)
+        assert dist.min() > 0.0, f"{z} m: a robot geom comes {dist.min() * 1000:.1f} mm into the table at t={dist.argmin() * ref.dt:.2f} s"
+        assert ref.meta["table_min_clearance_m"] >= P.PLAN["clearance_m"] - 1e-9
+        assert ref.meta["standing_gap_m"] >= 0.0 and ref.meta["lift_m"] >= 0.03
+        assert ref.meta["carried_object_clearance_min_m"] > 0.015      # the object stays off the table through the stand-up
+        seen[z] = ref
+    # the table height changes the posture: a low table needs the whole body (deep knee + hip hinge), a mid one only the arm
+    assert seen[0.15].meta["squat_deg"] > seen[0.30].meta["squat_deg"] + 10 and seen[0.15].meta["hip_hinge_deg"] > 0
+    assert seen[0.15].meta["squat_deg"] <= seen[0.15].meta["knee_range_max_deg"]
+    from openhumanoid.concept.motions.common import check_ranges
+    assert not check_ranges(kin_r1, seen[0.15].q)             # every joint stays inside its range (asserted independently of the planner)
+
+
+def test_pickup_respects_the_knee_range_and_reports_why_it_fails(kin_r1):
+    from openhumanoid.concept.motions import pickup as P
+    c = load_concept(R1P1R)
+    c["joints"] = [({"name": "knee", "range": [0, 60]} if (isinstance(j, dict) and j["name"] == "knee") else j) for j in c["joints"]]
+    k60 = RobotKin(build_robot(c))
+    ref = P.pickup(k60, table_height_m=0.15)
+    knee_max = max(np.degrees(ref.q[:, k60.index["knee_l"]]).max(), np.degrees(ref.q[:, k60.index["knee_r"]]).max())
+    assert knee_max <= 60.0 + 0.5
+    if ref.feasible:
+        assert ref.meta["squat_deg"] <= 60.0
+    else:
+        assert ref.meta["limit"] in ("arm reach", "table collision", "balance", "leg joint range", "path/IK") and "pickup at 0.15 m" in " ".join(ref.notes)
+
+
+def test_pickup_out_of_reach_is_infeasible_and_says_why(kin_r1):
+    from openhumanoid.concept.motions import pickup as P
+    ref = P.pickup(kin_r1, table_height_m=0.60)         # above the shoulder of a 0.55 m robot
+    assert not ref.feasible and ref.meta["reachable"] is False and ref.meta["limit"] == "arm reach"
+    assert "pickup at 0.60 m" in " ".join(ref.notes) and "arm too short" in " ".join(ref.notes)
+
+
+def test_pickup_balance_is_named_when_it_is_what_binds(kin_r1):
+    from openhumanoid.concept.motions import pickup as P
+    ok, info_ok = P.plan_pickup(kin_r1, 0.30)
+    assert ok is not None
+    assert info_ok["balance_margin_min_m"] >= P.PLAN["balance_margin_foot_lengths"] * kin_r1.lg.foot_len - 1e-4      # COM inside the foot polygon in every frame
+    # force the COM to the toe edge (zero margin): the arm can reach, the legs can stand, only balance forbids it
+    ref, info = P.plan_pickup(kin_r1, 0.30, plan={"com_fracs": (1.0,)})
+    assert ref is None and info["limit"] == "balance"
+
+
+def test_pickup_reach_range_reports_segments_and_limits(kin_r1):
+    from openhumanoid.concept.motions import pickup as P
+    r = P.reach_range(kin_r1, lo=0.30, hi=0.35, step=0.05, resolution=0.05)
+    assert r["segments"] == [{"from_m": 0.30, "to_m": 0.35}] and r["max_reachable_m"] == 0.35 and r["min_reachable_m"] == 0.30
+    assert all(x["reachable"] and x["table_clearance_mm"] >= 3.0 and x["balance_margin_mm"] > 0 for x in r["rows"])
+    r2 = P.reach_range(kin_r1, lo=0.60, hi=0.60, step=0.05)
+    assert r2["segments"] == [] and r2["rows"][0]["limit"] == "arm reach"
+
+
+def test_pickup_lift_point_stays_on_the_arm_circle():
+    from openhumanoid.concept.motions import pickup as P
+    sh = np.array([0.0, -0.1, 0.4])
+    G = sh + np.array([0.2, 0.0, -0.01])
+    h = np.array([1.0, 0.0, 0.0])
+    L = P._lift_point(sh, G, h, 0.04)
+    assert L[2] - G[2] == pytest.approx(0.04) and np.linalg.norm(L - sh) == pytest.approx(np.linalg.norm(G - sh))
+    assert P._lift_point(sh, sh + np.array([0.01, 0.0, 0.0]), h, 0.5)[2] == pytest.approx(sh[2] + 0.5)   # cannot rise on the circle: falls back to vertical
+
+
+@pytest.mark.slow
+def test_pickup_replay_has_no_table_spike_and_the_servo_grasp_lifts(kin_r1):
+    """The R1 review's 131x-stall spike was the hand path colliding with the table. Replayed through the engine's own ideal playback the
+    new path stays under the gate, and the servo-in-the-loop grasp lifts the 150 g object."""
+    from openhumanoid.concept.motions import pickup as P
+    d = P.demand_at(R1P1R, 0.35, servo=True)
+    assert d["valid"], d.get("reason")
+    assert d["worst_peak_frac"] < config.gate("peak_torque_fraction_of_stall") and d["tether_pct_bw"] < 1.0
+    assert {"shoulder_pitch_r", "elbow_r", "waist_yaw"} <= set(d["arm_waist_gripper"])
+    assert d["servo"]["grasp_ok"] and d["servo"]["overload_trips"] == 0 and not d["servo"]["fell"]
