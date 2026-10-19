@@ -28,3 +28,8 @@ coordination/.local/
 
 # Regenerable CAD exports (oh cad build); committed only at design freeze per cad/EXPORT_CONTRACT.md
 variants/*/cad/export/parts/
+
+# Separate Blender (bpy) venv for M3 shells (bpy pins its own numpy)
+.venv-bpy/
+# Regenerable bake-off meshes/STEP
+docs/design-method/bakeoff/parts/
