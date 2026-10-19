@@ -25,3 +25,6 @@ Thumbs.db
 
 # Local, per-machine agent state (never committed)
 coordination/.local/
+
+# Regenerable CAD exports (oh cad build); committed only at design freeze per cad/EXPORT_CONTRACT.md
+variants/*/cad/export/parts/
