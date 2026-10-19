@@ -28,3 +28,5 @@ Driven by real vendor servo dimensions:
 - **Gripper:** sized for soda-can / ball objects (~70 mm opening, ~62 mm palm, so the hand is wider than the forearm).
 - **Electronics bay:** in the **pelvis** (Pi 5, 2 bus adapters, BNO085 IMU near the COM, fuse, star distribution). Region B designs it as a tray with a mounting contract for region A.
 - **Arms:** keep the ≥ 14° display cant (v2 profiles use 19.5°).
+- **Bus adapters split by region** (maintainer, 2026-10-19): the pelvis tray holds the Pi 5, IMU, buck and leg-bus adapter; the arm/head-bus adapter goes in the torso by the battery, star and fuse. The pelvis rear stays at R2a depth.
+- **Neck is pitch-first** (region B, accepted): the pitch servo sits in the front chest slot and the yaw servo in the enlarged head, turning about the head centre. The sim template's neck order must be swapped at integration.
