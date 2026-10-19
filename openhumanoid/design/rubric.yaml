@@ -1,0 +1,48 @@
+# Design rubric: numeric bands for `oh design metrics` (code-measured) and the gestalt criteria for the design-critic.
+# Source of truth for ids/bands; docs/design-method.md mirrors it (tests/test_design.py checks the ids stay in sync).
+# H = total height, hu = head height. Bands are "start band (research 06 §7) -> calibrated against the reference set in
+# docs/design-method/calibration.json". `changed:` records every band that calibration moved and why.
+version: 1
+calibration:
+  status: provisional   # becomes "calibrated" only when >=3 references are MEASURED (confidence: measured), not approximated
+  references: [human_canon, optimus_like, atlas_like]
+  counter_examples: [toy_chibi, adam_cad_v0]
+  caveat: >
+    The three reference profiles are approximated from public dimensions and press images (see their `sources`),
+    not pixel-measured. Bands below separate sleek from toy on THIS set. Re-run `oh design calibrate` with measured
+    silhouettes (`--ref image.png`) before using any band as a hard gate.
+metrics:
+  - {id: P1,  key: P1_head_height_f,          name: "Head height / H",                         band: [0.11, 0.15],  gate: hard, changed: "start 0.13-0.15; refs measure 0.112-0.133 (silhouette chin), widened low end to 0.11"}
+  - {id: P2a, key: P2_neck_length_hu,         name: "Visible neck length / head height",       band: [0.18, 0.55],  gate: soft, changed: "start 0.25-0.5; refs 0.21-0.26 as measured at the width threshold, low end 0.18"}
+  - {id: P2b, key: P2_neck_width_ratio,       name: "Neck width / head width (no stick)",      band: [0.50, null],  gate: hard, changed: "start >=0.40; refs 0.69-0.72, raised to 0.50. Adam CAD v0 = 0.43 (the stick neck)"}
+  - {id: P3,  key: P3_shoulder_width_f,       name: "Outer shoulder width / H",                band: [0.22, 0.29],  gate: hard, changed: "start 0.22-0.28; human canon measures 0.28, top end 0.29"}
+  - {id: P4,  key: P4_waist_over_shoulder,    name: "Waist width / shoulder width",            band: [0.50, 0.75],  gate: hard, changed: "start 0.55-0.75; refs 0.55-0.61, low end 0.50"}
+  - {id: P5,  key: P5_pelvis_over_shoulder,   name: "Pelvis width / shoulder width",           band: [0.62, 0.90],  gate: soft, changed: "start 0.70-0.90; refs 0.68-0.69, low end 0.62"}
+  - {id: P6,  key: P6_hip_height_f,           name: "Hip-joint height / H",                    band: [0.46, 0.53],  gate: hard}
+  - {id: P7,  key: P7_knee_height_f,          name: "Knee height / H",                         band: [0.25, 0.30],  gate: hard}
+  - {id: P8a, key: P8_thigh_taper_area,       name: "Thigh taper: distal / proximal section area",  band: [null, 0.65], gate: soft}
+  - {id: P8b, key: P8_shank_taper_area,       name: "Shank taper: ankle / calf section area",       band: [null, 0.60], gate: soft}
+  - {id: P9a, key: P9_thigh_widest_from_top,  name: "Thigh widest point, fraction of length from the top",  band: [null, 0.33], gate: soft}
+  - {id: P9b, key: P9_calf_widest_from_top,   name: "Calf widest point, fraction of shank from the top",    band: [null, 0.33], gate: soft}
+  - {id: P10a, key: P10_foot_length_f,        name: "Foot length / H",                         band: [0.13, 0.17],  gate: hard}
+  - {id: P10b, key: P10_foot_height_f,        name: "Foot height / H",                         band: [null, 0.05],  gate: hard}
+  - {id: S1a, key: S1_iou_front,              name: "Front silhouette IoU vs approved D1",     band: [0.95, null],  gate: hard}
+  - {id: S1b, key: S1_iou_side,               name: "Side silhouette IoU vs approved D1",      band: [0.95, null],  gate: hard}
+  - {id: S3a, key: S3_ledge_count,            name: "Silhouette ledges (horizontal steps in the outer edge)", band: [null, 6], gate: hard, changed: "new: counts G0 breaks; refs 2, Adam CAD v0 30"}
+  - {id: S3b, key: S3_leg_bumps,              name: "Unintended bumps in the leg width profile", band: [null, 3],   gate: soft}
+  - {id: S4a, key: S4_flat_area_fraction,     name: "Share of surface in flat patches >= 0.002 H^2", band: [null, 0.30], gate: hard}
+  - {id: S4b, key: S4_worst_part_flat_fraction, name: "Largest flat patch / its part's area",  band: [null, 0.30],  gate: soft}
+  - {id: S5a, key: S5_hardware_visible_fraction_front, name: "Servo/frame/horn pixels visible, front", band: [null, 0.005], gate: hard}
+  - {id: S5b, key: S5_hardware_visible_fraction_side,  name: "Servo/frame/horn pixels visible, side",  band: [null, 0.005], gate: hard}
+  - {id: HP,  key: HP_all_enclosed_with_margin, name: "Every hard point enclosed with wall + gap", band: [1, 1],    gate: hard}
+informational:   # reported, not banded
+  - {id: S2,  key: S2_iou_front_vs_refs, name: "Front silhouette IoU vs normalised references", soft_target: ">= 0.80"}
+  - {id: M1,  key: M1_watertight_parts,  name: "Printability: watertight parts (full M1 = geometry gate, see docs)"}
+gestalt:         # judged by the design-critic (PASS / FAIL / UNCERTAIN, with evidence); UNCERTAIN counts as no-pass
+  - {id: G1, name: "Reads as an adult product, not a toy or character (no chibi head, no box torso)"}
+  - {id: G2, name: "Continuous silhouette: chest-waist-pelvis and thigh-shank read as flowing forms; joints are deliberate dark recesses"}
+  - {id: G3, name: "Two-tone discipline: light shells, dark recesses, one accent at most"}
+  - {id: G4, name: "Consistent design language: same radii family and section squareness across segments"}
+  - {id: G5, name: "Preferred over the previous best in BOTH presentation orders"}
+  - {id: G6, name: "Next to each reference at equal height it looks like a member of the same family (state which features match)"}
+reads_as: [product, toy, unfinished]

@@ -49,3 +49,17 @@ Known limitations: there's no thermal model, no inertial/acceleration terms beyo
 **How a shell is fitted.** At each station along a segment the template slices the parts the shell wraps, finds the superellipse that clears every cross-section corner, then takes the larger of that and the style profile (median scale). A shrink limit between stations keeps tapers smooth. Shell ends stop at joint **sweep radii** so moving yokes never hit a shell. This leaves the dark joint bands from the design language.
 
 **Not yet:** shell split lines and snap/magnet mounts for printing, horn bolt patterns, joint-range sweep checks (stand pose only), and print-bed layout. Those land with R3 (T-0004) and its follow-ups.
+
+## Design tooling (ADR 0010, v0.1)
+
+Silhouette-first design tools: studio render rig, `profiles.yaml` massing, code-measured rubric, blind critic. Method, rubric bands, calibration caveats and validation evidence: [design-method.md](design-method.md). Code: `openhumanoid/design/`. Extra: `pip install -e ".[design]"`.
+
+| Command (today: `python -m openhumanoid.design …`) | Does |
+|---|---|
+| `render <variant\|profiles.yaml\|mesh\|dir\|robot.xml> [--ref name=path] [--zebra]` | Clay + SSAO + 3-point light views, orthographic silhouettes with head-unit grid, equal-height reference overlays, review `sheet.png` → `variants/<id>/generated/renders/studio/` |
+| `massing <profiles.yaml>` | Smooth massing STL from section stations (SDF smooth union + marching cubes) |
+| `metrics <variant\|…> [--approved p.yaml] [--ref …]` | P1–P10, S1–S5, M1, hard-point checks → `generated/design_metrics.json` with PASS/FAIL per rubric band |
+| `calibrate` | Runs the metrics over the reference/counter-example set → `docs/design-method/calibration.json` |
+| `verdict a.json b.json --metrics m.json` | Combines design-critic reports (both presentation orders) with the fixed rules: UNCERTAIN = no-pass, consistent pairwise only, numeric hard gates override, 3-round cap |
+
+`render.render(spec, studio=True)` is the library entry for `oh render <id> --studio`; wiring `design.cli.register` into `openhumanoid/cli.py` is left to the commander (see the T-0016 handoff). Known limitations: references are approximated (confidence low), no production shell library yet, M1 wall/clearance/ROM belong to the CAD geometry gate.

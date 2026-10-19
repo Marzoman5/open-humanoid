@@ -1,0 +1,33 @@
+# Studio camera + light rig. COMMITTED so every iteration and every reference is rendered the same way (ADR 0010, A4).
+# Change it only with a decision record: the metrics' silhouette framing (silhouette.py CANVAS/H_PX/GROUND_ROW) must match.
+version: 1
+frame: {up: z, forward: x, left: y, units: m}
+silhouette:            # orthographic, rasterised exactly (no shading); see silhouette.py
+  canvas_px: 1200
+  height_px: 1000      # subject height H maps to this many pixels
+  ground_row: 1100
+  views: [front, side]  # front: looks along -x; side: seen from the robot's right, forward to the image right
+clay:
+  window: [640, 960]
+  lens_mm: 85          # 35 mm-equivalent, vertical sensor 24 mm
+  sensor_mm: 24
+  fit: 1.15            # camera distance frames height*fit
+  target_z_frac: 0.5   # look-at height as a fraction of H
+  camera_z_frac: 0.52  # camera height (nearly level, so verticals stay vertical)
+  views:               # azimuth in degrees from +x (front) towards +y (robot's left)
+    front: 0
+    three_quarter: 35
+    side: 90
+    back: 180
+  color: "#d8d5ce"
+  ssao: {radius_frac: 0.012, bias_frac: 0.0008}
+  background: ["#ffffff", "#e9e9ee"]   # bottom, top
+  lights:              # 3-point; position as (azimuth deg from +x, elevation deg, distance in H), colour intensity
+    key:  {az: 40,  el: 35, dist: 4.0, intensity: 0.95}
+    fill: {az: -50, el: 10, dist: 4.0, intensity: 0.35}
+    rim:  {az: 160, el: 40, dist: 4.0, intensity: 0.60}
+  specular: 0.20
+  specular_power: 20
+zebra: {stripes: 14, view: [front, three_quarter]}
+grid: {head_units: true, line_color: [40, 40, 40], label_every: 1}
+overlay: {reference_outline: [220, 30, 30], candidate_fill: [150, 150, 150]}

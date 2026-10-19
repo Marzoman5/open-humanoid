@@ -9,7 +9,12 @@ from .spec import expand_joints, generated_dir
 VIEWS = {"front": (180, -5), "side": (90, -5), "three_quarter": (140, -15), "back": (0, -5)}
 
 
-def render(spec: dict, width: int = 640, height: int = 800, views: list[str] | None = None) -> list[Path]:
+def render(spec: dict, width: int = 640, height: int = 800, views: list[str] | None = None, studio: bool = False,
+           refs: list[str] | None = None, zebra: bool = False) -> list[Path]:
+    """studio=True: the pyvista studio rig of ADR 0010 (clay, silhouettes, grid, reference overlays) into renders/studio/.
+    Default: the MuJoCo sim render (for simulation checks, not design review)."""
+    if studio:
+        return render_studio_set(spec, refs, zebra)
     import mujoco
     from PIL import Image
 
@@ -54,3 +59,15 @@ def render(spec: dict, width: int = 640, height: int = 800, views: list[str] | N
     files.append(f)
     renderer.close()
     return files
+
+
+def render_studio_set(spec: dict, refs: list[str] | None = None, zebra: bool = False) -> list[Path]:
+    from .design.meshio import load_subject
+    from .design.studio import render_studio
+
+    vdir = Path(spec["_dir"])
+    prof = vdir / "design" / "profiles.yaml"
+    src = prof if prof.exists() else vdir / "cad" / "export" / "robot.xml"
+    out = generated_dir(spec) / "renders" / "studio"
+    res = render_studio(load_subject(src, spec["id"]), out, refs=refs, zebra=zebra)
+    return [Path(p) for p in res["files"].values()]

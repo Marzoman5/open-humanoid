@@ -15,12 +15,16 @@ dependencies = ["pyyaml>=6", "numpy>=1.24", "jsonschema>=4"]
 sim = ["mujoco>=3.1"]
 cad = ["build123d>=0.7"]
 dev = ["pytest>=7"]
+design = ["manifold3d>=3.0", "trimesh>=4", "pyvista>=0.43", "scikit-image>=0.22", "matplotlib>=3.7", "pillow>=10"]
 
 [project.scripts]
 oh = "openhumanoid.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["openhumanoid*"]
+
+[tool.setuptools.package-data]
+"openhumanoid.design" = ["*.yaml", "references/*.yaml", "sample/*.yaml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
