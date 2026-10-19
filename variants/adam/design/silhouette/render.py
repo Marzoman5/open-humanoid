@@ -66,7 +66,14 @@ def render_twotone(subj, prof, mesh, labels, out_dir: Path) -> dict:
     H = subj.height_m
     centre = ((mesh.bounds[0][0] + mesh.bounds[1][0]) / 2, (mesh.bounds[0][1] + mesh.bounds[1][1]) / 2)
     poly = studio._to_pv(mesh)
-    poly.cell_data["rgb"] = (face_colours(prof, labels) * 255).astype(np.uint8)
+    # vertex colours = mean of the adjacent faces' colours, so the shell/graphite split is anti-aliased at voxel scale
+    fc = face_colours(prof, labels)
+    vc = np.zeros((len(mesh.vertices), 3))
+    cnt = np.zeros(len(mesh.vertices))
+    for j in range(3):
+        np.add.at(vc, mesh.faces[:, j], fc)
+        np.add.at(cnt, mesh.faces[:, j], 1)
+    poly.point_data["rgb"] = (vc / np.maximum(cnt, 1)[:, None] * 255).astype(np.uint8)
     files = {}
     for view in ("three_quarter", "front", "side", "back"):
         pos, tgt, fov = studio._camera(rig, H, c["views"][view], centre)
@@ -74,7 +81,13 @@ def render_twotone(subj, prof, mesh, labels, out_dir: Path) -> dict:
         pl = pv.Plotter(off_screen=True, window_size=list(c["window"]))
         pl.set_background(c["background"][0], top=c["background"][1])
         pl.remove_all_lights()
-        for L in studio._lights(rig, H, centre):
+        lrig = rig
+        if view == "back":       # the rig's key light is in front; for the back view turn the lights with the camera
+            import copy
+            lrig = copy.deepcopy(rig)
+            for L in lrig["clay"]["lights"].values():
+                L["az"] += 180
+        for L in studio._lights(lrig, H, centre):
             pl.add_light(L)
         pl.add_mesh(poly, scalars="rgb", rgb=True, smooth_shading=True, specular=0.35, specular_power=30, ambient=0.14, diffuse=0.85)
         try:

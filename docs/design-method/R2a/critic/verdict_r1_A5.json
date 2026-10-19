@@ -1,0 +1,90 @@
+{
+  "step": "D1",
+  "round": 1,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Head is a rounded box with no visible neck; chest and pelvis are separate rounded slabs; shoulders are far wider than both references in the equal-height lineup (metrics P3 = 0.40 against band 0.22-0.29, P2a neck fail). Arms splay outward in a wide A shape with no taper. Reads as a character, not a product.",
+        "Front and side clay views show the head sitting directly on the chest slab, with a visor-height block head and no visible neck (P2a FAIL, neck length 0.0759 hu). The shoulders are very wide (P3 FAIL, 0.4 of H) and the arms flare out into long tapered paddles. The legs are straight columns with no taper (P8a/P8b FAIL). Together these give a chunky mannequin look. The chibi-like head size is not the problem, since P1 passes at 0.145."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Silhouette is a stack of slabs: in the front silhouette the chest runs straight into a shallow pinch and then the pelvis block, and the thighs and shanks are parallel columns with only small steps (P8a 0.8905 and P8b 0.946 both fail). Dark joint bands at waist, elbows and knees in the two-tone view are deliberate, but the forms between them do not flow.",
+        "The two-tone view has deliberate dark bands at waist, knee, ankle, elbow and wrist, which is the right idea. The silhouette itself is still stacked: a rectangular chest slab, a separate rounded-box pelvis with a dark band under it, then two parallel thigh columns that nearly fuse at the crotch. The side view has a large boxy pack hanging off the hip and arm zone, and the chest is also a stepped box. The front silhouette shows only a small armpit notch and no chest-waist-pelvis flow."
+      ]
+    },
+    "G3": {
+      "verdict": "PASS",
+      "per_report": [
+        "PASS",
+        "PASS"
+      ],
+      "evidence": [
+        "Two-tone view shows warm-white shells over graphite bands at waist, elbows, knees and ankles, a gloss-black visor, and no accent colour. Caveats: the visor is very large and slab-like, the far arm in the 3/4 view reads almost entirely black, and the back view was not toned.",
+        "The two-tone render uses matte white shells, graphite recesses and a glossy black visor, with no accent colour. Caveat: the rear view is not rendered two-tone (grey head and back), and the shell/dark boundaries are aliased with white speckles at the visor edge and on the left arm in the 3/4 view. Those are render artefacts and not a design fault."
+      ]
+    },
+    "G4": {
+      "verdict": "PASS",
+      "per_report": [
+        "PASS",
+        "PASS"
+      ],
+      "evidence": [
+        "Head, chest, pelvis, arm and leg segments all use the same small-radius rounded-box section, so the language is consistent. The consistent language is itself boxy, which is what drives the G1 fail.",
+        "Head, chest, pelvis, thigh, shank and arm segments all use the same squircle-section, small-radius language, and joint bands are a consistent width. The pack box and the wedge foot are the only outliers, and both are visibly different from the rest. Caveat: this consistency is also what makes it look blocky."
+      ]
+    },
+    "G6": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Front IoU against the references is 0.5366 (optimus_like) and 0.5688 (atlas_like). In the lineup the shoulders are much wider, the neck is nearly absent, and the arms flare outward where the references hang close to the body. Legs are untapered columns, and the foot is long (P10a 0.213). What matches: head size (P1 pass), hip and knee heights (P6, P7 pass), white shell over black structure, and a black faceless visor.",
+        "At equal height the candidate does not read as the same family as optimus_like or atlas_like. S2 IoU against them is 0.5366 and 0.5688. What matches: head height, hip and knee heights, and the overall standing A-pose. What does not match: shoulders and arms extend far outside both reference outlines (P3 FAIL), there is no neck or trapezius slope, the legs are not tapered (P8a/P8b FAIL), the feet are much longer (P10a FAIL), and the torso shows no waist taper beyond a small notch."
+      ]
+    },
+    "G5": {
+      "verdict": "PASS",
+      "reason": "candidate preferred in both presentation orders"
+    }
+  },
+  "reads_as": "toy",
+  "numeric_hard_failures": [
+    "P3",
+    "P10a"
+  ],
+  "top_changes": [
+    {
+      "criterion": "G1",
+      "change": "Narrow the shoulder and upper-arm block to a human proportion (about 0.25 H outer width), and lengthen the visible neck. Add a clear, narrower neck column between head and chest so the head stops sitting on the shoulders.",
+      "profile_param": "segments[chest].stations[shoulder].w (reduce); segments[neck].stations[*].z (lengthen visible neck)"
+    },
+    {
+      "criterion": "G2",
+      "change": "Taper thigh and shank: make the thigh widest at the hip and narrow to the knee, and make the calf wider than the ankle. Pinch the chest-to-waist transition so the chest, waist and pelvis blend as one flowing form instead of three slabs.",
+      "profile_param": "segments[leg_core].stations[knee].w and .d (reduce), stations[ankle].w and .d (reduce); segments[torso].stations[waist].w (blend toward the pelvis width)"
+    },
+    {
+      "criterion": "G6",
+      "change": "Shorten the foot toward the 0.13-0.17 H band and bring the arms in so they hang closer to the torso as in both references. Check at equal-height lineup, since arm tips run off the panel edge in the current sheet.",
+      "profile_param": "segments[foot].stations[toe].z (shorten); segments[arm_core].stations[*].cy (move inward)"
+    }
+  ],
+  "next": "apply ONLY the top changes tied to failed criteria, re-render, re-run metrics and the critic"
+}

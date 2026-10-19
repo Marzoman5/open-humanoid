@@ -1,0 +1,90 @@
+{
+  "step": "D1",
+  "round": 3,
+  "max_rounds": 3,
+  "pass": false,
+  "criteria": {
+    "G1": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Head is a rounded cube with a rectangular visor window (two-tone front view). Chest is a flat-fronted box with a ledge where the shoulder blocks sit. Arms splay out in a wide A. In the equal-height lineup the front silhouette is clearly broader than optimus_like and atlas_like, with no waist and no taper. Metrics agree: P3 shoulder width 0.412 vs band 0.22-0.29, P8a/P8b/P9b taper failures.",
+        "The head is a rounded cube with a visor window. The chest is a wide box with a flat top ledge. The arms are straight tapered slabs that flare out to about 0.42 H wide (metrics P3 = 0.418, band 0.22-0.29). The pelvis is a separate box hanging off the waist band. The side view shows a large square back pack and a block-shaped heel. None of this reads as the human-proportioned Optimus or Atlas family."
+      ]
+    },
+    "G2": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Chest, waist and pelvis are separate stacked blocks. The chest box and pelvis box have a horizontal step between them, and the waist band reads as a stripe, not a flowing neck-to-hip form. Thighs and shanks are near-parallel columns, so the leg has no flowing taper. The side view shows a large rectangular pack and pelvis block hanging off the back, with a notch above the knee. Joints are straight dark horizontal bands, not recesses that the shells flow into.",
+        "Chest, waist and pelvis are three separate masses, with a dark band between chest and pelvis and a horizontal ledge where the pelvis box starts (front clay view). The front silhouette has a hard shoulder shelf and then arm wedges that meet the torso at an abrupt notch. Thigh and shank are straight columns. Thigh and shank taper are 0.8108 and 0.8639 against bands of 0.65 and 0.60, and the calf's widest point is 0.3933 of the way down against a band of 0.33. Joint recesses (elbow, knee) are present as dark bands, but they sit between blocky shells rather than flowing forms."
+      ]
+    },
+    "G3": {
+      "verdict": "PASS",
+      "per_report": [
+        "PASS",
+        "PASS"
+      ],
+      "evidence": [
+        "Two-tone view uses matte warm-white shells, graphite bands and a glossy black visor, with no accent colour. In A10 the bands are clean horizontal bands with sharp edges. Remaining flaws are the black heel box against white feet and a very heavy black shoulder and chest area in the side view.",
+        "Two-tone view: warm-white shells, graphite recesses and a black visor, with no accent colour. The knee and elbow dark bands are cleaner than in the baseline. The boundary between white and graphite is still jagged on the left-view elbow and forearm and at the shank sides."
+      ]
+    },
+    "G4": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Head, chest, shoulder boxes and the rear heel block are tight-radius boxes. Thighs, shanks and forearms are soft capsules with large radii. The foot is a flat slab. Section squareness is not shared across segments, so the parts do not look like one family of primitives.",
+        "Section squareness and radii differ between segments. The head, chest and pelvis are near-square boxes with small radii. The thigh and shank are softer oval columns. The arms are flat-sided slabs. The back pack is a hard-edged block. This does not look like one radius family. The new chest oval and the small slot on the forearm in the candidate are one-off details that match nothing else on the body."
+      ]
+    },
+    "G6": {
+      "verdict": "FAIL",
+      "per_report": [
+        "FAIL",
+        "FAIL"
+      ],
+      "evidence": [
+        "Matches: head sits at the same height and the leg and knee landmarks roughly line up (P6 and P7 pass). Does not match: shoulders and arms are much wider and splayed, there is no waist taper, no neck column, feet are long slabs (P10a 0.238), and legs do not taper. S2 IoU is 0.53 vs optimus_like and 0.56 vs atlas_like, consistent with the visual mismatch.",
+        "At equal height the design is much wider than optimus_like and atlas_like (front IoU 0.5332 and 0.5657). Matching features: head height is in band (P1 = 0.14), and hip and knee heights are in band (0.50 and 0.27). Features that do not match: the shoulder and arm span is far outside the references' narrow shoulder line, the neck is nearly absent (P2a = 0.1143, band 0.18-0.55), the legs are columns where the references have long tapered legs, and the foot is long and bricklike (P10a = 0.238, band 0.13-0.17)."
+      ]
+    },
+    "G5": {
+      "verdict": "PASS",
+      "reason": "candidate preferred in both presentation orders"
+    }
+  },
+  "reads_as": "toy",
+  "numeric_hard_failures": [
+    "P3",
+    "P10a"
+  ],
+  "top_changes": [
+    {
+      "criterion": "G1",
+      "change": "Narrow the shoulders and arms by a large amount, close to the reference outline (about 0.41 H down toward the 0.22-0.29 band). Move the shoulder balls inboard, tuck the arms closer to the torso, and slim the upper arm. This is the biggest cause of the oversized, toy-like top half.",
+      "profile_param": "segments[chest].stations[shoulder].w (and segments[arm_core].stations[*].w / cy)"
+    },
+    {
+      "criterion": "G2",
+      "change": "Make chest, waist and pelvis one continuous form. Taper the chest into a visibly narrower waist (waist/shoulder currently only just inside the band), then flare to the pelvis with no flat step. Give thighs and shanks a real taper: wide at the top, narrow at the knee and ankle, with the calf widest near the top third.",
+      "profile_param": "segments[torso].stations[waist].w / d; segments[thigh].stations[distal].w; segments[shank].stations[ankle].w and stations[calf].z"
+    },
+    {
+      "criterion": "G4",
+      "change": "Raise the radii and lower the squareness (n) of the head, chest and shoulder blocks to match the leg capsules. Round the head into a smoother egg or capsule and shorten the foot slab (P10a 0.238 vs band 0.13-0.17). Lengthen the neck slightly (P2a 0.1176 vs band 0.18-0.55). Fold the heel block into the shank or foot.",
+      "profile_param": "segments[head].stations[*].n; segments[chest].stations[*].n; segments[foot].stations[toe].z; segments[neck].stations[*].z"
+    }
+  ],
+  "next": "round cap reached: keep best-so-far and escalate to the human reviewer"
+}
