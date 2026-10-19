@@ -1,0 +1,22 @@
+# Strength-check configuration for Adam's validated CAD leg (variants/adam/cad/leg_v2.py). Read by `python -m openhumanoid.cad strength`.
+# The CAD leg is the 0.60 m stand-in layout (layout_v2.yaml), so the loads come from the 0.60 m R1 concept (the heavier of the two R1 heights).
+robot:
+  mass_kg: 5.11               # R1 package section 2.2: shelled nominal at 0.60 m (4.60 kg x structure 1.2); the 0.55 m robot is lighter (4.40)
+  height_m: 0.60
+  note: "mass is a pre-CAD guess (structure -15%/+40%); the check should be re-run when the BOM mass is real"
+concept:
+  report: variants/adam/generated/concept/R1-P1-0p60-3s-sts3250-knee-hiproll/report.json   # peak torques of walk / dance / squat / turn
+# design actuators (R1 Path 1: STS3250 at hip roll and knees). The CAD leg is modelled with STS3215-sized cases; the STS3250 has the same case.
+actuators:
+  hip_roll: sts3250-12v
+  knee: sts3250-12v
+walking:
+  stance_knee_flexion_deg: 45     # concept gait choice at 0.60 m (report: 45 deg, 0.5 s)
+leg:
+  side: l
+  foot: {link: ankle_roll_l_link, part: foot_l}
+# the pelvis housing and its cover are a stand-in for the pelvis design (out of scope of the leg validation)
+exclude_parts: [housing_hip_yaw_l, cover_hip_yaw_l]
+# print profile: PETG, 4 perimeters, 40% infill unless a part says otherwise. Orientation comes from Part.print_up in the builder.
+print_profiles:
+  "*": {material: petg, perimeters: 4, infill_pct: 40}
