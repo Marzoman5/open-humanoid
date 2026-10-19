@@ -1,0 +1,18 @@
+{
+  "order": "single",
+  "reads_as": "unfinished",
+  "reads_as_reason": "Two near-parallel rounded slabs with a hard diagonal saw-cut at the shank top and no knee form between them read as a prototype block-out, not a finished leg.",
+  "criteria": {
+    "G1": {"verdict": "FAIL", "evidence": "The thigh is a tall, almost constant-width rounded box (front and side views) and the shank is the same slab with a slanted top. Neither shows a muscle-like taper or a clear proximal-to-distal gesture. The metrics agree: P8a 0.708 and P8b 0.712 both fail their taper bands."},
+    "G2": {"verdict": "FAIL", "evidence": "In the side silhouette the thigh ends in a full round-over, then the shank begins with a flat diagonal cut. The two read as separate parts, not a flowing thigh-knee-shank form. The back view shows the cut as a flat elliptical face with a horizontal line across it, like a sliced cylinder. At 65 and 130 degrees the shank top is a bare slanted plane. It does not read as a deliberate dark recess."},
+    "G3": {"verdict": "UNCERTAIN", "evidence": "Only light clay is rendered. The geometry offers a gap at the knee that could take a dark recess, but its edges are not shaped to read as one: the shank's cut edge is knife-sharp, not a lip."},
+    "G4": {"verdict": "FAIL", "evidence": "The thigh has generous, uniform end radii and a soft rounded-rectangle section. The shank top has a knife-edge diagonal with no radius, and its distal end is rounded. Two different edge languages on one limb."},
+    "G6": {"verdict": "UNCERTAIN", "evidence": "No reference images were supplied. Optimus and electric Atlas legs have a tapered thigh, a defined knee housing, and a calf that swells then narrows. Shared: squarish-round section, wider upper thigh. Missing: knee housing, calf swell, distal taper. Would not call it the same family."}
+  },
+  "top_changes": [
+    {"criterion": "G2", "change": "Replace the raw diagonal cut at the shank top with a rounded knee-cap or lip with a radius matching the thigh's distal round-over; make the gap parallel to the knee axis.", "profile_param": "segments[shank].stations[proximal].z / n / w / d"},
+    {"criterion": "G1", "change": "Add real taper: narrow the thigh toward the knee and the shank toward the ankle; calf swell near the top of the shank, slimmer ankle.", "profile_param": "segments[thigh].stations[distal].w and d; segments[shank].stations[ankle].w and d"},
+    {"criterion": "G4", "change": "Break up flat faces (S4a 0.434 failed): slight crown down the thigh front and shank front; unify corner radii by lowering section squareness n on the mid stations.", "profile_param": "segments[thigh].stations[mid].n and d; segments[shank].stations[mid].n and d"}
+  ],
+  "notes": "Zebra views show jagged bands mostly at the knee ends and shank top; could be tessellation or real curvature breaks. The red target outline matches the silhouettes closely (T1a 0.9887, T1b 0.9862), so the target shape itself is probably too blocky: hitting the target does not make it look finished. No BASELINE was given, so there is no pairwise verdict."
+}
