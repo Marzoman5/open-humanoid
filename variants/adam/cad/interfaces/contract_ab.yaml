@@ -4,7 +4,7 @@
 # R1 landmarks), a vendor-CAD servo dimension (catalog/actuators/sts3215-12v.yaml), a dfm.yaml rule, or a stated design choice of region B.
 # Change requests go through the commander; B re-runs its checks against any change.
 schema: contract-ab/0.1
-status: "published 2026-10-19, v5 (NO waist joint: the torso is bolted rigidly to the pelvis deck at z 382.15; DOF 23 -> 22)"
+status: "published 2026-10-19, v5.1 (NO waist joint: torso bolted to the pelvis deck at z 382.15; v5.1: dowels at (17, +-15), A's bolting cavity, B's mount wrench and mount checks)"
 owner: "region B (cad-upper); consumer: region A"
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -14,7 +14,8 @@ torso_mount:                             # v5 (maintainer 2026-10-19): the waist
     Region A: the 6805ZZ seat fails at the fall tilt (static SF ~0.5-0.7) and no off-the-shelf bearing fits the envelope. Walking,
     turning, push recovery (SIL) and the pickup planner never use the waist (packaging study L2: margins unchanged or slightly better).
   plane: {z: 382.15, normal: [0, 0, 1], note: "A's deck top = B's pad underside, flat contact, no gap; the torso_link frame origin is (0, 0, 382.15)"}
-  deck_A: {x: [-12.7, 45.0], y: [-19.0, 19.0], top_z: 382.15, note: "A's flat deck (A's proposal). Nothing of A above z 382.15 under the torso"}
+  deck_A: {x: [-12.7, 45.0], y: [-18.99, 18.99], top_z: 382.15, note: "A's flat deck; |y| <= 18.99 for the hip-yaw cover lift-off (A, v5.1). Nothing of A above z 382.15 under the torso"}
+  bolting_cavity_A: {x: [-9.0, 32.0], y: [-17.2, 17.2], open: below, note: "A (v5.1): the old waist-servo volume, kept free for the key; the 4 heads are inside it"}
   pad_B:
     outline: {x: [-12.7, 32.5], y: [-22.0, 22.0], corner_r: 6.0}
     z: [382.15, 391.75]                   # solid pad, part of torso_frame, joins the floor (391.75..396.5)
@@ -37,9 +38,9 @@ torso_mount:                             # v5 (maintainer 2026-10-19): the waist
     tool_corridor_A: "Ø8 x 30 mm free below each head (dfm access M3) inside the pelvis, with the pocket full and the legs on (A)"
   dowels:
     part: "2 x Ø4 x 12 ISO 8734 hardened dowel pins (torque and shear; the bolts sit in clearance holes and carry no shear)"
-    points_xy: [[17.0, 17.0], [17.0, -17.0]]
+    points_xy: [[17.0, 15.0], [17.0, -15.0]]       # v5.1 (A): moved from |y| 17 so A's deck keeps a wall at |y| <= 18.99
     engagement: "6 mm in A (A's fit), 6 mm in B: hole Ø4.0 (printed, reamed), z 382.15..389.0 (0.85 mm relief at the end)"
-    note_for_A: "at |y| 17 a Ø4 hole leaves ~0 mm of wall to A's deck edge at |y| 19 (B's pad goes to |y| 22, 3 mm wall): A to widen the deck locally or move the dowels to |y| <= 15"
+    note_v5_1: "resolved: A moved the dowels to |y| 15 (deck wall 2 mm); B's pad holes follow"
   assembly_order: "A: pelvis with the pocket full (tray, IMU, both adapters, plugged). B: torso frame lowered onto the dowels (washer + nut slid into the four traps first); 4 bolts driven up from inside the pelvis. Then the shoulder servos, Pi, pack etc. (B). Legs after (A), or before: the ball-end key reaches."
   design_loads:                         # standard fall policy (docs/strength.md) and stall; B's run in variants/adam/cad/upper/strength/waist_design_load.json
     method: >-
@@ -48,7 +49,19 @@ torso_mount:                             # v5 (maintainer 2026-10-19): the waist
       each scaled so that no SERVO joint it crosses exceeds 2 x stall. With no waist servo the yaw torque and the tilt are no longer
       capped anywhere: they reach the mount in full. Plus every stall case (arm joints, neck, gripper) and the lift-by-hand case.
     a_estimate_n_per_bolt: 850          # A's estimate (side tilt, SF 2), before B's run
-    b_result: "pending (B's strength run on the v5 geometry; this file is updated with the numbers)"
+    b_result_v5_1:                      # strength_upper.py, unfactored (class SF applied in the checks: fall 2, stall 1.5)
+      worst_tilt: {nm: 21.9, case: "side fall onto the opposite shoulder bracket (390 N, uncapped)", radial_n: 392.5, yaw_nm: 0.4}
+      worst_yaw: {nm: 9.8, case: "forward fall onto a shoulder roll / pitch link", tilt_nm: 8.6, radial_n: 150.0,
+                  note: "the ~25 N*m estimate (390 N x 65 mm) is limited by the shoulder-pitch back-drive (2 x stall), which the fall policy applies to every case crossing that servo"}
+      worst_radial: {n: 392.5, case: "forward / side fall onto the torso", tilt_nm: 17.9, yaw_nm: 6.3}
+      worst_axial: {n: 381.7, case: "fall onto the torso from above (down contact)", tilt_nm: 5.0}
+      stall: {tilt_nm: 7.2, yaw_nm: 1.7, radial_n: 58.0, case: "neck yaw at stall against a blocked head"}
+      handling: {tilt_nm: 3.8, axial_n: 53.9, case: "lifted by one claw"}
+      rigid_fall_informational: {tilt_nm: 223.0, yaw_nm: 62.0, radial_n: 1308.0, note: "no bumper (10 mm stop absent): informational, like every rigid case; the TPU bumper zones are what the protected numbers rely on"}
+      bolt_tension_max_n: {fall: 464.0, stall: 199.0, note: "toolkit bolted-joint model: 4 bolts in tension + compression patch on the deck overlap; x SF 2 = 928 N (A's 850 N estimate confirmed, +9 %)"}
+      dowel_shear_max_n: {fall: 632.0, note: "per dowel: in-plane 393 N / 2 + 13.1 N*m about the dowel centroid / (2 x 15 mm), side fall onto the torso; bolts in clearance holes carry no shear"}
+      checks_B_at_sf2: {nut_trap_pull_through: 4.36, nut_trap_bearing_iso7093: 3.36, dowel_bearing_in_pad: 1.09, dowel_shear_steel: 5.97, verdict: PASS}
+      for_A: "check the deck, the bolt heads (ISO 7089 washers) and A's 6 mm dowel engagement at the same wrench; A's dowel bearing sees the same 632 N per dowel"
   keepouts:
     - {name: below_plane_for_B, note: "nothing of B below z 382.15"}
     - {name: above_plane_for_A, note: "nothing of A above z 382.15 inside the waist band (bolt heads are under the deck)"}

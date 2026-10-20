@@ -3,7 +3,7 @@ schema: interfaces/0.1
 variant: adam
 layout: adam_v2a_upper
 layout_status: frozen-concept region B layout (T-20261019-f6e2); region A legs not included
-layout_sha: b7f4d2b18f4c
+layout_sha: f37a2a9c2f5e
 units: {length: mm, angle: deg}
 frame: 'world: x forward, y left, z up; zero pose = all joint angles 0; links axis-aligned with the world at the zero pose'
 height_mm: 550.0
@@ -16,12 +16,12 @@ links:
     parent: null
     origin_mm: [0.0, 0.0, 275.0]
     side: null
-  waist_yaw_link:
+  torso_link:
     parent: pelvis
-    origin_mm: [0.0, 0.0, 382.0]
+    origin_mm: &id001 [0.0, 0.0, 382.15]
     side: null
   shoulder_pitch_l_link:
-    parent: waist_yaw_link
+    parent: torso_link
     origin_mm: [0.0, 65.15, 439.3]
     side: l
   shoulder_roll_l_link:
@@ -37,7 +37,7 @@ links:
     origin_mm: [0.0, 65.15, 266.0]
     side: l
   shoulder_pitch_r_link:
-    parent: waist_yaw_link
+    parent: torso_link
     origin_mm: [0.0, -65.15, 439.3]
     side: r
   shoulder_roll_r_link:
@@ -53,7 +53,7 @@ links:
     origin_mm: [0.0, -65.15, 266.0]
     side: r
   neck_pitch_link:
-    parent: waist_yaw_link
+    parent: torso_link
     origin_mm: [3.0, 0.0, 462.0]
     side: null
   neck_yaw_link:
@@ -61,73 +61,11 @@ links:
     origin_mm: [9.0, 0.0, 480.5]
     side: null
 joints:
-  waist_yaw:
-    limb: torso
-    side: null
-    base: waist_yaw
-    parent_link: pelvis
-    child_link: waist_yaw_link
-    axis:
-      origin_mm: [0.0, 0.0, 382.0]
-      direction: [0, 0, 1]
-      name: z
-    rom_deg: [-60, 60]
-    rom_spec_deg: [-60, 60]
-    rom_note: null
-    actuator:
-      id: sts3215-12v
-      host_link: pelvis
-      mass_kg: 0.055
-      frame:
-        origin_mm: [0.0, 0.0, 382.0]
-        z_dir: [0.0, 0.0, 1.0]
-        x_dir: [1.0, 0.0, 0.0]
-        y_dir: [0.0, 1.0, 0.0]
-      horn_plane_offset_mm: 0.0
-      body_mm: [45.22, 24.72, 35.0]
-      axis_from_near_end_mm: 10.11
-      corner_radius_mm: 37.222
-      case_holes:
-      - id: case_+y_00
-        at_mm: [8.3, 12.36, 381.5]
-        thread: M2
-        depth_mm: 2.8
-      - id: case_+y_10
-        at_mm: [29.0, 12.36, 381.5]
-        thread: M2
-        depth_mm: 2.8
-      - id: case_-y_00
-        at_mm: [8.3, -12.36, 381.5]
-        thread: M2
-        depth_mm: 2.8
-      - id: case_-y_10
-        at_mm: [29.0, -12.36, 381.5]
-        thread: M2
-        depth_mm: 2.8
-    horn:
-      seat_origin_mm: [0.0, 0.0, 381.75]
-      dir: [0.0, 0.0, 1.0]
-      type: round_25t
-      od_mm: 19.2
-      thickness_mm: 2.5
-      bolt_circle_d_mm: 14.0
-      n_holes: 4
-      screw: M2
-      center_screw: M3
-      clock_deg: 0.0
-      note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
-    back:
-      origin_mm: [0.0, 0.0, 347.0]
-      dir: [-0.0, -0.0, -1.0]
-      stub_od_mm: 6.0
-    idler: null
-    keepout:
-      servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
   shoulder_pitch_l:
     limb: arm
     side: l
     base: shoulder_pitch
-    parent_link: waist_yaw_link
+    parent_link: torso_link
     child_link: shoulder_pitch_l_link
     axis:
       origin_mm: [0.0, 65.15, 439.3]
@@ -138,7 +76,7 @@ joints:
     rom_note: null
     actuator:
       id: sts3215-12v
-      host_link: waist_yaw_link
+      host_link: torso_link
       mass_kg: 0.055
       frame:
         origin_mm: [0.0, 46.0, 439.3]
@@ -375,7 +313,7 @@ joints:
     limb: arm
     side: r
     base: shoulder_pitch
-    parent_link: waist_yaw_link
+    parent_link: torso_link
     child_link: shoulder_pitch_r_link
     axis:
       origin_mm: [0.0, -65.15, 439.3]
@@ -386,7 +324,7 @@ joints:
     rom_note: null
     actuator:
       id: sts3215-12v
-      host_link: waist_yaw_link
+      host_link: torso_link
       mass_kg: 0.055
       frame:
         origin_mm: [0.0, -46.0, 439.3]
@@ -623,7 +561,7 @@ joints:
     limb: head
     side: null
     base: neck_pitch
-    parent_link: waist_yaw_link
+    parent_link: torso_link
     child_link: neck_pitch_link
     axis:
       origin_mm: [3.0, 0.0, 462.0]
@@ -634,7 +572,7 @@ joints:
     rom_note: null
     actuator:
       id: sts3215-12v
-      host_link: waist_yaw_link
+      host_link: torso_link
       mass_kg: 0.055
       frame:
         origin_mm: [31.6, 10.0, 441.0]
@@ -750,89 +688,99 @@ joints:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
 estimates_to_confirm: [cable.plug_len_mm, cable.socket_wh_mm]
 problems: []
-region: 'B (upper body: waist yaw and everything it carries)'
+region: 'B (upper body: the torso bolted to the pelvis deck and everything it carries)'
+fixed_joints:
+  torso_mount:
+    parent_link: pelvis
+    child_link: torso_link
+    type: fixed
+    origin_mm: *id001
+    note: bolted torso-pelvis mount, contract_ab.yaml v5 (no waist yaw; DOF 22)
 contract_ab:
   schema: contract-ab/0.1
-  status: published 2026-10-19, v4.5 (6805ZZ seat = the designed waist load path; A lower backstop arcs at a 1.0 mm gap to B's floor; upper ring
-    and posts dropped)
+  status: 'published 2026-10-19, v5.1 (NO waist joint: torso bolted to the pelvis deck at z 382.15; v5.1: dowels at (17, +-15), A''s bolting cavity,
+    B''s mount wrench and mount checks)'
   owner: 'region B (cad-upper); consumer: region A'
-  waist:
-    joint: waist_yaw
-    axis:
-      origin: [0.0, 0.0, 382.0]
-      direction: [0, 0, 1]
-    split: 'Turntable split: A owns the STATOR (the waist STS3215 body, its housing in the pelvis, and the seat of the 6805ZZ ring bearing''s
-      OUTER race). B owns the ROTOR (the horn, the torso hub whose spigot carries the INNER race, everything above).'
-    servo:
-      actuator: sts3215-12v
-      host_link: pelvis
-      frame:
-        origin: [0.0, 0.0, 382.0]
-        z_dir: [0, 0, 1]
-        x_dir: [1, 0, 0]
-      body_world:
-        x: [-10.11, 35.11]
-        y: [-12.36, 12.36]
-        z: [347.0, 382.0]
-      connectors: "2 x 5264 on the BACK face (z = 347), x 12.5..22 from the axis: A's cover needs a plug window there + 12 mm plug room below;\
-        \ the back PA3 screw head (\xD85.5) turns with the torso: the cover's centre hole must be >= \xD88.1 (1.0 mm moving gap)"
-      horn: "stock round horn (\xD819.2 x 2.5) fitted by B; its underside is at z 381.75, its top at 384.25 (B's hub sits on it)"
-      a_housing_rules: 'Housing per servo_housing (slip 0.15/side, walls >= 2.4) with a HORN RELIEF: nothing of A within r 10.6 of the axis above
-        z 380.7 (the horn rim needs the 1.0 mm moving gap; vendor CAD). The housing top must not rise above z 382.15 anywhere except the bearing
-        ring.'
-    bearing:
-      part: 6805ZZ (25 x 37 x 7, ISO 15), deep-groove thin-section; carries the torso's radial load and fall moments so the servo spline does
-        not
-      outer_race_seat_A:
-        bore_d: 37.1
-        seat_z: [383.75, 390.75]
-        shoulder:
-          z: [382.15, 383.75]
-          inner_d: 33.8
-          note: supports the outer ring only (outer ring land d 33.5..37); keep d >= 33.8 free so the inner ring and B's spigot pass
-        min_wall_around_seat: 2.0
-        ring_top_z_max: 390.75
-      inner_race_B: hub spigot d 25 (inner race slip/press), bore d 19.8 around the horn; hub shoulder on the race top at z 390.75 (d 25..28.6)
-      axial_load_path: 'torso weight: hub shoulder -> inner race -> balls -> outer race -> A''s shoulder. Lift-off: horn screws (M3 centre + 4
-        x M2).'
-    load_path: 'v4.5 (commander decision after region A''s check): the 6805ZZ outer-race seat (A, Loctite 641 retention) is the designed path
-      for the waist tilt and radial load (22 N*m / 393 N from the fall policy, SF 2): A''s seat ring passes at 34 MPa vs 57 MPa. A checks the
-      bearing itself at 44 N*m. The captured flange of v4.4 is dropped (the upper ring could not be fastened and failed at 3-4 mm).'
-    backstop:
-      lower_stop_arcs_A: {top_z_max: 390.75, note: 'overload backstop only: partial arcs inside the waist silhouette (A''s choice of radii and
-          angles)'}
-      floor_face_B:
-        underside_z: 391.75
-        r: [14.3, 40.0]
-        gap_nominal_mm: 1.0
-        note: B's torso floor is a continuous flat face over r 14.3..40 at every yaw (a disc of r 40 under the floor outline)
-      cable_loop: 'r 21..29 in the floor slot r 18..29.5, below z 391: A''s arcs must stay outside r 30 (or leave the slot''s sector) at every
-        yaw'
-      inner_race_clip_B: retains the 6805 inner race on the hub spigot (axial)
-      assembly_order: 'A: stator, bearing (Loctite 641), backstop arcs. B: torso lowered onto the horn and the inner race; horn screws through
-        the floor and centre-web access holes; inner-race clip. No step needs access from below.'
-    design_loads_at_waist: {method: 'variants/adam/cad/upper/tools/strength_upper.py (waist_design_load.json): every protected fall case of the
-        upper body (contact F = phi E / d x k_peak = 0.25 x 10.4 J / 0.010 m x 1.5 = 390 N on the extreme point of each exposed link; inertial
-        n = dh / d = 24 g), each scaled so no joint it crosses exceeds 2 x stall (servo back-drive), EXCEPT the waist tilt, which the captured
-        flange carries (no side-moment cap at the waist). Robot 4.4 kg / 0.55 m (R1 package), CoM 0.55 H, lying 0.06 m.', worst_tilt_nm: 22.0,
-      worst_radial_n: 392.5, axial_n: -11.1, yaw_torque_cap_nm: 5.88, gated: 'SF 2 (fall class): 44 N*m tilt and 785 N radial. As two opposite
-        stop contacts at r ~35 mm: ~630 N each in compression (SF included)', supersedes: 'v4.3''s 72.8 N*m (1.65 kg x 30 g x 0.15 m, ad hoc)',
-      carried_by: the 6805ZZ seat (v4.5); the backstop arcs only engage after 1.0 mm of tilt travel (overload)}
-    keepouts_for_A:
-    - name: rotor_sweep
-      shape: cylinder
-      axis: [0, 0, 1]
-      centre: [0, 0, 0]
-      r: 40.0
-      z: [390.75, 402.0]
-      note: 'v4.5: nothing of A above z 390.75 under B''s floor disc (r 40) except the backstop arcs'' contact faces at <= 390.75'
-    - name: spigot
-      shape: cylinder
-      centre: [0, 0, 0]
-      r: 13.5
-      z: [382.75, 391.75]
-      note: rotating spigot + inner race + horn; 1.0 mm moving gap included
-    design_loads_at_bearing: superseded by design_loads_at_waist (v4.4)
+  torso_mount:
+    joint: fixed (torso_link is a fixed child of the pelvis; no waist servo, no 6805ZZ, no stops)
+    why: 'Region A: the 6805ZZ seat fails at the fall tilt (static SF ~0.5-0.7) and no off-the-shelf bearing fits the envelope. Walking, turning,
+      push recovery (SIL) and the pickup planner never use the waist (packaging study L2: margins unchanged or slightly better).'
+    plane:
+      z: 382.15
+      normal: [0, 0, 1]
+      note: A's deck top = B's pad underside, flat contact, no gap; the torso_link frame origin is (0, 0, 382.15)
+    deck_A:
+      x: [-12.7, 45.0]
+      y: [-18.99, 18.99]
+      top_z: 382.15
+      note: A's flat deck; |y| <= 18.99 for the hip-yaw cover lift-off (A, v5.1). Nothing of A above z 382.15 under the torso
+    bolting_cavity_A:
+      x: [-9.0, 32.0]
+      y: [-17.2, 17.2]
+      open: below
+      note: 'A (v5.1): the old waist-servo volume, kept free for the key; the 4 heads are inside it'
+    pad_B:
+      outline:
+        x: [-12.7, 32.5]
+        y: [-22.0, 22.0]
+        corner_r: 6.0
+      z: [382.15, 391.75]
+      note: 'x <= 32.5: the R2a waist band (shrunk 3.1 mm) allows x <= 33.5 at |y| 13 for z 384..394, so nothing of B (pad, nut traps) may reach
+        A''s x 45 deck edge; the contact patch is the overlap x -12.7..32.5, |y| <= 19 (~860 mm2).'
+    bolts:
+      count: 4
+      points_xy:
+      - [-4.0, 13.0]
+      - [-4.0, -13.0]
+      - [26.0, 13.0]
+      - [26.0, -13.0]
+      change_vs_A_proposal: 'A proposed (38, +-13) for the front pair. At x 38 B''s nut traps (9.4 mm washer seat) would sit 5-9 mm OUTSIDE the
+        waist band (z 384..394 allows x <= 33.5 at |y| 13). Moved to x 26: still inside the freed waist-servo cavity (old body x -10..35), so
+        A''s upward key access is unchanged. A to confirm.'
+      screw: ISO 4762 M3 socket head, driven UPWARD from inside the pelvis (2.5 mm ball-end key, reaches with the legs on), ISO 7089 washer under
+        the head (A side)
+      length: "A deck thickness + 11 mm (M3 x 16 for a 5 mm deck); the tip ends in B's clearance hole (\xD83.4 up to z 394.5)"
+      nut_B: "captive in a side-entry trap in B's pad (heat-set inserts pull out at ~300 N, the bolts see up to ~850 N): ISO 7093 large washer\
+        \ (\xD89 x 0.8) seat z 387.15..388.05 (slot 9.4 wide) under an ISO 4032 M3 hex nut, z 388.05..390.65 (slot 5.7 across flats, anti-rotation);\
+        \ 5.0 mm of solid pad under the washer (pull-through), >= 5.8 mm of solid above the nut. Slots open outward (toward |y| = 22)."
+      tool_corridor_A: "\xD88 x 30 mm free below each head (dfm access M3) inside the pelvis, with the pocket full and the legs on (A)"
+    dowels:
+      part: "2 x \xD84 x 12 ISO 8734 hardened dowel pins (torque and shear; the bolts sit in clearance holes and carry no shear)"
+      points_xy:
+      - [17.0, 15.0]
+      - [17.0, -15.0]
+      engagement: "6 mm in A (A's fit), 6 mm in B: hole \xD84.0 (printed, reamed), z 382.15..389.0 (0.85 mm relief at the end)"
+      note_v5_1: 'resolved: A moved the dowels to |y| 15 (deck wall 2 mm); B''s pad holes follow'
+    assembly_order: 'A: pelvis with the pocket full (tray, IMU, both adapters, plugged). B: torso frame lowered onto the dowels (washer + nut
+      slid into the four traps first); 4 bolts driven up from inside the pelvis. Then the shoulder servos, Pi, pack etc. (B). Legs after (A),
+      or before: the ball-end key reaches.'
+    design_loads:
+      method: 'variants/adam/cad/upper/tools/strength_upper.py: the wrench the torso_link subtree passes across the mount plane, about (0, 0,
+        382.15), for every protected fall case (contact F = phi E / d x k_peak = 390 N on the extreme point of each exposed link; inertial n =
+        24 g), each scaled so that no SERVO joint it crosses exceeds 2 x stall. With no waist servo the yaw torque and the tilt are no longer
+        capped anywhere: they reach the mount in full. Plus every stall case (arm joints, neck, gripper) and the lift-by-hand case.'
+      a_estimate_n_per_bolt: 850
+      b_result_v5_1:
+        worst_tilt: {nm: 21.9, case: 'side fall onto the opposite shoulder bracket (390 N, uncapped)', radial_n: 392.5, yaw_nm: 0.4}
+        worst_yaw: {nm: 9.8, case: forward fall onto a shoulder roll / pitch link, tilt_nm: 8.6, radial_n: 150.0, note: 'the ~25 N*m estimate
+            (390 N x 65 mm) is limited by the shoulder-pitch back-drive (2 x stall), which the fall policy applies to every case crossing that
+            servo'}
+        worst_radial: {n: 392.5, case: forward / side fall onto the torso, tilt_nm: 17.9, yaw_nm: 6.3}
+        worst_axial: {n: 381.7, case: fall onto the torso from above (down contact), tilt_nm: 5.0}
+        stall: {tilt_nm: 7.2, yaw_nm: 1.7, radial_n: 58.0, case: neck yaw at stall against a blocked head}
+        handling: {tilt_nm: 3.8, axial_n: 53.9, case: lifted by one claw}
+        rigid_fall_informational: {tilt_nm: 223.0, yaw_nm: 62.0, radial_n: 1308.0, note: 'no bumper (10 mm stop absent): informational, like every
+            rigid case; the TPU bumper zones are what the protected numbers rely on'}
+        bolt_tension_max_n: {fall: 464.0, stall: 199.0, note: 'toolkit bolted-joint model: 4 bolts in tension + compression patch on the deck
+            overlap; x SF 2 = 928 N (A''s 850 N estimate confirmed, +9 %)'}
+        dowel_shear_max_n: {fall: 632.0, note: 'per dowel: in-plane 393 N / 2 + 13.1 N*m about the dowel centroid / (2 x 15 mm), side fall onto
+            the torso; bolts in clearance holes carry no shear'}
+        checks_B_at_sf2: {nut_trap_pull_through: 4.36, nut_trap_bearing_iso7093: 3.36, dowel_bearing_in_pad: 1.09, dowel_shear_steel: 5.97, verdict: PASS}
+        for_A: check the deck, the bolt heads (ISO 7089 washers) and A's 6 mm dowel engagement at the same wrench; A's dowel bearing sees the
+          same 632 N per dowel
+    keepouts:
+    - {name: below_plane_for_B, note: nothing of B below z 382.15}
+    - {name: above_plane_for_A, note: nothing of A above z 382.15 inside the waist band (bolt heads are under the deck)}
   electronics_pocket:
     owner: B designs the tray and its contents; A provides the pocket, the mounting face and keeps the zone free (maintainer, v3)
     host_link: pelvis
@@ -867,15 +815,15 @@ contract_ab:
       note: 'on the centre line, 86 mm above the hip axis, 26 mm behind the waist axis, rigid with the pelvis: the runtime''s IMU site (docs/software.md)'
     - {part: waveshare-bus-servo-adapter, role: leg bus (12 servos), at: 'y -55..-13, board VERTICAL in the y-z plane (33 tall: z 344.6..377.6,
         1 mm above and below), components back (x -22..-34) on 2 stand-off posts; USB from the Pi in the torso'}
-    - {part: waveshare-bus-servo-adapter, role: arm/head/waist bus (11 servos), at: 'y +13..+55, mirror of the leg adapter (vertical); USB from
-        the Pi; its bus data goes back up through the waist opening'}
+    - {part: waveshare-bus-servo-adapter, role: arm/head bus (10 servos), at: 'y +13..+55, mirror of the leg adapter (vertical); USB from the
+        Pi; its bus data goes back up through the waist opening'}
     free_for_A: none in the pocket (v4); A's leg-feed splits (WAGO 221-413 taps) go outside the zone
     ventilation: none needed (adapter + IMU < 0.3 W)
     mass_kg: 0.075
   cable_pass_throughs:
     waist:
-      route: 'behind the waist servo: torso floor slot (B) at r 18..32 behind the axis over an arc of +-75 deg; flat service loop in the gap z
-        382..391 on a 25 mm radius with 2 x the 60 deg twist of slack (~55 mm)'
+      route: 'v5 (fixed, no loop): U-notch in the back edge of B''s torso floor, x -27..-19.2, |y| <= 16 (z 391.75..396.5), behind B''s pad (x
+        >= -12.7), straight down into A''s opening'
       a_opening:
         x: [-32.0, -16.0]
         y: [-20.0, 20.0]
@@ -883,14 +831,10 @@ contract_ab:
         note: open from the pelvis top down into the pocket; edges rounded r >= 2
       bundle: ['4 x leg power feeds, 18 AWG silicone pairs (star in the torso -> the 4 leg segments; R1 7.2: fed at the STS3250s); the leg adapter''s
           own power is a tap on one feed inside the pocket', "2 x USB 2.0, slim (\xD8 <= 3.5 mm), Pi (torso) -> the two bus adapters (pocket);\
-          \ bend radius >= 15 mm (4 x \xD8)", 1 x arm/head/waist bus data lead (3 x 26 AWG) from the arm/head adapter (pocket) back up to the
-          torso chain, '1 x IMU cable, 4 x 28 AWG twisted (BNO085 in UART-RVC or I2C mode: 3V3, GND, 2 signals), Pi (torso) -> IMU (pocket)',
-        the waist servo's own bus lead (arm/head chain) also drops through the opening to the waist servo's back-face connector]
+          \ bend radius >= 15 mm (4 x \xD8)", 1 x arm/head bus data lead (3 x 26 AWG) from the arm/head adapter (pocket) back up to the torso
+          chain, '1 x IMU cable, 4 x 28 AWG twisted (BNO085 in UART-RVC or I2C mode: 3V3, GND, 2 signals), Pi (torso) -> IMU (pocket)']
       bundle_d_mm: 13
-      twist_check: "Flat spiral loop in the 9 mm gap (z 382..391), laid on r 25 around the axis (outside the r 13.5 spigot keep-out, inside the\
-        \ floor slot r 18..32). At +-60 deg yaw the torso-side anchor moves 26 mm along the arc; slack = 2 x 26 + 3 = 55 mm, so the loop radius\
-        \ stays between 21 and 29 mm: >= the USB minimum bend radius 15 mm (4 x \xD8 3.5) at both limits. Bundle 13 mm round -> laid as two flat\
-        \ layers (6 + 6 mm) in the 9 mm gap; the slot width (14 mm) passes it. B re-checks with the loop modelled in its ROM sweep."
+      twist_check: 'v5: none (no waist yaw); the bundle passes the notch flat (7.8 x 32 mm opening, ~30 % fill, a USB-A overmold 16 x 8 passes)'
     legs: A routes the 4 leg feeds and the leg bus data from the pocket to each leg segment
   power_topology: {pack: 'Tattu 3S 1300 (72 x 36 x 22; maintainer v4) in the torso back (B), behind the Pi 5, removed backward', switch_fuse_star: 'XT60
       -> switch -> 18 A ATO fuse (R1 post-sign-off: 20 A had no margin on the WAGO 20 A rating) -> WAGO star (4 x 221-415) in the torso (B)',
