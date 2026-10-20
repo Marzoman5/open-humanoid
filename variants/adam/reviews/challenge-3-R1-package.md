@@ -27,3 +27,6 @@
 1. **Budget:** approve Path 1 (~$1,265–1,505 after the lean and knee fixes) on the condition that nothing beyond the bench servos is ordered until the STS3215 + STS3250 measurements are in?
 2. **Look vs robustness:** is ~0.035 H of shoulder ratio worth ~20% less strict margin (0.60 vs 0.55 m)? Or relax the numeric P3 for Adam and let the critic judge?
 3. **Squat depth:** does any MUST need a deep squat (≥ 110°), e.g. pickup from 0.30–0.35 m tables or dance moves? If not, the knees stay STS3215.
+
+## Bench protocol addition (2026-10-19 night)
+- **Unpowered back-drive torque** of the STS3215 and STS3250 (servo de-energised, measured with a lever and scale), plus behaviour with torque enabled vs disabled. If a fall reflex that de-energises the servos is adopted in the runtime, this may cap fall loads far below the current 2× stall policy, for every arm and neck path (region-B option D). The strength policy changes only after measurement, by the strength owner.
