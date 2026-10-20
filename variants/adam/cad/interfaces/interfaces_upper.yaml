@@ -753,8 +753,8 @@ problems: []
 region: 'B (upper body: waist yaw and everything it carries)'
 contract_ab:
   schema: contract-ab/0.1
-  status: published 2026-10-19, v4.4 (captured waist flange between A's lower stop ring and A's upper retaining ring; design load from the G-strength
-    fall policy)
+  status: published 2026-10-19, v4.5 (6805ZZ seat = the designed waist load path; A lower backstop arcs at a 1.0 mm gap to B's floor; upper ring
+    and posts dropped)
   owner: 'region B (cad-upper); consumer: region A'
   waist:
     joint: waist_yaw
@@ -795,55 +795,37 @@ contract_ab:
       inner_race_B: hub spigot d 25 (inner race slip/press), bore d 19.8 around the horn; hub shoulder on the race top at z 390.75 (d 25..28.6)
       axial_load_path: 'torso weight: hub shoulder -> inner race -> balls -> outer race -> A''s shoulder. Lift-off: horn screws (M3 centre + 4
         x M2).'
-    captured_flange:
-      flange_B:
-        r: [30.0, 40.0]
-        z: [391.75, 395.75]
-        thickness: 4.0
-        part: torso_frame
-        note: continuous ring = the floor's outer annulus; nothing of B beyond r 40 below z 400.75
-      lower_stop_ring_A:
-        r: [30.0, 44.0]
-        top_z: 390.75
-        gap_to_flange: 1.0
-      upper_retaining_ring_A:
-        r: [30.0, 44.0]
-        z: [396.75, 399.75]
-        gap_to_flange: 1.0
-        note: 'max thickness 3.0: B keeps clear up to z 400.75'
-      posts_A:
-        r: [41.0, 44.0]
-        count: 4
-        centres_deg: [45, 135, 225, 315]
-        note: join the two rings outside the flange (1.0 mm from its r 40)
-      screws_A: 4 x M3 joining the upper ring to the posts / lower ring at r 42.5 (A's pattern), with PTFE or nylon washers allowed as wear faces
-        on both stop faces
-      clearance_zone_B:
-        r: [29.0, 46.0]
-        z: [395.75, 400.75]
-        note: B keeps it free at every yaw (verified in B's gate); and r 40..46 free from z 390.75
-      cable_loop: 'r 21..29 in the floor slot r 18..29.5, below z 391: inside every ring and post (>= 1 mm) at any yaw'
-      access_and_order: '1) A: stator, bearing, lower stop ring + posts. 2) B: torso lowered onto the horn and the 6805 inner race (the flange
-        lands 1.0 mm above the lower ring); horn screws through the floor access holes; inner-race retaining clip. 3) A: upper retaining ring
-        installed WITH THE TORSO IN PLACE as two C-shaped halves slid in radially over the flange onto the posts. B HAS NO VERTICAL TOOL ACCESS
-        from above at r 30..46 at any yaw (shoulder cradles, Pi, front electronics sit there), so the ring screws must be driven from BELOW (through
-        the lower ring into inserts in the upper ring, from inside the pelvis) or the halves locked by a printed twist/bayonet; A picks one and
-        B re-runs its access check against it.'
-      inner_race_clip_B: retains the 6805 inner race on the hub spigot for normal (non-fall) axial loads only
+    load_path: 'v4.5 (commander decision after region A''s check): the 6805ZZ outer-race seat (A, Loctite 641 retention) is the designed path
+      for the waist tilt and radial load (22 N*m / 393 N from the fall policy, SF 2): A''s seat ring passes at 34 MPa vs 57 MPa. A checks the
+      bearing itself at 44 N*m. The captured flange of v4.4 is dropped (the upper ring could not be fastened and failed at 3-4 mm).'
+    backstop:
+      lower_stop_arcs_A: {top_z_max: 390.75, note: 'overload backstop only: partial arcs inside the waist silhouette (A''s choice of radii and
+          angles)'}
+      floor_face_B:
+        underside_z: 391.75
+        r: [14.3, 40.0]
+        gap_nominal_mm: 1.0
+        note: B's torso floor is a continuous flat face over r 14.3..40 at every yaw (a disc of r 40 under the floor outline)
+      cable_loop: 'r 21..29 in the floor slot r 18..29.5, below z 391: A''s arcs must stay outside r 30 (or leave the slot''s sector) at every
+        yaw'
+      inner_race_clip_B: retains the 6805 inner race on the hub spigot (axial)
+      assembly_order: 'A: stator, bearing (Loctite 641), backstop arcs. B: torso lowered onto the horn and the inner race; horn screws through
+        the floor and centre-web access holes; inner-race clip. No step needs access from below.'
     design_loads_at_waist: {method: 'variants/adam/cad/upper/tools/strength_upper.py (waist_design_load.json): every protected fall case of the
         upper body (contact F = phi E / d x k_peak = 0.25 x 10.4 J / 0.010 m x 1.5 = 390 N on the extreme point of each exposed link; inertial
         n = dh / d = 24 g), each scaled so no joint it crosses exceeds 2 x stall (servo back-drive), EXCEPT the waist tilt, which the captured
         flange carries (no side-moment cap at the waist). Robot 4.4 kg / 0.55 m (R1 package), CoM 0.55 H, lying 0.06 m.', worst_tilt_nm: 22.0,
       worst_radial_n: 392.5, axial_n: -11.1, yaw_torque_cap_nm: 5.88, gated: 'SF 2 (fall class): 44 N*m tilt and 785 N radial. As two opposite
-        stop contacts at r ~35 mm: ~630 N each in compression (SF included)', supersedes: 'v4.3''s 72.8 N*m (1.65 kg x 30 g x 0.15 m, ad hoc)'}
+        stop contacts at r ~35 mm: ~630 N each in compression (SF included)', supersedes: 'v4.3''s 72.8 N*m (1.65 kg x 30 g x 0.15 m, ad hoc)',
+      carried_by: the 6805ZZ seat (v4.5); the backstop arcs only engage after 1.0 mm of tilt travel (overload)}
     keepouts_for_A:
     - name: rotor_sweep
       shape: cylinder
       axis: [0, 0, 1]
       centre: [0, 0, 0]
-      r: 44.0
-      z: [391.75, 402.0]
-      note: 'torso floor + hub sweep (+-60 deg): nothing of A above z 390.75 inside r 44 (waist shell band z 376..402 is B''s)'
+      r: 40.0
+      z: [390.75, 402.0]
+      note: 'v4.5: nothing of A above z 390.75 under B''s floor disc (r 40) except the backstop arcs'' contact faces at <= 390.75'
     - name: spigot
       shape: cylinder
       centre: [0, 0, 0]
