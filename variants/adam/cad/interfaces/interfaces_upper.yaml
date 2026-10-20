@@ -753,7 +753,7 @@ problems: []
 region: 'B (upper body: waist yaw and everything it carries)'
 contract_ab:
   schema: contract-ab/0.1
-  status: 'published 2026-10-19, v4.1 (v4 + pocket height 35 mm: the adapters stand vertical; tilting cannot fit a 42 x 33 x 12 board in 33 mm)'
+  status: 'published 2026-10-19, v4.2 (pocket z 343.6..378.6: 35 mm, top meets the 3.1 mm frame-margin rule under the R2a outer top 381.7)'
   owner: 'region B (cad-upper); consumer: region A'
   waist:
     joint: waist_yaw
@@ -815,12 +815,13 @@ contract_ab:
     zone:
       x: [-44.0, -16.0]
       y: [-57.0, 57.0]
-      z: [344.0, 379.0]
-    zone_note: 'v4.1: z 344..379 (35 mm) because a 42 x 33 x ~12 adapter cannot be tilted into 33 mm (its height only grows when tilted); vertical
-      it needs 33 + 2 x 1 mm. The only volume region A can give at R2a depth: the hip-yaw links sweep the lower pelvis rear across the full width
-      (yaw +-45 deg). A Pi 5 does not fit here, so (maintainer, v3) the Pi 5, its buck, the star and the fuse go in the TORSO by the pack (B;
-      pack = Tattu 3S 1300, maintainer v4). The pocket holds the BNO085 IMU and BOTH bus adapters (v4: the torso has no room for the arm/head
-      adapter; both buses stay short to their servo groups). The buck stays with the Pi (5 V / 5 A must not run through the waist).'
+      z: [343.6, 378.6]
+    zone_note: 'v4.2: z 343.6..378.6 (region A: yaw-bracket rib tops out at 339.0, R2a outer top 381.7 - 3.1 mm rule = 378.6). v4.1: 35 mm because
+      a 42 x 33 x ~12 adapter cannot be tilted into 33 mm (its height only grows when tilted); vertical it needs 33 + 2 x 1 mm. The only volume
+      region A can give at R2a depth: the hip-yaw links sweep the lower pelvis rear across the full width (yaw +-45 deg). A Pi 5 does not fit
+      here, so (maintainer, v3) the Pi 5, its buck, the star and the fuse go in the TORSO by the pack (B; pack = Tattu 3S 1300, maintainer v4).
+      The pocket holds the BNO085 IMU and BOTH bus adapters (v4: the torso has no room for the arm/head adapter; both buses stay short to their
+      servo groups). The buck stays with the Pi (5 V / 5 A must not run through the waist).'
     mounting_face_A:
       plane_x: -16.0
       normal: [-1, 0, 0]
@@ -828,20 +829,20 @@ contract_ab:
     inserts_A:
       thread: M3
       points_yz:
-      - [-52.0, 350.0]
-      - [52.0, 350.0]
-      - [-52.0, 373.0]
-      - [52.0, 373.0]
+      - [-52.0, 349.6]
+      - [52.0, 349.6]
+      - [-52.0, 372.6]
+      - [52.0, 372.6]
       min_pad_d: 10.0
     screws: 4 x M3 x 10 low-head through the tray plate (2.4) into A's inserts, installed from the back with the back shell off
     contents_B:
     - part: imu-bno085
-      at: [-26.0, 0.0, 361.5]
+      at: [-26.0, 0.0, 361.1]
       frame: board standing in the y-z plane (normal -x); chip axes remapped to pelvis x/y/z in software
       isolation: 4 x M2.5 silicone anti-vibration grommets (FPV flight-controller type), 6 mm stand-off from the tray plate
       note: 'on the centre line, 86 mm above the hip axis, 26 mm behind the waist axis, rigid with the pelvis: the runtime''s IMU site (docs/software.md)'
-    - {part: waveshare-bus-servo-adapter, role: leg bus (12 servos), at: 'y -55..-13, board VERTICAL in the y-z plane (33 tall: z 345..378, 1
-        mm above and below), components back (x -22..-34) on 2 stand-off posts; USB from the Pi in the torso'}
+    - {part: waveshare-bus-servo-adapter, role: leg bus (12 servos), at: 'y -55..-13, board VERTICAL in the y-z plane (33 tall: z 344.6..377.6,
+        1 mm above and below), components back (x -22..-34) on 2 stand-off posts; USB from the Pi in the torso'}
     - {part: waveshare-bus-servo-adapter, role: arm/head/waist bus (11 servos), at: 'y +13..+55, mirror of the leg adapter (vertical); USB from
         the Pi; its bus data goes back up through the waist opening'}
     free_for_A: none in the pocket (v4); A's leg-feed splits (WAGO 221-413 taps) go outside the zone
