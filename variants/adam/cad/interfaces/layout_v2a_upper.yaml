@@ -12,8 +12,9 @@
 #     housings (top 380.6 in leg_v2) -> region A contract, interfaces/README.md.
 #   NECK (ADR 0015 amendment: the head grows a few mm deeper / at the chin so the yaw turns about the head centre): PITCH FIRST.
 #     neck pitch: STS3215 in R1's front chest slot (the only chest volume left: shoulder-pitch pair in the centre, pack behind), axis
-#       along y at (30.8, z 441), long axis down, horn face y 10. It drives the neck pivot (3, 0, 462) through a parallelogram.
-#     neck yaw: STS3215 INVERTED in the head's lower half, horn DOWN onto the neck post, axis through the head centre (x 3); the head is
+#       along y at (31.6, z 441) (its cradle clears the right shoulder cradle's front wall), long axis down, horn face y 10. It drives the neck pivot (3, 0, 462) through a parallelogram.
+#     neck yaw: STS3215 INVERTED in the head's lower half, horn DOWN onto the neck post, axis 4-6 mm ahead of the head centre (x 9), long
+#       axis BACK so the camera sits in front of it in the visor zone; the head is
 #       rigid with the servo body (host = neck_yaw_link), so nothing in the head sweeps. Needs the head front at x ~43.8 and full depth
 #       down to the chin (z 478) -> the head growth the maintainer approved. Camera above the servo (z 519..543).
 #     Kinematic order pitch -> yaw (the humanoid_v2 template lists yaw -> pitch at one point): reported for the concept/sim (head only).
@@ -34,7 +35,7 @@ points:
   elbow: [0, 65.15, 329.3]
   gripper: [0, 65.15, 266.0]
   neck_pivot: [3.0, 0, 462.0]
-  neck_yaw: [3.0, 0, 478.0]
+  neck_yaw: [9.0, 0, 480.5]     # 2.5 above the R1 chin: the yaw flange's cup floor must clear the pivot tongue over +-30 deg pitch
 roots:
   pelvis: [0, 0, 275.0]          # hip-joint height (R1 hip 275 mm); the pelvis link frame is region A's
 limbs:
@@ -66,5 +67,5 @@ limbs:
       # pitch pivot at the neck base (2 x MR105ZZ in cheeks on the shoulder cap); the servo in the front chest slot drives it 1:1 through a
       # parallelogram (14 mm cranks, M3 pushrod + 2 ball links). A direct drive at the servo axis swings the neck post into the shoulder-servo cap.
       - {name: neck_pitch, axis: y, range: [-30, 30], point: neck_pivot, servo: {host: waist_yaw_link, horn: [0, 1, 0], long: [0, 0, -1], horn_at: 10.0},
-         drive: {type: parallelogram, servo_point: [30.8, 0, 441.0], crank_mm: 14.0, crank_angle_deg: 90}}
-      - {name: neck_yaw, axis: z, range: [-90, 90], point: neck_yaw, servo: {host: neck_yaw_link, horn: [0, 0, -1], long: [1, 0, 0], horn_at: 0}}
+         drive: {type: parallelogram, servo_point: [31.6, 0, 441.0], crank_mm: 14.0, crank_angle_deg: 90}}
+      - {name: neck_yaw, axis: z, range: [-90, 90], point: neck_yaw, servo: {host: neck_yaw_link, horn: [0, 0, -1], long: [-1, 0, 0], horn_at: 0}}

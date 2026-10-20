@@ -4,7 +4,7 @@
 # R1 landmarks), a vendor-CAD servo dimension (catalog/actuators/sts3215-12v.yaml), a dfm.yaml rule, or a stated design choice of region B.
 # Change requests go through the commander; B re-runs its checks against any change.
 schema: contract-ab/0.1
-status: "published 2026-10-19, v4.2 (pocket z 343.6..378.6: 35 mm, top meets the 3.1 mm frame-margin rule under the R2a outer top 381.7)"
+status: "published 2026-10-19, v4.4 (captured waist flange between A's lower stop ring and A's upper retaining ring; design load from the G-strength fall policy)"
 owner: "region B (cad-upper); consumer: region A"
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ waist:
     host_link: pelvis
     frame: {origin: [0.0, 0.0, 382.0], z_dir: [0, 0, 1], x_dir: [1, 0, 0]}   # origin = top of the case envelope on the output axis; body below
     body_world: {x: [-10.11, 35.11], y: [-12.36, 12.36], z: [347.0, 382.0]}   # vendor CAD envelope (45.22 x 24.72 x 35)
-    connectors: "2 x 5264 on the BACK face (z = 347), x 12.5..22 from the axis: A's cover needs a plug window there + 12 mm plug room below"
+    connectors: "2 x 5264 on the BACK face (z = 347), x 12.5..22 from the axis: A's cover needs a plug window there + 12 mm plug room below; the back PA3 screw head (Ø5.5) turns with the torso: the cover's centre hole must be >= Ø8.1 (1.0 mm moving gap)"
     horn: "stock round horn (Ø19.2 x 2.5) fitted by B; its underside is at z 381.75, its top at 384.25 (B's hub sits on it)"
     a_housing_rules: >-
       Housing per servo_housing (slip 0.15/side, walls >= 2.4) with a HORN RELIEF: nothing of A within r 10.6 of the axis above z 380.7
@@ -34,17 +34,39 @@ waist:
       ring_top_z_max: 390.75              # flush with the race top; B's torso floor starts at 391.75 (1.0 moving gap)
     inner_race_B: "hub spigot d 25 (inner race slip/press), bore d 19.8 around the horn; hub shoulder on the race top at z 390.75 (d 25..28.6)"
     axial_load_path: "torso weight: hub shoulder -> inner race -> balls -> outer race -> A's shoulder. Lift-off: horn screws (M3 centre + 4 x M2)."
+  captured_flange:                      # v4.4 (commander decision): tilt in any direction = COMPRESSION on two opposite stops; no tension in the bearing or horn
+    flange_B: {r: [30.0, 40.0], z: [391.75, 395.75], thickness: 4.0, part: torso_frame, note: "continuous ring = the floor's outer annulus; nothing of B beyond r 40 below z 400.75"}
+    lower_stop_ring_A: {r: [30.0, 44.0], top_z: 390.75, gap_to_flange: 1.0}
+    upper_retaining_ring_A: {r: [30.0, 44.0], z: [396.75, 399.75], gap_to_flange: 1.0, note: "max thickness 3.0: B keeps clear up to z 400.75"}
+    posts_A: {r: [41.0, 44.0], count: 4, centres_deg: [45, 135, 225, 315], note: "join the two rings outside the flange (1.0 mm from its r 40)"}
+    screws_A: "4 x M3 joining the upper ring to the posts / lower ring at r 42.5 (A's pattern), with PTFE or nylon washers allowed as wear faces on both stop faces"
+    clearance_zone_B: {r: [29.0, 46.0], z: [395.75, 400.75], note: "B keeps it free at every yaw (verified in B's gate); and r 40..46 free from z 390.75"}
+    cable_loop: "r 21..29 in the floor slot r 18..29.5, below z 391: inside every ring and post (>= 1 mm) at any yaw"
+    access_and_order: >-
+      1) A: stator, bearing, lower stop ring + posts. 2) B: torso lowered onto the horn and the 6805 inner race (the flange lands 1.0 mm
+      above the lower ring); horn screws through the floor access holes; inner-race retaining clip. 3) A: upper retaining ring installed
+      WITH THE TORSO IN PLACE as two C-shaped halves slid in radially over the flange onto the posts. B HAS NO VERTICAL TOOL ACCESS from
+      above at r 30..46 at any yaw (shoulder cradles, Pi, front electronics sit there), so the ring screws must be driven from BELOW
+      (through the lower ring into inserts in the upper ring, from inside the pelvis) or the halves locked by a printed twist/bayonet;
+      A picks one and B re-runs its access check against it.
+    inner_race_clip_B: "retains the 6805 inner race on the hub spigot for normal (non-fall) axial loads only"
+  design_loads_at_waist:                # v4.4: from the toolkit's standard fall policy (docs/strength.md), not an ad-hoc g level
+    method: >-
+      variants/adam/cad/upper/tools/strength_upper.py (waist_design_load.json): every protected fall case of the upper body
+      (contact F = phi E / d x k_peak = 0.25 x 10.4 J / 0.010 m x 1.5 = 390 N on the extreme point of each exposed link; inertial
+      n = dh / d = 24 g), each scaled so no joint it crosses exceeds 2 x stall (servo back-drive), EXCEPT the waist tilt, which the
+      captured flange carries (no side-moment cap at the waist). Robot 4.4 kg / 0.55 m (R1 package), CoM 0.55 H, lying 0.06 m.
+    worst_tilt_nm: 22.0                 # side fall onto a shoulder bracket (390 N, unscaled), about 56 mm above the waist
+    worst_radial_n: 392.5
+    axial_n: -11.1                      # upper-body weight
+    yaw_torque_cap_nm: 5.88             # 2 x STS3215 stall (servo back-drive)
+    gated: "SF 2 (fall class): 44 N*m tilt and 785 N radial. As two opposite stop contacts at r ~35 mm: ~630 N each in compression (SF included)"
+    supersedes: "v4.3's 72.8 N*m (1.65 kg x 30 g x 0.15 m, ad hoc)"
   keepouts_for_A:
-    - {name: rotor_sweep, shape: cylinder, axis: [0, 0, 1], centre: [0, 0, 0], r: 44.0, z: [391.75, 402.0],
-       note: "torso floor + hub sweep (+-60 deg): nothing of A above z 390.75 inside r 44 (waist shell band z 376..402 is B's)"}
+    - {name: rotor_sweep, shape: cylinder, axis: [0, 0, 1], centre: [0, 0, 0], r: 29.0, z: [390.75, 402.0],
+       note: "v4.4: inside r 29 nothing of A above z 390.75 (hub, floor, cable slot); r 29..44 is the captured-flange zone (captured_flange above)"}
     - {name: spigot, shape: cylinder, centre: [0, 0, 0], r: 13.5, z: [382.75, 391.75], note: "rotating spigot + inner race + horn; 1.0 mm moving gap included"}
-  design_loads_at_bearing:               # for A's stator/deck sizing; B checks its own side
-    upper_body_mass_kg: 1.60              # region B estimate (arms, head, chest, 1300 pack, Pi 5 + buck); replaced by B's CAD mass at export
-    standing_axial_N: 16.2
-    fall_case: "forward fall onto the arms/chest: 30 g peak on the upper-body COM (research/methods/d drop-load rule, 0.15 m above the waist)"
-    fall_moment_Nm: 72.8                  # 1.65 kg x 9.81 x 30 x 0.15
-    fall_radial_N: 486.0                  # 1.65 x 9.81 x 30
-    servo_stall_torque_Nm: 2.94           # STS3215 12 V 30 kg*cm: the stator's anti-rotation must take this with SF >= 3 (8.8 N*m)
+  design_loads_at_bearing: "superseded by design_loads_at_waist (v4.4)"
 
 # --------------------------------------------------------------------------------------------------------------------------------
 electronics_pocket:
