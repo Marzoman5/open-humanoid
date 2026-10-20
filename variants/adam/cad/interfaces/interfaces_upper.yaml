@@ -3,7 +3,7 @@ schema: interfaces/0.1
 variant: adam
 layout: adam_v2a_upper
 layout_status: frozen-concept region B layout (T-20261019-f6e2); region A legs not included
-layout_sha: 6d072c7074e5
+layout_sha: 04454d5ff0a5
 units: {length: mm, angle: deg}
 frame: 'world: x forward, y left, z up; zero pose = all joint angles 0; links axis-aligned with the world at the zero pose'
 height_mm: 550.0
@@ -54,7 +54,7 @@ links:
     side: r
   neck_pitch_link:
     parent: waist_yaw_link
-    origin_mm: [30.8, 0.0, 441.0]
+    origin_mm: [3.0, 0.0, 462.0]
     side: null
   neck_yaw_link:
     parent: neck_pitch_link
@@ -141,33 +141,33 @@ joints:
       host_link: waist_yaw_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, 41.0, 439.3]
+        origin_mm: [0.0, 46.0, 439.3]
         z_dir: [0.0, 1.0, 0.0]
         x_dir: [0.0, 0.0, -1.0]
         y_dir: [-1.0, 0.0, 0.0]
-      horn_plane_offset_mm: -24.15
+      horn_plane_offset_mm: -19.15
       body_mm: [45.22, 24.72, 35.0]
       axis_from_near_end_mm: 10.11
       corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [-12.36, 40.5, 431.0]
+        at_mm: [-12.36, 45.5, 431.0]
         thread: M2
         depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [-12.36, 40.5, 410.3]
+        at_mm: [-12.36, 45.5, 410.3]
         thread: M2
         depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [12.36, 40.5, 431.0]
+        at_mm: [12.36, 45.5, 431.0]
         thread: M2
         depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [12.36, 40.5, 410.3]
+        at_mm: [12.36, 45.5, 410.3]
         thread: M2
         depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, 40.75, 439.3]
+      seat_origin_mm: [0.0, 45.75, 439.3]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
       od_mm: 19.2
@@ -179,7 +179,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, 6.0, 439.3]
+      origin_mm: [0.0, 11.0, 439.3]
       dir: [-0.0, -1.0, -0.0]
       stub_od_mm: 6.0
     idler: null
@@ -319,8 +319,8 @@ joints:
       origin_mm: [0.0, 65.15, 266.0]
       direction: [1, 0, 0]
       name: x
-    rom_deg: [0, 191]
-    rom_spec_deg: [0, 191]
+    rom_deg: [0, 80]
+    rom_spec_deg: [0, 80]
     rom_note: null
     actuator:
       id: sts3215-12v
@@ -389,33 +389,33 @@ joints:
       host_link: waist_yaw_link
       mass_kg: 0.055
       frame:
-        origin_mm: [0.0, -41.0, 439.3]
+        origin_mm: [0.0, -46.0, 439.3]
         z_dir: [0.0, -1.0, 0.0]
         x_dir: [0.0, -0.0, -1.0]
         y_dir: [1.0, 0.0, 0.0]
-      horn_plane_offset_mm: -24.15
+      horn_plane_offset_mm: -19.15
       body_mm: [45.22, 24.72, 35.0]
       axis_from_near_end_mm: 10.11
       corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [12.36, -40.5, 431.0]
+        at_mm: [12.36, -45.5, 431.0]
         thread: M2
         depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [12.36, -40.5, 410.3]
+        at_mm: [12.36, -45.5, 410.3]
         thread: M2
         depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [-12.36, -40.5, 431.0]
+        at_mm: [-12.36, -45.5, 431.0]
         thread: M2
         depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [-12.36, -40.5, 410.3]
+        at_mm: [-12.36, -45.5, 410.3]
         thread: M2
         depth_mm: 2.8
     horn:
-      seat_origin_mm: [0.0, -40.75, 439.3]
+      seat_origin_mm: [0.0, -45.75, 439.3]
       dir: [0.0, -1.0, 0.0]
       type: round_25t
       od_mm: 19.2
@@ -427,7 +427,7 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [0.0, -6.0, 439.3]
+      origin_mm: [0.0, -11.0, 439.3]
       dir: [-0.0, 1.0, -0.0]
       stub_od_mm: 6.0
     idler: null
@@ -567,8 +567,8 @@ joints:
       origin_mm: [0.0, -65.15, 266.0]
       direction: [1, 0, 0]
       name: x
-    rom_deg: [-191, 0]
-    rom_spec_deg: [-191, 0]
+    rom_deg: [-80, 0]
+    rom_spec_deg: [-80, 0]
     rom_note: null
     actuator:
       id: sts3215-12v
@@ -626,7 +626,7 @@ joints:
     parent_link: waist_yaw_link
     child_link: neck_pitch_link
     axis:
-      origin_mm: [30.8, 0.0, 441.0]
+      origin_mm: [3.0, 0.0, 462.0]
       direction: [0, 1, 0]
       name: y
     rom_deg: [-30, 30]
@@ -637,33 +637,33 @@ joints:
       host_link: waist_yaw_link
       mass_kg: 0.055
       frame:
-        origin_mm: [30.8, 19.15, 441.0]
+        origin_mm: [30.8, 10.0, 441.0]
         z_dir: [0.0, 1.0, 0.0]
         x_dir: [0.0, 0.0, -1.0]
         y_dir: [-1.0, 0.0, 0.0]
-      horn_plane_offset_mm: 19.15
+      horn_plane_offset_mm: 10.0
       body_mm: [45.22, 24.72, 35.0]
       axis_from_near_end_mm: 10.11
       corner_radius_mm: 37.222
       case_holes:
       - id: case_+y_00
-        at_mm: [18.44, 18.65, 432.7]
+        at_mm: [18.44, 9.5, 432.7]
         thread: M2
         depth_mm: 2.8
       - id: case_+y_10
-        at_mm: [18.44, 18.65, 412.0]
+        at_mm: [18.44, 9.5, 412.0]
         thread: M2
         depth_mm: 2.8
       - id: case_-y_00
-        at_mm: [43.16, 18.65, 432.7]
+        at_mm: [43.16, 9.5, 432.7]
         thread: M2
         depth_mm: 2.8
       - id: case_-y_10
-        at_mm: [43.16, 18.65, 412.0]
+        at_mm: [43.16, 9.5, 412.0]
         thread: M2
         depth_mm: 2.8
     horn:
-      seat_origin_mm: [30.8, 18.9, 441.0]
+      seat_origin_mm: [30.8, 9.75, 441.0]
       dir: [0.0, 1.0, 0.0]
       type: round_25t
       od_mm: 19.2
@@ -675,12 +675,17 @@ joints:
       clock_deg: 0.0
       note: '25T spline: set the horn within 14.4 deg of the zero pose, trim the rest with the servo''s calibrated offset'
     back:
-      origin_mm: [30.8, -15.85, 441.0]
+      origin_mm: [30.8, -25.0, 441.0]
       dir: [-0.0, -1.0, -0.0]
       stub_od_mm: 6.0
     idler: null
     keepout:
       servo: {frame: actuator.frame, kind: servo_envelope, plug_len_mm: 14.0}
+    drive:
+      type: parallelogram
+      servo_point: [30.8, 0, 441.0]
+      crank_mm: 14.0
+      crank_angle_deg: 90
   neck_yaw:
     limb: head
     side: null
@@ -748,7 +753,7 @@ problems: []
 region: 'B (upper body: waist yaw and everything it carries)'
 contract_ab:
   schema: contract-ab/0.1
-  status: published 2026-10-19, v4 (pelvis pocket = IMU + both bus adapters; Pi 5, buck, star, fuse, Tattu 1300 pack in the torso)
+  status: 'published 2026-10-19, v4.1 (v4 + pocket height 35 mm: the adapters stand vertical; tilting cannot fit a 42 x 33 x 12 board in 33 mm)'
   owner: 'region B (cad-upper); consumer: region A'
   waist:
     joint: waist_yaw
@@ -810,11 +815,12 @@ contract_ab:
     zone:
       x: [-44.0, -16.0]
       y: [-57.0, 57.0]
-      z: [345.0, 378.0]
-    zone_note: 'The only volume region A can give at R2a depth: the hip-yaw links sweep the lower pelvis rear across the full width (yaw +-45
-      deg). A Pi 5 does not fit here, so (maintainer, v3) the Pi 5, its buck, the star and the fuse go in the TORSO by the pack (B; pack = Tattu
-      3S 1300, maintainer v4). The pocket holds the BNO085 IMU and BOTH bus adapters (v4: the torso has no room for the arm/head adapter; both
-      buses stay short to their servo groups). The buck stays with the Pi (5 V / 5 A must not run through the waist).'
+      z: [344.0, 379.0]
+    zone_note: 'v4.1: z 344..379 (35 mm) because a 42 x 33 x ~12 adapter cannot be tilted into 33 mm (its height only grows when tilted); vertical
+      it needs 33 + 2 x 1 mm. The only volume region A can give at R2a depth: the hip-yaw links sweep the lower pelvis rear across the full width
+      (yaw +-45 deg). A Pi 5 does not fit here, so (maintainer, v3) the Pi 5, its buck, the star and the fuse go in the TORSO by the pack (B;
+      pack = Tattu 3S 1300, maintainer v4). The pocket holds the BNO085 IMU and BOTH bus adapters (v4: the torso has no room for the arm/head
+      adapter; both buses stay short to their servo groups). The buck stays with the Pi (5 V / 5 A must not run through the waist).'
     mounting_face_A:
       plane_x: -16.0
       normal: [-1, 0, 0]
@@ -834,10 +840,10 @@ contract_ab:
       frame: board standing in the y-z plane (normal -x); chip axes remapped to pelvis x/y/z in software
       isolation: 4 x M2.5 silicone anti-vibration grommets (FPV flight-controller type), 6 mm stand-off from the tray plate
       note: 'on the centre line, 86 mm above the hip axis, 26 mm behind the waist axis, rigid with the pelvis: the runtime''s IMU site (docs/software.md)'
-    - {part: waveshare-bus-servo-adapter, role: leg bus (12 servos), at: 'y -55..-13, board tilted 25 deg about y (33 mm board in a 33 mm pocket),
-        card-guided by the tray; USB from the Pi in the torso'}
-    - {part: waveshare-bus-servo-adapter, role: arm/head/waist bus (11 servos), at: 'y +13..+55, mirror of the leg adapter; USB from the Pi; its
-        bus data goes back up through the waist opening'}
+    - {part: waveshare-bus-servo-adapter, role: leg bus (12 servos), at: 'y -55..-13, board VERTICAL in the y-z plane (33 tall: z 345..378, 1
+        mm above and below), components back (x -22..-34) on 2 stand-off posts; USB from the Pi in the torso'}
+    - {part: waveshare-bus-servo-adapter, role: arm/head/waist bus (11 servos), at: 'y +13..+55, mirror of the leg adapter (vertical); USB from
+        the Pi; its bus data goes back up through the waist opening'}
     free_for_A: none in the pocket (v4); A's leg-feed splits (WAGO 221-413 taps) go outside the zone
     ventilation: none needed (adapter + IMU < 0.3 W)
     mass_kg: 0.075

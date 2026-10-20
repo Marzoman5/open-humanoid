@@ -25,6 +25,26 @@ def main() -> int:
     spec = load_spec("adam")
     layout = interfaces.load_layout(spec, HERE / "layout_v2a_upper.yaml")
     d = interfaces.generate(spec, layout)
+    # joints driven through a linkage (`drive:`): the joint axis is at `point`, the servo at `drive.servo_point`. The generator places a
+    # servo at its joint point, so a second pass with the point moved to the servo gives the real actuator/horn/back frames; the
+    # zero-pose overlap pre-check is taken from that pass.
+    import copy
+    lay2 = copy.deepcopy(layout)
+    drives = {}
+    for limb in lay2["limbs"].values():
+        for jd in limb["joints"]:
+            if jd.get("drive"):
+                pname = f"_servo_{jd['name']}"
+                lay2.setdefault("points", {})[pname] = jd["drive"]["servo_point"]
+                drives[jd["name"]] = dict(jd["drive"])
+                jd["point"] = pname
+    if drives:
+        d2 = interfaces.generate(spec, lay2)
+        for jn, dr in drives.items():
+            for key in ("actuator", "horn", "back", "keepout", "idler"):
+                d["joints"][jn][key] = d2["joints"][jn][key]
+            d["joints"][jn]["drive"] = dr
+        d["problems"] = d2["problems"]
     d["region"] = "B (upper body: waist yaw and everything it carries)"
     d["contract_ab"] = yaml.safe_load((HERE / "contract_ab.yaml").read_text(encoding="utf-8"))
     out = HERE / "interfaces_upper.yaml"
