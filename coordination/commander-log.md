@@ -47,3 +47,11 @@ Authorized by the maintainer: proxy review at R1/R2a (provisional), background a
 - [paused] Upper-body CAD stopped at d5090cd (branch worktree-agent-a2e0b61f5b2866437, NOT merged). Vendor CAD measured (files local/gitignored; no licence grant): servo estimates 17 → 2 (axis 10.11 mm from end, horn Ø19.2×2.5 in a 2.5 mm recess so forks ~6 mm narrower, back is a fixed Ø6 idler boss, connectors on the back face, M2 holes top/bottom). The leg ROM test now fails (horn 0.66 mm from the leg housing walls → region A needs a horn relief). Open for resume: contract_ab.yaml, all part geometry, checks, export. Findings to decide: neck yaw offset 26–28 mm, neck pitch needs +5 mm at the chin, gripper palm ~62 mm wider than the R2a arm, arms need ≥13.8° cant, electronics bay proposed on the pelvis. Handoff: coordination/handoffs/2026-10-19-1859-T-20261019-f6e2-cad-upper.md.
 - [state] ALL AGENTS IDLE. Resume order: (1) merge strength (re-run the full suite first), (2) merge upper-body progress, (3) maintainer decisions on the 5 upper-body findings, (4) continue upper-body CAD + start lower-body CAD.
 - [resume] Strength and upper-body WIP merged cleanly. Maintainer decided the upper-body questions (ADR 0015 amendment): head fits the mechanism, gripper sized for can/ball, electronics bay in the pelvis, arm cant kept.
+- [one-shotable backlog, 2026-10-19] To make the next humanoid much faster, after Adam's CAD:
+  (1) phase skills for concept (P2), CAD regions + interface contract (P3), strength, SIL/runtime, written now that each has had a real run;
+  (2) implement the placeholder gates (G-envelopes, G-silhouette, G-geometry, G-strength, G-cad-sim) so runs are machine-checked, not commander-checked;
+  (3) an intake template that forces verified-price feasibility and look/scale feasibility BEFORE locking budget and requirements (Adam's budget and look moved ~4 times);
+  (4) promote Adam-only scripts (variants/adam/design/r1_*, packaging/, v2/, cad/upper|lower tools) into framework tools;
+  (5) commander context rotation: a fresh commander per phase via a handoff (this file pattern);
+  (6) per-phase token and time telemetry for planning.
+- [handoff] Commander handoff written: coordination/handoffs/2026-10-19-2130-commander.md (context is high; a cloud commander is an option once the current CAD agents finish and merge).
