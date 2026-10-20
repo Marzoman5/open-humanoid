@@ -56,3 +56,4 @@ Authorized by the maintainer: proxy review at R1/R2a (provisional), background a
   (6) per-phase token and time telemetry for planning.
 - [handoff] Commander handoff written: coordination/handoffs/2026-10-19-2130-commander.md (context is high; a cloud commander is an option once the current CAD agents finish and merge).
 - [CAD-A] Left leg passes everything: G-strength 14/14 (the hip chain fixed), gate, ROM (CAD-limited + coordinated-limit table), access; left leg + pelvis region gate with 0 clashes. Rigid waist v5: 4× M3 upward from inside the pelvis + 2× Ø4 hardened dowels; B uses captive nuts (~850 N per bolt exceeds insert pull-out).
+- [overnight 2] Maintainer asleep; authorised "run this the rest of the night". Commander continues in-session (agents bound here); handoff updated with the overnight plan. Snapshots requested from both CAD agents. Keep-awake on.
